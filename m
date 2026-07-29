@@ -1,101 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1074570EE;
-	Wed, 29 Jul 2026 13:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4298339DBD4;
+	Wed, 29 Jul 2026 15:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785331953; cv=none; b=tPlajJyZSxCe/URdu3PFSQbhWbUtQGaDdKdpWlnNVaRM67jxrH+7T55UNp/AqRv7mkJoznlHpToI8rU1KZWbp5JVE0sLofUCFnk+rwj6abynEj8WZ4p3T+cKdEDat28DKnLvEq7XQc0jTm4kGxBW0ZZfeHwbaQyVYQEnFnoOaJA=
+	t=1785337658; cv=none; b=HNzrrUmGs/DeV+qgKjTtMtovNMPaZ8bqKYm54M+oTsF2fKn+WDQOBo99VBtDCV4xWO3apj/dOvSAd9G15eZBEYDNZpoRWB0I64E6sWo4uz/TBapOJZ3VqP83lDbjwNd4nlueTevfS9eY5xjN4C8t8kurWHH5U+xD1DHAlzrJGZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785331953; c=relaxed/simple;
-	bh=sYO3OQMt/+Stif8+cNPvSfMwor9ljLrebznuS3yEydo=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=QQrKzVojWDwFgMplnS6+5oNEbIVCJdvqfjUzMCZIdV/nwD4G7Zf9m6X6r+vC8avKyUvc1OAS6EfSHEQOpluXjLtUIOHYRiYLbxVBvT2+EdsnKo7NC3pyhGzHcB+y8mUsNE7rp5eWCEsxOHiGo/hOj7/NGtslpLTVUqOX1lxYQ8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYqI90r3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785337658; c=relaxed/simple;
+	bh=vSxmc2FQ+ZDk2hGWIiO/I83y4ahlPnFK/ITcev6CrtA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CeLMNK2FpwcQCAYK+v9xspIEsiZgV5V1iNvvswvfQwLIJbrv9790G8tJKa8AtxuI56P6Vp/gknZnPF07jVaeQfE/mKmkWx7+AmIc6vhSRvwOQzjJR9Oq1phY4H4hF3lV3vofdm9TKd+GWTU3CE8EEtkjfIYyfuNvEbUEP/EEZsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=YigJJK8k; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYqI90r3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A271F00A3D;
-	Wed, 29 Jul 2026 13:32:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785331943;
-	bh=f3O03q8g4zY3UkiuqFzkFOLvkkuY7KoV7rgZS+bJHG0=;
-	h=From:To:In-Reply-To:References:Subject:Date;
-	b=hYqI90r3Pj4axo/IkXm4UdGkdF/0ickGExddREMrxm7OlQ+37epBduCM//XKLqwWk
-	 EIPK43P7LivY4I/bXRO0rN28k+jxRNgAdOmIrcIK4JTzElC/EEPzfyZKmQQWAGH7Fl
-	 TmS25fepzui0nEEM0zT+Ywl+/sqo+P+ZwKwhDDi8LfSF99ru4Z8SSMTKIrxD0ojrLg
-	 9xyBFLDbvQr6qAUk457ci+3X+psX9yrD1kx+Mo2kWh1sLDo38Y6xy48kMPRUIIVVBD
-	 EgLkxvTyPIwctOULLnLe8oVfPJ60OJuaOtjgM1Ws6WtOJHNQvk/lIeGmuUAiVuQzcn
-	 Bn+OpOMOoZzgA==
-From: Mark Brown <broonie@kernel.org>
-To: dlan@kernel.org, elder@riscstar.com, guodong@riscstar.com, 
- linux-spi@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Pei Xiao <xiaopei01@kylinos.cn>
-In-Reply-To: <cover.1784527556.git.xiaopei01@kylinos.cn>
-References: <cover.1784527556.git.xiaopei01@kylinos.cn>
-Subject: Re: [PATCH 0/2] fix and cleanup in spi-spacemit-k1
-Message-Id: <178526212208.13644.13743864400074628954.b4-ty@b4>
-Date: Tue, 28 Jul 2026 19:08:42 +0100
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="YigJJK8k"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:
+	Subject:Cc:To:From:Content-Type:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=3nno4RIjepssL0babb4nLq1//aOFhCPGzoSYoFo6RvQ=; b=YigJJK8klIBdzXr3gct0pCuRdf
+	o//2LSjGN4pKSSG/Dc2j89NT9+8vJZXl8Gh2MXkqEW9GlRU53xFidPpkiL+1ZxzVMYdTk8GIGFP71
+	wgE7RwUD3qyc3AdCS35e4i2tUcELo080dueJuB8iq19F+kFfl15EL3jqX6eUBAXPza5cmv4vUZGwH
+	CgzolIzJlGQv8lu/nXF7jEGc/mZFkqEtrhG5nJkWmipGsZPG+3iGsRCFj2dWiBI7wb+M7tA2RloKR
+	cjC4uzbAe7RFBwmdlu4Nv0+sJpJRCcFvpbsoyicnXvv2R/+jewW40zY7D+7VJD+snlhLTUjr79RYp
+	7YGDntYQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1wp5sa-00000002eB1-1FM9;
+	Wed, 29 Jul 2026 17:07:32 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE:Keyword:riscv),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit)
+Subject: [PATCH 0/6] riscv: dts: spacemit: fix maximum CPU core voltage for K1 boards
+Date: Wed, 29 Jul 2026 17:02:17 +0200
+Message-ID: <20260729150722.1598630-1-aurelien@aurel32.net>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1509; i=broonie@kernel.org;
- h=from:subject:message-id; bh=sYO3OQMt/+Stif8+cNPvSfMwor9ljLrebznuS3yEydo=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqagDlvAGIROrYOOVdq9xw2Bu9XpOSqAvBUu3xE
- nSvFgs/iIuJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCamoA5QAKCRAk1otyXVSH
- 0JloB/9mrloYBsxFc3DmMt2jQDXe/kbgXHKA62LBppIHoKvnp5kQrALUQw4TJ38655Db3Jl0BPe
- aiGoPaCdkFaxpR4VzRDXPX44p1ujH7F+7ql+5tz+/KjFKO1bWH6xFn7UpouVDOFWRpKnah5hy8Z
- 55PnHDs23MXAvG+OX453G3d4BnDwPftT4/TPoig7QJjPGSeunBRR8Q4qeYNsrgdopqDCGhR8DBD
- liUzmnCgdMz1MMHGzuu+nqZbrr4dQdHK0LJ99GdCGR04lQp0t6JMUbY7ioMvmheZ6QguefkeF3D
- xDgU8XA4lCw2TzFUcWEAMcR6LPQ63OFp0XQ6v1QxfdhCu59H
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Content-Transfer-Encoding: 8bit
 
-On Mon, 20 Jul 2026 14:08:42 +0800, Pei Xiao wrote:
-> fix and cleanup in spi-spacemit-k1
-> 
-> 1.fix TX DMA descriptor on RX prep failure
-> 2. drop redundant dev_err_probe() around irq
-> 
-> Pei Xiao (2):
->   spi: spacemit: fix dangling TX DMA descriptor on RX prep failure
->   spi: spacemit: drop redundant dev_err_probe() around irq helpers
-> 
-> [...]
+The SpacemiT K1 based boards use the SpacemiT P1 PMIC. The buck1 and
+buck2 voltage regulators supply the CPU core voltage. They are
+configured with a maximum output voltage of 3.45V, while the highest
+operating point requires only 1.050V. This means that a kernel bug, OPP
+misconfiguration, or privileged userspace could request a voltage above
+the safe operating limit, causing possible permanent CPU damage.
 
-Applied to
+This patch series set the maximum regulator voltage to 1.050V instead.
+There is one patch per board in order to ease backporting to older
+kernel versions.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-7.3
+Aurelien Jarno (6):
+  riscv: dts: spacemit: k1-bananapi-f3: fix maximum CPU core voltage
+  riscv: dts: spacemit: k1-milkv-jupiter: fix maximum CPU core voltage
+  riscv: dts: spacemit: k1-orangepi-rv2: fix maximum CPU core voltage
+  riscv: dts: spacemit: k1-musepi-pro: fix maximum CPU core voltage
+  riscv: dts: spacemit: k1-orangepi-r2s: fix maximum CPU core voltage
+  riscv: dts: spacemit: k1-bananapi-cm6: fix maximum CPU core voltage
 
-Thanks!
+ arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi | 4 ++--
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 4 ++--
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 4 ++--
+ arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    | 4 ++--
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  | 4 ++--
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  | 4 ++--
+ 6 files changed, 12 insertions(+), 12 deletions(-)
 
-[1/2] spi: spacemit: fix dangling TX DMA descriptor on RX prep failure
-      https://git.kernel.org/broonie/spi/c/8955fbad8aad
-[2/2] spi: spacemit: drop redundant dev_err_probe() around irq helpers
-      https://git.kernel.org/broonie/spi/c/79052a6a6f5b
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.53.0
 
