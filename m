@@ -1,122 +1,115 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58C83CB918;
-	Thu, 30 Jul 2026 10:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE7440759F;
+	Thu, 30 Jul 2026 11:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785406828; cv=none; b=Qw7V+3o7kAQ//oOKPtb1Mb7uZkHXLNp0nb1PfBq37VOzegSZtISDBUXX9cdoItG63rwGvARO+txRezlnX14GbvDjPZ+DHa35ck1CABpBxNf6lUP3rDS6qKaenOQWfkNbVDJDOb1YmS/pDTKkumKROr1HGWlwHDdgl87mskT9s24=
+	t=1785410976; cv=none; b=QolfPu3A5nWacDNcNXfBk3qwu337QashnbUhFYDmbkfuHvJ0X4GWqJ0776xx8ZXpAsWRxuhZH6yMU+f8y8t1f3TVYbS/eNByAkMzpUgfEV61SrrAJSDFLVUoZShQwFDtqp3oTgwjGyiuhirySp/5/XsSamiy2wTc+GS+xKYWQtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785406828; c=relaxed/simple;
-	bh=SItzjP6NCZc85QcMoy3zvMBmct771MJHUZdy8mn7nmI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=emq4w+yreKt5Iq9DcIoyexxPYQqarxOqHgFmYsdOW0Y+Gjxusi0fK2fSqhZ09kHNTt6zH7qxgekx3TCvTcY4eCAiJbxrlnQOZa2lXDo1zKXCnmL3wDG9Ik8c1nUbKGOW4OpNSedFtNf6vJJ8sn3C5+27KsI3hc6qkIdyhDcRi2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=PRD9oYAi; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1785410976; c=relaxed/simple;
+	bh=H2g4QOv4E8IgtI4WawAx1g8Z9vGYbm2nn5NUM+9iliM=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F1538d76nIQF72KDcmN9XyjqwwXgAp9mIsxkH0Khy0sdfGV4uYZMUoteSocSFdqfYG/OYr9qMVI98Xj1dO938Z7fxTMGa1zBlsrWvrjeTBKN5kBnwegW6H+JAuQytP0oVxWizCIWZa4Wwy35Sr+M6gk+k0ONJCE1mTCJBJkpzxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkfE1pes; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="PRD9oYAi"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=lqe6fn6xE+B9TzlhACzO3A+XqQ4Cb+nHYZWBZjRrgM0=; b=PRD9oYAiPvn8MnJFynejZC0mPM
-	4X8LcLNZ8r+fNQxnCUfUnKjSbTqpPilc8my5exZ9QqpqzpjaZ/rQ6N7iGB3v/E2X6Dfoxf8O8Q83z
-	5frEMatty3w+YdbmuiYFNQuYlGd0p0ma67ziujDgDbMaRYqPiMh2dz1oPtNzuXTAO/xYLNvEecAXC
-	AS2hBPnC8E0zhu5gESIenxIQ7td40MY7OwoHdXR6Lxq2gwUpBSrgkmu7fnTONYA9p/dkDm3/fwRLW
-	sDGB3kjcNm6tA+SC3xo9Xgg+RUvevNs6KIOHOG9vohXVPxerRGx1B56NvF7lvfbhlRMCRCFz29WD3
-	anaRXvmA==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1wpNsF-000000040VI-3Jhh;
-	Thu, 30 Jul 2026 12:20:23 +0200
-Date: Thu, 30 Jul 2026 12:20:17 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: sashiko-reviews@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkfE1pes"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461031F000E9;
+	Thu, 30 Jul 2026 11:29:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785410975;
+	bh=ReYAwfOvi7XoAWmb+MBrm0lABIXnkQqz384e0Z3fGqk=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=AkfE1pesDiVbng8djmIMZ/lxp7mLUFWdjbtvznmNaqUwQ8XyLfv9oiYnb9HUrU3Xy
+	 CnT3hSiRIAWQjQxdkKgAUfaPPfeXAgAfllZJn4dwn4c3Clx5tGAGdntqLm5KJ3Ombi
+	 fCXdA9davtwmRIm9FpEmKnJLhJ0+c/pHFtdZK23E07Ka6+uAlClH6dvjRvDVp25Qhy
+	 2Naj6tWe1++8N2pZJgAerF6v2K5iir4rSuGONK5gDXdELOirqPq+1IMMgxX8XPUnRm
+	 BTLPUkMBWeTi8iQZpQna2dhexwga6pD0GvHl2SBppJawKay7PVjxWZOBNEK29RUA3o
+	 4XTHt5IMISmlw==
+Date: Thu, 30 Jul 2026 11:29:32 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v2 3/4] riscv: dts: spacemit: k3: add USB3 B and C
- controllers for Pico-ITX board
-Message-ID: <amslYcO2uXLKkHLw@aurel32.net>
-Mail-Followup-To: sashiko-reviews@lists.linux.dev,
-	linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
 	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
 	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>,
 	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20260729172450.1660418-1-aurelien@aurel32.net>
- <20260729172450.1660418-4-aurelien@aurel32.net>
- <20260729173332.51D661F000E9@smtp.kernel.org>
+Subject: Re: [PATCH v2 4/4] riscv: dts: spacemit: Add Milk-V Jupiter board
+ (M1)
+Message-ID: <20260730112932-GKF77474@kernel.org>
+References: <20260729160749.1621415-1-aurelien@aurel32.net>
+ <20260729160749.1621415-5-aurelien@aurel32.net>
+ <20260730085424-GKK76518@kernel.org>
+ <amsj0kK6LtnxRT_J@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260729173332.51D661F000E9@smtp.kernel.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <amsj0kK6LtnxRT_J@aurel32.net>
 
-Hi,
+Hi Aurelien,
 
-On 2026-07-29 17:33, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Mismatch between the length of the `phys` and `phy-names` properties in the `usb3b` and `usb3c` device tree nodes.
-> --
+On 12:13 Thu 30 Jul     , Aurelien Jarno wrote:
+> Hi Yixun,
 > 
-> --- Patch [3]: [PATCH v2 3/4] riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX board ---
-> commit 2aa9a6448bde1ee249cba54ddbed1021d4ace1cc
-> Author: Aurelien Jarno <aurelien@aurel32.net>
+> On 2026-07-30 08:54, Yixun Lan wrote:
+> > Hi Aurelien, 
+> > 
+> > 
+> > On 18:00 Wed 29 Jul     , Aurelien Jarno wrote:
+> > > Add support for the Milk-V Jupiter board with the M1 CPU. The M1 differs
+> > > from the K1 only by its package, which provides improved cooling
+> > > performance and allows it to run at up to 1.8 GHz instead of 1.6 GHz.
+> > > 
+> > > Add m1-opp.dtsi to define the 1.8 GHz operating point and the
+> > > corresponding core voltage, based on the upstream kernel. Include it
+> > > from m1-milkv-jupiter.dts. Raise the maximum buck1 voltage to 1.116V to
+> > > match the new operating point.
+> > > 
+> > While checking the schematics, the buck1,2 provide power supply both
+> > for cpu core and AVDD09 domain - check schematics page 9/25 [1]
+> > 
+> > the R81 is NC, so buck1,2 is actually all power supply, raise voltage will
+> > result high risk to damage the chip (overvoltage of AVDD09 domain), so
 > 
-> riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX board
+> Yes, both buck1 and buck2 supply the CPU core. I only raised buck1 here, 
+> because it's the only one controlled by the cpu scaling, but in practice 
+> I believe that configuring the PMIC as Dual-Phase Mode couple the two 
+> regulator at the hardware level and only the first one need to be set. 
+> See my analysis there:
+> https://lore.kernel.org/spacemit/178402025712.1568061.9223355686030414906.b4-ty@b4/T/#m828e80aaf454606baafbd43e3795089ba397145f
 > 
-> This commit adds the USB3 B and C controller nodes and their corresponding
-> USB2 and USB3 PHY nodes to the SpacemiT K3 SoC device tree. It also enables
-> them on the K3 Pico-ITX board in USB 2 mode.
-> 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > index 0eb24fac4733e..b786f119d4f95 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> [ ... ]
-> > +		usb3b: usb@81400000 {
-> > +			compatible = "spacemit,k3-dwc3";
-> > +			reg = <0x0 0x81400000 0x0 0x10000>;
-> [ ... ]
-> > +			resets = <&syscon_apmu RESET_APMU_USB3_B_AHB>,
-> > +				 <&syscon_apmu RESET_APMU_USB3_B_VCC>,
-> > +				 <&syscon_apmu RESET_APMU_USB3_B_PHY>;
-> > +			reset-names = "ahb", "vcc", "phy";
-> > +			phys = <&usb3b_u2phy>,
-> > +			       <&combophy 2 PHY_TYPE_USB3>;
-> > +			phy-names = "usb2-phy";
-> 
-> [Severity: Medium]
-> Does this mismatch between the array lengths of phys and phy-names cause
-> dtbs_check schema validation to fail? The phys property defines two items,
-> but phy-names only lists "usb2-phy", omitting "usb3-phy".
-> 
+Your anylsis is correct, and that's not the problem I'm talking about..
 
-This is correct, i'll fix that in v3.
+what I mean is that more than one cumsumers to buck12, where AVDD may not
+be able to tolerate high voltage, even vendor can't guarantee to run stably,
+vendor kernel enable 1.8GHz as turbo-mode which won't run for long duration.
 
-Regards
-Aurelien
+https://github.com/spacemit-com/linux-6.6/blob/k1-bl-v2.2.y/arch/riscv/boot/dts/spacemit/k1-x_opp_table.dtsi#L20
+
+ buck1,2 |--> CPU CORE
+         |--> AVDD09 (DDR, AFEAP ..)
+
+> But I can indeed raise both values for consistency.
+> 
+> > a safe strategy would to test if M1 able to run at 1.8G without voltage 
+> > change (still at 1.05v)?
+> 
+> I'll try that, but my guess is that given the vendor kernel raises the 
+> voltage to 1.116V, it is actually needed.
+> 
+> Regards
+> Aurelien
+> 
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
 
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Yixun Lan (dlan)
