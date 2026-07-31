@@ -1,63 +1,65 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D78640B104
-	for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 10:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F83FADE8
+	for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 10:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785492980; cv=none; b=eRzu6XCSvfgv12y9VwZnl6F4h6/PF0CNj2e/PmMhFMLgKk+2t3xXHJwbKGUA/3FXnVXHDvLfeuhT4cA38gY2Ip171b1hkbh3zX7zG9HaqXT3vkXDYkD8Gsj6rPkwDMcyzblD7TxI28fo0/IAHjWV4u7o/EwPEnYqkgid8vlYjVI=
+	t=1785492985; cv=none; b=malZkMmTNk1+X4OWyKSXz2jH2hq8pGys5/Zrumrw94fKQh003CqyFUiqI8Gk+Fu7ni+mqYeoVtyjNzEAoQxy3XkT2dJhBQ0B9h4J1EknVyHtyW3D3hpiFiYDb9p5FYmT+Bh04MT5HTKZrm2JzqIkKkU98PPVmWvaVx7Xso1lH+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785492980; c=relaxed/simple;
-	bh=Oq0qHCMJTDXMvBr5bsOFLCduogKj3CN2uMulTxtRHKo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oZx9T3QViqeSzzTHVYvVlZCS3XQ7MgAFsl55GekTX8QviQi4cYjet53jmo8STSAroMnrcbpx/xKyOJcQRxa85UyGEyB2tTgsO5f6F+hUaDR09i/0joM6AXPRQ6Rcfgn0OeFReKVjmY06wqSI2X+yXgjJlL0SpcH5pakmG5QKz0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rrsttUL1; arc=none smtp.client-ip=209.85.216.41
+	s=arc-20240116; t=1785492985; c=relaxed/simple;
+	bh=tIZl0SczIAIEGn6ulaKByJ4cIgNcPn8uPvyKgIjiEDc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mH1CPmRsoEdxmQ+Dts3rhJtY4/ZTsO61AwRdf2rt0da5daHqo3fG6qA2xAWpr5pv6VssVPaBZ9PwsOI+7gvNUMx4u5KScKb6vILkAegKE5Vsm/GGqyNRuP3Us0JkvAnfKwHqeuiFk8QGFvOuKAPNmYue9zBxaRLJhhhLuopa97g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elgb4uTR; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rrsttUL1"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-38e3617ba36so892906a91.3
-        for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 03:16:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elgb4uTR"
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38e041ea211so933401a91.0
+        for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 03:16:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785492964; x=1786097764; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xhY5pmRQ6A67JZa+NLW72z8V+CYSZWnDWCHhcpLOg6g=;
-        b=rrsttUL1fecT0qVOoeyQhHv11KJmVbV9ZvV6cHPgdnPt+yUH40kvZ/vcdGBhEXBVRO
-         h7kDLuP6wU/bq9WCR5ijlmoKEkf32kPLTCA1veYbUyo1/oLr3Hb8if0DyQ08LnhugN2b
-         iuTrT/8/iz640GYXoQOu8NtlLpS5s/kZKHRko/mhwS1kcps7Pt/axdbdOztod8iW/T1K
-         fsXnVYXXh4uE+UW1N7uUpX0ma3HHM1ksCreczd7t597n7J/PQgVF+rfa8smNFf3BfpSR
-         +4pSCgrYxNc2XzdIMbbACp1+LFK2ujXzRcqa6fSIi/O3EoCy/oLk29ceAC9l+b9KjTpA
-         VDTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785492964; x=1786097764;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1785492972; x=1786097772; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xhY5pmRQ6A67JZa+NLW72z8V+CYSZWnDWCHhcpLOg6g=;
-        b=nt9Xx/JSit5SfmSRfgBPap+o/azqlE40qhRKmHqWFw5sfjuN+xFQNgTyl3Ux896jfv
-         bfZEzIJFgTPmRBaDKaKLVgLv2F4qugKVxEbhXvaXTJtacPc3APG7kbz6yyA/rtmfKLcA
-         IAedk8D1KVmgP4i4G29e5r4+++egagY+X59tSxtvRGL3wZ1d2aJtAb0LDk15tJRDzXId
-         GAXJZQwixFwC1b3vOEHNnsBL2PR3IHJdC8lBPsR50clEkWfod3kbzVJoz3izBmtIlP+5
-         PrtC/Hz/VdOIBsigFEKwe4fevLH0QV1XzD67AdAoiZ9Npyl71Av7mQqP0hc4swU3P0FC
-         koPw==
-X-Forwarded-Encrypted: i=1; AHgh+RqGoqY8vbK3io/Sse1XCwpzR+sHv7MhYXwL4BVfNcxJL+3n4NHcgzrawu2eDVaOBMCgNQJcVrHBaQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy3ymyO8Zp8bc91s5hTi059n7JrU+TACZMgfMhiwPKJ7Zqts3qt
-	d5mPsUQI3fLeslg0EFORxTnsYcbP4NODli5736ThlnNc+e5uFjgLP4Vf
-X-Gm-Gg: AR+sD1226kz6dxP7GvfLxiPCkeP0qtsrYew/srSrLo7cjqbao1IB5oQxBz6tNsR7wsn
-	NK4PX2SicdKX/IO9uL55dV9/fuRutlOARc9eRTt1VlNWyzXy0NmuFWuIO8RzY0JYFMg3VDXK/l/
-	NYQ89SjjOXUj2Vq4ANur1B/VVNnG7lH7YZ+J8CAlNX9Bu2gPRZ9PisDHkhBneuA3GZL5CKiKiVE
-	swx9xEO84dJLTlC2D98/MClUaKa2o/qlthdoyOrvKfRb1IhTTbpeDLE5YFtoOJGqusG81AcYMKZ
-	EJ4vek8zdgs1urjDXGZNZCxFFh1a/CpOGfr5OolokwPBvI5PL/2KMZ0P/BZxN8vRB8XpBNSxuEY
-	OP6D6KZWoS/GckA6wWDFlaaRVnZL3y1aNahviYUa15YRMYvx5rBeLCUezIsuFyysTvjN4rJt6M0
-	tzSHPv2XcgX2tK2amr85TvphZhc3LkyCIC7UJleG2phlSgU2wHQ1LVa750xRNlOPTB3EFv2AJXz
-	pPLiP3iGLBZ6R+p7FfzP8HrDXQiNbq6WomQ50og4VMFxk+8ZJdfpyIFOR/hmoudcI3Qxo1UOFod
-	GE2sjIzR3IvcuRM=
-X-Received: by 2002:a17:90b:4d8e:b0:38e:895f:25fc with SMTP id 98e67ed59e1d1-38fb14a50b9mr1388374a91.38.1785492963980;
-        Fri, 31 Jul 2026 03:16:03 -0700 (PDT)
+        bh=VAZMksOYurF3tSXLo/jShDOr9iNsQwZ9titE58N+ejE=;
+        b=elgb4uTR6T3tBk6vb2Yd6gH3a3RMtkdTSgz9CLwZwKdoHE900kNGLBCMYfrEytDxnI
+         eY1p0gox5mCLEeXQcWtBVT3d1oDX21CLRan5GD3/Oju4MZMxrDSKg8xX6ZbmLisqU3va
+         VVCHult5PvswvenUfcqq8r+rKqOUD3yh0Omox9kCytqdrqI08kQ5TSNXaHYHfz8vDkdo
+         cnn1VMEdAgXPtZ2hrt8upN7Kq7RrxVtpB5+4a3XHaqKb9n04hyeGWl8161y5bZJ8QwW2
+         fYKDC5q2XfZpp9W00cyc1+q8BV6gqdh+4dtn22oD66XIO8GeNKwe/S+/or59qKAr7BAm
+         KMCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785492972; x=1786097772;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=VAZMksOYurF3tSXLo/jShDOr9iNsQwZ9titE58N+ejE=;
+        b=nn89GgT+SyQUzNfOKbkYas2+jR7P4YajYy4rb3Gf603qSwTdrmDiQlpfaZuPslDqk6
+         DeQcIUkIbkZNYlYm/w7bRsDn1L3I7FdImqFNSQM4SJe0LdldbrBEHE4d1ZqQ4pCpyJlW
+         tpPljYLpCOWNxtq3zhH3mnNq6tEtt+bltwcck7eZZ7HVfSQ0VZKfooqnXGpDHIrfc+ei
+         n3HZQf/pxFfoYylsKwIHAH8h6n+jRb1HlYnt4JWFKq1KTUxp0fJ1EqWHzV5KkmSrQT+b
+         g7dmr1UPlHU9tPBeeFIWDGB81JiYc2r6uEgtzIsr6nSwEOob7SM5ZglS7qkK4TJXf7jW
+         qzPw==
+X-Forwarded-Encrypted: i=1; AHgh+RpkAoG7+Vyq6cuoFoQT3EcODzlm+mZT7TyQIkmo0Z8eFXHLfIvVIMU4pLEBZ/eoYBF6eZhEMFu4Hw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzesN2SVqQvdApVzrZgXmLqwWi/POlGXWHplO8ns9uHshfWUcfd
+	7ullWfKDb90A5E1wBa03Yy8PP9OE2PUhhKxm8IwPU4mpVDnY/p30IVwn
+X-Gm-Gg: AR+sD103E1m9/r59Y1b87dvSARQaDlWxsmK1s92AMvlHg7q0oxsF8VtMGhOVv6uWTML
+	khBZDWQ4gQKiAZVtFC7OQVyN4pEapqZ++rnGZQX6mNomSBCIPfbMuFdevRTr2b+FE7Tz3afhxOj
+	Pkc1q4xgeIWS6HKOTlrV0eIERfjJM3Belf4oSj4cfwx7W8aqEt89bxOu+wJQIrawW88g3A+G6yM
+	aICRj5O8dFChOQ+zUOUeYxgbC5qHcge+VGECAvuFFyggLwHtcFFQSwiv+QbRbgFGMIP9flJ8F9L
+	KB7ZEAq+lM0HeECAKKaGhP+he29uPObiJzXl2RuCZ+97D8PPvDFklojyquGlB9w5lMiy/kZY6aO
+	asQuQUg82q7Ky5Ptm8TW+g8HN2Q/v6u6PbnGR1tsPLc6ZCLvFOPoYyK6eiJrAGAhKE+JXvWScoa
+	y6a9gusTDdrN+/OSBl1/qLcy5i/iTNVbzKCoFzhJ4qnYNqbYz6wyzEgG/l7dbi6jRuQBmo/Q8kz
+	Z57fvxEluT8B6M1Bo5TOd6AssR4eoXwvsY0ylEzjt8RhEh2d9EyAyLdKPFmoa8qhphwewb6FUa7
+	J2BH
+X-Received: by 2002:a17:90b:4cce:b0:381:cef1:11bb with SMTP id 98e67ed59e1d1-38fb13e74femr1383086a91.22.1785492972150;
+        Fri, 31 Jul 2026 03:16:12 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb2ce28c7sm509733a91.16.2026.07.31.03.16.00
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb2ce28c7sm509733a91.16.2026.07.31.03.16.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 03:16:03 -0700 (PDT)
+        Fri, 31 Jul 2026 03:16:11 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Yixun Lan <dlan@kernel.org>,
 	Takashi Iwai <tiwai@suse.com>,
@@ -73,10 +75,12 @@ Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 1/2] ASoC: spacemit: Drop redundant error messages
-Date: Fri, 31 Jul 2026 17:15:38 +0700
-Message-ID: <20260731101539.36290-1-phucduc.bui@gmail.com>
+Subject: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
+Date: Fri, 31 Jul 2026 17:15:39 +0700
+Message-ID: <20260731101539.36290-2-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260731101539.36290-1-phucduc.bui@gmail.com>
+References: <20260731101539.36290-1-phucduc.bui@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -87,36 +91,33 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-The called functions already log failures where appropriate. Return the
-original error directly and avoid duplicate error messages.
+spacemit_i2s_init_dai() takes an optional output parameter dp, but only
+assigns *dp on the success path. If devm_kmemdup() fails, *dp is left
+untouched.
+The current caller does check the return value before using dp, so this
+isn't an active bug. Still, initialize *dp to NULL upfront as a defensive
+measure, consistent with how core helpers like _snd_pcm_new() handle
+their optional output parameters.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/spacemit/k1_i2s.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/spacemit/k1_i2s.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index cd461f2aa756..64510c9a1a89 100644
+index 64510c9a1a89..23037fa4233c 100644
 --- a/sound/soc/spacemit/k1_i2s.c
 +++ b/sound/soc/spacemit/k1_i2s.c
-@@ -478,7 +478,7 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
+@@ -382,6 +382,9 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
+ 	struct property *dma_names;
+ 	const char *dma_name;
  
- 	i2s->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 	if (IS_ERR(i2s->base))
--		return dev_err_probe(i2s->dev, PTR_ERR(i2s->base), "failed to map registers\n");
-+		return PTR_ERR(i2s->base);
- 
- 	i2s->reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(i2s->reset))
-@@ -495,7 +495,7 @@ static int spacemit_i2s_probe(struct platform_device *pdev)
- 					      &spacemit_i2s_component,
- 					      dai, 1);
- 	if (ret)
--		return dev_err_probe(i2s->dev, ret, "failed to register component");
-+		return ret;
- 
- 	return devm_snd_dmaengine_pcm_register(&pdev->dev, &spacemit_dmaengine_pcm_config, 0);
- }
++	if (dp)
++		*dp = NULL;
++
+ 	of_property_for_each_string(node, "dma-names", dma_names, dma_name) {
+ 		if (!strcmp(dma_name, "tx"))
+ 			i2s->has_playback = true;
 -- 
 2.43.0
 
