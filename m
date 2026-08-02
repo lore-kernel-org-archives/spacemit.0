@@ -1,123 +1,85 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F83FADE8
-	for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 10:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFE021DE4FB;
+	Sun,  2 Aug 2026 01:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785492985; cv=none; b=malZkMmTNk1+X4OWyKSXz2jH2hq8pGys5/Zrumrw94fKQh003CqyFUiqI8Gk+Fu7ni+mqYeoVtyjNzEAoQxy3XkT2dJhBQ0B9h4J1EknVyHtyW3D3hpiFiYDb9p5FYmT+Bh04MT5HTKZrm2JzqIkKkU98PPVmWvaVx7Xso1lH+c=
+	t=1785634264; cv=none; b=Rmp6qYpOy8L3XbtXyDhkLP+c45KZ/dQEbviIjq6/yW2PDJ9BKgUuw7y1jx17NM8GwJdPT0yyMjml3UVNTvtTuI+uR8W78VdG4eAqnL4VnNuRTXk81sfGnTdMWIFOdn8zNm+qFRb4fglJv4ZG1RlkGJ7aEEYD8wuqGkOmHLlJPjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785492985; c=relaxed/simple;
-	bh=tIZl0SczIAIEGn6ulaKByJ4cIgNcPn8uPvyKgIjiEDc=;
+	s=arc-20240116; t=1785634264; c=relaxed/simple;
+	bh=QiRMI7iOL6WknIFRoN15qOxJv2SIX8sIO5xw+RCivRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mH1CPmRsoEdxmQ+Dts3rhJtY4/ZTsO61AwRdf2rt0da5daHqo3fG6qA2xAWpr5pv6VssVPaBZ9PwsOI+7gvNUMx4u5KScKb6vILkAegKE5Vsm/GGqyNRuP3Us0JkvAnfKwHqeuiFk8QGFvOuKAPNmYue9zBxaRLJhhhLuopa97g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=elgb4uTR; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=ni6OuxJE3O1CSb83s/zbvHKd7i/TpseV/Vcg8O7VlWepEpNnyvBjjQnp07xWaWhrqCVhWBKTMFYlQOXPfm2hTkYGucpoLJ1h+TjhDw1HazoH6aZB3rYZ29ldSfh38ocmUkibc0dlVlMVua5Cpk/ofR5bZkNIBVb3MoGzo2Kryrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mikZ1883; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="elgb4uTR"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-38e041ea211so933401a91.0
-        for <spacemit@lists.linux.dev>; Fri, 31 Jul 2026 03:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785492972; x=1786097772; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=VAZMksOYurF3tSXLo/jShDOr9iNsQwZ9titE58N+ejE=;
-        b=elgb4uTR6T3tBk6vb2Yd6gH3a3RMtkdTSgz9CLwZwKdoHE900kNGLBCMYfrEytDxnI
-         eY1p0gox5mCLEeXQcWtBVT3d1oDX21CLRan5GD3/Oju4MZMxrDSKg8xX6ZbmLisqU3va
-         VVCHult5PvswvenUfcqq8r+rKqOUD3yh0Omox9kCytqdrqI08kQ5TSNXaHYHfz8vDkdo
-         cnn1VMEdAgXPtZ2hrt8upN7Kq7RrxVtpB5+4a3XHaqKb9n04hyeGWl8161y5bZJ8QwW2
-         fYKDC5q2XfZpp9W00cyc1+q8BV6gqdh+4dtn22oD66XIO8GeNKwe/S+/or59qKAr7BAm
-         KMCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785492972; x=1786097772;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=VAZMksOYurF3tSXLo/jShDOr9iNsQwZ9titE58N+ejE=;
-        b=nn89GgT+SyQUzNfOKbkYas2+jR7P4YajYy4rb3Gf603qSwTdrmDiQlpfaZuPslDqk6
-         DeQcIUkIbkZNYlYm/w7bRsDn1L3I7FdImqFNSQM4SJe0LdldbrBEHE4d1ZqQ4pCpyJlW
-         tpPljYLpCOWNxtq3zhH3mnNq6tEtt+bltwcck7eZZ7HVfSQ0VZKfooqnXGpDHIrfc+ei
-         n3HZQf/pxFfoYylsKwIHAH8h6n+jRb1HlYnt4JWFKq1KTUxp0fJ1EqWHzV5KkmSrQT+b
-         g7dmr1UPlHU9tPBeeFIWDGB81JiYc2r6uEgtzIsr6nSwEOob7SM5ZglS7qkK4TJXf7jW
-         qzPw==
-X-Forwarded-Encrypted: i=1; AHgh+RpkAoG7+Vyq6cuoFoQT3EcODzlm+mZT7TyQIkmo0Z8eFXHLfIvVIMU4pLEBZ/eoYBF6eZhEMFu4Hw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzesN2SVqQvdApVzrZgXmLqwWi/POlGXWHplO8ns9uHshfWUcfd
-	7ullWfKDb90A5E1wBa03Yy8PP9OE2PUhhKxm8IwPU4mpVDnY/p30IVwn
-X-Gm-Gg: AR+sD103E1m9/r59Y1b87dvSARQaDlWxsmK1s92AMvlHg7q0oxsF8VtMGhOVv6uWTML
-	khBZDWQ4gQKiAZVtFC7OQVyN4pEapqZ++rnGZQX6mNomSBCIPfbMuFdevRTr2b+FE7Tz3afhxOj
-	Pkc1q4xgeIWS6HKOTlrV0eIERfjJM3Belf4oSj4cfwx7W8aqEt89bxOu+wJQIrawW88g3A+G6yM
-	aICRj5O8dFChOQ+zUOUeYxgbC5qHcge+VGECAvuFFyggLwHtcFFQSwiv+QbRbgFGMIP9flJ8F9L
-	KB7ZEAq+lM0HeECAKKaGhP+he29uPObiJzXl2RuCZ+97D8PPvDFklojyquGlB9w5lMiy/kZY6aO
-	asQuQUg82q7Ky5Ptm8TW+g8HN2Q/v6u6PbnGR1tsPLc6ZCLvFOPoYyK6eiJrAGAhKE+JXvWScoa
-	y6a9gusTDdrN+/OSBl1/qLcy5i/iTNVbzKCoFzhJ4qnYNqbYz6wyzEgG/l7dbi6jRuQBmo/Q8kz
-	Z57fvxEluT8B6M1Bo5TOd6AssR4eoXwvsY0ylEzjt8RhEh2d9EyAyLdKPFmoa8qhphwewb6FUa7
-	J2BH
-X-Received: by 2002:a17:90b:4cce:b0:381:cef1:11bb with SMTP id 98e67ed59e1d1-38fb13e74femr1383086a91.22.1785492972150;
-        Fri, 31 Jul 2026 03:16:12 -0700 (PDT)
-Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38fb2ce28c7sm509733a91.16.2026.07.31.03.16.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jul 2026 03:16:11 -0700 (PDT)
-From: phucduc.bui@gmail.com
-To: Yixun Lan <dlan@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Liam Girdwood <lgirdwood@gmail.com>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Goko Mell <goku.sonxin626@gmail.com>,
-	Jinmei Wei <weijinmei@linux.spacemit.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mikZ1883"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D9C1F00AC4;
+	Sun,  2 Aug 2026 01:30:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785634263;
+	bh=kF/jmHcAj/bSIW3njrcjP3ttcfjXyFDEpBH1tBCyzRw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=mikZ1883IUq3+1exW3KCr0FvI4UO2SWkwv5a7cduHXhtS3bE/4+wgIlm4qptjvf8x
+	 IsDyPOvxfeY1g5PWcpgtBHvLng83oEzf7crjSL5cv3mkmvky3o97JEb11sKzQawZEq
+	 tX+OVH8wcNGUVEcwd6FZyCEQ9y9qDwZU+TtB6l+4zrJQkf6RhqMM772jtD+RZpAP9p
+	 aUelbLWnFbTGJZJy43X8kxEWopdhpzQWQCPGAaxhxg/fYCEVaLPnRWbSBV0QXktOl9
+	 RSKmYr41TJ8t/18l5FM3XmsnD8fA6ANaoAwqDy5jHtX1ZMIxfde0V3zIknBsguPVmA
+	 ixo5dxGFbCkTA==
+From: Yixun Lan <dlan@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
-Date: Fri, 31 Jul 2026 17:15:39 +0700
-Message-ID: <20260731101539.36290-2-phucduc.bui@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260731101539.36290-1-phucduc.bui@gmail.com>
-References: <20260731101539.36290-1-phucduc.bui@gmail.com>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 0/3] clk: spacemit: k3: fix i2s clock topology and divider rates
+Date: Sun,  2 Aug 2026 01:30:55 +0000
+Message-ID: <178563403274.1609232.15890573449451118017.b4-ty@b4>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260717-k3-clk-fix-i2s-v1-0-e95001a692ee@linux.spacemit.com>
+References: <20260717-k3-clk-fix-i2s-v1-0-e95001a692ee@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-From: bui duc phuc <phucduc.bui@gmail.com>
 
-spacemit_i2s_init_dai() takes an optional output parameter dp, but only
-assigns *dp on the success path. If devm_kmemdup() fails, *dp is left
-untouched.
-The current caller does check the return value before using dp, so this
-isn't an active bug. Still, initialize *dp to NULL upfront as a defensive
-measure, consistent with how core helpers like _snd_pcm_new() handle
-their optional output parameters.
+On Fri, 17 Jul 2026 00:26:00 -0700, Troy Mitchell wrote:
+> The K3 i2s clock tree was modelled on the K1 layout but does not match
+> the actual K3 hardware topology, leading to incorrect clock rates being
+> reported and programmed.
+> 
+> Three fixes are provided in dependency order:
+> 
+> First, the MPMU_ISCCR syscon register is renamed to MPMU_ISCCR1 to
+> match the hardware register name, and MPMU_ISCCR0 (offset 0x0040) is
+> added. This prepares the header for the clock topology corrections that
+> follow.
+> 
+> [...]
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
----
- sound/soc/spacemit/k1_i2s.c | 3 +++
- 1 file changed, 3 insertions(+)
+Applied, thanks! Also fixed minor comments from sashiko bot
 
-diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index 64510c9a1a89..23037fa4233c 100644
---- a/sound/soc/spacemit/k1_i2s.c
-+++ b/sound/soc/spacemit/k1_i2s.c
-@@ -382,6 +382,9 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
- 	struct property *dma_names;
- 	const char *dma_name;
- 
-+	if (dp)
-+		*dp = NULL;
-+
- 	of_property_for_each_string(node, "dma-names", dma_names, dma_name) {
- 		if (!strcmp(dma_name, "tx"))
- 			i2s->has_playback = true;
+[1/3] dt-bindings: soc: spacemit: k3: add i2s_sysclk, i2s_bclk_factor and i2s1_sysclk_src IDs
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=cf59a8742581aa4a026b20c7a413be06f4fc9831
+[2/3] clk: spacemit: k3: fix i2s clock topology
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=e6b17a690c2f920963d6a9328642bb090f3be587
+[3/3] clk: spacemit: k3: fix missing /2 factor in i2s sysclk dividers
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=8a7d4b1924d2a424b1a6fe69de4f9464ee1fb485
+
+Best regards,
 -- 
-2.43.0
-
+Yixun Lan <dlan@kernel.org>
