@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346AA2836E;
-	Sun,  2 Aug 2026 02:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D882836E;
+	Sun,  2 Aug 2026 02:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785637217; cv=none; b=ZejCnSH9BZ5QaloppceXKHj1O1ZxXEIKsoLLeO7UIDo6vXKA6ESPZN/tUiL4G+6OxX3R9B6V1FMrgqb0hp3+LrbH9+G2KEizs9bFWiqIkdRI5P+0NHPVDCDuzMYt3xgnT/hF8TKaj4rHvs4P8ICCh35TlHahQ91SM0GDF9ypUNk=
+	t=1785637305; cv=none; b=nXaabxfqiSblmwTJA0rg9YYy3g/ExUV5ZGr5aQoU/bcwZIHWcTA3xjPrU9WDz+xP4+DWiJAWRUoHkHeKRsPvV2YJ35kwUqbbx/LFoEqclTchDtE4HqHUR6a8/9mpmP94ZDNUyOL9U7wgnygNpRlQQLfwkNq4R7LW+WOXqZ6qG08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785637217; c=relaxed/simple;
-	bh=Pc6ijemjw9JEpCJLWcf8vgM/2djgyNzTuRFuDEi5Lxs=;
+	s=arc-20240116; t=1785637305; c=relaxed/simple;
+	bh=zbByAfr/xel+53lfOEkIBIVLkuurZVSFyQeM2rVRoao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QxRCkFDOPM1oHbNGoxTGihjhkQ1WqNpZ1Xnldl8iboO/qOHMursmrWOk9w3rNRN7opLlhX9Hu5fyQyqfAnkxJD/YuZ25bf6L+CImY7VLUM8BVnYFDGCoSMZyzOELZZ9OQ+FKbO2DLLT3AH3qXe3kyW2LxN/4gqFH4ygd1jiU7wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aSr+r+qL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IeqlvJ3HZT6PUhxwNIAdO0dGMPCJS2LkRtOO4AbHff3l94MgX81jKJmwZAFVaedvVCimujzikYB6hZfW45+4TaWqadDn7MmVWBng3C9CFWfbLu4IPI7pEcxycrr1Z0fk4NAlRMo5MIEd75VBCXbsAdyIoS3pUmZbEEcFeiXK7Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KJtvdwB8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aSr+r+qL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F413E1F00AC4;
-	Sun,  2 Aug 2026 02:20:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KJtvdwB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F261F00AC4;
+	Sun,  2 Aug 2026 02:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785637216;
-	bh=Cv7kkTCkfbuNG2QrTaqkBnU6gtn4xOxKbQAsPbHIbXE=;
+	s=k20260515; t=1785637304;
+	bh=+qkDxw1M5h2ctJR13O5BI4kM8CdztxYtNjq1b+Maeoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aSr+r+qLvRf8sxi/tqA8YUNfbvdXGiOfcNW44AZsITdHAIqN1ck3tHKUJwjUyHJNG
-	 J9CVefIYx4ysq3/0gs0LGNDqVgCV3ykqkajinz4nBw39adWlo4Ukkv8JV2Mp/wv853
-	 KxA91NBABBVVv7Sf8bG9/2vhrjra1MIZmNsICS9ieo7gRJxTPaJwg+sBgLJXqbetRO
-	 gGI09e+UdWML0M8ixT6UXKugiXYPzse91/cg2CqxeCqgfs6KpRy20ULKVe3oK9s5rN
-	 15o2LmUoF2hVzsaqK0bVvqOLhwph8xSP9Eud1UzB5Lkc7aLSMBxBqCy1D4M2KPhrEQ
-	 DTCpJB6+7fJWQ==
+	b=KJtvdwB8UbvObstRE+x1s3YDw09r92Iwb6AKvLnEiAadYemPlB7JLQ23ojbD8omsM
+	 h9utxB9KMY1h1Jtr6QV7WSaXfBUPROkGnZUCmQJfPOcn5cUkqG8fT20i0Ey5LbB5cq
+	 z42x6ecQpJJJ0F4/6QkrDiQ3cQS40POo6sP48Yw/UqLZaPl1RG/thQIPx6vIDtk+1Y
+	 xRUhsvK5DtpyWVOX0xM5M/pPV1Dob2982fXHO9AJ8VgckNN6akgh+X4CbLs8fHEjR7
+	 7aFPFV/p6jSIutaoqreAIQx9nAVrofKZLW2IAU8uyAogsdBaeDBkCVgaiKgDDbqNgf
+	 a033t2hNM75zQ==
 From: Yixun Lan <dlan@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	Paul Walmsley <pjw@kernel.org>,
@@ -36,12 +36,12 @@ To: linux-kernel@vger.kernel.org,
 Cc: Yixun Lan <dlan@kernel.org>,
 	linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev
-Subject: Re: [PATCH 0/6] riscv: dts: spacemit: fix maximum CPU core voltage for K1 boards
-Date: Sun,  2 Aug 2026 02:20:11 +0000
-Message-ID: <178563718457.1616805.12139797953072589045.b4-ty@b4>
+Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+Date: Sun,  2 Aug 2026 02:21:40 +0000
+Message-ID: <178563724174.1617015.10811694726448141667.b4-ty@b4>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260729150722.1598630-1-aurelien@aurel32.net>
-References: <20260729150722.1598630-1-aurelien@aurel32.net>
+In-Reply-To: <20260729160749.1621415-1-aurelien@aurel32.net>
+References: <20260729160749.1621415-1-aurelien@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,30 +52,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 29 Jul 2026 17:02:17 +0200, Aurelien Jarno wrote:
-> The SpacemiT K1 based boards use the SpacemiT P1 PMIC. The buck1 and
-> buck2 voltage regulators supply the CPU core voltage. They are
-> configured with a maximum output voltage of 3.45V, while the highest
-> operating point requires only 1.050V. This means that a kernel bug, OPP
-> misconfiguration, or privileged userspace could request a voltage above
-> the safe operating limit, causing possible permanent CPU damage.
+On Wed, 29 Jul 2026 18:00:27 +0200, Aurelien Jarno wrote:
+> This series adds cpu scaling support for the Milk-V Jupiter boards.
+> 
+> The first commit adds it to the existing "Milk-V Jupiter (K1)" board.
+> 
+> The two following commits add a "Milk-V Jupiter (M1)" board, by moving
+> the common part, i.e. everything but the model name and the operating
+> point tables, in a shared DTSI file. This file is then included for both
+> K1 and M1 variants.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/6] riscv: dts: spacemit: k1-bananapi-f3: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=b496282ee4ad07311a13489e15b74fb7078d9a01
-[2/6] riscv: dts: spacemit: k1-milkv-jupiter: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=56a77ddae794ca0516fc146f6e59bb8cdf4fd9d2
-[3/6] riscv: dts: spacemit: k1-orangepi-rv2: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=ae0c38f0a24f95c8759b6b0eaaa5a0d36a7c6af2
-[4/6] riscv: dts: spacemit: k1-musepi-pro: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=f045253a03589b2616332560b4120e584342a987
-[5/6] riscv: dts: spacemit: k1-orangepi-r2s: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=d66267c35032c46c18b675601d03c80239bcd913
-[6/6] riscv: dts: spacemit: k1-bananapi-cm6: fix maximum CPU core voltage
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=a65e9b73b0f0f33078b63f039b3ff64af051a11f
+[1/4] riscv: dts: spacemit: Add cpu scaling for Milk-V Jupiter
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=e273d298b74ea63d5d586bd50240f919a9c33fb3
 
 Best regards,
 -- 
