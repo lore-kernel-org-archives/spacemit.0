@@ -1,119 +1,121 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8548A225403
-	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 04:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785730075; cv=pass; b=owxotThH8zJNgMdFvb5FOH5Y/wNKmCeDsn7M/moF+hCPZjAEYmu0W6tnwSzp/71i9kiPAebpq/6N3IXcsn27HseY6MNekJkSGxa7kS/zmOo9fEaD1JsNMFbHWQXoaJ107GZqIYpUpDJWS1GrKuJqOhvgkxAzMMTKHnCLargKg5M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785730075; c=relaxed/simple;
-	bh=o0bIczJYrX/P4k3ultDRs1w26VKyNpDX5L+21tUITZQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qw9iqinOOqgTYyQYMzqaNOLiibVIwy836E19wCSirBTvik6UYCsL5K8OV8Wp7V8KOXYklszkGAZJYE0qrFx9aqczG4eob3FRvWQJJEg5X8cIYsOceTehcuG84yCR3TXZFhLOfrpqUWZpx4w/kjojeqrwZZ/3Gwh54AsSFQZevpA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WC+AigpQ; arc=pass smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BEC39A4DC
+	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 06:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785739137; cv=none; b=OiNrWRRcBiWnGvKrUzPMEAAnio5D5ukDkZRI9G/wjVZvCA/gCeBUzSaum43Jr9RjjaZF218EDeHQsZqKZ/McGP8sZYADGsQt2Uj7KB3NoG7IMid1/J5GAVe5JsniceXSH5Q0g6A7ygMCLEl6/kULE1eWgl7tCJpjZ/9SzOY0OWs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785739137; c=relaxed/simple;
+	bh=QA0RG/EQoZtzcGyGC1Ik+B6R2bJjbNfpUqrsFDDIkfw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 In-Reply-To:References; b=Ly5oxmy5B4LdozqGORVB1DwGRTo2IvXs57Bt3Z6QpWlJesYCbNB0GEg+pe8eZfS9M7asRjGQSq/U7NQln0CRmoUeNKPllnzNEyG1vpFLQbRZH5I4/OEdcBA3sR4jgqFfTJ12f2OVu8v3kJzSyQz9D3JBeHy9/xSzsrE+agdHGqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=xSNW6L6S; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WC+AigpQ"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-383cb94f742so2837673a91.3
-        for <spacemit@lists.linux.dev>; Sun, 02 Aug 2026 21:07:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785730074; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MmM1lj23zpk914lOK0wASc+oALqDZXnQMRHFjyT9d4i+DwTvlcB92YIzsmjyfg3s32
-         /0LrnHBbXzRL+7rEvVW5vxzU/h6Zq8XAwoCkFErd2wNtFMGCkO+Pkl5rWfqvcgWC6AAA
-         TGaQLLWoq+lq1HzmIxyLPIlX8NsiXqwZvnMpEEZbmO2h26IXAWRZGVv3//fiUPqco4Y5
-         QzpItaWavRYKpR+DTRzHEWw+s0g6Oh4VyqilWRl295OXQH588wn5gFnJpDh6US2esbV4
-         kPJz26AmWpx/U3rV5b57oj2dnJ8WHmyA6PB9TO1EtiUYdOaB2tmBsL0MXTLUTPQe0kOF
-         XxxQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=o0bIczJYrX/P4k3ultDRs1w26VKyNpDX5L+21tUITZQ=;
-        fh=132mQbxo5hLyUKDHHQVd1gY6a/UiHWeY7YbgN3e+Ouw=;
-        b=d25jbhQ/7SKPh7D4QZirq8jKNBHoCefsJeeOtGQAGTiXSJd6MR3+hwQlsg1vCV41lR
-         si4HkERhRmGdiWQoE5OH6xb2CkHQ4OeiLdj5tQBTNtI2t2Z/8bpMZSBqBadf1BLAvSTe
-         91Oes6RBjJlCVae2R88IM4K2Fb2gOyDtnkiyW+07CPQScn1Jr/cZhuzO+Z/PwofQiSJt
-         Np0m5Cz73hunqaAjXVnqmH+aN+0md4NO7zhiWvxO6wUECrjQdDY/3Wee4QJ930OrPYx7
-         7VuPbuUeBVeTsc+vahl55ha5UQ0ITjLhk71uFJIzn2NFD7WRJLPBMqpyMv4Tn3Ht5137
-         iClw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785730074; x=1786334874; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=o0bIczJYrX/P4k3ultDRs1w26VKyNpDX5L+21tUITZQ=;
-        b=WC+AigpQfJpc86AvzrUXMeGXXVXQjyOND9kv8PuSIkUExzfqSZb2OwI2t+5wu/xMIw
-         Uc/svgVu2ybiQrfu+6D84S4gIfwaaDXcVEKo7r1XPp20MEocNJnC/t9YFAer783vG750
-         345BVc7QbTdks44QQmeIMfczeddBNNhyVukhYTJTGvN7kxrhgc1BWYtICSRfVH8VcsXK
-         +2+ttwIh5TeaBn8L+ribqnXt/Eqlw3ipFFmCXB5Mt0YfgAi4lChTG5FA4misD8PYkWlS
-         G/j/1XliZuQx8FmIQ2qpYQp2uIZr9QxMFG8ghvyIe1DWBswZmWOxbDtXhp/urS37MUVj
-         6TFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785730074; x=1786334874;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=o0bIczJYrX/P4k3ultDRs1w26VKyNpDX5L+21tUITZQ=;
-        b=GT4hvy/hqrv8P+WI34stYuH6aoGq1VASigYYEDo3S1QN9X9xTtGawxvm2IPUDJxzmp
-         h9dvvoYlNTVKdDhQYID0JZbhZEy6/U7Rhz/CW59afDWE99JZWRbS6PYPU2aDBmdYCBPQ
-         5eWh6P/3z8rWP5BZyW2sH/z5uNL+N+Agn48AqRLN72lKQGJ1u1c4jn57WZbKOX+nx0+t
-         DzBxJCTImaWMjU26iNXoldO3UoYy63m65P4rzI8xnIHj4tl/cMo0D4aAHI5rHuVqYcfY
-         4yj5NVUK3QxcIQkTfHIUBy/FN2jWooOVuhrkSS+RTCU6Hgj13HN5+L8yFLh7rHhbUKVy
-         2FFA==
-X-Forwarded-Encrypted: i=1; AHgh+RrqkPJGt12GNiSk03POOdRy2fWtIh4OVdnW/YcbJ2XUCdc/Ze/o0jit7fufQRAfzz5X41NXJ/J/GA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwPEwhNfUzeQV1Wo4poclDaJgVIAQ64e5+MEe5R0yBxaSQuRAtr
-	OyYP7VhS+vCOS/NyUXV6rh9TmxGq3sQr3gEdYdyWiqD6x+LGkmA9KStUiOpMrkPz23C49jzCqR4
-	L04BirG1TtJwVamgzckVEIN/nSbUMjwA=
-X-Gm-Gg: AR+sD11k+42NWIMmsfu1UG5Qvdk7uos0R0OHt9IG9gNujVgkdcSbZmDkImTS3CXaG37
-	TcjMjdONT9caVXQaTEuqpoT9Zo11RIyECUcjhQXssmEDxhkCiuae4DvVoIBt/mj0PUYs8wusyBx
-	2W7zZzmdJh3gbdzQp1Qbn2ZAxjCYsMhqgR1rxKtuLN7bBiGp+gFcgs6T4iiAXlbpL/n3YkuG+2X
-	0q+SZ9Kruc7Uw8eOQYu1Jyj8DVVByIcXE5Cn228CNWvCptg4O08nL+ItJvZS0C6gQ8LcGUgWIzk
-	HthFxAdpq/cGB7AzECfTFmLSeapDRt5iX4fO4HT3pxWYvmhnc0kil5Hx5Cz5Y0aPwJOVljkjZ/e
-	GZc+0D+k67N0io8gx3DyP00bDWWc++kBLuzQCsi48cbJ8AwHlbXI0IQ/P
-X-Received: by 2002:a17:90b:4c0e:b0:385:393e:7124 with SMTP id
- 98e67ed59e1d1-38fbc48e76cmr7516377a91.14.1785730073725; Sun, 02 Aug 2026
- 21:07:53 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="xSNW6L6S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1785739082;
+	bh=iihdqU1c6yaNLkn8c590s5INJB5zg6KyI0acQDBou80=;
+	h=Mime-Version:Date:Message-Id:To:Subject:From;
+	b=xSNW6L6Suaj22+WCF6WRfe2hM8qq+rDCye0l6RFSFXwuIcroHbFMN9y+9g8R4Jo61
+	 R1RMcJGnnhLUF3eA5dCHerAPsod3Lh2lv5Y4B3fTfTwvcHocDiv3yJenH2//po9x18
+	 0sc23PmKLDhMcHOstS7F64h6DY8XfrkS0HfN7HpQ=
+X-QQ-mid: zesmtpgz1t1785739069tc326f37f
+X-QQ-Originating-IP: I2fEBUXTYbdVIOREQA+XjLVLEyZuRzP1HgJPcBmEwRg=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 03 Aug 2026 14:37:47 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5329433773290095816
+EX-QQ-RecipientCnt: 14
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20260731101539.36290-1-phucduc.bui@gmail.com> <20260731101539.36290-2-phucduc.bui@gmail.com>
- <DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com> <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
-In-Reply-To: <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Mon, 3 Aug 2026 11:07:42 +0700
-X-Gm-Features: AUfX_mxoZsbHdTwTqbI_xo8lAz5x-PfMgbH_dD_PFhYYBwi0-5mHQuUL3UsDbSE
-Message-ID: <CAABR9nG=s78=5_tGSieN7hdCQOMNzJKdzJo5cx2bMfgAvJM+aw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=3fac37ecf71cd8e1a4822bac721c98320c21f5c60cca0c8fb67c52ed9fc3;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sun, 02 Aug 2026 23:37:45 -0700
+Message-Id: <DKF3O1FTBV9M.M82B257B0WI2@linux.spacemit.com>
+To: "Bui Duc Phuc" <phucduc.bui@gmail.com>, "Yixun Lan" <dlan@kernel.org>,
+ "Takashi Iwai" <tiwai@suse.com>, "Mark Brown" <broonie@kernel.org>,
+ "Jaroslav Kysela" <perex@perex.cz>, "Liam Girdwood" <lgirdwood@gmail.com>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Goko Mell"
+ <goku.sonxin626@gmail.com>, "Jinmei Wei" <weijinmei@linux.spacemit.com>,
+ "Kuninori Morimoto" <kuninori.morimoto.gx@renesas.com>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-sound@vger.kernel.org>, <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+In-Reply-To: <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
+References: <20260731101539.36290-1-phucduc.bui@gmail.com>
+	<20260731101539.36290-2-phucduc.bui@gmail.com>
+	<DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com>
+	<CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M5aCtjAndv5Ono9C9qt6/UT0Y7nF3V5gHIMAFk5H9DjuMelLAYlq/So+
+	891FDsvIhHbwqSe3P0whCqkWRXavNB/vCZwk9Vjs9/b9L9qPs2oGfqL7K4Oj2WuzEBaVT66
+	izy1oo31/08zCCnfbEEap4T8Idwv05BMP/fkBNnZW1iCvrtrQTIUeE7rrja1OSDvMbuAPX3
+	NFFd3bBvZ9BLzj0jTC/lpw8iSxTFUdPhqWeYy+IwXv3DFqb7OYWNnFoxSCFtV1TXiAXUuKg
+	XWJEZywE5wWgRIgmQ9ARNNUQiqj2mNQ28eJsNSO0ieD3IFuJdCQNdcNSZw9iec0QYpIB2H4
+	8i3SsA8JYEDu/fWneMlvYFc5UxEGowBQanFHyYl7WvMJN4705NSvtpuTAlWJ69R4nOb7wiF
+	GOsJmba4bfsGv4ryLVewrV+zpzSirJlViEilLpXeYiLZMoDqLmTT8pWEsaLWCmt0PpESsoA
+	OdbaG763NYDDUS/PpRkEO3ZEyzGp0gLBDCh2QD80yDbKS/DIcT+V6u6o3HV/fzpfUQQsJxF
+	7Ys9XqOCO3lsV08PK6dNstFTaAcli09qTKVZIcVoa3wkHXA1usM+FmN1NAA1CoFesTcmbF8
+	txc2L23W0pdgaW1ukwFA5f0yKeiwBswDg65VggQ1J+NoRb/q/e30W7KrzzIjsMA2pyFRakC
+	5nFeK4ya6m1dzYIB18Z6AJQCQ27o8yPNTlxtWLn1a4cGaiWLMpLG3VE3KSEaz0WA0P3U08Z
+	AuspBKwhTBStGk6WV8HoSPjOb+bxhgr2wsfjOFsLXFU2/U+0jAEbhjSQTCQC9RRqDDdjf40
+	6MCOOZqzOJytWr87hTznPwQgwnDUiub/ltN0OsWZK8/ZsFi5BsiLNa7/byAHFV7+/ZN6yp6
+	o97Fm9lJPpbY8JCtBzXlufEA8eltK65ZaorpmKTuVpnWH/dG1mhHQbyPNb7D94hiTHcOBvH
+	1CM243Q3fSeIr683z0Mzn1iFvenqQYG3bxGruPybD7YtREdzMK8BAMxW7qJpRCk/mI8Jlul
+	cooOIJtYdne812Mqg58+lGEeBA5TiBWHm9nbiudYmRzvCS5zgiOYlfbsP8i2wvgDFcTV+Ic
+	KKQ4CuzmtYrLlVpp5obR2CC+aoba3nGYQ==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-RECHKSPAM: 0
 
-Hi Troy,
+--3fac37ecf71cd8e1a4822bac721c98320c21f5c60cca0c8fb67c52ed9fc3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-By the way, I noticed that spacemit_i2s_init_dai() is quite similar to
-rockchip_i2s_init_dai().
+> My intention was to make the API a bit more defensive. While the current
+> implementation only has one failure path, spacemit_i2s_init_dai() may
+> grow additional error paths in the future. Initializing *dp to NULL
+> ensures it is left in a well-defined state on any failure.
+>
+> It would also avoid leaving dai uninitialized if a future caller
+> accidentally skipped checking the return value before using it.
 
-However, unlike the Rockchip driver, spacemit_i2s_dai already has most
-of the playback
-and capture capabilities initialized statically. As a result,
-spacemit_i2s_init_dai() ends up
-assigning the same values again, for example channels_min, channels_max, rates,
-and formats, which seems redundant.
+I still do not think this initialization is necessary. Currently,
+spacemit_i2s_init_dai() has exactly one failure path: devm_kmemdup() fails
+and the function returns -ENOMEM. The sole caller checks that return value
+and exits immediately.
 
-If you think that makes sense, I can either remove those redundant assignments,
-or make it follow the Rockchip approach by keeping the static spacemit_i2s_dai
-minimal and initializing those fields only in spacemit_i2s_init_dai().
+A caller that continued after ignoring the error would itself be incorrect
+and should not be accommodated. The helper is also static and has only this
+one caller, so there is no current API contract that requires the output to
+be initialized on failure.
 
-Best regards,
-Phuc
+I suggest dropping this patch.
+
+                                            - Troy
+
+--3fac37ecf71cd8e1a4822bac721c98320c21f5c60cca0c8fb67c52ed9fc3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCanA3OQ0caUB0cm95LXku
+b3JnAAoJEJgJ74D5MzQvuG0A/ibH2fQgOrwKfBlxv5Q59Oz+to/mVsA9rprloeG4
+B4ijAQCCE04RvnCm5R70NApx6Vd7Gs6AE46WzrT6ukatVhs2Ag==
+=0zg2
+-----END PGP SIGNATURE-----
+
+--3fac37ecf71cd8e1a4822bac721c98320c21f5c60cca0c8fb67c52ed9fc3--
