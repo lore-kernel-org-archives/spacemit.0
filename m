@@ -1,83 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4672A3AE18C
-	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 07:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9F93A9623;
+	Mon,  3 Aug 2026 19:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785743227; cv=none; b=OTa0Dg1jH0j8x0gNJFaDas0Os2fjaA08J/b0Z/dDTusg/0HEXodBO6e8iZCVYeR3uj2hu3jiRtTljio3Lh80IZ+k1OrjhjtSaWjsS9Oy9qdUbZz7/8IsXA5+G6gzQF7pWQr4W4ddYGLEIavqBqe3Rev5XAEoCroL9fZulVexbR0=
+	t=1785786532; cv=none; b=k60aNXeql49mLQI3zhox8E0eNo0ShYa4CkpsYxCOKRKPJaySDC2ZuG2O8PdYgaz02seDq4GM42F9Wuxo8bTNOFl1icrWuwHP+mFGuOUT7puydGm58MB/rTswZ4U0lw1QYMcwDwm1ZMJsUNuA4qZg2TiXdgP7BPJ9+3oUSRkifzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785743227; c=relaxed/simple;
-	bh=403dFbmwi2uDJ9XkHtGEBz3c5Zn1S63P+m2h+phsk/s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mc6l4BqzMwFiLM8ahslw3Hc9SfnmeogV82SY41tUQzjIrIm1xc4l8IccgsXvqgJr4obkcSBd3fIqZfq8y6KjYz/MEj4eRramtjZPQ2OBHhfnvLLbbFzsGwL5z5PQ/aNQLM9OCGOOdjeKPqPW6EieBgHREx6Kj1F+13ILFzar4Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OXPevsoU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785786532; c=relaxed/simple;
+	bh=BMU8m3G0CzQ7r/UHgsjtaV7XbVgRF26RkLmkRPIw7Ps=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Rdss2r6BPKq96O/Xh6xtGsXY4UtoFcNYEHEc/5KNKTN8rRySqNpvaj0/aA3QHcHeL4PIKafqXLUaNRZwVoRYBUsJ83OL1aikkAIFz4v1xJnDOgSsbJ8PMr2Y7c66+D8LOwvN+UH+l4dP3/Fabt2gqGekjStY4hQmWj2VpMW8ktg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rpl0512/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OXPevsoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4551F00A3A
-	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 07:47:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rpl0512/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B291F000E9;
+	Mon,  3 Aug 2026 19:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785743224;
-	bh=403dFbmwi2uDJ9XkHtGEBz3c5Zn1S63P+m2h+phsk/s=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=OXPevsoUV/McDbWM8JESVVeHAhFzHyXmqCVMbaDReIsSeOMrou8KFdrNAPQyHelKD
-	 kX1y0gySzEMqV0Pgl83V20ydNWVt1PNUHkeXzY4WisEGjRok2UCQbOgwJP86hlzwPr
-	 wnAist7mTX/sUr+2E4egOg68PpYBT5wm453tlb5CeadFO6RlXMaOoER7Uxae+OD+dj
-	 VAvjsC5BcjxqgL76o78qHIRK3xQnckAMMCK1N8YaNo2XH4c1ML6fJMawTXyqPCeN4+
-	 UR2IOQDduhZeyFY5FY5Sz6fDdKdBGkCxCs/sefiV3q1EdPPaILRmnZgBjerJlsiFzM
-	 kUaR2NgINs+Zw==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5b01cb18515so2697122e87.2
-        for <spacemit@lists.linux.dev>; Mon, 03 Aug 2026 00:47:04 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rq3Q5MGyk+NbZgYx06rG7tvwi11ZKJcneKXGVgZvlXimxw/cqfu1qPSEkDldCjZuMEOtl9Q/RkXkw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzZLzuX02hoENkRQRCHsVeIhE3n7+7w1+ktFuz3h/OigzxdK4yz
-	b9gOV4EXBmWnXCrFdZzYIqwwxLsfhfqLUuuSTI5ZhGG+mRGOZtRgu4qsehqK7pJhg2koaDSjEi1
-	KDs3eBGWh39cqCTCGuXWi4upYzzBdmNg=
-X-Received: by 2002:ac2:446a:0:b0:5b2:9b13:2cd9 with SMTP id
- 2adb3069b0e04-5b2e4f8014cmr1179343e87.44.1785743223708; Mon, 03 Aug 2026
- 00:47:03 -0700 (PDT)
+	s=k20260515; t=1785786531;
+	bh=gRKD3Yms4UmL1R70kEb/16Lt+YdAmM6DsCMChqeyD+o=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=Rpl0512/f7uVlPUuE9zwt2MLYmXdRZX1KjLmHF7w6wrNt747+ktKc5ZMnwSLWIL0k
+	 rVOei68WDTk69drAr7I9KlM7DMduTh0Pnb9bLBD9V5RwjL4KY4z+yhOyj+7rCopQM7
+	 5BD/cj2zIhO4RAJgYSRZfSIaFpxkZL1EWjHDvgnRp3glcyz9p8P3qy3K0kL9bSgety
+	 V+/HFoplEgMI0SvDikV/eYpWA2cYo5XKnwFrnm4jOmQ4TOC8KxYPOPwSXs6ELVAbG9
+	 dpR1UUn8+xDngp5TECnbjtLeMSO/zwhCB+D+bNtm2mBDvVrRGNeJU0qD37V4v61VSZ
+	 NQO41DE6voEHw==
+From: Mark Brown <broonie@kernel.org>
+To: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+ phucduc.bui@gmail.com
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Goko Mell <goku.sonxin626@gmail.com>, 
+ Jinmei Wei <weijinmei@linux.spacemit.com>, 
+ Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20260731101539.36290-1-phucduc.bui@gmail.com>
+References: <20260731101539.36290-1-phucduc.bui@gmail.com>
+Subject: Re: (subset) [PATCH 1/2] ASoC: spacemit: Drop redundant error
+ messages
+Message-Id: <178578223883.255647.15164633437477017509.b4-ty@b4>
+Date: Mon, 03 Aug 2026 19:37:18 +0100
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260729-spacemit-pinconf-validation-fixes-v1-1-edeaff398fb3@linux.spacemit.com>
-In-Reply-To: <20260729-spacemit-pinconf-validation-fixes-v1-1-edeaff398fb3@linux.spacemit.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 3 Aug 2026 09:46:50 +0200
-X-Gmail-Original-Message-ID: <CAD++jLkh0BxaNksg8GzBKbhT20B5qutOAkBc5hMODmG=9uLy_w@mail.gmail.com>
-X-Gm-Features: AUfX_mzUZKe_fim1woi5skXnfHo0SBeV2P3xbdCqiKquNyg0_pLWmtWIWfBu1s0
-Message-ID: <CAD++jLkh0BxaNksg8GzBKbhT20B5qutOAkBc5hMODmG=9uLy_w@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: spacemit: validate pins in pinconf callbacks
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@kernel.org>, linux-gpio@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1117; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=BMU8m3G0CzQ7r/UHgsjtaV7XbVgRF26RkLmkRPIw7Ps=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqcPCfrOivxgmMibuM26PL4ZckDkgUboZa7X5qP
+ 6ItXy4E4y2JATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCanDwnwAKCRAk1otyXVSH
+ 0EpfB/9KYDAOOEThhQgaerB9e2bpfLq1GQLe2mXmP49OGUBL2wJvbhyA8Yrd8SUneG5qqdmk1qI
+ pl1tRDu8T8z2CWPZjXfHQ/Ahc+Rk5GPFAyD8v2CRglNEGB9WfjDLgAP+85TWBGynlxEF9j9PA5H
+ ZN6j66rag14ZDQz9yr2lLo/N+rm7VCAVhcYNrH0mW8htfFo0YVM8tjgV3pW27bh8vOh4r/h+VdK
+ +QDYrujg2jeRvcgVzCPkmcb0l9iK8P1Fbf3GPq7DAkA2IppqHIxKsmu8nXiCXRfllzCoKOGSJyD
+ nsTcFkIxPSotXtOqlbKbtBiKVSvcUReRaGVMkbpu9LaFQK1m
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 
-On Wed, Jul 29, 2026 at 11:27=E2=80=AFAM Troy Mitchell
-<troy.mitchell@linux.spacemit.com> wrote:
+On Fri, 31 Jul 2026 17:15:38 +0700, phucduc.bui@gmail.com wrote:
+> ASoC: spacemit: Drop redundant error messages
 
-> Pin 0 is a valid pin ID, but spacemit_pinconf_get() rejects it by
-> testing the numeric ID rather than the result of the descriptor lookup.
-> It also fails to reject nonzero IDs absent from the SoC pin table before
-> computing their register addresses. Check the descriptor and use its pin
-> ID for the register lookup.
->
-> spacemit_pinconf_group_set() validates only the first group member when
-> generating the configuration. If a later member is invalid,
-> spacemit_pin_set_config() returns -EINVAL, but the callback ignores it
-> and reports success after partially updating the group.
->
-> Validate every group member before writing any registers so malformed
-> groups fail without being partially applied.
->
-> Fixes: a83c29e1d145 ("pinctrl: spacemit: add support for SpacemiT K1 SoC"=
-)
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Applied to
 
-Patch applied!
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.3
 
-Yours,
-Linus Walleij
+Thanks!
+
+[1/2] ASoC: spacemit: Drop redundant error messages
+      https://git.kernel.org/broonie/sound/c/a6604d9fb216
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
