@@ -1,140 +1,129 @@
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FB32FE582
-	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 02:31:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785724316; cv=none; b=AsD9KOhM8v+dpljLqmG934m0Pd1r+nOe5OfH4XtU0y1i0jkslLFIuIHRsy3OlUC0pvzNxKrM+KaYYDMTzPfseydB5dH7rpbfUZVl35HsSaR8JnDK/URlKyV7x/hcwINeS8Csl3Er5Wry+SiNwK4k+zc7iVJVt3sb6zB50oZJz+A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785724316; c=relaxed/simple;
-	bh=dFufYCbCTFpjoDYzjAiyshbG9ugy5oAi9IlFUnYfpTc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=ocyjbywlv4MedCjMH2PTVc+bphD0HaZUHi9dOz8m4F7SdDhxeoNiWTz8CvH2OTgYe9eHq8TkpA+fboS5T/l4PXVOXJzDipErNbgy5sBMNI/I0jLNfPm6iB6SdMGvecxUFGFDqDwC4UbIPM18/B2ddL/8ubmKeWs3WPNqLgmQfdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=iOTT0CoK; arc=none smtp.client-ip=54.207.22.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E92DBA34
+	for <spacemit@lists.linux.dev>; Mon,  3 Aug 2026 04:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785729961; cv=pass; b=NaJMUNWrsAS8bBDrps1mXnEgdkyF9t6631RYqfkSKTn3mkR1hynArulwvBF49BHC8Rwfbk8ZSSIHy3ox5t3Cdg3+eHnoXjKKl4qE9ujXPNTq/im3EGGuPh514+igH7eM3ENUHPyR27/7EyV9SeZVkCjx9w58YC/Q1NJPBNnjo1M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785729961; c=relaxed/simple;
+	bh=A4mDaEGWJkLlLk2knO0dp33P5Wgxhel42dq5VQij8a4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q5fE9NHN14yULQfSQ0d090C17Ru8AW0sS2QbC3PF6+ZPeDsIQ/czpxWyk3q3KF0/h43NtDGWUgsjmvKCmSO11HhMITfsMlmDKdW/EAIR9L2kaWLGEj/DHAf1uBn6zICZI52DwXvZWVkLRmcKW1SKUjNyi4y/fFPwpUmmm/uXCGI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJhcE1WT; arc=pass smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="iOTT0CoK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1785724220;
-	bh=VHxV9t8YiiS63VYfe+5FgSlLpbL8CZ/gf+KB/A1f4zk=;
-	h=Mime-Version:Date:Message-Id:From:To:Subject;
-	b=iOTT0CoKWyM4Nxf9osJcTTHEf52BPHXLT6xdoWQspjFBkQ07iCUTYWf4HhyL2Mr2m
-	 vpUPg7g0x0Qeh6wK5ZSWmkWKkQ7Qvff0PaH44Zjdb7aYmmtqwPBs+Y0xpKTm3v+84y
-	 A6jcKaCHwxMLBdvOmqAM2eSZQwqb0MEhVJDVEWxs=
-X-QQ-mid: zesmtpgz4t1785724211tfe1ca16a
-X-QQ-Originating-IP: kZcIIQPw8yJ2Ij6Xeff5lr9tzuCK2zUjxQmqPijcBAs=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 03 Aug 2026 10:30:10 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7980296911698113881
-EX-QQ-RecipientCnt: 14
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJhcE1WT"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2ce98cb8165so29362955ad.1
+        for <spacemit@lists.linux.dev>; Sun, 02 Aug 2026 21:06:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785729960; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CbTP7wOeIDKlGpj+6KdSdkBn83FPeLXwJRrp3VbV5mScODHlbinAtXPVpXLEPczR6l
+         NzzXog+tJMXtZK7o97AqGNLpMzL8cc2R5xrZQKCru0jdYJTbTCbF64PqqeKsklc+bJv/
+         +PL4u8RxGH1Cy1OlYAMOFilFfDa22jVU5sUVBPGK2LZNq93QVU/g35od3pKzPVu83RDX
+         oc/KeI0QAF4WqzNsm65AdtBpc/EjjaB6e0+TRvDyA/SGrF3aPKGJ5SBtxI70rJoxssym
+         lhOGlxAB1k3teQwHOLNEWXL4A/CNZcNZv2brgWDyfvN4sDbqC0uBYCeNvCOMsuMgeZAE
+         XOlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ZkrSKBKR4XV+e30AnWADztQMFm1oiGp+NcTdBitQDeY=;
+        fh=EmudtpLylleARzhZ3IRAf3tVr+Q//fwzgIH8AQOs5oQ=;
+        b=Gw8jqLR4WMfWaO+gt3AJdj2y8j3F80PHFuhPYAT5Q751t7kkj47LYo6KBzF5Qrra75
+         LGDBXUygC5SeZiH4M7fF4KGEram5NvQkiXbYXPUuNY6WRCYVNLKGIVePRfdlkQcIkYJg
+         2oAD+/CLPfioVBqaKCMpsRVx63wve5eRxjZxo40bWmm5UYlTFRbDHIC1Zd1fEXO4zpYh
+         lKKLSQqBNu58/9I9iEdTU7OYdDTxfBaEBZlsMdtKfwQl5JE/hH+WRao94mFvREBkGtSO
+         wRsf4dMmg46D5FXvPRVzIQrC6rQcRhuj1cRQxu529rRQTiPGSupu/4JwqvgRoFIw5cob
+         jCMQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785729960; x=1786334760; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=ZkrSKBKR4XV+e30AnWADztQMFm1oiGp+NcTdBitQDeY=;
+        b=HJhcE1WTKSbvamzdmEVw6oT3ZvBBZKz+SHyaGdZ9+dK5UWDcbbvWTAVQirmH4vitbB
+         6ZuXssj2aQjFlrVn0Wr+AGuzyMUq5SbMEUX24JMMG+Jr0AWE3m5vLDLQAQysF98ysq6L
+         g3a+KP4+8irG4nFLrEr5ABnNPsEbqloFEktOftOAV7yVJWHRrsQwGVCR/dNpneLmQcgS
+         sp69PowXKGEpVs9nSncjCMnFaWP65dAMqvusBS+ADAkw/gUwl8/PxpEO6jw2PrMBWWBt
+         7SwJyNKKX6RjbgeioXtusPfw3NegPv0TM8KVCmHlynJQSrd1lgIlvmjLA1lH2Fo+dgzc
+         Yblw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785729960; x=1786334760;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ZkrSKBKR4XV+e30AnWADztQMFm1oiGp+NcTdBitQDeY=;
+        b=d2TXKuDb/V3xuxX+kiSu1T/jPmo28QPyhTNTLsJloIE5Yw4SyW5PDFXFTw979NXWm5
+         B1/C7P95Ey4jaC1sZiOG24kSKUt9jPN7675iVre3TJYYtSsvbtM92rP/HsSaxrLXmZlB
+         lr/N8e90vj7n1MTjetKPlkYEztZwFejlFOxpUO8xKEfLtUk98e45TuQ9YmGL/MGeVKzs
+         4q/KsSkTTNvDzaRlUFH/0lSrEtK9MUUkaYja2Nf1I/XkQ3PFMPLuH3ZC3RZvxrrnfvRW
+         neZDaDBaslDoHc6WA58BgxV6GDZSk7Zz7HwrFR25bm/zMLN70LH0bGwjggQ+RppAlOuJ
+         BjjQ==
+X-Forwarded-Encrypted: i=1; AHgh+RoHHLL2cMo4ERn84bRP1Ps5QQh8GBtJWpiMRbGz5PzUuUTc+sjjKfNlPQVkjGFKTcIvp25VI+0b8g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxzdYx1OVGY/Di/kssGvdLiViflmGsJpRfAWLXsy/4nt6PVc8d9
+	Se1ZPcBZX/Hb4rDhkV5L4qzkEKtERwknOqkI0ERxVKqOcRXo5DLQXVG/bwv0z0TUCBO+HD3qtWt
+	nG+FCgBI9g7MAJcNHK0DdT9gIlniXIIA=
+X-Gm-Gg: AR+sD12uMwa2/HMnTFroMRCWKlvxM0TCI38sq2yOOCpEA0heZQFHejP4tMjAZELn3vM
+	0tNGubM7yS3Gg9yC07iD/cODuLmAXpOiKYMu8qVnhs9RwrRt5+grrykjb5q5rKbC8xkggbR7bxv
+	D6ao8u4ENj0rgjDuWYrvJFDJgWUQy/lwEHsMZ1r2FtlQ27OBSs8NMcQQcdpH1NTHzfAbRIUUaLd
+	eidpm3B5rQ1cp0cfXcP0jgNyGknQObGuwJeUUhYPk/ADqsW7pdjWLkkZbubySPPp8M9O6cyQy2h
+	FlcJl1PgN4UqYci0ugO58XeaGNAsw145hAjj++Qup6N8X+LOlT4tEDSeJYC2llVi97EUWWcXqe0
+	f1RJJV9hfepv+XDcRNtv4/LttK+9k6eojJxXNnT2O/2fONqLHhgMfP6fs
+X-Received: by 2002:a17:902:ebc6:b0:2c6:8d95:fd7e with SMTP id
+ d9443c01a7336-2d047d1e722mr119237785ad.6.1785729959704; Sun, 02 Aug 2026
+ 21:05:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=bf64bd363e0e8996a0a5ca0feb58c7dceb1ae0c90bcd07b3717d13d5a465;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Sun, 02 Aug 2026 19:30:08 -0700
-Message-Id: <DKEYEG48XLAC.4J8YYSOVORZ8@linux.spacemit.com>
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: <phucduc.bui@gmail.com>, "Yixun Lan" <dlan@kernel.org>, "Takashi Iwai"
- <tiwai@suse.com>, "Mark Brown" <broonie@kernel.org>, "Jaroslav Kysela"
- <perex@perex.cz>, "Liam Girdwood" <lgirdwood@gmail.com>
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Goko Mell"
- <goku.sonxin626@gmail.com>, "Jinmei Wei" <weijinmei@linux.spacemit.com>,
- "Kuninori Morimoto" <kuninori.morimoto.gx@renesas.com>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-sound@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] ASoC: spacemit: Drop redundant error messages
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260731101539.36290-1-phucduc.bui@gmail.com>
-In-Reply-To: <20260731101539.36290-1-phucduc.bui@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MOuEXcjulCr6PXSMnzY77oWzbaVMPkBJhzm2qvkh0p0H/g26r5MJJLJE
-	C9tfGpVMq8t6JH3qjmaTbNzTUR3eazxRCrh2P1/Xxwr1bafCVFN/chziVHL45218jMR4bVA
-	yN7CpULYM6cuX3Uxr/YbrBYWxPgTIP94KWhivSvZo9UIhyfp5EPW1DwvIzUpYgu6FJYMsjM
-	JwWziZfPvvpsnFwyi80kdN+FqVkUThib5ozgdSwCvTOQT4vh4nSuvT3tdXNdc7d1VPDB3F6
-	ONOWUq2RmtQOqTdejbkDQHLHd8UL33SfFRtmWM+PoXo5myMpt1r/pigqeJT3+bHslQr11sa
-	yMSUD3nLMdppKWYj/lqiV1CBIaedZJ1sZFoiZ0ZXVwSD393DBgxrnjnXC4QR2ESXW4muEku
-	TywlDK/CPYFmpsehj8Jdbx/EDp4XrQbb6GjmHURo0Wm64VqyLOikO0pnR4wrFAs6fc2f5+v
-	sufMa8Lh5Pgv1IV45sB2Ubh93ZDwF+lnIsfhRZCPVPdu1WqAObXxDPClPhatLBXunEk4cZH
-	DAj9RZeNDmZ0Hk2YxWFgmlJbRIrE9bZQDn50loe4Q2ZOYyAgjaZhbl7S0IgZW/OBRicwBjK
-	X1zJIhhJQWGgR8ocvXrSTmCyXAuZ4GtVM9/y3ExvaXZkAml0AZ1ZIUVYs9rS4iSrB7NHEXn
-	vFRf50dpLj1l8LC+oG6CECcnOGaHOgR9hl5WA6z84pQzlwA20ymBaWW1wWJRKZ3zIhGcN85
-	2EaRtOU4zZDmFu/s/HBdZ6sZgKqGtwg95SKcqAb9CCQ6ZmDvAl19DmZ9ezYREPUaHLNj6cM
-	O+CXJgVVNhHEkLv0gS0ohciR6TNQC8JaK080KX/c4ws3T90TrVx03q8/BfrGyF+acG8BM5y
-	dUJZ0SNAymEKlqi5Ud+6jek12A+qQMXnkJr291k9NyZ+xYoHGVvkjlhZAu5lFgBZT6XH11u
-	T3ppLRbxDQmrN9Fj1anAroMo2eR+nWxfac29lfPCiQucbh4A/vJQROd5KNKPL3dUDJgZuNi
-	xCUUO/ysH5OCEBnioWNPOIKDbu7jBlHxj8EtcH0X/HEXnyeSPp9lCPuS5Xxr6c6fevhP8Gy
-	jwLaci76nM3+z9iZCDvpTI=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+References: <20260731101539.36290-1-phucduc.bui@gmail.com> <20260731101539.36290-2-phucduc.bui@gmail.com>
+ <DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com>
+In-Reply-To: <DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Mon, 3 Aug 2026 11:05:47 +0700
+X-Gm-Features: AUfX_mwmWkehn7fn21ZthpV8C77-8fEL16i2_UDhIMxxkiWDLccefzmHbHrgzbY
+Message-ID: <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
---bf64bd363e0e8996a0a5ca0feb58c7dceb1ae0c90bcd07b3717d13d5a465
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Troy,
 
-On Fri Jul 31, 2026 at 3:15 AM PDT, phucduc.bui wrote:
-> From: bui duc phuc <phucduc.bui@gmail.com>
+Thank you for your feedback.
+
+> > The current caller does check the return value before using dp, so this
+> > isn't an active bug. Still, initialize *dp to NULL upfront as a defensive
+> > measure, consistent with how core helpers like _snd_pcm_new() handle
+> > their optional output parameters.
 >
-> The called functions already log failures where appropriate. Return the
-> original error directly and avoid duplicate error messages.
+> If devm_kmemdup() fails, spacemit_i2s_init_dai() returns -ENOMEM. The
+> sole caller checks the return value and returns immediately, so it never
+> accesses dai on that path. On success, dp is non-NULL and *dp is assigned
+> before the function returns.
 >
-> Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-> ---
->  sound/soc/spacemit/k1_i2s.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-> index cd461f2aa756..64510c9a1a89 100644
-> --- a/sound/soc/spacemit/k1_i2s.c
-> +++ b/sound/soc/spacemit/k1_i2s.c
-> @@ -478,7 +478,7 @@ static int spacemit_i2s_probe(struct platform_device =
-*pdev)
-> =20
->  	i2s->base =3D devm_platform_get_and_ioremap_resource(pdev, 0, &res);
->  	if (IS_ERR(i2s->base))
-> -		return dev_err_probe(i2s->dev, PTR_ERR(i2s->base), "failed to map regi=
-sters\n");
-> +		return PTR_ERR(i2s->base);
-> =20
->  	i2s->reset =3D devm_reset_control_get_exclusive(&pdev->dev, NULL);
->  	if (IS_ERR(i2s->reset))
-> @@ -495,7 +495,7 @@ static int spacemit_i2s_probe(struct platform_device =
-*pdev)
->  					      &spacemit_i2s_component,
->  					      dai, 1);
->  	if (ret)
-> -		return dev_err_probe(i2s->dev, ret, "failed to register component");
-> +		return ret;
-> =20
->  	return devm_snd_dmaengine_pcm_register(&pdev->dev, &spacemit_dmaengine_=
-pcm_config, 0);
->  }
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Therefore, I do not see a path where initializing *dp to NULL has any
+> effect. Could you clarify what case this change is intended to handle?
 
 
---=20
-Troy Mitchell
+My intention was to make the API a bit more defensive. While the current
+implementation only has one failure path,  spacemit_i2s_init_dai() may
+grow additional error paths in the future. Initializing *dp to NULL ensures
+it is left in a well-defined state on any failure.
 
+It would also avoid leaving dai uninitialized if a future caller accidentally
+skipped checking the return value before using it.
 
---bf64bd363e0e8996a0a5ca0feb58c7dceb1ae0c90bcd07b3717d13d5a465
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCam/9MA0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvAxQA/2DYCuc67ctUxgO1VADuU8NdphBXB5/3GDya8AM5
-p+GmAQDtiqRFSDixu2qu42rj/vId1THpHiepPIVvYmqVFAwCCg==
-=ZzYU
------END PGP SIGNATURE-----
-
---bf64bd363e0e8996a0a5ca0feb58c7dceb1ae0c90bcd07b3717d13d5a465--
+Best regards,
+Phuc
