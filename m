@@ -1,93 +1,135 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B14042EEAB
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 08:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5545234FF45
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 09:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785831062; cv=pass; b=kbF+HYe04WaOnEF1nx15Z/4dDlbjxP3c6pXHRT/j+agPJtkAQrSacjD2ro929Ob0PU8D/G906jOII1rsbEAKq+tiLxEp/iDVbNTaReO+wWhYoqS0rVMxSBnyPIVMbBc1HBc2hBCkWZKbjLwtGvUG72T8jA0GWVET/yLjtklBmY8=
+	t=1785836764; cv=pass; b=QMlQtfyK3wilqFHBXbgkdpyHIhGpZ+nXrfOzL/A7GYJZ6ueWyF9bBmz7z0pi1UeOsyBjqjAlxBlu8P5pAygmaR27kO1B6fvzju03sKWC77JfOk/ftnVDcgJ1AFZACODo1pViJdFjII16W31M5WMS2Nqac8YDJiRyRMt+hxsDigk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785831062; c=relaxed/simple;
-	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o5XZMJ3e+LNbpccZR9pv/rXKAs9T3E8u1fn3O9aZlabGe6BbU5oPuyNFa8kW/JcGfY7kD+DeA0o+D4nHPxXmNXs0nORkFcG9xmAKgIFglCzrIhEk26dJvF53p6uRWFivVvP5i+dggHz1yvvFi7N9aMXU+Kfs3oe/BFcrx+I3aWM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=ak86VaXI; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	s=arc-20240116; t=1785836764; c=relaxed/simple;
+	bh=B+ug8BAHEGyoCAw8DucRTEAi4NpWplnsoASlAual2G0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NyiBlp51unphgB9fT9VVo7cUt3McT8EHOltHhhs+/soDgVu2m1hn1NtYZkAqSJKPp22/ZwcTWPoX1tmIpWNJlBcRnnwe2GZ7BBcmFZ9blmEZIZqZZEtYYAgLJTKH2g4XsDbDnAz03K55SxrC1vLLBsdSb2LE1ZLqsbc2NFPwHdY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J+dOQhLo; arc=pass smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="ak86VaXI"
-ARC-Seal: i=1; a=rsa-sha256; t=1785831029; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=QLFfD1V+4nQg5tkAgOyb25zWmDiwfVkh8QfkmFdrnqGMcSwbIwPPlhAEo3ufL4bhC0xieYoX+UbpBE4xWj8Ol5hJ4T6CliKdqgWlraL3tAuylSRDfdCPfPsyi8nOXkzLvNg4tYBRDPfuKSDUkWRCJLE+6ZYxq3i2TflWI67SGUA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1785831029; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=; 
-	b=KwbX9K3oE2geWJjVPNeiMO56FgO9ztodEKLXzVYpB8HTUdTwS3bAt5iiJ7K+dROFUfGO2h4CBW3bLslrAQ7Y3OpddqDvV+ZM3SuQSr74Yukc5YUon4OyR4Un1WwQsqduui3RbblU8Bqj90ec2e8YKB9uM8kjykW8RibsEbmRtmQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785831029;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=;
-	b=ak86VaXIIMkrnmk5pJ98XNGP4niTPwXb6zjaTL2AwzA38i4LpOW0EmyWXPaPOW7U
-	GsmdOEkx3f/xTNLuS21iA2fOgVHpWni1e0yeRAOouIe14Hs9TELcShb6MezcOoyvz+m
-	dTd9rpoeYXJfBUppxrEZYgFaPlOTQkJGz+3CWCXc=
-Received: by mx.zohomail.com with SMTPS id 1785831026677755.103961666094;
-	Tue, 4 Aug 2026 01:10:26 -0700 (PDT)
-Date: Tue, 4 Aug 2026 08:10:14 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
-	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@outlook.com>,
-	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Yao Zi <me@ziyao.cc>
-Subject: Re: [PATCH 1/2] clk: spacemit: re-enable PLLs after init
-Message-ID: <anGeZk0-YShccqwE@pie>
-References: <20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com>
- <20260804-k3-pll5-pll8-1800mhz-v1-1-a3a75866ce32@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J+dOQhLo"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2d0407aedd6so48606005ad.0
+        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 02:46:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785836762; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ATcB+6FhbsW5Gowt5xin9sgaSpyLh7AnvUA8hSk5WtCjx6mWw5Iys2EJfN2XSzqn8m
+         Xd7Tn/AMnOKoZ+wWqWDQ/yMd9u9UYtW+JgoLgJ6c5LYm8/BdhFg7XJ4Q6wxwe3Shr6qZ
+         +DcY41gDzVMPJqcS8pzc5D7kRZOKHIWJ9mNAR4EmaaZEAp8zIuMQE2wBXQygH2vLKfhb
+         twub3gPY+s5aoSRmNq/yy0mK+YKTHFVM+nP2sX08RjQy3CQzG+fYpWhkLWLYBEpGRq08
+         JBkwqlOMeg5pt18bRKDqaheMmwP5LmM08hyaBa1TXuyhkDHYBVIJsHY4LsoZPILGmhL3
+         SBZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=B+ug8BAHEGyoCAw8DucRTEAi4NpWplnsoASlAual2G0=;
+        fh=Ywq3uGvk5OjWt6Hp2C0MfIi4ShD8b/DXraWEiveGIQc=;
+        b=OK4pZlWWMJrVYTuP0BG80OHt6MGRxh7uJo86mXdfjza+uq8adjGWh2Bdgpn7rbj2d0
+         WD5cwDmGMtJHNdgzGCXuqzZ0txHLS6p7GviJyrHXxer1AxcqDOEmjEtYe9V1yxvFiJIy
+         CYKl/crWBrxijr4LOSHsdw4QJM9fRyvUBVVRJZ5srAyL6xA2e9tgU5STtOYVmLUTm53E
+         9GFmlaeqE5ts/CRnlHzVynwTlnwlW87N2B+vhFIGRjMSeVUEzR8lZO5DzN49lX2Esws5
+         bRkgsxChYdVkuu4nRIPyX8UQUyOh8VlmikGGiz12r133zOuLL8IRLZlC3Gw3V3xAc/BW
+         BBsg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785836762; x=1786441562; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B+ug8BAHEGyoCAw8DucRTEAi4NpWplnsoASlAual2G0=;
+        b=J+dOQhLoqX14Zd1Kdkt8ix7aKmF4Px8uEumDFXGoLbydRDQEQlhb4AHFgp0qGB/ZzY
+         PSjEPM5Lt2ythUh1EordCe5OU3hCUC1bTpXP6ff8JmXysMmi1xKAuZiJyoFBYThUXpFj
+         lDA7t6mn8YYDOUInMoC8MI/pvHAwlvUVm7TAmiyiYHrmgP3gZIDkuknc9SY0IiGZDvSe
+         jFsoKyNclGV7fZIjCTzAwZoctAv+R9N4hp/fgVzYGFzscCTx853Y1iAWQDY18Z1JsLxJ
+         iqFfD+9VfYSKyIFIe51Row3YXFtM+hs3ktkU+da2/3jdi/+NYf8rkVTxxdtCGWX3pkNQ
+         HKDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785836762; x=1786441562;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=B+ug8BAHEGyoCAw8DucRTEAi4NpWplnsoASlAual2G0=;
+        b=mw21BnGqQQsDHSL4AypJSRuGA6HQUFEDTb/EFraG+P7NE9juT2cyDjgeN/8WIMbYP9
+         bRkBYNM5+z3/R62HyJHssWysnPvssUGj3C/aVb4+gFMv5pBceZneZmFQzAgOesdn1+hS
+         y3mBX6uLlVxGBM7c0nU0NOc+RxkaHUwoDKtEZ+Z32oU65FzvWeGzf9GirJ2SeeR8SZmT
+         3fKdEG+JolZArAx06O+AKrFk9B3cSbOVY40967zLX7Q30/WlDaDDVcRm3G9FdlC3yc2V
+         wpLnDFCuwoP8XiyC5CnHQrzNIf218Mu+yzZCO68bLxmDDVw3Ok2xcTSxaWf4oCcXghON
+         aspg==
+X-Forwarded-Encrypted: i=1; AHgh+RpCvQGHF/1ix75W0pOwFsizYiFNNhaNoDnl/ClDmsxqB2jMF1Wg+pcvI5NOXg6Qfef8FRUcQg153g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxC2ly10hETK3fI9dDjg6hV9/lZg6GlILkUz7RREVJlITc6kXSf
+	NeKEmiZRqecIePpJB56UB+z4fbvntqEd1ocVjb7jYq7WcyMn83V0cTu/reGn04fJoara9EKnaz3
+	ul6Cf3UqXuzGOd7q36Ry2PTOGwzrj8/o=
+X-Gm-Gg: AR+sD12BEyptbvazmA6lKUoqmxqbMI5pO935f/U68zIuhdqw/3VeEjbgbhkesi75oB2
+	TWe0cJyKjl+yH1AR2Sb2aFl94t421WHocI6VgFAcJWvhDrSP5TG/qvvSlBNUolElS7DBZOqtR/C
+	LeAdYibjELC8RlaRLrPpXjwJxy88Kzd9HeuhJXG+RRM04uweDGzbbug3Y/05Sig7lKKqA3wAjQ+
+	J3gTg5gfiQtFEVAF63QxYw2RU3T4ArlJPhipYHWIteydfyseq07j28XKtzLaaaSPt2i7/0hAes/
+	b99juBfru952lqK/egsgJUxomkVsOgrueDxj5u06F1EuvZS2RoGP/5uwuPOGlmgDjMJ2mqTL+kw
+	LGMr8lv7pzhBu6BXstrjm4BiP+KafqYHznyMu3wNvV/u1R+ls+LJu4U2Maw==
+X-Received: by 2002:a17:902:ea04:b0:2ca:3df2:919a with SMTP id
+ d9443c01a7336-2d0524a6a14mr133306145ad.33.1785836762473; Tue, 04 Aug 2026
+ 02:46:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260804-k3-pll5-pll8-1800mhz-v1-1-a3a75866ce32@linux.spacemit.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/285.815.77
-X-ZohoMailClient: External
+References: <20260804043036.22065-1-phucduc.bui@gmail.com> <DKFYC1MGUCF0.1AQF42KLZZ0XL@linux.spacemit.com>
+In-Reply-To: <DKFYC1MGUCF0.1AQF42KLZZ0XL@linux.spacemit.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Tue, 4 Aug 2026 16:45:51 +0700
+X-Gm-Features: AUfX_mzLmpOk076Xm-y3rQ56B_xdDiTseD6kbd_RoFN_z5sig_vDzkkt73AmOmY
+Message-ID: <CAABR9nFn0XW3CzAEncVkVKd65yBUEmquxjag6ybf_-NRf6mA8A@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: spacemit: Remove redundant DAI field initialization
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Aug 04, 2026 at 12:02:55AM -0700, Troy Mitchell wrote:
-> The PLL and PLLA init callbacks gate off and reprogram a PLL when its
-> firmware configuration is absent from the rate table. However, they
-> leave the PLL gated off after updating the registers.
+Hi Troy,
 
-I don't think this patch makes sense.
+Thank you for your feedback.
 
-If this PLL is essential for some components of the systems to work,
-there's no chance to re-program it safely after the kernel gets started,
-since all the PLLs in K1 and K3 are specified as CLK_SET_RATE_GATE.
+>
+> Initializing these fields conditionally preserves the existing
+> capabilities for devices with both "tx" and "rx" DMA channels, while
+> correctly disabling directions without a corresponding DMA channel. The
+> added rate_min and rate_max assignments also preserve the existing rate
+> constraints.
+>
 
-If the essential clocks could be re-parented glitchlessly, registering
-a notifier and re-parenting it before the PLL disables might be a
-solution. In this case, we need to delay the operation in
-ccu_pll*_init() until clock registration fully completes.
+Yes, I agree. That's also the conclusion I reached after reading
+rockchip_i2s_init_dai().
 
-Otherwise, re-enabling the PLL seems totally extra here, they could be
-enabled on the fly when it's going to be used.
+>
+> With the current static initialization, channels_min is nonzero for both
+> directions before dma-names is examined. snd_soc_dai_stream_valid()
+> therefore considers capture valid even when the device only provides a
+> "tx" DMA channel, which is permitted by the binding. The DMAengine PCM
+> code may then create a capture substream without an RX DMA channel and
+> fail during PCM creation.
+>
 
-> Re-enable the PLL to complete the sequence and propagate any lock
-> timeout to clock registration.
+I traced the probe path and confirmed that snd_soc_dai_stream_valid()
+is called from soc_new_pcm().
+However, I still couldn't see where a nonzero channels_min alone leads
+to creating a capture substream
+without an RX DMA channel.
+To avoid confusion, I'm referring specifically to the DMA-based
+configuration, not PIO mode.
+Could you point me to the relevant call path?
 
-Regards,
-Yao Zi
-
-> Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> Fixes: 3a086236c600 ("clk: spacemit: ccu_pll: add plla type clock")
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Best regards,
+Phuc
