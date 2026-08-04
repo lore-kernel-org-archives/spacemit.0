@@ -1,96 +1,122 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9F93A9623;
-	Mon,  3 Aug 2026 19:48:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785786532; cv=none; b=k60aNXeql49mLQI3zhox8E0eNo0ShYa4CkpsYxCOKRKPJaySDC2ZuG2O8PdYgaz02seDq4GM42F9Wuxo8bTNOFl1icrWuwHP+mFGuOUT7puydGm58MB/rTswZ4U0lw1QYMcwDwm1ZMJsUNuA4qZg2TiXdgP7BPJ9+3oUSRkifzI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785786532; c=relaxed/simple;
-	bh=BMU8m3G0CzQ7r/UHgsjtaV7XbVgRF26RkLmkRPIw7Ps=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Rdss2r6BPKq96O/Xh6xtGsXY4UtoFcNYEHEc/5KNKTN8rRySqNpvaj0/aA3QHcHeL4PIKafqXLUaNRZwVoRYBUsJ83OL1aikkAIFz4v1xJnDOgSsbJ8PMr2Y7c66+D8LOwvN+UH+l4dP3/Fabt2gqGekjStY4hQmWj2VpMW8ktg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rpl0512/; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3B423BCF7
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 03:38:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785814698; cv=pass; b=Nw7nuowuKwwtWq20Wpyh5AMJVNBhUgsLKflugi2wzWoWBHeO1Vs8pgkK4Kdgz6da+gEJZkXUm27FJocFX1t7nUr+FWsH8nm49PFYlsEY8W8RsqLuucC/5nNDpFWmNygzeaiUosvNdMpPseAh+2D4BV83byXbbekUI44hKEqEd3M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785814698; c=relaxed/simple;
+	bh=a0ml6BYu17jvK3MN7GxFDoVJFw8tqzUMPpCgh5kW4K8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Onc3+GTq79/xOiJcrNJuo8d2HJYiA9hwN+w6S1+G7QALnhx8G8dUjoUhJdDyXZ+UaN8Xwob5aQZ0PobJGKqXrjcEuywgce0DcgM3tdoDoS1wWDPk9PVhIejuCnlfW2IIQjvSWmR2WknHvEA61alyk2CteyON0Kkp25zpt3AcwDM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=spdanaKI; arc=pass smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rpl0512/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B291F000E9;
-	Mon,  3 Aug 2026 19:48:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785786531;
-	bh=gRKD3Yms4UmL1R70kEb/16Lt+YdAmM6DsCMChqeyD+o=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=Rpl0512/f7uVlPUuE9zwt2MLYmXdRZX1KjLmHF7w6wrNt747+ktKc5ZMnwSLWIL0k
-	 rVOei68WDTk69drAr7I9KlM7DMduTh0Pnb9bLBD9V5RwjL4KY4z+yhOyj+7rCopQM7
-	 5BD/cj2zIhO4RAJgYSRZfSIaFpxkZL1EWjHDvgnRp3glcyz9p8P3qy3K0kL9bSgety
-	 V+/HFoplEgMI0SvDikV/eYpWA2cYo5XKnwFrnm4jOmQ4TOC8KxYPOPwSXs6ELVAbG9
-	 dpR1UUn8+xDngp5TECnbjtLeMSO/zwhCB+D+bNtm2mBDvVrRGNeJU0qD37V4v61VSZ
-	 NQO41DE6voEHw==
-From: Mark Brown <broonie@kernel.org>
-To: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
- Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
- phucduc.bui@gmail.com
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Goko Mell <goku.sonxin626@gmail.com>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>, 
- Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260731101539.36290-1-phucduc.bui@gmail.com>
-References: <20260731101539.36290-1-phucduc.bui@gmail.com>
-Subject: Re: (subset) [PATCH 1/2] ASoC: spacemit: Drop redundant error
- messages
-Message-Id: <178578223883.255647.15164633437477017509.b4-ty@b4>
-Date: Mon, 03 Aug 2026 19:37:18 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="spdanaKI"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-84a2dcede83so5615267b3a.3
+        for <spacemit@lists.linux.dev>; Mon, 03 Aug 2026 20:38:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785814697; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YBfN0kXCHrptrPdw1E70CekZeH+g6+dg/4d10gUuyrpPfPWR4PkJUNTvbJvSX9KBiR
+         7Xc3v8TAevSTnk6V36HtTEbTcJJIs/oMo8EvCEAkl+WxgpGJyUm3LC6gFeG3yTA0vIDU
+         rnJz3UImZXHiV4vhKMJsoOxub2IPk0qQh9LeUUOYZOO+5Rw6qbwHJCpKTNysPT85Pg+h
+         NZfHyufVVbj81LbNxI3/toOQMveB4IkdBk0LDWhI5BVMDbBOZEyDdbQua/nWsTBCgc73
+         Pifx5LcEYai2sGA1SOUSlmR1mdtkJQDOtLdAmTUT2EYPG/xb2P8xApJ2wQowooP9gs44
+         zvyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=a0ml6BYu17jvK3MN7GxFDoVJFw8tqzUMPpCgh5kW4K8=;
+        fh=TfjdcrmXFR8QuVwFfQHJpUUHRPdpS/khIH/D/AjWxGM=;
+        b=I0upjCMnl1o/7p73yNeoDdTReSug6Ap+gH+8xSBQsF2AyhQxyR9oCpB1yzz1x7iKoj
+         MQrR8ldt/4u/bJ1UlGjqzFuNdIJ3gDCAuVFIGWQn1QGftR7T+5QKOcgXuBFy++DcBM1J
+         NBywStHTztY+wTXg047z7V6mJla5CiqMqr+C3umm7b8SIQJHKOnnFy9akUelOTYxxO9n
+         k52IujUjllQ/CyOObJNuNInbIeGTlEoPk1GqQ/xZyz8Ktj1Pvo2edLqKLw6FxNzFLP5A
+         Kztq311MIZ0CMprPNTyIMrrX4cDjpUUbTgxC+LU7fNXDO+hp02eaodualNdpLGS4//FH
+         481g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785814697; x=1786419497; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=a0ml6BYu17jvK3MN7GxFDoVJFw8tqzUMPpCgh5kW4K8=;
+        b=spdanaKIVMDgqUzNb8kJpcieTlmNsMHpys5ZyrZCGxMvLDr1WoSihpgM7TR9jRFrj3
+         y6776hsTcMkWebj6gGLPYiLXwcyQrYLwcCspcDFjXAl3Q6vxvSs0CjbAY3z8XsXTkSAl
+         9M5c4d6iZsoaCbgyprhiXqk8gENOAh7nyfzOg8kd6inivWGTL0gdlCMmJ6FKp6MHCaY8
+         f0hu15OUT9aFvsNDGP73Um0a/q8xgNUkDbjNKo2+dnoes80V5fQT65crYpLVtHCzrGcE
+         Lx8VIwoHvOE50fbn1/4P2NUlyDpWQnS9Iqv1xZWx0GgLDMmbB3KrMaeCxTgpAFMGoctS
+         jntw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785814697; x=1786419497;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=a0ml6BYu17jvK3MN7GxFDoVJFw8tqzUMPpCgh5kW4K8=;
+        b=nvdL6FT4+U1lN7ENqna5mSmtszqEZmRBeaMYc/7D4eu8/kVN2sWv0e7+GeO1ShOoF+
+         JTIeT80oWi0ivX1AR3iKSz9i9Eusx4WpBVHQG0Y5j83ifDDQktmx2f8hSzqEKKWOrmBb
+         2TUqiM8AhKtblGd2pYxW1VZ6ea8+xsS206iTLOT2Go41R2r4zrEHwj/zdOy/WMFCTHrb
+         7NcoMpC6Y8MHVc74jW59/lx9jYEKAfUGG1nYniBTmgJqb3xZWQ5TyurxW6nWacZueHbO
+         2fdQ1aTICgYTY+IAOm59D8Qe8I5GDw729lEuFhcXEKOd5BbC9bXKIrKYcESkGcCmAr0G
+         EFaQ==
+X-Forwarded-Encrypted: i=1; AHgh+RrB52qbF3qsnWqWYbZJAl7dvs38RMXTIlt3E+tFKWhypxwZTAY3UgMyHtJ7UhIoHq1k2w+hIOEi1A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwX6i9bcTkZGrDGmTYNeqto+I8uFMQKLcc2UtWU1FMDrKcOCFQw
+	e7lZqAGellckyzU9/a65LApnbuT92XhBuIvLKW8Dt2kdqR9kVl3KmsY67up/Xz/ety+nXnFdlrd
+	o9RxOy60BxBxq9qZjFP2K6CoyAP4I5rQ=
+X-Gm-Gg: AR+sD13OTEAFU8n2R3d4/gawV9MzXTl5tM+EoJJMdZD+MpOErlBBL1A7dTYOovkRuHJ
+	9rjmhoAW89uc3AFtquILJLDhgz5H3HSM0UOAvZ/IFTUkh/0zUux/iqpStclim9uXZ1VOPBcuwkD
+	1WCSkzrUfIiyuCsMWfWEoQHdOv0GsSAjumiRFH3qzvT2FooBM2l9/Iz7FGSkGoy5kWbyA+R55or
+	FH/PEdt4yS39G3qQN1V9VT3QN7FtcMlKEFdwnmVixQrgOJHnNpcWicCko+Ag1nn5fBQavUYEHM9
+	NcfnXdRmU9B1S3UIyehHNebCZisQsjtxI0MKZoG7JsWtTM8rPSWmJfnF1a4UujCHn09YObzzyLt
+	dxD/HLhC167dDoEy316LWHgFM/rUwCgr9juP0SGt7q2NtlmyayCDjK/7jvPetT1b807A=
+X-Received: by 2002:a05:6a00:12c9:b0:84a:6e0d:692d with SMTP id
+ d2e1a72fcca58-84ee4920b3fmr11591322b3a.46.1785814696703; Mon, 03 Aug 2026
+ 20:38:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1117; i=broonie@kernel.org;
- h=from:subject:message-id; bh=BMU8m3G0CzQ7r/UHgsjtaV7XbVgRF26RkLmkRPIw7Ps=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqcPCfrOivxgmMibuM26PL4ZckDkgUboZa7X5qP
- 6ItXy4E4y2JATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCanDwnwAKCRAk1otyXVSH
- 0EpfB/9KYDAOOEThhQgaerB9e2bpfLq1GQLe2mXmP49OGUBL2wJvbhyA8Yrd8SUneG5qqdmk1qI
- pl1tRDu8T8z2CWPZjXfHQ/Ahc+Rk5GPFAyD8v2CRglNEGB9WfjDLgAP+85TWBGynlxEF9j9PA5H
- ZN6j66rag14ZDQz9yr2lLo/N+rm7VCAVhcYNrH0mW8htfFo0YVM8tjgV3pW27bh8vOh4r/h+VdK
- +QDYrujg2jeRvcgVzCPkmcb0l9iK8P1Fbf3GPq7DAkA2IppqHIxKsmu8nXiCXRfllzCoKOGSJyD
- nsTcFkIxPSotXtOqlbKbtBiKVSvcUReRaGVMkbpu9LaFQK1m
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+References: <20260731101539.36290-1-phucduc.bui@gmail.com> <20260731101539.36290-2-phucduc.bui@gmail.com>
+ <DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com> <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
+ <DKF3O1FTBV9M.M82B257B0WI2@linux.spacemit.com>
+In-Reply-To: <DKF3O1FTBV9M.M82B257B0WI2@linux.spacemit.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Tue, 4 Aug 2026 10:38:05 +0700
+X-Gm-Features: AUfX_mwUhKeIhKcbOnxSm2msaY0Gt-2eSKlA6n-4fwTFNHrQX2Itl5fTDkBIuYY
+Message-ID: <CAABR9nGA0dft+MpoPJvvCYvDnZq0OKSNoF10+QUMxEakvz+2Ew@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 31 Jul 2026 17:15:38 +0700, phucduc.bui@gmail.com wrote:
-> ASoC: spacemit: Drop redundant error messages
+Hi Troy,
 
-Applied to
+Thank you for your feedback.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.3
+> I still do not think this initialization is necessary. Currently,
+> spacemit_i2s_init_dai() has exactly one failure path: devm_kmemdup() fails
+> and the function returns -ENOMEM. The sole caller checks that return value
+> and exits immediately.
+>
+> A caller that continued after ignoring the error would itself be incorrect
+> and should not be accommodated. The helper is also static and has only this
+> one caller, so there is no current API contract that requires the output to
+> be initialized on failure.
+>
+> I suggest dropping this patch.
 
-Thanks!
+I agree. I'll drop this patch from the series.
 
-[1/2] ASoC: spacemit: Drop redundant error messages
-      https://git.kernel.org/broonie/sound/c/a6604d9fb216
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Best regards,
+Phuc
