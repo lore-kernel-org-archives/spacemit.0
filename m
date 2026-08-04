@@ -1,165 +1,134 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F314611C4
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 13:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785850366; cv=none; b=N6uB0fYsj2i1ZwHY7BouTGqeW5xBbT8zsYmedbWsjTXje2TtD9J0KqqsOiuqfHTgQHFukZEcwjmVkmAnv6Lh+rwQ5lA0PEBbkQPk/B9zaZIo5q/QjVJpNgbx029VHCJjiOQwTtg+O1C3Fn4IXDE3HGi6xZNZnWwtuvyl0gKQCTc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785850366; c=relaxed/simple;
-	bh=eRx+GT39DKzuTQx/btp7YCRJPxu30ptis70hz6RLU1A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4lvUZCIx8OFbAiG9wH0qyHHAvfCq+sw8XQbaP21bsjGgkk8gxUWgiL1PUYqQ3gFobVEZR0aeQ6qcSjXV5Mmj4vvWoRogS8ac2i/AG/lOg0ekay3nsAX6CG9LUcMq5IeVoTOhLfsjC5zlTK9H9dg5C+XigqjfwOk1rjsShomdLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/KSJ7GB; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE483F39D8
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 14:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785853170; cv=pass; b=ZlQ5AeEyp4ZlV1aVOYRy6Cwgi6iQLEGg0GDb+JUGg/1raVd/dXH0UWTT9eChVx0f8cJ3XahWLDCzC3HmVZXrfq2CumvS7eA0RNGnlF3MCYfFL6OE1rExr6bvAU2DYOsI5NsQMrorGwaxBfIJZxLSh1sa9C88fNwdqA+wPcrV5Ik=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785853170; c=relaxed/simple;
+	bh=zexJpO5tXmn8HAg25izfUIHU0LdTYmQLXuVMKzDs2bE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hcwkbc2VapYVcPIVXpkkfqvonuerlSVAu01nUAcNPmla8jI/NBW03xGFIlE2zPR0RlQBJKFAg7nVL8r9+0lKjvyaNrZkGIggWbTW1aQkPKesEOtetiZ6LicVYZ8xm6QjYkHdPfMg9g1Hrotc7mLFobcwTUYFBYca3v0FI3Y7oj8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mFFguoVN; arc=pass smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/KSJ7GB"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-495437bb891so8700445e9.1
-        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 06:32:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mFFguoVN"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso5729178a91.1
+        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 07:19:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785853163; cv=none;
+        d=google.com; s=arc-20260327;
+        b=A2lbEsKwQqkGW79rXh5wDubCfSIIizGJtHPXZHHcVg+GSQq/HTFnggDK7D1ocEhZq+
+         d1bz1Go+k9oaTdl45X4TmBLLDC+BqWWbH6bCbUrYRFiqCSlYYeoJyyBX4JQV+eSB21ax
+         jrv0GcYHV5wv//brdn/oOBnWjNtLcq49e957axJv9D/bnTb1NNq0/xlKKSnUT43K1ZcV
+         UrK2bzhKgVCYbZXnFm7VKU8nCYbP79XVY2YYQJRxpQ1aBHfszcGZlyaFhBJybj+lG+Wk
+         XALQaJYVh0E5aJbCK1ExkkwkHCUIDqwcvNX1nbNwsOPNVvlHSxSez24nNFRyhEL557tQ
+         TT8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=nkmkxc4DOuqtEwvtF2rpwARowqLW40SS4Qr/sKzRoYg=;
+        fh=S83/dT6QfFETp5jiJCkCHPjysh+1v+6SBOW6Tnh0o2M=;
+        b=JvVUr5H9KkKUls71i+6vZG1g1IPrbOhXdb6Zq/OtgRs1b/IqaSCCFGZcGCdY6UwrNq
+         t/5aOnkFvUhTUChIjYQOUA9zyGqiWgGGVh7xYRoTMPn6sxEA4SLX5lYxv3U1h2WFPeJS
+         DHVValSwOIYj/6TcA20PHw17vPE5jadyckDT19YA127zKM4a5O9uHpcRr8KH9++ShX/e
+         JQq12CNOH4Q4TttfYEh1gEf2y9QkE/ZrZzLO2kU68YCepXzt00nttAWgVPaP+iFGH+jv
+         AXcgwC9aEHAXYhogha882nYFeK7lCK3hfvx57Hehy3PZeK7sY5Pafo38o/FD4NWdI4I0
+         et1A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785850363; x=1786455163; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Wq3ZNEzsGi/HzQvZ33ozF9Jd/aqNpP8g9VbFrSJ0TQo=;
-        b=m/KSJ7GBbbaS1LdgwFBj8gM3xIMrFTIJNsKkXPiKn1+6SVgZ4+0cEOmD/6l+y3zUT3
-         7TFGNhzK5/AGFdLBzOTIy8ualUfyRs4WHlBLxqbbzlgivVBtV+eBkoj7ay29a3ZqTy3I
-         0yQKuJUN5spSPE+aTytUU/LceJrK7fQRx0tI9RsNLtKS3koWtqbcF8H9UBTTiXoOheNL
-         llVaaHDa4A9gl61b/AnE2KlyBymdMAP5jku9Z5KkRYIus5UKG8XRzoK/E8SJnMkbI6qM
-         VAOgFRpVK+bemeeJiHSlimflznmlefQu/OI9s6lapZiVPKs6IGBfYsCP6Xmr9KY1mLZh
-         gFJQ==
+        d=gmail.com; s=20251104; t=1785853163; x=1786457963; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nkmkxc4DOuqtEwvtF2rpwARowqLW40SS4Qr/sKzRoYg=;
+        b=mFFguoVNFXRHlC1ie8asaNR7sO3zQDnOuZkmAxxDW1YKAgldxVVkDhz56PFONFj0w+
+         3gBg5rycqFyhTly/7M95b5z7v+lEk3Edn0hTduv47a7q86PnfDER77UXqXivBG3kRXrj
+         jICaAlDROQUZze+3bUg16lVrpYhN67epSCgIUSBQS5WNO6AFP5yGJJnU4iFLXzQQ3D75
+         O2ZWZl40LUv14b8Bl6fyGjE16y6RNLMJmNyP7TmGF6xvgWSWZ7W2tiFghPD1yuBbYGP4
+         Fb8F3O/rEvSg+8uVi1CYHm0lxPcwkNRy3dW4rKvUISWefxN8Q34fQoq1cRwJfd0Z3qp3
+         6VFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785850363; x=1786455163;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Wq3ZNEzsGi/HzQvZ33ozF9Jd/aqNpP8g9VbFrSJ0TQo=;
-        b=ISam+6uq1qbihc+cXodule06KD7T9PRKghuhlp6QDUlYmDejukmDRsIPMD9JKz6b5b
-         17bKyUsdQFJwXOmG4jbHaxB39XKPtqLDojSjmTNm2H4oX3GlVIbyGnMrqiInmdLRwmOE
-         4sNR2BwiUZu5y4Pm7ditl0PRYJQiXtNWi4B4q9tzNpD9GJoYEdEkyZGktyS38uz8q0p6
-         UQtVIEiaPbCW7A6rAnqMCW0S4PjNpC2wPdypwyDwpxNCMXGNEtDMxsqtrXwK9RU4xoUQ
-         w0Dod948n0D73/OJsmsgBwjLAbMDhYEGUsrfPdH1SkdQpTj7MLtqKSePsQKnk/NBcGq3
-         2rGA==
-X-Forwarded-Encrypted: i=1; AHgh+RothqHl8nA+1Y1jBYM6xqG09fJQaSFKSZ2ek3ZuWgNkAd7y5aD1o6xnhwmBV9+q6zV8HqjZeUSHuw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy/hr9iisG2wWZIHdE74+PKINFcMj49XFKqvGb7u+vuQhgBQMo/
-	BFCrcAE9anSpR3mnZ61x5N8GslIHWEz4TJidN/A+g5YAiW1VaHdYNAHc
-X-Gm-Gg: AR+sD12lgerp5YNnjuwuo28AQ+5ldzMT+1/kkicLF5n8fsY4aVf8RbaGuvGtQilGLi6
-	swBwP1oCPP8hyKZAA1IGaL5yutdk2rHfleu+DQGIk7Ox9Hpf0ZaLPTOtkNu8kIncqvu1JIPwFEx
-	PjVdr0s4SypOzqJyEHnLDM86NdmmdZIR5wAtrb1pmgVd7YiPUevo9fuEcE9OoA7DW2jkhUn4tyL
-	Z4gTMCYUqKJFYJvcEgIa+td1dyIjB+IuyaczE88hUNFRWIz7DOO8CEcTsWWWpY23adc6bNNZ2rv
-	v72NzwNu2Z9fVfOTEmIud+85BGRyagoJoDnJSssRrlorU0atvcchPRq7QV03+pZ5KqprSawLdZq
-	Ad6V3WtkT7vRQs6EpJDhuViRofXnrKhpEUk0f5lN+RkACP0LXKEMxYOlRCHm2a9Cnt44/5MjSST
-	BQjUkAaSg6IHU0hC3z5jK9XJUEWT/p+zSGlZY4dT7JWT2zQH8lV/d+6H/i4mNccMQ7zy/NXwNVc
-	0WUQKY359lkanZ8ofzNNktM+6jZ/H8=
-X-Received: by 2002:a05:600c:4f86:b0:493:f783:c46a with SMTP id 5b1f17b1804b1-4994a0fc5f1mr77242865e9.6.1785850362982;
-        Tue, 04 Aug 2026 06:32:42 -0700 (PDT)
-Received: from mamamia.internal (a89-182-139-70.net-htp.de. [89.182.139.70])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994a0f7bf4sm88037735e9.11.2026.08.04.06.32.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 06:32:42 -0700 (PDT)
-From: Andre Heider <a.heider@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Jonatan Hazell <jonatanh@hotmail.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] riscv: dts: spacemit: orangepi-r2s: Add cpu scaling for K1 SoC
-Date: Tue,  4 Aug 2026 15:32:34 +0200
-Message-ID: <20260804133236.205668-4-a.heider@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260804133236.205668-1-a.heider@gmail.com>
-References: <20260804133236.205668-1-a.heider@gmail.com>
+        d=1e100.net; s=20251104; t=1785853163; x=1786457963;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nkmkxc4DOuqtEwvtF2rpwARowqLW40SS4Qr/sKzRoYg=;
+        b=mE/bzTQ1RitodgEC/wALa32QyX9rCUq+IkELryZk1XpixGthl96zVxYxQzcf7nVH0K
+         YybK3fXnx8jF5gTVApLbw+NteGmvr+c3pYFe/kZw/7SYTeEquRr+ZcjgvsGDyGYCdNyk
+         7QzwP+diaicvEjgfeZ/PN0vXv8W7zzvUk5WAmKAcgfkO/tb7noa+BstTcxfLKdOxGuhe
+         DndbyVCDoVTJDTx2gbE6T5Duk/CdwTEaJXmouEQ0bg19NsP5PlZumjc+Z7YgktJzZBZg
+         L6qvjAt08Zj3Ds4dzy+ruEW2gNiz17sy2e/OFeTtk3TImB8vYl2GV3KTUvRobG2g3Pzh
+         y+6A==
+X-Forwarded-Encrypted: i=1; AHgh+RqhMcUQeRWD+2YZAsDjTZ+gg4pgvRZYADDKNbB/sEOtdChibTpBoyU7QbBRxh3mf64w/OpfOfc9ZA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyd3sPbUjZBZ83a30La5fBZ0y6najwotH/egpFe1bI1KqO5Do7N
+	W7tevf0EA/eyHQPaD4kJigNsOADVlXGZBlSOytBTuFfipAgXGuR44eIN0P6RRgHJwu0Hc+Pr4Nw
+	3c7sGQXTUbUDl7lqr8LZH8EPgBZlTjUc=
+X-Gm-Gg: AR+sD13s1ITo/pCqiTqVtOmpF4KVk1CFkCSyBMfWjIquvElEO8gurzFzohs332O6T0N
+	/SdBxu46QwfBBhzxffhUIoIbLyUL378wzVc3VjUZM4qBdnd3DUVOIHrJ4RnNdsWHduhjE8CXi1q
+	g9rfB1tiJVOppkLrHeUq+GcpRuEMiWuD4Oub0NPtc8P6S2upJ6BuuyUPcriDtbI9UoE5WNfHKAh
+	OqngWtpz6ig5rcOSao82v/4I7oQAI6FK8TZWtgt7auL018AHIdswooahAnsSuOmxI8EH6tIbWjD
+	O28YOPp1nxl3trDx5NYExW+U80b5URUMuoFEHTh76jbGxNyQ+++Lu0zda4rYnOub+RwvqorRFAs
+	DwDGE1HJUvNSMAWEqR1JtNEYVJ9TI57WM1TNA09mEYoonGCNZfJzIKyn6cAJQOAPr7T/sdOKHy2
+	wBDWf/NRhtUioRyJc=
+X-Received: by 2002:a17:90b:4985:b0:38e:4f41:83df with SMTP id
+ 98e67ed59e1d1-38fbc44465emr15422254a91.15.1785853162959; Tue, 04 Aug 2026
+ 07:19:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260804043036.22065-1-phucduc.bui@gmail.com> <DKFYC1MGUCF0.1AQF42KLZZ0XL@linux.spacemit.com>
+ <CAABR9nFn0XW3CzAEncVkVKd65yBUEmquxjag6ybf_-NRf6mA8A@mail.gmail.com> <DKG2L4V8Q2EU.1W5VODY60D6D7@linux.spacemit.com>
+In-Reply-To: <DKG2L4V8Q2EU.1W5VODY60D6D7@linux.spacemit.com>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Tue, 4 Aug 2026 21:19:11 +0700
+X-Gm-Features: AUfX_mx_KW5_NPCjT1WIS_jueD1He7JnKmss4jz44IKDHBp3hMCmxJRzwHiKS0I
+Message-ID: <CAABR9nEjZ=qHBHZ6=CWyauOVSnX1isW3Z9+BoSnmvuBBCKHiyg@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: spacemit: Remove redundant DAI field initialization
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jonatan Hazell <jonatanh@hotmail.com>
+Hi Troy,
 
-Enable CPU DVFS on OrangePi R2S by including the shared K1 OPP tables
-and wiring the CPU cores to the P1 PMIC's buck1 rail.
+>
+> More precisely, channels_min alone is not sufficient. The codec DAI must
+> also support capture (or be the dummy DAI for a dynamic link), and the link
+> must not be playback_only.
+>
+> Under those conditions, the path is:
+>
+>   soc_new_pcm()
+>     -> soc_get_playback_capture()
+>     -> soc_create_pcm(..., capture = 1)
+>     -> snd_pcm_new()
+>     -> snd_pcm_new_stream(CAPTURE, 1)
+>     -> snd_soc_pcm_component_new()
+>     -> dmaengine_pcm_new()
+>
+> dmaengine_pcm_request_chan_of() tolerates a missing "rx" channel and leaves
+> pcm->chan[CAPTURE] NULL. Once the capture substream exists,
+> dmaengine_pcm_new() returns -EINVAL with
+> "Missing dma channel for stream: 1".
+> The conditional initialization prevents the CPU DAI from advertising that
+> direction for a tx-only node.
+>
 
-This mirrors the existing cpu-scaling support for the Banana Pi BPI-F3
-and OrangePi RV2. Tested on the R2S hardware.
+Thanks for the detailed explanation and for tracing the call path.
+I don't have Spacemit hardware available to verify this myself.
+I'll update the commit message to reflect the behavior you've verified
+on the hardware more accurately.
 
-Signed-off-by: Jonatan Hazell <jonatanh@hotmail.com>
----
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 35 ++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
-
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-index 2d1ba34cb00e..6ebd4334410e 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -6,6 +6,7 @@
- /dts-v1/;
- 
- #include "k1.dtsi"
-+#include "k1-opp.dtsi"
- #include "k1-pinctrl.dtsi"
- 
- / {
-@@ -50,6 +51,38 @@ vcc5v0_usb: regulator-vcc5v0-usb {
- 	};
- };
- 
-+&cpu_0 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_1 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_2 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_3 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_4 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_5 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_6 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
-+&cpu_7 {
-+	cpu-supply = <&buck1_0v9>;
-+};
-+
- &combo_phy {
- 	status = "okay";
- };
-@@ -132,7 +165,7 @@ pmic@41 {
- 		dldoin2-supply = <&buck5>;
- 
- 		regulators {
--			buck1 {
-+			buck1_0v9: buck1 {
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
--- 
-2.53.0
-
+Best regards,
+Phuc
