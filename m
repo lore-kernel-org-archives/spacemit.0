@@ -1,132 +1,112 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6011B443E35
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 10:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8334D43E06B
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 13:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785837636; cv=none; b=tH8XxZODgIyZeEVSLYJlP53PuhuLgiyv+SUG0npK5cLHw+tWpTHF+/21jnsk6k4u2wsYwIucCTbQmkfAU710D7Ig3fijK3+k+qKqmrALyzoA++BAJS9hlnSFavWQGyFwZ9f20yj7hXHxLITEgQz688Mn81PGWKY8TsnCTXRVXX8=
+	t=1785850362; cv=none; b=COqSyWyKf9IJP9Pj+oRDjM6+XHJWy5GVfpxdBPnSx0yrbv5yXY0wM+dSDxMJTVOUvyoay0UrdPaW3SRqESqxvXFuq/lvg37EL8PWLKvYR43/23+43LnYegfS8hVa10EDQtJoh70qfHmLTbhBi5q2c7x2/jlrJS+en9F6MVyAPXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785837636; c=relaxed/simple;
-	bh=I4nKQIqakEl4AcAWcfhShCFtxF29eBoBD9yQFCgcxqY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=LSnMoHo6eeXrbRl8FgyqK2woiOV7MH3hjl8YhERpNZxVZ0r0W1/jF3Ym3HOlsEULbKC8uQNicKCWSog4IAsDSS7VPu7c1txhLSnBawmXbLfKPMGEFrsPlnm5p6c3Tm7bUxoU5wtAPvGxCE0T+4sWAnGBaBSjcOAmUbaZy4pkpYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ZjKQBO7x; arc=none smtp.client-ip=52.59.177.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1785850362; c=relaxed/simple;
+	bh=S7uc9JGdxOwR1bdhe/OsfcOzAKJ8rWbmIrOkJ5ul6x8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u7M58S/SMPb4cXB9x9YLvuVqCE8w+9PyQ6Semrjl6ubqER5PaRsVYAI+qfNJ9baajPPh4w6cDBiGE2YpYCJ3djnL1YjtjdKYgxhHgys9Vt0eIBJCPUpOiy3r8W4WGoawgjuP2eRVql0X5QtYQChjzKXyLWtWW4T6jGI1mGX9mjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fR5BP8Ds; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ZjKQBO7x"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1785837589;
-	bh=Ysd0un+5gtGIkkj7N0nhvFD98XFxC6uJDNPImhDLpDg=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=ZjKQBO7xnm4ykcirNDumwvXn0M+qgFMqf5/zinvR1nf28eAUWb1ajsXBVfJRlIWdo
-	 w5uRO/PsGH6xbBXHaUHsBeigrhozYoFXSvgvFMjBCDWBcg6SaD5jnqTv401+8pBiny
-	 3Mcu0pLvdN55E6FTPWnAOXcXiL8qtIsLGcasu7No=
-X-QQ-mid: zesmtpsz6t1785837580t822d7ccb
-X-QQ-Originating-IP: /deDCG4cZbZ/zIhBmDDPRVENV3b+dlp0f/0Nmm7NpCw=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 04 Aug 2026 17:59:38 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11623012881500782239
-EX-QQ-RecipientCnt: 13
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fR5BP8Ds"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-49558ce01afso25328855e9.1
+        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 06:32:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1785850359; x=1786455159; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=LnS+ToAVs8VPBevN/ktqdqEpqgN1qgKy4u1VdvZUrps=;
+        b=fR5BP8Ds3b9jbF1BBezBxxn1Dd4U52cTiv0Di1PXYSAGlJETiIyCRcF8sL2RC1S+yM
+         dODbtgq82J4zHyEGm6x4k1uKCq5QBXxmDLdQ2UGWt782LzE158iQm0BBoMU6d7yCDnjb
+         1gI6diFKLMB02iQ9KDLGBaibDjQ+4/yH43S4QAacP0CL0+hzhRBfK18B6u44LLzhh0Rd
+         0y0Hr5xBLuvIYlzFt5nDtigtBpXwqkHjCj48zKiTmXAVonNaQShkmnG8L9VFLV3+MjM9
+         XK3+6jnsmoSKhpyhZ+pMouaab3zqhgei4/P4tGoO04ADc5fpzP5o4pIrZfvRfiB52Ha1
+         /qtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785850359; x=1786455159;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=LnS+ToAVs8VPBevN/ktqdqEpqgN1qgKy4u1VdvZUrps=;
+        b=EsJgxms9DFyWbM7fEuIIh8uRq1JcnrCJu8+xWApUjY/trBdtKuY3PXqrmBH99DIcN4
+         cN1MekgjpHEZYsID60DBYGwAvGRtHFLC19rp5s+4PU19eT3h3mHSPl/lTOPU3GMHMExj
+         sp3/TWwCNxjQ+soebLqHxRtgBhw++Dzk0pn74OYMhOE4k4wWsmImBWRDh4vCr7++8TeF
+         dzeYi6InXdJFEEibu1JeTI+AE9BIrFQWduZIQ3IJkZU3TzGFW7hBXNcfgDxmPMex8f6z
+         vzbxeHxP3nl7HBpM+uekEhtE3bJf3WN7BbYWiUX2ajtBRJdSBqaegen/MdDp7hoqSMnl
+         x9Ag==
+X-Forwarded-Encrypted: i=1; AHgh+Rp5Y/oX5P1BNnQJteBCTE7iiJZIEX9gAsJVMncUfX1TbnODxJeTcFufaS/9cyJdfgGoDLRSsdYLIA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxH0cB5nhq6d4JZfBV4GCBocXq3jXl/jOpLI+kVpNrPlyvKOMPR
+	4oMA4Vi49i6KisG/pfoSM+OLprdmtN/FzuofOFJlvXmMsOqwUMfMic3eqVy0Fw==
+X-Gm-Gg: AR+sD12yIkvQCwSWzvbhBSieXV5l6CfL9e0yk6B73W597l/mjUMvgo18yE8OVvnCaII
+	InK+PJY7/bQDb86zO7kzaUlJTdkU4ggk1JW8XM7LCFosTPuD2u0nu2Die1M+Q6lnUXMw9L6BO4j
+	7f8O/ieDAnTKG8jEJovaQ4nDNhO2uKxVzEXRKzWP8VJqeU2CG2NprsaO6G4hOX2H2hoD0ggskK/
+	WZGZfl/fqCs6ZR77BjvjM1lo4WiFv5jvOyjHv1x/IW75J+7qtY1EiNcR0DKkndAnkfYgzNvLSsp
+	YpqjqvKXwDJ1pvTAl4ixVix2Fp8UDVPyJ0LKnKTljDRE6KT+gTolXq5kIR7nNxNfTZ4TE5sK3bH
+	GCJHdbF92WwDSwAGLCF0ZAEx2uwebVXNmc8kfS6R5mpRBBqNuGqDWZXTeUxxo8MIcdcWSm9fumJ
+	Z5d24CHFPUgodtBDzS+gzE/HXSOMDlYNiqtuqWfaKy5QrVguckLp+H12qt9dakKqeGp54kdeYnt
+	7GUo7f6KoIbv4T88SixjfV22uA9ay4Wu2ICoJmZnA==
+X-Received: by 2002:a05:600c:a45:b0:492:45a0:dcef with SMTP id 5b1f17b1804b1-4980c66d8a5mr291501805e9.5.1785850358389;
+        Tue, 04 Aug 2026 06:32:38 -0700 (PDT)
+Received: from mamamia.internal (a89-182-139-70.net-htp.de. [89.182.139.70])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994a0f7bf4sm88037735e9.11.2026.08.04.06.32.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Aug 2026 06:32:37 -0700 (PDT)
+From: Andre Heider <a.heider@gmail.com>
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH 0/3] riscv: dts: spacemit: add cpu scaling for 3 boards
+Date: Tue,  4 Aug 2026 15:32:31 +0200
+Message-ID: <20260804133236.205668-1-a.heider@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=0cb53cc854d56efd7aaf92f0490d3586ec96bc93b77b8c725886ac6337f3;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 04 Aug 2026 02:59:36 -0700
-Message-Id: <DKG2L4V8Q2EU.1W5VODY60D6D7@linux.spacemit.com>
-Cc: "Yixun Lan" <dlan@kernel.org>, "Takashi Iwai" <tiwai@suse.com>, "Mark
- Brown" <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Liam
- Girdwood" <lgirdwood@gmail.com>, "Goko Mell" <goku.sonxin626@gmail.com>,
- "Jinmei Wei" <weijinmei@linux.spacemit.com>, "Kuninori Morimoto"
- <kuninori.morimoto.gx@renesas.com>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-sound@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] ASoC: spacemit: Remove redundant DAI field
- initialization
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Bui Duc Phuc" <phucduc.bui@gmail.com>
-References: <20260804043036.22065-1-phucduc.bui@gmail.com>
-	<DKFYC1MGUCF0.1AQF42KLZZ0XL@linux.spacemit.com>
-	<CAABR9nFn0XW3CzAEncVkVKd65yBUEmquxjag6ybf_-NRf6mA8A@mail.gmail.com>
-In-Reply-To: <CAABR9nFn0XW3CzAEncVkVKd65yBUEmquxjag6ybf_-NRf6mA8A@mail.gmail.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MKTBhjEpzXIfuLhsfT/M6bRBLrAVgonnDdi8WJbc39DkG4DvH9dh0+Tr
-	++yoe5lQ5QzXPAZZLPPzOldHRwDDlWTz7h6+DwplZK8d1XRtppcAeVTlIK38W46VHyX8yIQ
-	4EMyNsoUlOmqn2oDpOdEG6BZ5IRBRfTbuOkiK/ckZ2Me2MsYgONx5Fm+9+THPnwgzF34LAU
-	zK0oi22fjQ6PseZSANfk+Q9CFSpd1F+SWwelz697kPbvYIBiVrdpFbQRxTNGlR0cgk/mrf0
-	REh4MbeRV90D2qjYtX+iUAbqKb65z9GrrcFhtW4+I4RBnc4fLCx3KOzXjT6mqT6OPKHmMLs
-	A6tcJJ1m8pmI7olVTVrj4B4SbSx9bxUyUBa7cDE47l8YWtizxbC63qhDXnDSv/2APzrkW0s
-	iXVAe0Jtdrl8ZKcHm0y6nbDJ622CeJjZVj8YVKFJxVLUez5y0xdTAGXJJ4U6L/YYLMeM5vE
-	CU3Z0iikATaXyca8HP/Bj1L7MFDis9Da1anWCU8jIqJ8IP0KFP+pToKsHhDlHMrlEMUrzIe
-	7x/yJKrvsyKRaj4i4Zzhdn1wA74zFCuN75l9xoq/dPusgpiFffcrDNUOuPTQ/IkpdEuIi5n
-	geQzEH3JIoC5nN8R6MpDIwqM42f6v9B8l+MXEGqFwXSY1JUvphuaD2rSjdiaZ+bOh08HgJA
-	x/+aUnO0slwz4tFwjYHOLDydl94e3YAYbWYtk3fBF+cAGkR30KFowA21BkeCFhP4jpMZMjh
-	UZN+j8KmJlVOVI7A8hIGEeyI3PjzHfPUXQnIjlWLPyrbcTxeNwsNJhmutxrEJFp0MegRZqJ
-	ddML83kGLggJLPRBpAQaf+Ze1m1zf2cT0q+RI19GH+3UCBIGwgna1x8BF4tEYCt+zXG36jO
-	jhlbHxhrwOscCnYJ50p0bozz2BAmcRezHtt25ij3lIdPSVRLdEu0S83obZYllSNW/EUEkIf
-	zNfcwxkp+2UKd/Y2jZvFNOm8WDTbkfAcVTimitLaOLctUCVXTKnGFlGiqJM+BnHfG2j7es5
-	bSJlxH2Fb18x1BpGDqoOnXTdKYFi3KaP/HLalvcdc9zup/WfFaq+9RGACyfVF76qTbOMwjz
-	E/Ts74+A2cNwkIwJmn5icwZv3HiYaXzOBYyewhhiYbfhJ+w2wh7987Eu5VFji9TrDx3nraO
-	TZ8FhrYRtr8P/N4=
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
 
---0cb53cc854d56efd7aaf92f0490d3586ec96bc93b77b8c725886ac6337f3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+This series adds cpu scaling for 3 boards, each authored and tested by a
+community member on their device:
 
-> I traced the probe path and confirmed that snd_soc_dai_stream_valid()
-> is called from soc_new_pcm().
-> However, I still couldn't see where a nonzero channels_min alone leads
-> to creating a capture substream
-> without an RX DMA channel.
-> To avoid confusion, I'm referring specifically to the DMA-based
-> configuration, not PIO mode.
-> Could you point me to the relevant call path?
+- k1-musepi-pro
+  fixed include order  
+  v1: https://lore.kernel.org/all/20260614122812.2287506-1-a.heider@gmail.com/
 
-More precisely, channels_min alone is not sufficient. The codec DAI must
-also support capture (or be the dummy DAI for a dynamic link), and the link
-must not be playback_only.
+- orangepi-rv2
+  unchanged, included here because it's still unmerged, probably just
+  fell through the cracks
+  v2: https://lore.kernel.org/spacemit/20260615-k1-cpufreq-orangepi-rv2-v2-1-237f006e580b@gmail.com/
 
-Under those conditions, the path is:
+- k1-orangepi-r2s
+  new patch from Vincent, cc'ed
+  origin: https://github.com/dhewg/openwrt/pull/3
 
-  soc_new_pcm()
-    -> soc_get_playback_capture()
-    -> soc_create_pcm(..., capture =3D 1)
-    -> snd_pcm_new()
-    -> snd_pcm_new_stream(CAPTURE, 1)
-    -> snd_soc_pcm_component_new()
-    -> dmaengine_pcm_new()
+Andre Heider (1):
+  riscv: dts: spacemit: k1-musepi-pro: add cpu scaling
 
-dmaengine_pcm_request_chan_of() tolerates a missing "rx" channel and leaves
-pcm->chan[CAPTURE] NULL. Once the capture substream exists,
-dmaengine_pcm_new() returns -EINVAL with
-"Missing dma channel for stream: 1".
-The conditional initialization prevents the CPU DAI from advertising that
-direction for a tx-only node.
+Jonatan Hazell (1):
+  riscv: dts: spacemit: orangepi-r2s: Add cpu scaling for K1 SoC
 
-                                            - Troy
+Vincent Legoll (1):
+  riscv: dts: spacemit: orangepi-rv2: Add cpu scaling for K1 SoC
 
---0cb53cc854d56efd7aaf92f0490d3586ec96bc93b77b8c725886ac6337f3
-Content-Type: application/pgp-signature; name="signature.asc"
+ .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 35 ++++++++++++++++++-
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 35 ++++++++++++++++++-
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 35 ++++++++++++++++++-
+ 3 files changed, 102 insertions(+), 3 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+-- 
+2.53.0
 
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCanG4CA0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvmhgA/iKim769XKKzBMQSQN0e0WT8cDcERmf6hZVpFc2P
-GucAAQCL7rMgg02LAyIJm55KkoPR7IBfAkfgUjclm5YznSGKCg==
-=QizS
------END PGP SIGNATURE-----
-
---0cb53cc854d56efd7aaf92f0490d3586ec96bc93b77b8c725886ac6337f3--
