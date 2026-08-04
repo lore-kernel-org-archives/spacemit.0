@@ -1,124 +1,147 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5883B9952
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 03:41:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785814910; cv=pass; b=GaExgkRFzVqyQMJDiipvF+PWRg37lMtr34RKT+CKy9ljDVmfHclsXa+XkFDZhB6uqfgA0jjLlAJLpb7LTrwCPrezXM4Lt2EocLZ3ESA4800G9dOLtrSaKxNFdVXVWedTb7U3wbFfffM4Xb9xud7PqA2gEtkhLPBGD1urT50SSzk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785814910; c=relaxed/simple;
-	bh=dHJdFWR6LaqfTnhSURUXcfTBvCZBNCAuZVufORAObbU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kUfbbzTlnVXC8YvRJYkS75Ue7OEnF/SfaFGhgp4mtVyVPyLnUBwl+Xa4lfIGlfCJ5G4PbTekdVmz4uo+R+XZNuSUbSHWpiJn5a0frCPTGCi1TinWIg9cMjP2tN0afEYlqyETykxMsDg0xOHICU2uJQma3BZjy2En/Tze91nv/CQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/Wfx3bc; arc=pass smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9922343D72
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 04:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785817854; cv=none; b=RnQMU6LMsI2yhkGrBTRebY/MhhVHu3tM/DXf/3NU91SCzzLbhDKtaJpP5/vQbK8gpRPFe18kH3eKn28d4sVwtLtjjERUPL2qv6zKumne2oQYvEHpVSsTLB+kZMVM0JmYcx/hY0mkKpzlt+oe5nCTlLNspsD0nYRxZSGIaMG1g58=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785817854; c=relaxed/simple;
+	bh=OAETXZTVcG4Rpgb01BW+Bm+y6f2gek5DmYAEnw75v6Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WiC5ZH6Cbz2SQKp/LZvxJnq9OiffKu1qqVizXjXH4fM6Icfw39O9PY4+DwHksSaKWHmHA2SylyDolPxHPLGv9ewbzLEJf8kiI0chozCn8Xkr5R/g+JN4FZpXyOJsdzKc1irkmzLmudRz+29AK7lLgEHHiqbCJmAaBE7KjhhG5do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ta8MgaaS; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/Wfx3bc"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso39700425ad.2
-        for <spacemit@lists.linux.dev>; Mon, 03 Aug 2026 20:41:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785814908; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UgXPrOVMIDK2b6LgFqfhcQ/Kp2/ZnaTzbddRgHQ+WO+BjRJPxiYtNLb1bOjegxmeoJ
-         drE3IQoLVZabXlBxc/pt3Dc+YpDPHJZj7aUdqXQ+KEo4XeEf85t+sYBj7hNFgIDtOCrd
-         tn5JCnAHy26BMSB2PIhyMSqK7lUkusRIiPT0FZ9jCZH+6AjsqApzM330QeInb/38pIWa
-         SKRSsSmhuM5qwOy9VVH8mjmdBDQBXKAXePOa+LTvPn0ME4mLW8T2+9I7PP4lGfczQnvZ
-         orqpGa3aVf7x8OxS1giqGUx21Rrx5Sn5pwsraCSNAtqGgBuCcvVMz2aLrP7LjcBPQDWP
-         T8MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=dHJdFWR6LaqfTnhSURUXcfTBvCZBNCAuZVufORAObbU=;
-        fh=BSiMz2zLuu+z4WN1L7anFTRObDqVKCCAiHnzm7qU300=;
-        b=FpIy56TFCT4GllHVBF3Uog3OZzemqL2geB6Hr/3q1StpmCzHCkXz053OTx+B1z0nPl
-         L4wmH6cWYtWTWiVTSwexlIcx+qGTrf26RNuLWa6XVTMZvRbCQzx4Fz7pbcSd4wwpPj2/
-         PYWTpz5FnKkIMqkTYCBtMd+YyMgkyfWccar1uO+1FTEyZrdgi0lLjUMtUaCjG0MgO57v
-         LZLFuJKGXTC4OtYSNhfhdTCFXngim12ATc2rc+pnSR0Z+OPAaMxPLvojrkgoJPMFdzHW
-         j1RxIA/+ngawN1YBP06K+XW7ocCOn9MMML1Y+5MdQ26OxCXPAI2rFTH1uu12ZWZUrr0Z
-         l+zQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ta8MgaaS"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2cacb8416a1so41114175ad.1
+        for <spacemit@lists.linux.dev>; Mon, 03 Aug 2026 21:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785814908; x=1786419708; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dHJdFWR6LaqfTnhSURUXcfTBvCZBNCAuZVufORAObbU=;
-        b=i/Wfx3bc2px6ykiv47TFx+33EV7LQcEa5gHWTo2D6n7dfI5Vtd2Z6/m33y4coXnQqA
-         PMrddB6/ZJMAJx1d5rWie/TpB4xl8iXiouW7qV0QdoVpAwfWQ2yj16M3+5HPGLftzzvs
-         ae7ET0zWBCS0JJLJGxtLeL+ycJne7OV3gh+He61rCDoS6H5P8Yei7GiHIHybdez9sSPr
-         9jpuZA1I8mVUjPiZZ4ws46NfFgHKQy7bZQFBU0HRxC0nkH0F+Nu7Mp/jKguzqBgxK+M6
-         ac0T8UxAmIa2cQnp4xMXuGeUdblZY4AnMq5pbCA6yZwNtdXBMdtMMyjHfi3SE7o/RVqQ
-         XsLg==
+        d=gmail.com; s=20251104; t=1785817852; x=1786422652; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=7yaXhmEwb+mJHwyLaCJwLr0hoYPttqtvD7BNNFbot6o=;
+        b=Ta8MgaaSCy5k0FAavNm5XFdUGByfIYizrVSxZdLNsmoDNh/hjTHuO05upNHOs5H7hG
+         4cCG53zX6yJplk5/M5rbVB3NUXZ0t6BKaWV4yYE2Bp+M5xfuTTKfcG0vFh3EUVX21Ntb
+         AoZG7l+g7z2BMy7foEIZsYUtMrSXm60wKj110289z46qpl0Ecq3VBWcuHk/2bcsca/Fr
+         7kjZIQCby4wUEu1GbtFUBc4cMNE4Sw6HY5fvluSEnDoFU7qv+4YGEDa9+BnTg2zRr/WG
+         gmVU7nsP4466UyHLi6InjnE10b9iRtMl1sSt8jZINf1XJ27liuD/O99A3nQNrdmcYM9/
+         VCFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785814908; x=1786419708;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dHJdFWR6LaqfTnhSURUXcfTBvCZBNCAuZVufORAObbU=;
-        b=kYbdlkEa59P9lEjEaRhikFM6w8MGC54bDLQdseQ9uVx5zyMOZOqg5Xt49CM0PFLDGJ
-         xdVIs46entk8pNZvN60ORmhvkWPiXLXhkHzvKC0cHePRzbHCWaWCAOEsPJZnzzaHNqcX
-         1Grswzixtnaj3lP2xxIjcYFpc7Lr+mWJPWkRAJnkikue4M/w9KrygxsEBkJ8ul69d8mj
-         7G310VNYUUQyiKnu91HmdPFiTrAYGTufqrNJ8v4ghOpp/Snj7qnDezhuHjVXZQGd5EaP
-         BDlFAMj/DcsjzDFT/uJ6DCxDLm3ibibP5P2VMnOWR56pnV07mg8CtBBW+7avXt3L23If
-         3XIg==
-X-Forwarded-Encrypted: i=1; AHgh+RrNiQoXqKw7+21vk2h6QwUDI48wFR5U22dD1UdAdfItv4wtpQjoCKAPPuwjva/OCKqUTnGwSm2K0g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz62J3LS0C1lpsvXLpBqC4DHU/HPGOh/wJjZRxX/6VyQMmhadmt
-	80BRDhbSqN9vI01RQxH7GTfxurhUeUFfmVcutUqmUvysso8vnqYRemYjGG3hNuDDnLwfwwBqspC
-	o9vXYwyBv0FfIun5UMeb4ofVyrgVnut4=
-X-Gm-Gg: AR+sD10UFjTi6eUsvDv+qPZuEfGgwvoqhTnoJpfJQBFjzPLZygRBHrpx9fPpwDy0mK8
-	gQyvdaU4VkNfOWcyuUVbov9/WtmMKA32X2ssdGkZmX4sCb2tTWE3ulqtApNa3Rj9vM16mfAX9X9
-	eas4kvAQRBFdaVJkzJ5UDoslRlRBzbYPhDXiRTzqwvFm/kFK0uycguAGwMPb81TfoCvDRXQp+2R
-	Pv9PCgretEmdwjLmAAt4sezg7drJW6PFAue9l+p6i1tYr9oiDlBR4KUiL3pdKfaTDFJPqX5Dqqd
-	WC94aqrH7kHKOmr6lZWAojRPkSDiOiCL+0CyOq9zZCLkB6WcaugNYC9zfqMOLFIGoKh46GcRb6o
-	1M3iA254jgUJzof0857h+k6yKC3GI66Po9NgVDer7rETQmUpIiQDbEvXe
-X-Received: by 2002:a17:903:37c8:b0:2b2:67ca:5ff9 with SMTP id
- d9443c01a7336-2d051efd46amr123451215ad.0.1785814908348; Mon, 03 Aug 2026
- 20:41:48 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1785817852; x=1786422652;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=7yaXhmEwb+mJHwyLaCJwLr0hoYPttqtvD7BNNFbot6o=;
+        b=QvN/+0B/QbKN4o2YKQsuJ7cLthzppzpcXrPEyvp3W0UFBKYRZRYa2H4Cb9stlWlEMG
+         gzG+yx2VsPK3Xu19Nm+Jh+mMNkwm3F9buE820IVMP4K6Z3CyZkYAPsaBqyctvp1itiv2
+         o3Fsg3KLU5U0HpdDmV/JpqdSjxYJBBnS3O6Pyt67RI5izAUDV9qHes6dAB554sKK05xT
+         YJeIwh3efoe0MsXVfvasdUqaOiSHR6TBonRNgW0ZMCSs2P7WuYN3BBuZxDo+6pOem2+r
+         qN9BZPl48kqmda1TSzsjGjbIQt883WYTsIzh6YbqyWIHb8CbQ/sh/8SGEirpXZoVt+XD
+         P7Qg==
+X-Forwarded-Encrypted: i=1; AHgh+RosU81vt7Sv0xLF9pOvDeF4JC9jf90BG/bQKNR3FjK8Vov2rZATwVVSYwi3glIoszREYeEgKRDurQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzQxejbgL316sZniDefUdYmtNZxA3BQmE9j5aCwLyRD9OLdcbUN
+	bgGXL8XU67Wx1EfbTqtrtMjGthjo3nGR7UQ2eF1oskK+yCL4hCvatEQs
+X-Gm-Gg: AR+sD12Udcc2HyrPxQ5XcJQxEBKmZIBw+UwLUYF2Vzg5RNlUEKd8FFP5zYz8m7kAaZQ
+	XRjjlmfHUlpCr1jSPA6s6rPWNOMhusiRgGljTaPRyeRQd3uyf4MMiG0mITo71PQN2Qq+04eeRL9
+	3TKmMcRFRT1FUJuLZLfWQL7fX4nXSu0JLSZ2WUp+vmJlpp1mHxTAfgtxHSbsqo9dPNXEC6BsUUO
+	VtUwDtaShaJ5JPhDMlcxJPg/fnnS6QpmNH6wCx0k1j2tQOn8MVTNcgpamhkrwlIoNTSQ9cqzCXz
+	rahC5JZE3CUrJjWLSP7Se+BW/hBd8m+6MKs+fw3mnfoICbLvMa9UGi/HVU6gbaFZTiErkh2W4Eg
+	2955d00zVW6NZ6F60oH7408NaHjGbKuzgoquYW/kVvkoSnGQvkNKWxVCNrcRU05U4SJ3RxCWzFQ
+	BEFep+JDOfrl3qO0kUqmaOCJPMmSSNPNdudzEDff7T/+OUOjbfHfxpQndPkTem4wqrpiXAaVkW/
+	0ju+Gm22XUg5jT5Ki9BTuZW7Gup6nOykkojO1QVWN8jOCy9bc3i7RYXl3YMP7/hhgncBj0f5Ghn
+	9SAP
+X-Received: by 2002:a17:903:390c:b0:2ca:ce92:6e44 with SMTP id d9443c01a7336-2d05218984fmr118913895ad.8.1785817852050;
+        Mon, 03 Aug 2026 21:30:52 -0700 (PDT)
+Received: from phuc-desktop.. ([183.91.15.56])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04ae58d8bsm46026045ad.26.2026.08.03.21.30.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Aug 2026 21:30:51 -0700 (PDT)
+From: phucduc.bui@gmail.com
+To: Yixun Lan <dlan@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Liam Girdwood <lgirdwood@gmail.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Goko Mell <goku.sonxin626@gmail.com>,
+	Jinmei Wei <weijinmei@linux.spacemit.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	bui duc phuc <phucduc.bui@gmail.com>
+Subject: [PATCH] ASoC: spacemit: Remove redundant DAI field initialization
+Date: Tue,  4 Aug 2026 11:30:36 +0700
+Message-ID: <20260804043036.22065-1-phucduc.bui@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260731101539.36290-1-phucduc.bui@gmail.com> <20260731101539.36290-2-phucduc.bui@gmail.com>
- <DKEYE4CK1DUW.1PQ03VOZZT9TH@linux.spacemit.com> <CAABR9nEqZG1Vywb2CkoLVgqoLVPKqfYt01t3dF=WTu9qJSS=bw@mail.gmail.com>
- <CAABR9nG=s78=5_tGSieN7hdCQOMNzJKdzJo5cx2bMfgAvJM+aw@mail.gmail.com> <DKF3ONLMSCC7.23CTHB22RU044@linux.spacemit.com>
-In-Reply-To: <DKF3ONLMSCC7.23CTHB22RU044@linux.spacemit.com>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Tue, 4 Aug 2026 10:41:36 +0700
-X-Gm-Features: AUfX_my_ZTitbKpIGPjAOMpa4lAbJZAoEqlQiMARrsgDTH0HTjCNWq0y94hxl8c
-Message-ID: <CAABR9nHZgDvNBTT=uKO36+ExC5ozi7mWbS2J-3MxhN4GctpYHw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ASoC: spacemit: init *dp to NULL before error paths
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Goko Mell <goku.sonxin626@gmail.com>, Jinmei Wei <weijinmei@linux.spacemit.com>, 
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Troy,
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-Thanks for the clarification.
+spacemit_i2s_init_dai() already initializes the playback and capture
+fields after duplicating the static DAI template with devm_kmemdup().
+Remove the duplicated initializers from the static template and keep
+all field initialization in spacemit_i2s_init_dai().
 
-> Nice catch. Please follow the Rockchip approach: keep the static
-> spacemit_i2s_dai minimal and initialize the playback and capture fields
-> conditionally in spacemit_i2s_init_dai().
->
-> Simply removing the assignments from spacemit_i2s_init_dai() would leave
-> channels_min nonzero for both directions in the static template.
-> snd_soc_dai_stream_valid() treats a direction with a nonzero channels_min
-> as supported, so the driver would continue advertising capture even for
-> a device with only a "tx" DMA. The binding permits such a configuration.
->
-> Please preserve rate_min and rate_max when moving the capability fields,
-> and send this change as a separate patch.
->
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+---
+ sound/soc/spacemit/k1_i2s.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-I'll follow the Rockchip approach and send a separate patch.
+diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
+index 2d5ea1fd5d49..28a762769253 100644
+--- a/sound/soc/spacemit/k1_i2s.c
++++ b/sound/soc/spacemit/k1_i2s.c
+@@ -354,22 +354,6 @@ static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
+ 
+ static struct snd_soc_dai_driver spacemit_i2s_dai = {
+ 	.ops = &spacemit_i2s_dai_ops,
+-	.playback = {
+-		.channels_min = 1,
+-		.channels_max = 2,
+-		.rates = SPACEMIT_PCM_RATES,
+-		.rate_min = SNDRV_PCM_RATE_8000,
+-		.rate_max = SNDRV_PCM_RATE_48000,
+-		.formats = SPACEMIT_PCM_FORMATS,
+-	},
+-	.capture = {
+-		.channels_min = 1,
+-		.channels_max = 2,
+-		.rates = SPACEMIT_PCM_RATES,
+-		.rate_min = SNDRV_PCM_RATE_8000,
+-		.rate_max = SNDRV_PCM_RATE_48000,
+-		.formats = SPACEMIT_PCM_FORMATS,
+-	},
+ 	.symmetric_rate = 1,
+ };
+ 
+@@ -399,6 +383,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
+ 		dai->playback.channels_min = 1;
+ 		dai->playback.channels_max = 2;
+ 		dai->playback.rates = SPACEMIT_PCM_RATES;
++		dai->playback.rate_min = SNDRV_PCM_RATE_8000;
++		dai->playback.rate_max = SNDRV_PCM_RATE_48000;
+ 		dai->playback.formats = SPACEMIT_PCM_FORMATS;
+ 
+ 		i2s->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+@@ -411,6 +397,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
+ 		dai->capture.channels_min = 1;
+ 		dai->capture.channels_max = 2;
+ 		dai->capture.rates = SPACEMIT_PCM_RATES;
++		dai->capture.rate_min = SNDRV_PCM_RATE_8000;
++		dai->capture.rate_max = SNDRV_PCM_RATE_48000;
+ 		dai->capture.formats = SPACEMIT_PCM_FORMATS;
+ 
+ 		i2s->capture_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+-- 
+2.43.0
 
-Best regards,
-Phuc
