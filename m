@@ -1,119 +1,93 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59283EEAE9
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 08:08:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785830911; cv=none; b=WYJT8zNko3PIubuLKfCJ9QAWax6hR7LVNGrQJ9Ie+c4DVAbNrac0v5PrfhzMfftpcW1oD/S09diWaxnKFbdU36bAl6njRoAO/Wc7KLzW8o1wvHAxayVMytp/SXIc6IK7LUqqCEEfedDPgNZBJCty8eSZF5NSCGNHqrkmxDA75yg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785830911; c=relaxed/simple;
-	bh=R7uRK61hw3CVR8tJK+r5WwYG+d7nfetP6ZE+BuElEhQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rZsU4YLPrAC4kbxqMpc3ANnd+tJVcIJlppiq5prPutZsQDAhFuWw5fS3LAkxBOl9nQMFjhSEdgC43Shbd3lr9acCHpCh4altkeMBO7NFFxmBLgxlGHbWSV2slpSDiZMLr9HWL/OoPo8obnJkfKJg+e7RYkFg86HTUdpbIxm3mNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=XTXpR6J2; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B14042EEAB
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 08:10:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785831062; cv=pass; b=kbF+HYe04WaOnEF1nx15Z/4dDlbjxP3c6pXHRT/j+agPJtkAQrSacjD2ro929Ob0PU8D/G906jOII1rsbEAKq+tiLxEp/iDVbNTaReO+wWhYoqS0rVMxSBnyPIVMbBc1HBc2hBCkWZKbjLwtGvUG72T8jA0GWVET/yLjtklBmY8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785831062; c=relaxed/simple;
+	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o5XZMJ3e+LNbpccZR9pv/rXKAs9T3E8u1fn3O9aZlabGe6BbU5oPuyNFa8kW/JcGfY7kD+DeA0o+D4nHPxXmNXs0nORkFcG9xmAKgIFglCzrIhEk26dJvF53p6uRWFivVvP5i+dggHz1yvvFi7N9aMXU+Kfs3oe/BFcrx+I3aWM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=ak86VaXI; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="XTXpR6J2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1785830793;
-	bh=6gXVxn6BRjuds9kRjwk4efJbrA6Q136vq3bJ3il3XF0=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=XTXpR6J241kfaxM8Qqj5DjAO4b+Qe7X86BXsdrfjolj+rzqEw9xAa5VyFBHGbMoTb
-	 iwk7PYxa9/vBd+Ay6MaQhWoKZRxDbEpriHotMm2mQt12FjX5inj3LIh+LmXm/nfcw7
-	 JP++ToaocS2o2PoJlj2VDXENnDAK2vPD/UbaRQNQ=
-X-QQ-mid: esmtpsz21t1785830791t44ff0d4e
-X-QQ-Originating-IP: cxtzIR9mVDfKgL1wExk8Ig2Kk2WishVAHy1amntqvbA=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 04 Aug 2026 16:06:29 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 3732353864578006968
-EX-QQ-RecipientCnt: 6
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Tue, 04 Aug 2026 01:06:24 -0700
-Subject: [PATCH] MAINTAINERS: add SpacemiT K1/K3 I2S entry
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="ak86VaXI"
+ARC-Seal: i=1; a=rsa-sha256; t=1785831029; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=QLFfD1V+4nQg5tkAgOyb25zWmDiwfVkh8QfkmFdrnqGMcSwbIwPPlhAEo3ufL4bhC0xieYoX+UbpBE4xWj8Ol5hJ4T6CliKdqgWlraL3tAuylSRDfdCPfPsyi8nOXkzLvNg4tYBRDPfuKSDUkWRCJLE+6ZYxq3i2TflWI67SGUA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1785831029; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=; 
+	b=KwbX9K3oE2geWJjVPNeiMO56FgO9ztodEKLXzVYpB8HTUdTwS3bAt5iiJ7K+dROFUfGO2h4CBW3bLslrAQ7Y3OpddqDvV+ZM3SuQSr74Yukc5YUon4OyR4Un1WwQsqduui3RbblU8Bqj90ec2e8YKB9uM8kjykW8RibsEbmRtmQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1785831029;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=6iE1had4Tg/gR0N8etf03PCwEV/trK2r9t6ymr9IPEg=;
+	b=ak86VaXIIMkrnmk5pJ98XNGP4niTPwXb6zjaTL2AwzA38i4LpOW0EmyWXPaPOW7U
+	GsmdOEkx3f/xTNLuS21iA2fOgVHpWni1e0yeRAOouIe14Hs9TELcShb6MezcOoyvz+m
+	dTd9rpoeYXJfBUppxrEZYgFaPlOTQkJGz+3CWCXc=
+Received: by mx.zohomail.com with SMTPS id 1785831026677755.103961666094;
+	Tue, 4 Aug 2026 01:10:26 -0700 (PDT)
+Date: Tue, 4 Aug 2026 08:10:14 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@outlook.com>,
+	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH 1/2] clk: spacemit: re-enable PLLs after init
+Message-ID: <anGeZk0-YShccqwE@pie>
+References: <20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com>
+ <20260804-k3-pll5-pll8-1800mhz-v1-1-a3a75866ce32@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-spacemit-k1-k3-i2s-maintainers-v1-1-f19ac47e3a7f@linux.spacemit.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNQQ6CMBCF4auQWTNJWwyIVyEshjLiSKikU4wJ4
- e5WXLzFt/nfDspRWOFW7BD5LSqvkGHLAvyDwsQoYzY442pzNRXqSp4XSThbnCsUp7iQhJTHUbE
- hdyEa28G0FnJkjXyXz3nQ9X/rNjzZp18VjuMLKqXo2YIAAAA=
-X-Change-ID: 20260803-spacemit-k1-k3-i2s-maintainers-7a24aad9b091
-To: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Yixun Lan <dlan@kernel.org>, 
- linux-sound@vger.kernel.org, spacemit@lists.linux.dev, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=996;
- i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=R7uRK61hw3CVR8tJK+r5WwYG+d7nfetP6ZE+BuElEhQ=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFmFc1sMN8bLx7+7Uh/nVey2vjxFY+2lqO5eTZ+LUnNiS
- 2PzpoR2lLIwiHExyIopsnQ/4NlW4BNlWyBQ6Aszh5UJZAgDF6cATETyOsP/YuMVzo3tHF/1ty1R
- a32++35x8gQ+rskc+7d8ZdQ4ve3fAob/BScDTyzmucn5atX78oAEqaC3YnUszwoq0j/lFql8DHz
- FBAA=
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NJ9msQyD6LQVrK/RCeYpM+RUlKK9/3wgJIN0spB06P64FhpraPNXnLtA
-	CBXBj8AoL5zSNfRlc9A8J2Dt/XV0SMt7M9TU/g6fZ3ALJF/4qssxJIwzZAbX70n2TiLXXg1
-	za0/LIZT357mSpcTwP68StzhFsImuq5lYflY3Io7Vg9IxnvpRlz50552tqSC3Qfgy9wdm/C
-	++hoQPe+XVrY0L46eVUXZPSPUG3trwpXYTQ6JXY1+tpketkj8n04daOYNJHj8wJlD8OHATb
-	PQEWFQn1YUXCJOwv4I1NS1+4a6PToWWr15bcg0kJiy+qZ6vHmyGIpZAmVXmuG9e7i1prV+K
-	/lJyLMRZ9URe5Aq6AUfPcKEvXKBhuso1sT70GDmXLrx2zqNHd7Oq3aN+CfcgAfUVs9bEikK
-	ks8ko/Bi9rIcZJ59a+fIuXQ5uP0LAQvIqCu8eBqwrHN0XobDRg6r5px/0LrlXuWuhrRTYKy
-	yhY6XDI9IXwuMSHQkM8AoFhQ+v6Hr8t/gz055tSfKkQ2a7+CdzLjgxppsVVDBKOXNEpZull
-	ghNZhDPNQd6ytqzQZpUgTS0DQEnA40CsZjoYMR3be4787jdy91VvAmEmcSFg+c83ko7ofE4
-	dSaYJlbJwhon8ypFQfT6NAEcjTG5Vs9VkMGczA8yuNBU/vSTaYQj4ft+Oz2PNd4dLANChEx
-	sSoEZlGXL76vnWalffD7EFGgOu2KYyyMZQiI5tth0yg0N2Sr1SIsauScGXP/hRzfMX7PHxC
-	ku0lKr96SkCmY3LPHwoRXvPeWurLSkIi9dnQd/pJliT2ZFlaQJPFkfUNLY05hpvajdHWaH8
-	tepuwCK9W8Fq61n9+T0Ue2ijBpH4ZYnUr9H5aKMpQuirR2rgtXHO7PbZ8t0mcz1zBd+c5mG
-	no3+QuZwze6q7FnRZbdoxmGxvGMWyHDDsqDrCc8sx4c+pudeOd6nlqGxTztf/0V71Ii1ws3
-	FMFH/AzQCkC4L1SezL2L38uJAsmckPz2xI2o0PtOhFf89NuWkcl2yd4jO7vqeOlOLR0vJLN
-	iwKI7Tcz4y6v1PSOhQ30mE0jA93HoaKk2l56cKVQEL5qmzYfSbMtFL/LDVR43iclQQe+8wj
-	DPvjiEWywpOYUR4BL8YDJl9PU+CYGUJI7yRudgQ143Aa/kyvN3a6UmtcShravaDrQ==
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260804-k3-pll5-pll8-1800mhz-v1-1-a3a75866ce32@linux.spacemit.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.10.1.5.2/285.815.77
+X-ZohoMailClient: External
 
-Add myself as the maintainer for the SpacemiT K1/K3 I2S driver and
-its devicetree binding.
+On Tue, Aug 04, 2026 at 12:02:55AM -0700, Troy Mitchell wrote:
+> The PLL and PLLA init callbacks gate off and reprogram a PLL when its
+> firmware configuration is absent from the rate table. However, they
+> leave the PLL gated off after updating the registers.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+I don't think this patch makes sense.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a674e36529f7..18e92a05e467 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -25427,6 +25427,12 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/i2c/spacemit,k1-i2c.yaml
- F:	drivers/i2c/busses/i2c-k1.c
- 
-+SPACEMIT K1/K3 I2S DRIVER
-+M:	Troy Mitchell <troy.mitchell@linux.spacemit.com>
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
-+F:	sound/soc/spacemit/k1_i2s.c
-+
- SPANISH DOCUMENTATION
- M:	Carlos Bilbao <carlos.bilbao@kernel.org>
- R:	Avadhut Naik <avadhut.naik@amd.com>
+If this PLL is essential for some components of the systems to work,
+there's no chance to re-program it safely after the kernel gets started,
+since all the PLLs in K1 and K3 are specified as CLK_SET_RATE_GATE.
 
----
-base-commit: 1590cf0329716306e948a8fc29f1d3ee87d3989f
-change-id: 20260803-spacemit-k1-k3-i2s-maintainers-7a24aad9b091
+If the essential clocks could be re-parented glitchlessly, registering
+a notifier and re-parenting it before the PLL disables might be a
+solution. In this case, we need to delay the operation in
+ccu_pll*_init() until clock registration fully completes.
 
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Otherwise, re-enabling the PLL seems totally extra here, they could be
+enabled on the fly when it's going to be used.
 
+> Re-enable the PLL to complete the sequence and propagate any lock
+> timeout to clock registration.
+
+Regards,
+Yao Zi
+
+> Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> Fixes: 3a086236c600 ("clk: spacemit: ccu_pll: add plla type clock")
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
