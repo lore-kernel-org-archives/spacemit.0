@@ -1,74 +1,83 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8334D43E06B
-	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 13:32:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D262543849B
+	for <spacemit@lists.linux.dev>; Tue,  4 Aug 2026 13:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785850362; cv=none; b=COqSyWyKf9IJP9Pj+oRDjM6+XHJWy5GVfpxdBPnSx0yrbv5yXY0wM+dSDxMJTVOUvyoay0UrdPaW3SRqESqxvXFuq/lvg37EL8PWLKvYR43/23+43LnYegfS8hVa10EDQtJoh70qfHmLTbhBi5q2c7x2/jlrJS+en9F6MVyAPXs=
+	t=1785850363; cv=none; b=IPrnc9bwYddrVfZ4NMrxkcMCy8WyfV0ua0XvuBV87DPuQu33ZKTdJQtYOaF/7NqddhHi97usAz9eC6FYgV3pQO6CoDBZKVz4tXP6GdtxvQnft40m+QCL1kHaNM4RWEzBJ0LEeIgCbw3CVbKjCIQXcZrk1I7KBZAmPedhUQ+tfBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785850362; c=relaxed/simple;
-	bh=S7uc9JGdxOwR1bdhe/OsfcOzAKJ8rWbmIrOkJ5ul6x8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u7M58S/SMPb4cXB9x9YLvuVqCE8w+9PyQ6Semrjl6ubqER5PaRsVYAI+qfNJ9baajPPh4w6cDBiGE2YpYCJ3djnL1YjtjdKYgxhHgys9Vt0eIBJCPUpOiy3r8W4WGoawgjuP2eRVql0X5QtYQChjzKXyLWtWW4T6jGI1mGX9mjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fR5BP8Ds; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1785850363; c=relaxed/simple;
+	bh=uQjpvvh5tM6LSZCB3GgPu4orRfOX4CYcABKTac76MX4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RZTaWJdJZ0Qjcj5DwzExdthgCK17yKkHIPomkhjS6hHhzRKc7gcL/wPSyvoCEc04EPBxLGCWrvD0Hps6LPVTzsiTXHMeYslyTuVf1CLs4PAyTXFaFUaxQuMQx9H6L0nKBxp4XVDoX10YXSIVB0QtFoUYh/U26ri2/bSM3LWdcfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TmFeONgz; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fR5BP8Ds"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-49558ce01afso25328855e9.1
-        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 06:32:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TmFeONgz"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-49558ce01afso25329075e9.1
+        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 06:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785850359; x=1786455159; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LnS+ToAVs8VPBevN/ktqdqEpqgN1qgKy4u1VdvZUrps=;
-        b=fR5BP8Ds3b9jbF1BBezBxxn1Dd4U52cTiv0Di1PXYSAGlJETiIyCRcF8sL2RC1S+yM
-         dODbtgq82J4zHyEGm6x4k1uKCq5QBXxmDLdQ2UGWt782LzE158iQm0BBoMU6d7yCDnjb
-         1gI6diFKLMB02iQ9KDLGBaibDjQ+4/yH43S4QAacP0CL0+hzhRBfK18B6u44LLzhh0Rd
-         0y0Hr5xBLuvIYlzFt5nDtigtBpXwqkHjCj48zKiTmXAVonNaQShkmnG8L9VFLV3+MjM9
-         XK3+6jnsmoSKhpyhZ+pMouaab3zqhgei4/P4tGoO04ADc5fpzP5o4pIrZfvRfiB52Ha1
-         /qtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785850359; x=1786455159;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1785850360; x=1786455160; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LnS+ToAVs8VPBevN/ktqdqEpqgN1qgKy4u1VdvZUrps=;
-        b=EsJgxms9DFyWbM7fEuIIh8uRq1JcnrCJu8+xWApUjY/trBdtKuY3PXqrmBH99DIcN4
-         cN1MekgjpHEZYsID60DBYGwAvGRtHFLC19rp5s+4PU19eT3h3mHSPl/lTOPU3GMHMExj
-         sp3/TWwCNxjQ+soebLqHxRtgBhw++Dzk0pn74OYMhOE4k4wWsmImBWRDh4vCr7++8TeF
-         dzeYi6InXdJFEEibu1JeTI+AE9BIrFQWduZIQ3IJkZU3TzGFW7hBXNcfgDxmPMex8f6z
-         vzbxeHxP3nl7HBpM+uekEhtE3bJf3WN7BbYWiUX2ajtBRJdSBqaegen/MdDp7hoqSMnl
-         x9Ag==
-X-Forwarded-Encrypted: i=1; AHgh+Rp5Y/oX5P1BNnQJteBCTE7iiJZIEX9gAsJVMncUfX1TbnODxJeTcFufaS/9cyJdfgGoDLRSsdYLIA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxH0cB5nhq6d4JZfBV4GCBocXq3jXl/jOpLI+kVpNrPlyvKOMPR
-	4oMA4Vi49i6KisG/pfoSM+OLprdmtN/FzuofOFJlvXmMsOqwUMfMic3eqVy0Fw==
-X-Gm-Gg: AR+sD12yIkvQCwSWzvbhBSieXV5l6CfL9e0yk6B73W597l/mjUMvgo18yE8OVvnCaII
-	InK+PJY7/bQDb86zO7kzaUlJTdkU4ggk1JW8XM7LCFosTPuD2u0nu2Die1M+Q6lnUXMw9L6BO4j
-	7f8O/ieDAnTKG8jEJovaQ4nDNhO2uKxVzEXRKzWP8VJqeU2CG2NprsaO6G4hOX2H2hoD0ggskK/
-	WZGZfl/fqCs6ZR77BjvjM1lo4WiFv5jvOyjHv1x/IW75J+7qtY1EiNcR0DKkndAnkfYgzNvLSsp
-	YpqjqvKXwDJ1pvTAl4ixVix2Fp8UDVPyJ0LKnKTljDRE6KT+gTolXq5kIR7nNxNfTZ4TE5sK3bH
-	GCJHdbF92WwDSwAGLCF0ZAEx2uwebVXNmc8kfS6R5mpRBBqNuGqDWZXTeUxxo8MIcdcWSm9fumJ
-	Z5d24CHFPUgodtBDzS+gzE/HXSOMDlYNiqtuqWfaKy5QrVguckLp+H12qt9dakKqeGp54kdeYnt
-	7GUo7f6KoIbv4T88SixjfV22uA9ay4Wu2ICoJmZnA==
-X-Received: by 2002:a05:600c:a45:b0:492:45a0:dcef with SMTP id 5b1f17b1804b1-4980c66d8a5mr291501805e9.5.1785850358389;
-        Tue, 04 Aug 2026 06:32:38 -0700 (PDT)
+        bh=kGdbltKWpfHXSCdQSqEjll17z2tSjmzRYfJiMwHBwqQ=;
+        b=TmFeONgzhyOW3elxrvf9X6Dr7IlcGYzrI5fheeYtPL4CaJAb6Fs6RDYhN5xRPErDZc
+         Dl8Ax8ZbArJQbcdH+VsTTvE/v2KbIhrgQM8Z+cZ5CAACSMjeMq98Q7zr9iEwRsYpxU4p
+         YQN45ZMdmXt78Y1ZaduhpQqIM7QHoR0YNZcjID9kJSCsYBCsXpn6tBqBnVJ5EkXObnim
+         wVjqUd/awkQANMxWKnLS19Mxlqxs9iUR4mT1FwdO24aLyUXV9yMYqQ0BLJrPMw+gTAVH
+         hJGYOI25sFXQrtbrvoYUn0lf8Ahf74JkSzfFZUeU8/eP36zxOESRPjBYYp6ajsdbz66x
+         fgvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785850360; x=1786455160;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kGdbltKWpfHXSCdQSqEjll17z2tSjmzRYfJiMwHBwqQ=;
+        b=TVuYgJdci5f6Kzb0gs8s+9Njv+N1Zbp8R9VeYtyDGdaQOn6Q4r9Vd2gRnmGBBN8zHD
+         qIMBejpl6xh5POziVZ5DEI2LQvTAnlIubHuHHA+rpDIw7SFO1iG3mLjhRBZWAOjqE8qf
+         dtRkDElx3ewVOvkSEpY8ZUbj1t8aGO1ZmW+euZS7w9aheXrcFuTfZKlT2Yl8whm7D1gy
+         i5s3GB720NLn8HEhYkGOHrUmTEONHack9YZz3+H+S7OQzj4zlYuMGVkP95hCTulq8xDo
+         GDPI1gwXmodvZwjKg0C+ODo+4OZiuht3F6+g9/OB1ONve+/bYvKWUR6pkibOM7thWQRq
+         DW/w==
+X-Forwarded-Encrypted: i=1; AHgh+RqQ3sV1zY4sr8d2nCDJlnejOgaT1p5WiNKAqwJzMQklYvnIl4yxMVe/s1U047fboLFvRXpQbLuGPA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHj0ZQDiKvKN6gYOwzB6Nq6WdaGxYHDACPnSSn4kWB3YFrj2vy
+	civFkCHH34AMTWvbxeJIVphIWRe9wTqIzSMniunB8/8AvEzAVA2gLO0b
+X-Gm-Gg: AR+sD135XwiMtTL7XDWNhN5xvYuqFfPhvkdbT6p2Om7xbdVws3Vtd2FGb8hXJU32uI3
+	LoOa7feKpgqTkaCvf7NIElbqhwI3Bl6wKmlATPHyqroTNwbgvy8HFJNGvVnKQnIv0kKnMiu03s/
+	dehUIf0EryU8fd1soblUTytJme6u+JBaEGvm1ykaoqZIUztkJ1wQrGW5alePvV5nAA5aRoRHVzq
+	fg1SAD+2j8NHA4JIYZljajNRnO0aMEmIGlhHHCHT/ogA3Bbn4S/034gQD9OnoajFy0VMHefvyIr
+	6bifX+XSEwvbxzXXwCr5HlUWwuycmqlwzoqMvaD6jde0Av9nOvqoihgNWO/NQr21/g3mZ8/9rXS
+	1eKMMXinV5skGucKXnvkliaaX60Q6w6UHN+MULR4rmgubmnIcG44GoEgYft9Yc7JfeY9muoyXVI
+	uVzOdS5/1RW1iiqszGY9KG6smocieXdZ5f9ugQ2Vp1x6WWO9UBPmxFXGU0aa0O0Si6xeilecwuv
+	EF3zbuIm0VdZW98GA/y4TwoxN+9UT4=
+X-Received: by 2002:a05:600c:154c:b0:499:4d4b:be2b with SMTP id 5b1f17b1804b1-4994d4bbe5bmr27679215e9.16.1785850359884;
+        Tue, 04 Aug 2026 06:32:39 -0700 (PDT)
 Received: from mamamia.internal (a89-182-139-70.net-htp.de. [89.182.139.70])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994a0f7bf4sm88037735e9.11.2026.08.04.06.32.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4994a0f7bf4sm88037735e9.11.2026.08.04.06.32.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 06:32:37 -0700 (PDT)
+        Tue, 04 Aug 2026 06:32:39 -0700 (PDT)
 From: Andre Heider <a.heider@gmail.com>
-To: Paul Walmsley <pjw@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>
-Cc: linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH 0/3] riscv: dts: spacemit: add cpu scaling for 3 boards
-Date: Tue,  4 Aug 2026 15:32:31 +0200
-Message-ID: <20260804133236.205668-1-a.heider@gmail.com>
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/3] riscv: dts: spacemit: k1-musepi-pro: add cpu scaling
+Date: Tue,  4 Aug 2026 15:32:32 +0200
+Message-ID: <20260804133236.205668-2-a.heider@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260804133236.205668-1-a.heider@gmail.com>
+References: <20260804133236.205668-1-a.heider@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -77,36 +86,74 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series adds cpu scaling for 3 boards, each authored and tested by a
-community member on their device:
+Enable CPU DVFS by including the OPP table and wiring the CPU nodes to the
+CPU regulator supply.
 
-- k1-musepi-pro
-  fixed include order  
-  v1: https://lore.kernel.org/all/20260614122812.2287506-1-a.heider@gmail.com/
-
-- orangepi-rv2
-  unchanged, included here because it's still unmerged, probably just
-  fell through the cracks
-  v2: https://lore.kernel.org/spacemit/20260615-k1-cpufreq-orangepi-rv2-v2-1-237f006e580b@gmail.com/
-
-- k1-orangepi-r2s
-  new patch from Vincent, cc'ed
-  origin: https://github.com/dhewg/openwrt/pull/3
-
-Andre Heider (1):
-  riscv: dts: spacemit: k1-musepi-pro: add cpu scaling
-
-Jonatan Hazell (1):
-  riscv: dts: spacemit: orangepi-r2s: Add cpu scaling for K1 SoC
-
-Vincent Legoll (1):
-  riscv: dts: spacemit: orangepi-rv2: Add cpu scaling for K1 SoC
-
+Signed-off-by: Andre Heider <a.heider@gmail.com>
+---
  .../riscv/boot/dts/spacemit/k1-musepi-pro.dts | 35 ++++++++++++++++++-
- .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 35 ++++++++++++++++++-
- .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 35 ++++++++++++++++++-
- 3 files changed, 102 insertions(+), 3 deletions(-)
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
+diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+index 246f8f2ab62b..23f32a8a3d45 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+@@ -8,6 +8,7 @@
+ /dts-v1/;
+ 
+ #include "k1.dtsi"
++#include "k1-opp.dtsi"
+ #include "k1-pinctrl.dtsi"
+ 
+ / {
+@@ -99,6 +100,38 @@ &combo_phy {
+ 	status = "okay";
+ };
+ 
++&cpu_0 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_1 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_2 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_3 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_4 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_5 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_6 {
++	cpu-supply = <&buck1_0v9>;
++};
++
++&cpu_7 {
++	cpu-supply = <&buck1_0v9>;
++};
++
+ &eth0 {
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+@@ -178,7 +211,7 @@ pmic@41 {
+ 		dldoin2-supply = <&buck5>;
+ 
+ 		regulators {
+-			buck1 {
++			buck1_0v9: buck1 {
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <1050000>;
+ 				regulator-ramp-delay = <5000>;
 -- 
 2.53.0
 
