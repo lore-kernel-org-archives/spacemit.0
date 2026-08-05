@@ -1,164 +1,191 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31FD3DE43F
-	for <spacemit@lists.linux.dev>; Wed,  5 Aug 2026 06:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2733C9EE4
+	for <spacemit@lists.linux.dev>; Wed,  5 Aug 2026 08:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785912249; cv=none; b=i2pGAUXI1Me9xc4GFPPFHMP+HgqGQaz9UhrKIEB+KkoP7BmXKvYHKQCsK6xuyd58HQ+WfHVdrJHBC9D8QDL57K8D9d8aRIucGM37OPAm3ORpoJSNg9j33fEH/3V9T7bGVLFCgL1+WfflClcL3464fVZr02xqlS/hFQkZhneXUJ4=
+	t=1785919964; cv=none; b=WDW0zX5CO9Y1Dt1fHvcbtROAeOvP59oGkt1lWHLqwc+FIIlrvh7rQIaPY5GxfQAWKVFAd0XsyTTXpM1Z5MuQCeeq7RAI3Ec8E4DcXV3GfRBZfBXBxVa+DUxeAwTg/LBFr1HnLUPKJiKxh0Oz3WlfjBjjV+Ro8qcZMX6vqtKZAtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785912249; c=relaxed/simple;
-	bh=ONk4+ySJ6/04rtJi3tnz+Bcm2WtGNmnRsdHa+ACx5DI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XIryKe2Q4K0MVLeFCePuDknsYbp77hAgIPj4FHv3ODLLR9uzfmFVkLZiUmyY5SM7JHkxgHn9p4Bla3J09psTpV0zdwT070pnP2R2N35uIVToLgAqw9cqMDdKsN+jO/emBM1BW6llDwTzQyCvpb0AY2d0p3bIZYYHy0x6fznwajY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jf/OUJby; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785919964; c=relaxed/simple;
+	bh=ti+K/qbCna4x73H0nCznzAUBC54xgxZKhZFl+GDk1OU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=luewcAGEULpnFoQL21h7F3k1/PEblYzSwvA6y6wK0gHt0KuJ+c3RxqgjKUG2qFdMhEjAIjIgkDwT4Hq2MafaRNcMhyflHGYvJN85HFoQCkcSIf2CXG2RkY0EWS0F+n0Ec6kbzbVNP9CmsRBOTETfEFSChPyQCcpWVR9oZrjU9WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GYNze0Ra; arc=none smtp.client-ip=91.218.175.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jf/OUJby"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ce98cb8165so7612695ad.1
-        for <spacemit@lists.linux.dev>; Tue, 04 Aug 2026 23:44:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785912247; x=1786517047; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jFfF9vOjPIRrYjKrW5dKD1o7wgpldgxBl11pAMSS8hY=;
-        b=jf/OUJby/toQfOrA+QUwNbclu5dAMGeMECUdw7iFDfa8y6TfIYl01lPtvhoxgnH+bg
-         9Tf8P9l6WHu5B5sYx3ZcIiXfiG1W9wMYLbxyZOI1Uc3QKeiYja2PbEIjOEGXTjmGmLBQ
-         H5JNZmtrYjpqlAJlFzlBublhFEmpnZOuY7kjj404JfOj+37fViHO1CKldHjWQltFB1iO
-         Ah0bUKDUFs0G2HHelJ9a25v01/wEtl0k0HLGIHL9uxJH9YpYlZiNykVj27LUQ/jWIY5N
-         2sBRu7DduqnW8PKnZ1YpXZmSfO6+RoMWVEiAtxjq6YA6Xf5ybq044ZHLRA5fD+YaoghA
-         dH0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785912247; x=1786517047;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jFfF9vOjPIRrYjKrW5dKD1o7wgpldgxBl11pAMSS8hY=;
-        b=fOhE4CYJ8MUWJgcQT/hg4NePWrLFhNOjt1iql4zF0gXGSXBHGe3DjWRxASPfU9wI92
-         giG7XkeTxrB2t6gKIt+PjrsZQYwZqHvHl0iwBPBu6bmhiBdfgG7a3narrJKZ75fhQli6
-         WQjSxApfFDaLLJVWO/kylL5yr0ihWR6sXfQ3kF+YiV6u6qxUqsOEqbjznydhydMJ0xDz
-         arOalxXhXQu2iLJF3IfpD2SzOJhIiXkXAZV99JpVBnhCgHiE67vZbXT6lVdVT9C+b2eD
-         TsVToBhRf2/Cetx6TU48ADaMTLVqDAH58W+IAv/aA6zPWvVYVNz40d5J+W0Zrydhly9w
-         E4pg==
-X-Forwarded-Encrypted: i=1; AHgh+Rrq6Tlhe/ErhT/5lyjU10KiwJMXgtVWD6dKF9lVMs+fQc/n+zI5H9bdriGP+JgrZ4fHXa0PISdkGQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzYvtM0ZXHqsEsUVHVRuWoKBLYIYhyQAbQ6hLqRH2hZZuYczYr9
-	/yaK9s6Z4HsCY8QnDynr2oLYalQUYItlVd6qX3OYxGieo8ThHF7Cpjzz
-X-Gm-Gg: AR+sD11Grd5skCj4bS9O51R5OnUV5ew18snINnDCKPtkfqurX9bsViXGEa7eIHBZfF8
-	NSONPqHTOpdr+gDmcb/1fYbt914sYL900r5zmKgzMz4UMRWQIBahoKlQ8JUa1afy5WkkuqsPlhX
-	cW9JPVQhPSRbhzY2octCN/cg5iYWAaHszmT2P4V07gfXjs/Cx/PGXvAREV35GE5wOfFDz0c4OQk
-	RPAGSBgyRtUPoWMhJOv/+18Tstmvm/OdDLGbfh1FgKJJRoe6blHyfItrYGvlUmZKMqoLReqVhNh
-	HDCJn1m4GBl87Icb6wPLvR2kbnxHG8AokoY6IZkRmSG3Y0fL8Ehge+zd6w5g16yxE4PcSw6u36H
-	SjwewSadXnBgbR511+ibpsmfEKfFqzfMC2dFvCctZO+z5KVyUudNzC2taQ9gRwNwOQWuAjr/gB0
-	MREsWsAzpClXHpKwuPlOy+Te1p+uZUDhwWJKGxEugGckUiycQGqzNuLVcA3M/x6UDvw9EnEoITs
-	OVNZGyDt6rS0MwuMkxtm9uqjegIqHLbb5YfZWzO5Pi2BJlEnAQP+O29kd6jeXCzw8RBGw5ULtoI
-	i77j4A==
-X-Received: by 2002:a17:902:e551:b0:2d0:401c:2edc with SMTP id d9443c01a7336-2d08aa1c85bmr95025355ad.1.1785912247199;
-        Tue, 04 Aug 2026 23:44:07 -0700 (PDT)
-Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d0aa491747sm14094435ad.39.2026.08.04.23.44.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 23:44:06 -0700 (PDT)
-From: phucduc.bui@gmail.com
-To: Yixun Lan <dlan@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Liam Girdwood <lgirdwood@gmail.com>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Goko Mell <goku.sonxin626@gmail.com>,
-	Jinmei Wei <weijinmei@linux.spacemit.com>,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH v2] ASoC: spacemit: advertise only DMA-backed DAI streams
-Date: Wed,  5 Aug 2026 13:43:48 +0700
-Message-ID: <20260805064348.44283-1-phucduc.bui@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GYNze0Ra"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785919957;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=tscwLloeuHeKikv6fxJbnoM9flEfp8SS4g24wd5euO8=;
+	b=GYNze0RahhxKiAKCnWOf5DUhFtL4MN1/rXEkFj4CpwYvjAtpGWHtosDWYTuhlPx0mhGmxS
+	tDrTF3vgFyJz7SDTfJl+sVy1jhQyvKOypS5i7QHbfBvf361zVDr4ZUCGXgqVtS0I2y9V06
+	stwlVOjSOnkrL4feWV2TDFW0hy0ByX4=
+From: Troy Mitchell <troy.mitchell@linux.dev>
+Subject: [PATCH v3 0/6] hwmon: (lm63) Add Sensylink CTF2301 support
+Date: Wed, 05 Aug 2026 01:52:14 -0700
+Message-Id: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2WMwQqDMBAFf0VybkqyiUZ76n+UHjRu6oKoJDZYx
+ H9vFEoLPc7jzawsoCcM7JKtzGOkQOOQQJ0yZrt6eCCnNjEDAbmoZMHt3IMSkgsti0YYZaEULL0
+ nj46Wo3S7J+4ozKN/HeEo9/W/EVOGVwaNLbUDq821p+G5nFuMbG9E+HiFMCC/HiQPXe4apaE0U
+ P9627a9ASv2mTHWAAAA
+X-Change-ID: 20250916-ctl2301-0416b073c280
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+ Shuah Khan <skhan@linuxfoundation.org>
+Cc: Troy Mitchell <troy.mitchell@linux.dev>, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-doc@vger.kernel.org, Jean Delvare <jdelvare@suse.de>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6020;
+ i=troy.mitchell@linux.dev; h=from:subject:message-id;
+ bh=ti+K/qbCna4x73H0nCznzAUBC54xgxZKhZFl+GDk1OU=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFlFPw+uYPNY+yps5fcU89ayj+5WF92dPyXN7qt+EVfTX
+ Lj+/INHHaUsDGJcDLJiiizdD3i2FfhE2RYIFPrCzGFlAhnCwMUpABOJ0mNkmBsqECB8ZVLBj74C
+ pXWH5n3ecmja8alPchfejvCeLjkhxo6RYUu2y83Cr8e3ya9danf4g5aX+hyfwIkWMzezLrytuPZ
+ jACMA
+X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+X-Migadu-Flow: FLOW_OUT
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+Sensylink CTF2301 is a system-level thermal management solution chip.
 
-The static DAI template initializes both playback and capture stream
-capabilities before dma-names is examined. As a result,
-snd_soc_dai_stream_valid() considers both directions valid even when the
-device only provides a single DMA channel.
+The CTF2301 is an I2C/SMBus compatible device featuring:
+  - One local temperature sensor with +/-0.5 degree C accuracy and
+    0.0625 degree C resolution.
+  - One remote temperature sensor for external diode-connected
+    transistors, offering +/-1 degree C accuracy and 0.125 degree C
+    resolution (temperature range: -40 degree C to +125 degree C).
+  - An integrated PWM fan controller capable of operating in two modes:
+      1. Direct-DCY: Open-loop direct duty cycle control.
+      2. Auto-Temp: Closed-loop automatic fan speed control based on
+         measured temperature.
+  - A 1-channel fan speed monitor (TACH input) for RPM measurement.
 
-Move the playback and capture capability initialization into
-spacemit_i2s_init_dai(), where it is performed only for the stream
-directions backed by a corresponding DMA channel. This preserves the
-existing capabilities for devices with both "tx" and "rx" DMA channels,
-while preventing unsupported stream directions from being advertised.
+As Guenter pointed out on v1, the CTF2301 register map is a near match
+for the LM63/LM96163 family (local and remote temperature, tachometer and
+PWM fan control), so this version drops the standalone ctf2301 driver
+and instead adds CTF2301 as a new chip type in the existing lm63 driver.
+This reuses the shared temperature, limit, alarm and PWM handling instead
+of duplicating it.
 
-Initialize rate_min and rate_max together with the other stream
-capabilities to preserve the existing rate constraints.
+The CTF2301-specific differences are handled on top of lm63: 12-bit local
+temperature input and high-limit values, nine conversion rates, 12
+fan-control lookup table entries, and optional 22.5 kHz high-resolution
+PWM. When no IRQ is described, the shared ALERT/TACH pin is configured as
+a tachometer input. The LM63 family can also register as a thermal cooling
+device when the device tree provides the #cooling-cells property.
 
-Fixes: fce217449075 ("ASoC: spacemit: add i2s support for K1 SoC")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+The required SpacemiT I2C controller clock series has been merged but is
+not yet included in an rc release:
+https://lore.kernel.org/all/20260508-k1-i2c-ilcr-v7-0-8c2dde5c3ed5@linux.spacemit.com/
+
+Apply that series before testing this series on K3. Without it, the I2C
+controller cannot generate an accurate 400 kHz SCL clock and CTF2301
+accesses may fail.
+
+Tested on a SpacemiT K3 CoM260 by booting an initramfs and verifying the
+CTF2301 probe. Temperature, tachometer, PWM, and conversion-rate behavior
+were checked against direct I2C register accesses and the datasheet.
+
+Datasheet:
+https://www.sensylink.com/upload/1/net.sensylink.portal/1689557281035.pdf
+
+Register description:
+https://github.com/TroyMitchell911/ctf2301-datasheet
+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
 ---
+Changes in v3:
+- Add the Sensylink website link to the vendor-prefix commit.
+- Preserve the optional interrupt from the trivial-devices binding.
+- Explain in the commit message of patch 3/6 why CTF2301 cannot use
+  national,lm63 as a fallback compatible.
+- Check both bytes of CTF2301 local temperature values before caching them.
+- Use the schema-valid 25 mA drive strength for the K3 I2C6 pins.
+- Link to v2: https://patch.msgid.link/20260721-ctl2301-v2-0-ef5fb342872a@linux.dev
 
 Changes in v2:
- - Update the commit message to describe the functional fix as 
-   suggested by Troy.
+- Replace the standalone CTF2301 driver with a new lm63 chip type, as
+  suggested by Guenter, reusing the existing temperature, limit, alarm,
+  tachometer, PWM, and automatic fan-control paths.
+- Add the temperature thresholds, alarms, and automatic fan-control lookup
+  table support which were missing from the v1 driver.
+- Handle CTF2301-specific 12-bit local temperature values, nine conversion
+  rates, 12 lookup table entries, shared ALERT/TACH pin, and optional
+  22.5 kHz high-resolution PWM.
+- Propagate SMBus failures from lm63 initialization and write paths.
+- Add optional thermal cooling-device support for the LM63 family using
+  the existing manual PWM control path.
+- Move the National LM63-family compatibles from trivial-devices.yaml to a
+  dedicated binding which permits #cooling-cells.
+- Add CTF2301 to the LM63-family binding instead of keeping the standalone
+  schema from v1. Do not declare #cooling-cells on K3 CoM260 yet because
+  the board has no thermal consumer.
+- Fix the binding errors reported by Rob by using a plain compatible string
+  and wrapping the description.
+- Document CTF2301 support in the lm63 hwmon documentation and provide the
+  detailed register description used for review.
+- Add the K3 CoM260 I2C6 pinctrl state and CTF2301 device node for hardware
+  testing.
+- Link to v1: https://lore.kernel.org/r/20250916-ctl2301-v1-0-97e7c84f2c47@linux.dev
 
-Link v1 : 
-  https://lore.kernel.org/all/20260804043036.22065-1-phucduc.bui@gmail.com/
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Guenter Roeck <linux@roeck-us.net>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+To: Yixun Lan <dlan@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>
+To: Shuah Khan <skhan@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-doc@vger.kernel.org
 
- sound/soc/spacemit/k1_i2s.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+---
+Troy Mitchell (6):
+      dt-bindings: vendor-prefixes: Add Sensylink
+      dt-bindings: hwmon: Move LM63 family to a dedicated binding
+      dt-bindings: hwmon: Add Sensylink CTF2301
+      hwmon: (lm63) Add Sensylink CTF2301 support
+      riscv: dts: spacemit: Add K3 I2C6 pinctrl state
+      riscv: dts: spacemit: Add CTF2301 on K3 CoM260
 
-diff --git a/sound/soc/spacemit/k1_i2s.c b/sound/soc/spacemit/k1_i2s.c
-index 2d5ea1fd5d49..28a762769253 100644
---- a/sound/soc/spacemit/k1_i2s.c
-+++ b/sound/soc/spacemit/k1_i2s.c
-@@ -354,22 +354,6 @@ static const struct snd_soc_dai_ops spacemit_i2s_dai_ops = {
- 
- static struct snd_soc_dai_driver spacemit_i2s_dai = {
- 	.ops = &spacemit_i2s_dai_ops,
--	.playback = {
--		.channels_min = 1,
--		.channels_max = 2,
--		.rates = SPACEMIT_PCM_RATES,
--		.rate_min = SNDRV_PCM_RATE_8000,
--		.rate_max = SNDRV_PCM_RATE_48000,
--		.formats = SPACEMIT_PCM_FORMATS,
--	},
--	.capture = {
--		.channels_min = 1,
--		.channels_max = 2,
--		.rates = SPACEMIT_PCM_RATES,
--		.rate_min = SNDRV_PCM_RATE_8000,
--		.rate_max = SNDRV_PCM_RATE_48000,
--		.formats = SPACEMIT_PCM_FORMATS,
--	},
- 	.symmetric_rate = 1,
- };
- 
-@@ -399,6 +383,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
- 		dai->playback.channels_min = 1;
- 		dai->playback.channels_max = 2;
- 		dai->playback.rates = SPACEMIT_PCM_RATES;
-+		dai->playback.rate_min = SNDRV_PCM_RATE_8000;
-+		dai->playback.rate_max = SNDRV_PCM_RATE_48000;
- 		dai->playback.formats = SPACEMIT_PCM_FORMATS;
- 
- 		i2s->playback_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
-@@ -411,6 +397,8 @@ static int spacemit_i2s_init_dai(struct spacemit_i2s_dev *i2s,
- 		dai->capture.channels_min = 1;
- 		dai->capture.channels_max = 2;
- 		dai->capture.rates = SPACEMIT_PCM_RATES;
-+		dai->capture.rate_min = SNDRV_PCM_RATE_8000;
-+		dai->capture.rate_max = SNDRV_PCM_RATE_48000;
- 		dai->capture.formats = SPACEMIT_PCM_FORMATS;
- 
- 		i2s->capture_dma_data.addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
--- 
-2.43.0
+ .../devicetree/bindings/hwmon/national,lm63.yaml   |  55 +++
+ .../devicetree/bindings/trivial-devices.yaml       |   6 -
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ Documentation/hwmon/lm63.rst                       |  22 ++
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi        |  19 +
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       |  11 +
+ drivers/hwmon/Kconfig                              |   8 +-
+ drivers/hwmon/lm63.c                               | 414 +++++++++++++++++----
+ 8 files changed, 453 insertions(+), 84 deletions(-)
+---
+base-commit: a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+change-id: 20250916-ctl2301-0416b073c280
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.dev>
 
