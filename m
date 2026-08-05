@@ -1,110 +1,111 @@
-Received: from out-186.mta1.migadu.com (mta1.migadu.com [37.59.57.117])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BC03E557B
-	for <spacemit@lists.linux.dev>; Wed,  5 Aug 2026 09:26:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.59.57.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F93640D590;
+	Wed,  5 Aug 2026 13:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785921997; cv=none; b=L3QnKBVlGGsB2ZWuC7YAtLyyHDd1LASQ0qyS7KyCxLymP7dQ86cSUeNlAcrebWlEAoMrw9MWVRQBFNWitnBonAocz1CrBoG3EMezo+E/72SNcOlABZSItP6LeYljik2cK6PZGayIdzpsEQRmQAkLyUKzi2mquPCmPWzhhoO0CZM=
+	t=1785937284; cv=none; b=Q7Dn8Ex5Hs9EjvemI1gnFlE0oK+d0weccdDNzOMiocAtXwHCWyoS/+W+z+qsClPIPrtrnoexqCGOl5i3HFOnlw/POCMpRqSam8BEVCE0MyndhlLGSBkiueZHCnm2LM1caonMew8TkiXyfbBEd2ITl1M1ALkPEaUcv6gR6SNC03w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785921997; c=relaxed/simple;
-	bh=qkSmO+AW5LxoIXLT9GpKbrSpSAJky3A3GfHMGrIZGak=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc:
-	 In-Reply-To:References; b=HL+GR2tgbMXnrHwA6hG10PWv/cJjdpX41UEU+4shdG9M9wnLzNRGwYFkKSvwb7uQ/8YEXVBnU+IGglCm7ewRz96APgUxNT5oaKc26h30+H5kN6viy8pLfXRPUWdSuM+uNPsK8gZa/MKh2oH2WAuSc4gsBVEWwhyOTvDHL5BrNSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=JLV2tluV; arc=none smtp.client-ip=37.59.57.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785937284; c=relaxed/simple;
+	bh=Dl60V5oJWGATr9UoU21EUcyRLhevl9KWng0zLTgeJ3g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aMa6byyAKc2osCJPn7aQvygZWmjnzoVLPhvIMY5D0GvwCoVs9P26diSZ/uJ9Zhf10oP3eMU4vmbjUG3NlYnyyw8yq067zNjX1AYo8sW3e9+dLgskRQi9FD5OOjT47Uf0qBGaYI9yBgPoSE6UD5w5ZCeNfisVVOd/LuyVRUTBqKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=myDkPRoT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="JLV2tluV"
-X-Mailbox-Line: From troy.mitchell@linux.dev  Wed Aug  5 02:03:29 2026
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785921992;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MLkmEy2Qv+au8QUwUsCORU0DDXMr6v1e63PHv69jpg4=;
-	b=JLV2tluVrP6L0K5Jqph3/Gm/ExTCIV44fuCHhLO6HNBThduiWBloGup1CWZZLBRMR4Tg7M
-	XW7X7+DyCyR4zqYr1++Sw5BfHZIqckZKMmoSpKuKiGYGyQjUkh79l4IEeKsTDQnhm7sdNA
-	zldW6xzW+GK4+pK0nl6yc2yVLmL+UzA=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Troy Mitchell <troy.mitchell@linux.dev>
-Date: Wed, 05 Aug 2026 02:00:56 -0700
-Subject: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="myDkPRoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F981F000E9;
+	Wed,  5 Aug 2026 13:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785937283;
+	bh=RYj/wJsPNPiCwZB0BrZVoozSYFvU01Oky1FUJmpEOEk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=myDkPRoTj2iEmDN0EN80Dhd2MtCtolJTdeQ3rYzTWgEVxImBGxK21O/DJ/VN9BW4G
+	 KGK3uYrSjc4UYtX6ufpH3cU7ZSmW5TTPFoASV1YT7w+ZA0rKTbx4G86AHM6DP4iARW
+	 T0nNLDnApmF5gmZ4h8dnfzZKuAuTjmYxPzn+8ncGJthjZdSjRUkQfLDYpxbDN+uyav
+	 7j0eqpcRzTMEvCFmY1tnIst6DnjHaiFcqyJ1f1Yo6cc6gbilYP4EhiO1cpElCRNdg5
+	 nXmZHXgRcPoMdRQENZXcBFuN982usyC/ltA+I06QVnnukOJvwfHRu1YvHJ7GtjW9m5
+	 vhfTthGpjDfog==
+Date: Wed, 5 Aug 2026 13:41:19 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.dev>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
+Message-ID: <20260805134119-GKJ77474@kernel.org>
+References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
+ <20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
- Shuah Khan <skhan@linuxfoundation.org>
-Cc: Troy Mitchell <troy.mitchell@linux.dev>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-doc@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1093;
- i=troy.mitchell@linux.dev; h=from:subject:message-id;
- bh=qkSmO+AW5LxoIXLT9GpKbrSpSAJky3A3GfHMGrIZGak=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFlFv0/xi1+72ZxzvK+hfKn9jQixffu/FCqt9bfYfWpb2
- Syn7cpMHaUsDGJcDLJiiizdD3i2FfhE2RYIFPrCzGFlAhnCwMUpABOp5mRkmKCxsWlS90G2GNMP
- e+W1Ps39ciVb1lz9/3PttjfGQVuPpDH895CwkJwi7+Zj3Jp5bG/Wf/v3z1auFtutkuLfluZm+nQ
- ZHwA=
-X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
-In-Reply-To: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
-References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
 
-Enable I2C6 on the K3 CoM260 module and describe the Sensylink
-CTF2301 temperature sensor and fan controller at address 0x4c.
+hi Troy,
 
-Set the I2C6 pin power source in the board-level pinctrl node
-because the IO rail voltage is board-specific.
+On 02:00 Wed 05 Aug     , Troy Mitchell wrote:
+> Enable I2C6 on the K3 CoM260 module and describe the Sensylink
+> CTF2301 temperature sensor and fan controller at address 0x4c.
+> 
+> Set the I2C6 pin power source in the board-level pinctrl node
+> because the IO rail voltage is board-specific.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> index a38d7b738258..95a60fbb411f 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> @@ -26,6 +26,25 @@ reg_5v_sys: regulator-5v-sys {
+>  	};
+>  };
+>  
+..
+> +&pinctrl {
+> +	i2c6-1-cfg {
+I'd prefer to use the reference, keep it short & close to where it's used
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
----
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ &i2c6_1_cfg
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-index a38d7b738258..95a60fbb411f 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-@@ -26,6 +26,25 @@ reg_5v_sys: regulator-5v-sys {
- 	};
- };
- 
-+&pinctrl {
-+	i2c6-1-cfg {
-+		i2c6-1-pins {
-+			power-source = <3300>;
-+		};
-+	};
-+};
-+
-+&i2c6 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2c6_1_cfg>;
-+	status = "okay";
-+
-+	temperature-sensor@4c {
-+		compatible = "sensylink,ctf2301";
-+		reg = <0x4c>;
-+	};
-+};
-+
- &i2c8 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c8_cfg>;
+> +		i2c6-1-pins {
+> +			power-source = <3300>;
+> +		};
+> +	};
+> +};
+> +
+> +&i2c6 {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&i2c6_1_cfg>;
+> +	status = "okay";
+> +
+> +	temperature-sensor@4c {
+> +		compatible = "sensylink,ctf2301";
+> +		reg = <0x4c>;
+> +	};
+> +};
+> +
+>  &i2c8 {
+>  	pinctrl-names = "default";
+>  	pinctrl-0 = <&i2c8_cfg>;
+> 
+> -- 
+> 2.55.0
+> 
 
 -- 
-2.55.0
-
+Yixun Lan (dlan)
