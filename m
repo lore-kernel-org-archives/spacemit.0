@@ -1,111 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F93640D590;
-	Wed,  5 Aug 2026 13:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5B2D594F
+	for <spacemit@lists.linux.dev>; Thu,  6 Aug 2026 02:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785937284; cv=none; b=Q7Dn8Ex5Hs9EjvemI1gnFlE0oK+d0weccdDNzOMiocAtXwHCWyoS/+W+z+qsClPIPrtrnoexqCGOl5i3HFOnlw/POCMpRqSam8BEVCE0MyndhlLGSBkiueZHCnm2LM1caonMew8TkiXyfbBEd2ITl1M1ALkPEaUcv6gR6SNC03w=
+	t=1785984258; cv=none; b=PCp83njx/rOCeXaJ6wXKzrPWreuYS2qU/VWRbCmoc0HqTN0oPSW1K0zZJqX93q+B+9tg4PuVHYHIp7nnx0j1u1/yg7qGG62tHCnPSNjZo9tRyvlfGMVvNzb15IY68ew9cSGR8+dfuJdJK61M/b7nWOffEs9uMcFEvREwlJaR5Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785937284; c=relaxed/simple;
-	bh=Dl60V5oJWGATr9UoU21EUcyRLhevl9KWng0zLTgeJ3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aMa6byyAKc2osCJPn7aQvygZWmjnzoVLPhvIMY5D0GvwCoVs9P26diSZ/uJ9Zhf10oP3eMU4vmbjUG3NlYnyyw8yq067zNjX1AYo8sW3e9+dLgskRQi9FD5OOjT47Uf0qBGaYI9yBgPoSE6UD5w5ZCeNfisVVOd/LuyVRUTBqKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=myDkPRoT; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="myDkPRoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F981F000E9;
-	Wed,  5 Aug 2026 13:41:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785937283;
-	bh=RYj/wJsPNPiCwZB0BrZVoozSYFvU01Oky1FUJmpEOEk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=myDkPRoTj2iEmDN0EN80Dhd2MtCtolJTdeQ3rYzTWgEVxImBGxK21O/DJ/VN9BW4G
-	 KGK3uYrSjc4UYtX6ufpH3cU7ZSmW5TTPFoASV1YT7w+ZA0rKTbx4G86AHM6DP4iARW
-	 T0nNLDnApmF5gmZ4h8dnfzZKuAuTjmYxPzn+8ncGJthjZdSjRUkQfLDYpxbDN+uyav
-	 7j0eqpcRzTMEvCFmY1tnIst6DnjHaiFcqyJ1f1Yo6cc6gbilYP4EhiO1cpElCRNdg5
-	 nXmZHXgRcPoMdRQENZXcBFuN982usyC/ltA+I06QVnnukOJvwfHRu1YvHJ7GtjW9m5
-	 vhfTthGpjDfog==
-Date: Wed, 5 Aug 2026 13:41:19 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.dev>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
-Message-ID: <20260805134119-GKJ77474@kernel.org>
-References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
- <20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
+	s=arc-20240116; t=1785984258; c=relaxed/simple;
+	bh=fdKINRgR9WJwx0vmYWSAcr2iuXt9HdtdCloAto6b8lE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=aHLpjShjkl9oMdZCtgjRue2l2aTygfy2dWEgbGJqqmPwVDF9BM/q0juyG0Q8gQB0NxnkQ5ESt6Vv/sowH/hkRqOSg78STcKWLZ0r4Fu9Hwx6d1FJtBViA7MfuYwzOEZ5YnkuJvv35oyzdBE0sBgQOP9W+XCgZ+FG+zxzFsEk/H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: b2eed532914011f1aa26b74ffac11d73-20260806
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:c371c1ee-ebea-4b17-b729-418e0d974607,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:e7bac3a,CLOUDID:b944984e5793b53cccfeaf2f5f05f109,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|136|865|898,TC:nil,Conte
+	nt:0|15|52,EDM:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:ni
+	l,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: b2eed532914011f1aa26b74ffac11d73-20260806
+X-User: xiaopei01@kylinos.cn
+Received: from [10.42.12.251] [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <xiaopei01@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1300538191; Thu, 06 Aug 2026 10:44:09 +0800
+Message-ID: <89380ae2-0777-4518-9393-171aeae613a7@kylinos.cn>
+Date: Thu, 6 Aug 2026 10:44:06 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] thermal: spacemit: k1: add shutdown action and reorder
+ registration order
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, shuwei.wu@mailbox.org,
+ rafael@kernel.org, linux-pm@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, dlan@kernel.org, daniel.lezcano@kernel.org
+References: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
+ <DK4XSEPSTY3I.O9ZFCZ9BJGNW@linux.spacemit.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
+In-Reply-To: <DK4XSEPSTY3I.O9ZFCZ9BJGNW@linux.spacemit.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-hi Troy,
 
-On 02:00 Wed 05 Aug     , Troy Mitchell wrote:
-> Enable I2C6 on the K3 CoM260 module and describe the Sensylink
-> CTF2301 temperature sensor and fan controller at address 0x4c.
-> 
-> Set the I2C6 pin power source in the board-level pinctrl node
-> because the IO rail voltage is board-specific.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-> ---
->  arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-> index a38d7b738258..95a60fbb411f 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-> @@ -26,6 +26,25 @@ reg_5v_sys: regulator-5v-sys {
->  	};
->  };
->  
-..
-> +&pinctrl {
-> +	i2c6-1-cfg {
-I'd prefer to use the reference, keep it short & close to where it's used
 
- &i2c6_1_cfg
+在 2026/7/22 15:54, Troy Mitchell 写道:
+> On Thu Jul 16, 2026 at 12:04 AM PDT, Pei Xiao wrote:
+>> Add a devm action to clean hardware interrupts, sampling, and control
+>> registers on driver unbind, mirroring what k1_tsensor_init() sets up.
+>>
+>> Reorder the registration order within probe(): register the thermal
+>> zones first, then request the IRQ, and register the shutdown action
+>> last.  On removal, the hardware interrupt is disabled first, then the
+>> IRQ is released, and finally the thermal zones are released.  This
+>> avoids the IRQ thread accessing an already unregistered thermal zone
+>> during devres cleanup.
+>>
+>> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+friendly ping.
+prevent being forgotten.
 
-> +		i2c6-1-pins {
-> +			power-source = <3300>;
-> +		};
-> +	};
-> +};
-> +
-> +&i2c6 {
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&i2c6_1_cfg>;
-> +	status = "okay";
-> +
-> +	temperature-sensor@4c {
-> +		compatible = "sensylink,ctf2301";
-> +		reg = <0x4c>;
-> +	};
-> +};
-> +
->  &i2c8 {
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&i2c8_cfg>;
+Pei.
+Thanks!
 > 
-> -- 
-> 2.55.0
-> 
+> Thanks.
 
--- 
-Yixun Lan (dlan)
