@@ -1,81 +1,78 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E5B2D594F
-	for <spacemit@lists.linux.dev>; Thu,  6 Aug 2026 02:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2AF2FD696;
+	Thu,  6 Aug 2026 02:44:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785984258; cv=none; b=PCp83njx/rOCeXaJ6wXKzrPWreuYS2qU/VWRbCmoc0HqTN0oPSW1K0zZJqX93q+B+9tg4PuVHYHIp7nnx0j1u1/yg7qGG62tHCnPSNjZo9tRyvlfGMVvNzb15IY68ew9cSGR8+dfuJdJK61M/b7nWOffEs9uMcFEvREwlJaR5Yk=
+	t=1785984289; cv=none; b=tq9hyPjwBBg+CCGt96auF31oXXfJrkGy7UCXxSSQ28etw4lwa46eryxso2LfFa7RXnXV6AGwFcYFQce+Lhnv9UTlcXs8gmCSvJXI+ZhMvJ3YOzDkS35PwIfGk9RZIKkESdaWSSAx0AQ9+lOz8YrtuVTOX6sJG9D7ATpY67dnUyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785984258; c=relaxed/simple;
-	bh=fdKINRgR9WJwx0vmYWSAcr2iuXt9HdtdCloAto6b8lE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=aHLpjShjkl9oMdZCtgjRue2l2aTygfy2dWEgbGJqqmPwVDF9BM/q0juyG0Q8gQB0NxnkQ5ESt6Vv/sowH/hkRqOSg78STcKWLZ0r4Fu9Hwx6d1FJtBViA7MfuYwzOEZ5YnkuJvv35oyzdBE0sBgQOP9W+XCgZ+FG+zxzFsEk/H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: b2eed532914011f1aa26b74ffac11d73-20260806
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:c371c1ee-ebea-4b17-b729-418e0d974607,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e7bac3a,CLOUDID:b944984e5793b53cccfeaf2f5f05f109,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102|136|865|898,TC:nil,Conte
-	nt:0|15|52,EDM:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:ni
-	l,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: b2eed532914011f1aa26b74ffac11d73-20260806
-X-User: xiaopei01@kylinos.cn
-Received: from [10.42.12.251] [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <xiaopei01@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1300538191; Thu, 06 Aug 2026 10:44:09 +0800
-Message-ID: <89380ae2-0777-4518-9393-171aeae613a7@kylinos.cn>
-Date: Thu, 6 Aug 2026 10:44:06 +0800
+	s=arc-20240116; t=1785984289; c=relaxed/simple;
+	bh=dlqyYmVKeqyVIUQmPyqZFyzV7xRFXPloCZDvdepy43U=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=MpKIiwaRzYFxQjYgGOjigp01z7Ml5DvkZTZuXQ7cF/YHSthwE1x6oC/5Tsb8he8xFhv9p+rCGTgl8s9/cKNSuhOg/xcBpgt3cSq2ZRT3vrQ5LO2PmUWeOIF5yRleyeMpE9JvdBKKsGfcmylH6LLY/myV/b4bCF0m9+qnbO5Yx8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XqiB5cci; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XqiB5cci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6671C1F000E9;
+	Thu,  6 Aug 2026 02:44:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785984288;
+	bh=CiA7EOsZf1u31c7ZK2OS7J7IWSJm/ecqwp0+2UUVfkM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=XqiB5cciERKd1+gcdfpX74rbCDBckILJJE9lwPZPccRKQgjift/VpL1v0JTXaGGzu
+	 6KAM29U4nZ7sjk7OrvdBVIlxikf/Wabx12MbVUWNxvEXZBduyl98FTw4aGEew376kf
+	 JV6qfQ0Gdf5jmBqw6OyUfoDj8BmjP7Mb2C5E1Ucprv8XsMG6hfq0zp9GOqmLgY+Qwq
+	 Dlhkkc/+ByT4ikQtiBKDFS4XQwWzHM9r5ASJJIGAHFpcMZo89bbQP+WmKmdbCfl+Ch
+	 89Ynv1386dJqJPTrM+y5+RMX7Mbbg1f1vwYjAF9JpyADCvNaLfY5oyGFIsvtasN2OW
+	 5fzeDubkwkeUw==
+Date: Wed, 5 Aug 2026 20:44:46 -0600 (MDT)
+From: Paul Walmsley <pjw@kernel.org>
+To: Peixin Xie <peixin.xie@linux.spacemit.com>
+cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+    Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+    Yixun Lan <dlan@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>, 
+    Oza Pawandeep <quic_poza@quicinc.com>, Will Deacon <will@kernel.org>, 
+    "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, 
+    linux-acpi@vger.kernel.org, linux-riscv@lists.infradead.org, 
+    linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
+    stable@vger.kernel.org, Sunil V L <sunilvl@oss.qualcomm.com>, 
+    Huisong Li <lihuisong@huawei.com>
+Subject: Re: [PATCH v3] riscv: acpi: Handle LPI architectural context loss
+ flags
+In-Reply-To: <20260803-riscv-acpi-lpi-timer-v3-1-520fa13732f5@linux.spacemit.com>
+Message-ID: <e9ccdf60-481a-39a3-f0fa-428f47d838b9@kernel.org>
+References: <20260803-riscv-acpi-lpi-timer-v3-1-520fa13732f5@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] thermal: spacemit: k1: add shutdown action and reorder
- registration order
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, shuwei.wu@mailbox.org,
- rafael@kernel.org, linux-pm@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, dlan@kernel.org, daniel.lezcano@kernel.org
-References: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
- <DK4XSEPSTY3I.O9ZFCZ9BJGNW@linux.spacemit.com>
-From: Pei Xiao <xiaopei01@kylinos.cn>
-In-Reply-To: <DK4XSEPSTY3I.O9ZFCZ9BJGNW@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
 
+On Mon, 3 Aug 2026, Peixin Xie wrote:
 
-
-在 2026/7/22 15:54, Troy Mitchell 写道:
-> On Thu Jul 16, 2026 at 12:04 AM PDT, Pei Xiao wrote:
->> Add a devm action to clean hardware interrupts, sampling, and control
->> registers on driver unbind, mirroring what k1_tsensor_init() sets up.
->>
->> Reorder the registration order within probe(): register the thermal
->> zones first, then request the IRQ, and register the shutdown action
->> last.  On removal, the hardware interrupt is disabled first, then the
->> IRQ is released, and finally the thermal zones are released.  This
->> avoids the IRQ thread accessing an already unregistered thermal zone
->> during devres cleanup.
->>
->> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-friendly ping.
-prevent being forgotten.
-
-Pei.
-Thanks!
+> Commit 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for
+> broadcast timer") replaced the generic nonzero check for LPI
+> architectural context loss flags with arch_get_idle_state_flags().
+> RISC-V does not implement the helper, so it falls back to the stub
+> that returns 0. Consequently, CPUIDLE_FLAG_TIMER_STOP is not set when
+> an LPI state loses the hart timer context, preventing cpuidle from
+> using a broadcast timer for that state.
 > 
-> Thanks.
+> Implement the RISC-V helper and map the hart timer context loss flag
+> to CPUIDLE_FLAG_TIMER_STOP.
+> 
+> Fixes: 4785aa802853 ("cpuidle, ACPI: Evaluate LPI arch_flags for broadcast timer")
+> Cc: stable@vger.kernel.org
+> Acked-by: Sudeep Holla <sudeep.holla@kernel.org>
+> Reviewed-by: Yixun Lan <dlan@kernel.org>
+> Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
+> Reviewed-by: Huisong Li <lihuisong@huawei.com>
+> Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
 
+Thanks, queued for v7.3.
+
+
+- Paul
