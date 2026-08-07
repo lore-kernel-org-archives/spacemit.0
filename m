@@ -1,178 +1,146 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E4C3D6CDD
-	for <spacemit@lists.linux.dev>; Thu,  6 Aug 2026 19:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9CE374E7F
+	for <spacemit@lists.linux.dev>; Fri,  7 Aug 2026 02:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786044663; cv=none; b=WQ+9FVc045Mej+RkNWc7IQY0FKBX/5zG5tSe0i5nIpJRvq+qajbSdc/8Rr1fT7H+G9x8BCAh+0fFdmya9XZHY7wOAX61z0XcbKb090Vy/qBnLihWp6DzMe5uTB/62Loy1vpN7ORuw/flvCxoTuGsunf10Cit+iYa8pCkgSnc+Rc=
+	t=1786069514; cv=none; b=Xf5fuC1rSnbcPfOw2CgFcW/l5qbuFtc73PO8CKdcNFHcvb7BikrCGNfJczC/gK129DFDITcESw03CA3XM0cwdwmuae9w5tSLN0RchYE+6Z5KhStvDaSxm0DudVRdIatgIZjPPwssCi9bVMFi0Xi9cn6k8vjX0DTq7e8G6JuETno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786044663; c=relaxed/simple;
-	bh=4tx9NSGNynTF4PHpWC7vIVZqpu7kF9vx/gpj/G0H91k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qyau+BORsuwcu2xxKLMmJEdGqyFJOgDc0QamvEiX8HVvOSDybRd9I4sSF/yWXXgma6LzKPyjIolXVrumLJosEFQ5x1bEevKLHRGQqTwL7+aJK9cybdzvIBy0jAomR4zqy3Bhrqwka8M8gmM2aA7IVSEHPPsrZYAAElyhAZ6BJFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0wCB6yC; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1786069514; c=relaxed/simple;
+	bh=8jBKMNYB0eUETlc8evzGy3eZ9r0JV0X/gI3eEmEgJws=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=NoONCpkr52hs79HXamLDE5LDz/N0RmV0a0DkiEhTGi3f0ZEuidM7gTpM1jNZLZnkn0ROPmufWo9bgyLm8SIutrBZsUT2r0SCegdKy63Dgk7CfHVlXuw73L5SD3K2OGCpBvTseG7t0lRvHnlqJvP04JKxILt1zad4z+X2DrUuaGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GeNbwbjO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ET3NmcjX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0wCB6yC"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2d049069377so28454025ad.0
-        for <spacemit@lists.linux.dev>; Thu, 06 Aug 2026 12:31:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GeNbwbjO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ET3NmcjX"
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6770HBkk2803493
+	for <spacemit@lists.linux.dev>; Fri, 7 Aug 2026 02:25:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	sME6dxu+lP6XRSMrnAXeehDIBxuMJDmF4YYzKVgdqY8=; b=GeNbwbjO1fbnzb5t
+	aR2/MyUqbNyATdthNed42sBhG2Tjl5Ie8RzmWkY5rKqcw+7O2hoo7zJjiIpscMEF
+	w7Eej5wjbVLP6QHh4MiYOPDX2RrIeyuz4dznxS4OWBtOYeOwi6DwZJkObJK2NE62
+	8PogpSC2dRM+2SJp13jUINMPPHCWw7UtB+gz9ndEzy/PLF3VtiqjNagm291VA6gL
+	VccoHR2TlXOxZBRsvJmGBEAxtB1kpstoZo9tfOBRXpsCibRi3hdx7J6GJzwEGijm
+	nqiXoCABnCWoKYgVfDsjgBb3Pe3Nd5gLjmcZVXe/vV8OKZQYlZ+llynFxTgcs8gx
+	cPmmCg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvy6hsqww-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Fri, 07 Aug 2026 02:25:12 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-51bec738909so28762551cf.1
+        for <spacemit@lists.linux.dev>; Thu, 06 Aug 2026 19:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786044661; x=1786649461; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:sender:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=96I6v/AKBNTvV/KdjO4chCrzAPiR9Nz0WdXHIejWW6U=;
-        b=O0wCB6yCEJ6X09Z/wfDk6yEYS3x4lHvQaO4QbaVDJpDLhGHvO7O1mCzBNDOF932uDc
-         rsQribIX6u8LN03wS7LjEU29js6B65GfbnMltwrmF/Lmqa/jQxAzP6wB4mzKMJqTuSWj
-         2rImBJ/GoSlLptyIKhRyUsNAskV1+cefXeTWPX1yeFmu8QSG1BCZllkJUQAEVESaz+Xx
-         Xb50RGYyQ0+YZll93j/0nog3bYJ+uDeJyTUdU61Ini5yTbTsvaMR5yvblyySgtOE2agG
-         oO07Xr45ybZ8FCa2czD9a3q/Z1Yow5H8IAnb9X7/bYkqBtX0Z2cSjpTAUYeBKT0qS6tc
-         DvjA==
+        d=oss.qualcomm.com; s=google; t=1786069512; x=1786674312; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=sME6dxu+lP6XRSMrnAXeehDIBxuMJDmF4YYzKVgdqY8=;
+        b=ET3NmcjX0NiUgBOaNomT2Pn01uDg+QiilA8p39AgxU0krMcJ8u739TQj21NRAh/9/e
+         2j7bRDuMXjhqX+KGftTfFgiMEVrvVFHBwJLHsKADok6IUWz5wZ4XcbkK7rIG+Bc5zBpt
+         cSy0+RZ6X7/sZdRY0pkp1M6Wg7nu1L/75JIxBPIEUTFwbKJX3lO0ETbVs7nVv4eTrQxC
+         p0+hUeXmW1VGg3pE0ZW3wXswFyiwcqEXrvD6NDM9r5Pf3s4eUChK4ydKeoaeFJCZqxTH
+         jtDAuP5nEGF1thm/9WUNwQAnmeq8u9LzwC/Gl6Tp/UhFMDtqMHHuZ9+g2xqyF2z51vDQ
+         /haw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786044661; x=1786649461;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=96I6v/AKBNTvV/KdjO4chCrzAPiR9Nz0WdXHIejWW6U=;
-        b=SOx+UGVTsIYOmk48Woxd7s5SR6+bD7lrKKIClaRKa8sASGM5n8kw4beqvVoHTFcsTX
-         unQovUC+DIGkjW5ZGuJmcMpNKYpHdSPxuzFwBjnKKeQAEifx2/fZ4ftxK1NogWkGLkGz
-         ICOAbSr8fHQJtX+b/8t1Y+UyJ5yHxIgF5I4CHfqSWkYPmLTZBtHm/Q9UqDCLDtdW/b4H
-         de6KNhQW6Lu0X0sHU4ktu3wW8Vy5fqSmaTcsqsDxWLzE0kTT3MY+47JkjH4rqnE3cwzt
-         lG8qqYHQgqXIvd7mflHyTRcopBUIedu3+pdBbBjmofJQESxhr5rDNJYiNpyLtlzLtDQn
-         SIkQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rr9SCKCzEnXzjf8E+5RTj2lP3Dz3SA9PNaWXLmi7KPGZ8eXvyGkjSccX5S4335E6MSvCGKm1KZfoQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxi0ruhwoSkV0t6jafhD32QoieSLd00+nYJBdY8QMgGrex1OZrQ
-	MFQxVGqibWs4sb40q1sX1YfYlV44OrXzsX3zwZNbYhfbTcoX7u6edhLj
-X-Gm-Gg: AR+sD109onMPgdFFSdSq8p1sdHvI5uAwMOmxr1r+jyTzH1ALFWPc/zIxO98LjmfHd6P
-	LTn4hkC2GK/EkeiGER42uBqnM5yWnloDs7cxEB0Rq5YAqTt/5hQGiYqQ4cuA1uYWsKkjLW6vuuR
-	jfBfRuMOcgH3oZAVFTrVq+2Q38shhHWjUL5nz5lD9rnrUJwuHTVZspu+1MIewNvwRWFLKYVTbjQ
-	19qGbUM8jLb2ZLWdbjY7CcyGgobnHlOMQ3gccapg8GEaOD5scTTUi8YVeZ4lU3zjUPHPgYjWoEr
-	Huz/5/QFGo2tDWHCh9ypisk9P3hyFwgeLnu7EAOkxzDTEuxgQRr9QXoZP1Faz/PQS6zm0yTZivq
-	A1L7OjHMO/0OXyzryPDsC+rwrl320nOlXhxoC3SB23AV0YeYqiF7AMbec6ic+gercwfVfEM9Yx6
-	uArNlwHCyb1SY+VPxmFN1/GNrVI8DS6SbPCKdvEvtcaB1GLrk+3pBw10Ygaa+wFFUhg4dZPpB1z
-	3U=
-X-Received: by 2002:a17:903:1a83:b0:2cc:307c:51fc with SMTP id d9443c01a7336-2d106e81d72mr45720725ad.21.1786044660266;
-        Thu, 06 Aug 2026 12:31:00 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d120c611casm1084905ad.83.2026.08.06.12.30.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2026 12:30:59 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 6 Aug 2026 12:30:59 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Troy Mitchell <troy.mitchell@linux.dev>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-doc@vger.kernel.org, Jean Delvare <jdelvare@suse.de>
-Subject: Re: [PATCH v3 4/6] hwmon: (lm63) Add Sensylink CTF2301 support
-Message-ID: <977654fc-d5e1-4d23-8ab3-286acd2dc372@roeck-us.net>
-References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
- <20260805-ctl2301-v3-4-b86c75d1c552@linux.dev>
+        d=1e100.net; s=20251104; t=1786069512; x=1786674312;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=sME6dxu+lP6XRSMrnAXeehDIBxuMJDmF4YYzKVgdqY8=;
+        b=iJuhLlo1i3m3i0GJkVOEZoXCtEldTG9kIoyl6TR8SKMnvx9ZyJqzaC8Nr7hHKFSBBc
+         Q6EMsee3yAilS3L7EWA3UEJp6ywF81A/vYyLbK3mNppUXI2eLli0sPBhcpu3TUFMvtBI
+         mjwIKV79JUAEuSm+7A2T/N7gF4siofPJ2hwZ87vSAeOg+z6MIAyTtT3tMEN7kx4/HV+k
+         PTPbKBfQ3Xj+5MnYo0NI1l6kIXaPrj5BLJtpCdCyrUhS3UCoyL8mMckB0JrEizmA2zlT
+         IqaGlrGWRKXs1zmgskaub2ydCXNfpEcVNiPIK2EoLlCoTOwxmojp9cxdUac19NcQuzFR
+         PTxw==
+X-Forwarded-Encrypted: i=1; AHgh+Rp/wfUzvy656yFAxfB5JbfR4RErI+plvJKsPp0GeRods/7BS4XHSC+/KI8qYc3LkDjnsGJp8MLMEg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyH9Hz52w8C03EtIRoJBwSbo5XePUjqlveEZJsz9K9DhyqPd9qE
+	aRE4mkpQfBgNH2DGznWYzdpi1NzAcwNKL9qS/Fv8TvcHGLDatxOmfRYeZscHRoIkg86LSELuiyf
+	Kez7tNGNPS3swh8tdBMA0vHZCvz7ZGiMx+TPjDTuKNujxlHLpwRglgAmQZa+ZAQ==
+X-Gm-Gg: AR+sD12exc2eYtnDP009MJabrmauXVPkGaFMBAeni0WUx9IDqD+Iy55hjNAy1QbMmTo
+	J0mBEz3//wQcCytBytEjco9ABqMt/oM3MM0sxmlbfKryr2Nw75LYQSg4kXlfM3OxXIACUJYqdD+
+	X4NhSvP/CU5He+8m+tKG2wVJdzmUG3i9YhzZVw7HLIN2ppuwbTXUKgWr0zE7XA44IC0IVMhnQen
+	pc+/TRexOuLxFDg8S/dFaeT5lAGo8NMn2NXYN+stJenCCionb/WeJw/qJSHLr8XgSdFPUtGol/o
+	5Z5chAdoQm/j4L7DU3ZNkniPMd8Nn6zdkTY+dJGQE7DzTXE2RmvkqHiq2Q3vJiPDYD1HTFv1pX1
+	4QGDABQF5d+lniQ/EnAkKSe/MgpXywfUu5QQI43WlrAHhjA==
+X-Received: by 2002:ac8:7f85:0:b0:51c:1967:5091 with SMTP id d75a77b69052e-52ce6200bcbmr210648551cf.41.1786069511714;
+        Thu, 06 Aug 2026 19:25:11 -0700 (PDT)
+X-Received: by 2002:ac8:7f85:0:b0:51c:1967:5091 with SMTP id d75a77b69052e-52ce6200bcbmr210648191cf.41.1786069511316;
+        Thu, 06 Aug 2026 19:25:11 -0700 (PDT)
+Received: from [192.168.2.1] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4995420bd1csm108881935e9.3.2026.08.06.19.25.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Aug 2026 19:25:10 -0700 (PDT)
+Message-ID: <0f8f7fb1-1138-42fd-b949-19e32e61917a@oss.qualcomm.com>
+Date: Fri, 7 Aug 2026 04:25:04 +0200
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260805-ctl2301-v3-4-b86c75d1c552@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] thermal: spacemit: k1: add shutdown action and reorder
+ registration order
+To: Pei Xiao <xiaopei01@kylinos.cn>, shuwei.wu@mailbox.org,
+        troy.mitchell@linux.spacemit.com, rafael@kernel.org,
+        linux-pm@vger.kernel.org, linux-riscv@lists.infradead.org,
+        spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+        dlan@kernel.org, daniel.lezcano@kernel.org
+References: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
+Content-Language: en-US
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+In-Reply-To: <1967d2bcc8fede6fbd25fc8eee07f2873fb41472.1784184867.git.xiaopei01@kylinos.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: -uxj687CKFPR35H9M5yQRgPqfPvtlGX0
+X-Proofpoint-ORIG-GUID: -uxj687CKFPR35H9M5yQRgPqfPvtlGX0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDAxNCBTYWx0ZWRfX7ZpchTFYTMTQ
+ SX5f1r5Zne9pQlomXcyujmPKLJA0xUjOsz7vYyjvunEYTLm3M26S7+YT9AKe+Tr29YqXzqRKSr9
+ UVNtzmQ8Nx5E10mIWSJf1d5i+iQ02v6SX8/0F3r3ZSq/euOM1y4ROhwTDSewUyMOREfpztTVFq0
+ QJ+8jadFawTHP1VA1CXImbsUfwfg5g6qvo1jBhjEiqMiwdbAHn2dV4jk9X0UDLCYbtIAaH1Vwfm
+ pxdFYOatkR/MbK5+ApvYywWz5PMzXaTEfSoiiXzTONu7Zxmrh7wSxBUC2Wsoz68zwSbeKlCQgwc
+ 6j/bbqe0tdsLkL3+yVZQmQohk1jV+b+BsNtLJEMq9i2vRFy2ubbKV0+01U9xYMwRXhMBNav7ykn
+ qZGE56V2B5iQmtISt9X9XX+RFxdVoppnNZVSk7Jq8qguDlKHd0ZRtROLvVi1E0FYcE7gU1cmD00
+ u9AtaxxgkGRiV4F96ig==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDAxNCBTYWx0ZWRfXxUbt89P/wUx9
+ 65Q1/8EOx89c7LVkToAf4h6jyCWQWZQHJw36wzTOk1sUDpHvlhTp+Uj0kzbnadeDXHZwBbDYFZv
+ JnQHhzHfR6iNUYgHgZsytmDe8Y5ng0s=
+X-Authority-Analysis: v=2.4 cv=bot8wkai c=1 sm=1 tr=0 ts=6a754208 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=uw/3876vWhRnNVL35W6mqQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=c8bhSAXnGUngXy6NwXgA:9 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-07_01,2026-08-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608070014
 
-On Wed, Aug 05, 2026 at 02:00:54AM -0700, Troy Mitchell wrote:
-> Add Sensylink CTF2301 support to the LM63 driver. CTF2301 follows
-> the LM63-style temperature, tachometer, and PWM register layout,
-> while using a 12-bit local temperature register and requiring the
-> ALERT/TACH pin to be configured for tachometer input.
+On 7/16/26 09:04, Pei Xiao wrote:
+> Add a devm action to clean hardware interrupts, sampling, and control
+> registers on driver unbind, mirroring what k1_tsensor_init() sets up.
 > 
-> Register an optional thermal cooling device when the device tree
-> node provides #cooling-cells, allowing thermal zones to control
-> the fan through the existing PWM path without changing behavior
-> for existing LM63-family users.
+> Reorder the registration order within probe(): register the thermal
+> zones first, then request the IRQ, and register the shutdown action
+> last.  On removal, the hardware interrupt is disabled first, then the
+> IRQ is released, and finally the thermal zones are released.  This
+> avoids the IRQ thread accessing an already unregistered thermal zone
+> during devres cleanup.
 > 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+> Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 > ---
->  Documentation/hwmon/lm63.rst |  22 +++
->  drivers/hwmon/Kconfig        |   8 +-
->  drivers/hwmon/lm63.c         | 414 +++++++++++++++++++++++++++++++++++--------
->  3 files changed, 366 insertions(+), 78 deletions(-)
-> 
-> diff --git a/Documentation/hwmon/lm63.rst b/Documentation/hwmon/lm63.rst
-> index 9e27367d7405..c40bd0dfe591 100644
-> --- a/Documentation/hwmon/lm63.rst
-> +++ b/Documentation/hwmon/lm63.rst
-> @@ -33,6 +33,16 @@ Supported chips:
->  
->  	       http://www.national.com/pf/LM/LM96163.html
->  
-> +  * Sensylink CTF2301
-> +
-> +    Prefix: 'ctf2301'
-> +
-> +    Addresses scanned: none
-> +
-> +    Datasheet: https://www.sensylink.com/upload/1/net.sensylink.portal/1689557281035.pdf
-> +
-> +    Register description: https://github.com/TroyMitchell911/ctf2301-datasheet
-> +
->  
->  Author: Jean Delvare <jdelvare@suse.de>
->  
-> @@ -62,6 +72,8 @@ value have to be masked out. The value is still 16 bit in width.
->  
->  All temperature values are given in degrees Celsius. Resolution is 1.0
->  degree for the local temperature, 0.125 degree for the remote temperature.
-> +The CTF2301 local temperature input and limit have a resolution of 0.0625
-> +degree.
->  
->  The fan speed is measured using a tachometer. Contrary to most chips which
->  store the value in an 8-bit register and have a selectable clock divider
-> @@ -93,3 +105,13 @@ support these GPIO lines at present.
->  The LM96163 is an enhanced version of LM63 with improved temperature accuracy
->  and better PWM resolution. For LM96163, the external temperature sensor type is
->  configurable as CPU embedded diode(1) or 3904 transistor(2).
-> +
-> +The CTF2301 is register-compatible with the LM63 family and provides 12 fan
-> +control lookup table entries. It supports 8-bit PWM resolution when configured
-> +for a 22.5 kHz PWM frequency.
-> +
-> +Device tree nodes may declare ``#cooling-cells`` to register the fan controller
-> +with the thermal framework. The cooling state is mapped to the existing
-> +``pwm1`` range from 0 to 255. The driver keeps the current automatic or manual
-> +fan control mode during probe and switches to manual control when the thermal
-> +framework first requests a cooling state.
-> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> index 2bfbcc033d59..abb1af8664fb 100644
-> --- a/drivers/hwmon/Kconfig
-> +++ b/drivers/hwmon/Kconfig
-> @@ -1501,10 +1501,10 @@ config SENSORS_LM63
->  	depends on I2C
 
-This seems to be missing the THERMAL dependency as suggested by Sashiko.
+Applied, thanks
 
-...
-> -enum chips { lm63, lm64, lm96163 };
-> +enum chips { lm63, lm64, lm96163, ctf2301 };
-
-Alphabetic order, please.
-
-> +		if (data->kind == ctf2301) {
-> +			msb = i2c_smbus_read_byte_data(client,
-> +						       LM63_REG_LOCAL_TEMP);
-> +			lsb = i2c_smbus_read_byte_data(client,
-> +						       CTF2301_REG_LOCAL_TEMP_LSB);
-> +			if (msb >= 0 && lsb >= 0) {
-> +				data->temp8[0] = msb;
-
-Why keep the assignments to data->temp8[0] and data->temp8[1] ?
-
-Thanks,
-Guenter
