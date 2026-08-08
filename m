@@ -1,68 +1,68 @@
-Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
+Received: from mail-pz2-f1.google.com (mail-pz2-f1.google.com [74.125.228.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD51730C16E
-	for <spacemit@lists.linux.dev>; Sat,  8 Aug 2026 13:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6822E3EC80C
+	for <spacemit@lists.linux.dev>; Sat,  8 Aug 2026 14:07:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786195859; cv=none; b=FgVKPJecmP+0mW8Gb4ibbhLgc7vxfePL084SqKI+Wt+PEJbHe4W7/ovEv+KJ4kpMKUw+YHcyaXSKwPceXpWeciwPpcKrvU1UM6+pBPy/2KlrVsTl0rezDUcmiD53TfMCVca8dj5kHkSHP8hDiW3vYNwstKMOJXeeYNsxRqvgmEs=
+	t=1786198028; cv=none; b=Xg1X+gVfeA6p4+2dZYuFogGElFKwhrli+RserSIfs2hyWCpgP6eGWXcfR5llSDCi/uMF9YP64yiFeToPPpupc+FFRpaSYeyEd20JTCgadWyC0Arp3R1rTPU6YzMDnJ9dpp6jSBkXsJ9fJvuuv1a3zX9hv/GV+mBWjZ6T0aoavaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786195859; c=relaxed/simple;
-	bh=GcFnNVCqGghgN6FJ2JiRi+jSktMU9+DvANABx3igE7g=;
+	s=arc-20240116; t=1786198028; c=relaxed/simple;
+	bh=Aar1x9JA3i5d5qHNi8WoHCLxzhdIChv9/LTSPfuTPLQ=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T/Q8i0vGlBkJUqN7N+uaDnJGtsUbovNJcaSDr3EMo5C08/AbUR+j1MiHw3gC5hSNau0fz+ddV/G3Efzff+XT/VuqSZgSMYMZ7iAX4NXuVeVFIEHWUN6fIkVokiap41aMJvP3xDB3YxF492DJp5CaOw/3cD6QP4vlh6pFrmGrfZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oa/ouRc1; arc=none smtp.client-ip=74.125.228.0
+	 MIME-Version:Content-Type; b=iSRoTfzM7aSIh26wUDViw/op51VYdFzbTALYdU23/aTXDs5FL6UlrpFtycxtgDi5eAQZ0tlpUH5n3NXFkq6SfxeP3QaLtZsjA7gQD46Y1L8hSUMgh8eLUU40oQ9AVsHR1qV2/XcssywYbcjYVOCNVjbK0OtLIPnR49gRo2Rw2wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ijGYYj52; arc=none smtp.client-ip=74.125.228.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oa/ouRc1"
-Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-cb01d87597cso17296a12.1
-        for <spacemit@lists.linux.dev>; Sat, 08 Aug 2026 06:30:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ijGYYj52"
+Received: by mail-pz2-f1.google.com with SMTP id 41be03b00d2f7-c9fcd903839so283010a12.1
+        for <spacemit@lists.linux.dev>; Sat, 08 Aug 2026 07:07:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786195857; x=1786800657; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786198027; x=1786802827; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=6zYCYgrPHJ1R0IyDM9ZJHQW95fmf52/M7XVvd8snhDU=;
-        b=oa/ouRc1c7zbzClJ9M5fqcu8D1LX9DU9BMhGZTtZzUwennFOtyrbd+J/NL5SzasVFH
-         rpa3thWPNERwmsEjXPVmVcvNPb3/YAG8H82Ul2wJgUwLsU2MtHzIj6FNXV2bMUhxU5QG
-         C6euyWIhFJEuOIOxOm0aorI1V0N+sYcipQ8KnLd+FK0/YHLYu7ucoyQNwGVfYZiiCaX+
-         sFWV2SKJSBnz6pQpU/wIMvV45pWC8hNHpUDWiD8tIJmQovoPfzifFlwKAl/3rXPfS97J
-         gqYdEFRJPo7WaMlIol2qckrxw0vmzrqfNc7mEUYQfoaB3FOydTLr2rkswYtnoK4edEl+
-         U66Q==
+        bh=zrxXzmuLnBiNnwK74e3uO+cSnorKNXKL/VAH2ROuE74=;
+        b=ijGYYj52aANyEwSubofjufSS+78Ld32XA/98nfofdKn2Vq78IPIEkDcutqeiHXRE/k
+         OfKEARcsb5wr0sUKepe9AqTdY1FT4BDlktbuAphk+ZjH613xGsMNXwGezX06/3Oe4m55
+         qX+l0eyOOrX9kuApr+dvirbL5CKJu8olA4mCmGc47nnwoNoZj/agI8zYbbE0S7NAQ1yK
+         Qj7Kpoi3zzdIgIOQ69eaIrQNL5WeI5zfoAN93gfOGIQ43Fi+EOmUmwDWmGQtijwtDag0
+         y5ASagPnXLXppbQqLlJAQUR9qjfvRrE+pRVttvwSY/NuaM6q39ZUQUyBf1yC0P5eNYxn
+         RAsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786195857; x=1786800657;
+        d=1e100.net; s=20251104; t=1786198027; x=1786802827;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6zYCYgrPHJ1R0IyDM9ZJHQW95fmf52/M7XVvd8snhDU=;
-        b=DcpIWyCrI0X8SOSSz+hGvCQ9GMNBqjugoSA/5woBgvqgVY/LN5DFCUoKykTNrPp37W
-         rF3z/zculiWgGs6sKfivdPj9Jf+LPHN8EgzRzhcb1IbzwJh+57D/xUY0GB/7ijxWCtPY
-         jqsIjpqGlx6HODwj0DHWUQSvlEGcHJIuFZuxVeP0NeG4C6W+QEPns8H/VjvsipEvA2vG
-         LEos2NULVDTV0xLpEnfGE0R3o+j97HHPWsTmiVbRMFD0KSknECOCkxGrlKXOeUAqFks3
-         3UiSY/cUwQT/h3q/Xm3O7epSq+FR7lchy6bTRLO9pGvFutCnlJRLod/gxLsZsscGYP2z
-         50eA==
-X-Forwarded-Encrypted: i=1; AHgh+RrhELtzjWzvRbPCRzRxtziE/NBZmPbv94ox4UAcIkvBdpbInGv+Hc8B6O/ME1tV0cIg57L/hb5BBQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YweNarK3/FLba75TxRRiXS0UZse02EmnkIqtdTbF8K3D3QYAiow
-	5sK+jPjJyK4Tj/Vb2WNbmXgd4gCPMy3j8B1NlBNsljVtQGcOoX8eW8HR
-X-Gm-Gg: AR+sD10fTTFkoypTNcK+XTzKbkHm3DHBLDQtKHcI9WSfxLvafHYrKz5dguLWxVIy4jW
-	U3yXfpg1MxAMD6f615ahPvCLCQQMUxsYB6h2CYa89vM1UlBYodOYIn+XQBIT2SU8FzB8/XjRR4u
-	RjGAzxWtIdyQ2+mt/fOf7HIJS7uMz/6uqsJOr6q5V/5nSxOIvnm4JeghBsAQdVTdlsQBsTa8S6d
-	7z5+Yvvyxz7dV7yD9I/otB3yq5wVwsFx3W5qHiYTmmxWC1Zcg6AkGPf1fTy1zPLHcBdPp++YfNZ
-	2G4vhgk3RZ5I+uud1TPYl/Zn9GuK+wtqoIp1bJy8n1OoBC7S8z2UIJpVbu6QeLAYHmnVa+GbENz
-	r75yusGASsY8pVdnAYQxjtGUQO75VQQO071eoDcJ1xvbwnIBo0uJvTKJ+J+rLZTdKHxK2qw63oy
-	pMJSrV7Ts1WJi2Z+WTusZKBIMTXsQDz+etrg7DRQ+7b6HX5viMOw==
-X-Received: by 2002:a05:6a00:240c:b0:842:3838:cb03 with SMTP id d2e1a72fcca58-84f6b778b44mr5395163b3a.11.1786195856790;
-        Sat, 08 Aug 2026 06:30:56 -0700 (PDT)
+        bh=zrxXzmuLnBiNnwK74e3uO+cSnorKNXKL/VAH2ROuE74=;
+        b=jQmykQVRb6KaWKDx2Cbkb9n85xxYdDtjX6J7p+sVtSAai65moV/hRDqgfR6gmpRoIR
+         bBsowDsLeivAn6HjggM0h/GfSuleE2UIu4H8bpZzrb9TFk0eP4jb1dBkMo/l1+j15zM6
+         3TBaojC6/fFzEzTSFYxG76+KLwMVuhTIO1t36QzZpi/HUcJoFoBQHwqCYk3cAK9G7Lqg
+         YizaZ/iDXvX5fFjeFoQoL01EfdZgxO567uCeaNQWnGPperWlngKoxtijYjRvGU1FRlZX
+         Oxja01ZI5NpEtvRzAsh4obE6NIYMGzIihvpVnfb+lyvvOL7zMLAJQpZh4wAbtd3TgXA4
+         e17A==
+X-Forwarded-Encrypted: i=1; AHgh+Ro6sPkSN7R6ruQzZYabfPW0P/4tVk/OvS/iohF2hCQrPVkc27EYxc3/8pdCszz1Yz8vJDcnt3fnGw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywg3YPd1uxTnU2ncfEG2sibjk482/AV8FHULxxHDDHAizlK36Ug
+	TUdyxUoyLsexT9RCZlhnNBtTLVDhFrGuoz1IXPsloQWf1Op55yEH+Zj2
+X-Gm-Gg: AR+sD11yCkYZ1BHnsUNbaIUyosPTPf/AhM1AcvI/TJthrJa/0l4vRp4faJul5JgKrFm
+	vZJz4kIi8kaI0WWdWQNus4uBtFOcoL8yKUitJVq33qV0PU/m8UJhvtIB41oJ6O6bQGRZSXxqEr5
+	fr3sSoZz/Kn0jbiN5UNAwlZcu1ZcOVFVQZcrPkyw9pKOZaNE/9N4BoTcbGAz5OOcnTBiCAyPf19
+	XEhRlFKo1KA14YkBEOH/hrDEspkaHTI6K9QUPA+KQmkUeA+mCGZmsU+jAYdTCjopSsI6EYZjo/v
+	ZgmsV9LzEVhzC1ndKLzP3kyTi5iSjuBJOPEpW7SjP8UJf2OOefaeU4WWjHilT/X6Nn/8ceaXQBq
+	yRVlHKTM4/+V9iYhDysx0YGpxRTjB2OC2LCVqTPrAOLR+2i8V89bZ9wJ8f4aTokknoUQALq77t2
+	Uj1Enpf8QFnClfhcsI9jAGRgF+2daPxzj0xBiebtE=
+X-Received: by 2002:a05:6a00:2286:b0:848:76af:db37 with SMTP id d2e1a72fcca58-84f694200b5mr7899614b3a.7.1786198026809;
+        Sat, 08 Aug 2026 07:07:06 -0700 (PDT)
 Received: from localhost ([2403:2c80:17:1e::20db])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f5a51e9a9sm2125357b3a.37.2026.08.08.06.30.54
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbe8f372b5bsm1905209a12.25.2026.08.08.07.07.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2026 06:30:56 -0700 (PDT)
-Date: Sat, 08 Aug 2026 21:30:52 +0800
-Message-ID: <b66d3009f9cf310ca0f068999bd475ac.codykang.hk@gmail.com>
+        Sat, 08 Aug 2026 07:07:06 -0700 (PDT)
+Date: Sat, 08 Aug 2026 22:07:03 +0800
+Message-ID: <7b4b8457715c2e447f3b3522e519f0af.codykang.hk@gmail.com>
 From: Cody Kang <codykang.hk@gmail.com>
-To: Philipp Zabel <p.zabel@pengutronix.de>
+To: Yao Zi <me@ziyao.cc>
 Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
@@ -71,18 +71,17 @@ Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
  Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
  Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
- devicetree@vger.kernel.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-clk@vger.kernel.org
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, dri-devel@lists.freedesktop.org,
+ linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
 Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
  controller bridge driver
-In-Reply-To: <5537a40f12e80b89e330f37032016de6f3b9f4c7.camel@pengutronix.de>
+In-Reply-To: <amdPPBOH-Dk4oU7y@pie>
 References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
- <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
- <5537a40f12e80b89e330f37032016de6f3b9f4c7.camel@pengutronix.de>
+ <20260725-k3-display-v1-12-6de34d80e86c@gmail.com> <amdPPBOH-Dk4oU7y@pie>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -92,10 +91,10 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-Hi Philipp,
+Hi Yao Zi,
 
-On Mon, 27 Jul 2026 09:49:58 +0200, Philipp Zabel wrote:
-> On Sa, 2026-07-25 at 00:51 -0400, Cody Kang via B4 Relay wrote:
+On Mon, 27 Jul 2026 12:29:48 +0000, Yao Zi wrote:
+> On Sat, Jul 25, 2026 at 12:51:21AM -0400, Cody Kang via B4 Relay wrote:
 > > From: Cody Kang <codykang.hk@gmail.com>
 > >
 > > Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
@@ -116,90 +115,95 @@ On Mon, 27 Jul 2026 09:49:58 +0200, Philipp Zabel wrote:
 > >  drivers/gpu/drm/spacemit/spacemit_inno_dp.c | 2443 +++++++++++++++++++++++++++
 > >  drivers/gpu/drm/spacemit/spacemit_inno_dp.h |  328 ++++
 > >  4 files changed, 2793 insertions(+)
-> >
-> [...]
-> > diff --git a/drivers/gpu/drm/spacemit/spacemit_inno_dp.c b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
-> > new file mode 100644
-> > index 000000000000..e88731d9b18b
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
-> > @@ -0,0 +1,2443 @@
-> [...]
+>
+> ...
+>
 > > +static int inno_dp_probe(struct platform_device *pdev)
 > > +{
-> [...]
-> > +	dp->reset = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+> > +	struct device *dev = &pdev->dev;
+> > +	struct device_node *aux_bus_np;
+> > +	struct spacemit_dp_dev *dp;
+> > +	struct resource *res;
+> > +	int ret;
 >
-> Since this is only asserted in probe and deasserted in remove, you
-> could use devm_reset_control_get_optional_exclusive_deasserted() [1].
-
-Thanks for the review. Will do in v2. The binding marks resets as
-required, which means I shouldn't use _optional in the first place.
-I will use the non-optional devm_reset_control_get_exclusive_deasserted().
-
-> [1] https://docs.kernel.org/driver-api/reset.html#c.devm_reset_control_get_optional_exclusive_deasserted
+> ...
 >
-> > +	if (IS_ERR(dp->reset)) {
-> > +		ret = dev_err_probe(dev, PTR_ERR(dp->reset),
-> > +				    "failed to get reset\n");
-> > +		return ret;
-> > +	}
-> > +
 > > +	dp->pxclk = devm_clk_get(dev, "pxclk");
 > > +	if (IS_ERR(dp->pxclk)) {
 > > +		ret = dev_err_probe(dev, PTR_ERR(dp->pxclk),
 > > +				    "failed to get pxclk\n");
 > > +		return ret;
 > > +	}
-> > +
-> > +	if (dp->edp_mode) {
-> > +		dp->bridge.type = DRM_MODE_CONNECTOR_eDP;
-> > +		/*
-> > +		 * OP_DETECT is required: without it
-> > +		 * drm_bridge_connector_detect() hard-codes CONNECTED for any
-> > +		 * eDP connector and fbdev wedges at bind.
-> > +		 */
-> > +		dp->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
-> > +				 DRM_BRIDGE_OP_HPD;
-> > +	} else {
-> > +		dp->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
-> > +		/*
-> > +		 * No OP_HPD: the HPD interrupt is gated by the DP pixel clock.
-> > +		 * Leaving it out marks the connector POLL_CONNECT |
-> > +		 * POLL_DISCONNECT instead.
-> > +		 */
-> > +		dp->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
-> > +				 DRM_BRIDGE_OP_MODES;
-> > +	}
-> > +
-> > +	if (dp->reset) {
 >
-> This check is not necessary, reset_control_deassert() handles NULL
-> pointers.
+> It seems pxclk is only enabled in probe() and disabled in remove(),
+> please consider using devm_clk_get_optional_enabled().
+
+Thanks for the review. You are right that the disable belongs to
+devres. I will move the disable to a devm action registered
+after the populate.
+
+But the _enabled part of devm_clk_get_optional_enabled() doesn't
+fit here: it hands the disable to devres at get time, before the
+PHY child is populated, so on unbind pxclk would be disabled only
+after the PHY PLL it is parented on is gone, and the clock core
+would warn.
+
+I will keep the non-optional getter, since the binding requires
+the clocks.
+
+> ...
 >
-> > +		ret = reset_control_deassert(dp->reset);
->
-> If the _deasserted() variant is used above, this can be removed and the
-> reset control doesn't need to be stored in dp.
->
+> > +	if (dp->pxclk) {
+> > +		ret = clk_prepare_enable(dp->pxclk);
 > > +		if (ret) {
-> > +			dev_err(dev, "failed to deassert reset: %d\n", ret);
-> > +			return ret;
+> > +			dev_err(dev, "failed to enable pxclk: %d\n", ret);
+> > +			goto err_reset;
 > > +		}
 > > +	}
-> > +
-> [...]
-> > +	return 0;
-> > +
-> > +err_clk:
-> > +	clk_disable_unprepare(dp->pxclk);
-> > +err_reset:
-> > +	if (dp->reset)
-> > +		reset_control_assert(dp->reset);
 >
-> Same as above. Remove the unnecessary check or manual assertion
-> entirely.
+> So this check could be dropped.
 
-Agree, all of these will be fixed in v2.
+Yes, all the if (dp->pxclk) guards are dead code; will drop them
+in v2.
+
+> ...
+>
+> > +	/*
+> > +	 * The PHY exposes its PLL as the APMU pixel-clock mux's external
+> > +	 * parent.
+> > +	 */
+> > +	dp->pll_clk = devm_clk_get(dev, "pll");
+> > +	if (IS_ERR(dp->pll_clk)) {
+> > +		ret = dev_err_probe(dev, PTR_ERR(dp->pll_clk),
+> > +				    "failed to get PHY pixel clock\n");
+> > +		goto err_clk;
+> > +	}
+>
+> Same for the "pll" clock.
+
+We never enable "pll" ourselves (it is only a parent and rate
+target), so it will stay a plain non-optional devm_clk_get().
+
+> > +	if (dp->pxclk) {
+> > +		ret = clk_set_parent(dp->pxclk, dp->pll_clk);
+> > +		if (ret) {
+> > +			dev_err(dev, "failed to route eDP pixel mux to PHY PLL: %d\n", ret);
+> > +			goto err_clk;
+> > +		}
+> > +	}
+> > +	 */
+> > +	ret = devm_request_threaded_irq(dev, dp->irq, spacemit_dp_irq_handler,
+> > +					spacemit_dp_hotplug_event_handler,
+> > +					IRQF_NO_AUTOEN, dev_name(dev), dp);
+> > +	if (ret) {
+> > +		dev_err(dev, "failed to request irq %d: %d\n", dp->irq, ret);
+> > +		goto err_clk;
+> > +	}
+>
+> Since 55b48e23f5c4 ("genirq/devres: Add error handling in
+> devm_request_*_irq()") devm_request_threaded_irq() automatically throws
+> an error message when it fails, so this error message is redundant.
+
+Right, will drop it.
 
 Cody
