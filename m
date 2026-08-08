@@ -1,66 +1,66 @@
-Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
+Received: from mail-pz2-f0.google.com (mail-pz2-f0.google.com [74.125.228.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF9240587A
-	for <spacemit@lists.linux.dev>; Sat,  8 Aug 2026 13:22:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD51730C16E
+	for <spacemit@lists.linux.dev>; Sat,  8 Aug 2026 13:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.0
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786195325; cv=none; b=bHjIuMqqc7szFRqZKBWRCuC48/V442LM+U/+risV5G6AgrxScRxTluXTL2984KSXh6pN3zW5CUZhiQTPjbQokfCQoEyG/AEkTZNg7rMYaJDkhEBsLcNvUz35ATV1bJa9AyMq25cikaZSFrXSdnIPoOd0KCUHUGY8uuGj1AumdKM=
+	t=1786195859; cv=none; b=FgVKPJecmP+0mW8Gb4ibbhLgc7vxfePL084SqKI+Wt+PEJbHe4W7/ovEv+KJ4kpMKUw+YHcyaXSKwPceXpWeciwPpcKrvU1UM6+pBPy/2KlrVsTl0rezDUcmiD53TfMCVca8dj5kHkSHP8hDiW3vYNwstKMOJXeeYNsxRqvgmEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786195325; c=relaxed/simple;
-	bh=3bY6g03Im9fvI5gkQ67473PMLqfsCYi0JF6q2NRnWt0=;
+	s=arc-20240116; t=1786195859; c=relaxed/simple;
+	bh=GcFnNVCqGghgN6FJ2JiRi+jSktMU9+DvANABx3igE7g=;
 	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y8wZj+OXo+/sAPob8qAV8jJIjLve9R2MXPmlbJxBytfJGBjPPKxN/dzPTfeJmp2wBbL5h5CZdRY1aVs0CxnYUHxojtHXdWmAixJEnZZ1g9UreasGuDtStaqsCxPMPLWlJfDqYH7ayY7ZlkTirEuNnBbRH0lVX1mH0//ljGGD2P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=arWVLv0D; arc=none smtp.client-ip=74.125.227.138
+	 MIME-Version:Content-Type; b=T/Q8i0vGlBkJUqN7N+uaDnJGtsUbovNJcaSDr3EMo5C08/AbUR+j1MiHw3gC5hSNau0fz+ddV/G3Efzff+XT/VuqSZgSMYMZ7iAX4NXuVeVFIEHWUN6fIkVokiap41aMJvP3xDB3YxF492DJp5CaOw/3cD6QP4vlh6pFrmGrfZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oa/ouRc1; arc=none smtp.client-ip=74.125.228.0
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="arWVLv0D"
-Received: by mail-pj2-f10.google.com with SMTP id 98e67ed59e1d1-38dc4f9462cso263057a91.0
-        for <spacemit@lists.linux.dev>; Sat, 08 Aug 2026 06:22:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oa/ouRc1"
+Received: by mail-pz2-f0.google.com with SMTP id 41be03b00d2f7-cb01d87597cso17296a12.1
+        for <spacemit@lists.linux.dev>; Sat, 08 Aug 2026 06:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786195322; x=1786800122; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1786195857; x=1786800657; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=li/c4+/312t4GgA151ifIixBtg8Isry/It3D3W9Em4A=;
-        b=arWVLv0DdtWSO8e7dL76bQr90SNFt9m36B2VlKYO+AyhYnYClHkMXHOsst+PWcP/SX
-         FZKe9KQtFqpcxbAKmMXM05stIsiNLX8Alpt2IJaSMA+3UevyHM85tOlEi4O/LwZh7jf7
-         4Ph2nIWR2CYGpWt8fo2oEwZtrrohSplP2rNKUxZZieuBG2t9fUKprGtZE9ODoUBgn0ar
-         IAwiD3NhrQdRmTrDDWXnLaVpYb0yQdd8E7gB8ZamGjDFKUIDNF5BUatGR2LSHxpckjYH
-         u8RR9AWcXaB2roQPYHNrdZ0CMC/yO66wuccJfblN6nV6kmH1M1aA2UFzXywcdO9VmKQZ
-         nQxQ==
+        bh=6zYCYgrPHJ1R0IyDM9ZJHQW95fmf52/M7XVvd8snhDU=;
+        b=oa/ouRc1c7zbzClJ9M5fqcu8D1LX9DU9BMhGZTtZzUwennFOtyrbd+J/NL5SzasVFH
+         rpa3thWPNERwmsEjXPVmVcvNPb3/YAG8H82Ul2wJgUwLsU2MtHzIj6FNXV2bMUhxU5QG
+         C6euyWIhFJEuOIOxOm0aorI1V0N+sYcipQ8KnLd+FK0/YHLYu7ucoyQNwGVfYZiiCaX+
+         sFWV2SKJSBnz6pQpU/wIMvV45pWC8hNHpUDWiD8tIJmQovoPfzifFlwKAl/3rXPfS97J
+         gqYdEFRJPo7WaMlIol2qckrxw0vmzrqfNc7mEUYQfoaB3FOydTLr2rkswYtnoK4edEl+
+         U66Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786195322; x=1786800122;
+        d=1e100.net; s=20251104; t=1786195857; x=1786800657;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=li/c4+/312t4GgA151ifIixBtg8Isry/It3D3W9Em4A=;
-        b=E2szMzWXUozHOzP0G7E/CHGQtZrUDseO1y311IIj6Yxm0lwYtT3l4RW5ZxmWVWcZBJ
-         HMB379ASBBhOFHwzWEXMJaFmzjF/IEXrHVwi2mUXpOMgkmF00rpGSwBg6rsGSDFT2su2
-         9DMtKjPTJG429TY9vHtLzYxlPz2WXPuywOj8IjR77tTKdUUgECk5RSDsoRaEAtDLX3Ko
-         kgsSMytk6Z60pifxJ4ja2s7KyZLoQ2aYttXzSm1sYNSYi1/NF3n0bXojPhlOoAChLRui
-         xcBupC8UcbY8cmHmnuMeqtGuTNUHT8lKgikWW7k1AQQNHe78c/4y4lSeHUPwbupfODfW
-         0I4w==
-X-Forwarded-Encrypted: i=1; AHgh+Rqdaa/BOYN0TZ1ibFNCgIoO0z4n+0d/1cexkV1bQClD352yCbaPjr5G/KTEn1AxyYBrYrlHtYpFMg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyAPpZcCeLcy1CoY9lhFQUk6BFXk8BsOcRq1HEfnhWrb73hZfv1
-	l4L4DJ/xw7mcbSvC6uBXiV5uTd/EmC3ACIwrJQZxqV5Sug+BLCol+TXU
-X-Gm-Gg: AR+sD12wG+zUXhtmGQ2dPEE9988Vst9vQ8GN/kqZtt3NMfruh3xzuxbMt0QVBsrjl6J
-	y26TGcIaU/0WU4n3hkIak1qCk4M1tArhjdo7TXGJSKC/RSH5OxmySCUUelRXS/DdOgtVBx3D2t2
-	3ZKCV7KfFvH/ZqfTApTOSLUGGYWz8rV9DbqVeeBzpPn7+6WCnjclIf5rFnSGm9QmemCoUVvC4j2
-	DD6lDWbT/KEzYo5CHz7JdQE3Q8boqpKPk9caZiHjJ1L0WmnrcedI67LtbJQB7GNVeDz8ouGsrSG
-	OHM2on1460GKFC9kod7qT3V9hL7e1PN5R3Yco1JwHjgQlVxtAiQo3BmkwCcO36sVYQKD58f4kW8
-	uM1qKBmlLCb84PcLlBGc8RUpHaI5ILPPNXsx29grKqgWtckBaKb+PUZmtAMBkBNxq+Annob9VqJ
-	7+cwvJBaV3xxu8+ZJwvXdJg9tVvdl6aWNFpg+aWIg=
-X-Received: by 2002:a17:90b:17c5:b0:37c:607b:2cd9 with SMTP id 98e67ed59e1d1-3903b9f3ee3mr28104214a91.0.1786195321821;
-        Sat, 08 Aug 2026 06:22:01 -0700 (PDT)
+        bh=6zYCYgrPHJ1R0IyDM9ZJHQW95fmf52/M7XVvd8snhDU=;
+        b=DcpIWyCrI0X8SOSSz+hGvCQ9GMNBqjugoSA/5woBgvqgVY/LN5DFCUoKykTNrPp37W
+         rF3z/zculiWgGs6sKfivdPj9Jf+LPHN8EgzRzhcb1IbzwJh+57D/xUY0GB/7ijxWCtPY
+         jqsIjpqGlx6HODwj0DHWUQSvlEGcHJIuFZuxVeP0NeG4C6W+QEPns8H/VjvsipEvA2vG
+         LEos2NULVDTV0xLpEnfGE0R3o+j97HHPWsTmiVbRMFD0KSknECOCkxGrlKXOeUAqFks3
+         3UiSY/cUwQT/h3q/Xm3O7epSq+FR7lchy6bTRLO9pGvFutCnlJRLod/gxLsZsscGYP2z
+         50eA==
+X-Forwarded-Encrypted: i=1; AHgh+RrhELtzjWzvRbPCRzRxtziE/NBZmPbv94ox4UAcIkvBdpbInGv+Hc8B6O/ME1tV0cIg57L/hb5BBQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YweNarK3/FLba75TxRRiXS0UZse02EmnkIqtdTbF8K3D3QYAiow
+	5sK+jPjJyK4Tj/Vb2WNbmXgd4gCPMy3j8B1NlBNsljVtQGcOoX8eW8HR
+X-Gm-Gg: AR+sD10fTTFkoypTNcK+XTzKbkHm3DHBLDQtKHcI9WSfxLvafHYrKz5dguLWxVIy4jW
+	U3yXfpg1MxAMD6f615ahPvCLCQQMUxsYB6h2CYa89vM1UlBYodOYIn+XQBIT2SU8FzB8/XjRR4u
+	RjGAzxWtIdyQ2+mt/fOf7HIJS7uMz/6uqsJOr6q5V/5nSxOIvnm4JeghBsAQdVTdlsQBsTa8S6d
+	7z5+Yvvyxz7dV7yD9I/otB3yq5wVwsFx3W5qHiYTmmxWC1Zcg6AkGPf1fTy1zPLHcBdPp++YfNZ
+	2G4vhgk3RZ5I+uud1TPYl/Zn9GuK+wtqoIp1bJy8n1OoBC7S8z2UIJpVbu6QeLAYHmnVa+GbENz
+	r75yusGASsY8pVdnAYQxjtGUQO75VQQO071eoDcJ1xvbwnIBo0uJvTKJ+J+rLZTdKHxK2qw63oy
+	pMJSrV7Ts1WJi2Z+WTusZKBIMTXsQDz+etrg7DRQ+7b6HX5viMOw==
+X-Received: by 2002:a05:6a00:240c:b0:842:3838:cb03 with SMTP id d2e1a72fcca58-84f6b778b44mr5395163b3a.11.1786195856790;
+        Sat, 08 Aug 2026 06:30:56 -0700 (PDT)
 Received: from localhost ([2403:2c80:17:1e::20db])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-390b343e662sm2307387a91.2.2026.08.08.06.22.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84f5a51e9a9sm2125357b3a.37.2026.08.08.06.30.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 08 Aug 2026 06:22:01 -0700 (PDT)
-Date: Sat, 08 Aug 2026 21:21:57 +0800
-Message-ID: <c73cc405df108dd7c3c5da95a1f8cddc.codykang.hk@gmail.com>
+        Sat, 08 Aug 2026 06:30:56 -0700 (PDT)
+Date: Sat, 08 Aug 2026 21:30:52 +0800
+Message-ID: <b66d3009f9cf310ca0f068999bd475ac.codykang.hk@gmail.com>
 From: Cody Kang <codykang.hk@gmail.com>
 To: Philipp Zabel <p.zabel@pengutronix.de>
 Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
@@ -77,11 +77,12 @@ Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
  devicetree@vger.kernel.org, spacemit@lists.linux.dev,
  linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
  linux-clk@vger.kernel.org
-Subject: Re: [PATCH RESEND 10/17] drm/spacemit: add Saturn DPU KMS pipeline
-In-Reply-To: <084a860a77f18aaafcda4b223eec4fdcd96e75c9.camel@pengutronix.de>
+Subject: Re: [PATCH RESEND 12/17] drm/spacemit: add Innosilicon DP/eDP
+ controller bridge driver
+In-Reply-To: <5537a40f12e80b89e330f37032016de6f3b9f4c7.camel@pengutronix.de>
 References: <20260725-k3-display-v1-0-6de34d80e86c@gmail.com>
- <20260725-k3-display-v1-10-6de34d80e86c@gmail.com>
- <084a860a77f18aaafcda4b223eec4fdcd96e75c9.camel@pengutronix.de>
+ <20260725-k3-display-v1-12-6de34d80e86c@gmail.com>
+ <5537a40f12e80b89e330f37032016de6f3b9f4c7.camel@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -93,71 +94,112 @@ Content-Transfer-Encoding: 8bit
 
 Hi Philipp,
 
-On Mon, 27 Jul 2026 09:35:38 +0200, Philipp Zabel wrote:
+On Mon, 27 Jul 2026 09:49:58 +0200, Philipp Zabel wrote:
 > On Sa, 2026-07-25 at 00:51 -0400, Cody Kang via B4 Relay wrote:
 > > From: Cody Kang <codykang.hk@gmail.com>
 > >
-> > Add the atomic KMS implementation on top of the hardware backend: one
-> > CRTC and one primary plane per DPU instance. atomic_check validates
-> > the plane rectangle 1:1 against the mode and sizes the per-channel FBC
-> > line buffer; atomic commit builds the cmdlist batches, maps the
-> > framebuffer through the DMMU and arms the cfg-ready handshake, with
-> > vblank events driven from the DPU interrupt.
+> > Add the DP/eDP controller that sits downstream of the Saturn DPU. Two
+> > identical instances share one compatible; the eDP-vs-DP role is board
+> > wiring, so it is taken from the devicetree: an eDP panel always sits
+> > under an aux-bus child node, an external DP connector never does.
+> >
+> > The link is driven through the generic PHY framework, so the controller
+> > never touches a PLL register. The controller's HPD interrupt is gated by
+> > the DP pixel clock, which can be off exactly when a plug has to be
+> > caught, so the connector is also polled and the interrupt path re-reads
+> > the live level when it does fire.
 > >
 > > Signed-off-by: Cody Kang <codykang.hk@gmail.com>
 > > ---
-> >  drivers/gpu/drm/spacemit/spacemit_crtc.c   | 815 +++++++++++++++++++++++++++++
-> >  drivers/gpu/drm/spacemit/spacemit_planes.c | 376 +++++++++++++
-> >  2 files changed, 1191 insertions(+)
+> >  drivers/gpu/drm/spacemit/Kconfig            |   19 +
+> >  drivers/gpu/drm/spacemit/Makefile           |    3 +
+> >  drivers/gpu/drm/spacemit/spacemit_inno_dp.c | 2443 +++++++++++++++++++++++++++
+> >  drivers/gpu/drm/spacemit/spacemit_inno_dp.h |  328 ++++
+> >  4 files changed, 2793 insertions(+)
 > >
-> > diff --git a/drivers/gpu/drm/spacemit/spacemit_crtc.c b/drivers/gpu/drm/spacemit/spacemit_crtc.c
-> > new file mode 100644
-> > index 000000000000..b75ff6320501
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/spacemit/spacemit_crtc.c
-> > @@ -0,0 +1,815 @@
 > [...]
-> > +/*
-> > + * The assert and deassert orders are not mirror images: the hardware wants
-> > + * these.
-> > + */
-> > +static void dpu_reset_assert(struct device *dev, const char *name,
-> > +			     struct reset_control *rstc)
+> > diff --git a/drivers/gpu/drm/spacemit/spacemit_inno_dp.c b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
+> > new file mode 100644
+> > index 000000000000..e88731d9b18b
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/spacemit/spacemit_inno_dp.c
+> > @@ -0,0 +1,2443 @@
+> [...]
+> > +static int inno_dp_probe(struct platform_device *pdev)
 > > +{
-> > +	int ret = reset_control_assert(rstc);
-> > +
-> > +	if (ret)
-> > +		dev_warn(dev, "failed to assert %s reset: %d\n", name, ret);
-> > +}
-> > +
-> > +static void dpu_reset_deassert(struct device *dev, const char *name,
-> > +			       struct reset_control *rstc)
-> > +{
-> > +	int ret = reset_control_deassert(rstc);
-> > +
-> > +	if (ret)
-> > +		dev_warn(dev, "failed to deassert %s reset: %d\n", name, ret);
-> > +}
-> > +
-> > +static int dpu_pm_suspend(struct device *dev)
-> > +{
-> > +	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
-> > +	struct spacemit_crtc *a_crtc = priv->a_crtc;
-> > +
-> > +	/*
-> > +	 * Assert before gating: a reset asserted into an already-gated block
-> > +	 * has no clock edges to propagate on and leaves the register file
-> > +	 * untouched.
-> > +	 */
-> > +	dpu_reset_assert(dev, "lcd", a_crtc->lcd_reset);
-> > +	dpu_reset_assert(dev, "esc", a_crtc->esc_reset);
-> > +	dpu_reset_assert(dev, "mclk", a_crtc->mclk_reset);
+> [...]
+> > +	dp->reset = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
 >
-> It looks like these three are mirrored, and could be handled by
-> reset_control_bulk_assert/deassert().
+> Since this is only asserted in probe and deasserted in remove, you
+> could use devm_reset_control_get_optional_exclusive_deasserted() [1].
 
-Thanks for the review. Indeed, reset_control_bulk_deassert()
-walking the array in reverse gives exactly the mirrored order the
-hardware wants. Will fix in v2.
+Thanks for the review. Will do in v2. The binding marks resets as
+required, which means I shouldn't use _optional in the first place.
+I will use the non-optional devm_reset_control_get_exclusive_deasserted().
+
+> [1] https://docs.kernel.org/driver-api/reset.html#c.devm_reset_control_get_optional_exclusive_deasserted
+>
+> > +	if (IS_ERR(dp->reset)) {
+> > +		ret = dev_err_probe(dev, PTR_ERR(dp->reset),
+> > +				    "failed to get reset\n");
+> > +		return ret;
+> > +	}
+> > +
+> > +	dp->pxclk = devm_clk_get(dev, "pxclk");
+> > +	if (IS_ERR(dp->pxclk)) {
+> > +		ret = dev_err_probe(dev, PTR_ERR(dp->pxclk),
+> > +				    "failed to get pxclk\n");
+> > +		return ret;
+> > +	}
+> > +
+> > +	if (dp->edp_mode) {
+> > +		dp->bridge.type = DRM_MODE_CONNECTOR_eDP;
+> > +		/*
+> > +		 * OP_DETECT is required: without it
+> > +		 * drm_bridge_connector_detect() hard-codes CONNECTED for any
+> > +		 * eDP connector and fbdev wedges at bind.
+> > +		 */
+> > +		dp->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
+> > +				 DRM_BRIDGE_OP_HPD;
+> > +	} else {
+> > +		dp->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+> > +		/*
+> > +		 * No OP_HPD: the HPD interrupt is gated by the DP pixel clock.
+> > +		 * Leaving it out marks the connector POLL_CONNECT |
+> > +		 * POLL_DISCONNECT instead.
+> > +		 */
+> > +		dp->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
+> > +				 DRM_BRIDGE_OP_MODES;
+> > +	}
+> > +
+> > +	if (dp->reset) {
+>
+> This check is not necessary, reset_control_deassert() handles NULL
+> pointers.
+>
+> > +		ret = reset_control_deassert(dp->reset);
+>
+> If the _deasserted() variant is used above, this can be removed and the
+> reset control doesn't need to be stored in dp.
+>
+> > +		if (ret) {
+> > +			dev_err(dev, "failed to deassert reset: %d\n", ret);
+> > +			return ret;
+> > +		}
+> > +	}
+> > +
+> [...]
+> > +	return 0;
+> > +
+> > +err_clk:
+> > +	clk_disable_unprepare(dp->pxclk);
+> > +err_reset:
+> > +	if (dp->reset)
+> > +		reset_control_assert(dp->reset);
+>
+> Same as above. Remove the unnecessary check or manual assertion
+> entirely.
+
+Agree, all of these will be fixed in v2.
 
 Cody
