@@ -1,112 +1,145 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1C72F39C7
-	for <spacemit@lists.linux.dev>; Mon, 10 Aug 2026 08:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E784018A6DB
+	for <spacemit@lists.linux.dev>; Mon, 10 Aug 2026 08:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786350017; cv=none; b=cBJu6zZ8euH5K3vUN60QMp7F2k9gPTX6SLezXrTUAfmY/gCL/qnnJyLqyMJzfmfcN0ZojatBlkLO2UbD4Cu0i4dqgtzav7Fz7xiPTqadcZFzgjUJnw6hT27LoQSM49Xsdjg9he15/6TjJ6rSgmT9iJKRMh6mMArQANJQTONxvbc=
+	t=1786351407; cv=none; b=Or0GatzkAaZGDH5nsapQrCxUzY2nxMN8n6azA0gxXGIgnpNvykS+KV+/v0nS4Oie+9YE5ox4JGATVIeIjX0mgbOgs9AWehRLrssK7+NwwtlInaVV0u+wkx42DULH9Jdt5aQWvCXX4DWz66A/nMBJLvNjjIiLPjAlpM5OUya6sjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786350017; c=relaxed/simple;
-	bh=nzaQJ5xHWOHZSj+57EcWQMu+TpfT4HpZOkKr5A3+P4g=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 In-Reply-To:References; b=hKO2D6hO0QciRvOELImYITmGLVhpqxv47cAmkHZJsJaHJPi0EmUyvoiXMhOcIQMLS65dXZbLRBu3GLvcvjUCkxyplT3GL37bXPiWW0/RnCXyOy97JTIiJiHANzLfZ4kKicLxiz2z8yHwP045P8Fd9P5aUzj3zgz8JlHD1JicS7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=T1m71LCQ; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1786351407; c=relaxed/simple;
+	bh=zfC7lhtC0ZhBcGSHDYbkMlXmarTuC594GkrsxACApUQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=l4PXt0yGE3idaxAebBuPm0+peGfY3W054EsobJMRbY9Gh3kW5m3zjlUlhdQ4sW53Wpeg2CO6N5Oa92zjmL5BqZ37EV2+ocJERdO3HJIgpfrDjzRNTWVrvgpaILAFDqdxlT8fKPDnfDVmKvdpjNW3WbMu6kvUAJRCMrC/+SaRAME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=YzVpz9fB; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="T1m71LCQ"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="YzVpz9fB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1786351336;
+	bh=9b6ShfMeZe2xAUD9+B2Stmwf48m8aw2mvouvW/AlHHI=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=YzVpz9fBx/BiYsAkfqn4CLVmugnwRJkZF8a7Ha7/tN7OjH+otvDzlh9KqyNZBgC6U
+	 6gn8430g/FU1mkYrCtFK6GOKoa+YcKrr2WgWmqA0NGkS3opvvfph0bxN30/iEAcjTV
+	 qNFZynqQGVVAMkhMOwAmqANgcNGsa8JfMuMJxaN4=
+X-QQ-mid: esmtpgz15t1786351327tc93958f4
+X-QQ-Originating-IP: kbLOV7gjYlNvnl0rraFfGXYnouNtT815jhLZiJswT5s=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 10 Aug 2026 16:42:05 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1439357261299029505
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1786350014;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Mwb4T+70sQLw0zGlvvSzZhnupF748FA5zZmXS7ztNcU=;
-	b=T1m71LCQgmbZJiuEVkMw3skXMvxXtbkBcBWHDF1MUhxXqfVkveKgF4RKsQurR/ajD9cSz+
-	nt2SRN+B/OqyK3bqask8irYPL2hMhkMw2kK5kvpA5oKWqltev1QkSfQlgdfIdQywSybPu4
-	URq2rMsh0uqV2GPSRAgbujtJBBBMkKU=
 Content-Type: multipart/signed;
- boundary=d199f377d7c17763f6ce1e395f30f63cbfb46a7e8fee7409363fcd76361f;
+ boundary=5c2444142807e9cfb537af5f4976382a35e3a9d6e77c043f51e0fe45cff4;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 10 Aug 2026 16:20:05 +0800
-Message-Id: <DKL487DPH7KA.3GNYMRSBR1JY3@linux.dev>
-To: "Troy Mitchell" <troy.mitchell@linux.dev>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
- <dlan@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>, "Shuah Khan"
- <skhan@linuxfoundation.org>
-Cc: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-hwmon@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-In-Reply-To: <20260805134119-GKJ77474@kernel.org>
-References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
-	<20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
-	<20260805134119-GKJ77474@kernel.org>
+Date: Mon, 10 Aug 2026 16:42:02 +0800
+Message-Id: <DKL4P0ONTLFP.3QG0CCUU76BUG@linux.spacemit.com>
+Cc: <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] clk: spacemit: re-enable PLLs after init
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Yao Zi" <me@ziyao.cc>, "Michael Turquette" <mturquette@baylibre.com>,
+ "Stephen Boyd" <sboyd@kernel.org>, "Brian Masney" <bmasney@redhat.com>,
+ "Yixun Lan" <dlan@kernel.org>, "Inochi Amaoto" <inochiama@outlook.com>,
+ "Alex Elder" <elder@riscstar.com>, "Haylen Chu" <heylenay@4d2.org>
+References: <20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com>
+	<20260804-k3-pll5-pll8-1800mhz-v1-1-a3a75866ce32@linux.spacemit.com>
+	<anGeZk0-YShccqwE@pie>
+In-Reply-To: <anGeZk0-YShccqwE@pie>
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mg1D4hNPaN4xNs8K0vq3tEv8dgERJCWMB9LOGp5Bj2xPYvHj/+zoldkR
+	POwCaG4rKK3apn7ZzuXnwCLPsgBq2dP7PuzsXJm2DK6r9Or+ezbWnf52zq06d01HFpUU02k
+	8te73QVb6+IBr+kgolvyc9LAuxuYLR38V3fNv7mmzoyDfjLVXUTZk2Kdh0TTWVjrltR/EeU
+	AI/iB5Wm8TOonI8Yle/UeQf6mx8FasLAXBNZVgGVOLci6xrCCAU/rFOIoYFwPV62CGvVYU1
+	tlX5hyWSRl4D/Q5JTdxj8s4WUK+xFqMXOGOxDMC0MLqIugORSYaylC/Vcjchk7eyKH3Al+Z
+	mdiacvaheDmFPaA8rNkJxgVcUHzaQzdE7xK8gDiqSLR80MQOczv3yi6Jn3XWaWO3C/bQqgF
+	Cp8mudDd1xSsCeptElIAdsI/C4m9XAhUoM/Es0comzm0kA3An2MAGbxKOoybjiroYvBDuIR
+	N/hVmuFN3uRRBG0vQKelcHJCRhBoAsZf5FuT0IgJpd6m9QUjy4pN2bmi4Vetd0EdohtEIK2
+	2YW9lpyxHyvT77gSXKc+J1Ru44EGAkrezF/dI/CqvJMwyZTkjM5GFgkTwe7xEiQ5V/q6x6/
+	JzzrO/czLW++L3e8bQFiQ9nTjTQzsV1ntj5yAArktIZGUi9LuCAn6LFIKT5WLeA3SubOBy5
+	ag1c0IaOa/JknG7QD0uxagJIFObnF+n7GDVc3JL/KQ1iNsGRHdE47QtB0IdRfSroWLPovtx
+	XoFiZTvY4ws4hvhg+zw07o7d2FdJtMETDmmvpK+EqA/qpWgN2EOJxDtLIBHQPnaUtXtQTgJ
+	Ir18g6oKm1TXlQKjQKslu579Kbzv3E4yLj8xlZ9PyXeriyoduWP0xgZnRb4fe9tIWF7UkOm
+	CXrWNwOsDWE/5w2haymcFC3EyOFj48WpXusatS052skmw6sGOxhSbeV5zm2p4YZSVF1/tur
+	ZtJwFk71wkfYrbf/qGydSyhUEMCMfHLhcRlXELzbGgh5WD6fnfpC5hB5I4CbtRre2tQK7hO
+	KG9MD98K3lUvPqgPDdF8yYXm/MHvbuuvZ6tZGLAY32Vbg8pK3UXguzVaXmukuEStjkMHpbG
+	X+Gq85LhXnVTx2BXsYAUh4=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
---d199f377d7c17763f6ce1e395f30f63cbfb46a7e8fee7409363fcd76361f
+--5c2444142807e9cfb537af5f4976382a35e3a9d6e77c043f51e0fe45cff4
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-> > +&pinctrl {
-> > +	i2c6-1-cfg {
-> I'd prefer to use the reference, keep it short & close to where it's used
+> I don't think this patch makes sense.
 >
->  &i2c6_1_cfg
+> If this PLL is essential for some components of the systems to work,
+> there's no chance to re-program it safely after the kernel gets started,
+> since all the PLLs in K1 and K3 are specified as CLK_SET_RATE_GATE.
 >
-> > +		i2c6-1-pins {
-> > +			power-source =3D <3300>;
-> > +		};
-> > +	};
-> > +};
-> > +
-> > +&i2c6 {
-> > +	pinctrl-names =3D "default";
-> > +	pinctrl-0 =3D <&i2c6_1_cfg>;
-> > +	status =3D "okay";
-> > +
-> > +	temperature-sensor@4c {
-> > +		compatible =3D "sensylink,ctf2301";
-> > +		reg =3D <0x4c>;
-> > +	};
-> > +};
+> If the essential clocks could be re-parented glitchlessly, registering
+> a notifier and re-parenting it before the PLL disables might be a
+> solution. In this case, we need to delay the operation in
+> ccu_pll*_init() until clock registration fully completes.
+>
+> Otherwise, re-enabling the PLL seems totally extra here, they could be
+> enabled on the fly when it's going to be used.
 
-My intention here was to keep all board-specific pin configuration
-overrides under a single &pinctrl block, so that they can be found and
-maintained in one place. Using a separate top-level reference for each pin
-group would tend to scatter those overrides throughout the board DTS as
-more groups are customized. The &pinctrl block is also placed immediately
-before the &i2c6 consumer.
+You are right. In both hunks, ccu_pll*_disable() has already gated the
+PLL before the newly added ccu_pll*_enable() can run:
 
-Would keeping the current structure be acceptable for that reason? If you
-still prefer the direct reference, I will change it to &i2c6_1_cfg in the
-next revision.
+> @@ -148,7 +148,7 @@ static int ccu_pll_init(struct clk_hw *hw)
+> 	ccu_pll_disable(hw);
+> 	ccu_pll_update_param(pll, &pll->config.rate_tbl[0]);
+>
+> -	return 0;
+> +	return ccu_pll_enable(hw);
+>  }
+
+> [...]
+>
+> @@ -252,7 +252,7 @@ static int ccu_plla_init(struct clk_hw *hw)
+> 	ccu_plla_disable(hw);
+> 	ccu_plla_update_param(pll, &pll->config.rate_tbl[0]);
+>
+> -	return 0;
+> +	return ccu_plla_enable(hw);
+>  }
+
+Re-enabling the PLL afterwards therefore does not make reprogramming
+safe for a live consumer. I will drop this patch, "[PATCH 1/2]
+clk: spacemit: re-enable PLLs after init", from v2.
+
+To avoid delaying the 1.8 GHz rate-table update while this broader issue
+is investigated, I will resend the current "[PATCH 2/2] clk: spacemit:
+k3: add 1.8 GHz PLL5 and PLL8 rates" as a standalone patch. It only adds
+the firmware-selected 1.8 GHz settings to the rate tables.
+
+The existing problem of reprogramming an unmatched PLL from
+ccu_pll*_init() needs a broader solution and is independent of the rate
+table update. I will address this issue in a separate patch series.
 
                                             - Troy
 
---d199f377d7c17763f6ce1e395f30f63cbfb46a7e8fee7409363fcd76361f
+--5c2444142807e9cfb537af5f4976382a35e3a9d6e77c043f51e0fe45cff4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCanmJtSEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8CFgEAiJSPpno04iz/
-cz/ScQC1rhjqbfbKZVHCF6VJ27Lw8fwA/jzuR+UYxLorJLN/rAcuXQS8gF7HrQ5p
-lCjF5MwhGh8J
-=4F8l
+iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCanmO2g0caUB0cm95LXku
+b3JnAAoJEJgJ74D5MzQvCy8A/3AS+h5VxUd4a+hzLwgWTitmdjKz5AQxKY9ffa9g
+0PEaAP46TDFaDGtlJxZlgxExHbHVjyTZ7P44F33VqpOtqO4bBw==
+=9C3d
 -----END PGP SIGNATURE-----
 
---d199f377d7c17763f6ce1e395f30f63cbfb46a7e8fee7409363fcd76361f--
+--5c2444142807e9cfb537af5f4976382a35e3a9d6e77c043f51e0fe45cff4--
