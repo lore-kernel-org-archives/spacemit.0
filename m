@@ -1,158 +1,164 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013015.outbound.protection.outlook.com [40.107.159.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F311B39A060
-	for <spacemit@lists.linux.dev>; Mon, 10 Aug 2026 08:47:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786351675; cv=none; b=gr+hQMRAoFErz/NMVtCBZOQIdwxm1olMUwe8MxzmbnqwCZylEsv++s4VRRxBSz85hWMHA56fWCH28J4V3J9UzIhr+q9lnVX52WdMLrHenxOUCaLVOdEyiBK4+d3QVBZUvic5LIW1b6FFBEaiFCVDkLG5WbXoyjwo2HKGOAuk9bs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786351675; c=relaxed/simple;
-	bh=PS4d3vonY5cnWvEJCbFrwS8DUvEWQjBP1Nlfw0ZPQwA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sqR6RGcqhg58X8Hf9UfmZ4ThcesLZswhSVKakCoJ+mAB1JsMBCjolF2jO8W9pCTd6uvxgtUOMaj8+OnqEeXQocIz+9mqFXDkCpCAAhoG6rYQ1CepddysdezJOjuGAJnsE9QO1/s7+7L+fKmR9UmdgMReVaGmi3/68qYH8f+xaX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=GKGbohTv; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AEA3D954E
+	for <spacemit@lists.linux.dev>; Mon, 10 Aug 2026 12:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786365810; cv=fail; b=u74U2VufpXnoh5sLieAWC+5hiNeQu7tW9oD/lT9Nb+F+LACOrgoi0PcwiEsjX6A8Z94GHrAIup5PDnULrUXBw9pe1CIPPkesiSNyq1y0DdB7L5kC/h4T6t4Nrw5mGfs77Sfw6o9Dl2EIAPw8YkhSNT+ai4mXtnukJdJPGmMHHfA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786365810; c=relaxed/simple;
+	bh=hGIrqxzLto9BvfOiPB78fEtx+MIaG6N7CgOZJ3p8feY=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=XGfJeuDUJtQvrZnpgk14uCbJNuympsD5o/OmrXkmKbK4fDgmOwBNBmBnUeV3TGz7BfjDPRh2cdVq4ttS+9Zoo9ZIDM5laebR0oNZteFZxCaz6bKc+HUEMV9Pk13EBsTOMHsLYUfA5Z855nkkJxxifgJhqZZ9WY+iGfLFp5Ogxu0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=JR1pk7vy; arc=fail smtp.client-ip=40.107.159.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="GKGbohTv"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1786351597;
-	bh=M29CFWqH2OirKKpE7HnEh81ikMXn50dgrCAc8pjdIf4=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=GKGbohTv9NKy4H7Rx7yiYZ7CkI8c9XF6R7+iJgAEIotkViD/FCo0c6ttvsB5hZ8tJ
-	 n7GhBRNasQgSmhKfssG4syLk1a4K2uMCsFjmxfgG0HjGdRwkX8Su03wtaFUwo31XOi
-	 1uK/qvMekFLdLW0AXgVJDZAdA7nfGNBw93XxT0eM=
-X-QQ-mid: zesmtpgz4t1786351589t253fc5a6
-X-QQ-Originating-IP: 5bw4/46W/vAFFmQLjlD9b2QFb7W2rG/uBYflbHBWBgo=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 10 Aug 2026 16:46:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10674885904044503331
-EX-QQ-RecipientCnt: 16
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Mon, 10 Aug 2026 16:46:24 +0800
-Subject: [PATCH v2] clk: spacemit: k3: add 1.8 GHz PLL5 and PLL8 rates
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="JR1pk7vy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yf0Kv0BjkIL7cIkEXx8gEUlJRbYwDBwaN+VenvGSi2RIVk5J6l82ATINxX3mdtCU2oHkXapf9XhiQmbYV0X6skGJB8n9RhkwUNNJWeQMX5hjEx3ScV7s3RmjzEduvxZqPzTPJvl20Luxkxo29DYxrrmHaKxNKISfD8sZkEjflI1GkpsCL8U/rsj+M+C4LCcPv6LfinBJ5WQ3BmBuxECR6UZtMpfs+7YyeYtDDJSEt2z19nqgLF9scOwfrSUBHeL/Kc/7Ksc60HAGO6zMMcqEldX/sBx9FtarszmB3QPv5pbbNvc/aqs+aZ9RaKRwQQHrJDErzdGA2jxuT/v6epwaJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NwRLMYT7rDUlyQ7u/Q9XF8UzXMRdbbqCYUGUbXGyhhE=;
+ b=ROv5FgkEjQHqWaRDFPY25c7infaHpHVE4Oud3pI/p3xOawsnyW3zaGmUCMq3j2xlfksFKmR+uQd9uPMPNdNI198eZ5pdaz97E16OI4/aA2dYU1ruMSpZmgl2c9SbZkctuanWVkPewlsscInPGvRdzqR32MVBEp8Gds/WJ2x07hFtjNuSvSiEOvexOyxcwSXn0oZwrBaYzKfq9bhm2BK/5auZGJoyRR2LpCiPyJ1EfrxIKRx5WWliZNTFMlLM6scbfkFxjUcOsKx4hj7VidEI89DaF394Pk08co3QtEp0UvmdJpUJT3AIVPome+NrohguVk+LJJLFnMEczDUDzRcUdQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NwRLMYT7rDUlyQ7u/Q9XF8UzXMRdbbqCYUGUbXGyhhE=;
+ b=JR1pk7vy1DMYOfbYGWlmO2r19rJLpov1YSHGyWNMEW9P0WGH1AGHzdAJzETLglp8Aur6MqfOpcom1ljVajGmxP80DqBf9AoPVREwW1/0zwg8EYAQmZvZzGxS149esyirzxsAPhMAL7D4rg3hihHWBpmaZUlQxEZxuwG627pzffdM8fD5VXWmF4DHCkcM4KDhj0YBCEbxklxNtj831/5KumIfByRhWZEge1Q7e2geKwUlNJitUQ7w1Dek86KW8htuk49dHUPT6woAu/onMNHONQS5DvN2KL0khFtTzPygd9P2VT9Kc1ifljnScD0bebpywN9BK5e6qwYABzPs1gRfFQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by VI1PR04MB6861.eurprd04.prod.outlook.com (2603:10a6:803:13c::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
+ 2026 12:43:25 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%4]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
+ 12:43:25 +0000
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: linux-pci@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH v9 0/3] PCI prerequisites for PHY consumer/provider split
+Date: Mon, 10 Aug 2026 15:43:12 +0300
+Message-Id: <20260810124315.433448-1-vladimir.oltean@nxp.com>
+X-Mailer: git-send-email 2.34.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AS4P191CA0029.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5d9::12) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260810-k3-pll5-pll8-1800mhz-v2-1-aabff510a797@linux.spacemit.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Nyw6CMBBFf8XM2iFteVVX/odhUesoo7zSAkEJ/
- y7FuHNzk5Pce88MnhyTh+NuBkcje26bFdR+B7Y0zZ2QryuDEioTWih8xthVVRpCo9RC1OUbrZY
- 6T40whySBddo5uvG03Z6LL/vh8iDbh6/QKNn3rXtt3lGG3k+R/FeMEgWa2OSpzjJLsTpV3AxT5
- DtjqeY+sm0NxbIsH03CIcvTAAAA
-X-Change-ID: 20260802-k3-pll5-pll8-1800mhz-c81875a0a944
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>, 
- Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@outlook.com>, 
- Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2487;
- i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=PS4d3vonY5cnWvEJCbFrwS8DUvEWQjBP1Nlfw0ZPQwA=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFmV/Q85y7xOz+g7eSPiS8DlyZ5Nd5dWKvDzNTmdujw1X
- 6Z+648rHaUsDGJcDLJiiizdD3i2FfhE2RYIFPrCzGFlAhnCwMUpABNJ82VkeMTFomN41t6I9+Pl
- +ElMS+xvNKg9izw7u4H/yPVTzx6sDGNk+PA3niP5h6LiAq6qLXFTqp8+113q3bwx5dhHOdOb69Z
- WMAEA
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MeYHCqcqpzbjRStQUqduFrKEn72gnnjlQ9EFROImFdlLFiLSSSH/vWq/
-	jfYr7TwQOzWCQi4wE04Xm/z+aasCJziMwwUpeZ15txdbkcHy6nhYYHxnSwhdT+GqBx6xUzi
-	IYyyR28pVhZqlIhxVBrI/fkW3vFWES8/0TQx5aphRe8zyA6h+r5X0ZNdGZ0mbUkkILq3R7L
-	n4te9u7bBprpC7HScBNlVmZCumnzJPlX8unCSxh9rWLCBqouJLhnpsPwcIUE23bPW3rtYQO
-	W670lgzKu8FfXA9eNE8y8ixeCh/sqQljlrLrsyPp07wPl9J3lBrYQtTrcVhPv6KYcVZcQeP
-	X3nrMfQoObLlbSMUGiqQPYVzilJLT2qmOLvah30bcDCG0y2kNxjM/j7PYLHpi5t37odl7bd
-	nVw9b/4N24VwpEjQ3Sv1oknzBdXJE8hWuahd/h0ynTtSFLPO4iBTY/HUgOeHc6sSIUQns2f
-	y8XKE0WCTeGsZOevquegbHAn50hH1XnL012SeJP/pHp3v4HFAStdbOupPw/H8L5QyuQmuJe
-	cagy8GH8eLGXxoHvMPfee1QihNnJ27CMJCzpZJM8GK9pXUQL7kKE1utmJ3Ajoc4FI2rKGXD
-	+dIJWFxI+m3XbM74LjAYCiYTnlkX47WqfkiZcrUPLJn/prI4Iz5pHVSd4E5CU8lnrosAnpB
-	F5eQxC2NPtv3b9EYqhUcenV6GHSUp4YJPT3rhdB0fk5oj3TLhLmcQPqeN6RseSnlb++ZK4l
-	5yF9ZSpX5rNTAJSeFtg4IgB4lcxbH1bkQS7KeA3pzNfg/1k0r2MTZXmqDQFGf5H/QnzX5Ee
-	sIzmP+G/OUg479ROyOmYWvxIcrSGUQAWxW67ghmdPMGlMpx+1Oq2R5GRAUARAav7ZcLGLUX
-	qzrLlQqodpAhS6L7GjY8uaikymMuC/EEgtjkVKcrtUTnFmkj7AiULU10v2Gv63phnO2q1Yx
-	LcUxVZjtLiutO3HWOSG+VaWnZ/o+4ZOdTQaP9vzqHL+GgBs4eMQivpMD9w3CCxQEJ6dOkjc
-	ugFltk9d3jm3CGxL2OjNgmNtxbmHLl0wVTMnfZBO+EY5DKpTQPstAJLcnBT73SMML5B82yI
-	sewpidQzqZqtjqkuhM2K0BOknjMe1ocjaWDPCjY6TMuu01PNhxAutr022GPN/Rfcbb1A/KQ
-	dqJSyRGmW4HZtro=
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|VI1PR04MB6861:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5c6f2fdc-5270-4c0d-101f-08def6dcf83f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|19092799006|6133799003|56012099006|10067099003|11063799006|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	i7rfEV4AFaYKci9Hi0m9z4d+8TIurCKXerD12KbO4z28NQZv5Z9VgZAudmhWEVmtcPZtJYsv5M+ufhGoWH0MiVePZC08ASKYLW7pOZR9bNeVJiCmW5+VZUuvkbbX1wSvtDYFhozD8v4jVZLYVnyHybajBF6DFKeVSkRGA9jeqbesvF9XkbVvcaJeLLzR/OCjwoAIERzKnQPz6RCtiCSfjLiZa/qMSTxF6EyguoVNP+h40rt+OTAzNqF5ykCoABx2bxUIU5ODy/rz3E7Uu+bm9bdxIx3YrZQ/tJ7krlyIX/AmUosVGSL2qndbMvh0dqambaq85TLNMayuMfigxQJZ2WM4d/RAdfdNf/EUcngtyvfl45+H3Incbui/Zbaq0wIGYSYrBQmLQo3OwwlwYo/HTBeyTJGTQIbmByZUHZPuwGYHculd4a5jPPB041VfWWATFqslC7ZtJ10T5wBxnSek357bXXUsNmmnxyHDA6TAxroPeHxUp9liNO3q1cTB7tyqsTDvZ24t18ho+e40iSTZwtRo81g3XCMgqE5VRjnvLgNOiRf3qqdeHQHedyvMJUch8jR5HuVpDFWHN9KRzDJAAb86Ab7B6E3G/pilJvpynjJfG53Q/YiV32KHPI04K+v44VHe3YRaAaD6O5ogKxH7rYjR3B978iv23dJYxwTmZQU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(19092799006)(6133799003)(56012099006)(10067099003)(11063799006)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?T3Z3L3BmenY1VHhrZVhyV1o3SjYzMUNoSG5pNXlFWlM3RkdzL1pWdXRmdUVP?=
+ =?utf-8?B?ZjBQNG9USm4xRUR5ckJUUzNDWGt0MkxPcWdFVWo5SDk2WDVDUWhhT21uREtG?=
+ =?utf-8?B?Y0lCOGs1anh3MUZ4VkdpMWozL21mYlIzTXRseW1KSjQ4akJMNWRlNGNKaXBD?=
+ =?utf-8?B?T0JRdVIwWFBGbk1oaHU3bzA5ZVE4c3RkRXpjUTl5dS9IbTczYnZrUXZYM1ZF?=
+ =?utf-8?B?VGxzQm1qZXJnTml1ZHFxcFFVeEJtUUQ0OVN4MVFHSXc5cC9yeFNaQVpHNHND?=
+ =?utf-8?B?Zk1PTUhaYm5JSVgvNnlhVVVtZ0ViQmtnbndtU2tsZE9RSHBWZGNhQThBUkxj?=
+ =?utf-8?B?MlpCdWNCRndUcXBjaUo2OWFLZ2V6cGczUVcyYS9aUTJWNHJEejN2YmtldVdl?=
+ =?utf-8?B?c1lTZ3NUT0F0QXplOU9Dc2Z0cGZ0cHZZcXlraHJqeTA0eVJneDZVTUM2YlZF?=
+ =?utf-8?B?M2V5TFZ0REd5clU1VVc3TDFFZGMvWGR2RDhJVyt5WEdlUkJad3dWWTZmSGhw?=
+ =?utf-8?B?QkxKUWdNcVRld0NvSWxsTGhRUGNCQ2J6S2F4dGRWTk1EQmszbHh5dE5tRnc5?=
+ =?utf-8?B?dXk3ZmVMSGROSTQ0UFpkUk1zaHE1ZERqL1dISDlRdlJkZm5JWDhlZ3ZxSUdL?=
+ =?utf-8?B?Y2YvcHVZL3JTVXNaM21XSVAvZ2NOSG5jT2J3T2ZTeDlUM29ESithTkVIN0Fa?=
+ =?utf-8?B?Mk1JNWorRzFDdU8wMGYwSFNvV3FSdU1IRTNXSzBMY0tjZktPRFdtblRkdllp?=
+ =?utf-8?B?RTI5ZlhsY0JRM1h1U0U1Tzc0YUlCeXlEcVIvUDFiZ0ZKL1lyaWlQRzVaalMw?=
+ =?utf-8?B?ZFZEbjkzUVJ2Mmo4TGFZcWtMWUJaTlRRMGN5UWxMdDRnNStyV29TR1ZxWlpV?=
+ =?utf-8?B?MVU0VmlkdG81dC9Zd0pxaDRRQ3loeEdnVzU1TFVHeXZ5WWFKbk1lTUlySjFt?=
+ =?utf-8?B?bGVCOHdBTkYrWUdXNjlLT2d2WGhrMU9VSmdsclR4QnIrUGdyV1ZkWGcvVThq?=
+ =?utf-8?B?ZEJGNlc0VHBUUk5PREVHYmkzZkNZZi8xZHZPUXVnNi9ydkhJVjFmS2J6SHJJ?=
+ =?utf-8?B?RUZMOGVJUnRBcWxKdmFqSCtFbHRCaWhNS1p5TC9oQStjMUtjSHNjNGI5SzUv?=
+ =?utf-8?B?cUZXTVA1MG8zUGFQVEN3NGk3RWtsbk9VOE9CcmpYRXV5bTRmZnRQNUh0d3U4?=
+ =?utf-8?B?VEVUa09KYU1xcDU3VUJ2MnA3OTR2OXVIRFlldjl6YkpmbjlxekpFa1M0N2hu?=
+ =?utf-8?B?ZFRQelJvMFFra3VmOHdDbGpUTlJtSWt1aFlUMi92RnBxVjhmK2hBeW5OZTVT?=
+ =?utf-8?B?OUxDdzYyc09keXErZGplTC9IRThOa0l0RkY1QTZsNEg0MXI3TWxBUEthSExm?=
+ =?utf-8?B?czVZdDR1RkQzczgvQ29UUFc0SStiM1p0dHdxc29Ud0JDd0tnQzlWSmhmSlh6?=
+ =?utf-8?B?SXRPMnRibTZIY3pKZEpYSEdkb0lMc0tSeVc0SlpCeDMrTXJPMlQzY3R1a25V?=
+ =?utf-8?B?NjVMNTZVeTBURytTdmdXU3NZb2xSbWIxNFVoS3puc1V3eUE5K3BseXRzajk3?=
+ =?utf-8?B?cmp4ZVZYbHdITXBGdUhNYlBBTHFXS1VyN1owWU1MMDdPUFl3ZmRIRE5zRTlW?=
+ =?utf-8?B?V0M3bGFwTkpsMVJGbkU3TFBYdmpjNzd0NWVRQnN0dzdxRWIyb0hGcjRqcHUv?=
+ =?utf-8?B?L3lnM3FjZFlqNWFQM2hRRlovY1pCNTV4dU9oMklqNUU2U0FHR2paWGZEWkFB?=
+ =?utf-8?B?ajdaQm9hdXpQSm1YOWZKSk0yc0hZVnVpYjM0Zm1uY1VTYVcrRGt1UmFvR3pO?=
+ =?utf-8?B?aFJKUW0waHdub1Vka2VKdm5yOTdJT0ZiWHFJYmpldnBYVUFTOVpmRS9nRHFP?=
+ =?utf-8?B?ZlgvckhTaHA2UzJNTzlZY3ZFbnhsY0lwbTZwb3E1bXlqZUkzN3MwdHgvdURL?=
+ =?utf-8?B?T1F0SWlHRnVMbldJT2V0SWt2aVpYNVZYem5NWlRWMEdrM0N2K1NoN0RwbldF?=
+ =?utf-8?B?SFc5S3RZZlFra3pyMElYdVhrWkYwaWVmSXRrZzBMRGNSbU9GWHBSWlJsZ2ZO?=
+ =?utf-8?B?SXVLcHNMcE05WFJOSktzdVB3QWR4ODhXT1QwSWpEWGhMcEM4V2tLd1YvaGFu?=
+ =?utf-8?B?TUxNNTc0NngwWU53WGJBdHV2QS9jOFhLYTVCeWdnb2xZMlpQQUV4cEZWWGgv?=
+ =?utf-8?B?WmUzNmJBdlFFVDZIVVJqdHJnandIL1gxZ3QzZEpqdU82a0lsdlRGVHR2OXc4?=
+ =?utf-8?B?MnBkVUxsQThZQlZNNSs4WWwwQXBZVXhLenBaaHF5WXh0UEMzbTRXdnZ0aEo0?=
+ =?utf-8?B?NVBMSVZncGJZbWtHUm05bURZMmZkUjhuSGgybnlTcldOMXh5WUxOQT09?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c6f2fdc-5270-4c0d-101f-08def6dcf83f
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 12:43:25.3390
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qnkvNs/KNsWoKPRga0C09HJJ9asp0uKPisxW7x6fvnAjNLFVLkgxOzgSUl2yt+M/k+oAi3EtoHsr7eeQZSmmPw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6861
 
-K3 boot firmware configures the C2 and C3 CPU clock domains at
-1.8 GHz. PLL5 feeds C2 and PLL8 feeds C3, but their rate tables
-currently contain only the 2 GHz overclocking operating point.
+"[PATCH v8 phy-next 00/31] Split Generic PHY consumer and provider API"
+https://lore.kernel.org/linux-phy/20260505100523.1922388-1-vladimir.oltean@nxp.com/
+became unmanageably large for a single patch series and needs to be
+split per subsystem.
 
-Add the nominal 1.8 GHz configuration as the first entry in both
-tables. This lets determine_rate() and set_rate() select the firmware
-operating point while retaining 2 GHz as a supported overclocking rate.
+Here are the patches pertaining to PCI extracted out of the larger
+series.
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
-The related U-Boot change is available at:
-https://github.com/spacemit-com/uboot-2022.10/commit/fb95cf3d848b771c61b5a1b3e5cbbee223faf352
----
-Changes in v2:
-- Drop "clk: spacemit: re-enable PLLs after init"; the PLL init issue
-  will be handled in a separate series.
-- Send the K3 PLL5 and PLL8 1.8 GHz rate-table update as a standalone
-  patch.
-- Clarify that 1.8 GHz is nominal and 2 GHz is an overclocking rate.
-- Link to v1: https://patch.msgid.link/20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com
+Change log in individual patches.
 
-To: Michael Turquette <mturquette@baylibre.com>
-To: Stephen Boyd <sboyd@kernel.org>
-To: Brian Masney <bmasney@redhat.com>
-To: Yixun Lan <dlan@kernel.org>
-To: Paul Walmsley <pjw@kernel.org>
-To: Palmer Dabbelt <palmer@dabbelt.com>
-To: Albert Ou <aou@eecs.berkeley.edu>
-To: Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-clk@vger.kernel.org
-Cc: linux-riscv@lists.infradead.org
-Cc: spacemit@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org
----
- drivers/clk/spacemit/ccu-k3.c | 2 ++
- 1 file changed, 2 insertions(+)
+Vladimir Oltean (3):
+  PCI: cadence: Preserve all error codes in cdns_plat_pcie_probe()
+  PCI: Add missing headers transitively included by <linux/phy/phy.h>
+  PCI: Remove device links to PHY
 
-diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
-index cb0c4277f72a..e8b7ce89c2cb 100644
---- a/drivers/clk/spacemit/ccu-k3.c
-+++ b/drivers/clk/spacemit/ccu-k3.c
-@@ -38,6 +38,7 @@ static const struct ccu_pll_rate_tbl pll4_rate_tbl[] = {
- };
- 
- static const struct ccu_pll_rate_tbl pll5_rate_tbl[] = {
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
- 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
- };
- 
-@@ -50,6 +51,7 @@ static const struct ccu_pll_rate_tbl pll7_rate_tbl[] = {
- };
- 
- static const struct ccu_pll_rate_tbl pll8_rate_tbl[] = {
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
- 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
- };
- 
+ .../controller/cadence/pcie-cadence-plat.c    |  6 +---
+ drivers/pci/controller/cadence/pcie-cadence.c | 16 +---------
+ drivers/pci/controller/cadence/pcie-cadence.h |  2 --
+ drivers/pci/controller/dwc/pci-dra7xx.c       | 16 ----------
+ drivers/pci/controller/dwc/pci-keystone.c     | 32 +++----------------
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |  1 +
+ drivers/pci/controller/dwc/pcie-histb.c       |  1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |  1 +
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c |  3 ++
+ drivers/pci/controller/dwc/pcie-tegra194.c    |  1 +
+ drivers/pci/controller/pci-tegra.c            |  1 +
+ drivers/pci/controller/pcie-rockchip-host.c   |  1 +
+ drivers/pci/controller/plda/pcie-starfive.c   |  1 +
+ 13 files changed, 17 insertions(+), 65 deletions(-)
 
----
-base-commit: 1590cf0329716306e948a8fc29f1d3ee87d3989f
-change-id: 20260802-k3-pll5-pll8-1800mhz-c81875a0a944
-
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
+-- 
+2.34.1
 
