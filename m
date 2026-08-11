@@ -1,100 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92E742FCC4;
-	Tue, 11 Aug 2026 10:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D28F70830
+	for <spacemit@lists.linux.dev>; Tue, 11 Aug 2026 12:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786442618; cv=none; b=NWZtofpbgtW+SC7r+8F1ljpypdPhmApwr373Kej73qWA/zjJxVeV7SWdSFcYbzve3TjyXIMqzYLCqlP15i+v3+7rrNF5Ka9QbsGhm9hi5xO0S6EBUP2FeO0LP+YBcQEBpHw8bAbv3bfEBqoLXBWgpPP0fYiYP9GHi36ctwCP7z8=
+	t=1786451860; cv=none; b=VazGasRLDTwe+JImWdpruaqX+R2wHYD9aBtOU6VeKc/UgD9/GWjByfgSdI1crpFF+OjmFoNjUnTnyVulcAALNZrJDRYHwSX8BdIdVvsDDv6wKbJdfxElM7qyE89nAqPg2DmA2MjMq94gmVuMitJTO1y1Urk5Y60F38GCYA8Nq2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786442618; c=relaxed/simple;
-	bh=KuQKWxoV/XqAzzIt2eOByfa0yezRtUnVGXz4aWT8Qlc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tHupf5AZESPbhJdmpzmYH3WFamQHKLM79HMYvYv8gkLaE3dFEynVh7mBSxPDU06R23lvJR59kbfridZoxn0YhC4Y1Fuq4jihjEfiwEuERR8zBjUYFKozO1IBiYZMe5ogbQp9ADaog/zNn5APUwkYpaKlJ4V3RMcJx4GFLfY8Two=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SUKu6Pdd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786451860; c=relaxed/simple;
+	bh=PRdKIAOvw5s3CXBAfCHJZ/FPXXdZDkOZMZRgA99hHGo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hNgintGCCaxWxlecIwOcAlSZY+zn6IfU1cDu+lNhl/W0mfXtHuU9t5CT0TvHdGbU1lymNPmkvXrEBoNs5SekX2NyRZJAb87hSwAQ3aqwwolukxuzHHXup84SLgsJfq1LrFA7kFbG3wrbJMc4rfYGmRCz+qcAE2JwDAUGheW3Puo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=penboPlp; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SUKu6Pdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4871F000E9;
-	Tue, 11 Aug 2026 10:03:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786442609;
-	bh=u/IzL0ZgCIvODGVKGV0oRzG71HOWOlAnML9MbCNUtjM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=SUKu6PddNdSmymN3z3JFDIpGFuh7jtkV92p8UZddrFXDiftC6Dwp9rKe0H42YqlBh
-	 84CmCk4XzwbrsqAOqOKOTLW/rrJMefc7WtZvqs3sIZmThIY5CoiS04++D8MzUdd8iD
-	 6vIAybKXgtRWRw8hisxWbbz3eQFLhVMORHRQntC2h5rs9gfT96u2uk4Bd+tDPiUWGl
-	 Zt5qj3ugNuNhVKjbGQJtqHsLwGyTLZsIy9MUznTClr2WJaSYD7waVEM5QKQJUbwNbN
-	 BAdIPGRiTKn7Byh5W9byyzdomibM3qftZgYuVE16QgnoDHIDcrdIdUH0dkY3T9icja
-	 jao7MZMMUDsAg==
-Date: Tue, 11 Aug 2026 10:03:27 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, soc@kernel.org,
-	spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [GIT PULL] RISC-V SpacemiT Devicetrees for v7.3
-Message-ID: <20260811100327-GKA277506@kernel.org>
-References: <20260802024052-KYC1424545@kernel.org>
- <93faefb2-5cd4-439c-a4a5-842ca5407975@app.fastmail.com>
- <DKLRT9TOCY0W.1ZZ35K3S4Y5E7@linux.spacemit.com>
- <cec87950-f0e1-49f8-9a2c-f8b87b460da2@app.fastmail.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="penboPlp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1786451811;
+	bh=5p2pm9Jm0AFkA3Cv7lfCZGznIrlmzdC8UCeNECr1A+M=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=penboPlpom5BeaBCWIcgoh0epe2gwf+/lLVq+0G8Lniy4X4MGY8c/+SKKI5OLIAXG
+	 NYJHBIiWtkY1Ui1d7hS4mzq/MiC1REyfU58WFig3f/lg9LmFO9hAUFR2ECNgSL72R1
+	 5BzE3IxBRa3XHKmlbDIwWb+MrUSBxzwrk1Vh2OQE=
+X-QQ-mid: zesmtpsz2t1786451804t71d80de9
+X-QQ-Originating-IP: lBUhuCmLbpREMH5EtfWFQKA2MDAN7ImFN6rulf8vBkk=
+Received: from [127.0.1.1] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 11 Aug 2026 20:36:42 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5807538243920040017
+EX-QQ-RecipientCnt: 8
+From: Peixin Xie <peixin.xie@linux.spacemit.com>
+Date: Tue, 11 Aug 2026 20:36:37 +0800
+Subject: [PATCH] ACPI: scan: Drop power resource references for deferred
+ devices
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cec87950-f0e1-49f8-9a2c-f8b87b460da2@app.fastmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260811-acpi-power-resource-ref-fix-v1-1-828f1c383831@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ6CMBCF4auQWTtJ26CCVzEuSp3quKDNDAgJ4
+ e6OuntfXvJvoCRMCpdmA6E3K5fR4A8NpGccH4R8N0Nw4eQ67zGmyljLQoJCWmZJZCNj5hVDju2
+ 57/KxdwNYodrB669+vf2t8/CiNH2TsO8fMEPaPH8AAAA=
+X-Change-ID: 20260811-acpi-power-resource-ref-fix-2fa4798f590b
+To: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, 
+ Yixun Lan <dlan@kernel.org>
+Cc: linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Peixin Xie <peixin.xie@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1786451803; l=3534;
+ i=peixin.xie@linux.spacemit.com; s=20260727; h=from:subject:message-id;
+ bh=PRdKIAOvw5s3CXBAfCHJZ/FPXXdZDkOZMZRgA99hHGo=;
+ b=KCyo59TT+gLQT3m6fLfdzwf2cknfd3UWveLQW3AA1yXOa+u/j83cdFr0El6F+8ZL7YOKA9zBm
+ G4od29h5SEpDwCPwH/RD5IIqaaZU6IOmIs4lJx3ENsKOdgvi8D9jH/C
+X-Developer-Key: i=peixin.xie@linux.spacemit.com; a=ed25519;
+ pk=jczO0FmEQZBoClfXslkwCsHKDmSRchQ1hQr8W7yiiXg=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MwR9jyT/7fHBToAzmrtpiNFfV0iiVHDFAflihfA53OF3z9rdXnsrYVNB
+	XqS1VOLnLfk7lNv6pWQT99WRaS1rR5B8GeMCRRFqP/TkyNCA3J651T6AkTtbEfilDeMYW1i
+	jH2t2uIHfijYImC7S8qvrgbFKwWFHS3PL1cgWCUvkl33Gtn3kSLAgqfGGhQdkXwXSdtkN7V
+	tdqbA+hXrbrQ0VbyCRJYFszcCwWj70qwUVvjpnpsHnGpaLVq+Xw6LzKB1yziqhckPWdBbx8
+	Z3g/IlK0Ye3G2gcPehk7iX1K1XGG3pk7udwpOx+zdg9utiRa2rUAVtSVJVcwVRnkyjwurwg
+	Ujh7myF3W9zrueuaitemG7luDA2A0EY4yd+VCSBdcOoYEvoGSxzJVI/Fn9lBYzEmCqKX5Hx
+	dxJO/CfaBNjnbPIJlw5b+64iIIWpmRRL5r13xooH6kDCsQgYh2xX3Isb3UZ2b3abGNpyr1C
+	iB0WWjT8SjLsTLjOZVRkL7MBETd1Z3m+ezdKcVxYChLZZZiccLnBTZDIvzB+3j/MajFUHSr
+	0Rzf4ElQtDvdcmeuwozqtfXepupMZnMCiMFBE+W1QBpDq6NH2KgfKxhZtwlS/bpwVAB1H8C
+	NgPtVZVNBF2kqC6JfsI3Dwu0ND4n9I2dU9a1B/SHlD/OHiEXxBXAuag78swCL32tXChnUp9
+	gCE1BSzwnqE0NJViPermcCS8cMjbz1XYN0Sf1cDehoFIi3hcxjNbbX8JG/O9SHwWfRq+PtT
+	k2uoDr2DDgSQT87En8U+jBM1/YTnlbPq7FBLcRvmeIIe1qV2JVntWyYbszMRdOLNC0Dc2bj
+	StkklqLJ59KQFVEMYvrR6xM8G/nuv1gmTE9chfc61juQxsvu4B8Eele0yPLa48gevIUohIr
+	7y+j7rXQ3EEPdXIj4o6PB4fck4aebbEZp2Ov7+YJ6j7tiJNO44s2UHCU7dpcunI2+nftIFZ
+	ArYYjEyJ+1JC0FnVVlmCMCROO9pik8YTCN+Uhw7YPFYcXb/aW4/iXYVhUT7/dOv/OwENhGy
+	sTdCQ2XP5/bTCALKFpyibmdC7CGcWjjZ1jbXl4R5zT0vZIu/mmBcD6t+Ui9g9zTl7afMgtF
+	BzUhqMLawEb98s6BzVIewyGjsx1Tv4fzBYGAR3zu8IO7+opWr4tHUGfvgZ+cSnK+512Ohlf
+	mgVe
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-hi Arnd,
+acpi_bus_get_power_flags() initializes the device power state and takes
+references to any power resources required by that state.
 
-On 09:22 Tue 11 Aug     , Arnd Bergmann wrote:
-> On Tue, Aug 11, 2026, at 04:49, Troy Mitchell wrote:
-> > On Tue Aug 11, 2026 at 12:45 AM +08, Arnd Bergmann wrote:
-> >> On Sun, Aug 2, 2026, at 04:42, Yixun Lan wrote:
-> >>
-> >>> Troy Mitchell (1):
-> >>>       riscv: dts: spacemit: k3: add i2s0-i2s5 nodes
-> >>
-> >> This commit caused a build failure, so I reverted it for the 7.3
-> >> merge window:
-> >>
-> >>     Lexical error: ../arch/riscv/boot/dts/spacemit/k3.dtsi:1181.20-39 Unexpected 'CLK_MPMU_I2S_SYSCLK'
-> >>
-> >> Please make sure that each pull request you send is free of
-> >> build failures and warnings and works on its own.
-> >>
-Ok, Learned
+If the device is not ready for enumeration, acpi_bus_attach() parks it
+and clears power_manageable without dropping those references. When the
+dependency is later satisfied, power initialization takes the references
+again. The additional references prevent the resources from being
+turned off when the device enters D3.
 
-> >
-> > The missing macro has been merged here [1].
-> >
-> > Link: 
-> > https://lore.kernel.org/all/20260717-k3-clk-fix-i2s-v1-1-e95001a692ee@linux.spacemit.com/ 
-> > [1]
-> 
-> Right, the problem was that your patch to use the macro was
-> applied on a different branch that caused the build to
-> fail. Yixun Lan should have caught this problem and rejected
-> your patch before sending the pull request when doing
-> a 'make dtbs_check'.
-> 
+Transition the device to D3cold before clearing power_manageable to drop
+the references acquired during initial power state initialization.
 
-Sorry, I didn't catch this problem due to test DT together with the 
-clock patches.. I'll be more careful next time to send a PR without
-unmerged cross-tree dependency, thanks for taking care of this..
+This is particularly easy to trigger on RISC-V, where dependencies on
+interrupt controllers are derived automatically from interrupt resources.
 
-> This is a common problem with unstructured SoC devices:
-> If you can't just use the number from a datasheet, you
-> have to wait until the binding has been agreed and merged.
-> 
-> Earlier in the cycle this could have been resolved by
-> ensuring the binding change is used as the base for both
-> the clk driver and the dts branch, but now you'll have
-> to wait until after -rc1 is out to resend.
-> 
+Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+---
+This issue was reproduced on a SpacemiT K3 RISC-V platform. The affected
+device uses a power resource through _PR0 and has an automatically derived
+dependency on its interrupt controller.
 
--- 
-Yixun Lan (dlan)
+Before the change, the initial power initialization acquires a power
+resource reference. The device is then deferred, but that reference is not
+dropped. When the dependency becomes available, power initialization
+acquires another reference. Consequently, entering D3 only drops the
+reference count from 2 to 1 and _OFF is not evaluated:
+
+  [    0.403217] ACPI: \_SB_.USBD.PDPR: ACPI: PM: Power resource is on
+  [    0.409393] ACPI: \_SB_.USBD.PDPR: New power resource
+  [    0.419165] ACPI Debug:  "ACPI USBD: entering PDPR._ON"
+  [    0.424495] ACPI: \_SB_.USBD.PDPR: ACPI: PM: Power resource turned on
+  [    0.431036] ACPI Debug:  "ACPI USBD: entering _PS0"
+  [    0.790826] ACPI: \_SB_.USBD.PDPR: ACPI: PM: Power resource already on
+  [    0.801777] ACPI Debug:  "ACPI USBD: entering _PS0"
+  [    0.995285] ACPI Debug:  "ACPI USBD: entering _PS3"
+  [    1.005550] ACPI: \_SB_.USBD.PDPR: ACPI: PM: Power resource still in use
+
+After the change, the reference acquired before deferred enumeration is
+dropped, and _OFF is evaluated both when the device is deferred and when
+it later enters D3:
+
+  [    0.340111] ACPI Debug:  "ACPI USBD: entering PDPR._ON"
+  [    0.345459] ACPI Debug:  "ACPI USBD: entering _PS0"
+  [    0.350532] ACPI Debug:  "ACPI USBD: entering PDPR._OFF"
+  [    0.742054] ACPI Debug:  "ACPI USBD: entering PDPR._ON"
+  [    0.747282] ACPI Debug:  "ACPI USBD: entering _PS0"
+  [    0.758664] ACPI Debug:  "ACPI USBD: entering _PS3"
+  [    0.768959] ACPI Debug:  "ACPI USBD: entering PDPR._OFF"
+---
+ drivers/acpi/scan.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 9a7ac2eb9ce0..7a8404719fa1 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -2350,6 +2350,11 @@ static int acpi_bus_attach(struct acpi_device *device, void *first_pass)
+ 	acpi_bus_get_status(device);
+ 	/* Skip devices that are not ready for enumeration (e.g. not present) */
+ 	if (!acpi_dev_ready_for_enumeration(device)) {
++		/*
++		 * Drop power resource references acquired during initial
++		 * power state initialization before parking the device.
++		 */
++		acpi_power_transition(device, ACPI_STATE_D3_COLD);
+ 		device->flags.initialized = false;
+ 		acpi_device_clear_enumerated(device);
+ 		device->flags.power_manageable = 0;
+
+---
+base-commit: d58772d8520c7ef247c4b95c9bd76d3a25da9ff5
+change-id: 20260811-acpi-power-resource-ref-fix-2fa4798f590b
+
+Best regards,
+--  
+Peixin Xie <peixin.xie@linux.spacemit.com>
+
