@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB51379C4F;
-	Tue, 11 Aug 2026 18:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A4130E0D5;
+	Wed, 12 Aug 2026 05:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786472244; cv=none; b=WEimjV5TRzsm2wTjQJKI55PsW/EnjRd0X9ZY4qsXfcAKFbTNZnOKH+xhSX3Kc9SxfVtwkG18INQ9WxamPAQ2aeC9QRp/UanSXiRPLnx87UtUM2r4VnYpSobjb+40ol898mtm5KrCMYc9z0j71q3Od7cWR9wP+TGjttF9CfFuvXM=
+	t=1786512155; cv=none; b=cAN1BWmm4Y/YFa0Zw+hT0gKqlozviLrSJdg9eRvnf7spxQG8ZPEQB3V0ubN4odOBScbIYSkQ+V9Q70Y6K0hyXFBAzDvrUZObYBzJd5hwaqc/cxUu1klyZWFZn/s1DN23n9OfbxzbChS+eHtpsidw7heZJX2z361hC6WBDd3hTH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786472244; c=relaxed/simple;
-	bh=XMPzjAVOoCtYxlfU1GRd2Wmzy54SzTwMK11PIevce7k=;
+	s=arc-20240116; t=1786512155; c=relaxed/simple;
+	bh=cJNabvSKy6D6S+wSMhd5JQHpofj3pi/1/w1+JB93TkQ=;
 	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=dsZ5SpgGotEvGFZHkch22sjBJbuXinsUcHQGYA6fNBA1sgv3mIJgFZRKYXNO/F2syLaBudg0tDSBWlIr/ytu+cPw5RoGiFBt1av+zALGrd1gDFUz7vImidmqBuGd4ECxaWyYGBv1FcvJDktPWUBNVFghdxo4DrHWh+mqAA46KBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3E/H0u0; arc=none smtp.client-ip=100.103.45.18
+	 To:Date:Message-ID; b=b/Z0fdKtknNyTAhTV+08eK0TKZxH8c9P2qHP4U2NEFNMnWdfEjHO8kIVwbHDNpZiGeWBcgvXzA9hiS8/8vNwVoHwVxfRbwxEZ3VLl436PAbWwhR0e1jTzjGH+sktoHyRj9fBzjK7VwwtjlVp+Nbs/Zz6D9/rl4y49rSwZasNXLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPveumX/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P3E/H0u0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A91C1F000E9;
-	Tue, 11 Aug 2026 18:17:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPveumX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B1E1F000E9;
+	Wed, 12 Aug 2026 05:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786472243;
-	bh=cq4yAgddgwMxze16Cx7rF1nhbwgu2c0MJTah2bwMsuQ=;
+	s=k20260515; t=1786512154;
+	bh=ZPBb4cAV5MPrzvf4K070sFW5PaFLurQzUak2P3Vdyz8=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date;
-	b=P3E/H0u0DWRHlz1e/KeGyULPwI0uH3SiPzzpcTV/R4Fnc4loR/S8hPqxlhRR3vaYJ
-	 n23WZwN6TcHaTmzAYnm/VmshEvGybrTIoTDGAtHvYHxEofbn3tx4AXWlGafy0PWyEq
-	 3/wMWDaNI3QChrfHPKbOt5B68aV2bYQykKIvmDmt7HqiRVeFNID4ZPTG15AJDNX4Zj
-	 3rP049JG2dvGr2a0/h5yJhAU8JFPaFSKI2huN7xK2BFy2dWI8RkZhDiL9EkAfOr75d
-	 C7+c9ZfbJ67LqD75JXWSxWVpJ4fMChuz9uYzjZaffgsWcBqdD2YQ0sa82OPxiRbXJo
-	 mJH4xjTEmhH0g==
+	b=QPveumX/9BAkYMdtgUZyMe0989p35NJ/zMIOCea5t/w+G7+lZExnI/ehRI03M4gVW
+	 yLvHNzpxMKU5WWJQKJXkqYwgJBKlm9fNNVtm/m/GiQImqJN84qAdvnaG1Z36uHeFjI
+	 0wJ0bJMOhxtC/HfTdWSedxjAu64DjdOWxh66P2dL58iylcrBTxSB/Mg1MJJV0mUEIV
+	 69at9EczkRFgnU0LnQzMkFT5sRxprN9+MBUauxK3FRo6oN3WntIZR5TCHVx7ccCV/R
+	 hTF4lDo0TwbzKI5tXy0OWPt8nrqYEzTnepYJLfSrciaWH2PBkStpzmvLFYn+wI5Ta5
+	 SazDDbmTaOKwQ==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -34,24 +34,20 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260706203425-KYC2957292@kernel.org>
-References: <20260706203425-KYC2957292@kernel.org>
-Subject: Re: [GIT PULL] clk: spacemit: fixes for v7.2-1
+In-Reply-To: <20260802014217-KYC2734409@kernel.org>
+References: <20260802014217-KYC2734409@kernel.org>
+Subject: Re: [GIT PULL] clk: spacemit: Updates for v7.3
 From: Stephen Boyd <sboyd@kernel.org>
-Cc: Yixun Lan <dlan@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Brian Masney <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>, linux-clk@vger.kernel.org, spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: Yixun Lan <dlan@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Brian Masney <bmasney@redhat.com>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, linux-clk@vger.kernel.org, spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
 To: Yixun Lan <dlan@kernel.org>
-Date: Tue, 11 Aug 2026 11:17:21 -0700
-Message-ID: <178647224123.5862.9538366108280919307@lazor>
+Date: Tue, 11 Aug 2026 22:22:32 -0700
+Message-ID: <178651215252.5862.4480686966770442690@lazor>
 User-Agent: alot/0.12
 
-Quoting Yixun Lan (2026-07-06 13:35:51)
+Quoting Yixun Lan (2026-08-01 18:42:52)
 > Hi Stephen,
 >=20
->    Please pull two small SpacemiT's clock fixes for v7.2
-> First patch for USB2 clock fix need to go in pair with USB2 reset fix, the
-> reset part patch was already accepted by Philipp Zabel as a fix for v7.2.
-> Second patch fixes a system hang due to HDMA clock being shut off.
->    Thank you
+>    Please pull SpacemiT's clock changes for v7.3
 >=20
 > Yixun Lan
 >=20
@@ -63,13 +59,13 @@ Quoting Yixun Lan (2026-07-06 13:35:51)
 > are available in the Git repository at:
 >=20
 >   https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/ tag=
-s/spacemit-clk-fixes-for-7.2-1
+s/spacemit-clk-for-7.3-1
 >=20
-> for you to fetch changes up to eb525edd48907795c0d4e498ff57ad168070b289:
+> for you to fetch changes up to 8a7d4b1924d2a424b1a6fe69de4f9464ee1fb485:
 >=20
->   clk: spacemit: k3: set hdma clock as critical (2026-07-06 19:45:17 +000=
-0)
+>   clk: spacemit: k3: fix missing /2 factor in i2s sysclk dividers (2026-0=
+7-29 02:42:06 +0000)
 >=20
 > ----------------------------------------------------------------
 
-Thanks. Pulled into clk-fixes
+Thanks. Pulled into clk-next
