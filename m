@@ -1,95 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29F91F8691;
-	Thu, 13 Aug 2026 12:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686DC47D46B
+	for <spacemit@lists.linux.dev>; Thu, 13 Aug 2026 13:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786623630; cv=none; b=qn5eedldqRno4IFCBsZx80zDjdha9UpSheAbjJTtLrqfSiZf2fCvTydt6HUedFqcgnhoUrdcq0Kdb6D6yUsWNQAN0z5JEiQZIWEJerGPlLcGLxQtTHd4ykMgLuIqVkKtbm1tcd9hlJcQmxBGAj03XBWLzSRQuTmvBv/1CnyFoBA=
+	t=1786628415; cv=none; b=fqm/R9hsZMmk3yk2uj9TAQ7/o7Yw4vdJmxYam4XeJMdu58sB3NRQJxegt/wtrhso05IZlCq5nF3lJ8a0j4T+FLst52kiOp2sUggSN1GwGvxW0jVuFVd9kjm8x/pMhOCGeC806FaBiI6K3g7SRMstgnhQTCVs6fdQIQ1RHgqv194=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786623630; c=relaxed/simple;
-	bh=WMCbSYBvbFSAqJCoiPswlpF/qTICQkeiWenI/Fv71Cg=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=d+XPdCKOMBH1H+PR6BiQXTTchJOuNgwzmsalU9ybp1w/48EOU+SMnK4dK4gV7dpysp4a9pTgeOog01r7kNMr6YbFdeF0DHvGA+uPjKwZjtI4ws4WEnFz0XUZohZpwB58gigVAB1mGIl6rXuVDjWTfGy8qDuShZKd2BWdX7NO6MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LliF5Im7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786628415; c=relaxed/simple;
+	bh=EOTzoKXhw8pmYEF064ZJZFhuQOAr+bV2/xKGwpi/9TA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cqt8AbTgUwP4Ib1JKcNEyim2EyeHJ7UJOnZmYCkCrvRfgJG7Ji3nRWkVYjTuJjwGDe8XYLJWMO74ksGjZI2WlJdD8VtIMaB/Iq0g8cRL0QFGlBIBuK/H90OB8zQbJInCCn7pmNTspc/QMermm+AeiNBB2aWgO7J/Z6vk6k/aXD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=yKR98d1s; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LliF5Im7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7581F000E9;
-	Thu, 13 Aug 2026 12:20:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786623629;
-	bh=j79Qv2kin7snMq51u+mksCtLNTIh6v/403FJtOsIOxY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=LliF5Im7g4i0LBPkEuB0ArAle1L3Wvcr3GtKvLVyY4iHgSJYmF6nF/wKfNZqGS/KF
-	 VgkzFypGexMUbm7twuHFfxkeENfqUF8VB0OMo1yDP88AAJpjeH38X1IqkB/G/9aNj4
-	 4FULUnknnAedjA/5gud1Iv4qTlv3A+H1/Vx1ExB9RXlU21I3An0Mu37mFmtrukYB3s
-	 EK5qLKi1xc31OeLuBxrDX+PKZC7+K3pvD8evoCY4IKtztUxffbaozekI7pDG/Ugsfa
-	 T2xhVpM8sOniC3et1kUMaF1UjYZwdRozu9EmbqanEC4YvOn8LdX2M5Yq9m7AjyVMV/
-	 A7Gt7pckzpdvQ==
-From: Mark Brown <broonie@kernel.org>
-To: Yixun Lan <dlan@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
- Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
- phucduc.bui@gmail.com
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Goko Mell <goku.sonxin626@gmail.com>, 
- Jinmei Wei <weijinmei@linux.spacemit.com>, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260805064348.44283-1-phucduc.bui@gmail.com>
-References: <20260805064348.44283-1-phucduc.bui@gmail.com>
-Subject: Re: [PATCH v2] ASoC: spacemit: advertise only DMA-backed DAI
- streams
-Message-Id: <178656041255.521321.7252255564384020860.b4-ty@b4>
-Date: Wed, 12 Aug 2026 19:46:52 +0100
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="yKR98d1s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1786628382;
+	bh=g0sOZCBcZ2Jrw2TFICRpxT9bPvkWg5mDU3MLmvx9Nrg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=yKR98d1sBuhMaO1QCtKqv0vlG1m64pb/+BRw59DG1p43nyFTMf67/HWIIaojw+1KX
+	 kyq4wdMq4A62tYBMSSBbWXUJ5ysz9Q57QoyquiNudG0hCPWQX3B8RWHmubcTTcr+rq
+	 i9TSFRY3FyDeTjduI3JXhc/r6bbvtnwdu6UxR7IU=
+X-QQ-mid: esmtpgz11t1786628375t10281695
+X-QQ-Originating-IP: uzsjwFlxrWyHR9ePQt3/tWbNYhbV0LoN42pEOIxKeZE=
+Received: from [192.168.1.100] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 13 Aug 2026 21:39:32 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 3186414962884766525
+EX-QQ-RecipientCnt: 19
+Message-ID: <870CB1C672C91040+8a75565f-344c-4f1e-aa69-33585a88c8e5@linux.spacemit.com>
+Date: Thu, 13 Aug 2026 21:39:32 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] usb: chipidea: usb2: add optional reset support
+To: Peter Chen <peter.chen@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+References: <20260812-b4-spacemit-k1-usb2-v1-0-f28cf29e522b@linux.spacemit.com>
+ <20260812-b4-spacemit-k1-usb2-v1-2-f28cf29e522b@linux.spacemit.com>
+ <an2UgcS8cHDGwzsO@hu-petche-lv.qualcomm.com>
+Content-Language: en-US
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+In-Reply-To: <an2UgcS8cHDGwzsO@hu-petche-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1133; i=broonie@kernel.org;
- h=from:subject:message-id; bh=WMCbSYBvbFSAqJCoiPswlpF/qTICQkeiWenI/Fv71Cg=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqfbaJ4xXTgaAU8344lNnzLHvdYVkrGGb5f1eyH
- s5VgiGWywqJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCan22iQAKCRAk1otyXVSH
- 0HqpB/44WA3YXP8HUVRPmnUU+CaKSAAsNSpCeGaKrWokoYw14GfslOin9QfaxnVtK2nvQGb8hEe
- BgVlCQcdGLimIF370fcNVOBnoe/zyrX5mfwTkIe9kXCe2BnmkYQa07Q+nlzGK30knIoYvaX/59r
- 8m8q/BX1DvkY6l1J9OrglwNOwfiR2oJTfULl/m2mirlq34G3WT9/bSdJni9TJLyxnsjntGFwTiC
- XUsHYmIAQRS5XB4A2MPjazuNyqibaDiFHAwbX9Pm21HviIfswR5142VE2Xy43R+J6HC+Ci6G99+
- xHTZeysYX5BilSm+3r1IeZ425sl0E9nxc+EhrJXYYFjl+s2S
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: MhTS1zoHQzhUjTHRHxfWbMuupghBYH8SH6pucJxT0SQixF+Adgp1vR2A
+	dU+cBN/rUaTdqfkbb/Dpotk8DrFaH4z2LFocYpNTQbvNq0xP2kHVeSsSyF2UG4eBbgrKTZz
+	T38JoNxy0BCCDj2Ctx/OdgWHx2JLKvIAeVEykQ8/RA4ZJazVVsX+jBVnzP9lNFMOLH9KBeq
+	U5V+HmwDdhj3v1lZRE46nCdw6QFiinO8wsuk1Lp5J2j/Bzn915dLEJgfpmXWZQkHqmMA9xY
+	q6f4WeUYVL8m1UGgD8TGEpYxlGhaKyVuhXpUL9gRjXSRbCAQzwHQ6Tk5HUXppYyC31+r5rp
+	hITGIIvbAqihuOXrjvty2fvbiMGQYTaW0DMHa6yUcUaP71yjN5iB+aiAK+NLpTuicrvaUKo
+	ZaO9UBUwEg2z8iCZ9/5ke7qDNdM8cOB4W/LIJ2Gg2RMHRurKKsFn49zsmnFy6FMjN57CnZw
+	uPAPehPsrZWuLuAZ2LG0TnH8A5h970Pd9h/47DW+h0iOA5ow9w7rfHTbZqhIhVU8Zwzj115
+	pWL8Ej19O+WQiCkxiZW8S34BUxwfVHztq0dutdDTXSKugHJT9TwmqXxfzaHwoDqYq3Lgpuh
+	YzURde1TeRijXUkopTC6lsiSOr49+air7iz4KPeLVyBRAVTbf+vBY7nY+UjZ/Lsq17pFJ8x
+	/ItGkTfUGKfl0RtHPCLEyLyCp0bC/S7Qo8vkld0iI6GCi1nVKPpuOMLbnA6jA930VapMNuE
+	gr9hL0E30TIqPoV7jwq4G+nI3gEnNDPCz4XAePcRpB0YBFBkCQq+4RWomuVD0Cu5k+1JwZD
+	+2EJQMNkfYTuiCqlSDez9oIWaGjZEK1LE0FvNA/X6DIqRA1hdwh1iISb5zqOTjnJ46eeTD9
+	v6X+icyrvcY6rHDxWS78lm01axrKcYOl7nmS105/zY/xwLk3bwX+4eX2haxTeaY0Wuk2d/q
+	ox75wdv5kaHI3MJ3kQA+2gQYvBDcmGUB/3sDY4uGWJ19k7JkNluzkmrtzCVD20CzjDm4Lux
+	B9sTEUBfwzYDUW89vjHnstxVnU0EYGN/rMewoiBeKXS34o0y8ilL1NEZqR2JWjDmEsc63m8
+	Tp8t5P0IWqYsGB5nHIjYHnqvz6o++KPow==
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+X-QQ-RECHKSPAM: 0
 
-On Wed, 05 Aug 2026 13:43:48 +0700, phucduc.bui@gmail.com wrote:
-> ASoC: spacemit: advertise only DMA-backed DAI streams
+On 8/13/2026 5:55 PM, Peter Chen wrote:
+> On 26-08-12 17:26:13, Junzhong Pan wrote:
+>> The USB2 controller of SpacemiT K1 SoC requires reset support, to keep
+>> compatibility, add optional reset support.
+>>
+>> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+>> ---
+>>  drivers/usb/chipidea/ci_hdrc_usb2.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/drivers/usb/chipidea/ci_hdrc_usb2.c b/drivers/usb/chipidea/ci_hdrc_usb2.c
+>> index 8ffa1e95d8e8..00d575cd2955 100644
+>> --- a/drivers/usb/chipidea/ci_hdrc_usb2.c
+>> +++ b/drivers/usb/chipidea/ci_hdrc_usb2.c
+>> @@ -12,6 +12,7 @@
+>>  #include <linux/phy/phy.h>
+>>  #include <linux/platform_device.h>
+>>  #include <linux/property.h>
+>> +#include <linux/reset.h>
+>>  #include <linux/usb/chipidea.h>
+>>  #include <linux/usb/hcd.h>
+>>  #include <linux/usb/ulpi.h>
+>> @@ -21,6 +22,7 @@
+>>  struct ci_hdrc_usb2_priv {
+>>  	struct platform_device	*ci_pdev;
+>>  	struct clk		*clk;
+>> +	struct reset_control	*reset;
+>>  };
+>>  
+>>  static const struct ci_hdrc_platform_data ci_default_pdata = {
+>> @@ -80,6 +82,12 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
+>>  		return ret;
+>>  	}
+>>  
+>> +	priv->reset = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
+>> +	if (IS_ERR(priv->reset)) {
+>> +		ret = PTR_ERR(priv->reset);
+>> +		goto clk_err;
+>> +	}
+>> +
+> 
+> You may update binding doc?
+> 
 
-Applied to
+Sure, I forgot it, will do in v2.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.3
+Thanks.
 
-Thanks!
-
-[1/1] ASoC: spacemit: advertise only DMA-backed DAI streams
-      https://git.kernel.org/broonie/sound/c/0a91bb72980e
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+> Acked-by: Peter Chen <peter.chen@kernel.com>
+> 
+> Peter
+>>  	ci_pdata->name = dev_name(dev);
+>>  
+>>  	priv->ci_pdev = ci_hdrc_add_device(dev, pdev->resource,
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
