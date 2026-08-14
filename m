@@ -1,67 +1,65 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011064.outbound.protection.outlook.com [40.107.130.64])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011004.outbound.protection.outlook.com [40.107.130.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9FC3F3282;
-	Thu, 13 Aug 2026 18:49:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2534F377A8E
+	for <spacemit@lists.linux.dev>; Fri, 14 Aug 2026 20:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.4
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786646968; cv=fail; b=TU6oQ9E7reJFZoQfThPhldtiSI3iOTVOESkego0f/H0cm/gAsNzKJLhf2mcVob4kltavljFBuu4BfP6DOsTPeLMtRGDJKQrGhKuQw9pmUyLocoyuWgstYVYsTIsfwiDyfl0K79xTOcq8Z1UxHQPB+543FLcK91UGvzkxG4iG/2o=
+	t=1786738688; cv=fail; b=O/V3xdjciq6KDIgwETyxkbrm6p90NXOJANRs/+9bovZHuQXnL7xZKZ+0zjY/QpVZY2CrU6jSmAjqNfjEkQdXSgoBSe/I0NLKPxuFOXq5OAbTWP4BDTqD68NgeS9MiSJns+E0VYkv/bRRzlo4zy403iPYiVlxOld9Fa4WZRw4V8U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786646968; c=relaxed/simple;
-	bh=zZ6ILbmbD8sJfgDzn5YXO8xmul2JP6tY2wTxawxX3TQ=;
+	s=arc-20240116; t=1786738688; c=relaxed/simple;
+	bh=/zYm3BAixEQO1vCAQM1Q3C4pVdyh1ToTxayIWJBUfdg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=mBRsZIBBUeyHrqf4jABWugrvmMqAI6sh4g1+5BDG18qG5dAUXZ5uskuxZpcpp/ZSHAMTqHCTomKam0IGoatfFziIgEsfjIVxaVyO+qV1U0bCnpCarXoJuvUlQErg9s8YeDapT3RmfOlqMHZzrIsJYXmSPqDPvqjWyZlD4Oo0++8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=WZ7XnN64; arc=fail smtp.client-ip=40.107.130.64
+	 Content-Disposition:In-Reply-To:MIME-Version; b=SFrHEQ4mlwREHYrFBHTUPwC8PcKhTQj4ZRFENDYqzPqrmM39X0pURdLkDg16M1JLV3dQZ1E9kkGoX13d1GMBz9WFT07UZhTlhez4b2Pz/fuLOlUYEoUp/QwlKFqtK+z2T3UkaxfVJlo5ZtDvPpuTGpGnNYw0T1NzACNKjTqfi4M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=c3PsAh1w; arc=fail smtp.client-ip=40.107.130.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="WZ7XnN64"
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="c3PsAh1w"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gLJ0A65DXq/5P6NrA2jFyC+9SyRMOprNid9JfHJXGjh+qoM+4llT+RVk9j4kME4ki3cUpCD/XwD+QX6SSRB3yPIkufuvmXZM0ZYtXL3Xnj7P0zElu5yFMz0TTRwzsebEA1+yyMIGCZkNnz4JACd8ixikSc59Gm16qsToK0/XgeVIhhBdPq4MAyzvwvA/ovBHTjH3Kj7k9Ghy9rWwZXSmcFn8E25K0UJMWJfg5pEKWd6mQ4c1k1pJUtnmE92BGVaJFIPd0KcdeIo9tVqNEEsllluH4JQyhNEppGOKlM4R8o3KQRMfcnyjlW2EeADBXueu2YaI5uTPNti1HluEC8kAKg==
+ b=hcplm5F4nS1dA3XjYCbvT2xe27rfgYqeLhkZcxbNrPM0kQpm+/djGD/P71TyVPuxSWCgVhpQh9OTfSjuIkvnAchWi/NGNWT1vHdjfRI16eZ3ITSYbHUDNS7HUp6ec+v4jeKRIFSde4Kay9DuZs71KelWJIk/AWfHyllYmqi1gzt5BqnNZEXsJfFhC9FKW6sl5pA0QfhvcGINsS8KQqhykWMF9Uoe65QywR4ny9e0/gYJ0M9EvZlLztwwjqdca5xgHu2EuALdm7J5RzfAs1eKo3IeIavz9dR4tqlqwsrcbAz8gxxvQZPE7wsKrsuumI96mQIdNE9GnWWpW0oRTk/bVg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RJoXzZLaV9CrWqVMRDQ7ngwc3lK41lX6j2Op+4khpZY=;
- b=fs/NFYvw0qSzx8hIopeYKGNXzGCAiFRb9EaKU/ozLrLMX7NYpmU/K2Synrxv+eewA+fw0nbSgsbBeufIHRz+2mLH/3n3IDEgbUAXOCxPF0H2RpuOOnE0Mf00BEi30DRyIEeIZiW7eTgP1i2I+smAujyU+CxiJFb+QmNDSITd/VBRXO6Ylx3LF5o67zo/lg2AxHtyb3q4Rbo3j774qg11p92Ka65mV3cYlqpeL6c+KsABsGnTTaZ/XPcKz/vSorcbTljVo9/EVMHg5MOBrAJJDueh6DUlXt9wB4ZZEOghNPtAWod5FN3n2orywTwNkzWo9Q/agFKFWa+FdOVLuGzERg==
+ bh=+70hAGVzvAAsTrUAoH9tPw43XI9ZpohG+2guBG/g39Q=;
+ b=YuHZDR01lx7DSmBa9vfmG3Y+R4NFpmjsypSXFGAgwE+BkiY9oU2lyVQ+cTlELyvM2gjXKLz4aJm0dmd2spKT1P4aoRaB3ubMtaClfby+2gzaTYC297clf2kkyLYPt7niNfL5zT4w3/52NEiH3msIS/f84rDkWx1lDQmeIjICrgCOW/g0MJWIR6OmR5eHGG/qn7Rni29WRJ98guqEj1SjHfTUSsSXYRmQ3QIBa0y7pahUYdvjYZACs5XK6YoK8GggqHzjE7V7GloSqoRpr5V1tn1BLP5MQ9JBrSDQY9YxS+Fs/dcVe9/m3kHe5o/JbhEtHj9zCF8Q4F/byB1y5aGwxQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RJoXzZLaV9CrWqVMRDQ7ngwc3lK41lX6j2Op+4khpZY=;
- b=WZ7XnN647b/6QPYLJVQxEYx+syzOkffBeUBB6dz2oQbKTri0GjCdEb3vn1ZwK3arm6QrSY0WORIfPHo/1DaFCgokhjm4sQ1dKBJqCTGld3tRE2eD9F6+8dyP44nzhzlhgQosXwQKUzcBcS35NQZo7/r2eWv5CRrY4EiKZxVqJuXRWbFLBux6kJMPIjj8hk3jvdB/DgL85/yW0iCKpR+w6SQddFDrMQljyXoCJ83gzK4lH5CTLjKt89+deOy9j6snKsS5hHq767wCQcQ56FIMvKfnRToe8UMvh8YEY7JBfnkBxV5uphFQaHCYu7F/Po0ks5zH2AKS22cl2EUUxyb03A==
+ bh=+70hAGVzvAAsTrUAoH9tPw43XI9ZpohG+2guBG/g39Q=;
+ b=c3PsAh1wI13p4/8XkSWYmEhTFWA29KH/z0kCsWbBAVupjbE+YDXAk+F9hgw7GDgp9hPZhudKKxBCG7K7z75+I2NsixeL/+YYkAopk1o7M3DrGGzDSqM873pB0nRL7nBu7Cx/lAyJ/eC0UJXKI8DUuGXco9WzqGraEQ0QvD73aPuyZKLxqorXctuNLqdG2+uFsHjhxWeJepE8HmqF4jecs2Eds8js+lzd+oqS7Hljy1GE4S9phQk8wCMug6ycFD5SD4CAfySehFKT82QXxJkw1k/8O5gtkNUjMOZLflUmvU6DrIzQ7OvSuyT57six7gu6ipGkeDawSkfRMVtvX2gpFQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS5PR04MB10060.eurprd04.prod.outlook.com (2603:10a6:20b:676::13) with
+ by GVXPR04MB12268.eurprd04.prod.outlook.com (2603:10a6:150:2c7::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
- 2026 18:49:24 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 20:18:02 +0000
 Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
  ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 18:49:24 +0000
-Date: Thu, 13 Aug 2026 13:49:16 -0500
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 20:18:02 +0000
+Date: Fri, 14 Aug 2026 16:17:54 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
-To: Hans Zhang <18255117159@163.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	mani@kernel.org, jingoohan1@gmail.com, imx@lists.linux.dev,
-	linuxppc-dev@lists.ozlabs.org, linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-tegra@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 04/16] PCI: dwc: layerscape-ep: Use cached PCIe
- capability offset
-Message-ID: <an4RrIcV2Q6NtQ1X@SMW015318>
-References: <20260720150619.24733-1-18255117159@163.com>
- <20260720150619.24733-5-18255117159@163.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Yixun Lan <dlan@kernel.org>, Guodong Xu <guodong@riscstar.com>,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Subject: Re: [PATCH v2] dmaengine: mmp_pdma: fix wrong extended DRCMR base
+ for SpacemiT K3
+Message-ID: <an938oW_b_W-AYeE@lizhi-Precision-Tower-5810>
+References: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260720150619.24733-5-18255117159@163.com>
-X-ClientProxiedBy: SA9PR13CA0174.namprd13.prod.outlook.com
- (2603:10b6:806:28::29) To GV2PR04MB11799.eurprd04.prod.outlook.com
+In-Reply-To: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
+X-ClientProxiedBy: SA1PR04CA0017.namprd04.prod.outlook.com
+ (2603:10b6:806:2ce::22) To GV2PR04MB11799.eurprd04.prod.outlook.com
  (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
@@ -70,130 +68,145 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS5PR04MB10060:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9ca7d326-1ca7-4cff-d591-08def96b97bf
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GVXPR04MB12268:EE_
+X-MS-Office365-Filtering-Correlation-Id: bda2f911-cc09-4fb0-4c80-08defa41241e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|23010399003|19092799006|6133799003|56012099006|10067099003|11063799006|4143699003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|7416014|19092799006|366016|1800799024|23010399003|10067099003|56012099006|6133799003|18002099003|22082099003|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	wcJvH7zpJFzrE1i9zqbBU1P9ATnBOB39jgkZ+Mr48gdLyySS2SJLyRG08czl17pOfAmA7OhGo7ydbjCbXfAoQcdceJyD7NfAMqon9BJxpKtsovALGpaFvedDyGu18QhIz0DR7fR6z/MCJ8bKxAF55zoFb9qBfigdq6+Zkm/wfcW8Pd+LZVDRCj8H9JjhpK/IV9KjzKRdfwuygcf09u8DbVfsaOScdZDpdTXnOWoFl7Ort5knb0AiZEA/OyZeCi0g3Z56+2UmxvhzEHLDxkehNPi+2+zoj2q2dRIHZL47FZ7wqDhgYgE24jZZq9kV+cMU7wYenJ5Bncr+RNlbKfinGRUk70IX7at6zA3qcehEw0Wl9/vTycDuMzhg7J8Wz7F3yle8JF5VFHRw+foVmhtmt6hFTD7MlBrkbda1X5mKfpdij7B/6EDzfkNH7tyJV2dr3JqxGIEZJU4WXQVn2FVj54VZv8c3thiLh4+mMQS/aGyNAHAxpycroT48e/fUNzzZ32B+Drj/BMV6kBqu49ViRCvAHQm3whetErPvOZloXbZiwTTdwYyxARtNA/uIb4cEObYa+wfNVdIlLkVsof6lrnraXxtJ8oC6jKM0K4jddJ2Nc4WCvEeXRmmXJoaIWqsw/WoLFWX2JKcyoEOXBe/5fHUr90cDigyhER3NOrriTvk=
+	VoC/PKMp3kwZemy1SurbsrVlR5XQKhjDFtAtKYreRPiLqH5j3iRKgf6mB08g/+F8Jjlt5/Pwya9TbVG1yxB0TzOPHvAa1J/+DVDpPd6JkWvXzEZLN+v9OX9lHQibz1Njpc9GDM0ndxktlHFFaaQhV7+AIzZhPQo70g8XdyC/nOhOuODQnzYLMED5H5kRJg0yV1XxYDSu+xiXP5hbYK4ScK5aWukQB/wN/uh6pK9yy2k8WSGt1gNqzVBai7CnRkkl07sozVUnEfP0WiLQj3yZfzbHAXOAZKKBrGhnZ059H/UIwKGoGdZ/PlxSK44gv7khGm9CKi1mEWsEZTeXvvr8Qq4gqdKpFOph/sT7twAjqu5uBXRCEEwLccnfb2exNB1/fhpM3nc2Hsbc92Yss3+4F6Hz4CdMV/ZC28UjHeQPQRbBKLRKUdv0pbj3s29ZKB8lzeyq9H9H8oeFkHwz5REsqXXd5h5cp3TTJGwlFV66DkBr+p5351AG1s9RA4MJALcyooraoCL8z1Sb6uaZKxi9C3h4QUFHAUMjEOdrvFHgweVZ1piQDlpIk4i0RujHm1aR21xIDdKg83B5jCT8RIDdkr4P3mAZRTdQZaHwoHqABxmgHVQ6i2KU6uR9hxR6r/HjMmIZ/6t+dzRey1UI488PctLGHboX7iIt+oJl3C0TjSo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(23010399003)(19092799006)(6133799003)(56012099006)(10067099003)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(19092799006)(366016)(1800799024)(23010399003)(10067099003)(56012099006)(6133799003)(18002099003)(22082099003)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7S4KOFeu+bq1Jsj4N5leCG2q6tO9QWExUi0FsFauCSp47qD4ysbWzNbnD5Al?=
- =?us-ascii?Q?Iw0Aq5DX2tB4yOh6aRWbbzojrBAHGTO/gXpMF9lZzkpgssMgwGQfJS/HmCgN?=
- =?us-ascii?Q?KDbHrFPvDVh8ctAtOF8Fho+ATaPrWRIRnycx0FnDtZwaKkm7acjdai+wYmRo?=
- =?us-ascii?Q?41I7+xw6l7gFDNTGaiZjmgGUVCIG9Y18NknjkcO0q7iKI1+/hsuni7KvbMW8?=
- =?us-ascii?Q?If/E465RcuSDlir5Lu8ZNa9oT8OSRuV+PUxUlIQ5kz1SMNmjDcDPU5wwm+uK?=
- =?us-ascii?Q?B29xKf/QnwasvL3IZfZhfqIQc2hfJkLS2phRmUyupK7RuXnmqQPP/IAXVlvB?=
- =?us-ascii?Q?83ifPQScCAk9Ftvl1O4/U32DKrlmsjpwVTl/vjguOouXbwcqxUq/gakc4xTf?=
- =?us-ascii?Q?gwDlV1NgI3YzZEkzjJJpQeSQcjUTV8cxHosO16yL+RMFgen3sS4HpAqitQOd?=
- =?us-ascii?Q?h9efQ+Ti7Kz/aJ5J+WvHmlvQvx1nrHqfdIb/8PgKh2pai9c2ylEwHF3+nOJI?=
- =?us-ascii?Q?xI/meyt9dAmwCyEVQ/9JTyYCxMomhCKCSa6eGuDeE/Dj64/d2azQnV4nAC3u?=
- =?us-ascii?Q?50A39Sn7MuuenwFa+ZjLj56Rzs36kDhb9RrD6IPSCFpundSvE0KI8PNwr3Ov?=
- =?us-ascii?Q?ipkaDVtyL8xeJda4Fq6xLuWiKtJ0A68WTu3A3HhK9G7lzE6Zl+gWjJPG2t2+?=
- =?us-ascii?Q?TG+i81LSdh7NisGWHQtriSC1M445e2fP5QDPdPs7YvFhV0a+qXDCbRMOZWvW?=
- =?us-ascii?Q?WtS3szbRveenCh2kChSChz4HEQM36qdjaMLfpZlZjX4i0vOqYHQicKfvfluc?=
- =?us-ascii?Q?fMwalbVbPZloKPwnE6PyetYIjYk58tXPQwNwBewaaFhcuOvlAPs5bJU4GV5b?=
- =?us-ascii?Q?EOC9omX1W4KyGVsZOqVIbaKeLSQMZk/OgbWGsnAZMUzGl6iQAGCY9FJ8CcNK?=
- =?us-ascii?Q?KpR6+0zTWNgpd3bcbVaiVqoiEaqENV/BSFr2Fs00fYI96c970utVDDz0v1bR?=
- =?us-ascii?Q?e7O4F1sFrBY/XI3aoCLn6+i9UUXeJRHVdnSShELDtkxm0MBGLEtyJIKhsVBY?=
- =?us-ascii?Q?25zKXSVWbC1ZZqsQN4WOTtHYMAByJpD1EhkqtL5kxQqrHuBf1+es38U0wB6K?=
- =?us-ascii?Q?/+KdHcZfcR3EFkamXOjqbOy7hP/nV5++hqWtNreXBr8lXogvDvIgfY3ZlxxX?=
- =?us-ascii?Q?ni2gul0jTB6Uoa0rSBMCjnSfkupxXRPJyVH5mmPAZ4OoVr0MGatmvHwSqwX1?=
- =?us-ascii?Q?Z4PASfk/0avQPCDBwtk7OMQMyDZD4puqkTWcn7Dz8dlIWLpX50SjqDkBxjN+?=
- =?us-ascii?Q?Wnr5Qo/726p9B+8HR+2NjK3ss4aVHK+mPhb8NFmtP9QYnWrKblphPA6+HN7m?=
- =?us-ascii?Q?EEdcwvmEXrxSnfBk2DjPXpFJKKktG9cL4GGdbUkup7j9HaPwLLeXn6WqUKN7?=
- =?us-ascii?Q?omKcrmoAjaaQpnajalYz0bBztGxoK1BAXssan+55NLRvxp3zNXhSVVgMVFh1?=
- =?us-ascii?Q?fgY/DRgw0i8Ug+rqUYyjE6/7gSMrf+HTpQyF9XtY8SkJoq1DwEBPfcbq1XAS?=
- =?us-ascii?Q?MRkFpmcpfOui4QIykejWUwnQ2+2TsBMrXkzlFmkxHmPHXVMXB5CmSSk2RnsU?=
- =?us-ascii?Q?rBRIK9j8dIJYhroGPEifiz6CpiijiyAYSIvNfClVbsNCsTCgW117oqb4H7js?=
- =?us-ascii?Q?8QkERrzJ7AdLQNc4lZ1oQjwjStPcsF0LYPExCyj+BH6xIA9inD0ov5L96FS6?=
- =?us-ascii?Q?9pcK30ldnmFQjwyIia42eGv+Nql5G3hsiZ4iEBBNZAxk7p312Urs?=
+	=?us-ascii?Q?GxVC/DSel7ccdGWfwPtIQFGExdp/OkzKUSDyYGdLuWq9+QgemtRzSSYiAoGX?=
+ =?us-ascii?Q?JPWo2lvtFY6agU+bJJZaTRNcAaP+jv2o3TIUk2Gxn/VbaQTU9wMOxhcj66yJ?=
+ =?us-ascii?Q?3bABkJc3i4QOETyht5K+h+Yhaiv6rWpIHg+NopOivE23ucurON1xPw4QoP81?=
+ =?us-ascii?Q?4D1PZg6q/N8RYP8ByEEo4LW9Pv9yM/KNkKTpMRRk0UqUt7m0RYrf8Nm2AU2+?=
+ =?us-ascii?Q?NW1vi80pEsC8MHmFRrgsf8udjBA3NV5CQ3D3v2T7BPdqA+rg/0kqequxUMKb?=
+ =?us-ascii?Q?4TIndEgTX8H2jCgHrU96qoswL4UtXNihZDbftTP/uZgpoi9yOj9eRduUJNNd?=
+ =?us-ascii?Q?FQJ0aH6ruJRCkT46SGSGUZ0+YbXpkua3mogO/6oar9efY8AO+jUTD2iHM1Zt?=
+ =?us-ascii?Q?miM1/Nu+/bY4shEUQ7kJIyGpauojQtxvD6fUgfjcOHj0imC4XpK3ZhsuH0SF?=
+ =?us-ascii?Q?ryRdZZOUWvvGFdx/RwmpBiR7YIey8Qfyg+z7jzcvt6T/z+30mpjZVtT9j2An?=
+ =?us-ascii?Q?TEB/4qSo1ZC9sa9A9NuWVUMO7YtDgzn+td8+yowYwh3o7IrVEop2rD4q43Za?=
+ =?us-ascii?Q?N3hX+5MDt5o1DSEsvRoT8DKHlKsibo2IQ71lADSdOHB1lcdh42V1cT9usyWr?=
+ =?us-ascii?Q?B19eg6T7LSeSNsSNNxAq7NtN/grTYbgwOi+/wDXSICpn+jhM6xjYxtX08VWW?=
+ =?us-ascii?Q?NnR4QBnk+OWvabR47K9bqfEYeP2W7mujChOCzEHt7102IScF/M9Bbf1353p4?=
+ =?us-ascii?Q?VXDVUfQltMC0BXHlYscV91OPcbNwF49sKUgphwvG+YUoEes50BaUs6M0fGOM?=
+ =?us-ascii?Q?HqENWyxa6wK8yIU82+FKb4q91Mx+d/shqjPDzexWX7/i5RQeY+jLH5GMFNJj?=
+ =?us-ascii?Q?g++z7t/3SM6NcoXQlpkq1widI+Fcg6ouRXhWf3VmJ98VsXDIkGroNsg2Xbrp?=
+ =?us-ascii?Q?ablUrNxK+KglpVySXoAPQg0fyLMkSYjJBpCpOpfKWMakcne91p9tP6ZPNXwY?=
+ =?us-ascii?Q?eOVIHKt7pvDRFRYE6LGDrvHAqbpUxgLsdwi7ZoEuC1tftGQyoEpK/1ITYwuw?=
+ =?us-ascii?Q?q61Db6F5dOLHYUIhNTfkW6H7nORwVLqMN0cRROUyijfg3Vp0nnIfT7ikr6n3?=
+ =?us-ascii?Q?fEiOIXDKTiH3mwrynKueWNB9HvCRVg7jq9VU1RBPt3pefUHvkMFRRWWCcutu?=
+ =?us-ascii?Q?jNcYSRVehd4iehOYz8BgHSoG3jLDgStOFARPsVhnfsQIaI3JKwkjoAKRFLLr?=
+ =?us-ascii?Q?pG/TDSu/h5yLivF/Ewc+Pk5JESeLw+RynPLGfzN+WeLqo2tXp30YWXh9awtN?=
+ =?us-ascii?Q?Ku8ILbRgUPRxdFDzfrDU1fJs2sIi2kHT2t+NZ3ihq2DmdrDCqt4cY/Mt6f8G?=
+ =?us-ascii?Q?VRtMgofCF9JRxZLra41MMkQqFNNJtf2NQaf8UPGK3ZfyaWfVzHG40+PqOQcT?=
+ =?us-ascii?Q?lA6TpIGPeSN6GWNpVf3amjzNkOtekmvJi49RVLiu5ayxiR/fXO5zZi2MsX5F?=
+ =?us-ascii?Q?zxDyFX1678IZZkEOqx+pI5IhYnBnSVtSt5t0tH6dlnlsxM2V5LWC0C740trR?=
+ =?us-ascii?Q?6cgyYrgsnmm/qBm6xq42HHdV38WJVajWaK5AHO5Y2gZbWt57gZOuwEr8jbGa?=
+ =?us-ascii?Q?//aiehddOfxzrMASO5O72DMC3AJTfqMIghHw7zeA6PNziSBBpjJW2bFgvMvd?=
+ =?us-ascii?Q?u7i2x5Ekg/i2LvNLNqC4w9IAkcJ/dCRn8cxC4QykJjo3XX9CyBWdjUnbFddw?=
+ =?us-ascii?Q?7yGgMhmt8UKBDL+2o5zSAKMW/I3VLAf1ZOq8H/1NaiMLjypWsyqD?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9ca7d326-1ca7-4cff-d591-08def96b97bf
+X-MS-Exchange-CrossTenant-Network-Message-Id: bda2f911-cc09-4fb0-4c80-08defa41241e
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 18:49:23.9809
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 20:18:02.1121
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u9Dv8/Lv1MQBrrKRUB3oxVsDeFhkGqNyt0J2YNDwcPjbhzccbl5p8PwwNhxPXF0gmhcVP+HJpqvcCEkVB6cEsmUhWD1smqXV06myv5Z3AkOY34rfrDH+C2cRWryOsdaI
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR04MB10060
+X-MS-Exchange-CrossTenant-UserPrincipalName: tST6H0z4HD8CSFghaWtS2kgrptgymboUDO5zVlAKMasKq0/zOwPt+Xg22hkOBfLpSoT2i7wKbC5VsFypUvMSjPv800p7ALyUIzzLX/kw+ieLQo4VNdTERS2g94d4mNWe
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB12268
 
-On Mon, Jul 20, 2026 at 11:06:07PM +0800, Hans Zhang wrote:
-> [You don't often get email from 18255117159@163.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On Mon, Jul 27, 2026 at 01:26:15AM -0700, Troy Mitchell wrote:
+> The extended DRCMR window on SpacemiT K3 starts at 0x1100. Commit
+> 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support") incorrectly
+> set it to 0x1000, causing DRCMR accesses for request IDs >= 64 to target
+> offsets 0x100 too low.
 >
-> Replace these with dw_pcie_get_pcie_cap(). The hardware is already enabled
-> by the driver before ls_pcie_ep_probe() and before the interrupt handler
-> runs. dw_pcie_get_pcie_cap() will cache the offset on first call, and
-> subsequent calls (including inside dw_pcie_ep_init) will use the cached
-> value without re-searching.
+> The 0x1100 base has been verified on K3 silicon using real SPI and QSPI
+> DMA transactions. The K3 DMA documentation [1] was updated on June 24,
+> 2026, to reflect the corrected register addresses.
 >
-> Signed-off-by: Hans Zhang <18255117159@163.com>
+> Drop the bogus DRCMR_EXT_BASE_K3 macro and reuse
+> DRCMR_EXT_BASE_DEFAULT for the K3 ops.
+>
+> Fixes: 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support")
+> Link: https://www.spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/16_peripherals/dma.md&lang=en [1]
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 > ---
 
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-> In pci-layerscape-ep, dw_pcie_find_capability() is called in:
+> This is a minimal fix for the wrong DRCMR_EXT_BASE_K3 value introduced
+> by commit 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support").
+> K3 silicon uses 0x1100 as the extended DRCMR base, so the K3 ops now
+> reuse DRCMR_EXT_BASE_DEFAULT.
 >
->   ls_pcie_ep_probe()
->     -> offset = dw_pcie_find_capability()
->     -> pcie->lnkcap = dw_pcie_readl_dbi(offset + PCI_EXP_LNKCAP)
->     -> dw_pcie_ep_init()
->     -> ls_pcie_ep_interrupt_init()
->         -> devm_request_irq(..., ls_pcie_ep_event_handler)
->           -> ls_pcie_ep_event_handler()
->             -> dw_pcie_find_capability()
+> I deliberately kept the per-ops drcmr_ext_base field and the
+> DRCMR_EXT_BASE_DEFAULT macro to preserve the extensibility that was
+> introduced together with the helper refactor, in case a future PDMA
+> variant ends up using a different extended base. If reviewers prefer
+> to drop this abstraction entirely and collapse it back to a single
+> constant now that all known users share the same value, I am happy to
+> send a v3 that removes the drcmr_ext_base ops field as a cleanup.
 > ---
->  drivers/pci/controller/dwc/pci-layerscape-ep.c | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+> Changes in v2:
+> - Reword the commit message to remove the inaccurate K1 comparison.
+> - Mention successful SPI and QSPI DMA tests on K3 silicon in the commit
+>   message.
+> - Add a link to the corrected K3 DMA documentation, updated June 24,
+>   2026.
+> - Link to v1: https://patch.msgid.link/20260615-k3-pdma-fix-drcmr-base-v1-1-ee1af124199f@linux.spacemit.com
 >
-> diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> index 8936975ff104..b2d0b51df3c5 100644
-> --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> @@ -74,7 +74,6 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
->         struct ls_pcie_ep *pcie = dev_id;
->         struct dw_pcie *pci = pcie->pci;
->         u32 val, cfg;
-> -       u8 offset;
+> To: Vinod Koul <vkoul@kernel.org>
+> To: Frank Li <Frank.Li@kernel.org>
+> To: Yixun Lan <dlan@kernel.org>
+> To: Guodong Xu <guodong@riscstar.com>
+> To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> To: Paul Walmsley <pjw@kernel.org>
+> To: Palmer Dabbelt <palmer@dabbelt.com>
+> To: Albert Ou <aou@eecs.berkeley.edu>
+> To: Alexandre Ghiti <alex@ghiti.fr>
+> Cc: dmaengine@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Cc: linux-riscv@lists.infradead.org
+> Cc: spacemit@lists.linux.dev
+> ---
+>  drivers/dma/mmp_pdma.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 >
->         val = ls_pcie_pf_lut_readl(pcie, PEX_PF0_PME_MES_DR);
->         ls_pcie_pf_lut_writel(pcie, PEX_PF0_PME_MES_DR, val);
-> @@ -83,9 +82,6 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
->                 return IRQ_NONE;
+> diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+> index 386e85cd4882..78e3e07e681d 100644
+> --- a/drivers/dma/mmp_pdma.c
+> +++ b/drivers/dma/mmp_pdma.c
+> @@ -52,7 +52,6 @@
+>  #define DCSR_EORINTR	BIT(9)	/* The end of Receive */
 >
->         if (val & PEX_PF0_PME_MES_DR_LUD) {
-> -
-> -               offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> -
->                 /*
->                  * The values of the Maximum Link Width and Supported Link
->                  * Speed from the Link Capabilities Register will be lost
-> @@ -93,7 +89,8 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
->                  * that configured by the Reset Configuration Word (RCW).
->                  */
->                 dw_pcie_dbi_ro_wr_en(pci);
-> -               dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCAP, pcie->lnkcap);
-> +               dw_pcie_writel_dbi(pci, pci->pcie_cap + PCI_EXP_LNKCAP,
-> +                                  pcie->lnkcap);
->                 dw_pcie_dbi_ro_wr_dis(pci);
+>  #define DRCMR_BASE		0x0100
+> -#define DRCMR_EXT_BASE_K3	0x1000
+>  #define DRCMR_EXT_BASE_DEFAULT	0x1100
+>  #define DRCMR_REQ_LIMIT		64
+>  #define DRCMR_MAPVLD	BIT(7)	/* Map Valid (read / write) */
+> @@ -1219,7 +1218,7 @@ static const struct mmp_pdma_ops spacemit_k3_pdma_ops = {
+>  	.get_desc_dst_addr = get_desc_dst_addr_64,
+>  	.run_bits = (DCSR_RUN | DCSR_LPAEEN | DCSR_EORIRQEN | DCSR_EORSTOPEN),
+>  	.dma_width = 64,
+> -	.drcmr_ext_base = DRCMR_EXT_BASE_K3,
+> +	.drcmr_ext_base = DRCMR_EXT_BASE_DEFAULT,
+>  };
 >
->                 cfg = ls_pcie_pf_lut_readl(pcie, PEX_PF0_CONFIG);
-> @@ -266,7 +263,7 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
+>  static const struct of_device_id mmp_pdma_dt_ids[] = {
 >
->         platform_set_drvdata(pdev, pcie);
+> ---
+> base-commit: c425609d6ac4012c8bbf01ec2e10e801b1923a7b
+> change-id: 20260615-k3-pdma-fix-drcmr-base-326536770427
 >
-> -       offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +       offset = dw_pcie_get_pcie_cap(pci);
->         pcie->lnkcap = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
->
->         ret = dw_pcie_ep_init(&pci->ep);
+> Best regards,
 > --
-> 2.34.1
->
+> Troy Mitchell <troy.mitchell@linux.spacemit.com>
 >
