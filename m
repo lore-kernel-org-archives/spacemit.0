@@ -1,223 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5597B238166
-	for <spacemit@lists.linux.dev>; Mon, 17 Aug 2026 01:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BE22E62A4;
+	Mon, 17 Aug 2026 03:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786930668; cv=none; b=avPXTF+tZ2RMTFavsCq+xLSkoeQ2vhY26Gqs9bJUMicboK55pWuIC0mQ3+jpI5eYAgKpO262UcJDfssweS+89GQR6t+rdsWFsWSZtGLjDueWF6gFCHvIYrmaieEg7fMVKekNTwGC1rM5cJKpvXo8D/beqJb4oG411TqGU15XKlM=
+	t=1786937474; cv=none; b=MM0trBZWer0FiAa2jxdy/wNGg+1M/o41Av44ja8Kw/spXvr57jtudFraXCqhmoBvUb5Ubs8WCjWZq4CFxCORkF58KucxSNUhs26NngIJAcPWDXuAVPB4YT/3noBWIsybiNqu8E3BAZrguLsZMdH/IPuvkaXI7zozSbBlrZKF7AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786930668; c=relaxed/simple;
-	bh=QMju5I8ctfa1RrvwFO5E5YnjxpUvLHaeN6eKSgKjHsA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=soxa2ZrSOCIBdlE4yH4yYn6+gAoY+/jAOZ51zX86Gtrz7zN+OTd3PBs2S7TLIPaySwBKwa4Z+gv7BLPLqKBkWjDSXSHPsBCwKF8AczHl6THKl4XnFnhGIh1JR9mW9JPTltKzl52JPdmI4TELS1LnSUsGrXyXj8bilolPyfoAf2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IFiByPYa; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786937474; c=relaxed/simple;
+	bh=3Lw8nNo3vlnI5Cj1H2N29cS3MfP60oakb6Dzi9VqRa0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tiJszgkUeGaihwk90CbiPTPQZF6qAEFXWt5WGtpwkyk78TF2yg49AEiVU6Q64RqXNNhMsWzZOAfXAT+X0Oh2JbQOA46ScGY6oKoVBuwGkRDL8j+C9lj0sJhJpAz0j4P7E7J2sw+7WxQvw/w+i+31d0dZ5HXu24hdTiVHN8K6Vys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8vLFnA6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IFiByPYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C9E1F00A3F
-	for <spacemit@lists.linux.dev>; Mon, 17 Aug 2026 01:37:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8vLFnA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABF41F000E9;
+	Mon, 17 Aug 2026 03:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786930667;
-	bh=Mdw2WrAprtmri6kq3AXp//k+l34uk9fCAfsJ9EpaFNE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=IFiByPYaI3JoNtjDZkT8hiAzYCPLJoNGN9l3xxpjRJzpjFwFstKEp06T/8RyLH5Hv
-	 h5/wRLrJ6bhx3qMzfHDVxROjE/lpC0xtSxNie/BOS1ciBctwhmP/cmsl29nHtsg6yC
-	 jpRh84S/IPtuK2JVnDJZnlpLstBNMNRfIyw7QXYXSodYREVM/kixunSRBjCrW/WQrj
-	 ijX6V/bB0d1CxhGOdS3F0z/QF1mx54mmmECeTxaoK7idFadBxOLvcCz/yGxE6jXpUE
-	 josURyeziHZXINtzeiXM/WboNjZWmGcbWwcJD8pDlubftA7KcNcq3D72Pfl+KwQo2p
-	 Nr+K26dRmqLKw==
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-47f6609c657so1320219f8f.2
-        for <spacemit@lists.linux.dev>; Sun, 16 Aug 2026 18:37:47 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RrS3NGn8QOXMb9001H8K3baZ1N7BPbDv5pl57JH6QGcqMpfiO3HSWY+z2IHMtA9CUE0Z7VQibZ/pg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwMp6L660X9BP8YuhdUv9oYTm2iJdYNzKqMkzVqdmeZP4QuiZQR
-	SMTfzxl70QK0+fxYcx8j+UEo/A5p/Zm4evrWWDdGD5pCU5va0gicmPYByn6uuc5VTLShdRQb93J
-	iYQ0NzG8nP2AdOeXuy3SEV0nZDcIZWfo=
-X-Received: by 2002:adf:e74c:0:b0:47f:f31d:27a4 with SMTP id
- ffacd0b85a97d-4816075d33emr25717249f8f.13.1786930665792; Sun, 16 Aug 2026
- 18:37:45 -0700 (PDT)
+	s=k20260515; t=1786937472;
+	bh=toX/MnDHIJfbzMtrwLv5Ia5fgxHNg9bMGwJkF9+Vi0M=;
+	h=From:To:Cc:Subject:Date;
+	b=X8vLFnA65DVCR+2PGFO16WB2XwankYOHjBcqOiQIIO/XZxK6I6HFqy/zeUUBz/QNs
+	 LFkkTPeum2HQXclxW5wh3/UdTFQp53NV0s0UeMJdgmvBuydi3riHumZJyf3Sfdm2J4
+	 ieV/Bbc5rx2IEgGBV1m7S8YttUBs2LGngtCV3TlZYhWqi8o/pek7QovPue77wfcNK4
+	 0mJT5VyjU5P7D4VUe37hWf+8EA69ZXUUbC6VRzhN7wIZpAt8YhjYxOaSclxQ574+2u
+	 rqs0PKyadGuK5nFQU2Sf56l7ydewpK3AgoXC8Ffu9E0YSSbW91pPMkVzw1WPLEFShZ
+	 zC3pDCTROJLTA==
+From: Guo Ren <guoren@kernel.org>
+To: linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Cc: dlan@kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	junhui.liu@pigmoral.tech,
+	"GUO Ren (XuanTie)" <guoren@kernel.org>,
+	stable@vger.kernel.org,
+	Guodong Xu <docular.xu@gmail.com>
+Subject: [PATCH V2] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
+Date: Mon, 17 Aug 2026 03:30:38 +0000
+Message-ID: <20260817033038.2286436-1-guoren@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260816074125.2105828-1-guoren@kernel.org> <DKQ8V08O8TKD.QHLCPR9W40HE@pigmoral.tech>
- <CAJF2gTRwMXVzxDL=C3JjmtxP3K5aLqki5qZdcyv751BTZ2p=5g@mail.gmail.com>
-In-Reply-To: <CAJF2gTRwMXVzxDL=C3JjmtxP3K5aLqki5qZdcyv751BTZ2p=5g@mail.gmail.com>
-From: Guo Ren <guoren@kernel.org>
-Date: Mon, 17 Aug 2026 09:37:33 +0800
-X-Gmail-Original-Message-ID: <CAJF2gTRkUvBq9_JEBrfffHBmSmVfHWOocnz56QD5hzoOGk0gKQ@mail.gmail.com>
-X-Gm-Features: AcwNN1XLTxQ71XnG-AfWlaeXf9W-RSaqjpUxNik7UZ4dK_RBXIFXrwZN662MX-g
-Message-ID: <CAJF2gTRkUvBq9_JEBrfffHBmSmVfHWOocnz56QD5hzoOGk0gKQ@mail.gmail.com>
-Subject: Re: [PATCH] riscv: dts: spacemit: k3: fix IMSIC guest parameters
-To: Junhui Liu <junhui.liu@pigmoral.tech>
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	dlan@kernel.org, devicetree@vger.kernel.org, spacemit@lists.linux.dev, 
-	stable@vger.kernel.org, Guodong Xu <docular.xu@gmail.com>, 
-	linux-riscv <linux-riscv-bounces@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 17, 2026 at 8:51=E2=80=AFAM Guo Ren <guoren@kernel.org> wrote:
->
-> On Sun, Aug 16, 2026 at 5:01=E2=80=AFPM Junhui Liu <junhui.liu@pigmoral.t=
-ech> wrote:
-> >
-> > Hi Guo,
-> >
-> > On Sun Aug 16, 2026 at 3:41 PM CST, Guo Ren wrote:
-> > > From: "GUO Ren (XuanTie)" <guoren@kernel.org>
-> > >
-> > > The initial K3 device tree used generic/placeholder values for the
-> > > IMSIC guest configuration:
-> > >
-> > >   riscv,guest-index-bits =3D <6>;
-> > >   riscv,num-guest-ids    =3D <511>;
-> > >
-> > > According to the SpacemiT K3 User Manual [1], these values are
-> > > incorrect for the X100 cores:
-> > >
-> > >  - Hypervisor Extension: RVH 1.0, GEILEN =3D 8
-> > >  - Advanced Interrupt Architecture (AIA):
-> > >     - M-mode MSI: 512
-> > >     - S-mode MSI: 512
-> > >     - VS-mode MSI: 64
-> > >
-> > > Therefore:
-> > >
-> > > - S-mode IMSIC (simsic) only needs guest-index-bits =3D 3 (to cover
-> > >   GEILEN =3D 8) and num-guest-ids =3D 63.
-> > > - M-mode IMSIC (mimsic) does not implement guest interrupt files at
-> > >   all, so the guest-related properties must be omitted.
-> > >
-> > > Although the KVM AIA driver will re-detect the actual number of guest
-> > > interrupt files via hgeie and correct guest-index-bits at runtime, th=
-e
-> > > device tree should still describe the correct hardware parameters.
-> > >
-> > > Update the device tree to match the silicon.
-> > >
-> > > [1] https://www.spacemit.com/community/document/info?lang=3Den&nodepa=
-th=3Dhardware/key_stone/k3/k3_docs/k3_usermanual/08_cpu.md
-> > >
-> > > Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K=
-3 SoC")
-> > > Cc: stable@vger.kernel.org
-> > > Cc: Guodong Xu <docular.xu@gmail.com>
-> > > Cc: Yixun Lan <dlan@kernel.org>
-> > > Signed-off-by: GUO Ren (XuanTie) <guoren@kernel.org>
-> > > ---
-> > >  arch/riscv/boot/dts/spacemit/k3.dtsi | 6 ++----
-> > >  1 file changed, 2 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/d=
-ts/spacemit/k3.dtsi
-> > > index 19fc9b49668e..4120eb0c4083 100644
-> > > --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > > @@ -1127,9 +1127,9 @@ simsic: interrupt-controller@e0400000 {
-> > >                                             <&cpu4_intc 9>, <&cpu5_in=
-tc 9>,
-> > >                                             <&cpu6_intc 9>, <&cpu7_in=
-tc 9>;
-> > >                       msi-controller;
-> > > -                     riscv,guest-index-bits =3D <6>;
-> > > +                     riscv,guest-index-bits =3D <3>;
-> >
-> > According to the IMSIC DT binding, riscv,guest-index-bits describes
-> > the number of guest-index bits in the MSI target address, not the
-> > number of guest interrupt files actually implemented by a hart.
-> >
-> > On K3, the per-hart IMSIC stride is 0x40000 bytes (0x200000 / 8).
-> > Therefore, riscv,guest-index-bits should remain 6, which satisfies the
-> > per-hart stride formula specified by the AIA specification:
-> >
-> >   2^(guest-index-bits + 12) =3D 2^(6 + 12) =3D 0x40000 bytes
-> >
-> > KVM already handles the difference between the address space and the
-> > actual number of guest interrupt files. It reads HGEIE to find the
-> > actual number of guest interrupt files and uses the smaller value:
-> >
-> >   /*
-> >    * Number of usable per-HART HGEI lines should be minimum of
-> >    * per-HART IMSIC guest files and number of bits in HGEIE.
-> >    */
-> >   if (lc)
-> >           hgctrl->nr_hgei =3D
-> >                   min((ulong)hgctrl->nr_hgei, lc->nr_guest_files);
-> >
-> > I also tested this on K3. HGEIE returned 0xfe after writing all ones,
-> > so the driver gets fls_long(0xfe) - 1 =3D 7 usable guest interrupt file
->
-> I don't think the reserved per-hart address stride alone is sufficient
-> reason to set riscv,guest-index-bits to 6.
->
-> As mentioned in the commit log:
-> "Although the KVM AIA driver will re-detect the actual number of guest
-> interrupt files via hgeie and correct guest-index-bits at runtime, the
-> device tree should still describe the correct hardware parameters."
->
-> Although K3 reserves a 0x40000-byte IMSIC address window per hart, only
-> the first 0x8000 bytes, corresponding to guest indexes 0 through 7, are
-> actually implemented. The remaining range from 0x8000 to 0x3ffff does
-> not correspond to any implemented interrupt file.
->
-> If we describe guest-index-bits =3D <6>, that raises a few questions:
->  - What hardware resource is represented by guest indexes 8 through 63?
->  - What behavior does the K3 hardware guarantee for accesses to the
-> unused 0x8000-0x3ffff range?
->  - Shall we let the kernel map that unused range and consume
-> additional page-table entries for it?
+From: "GUO Ren (XuanTie)" <guoren@kernel.org>
 
-After re-reading imsic_parse_fwnode(), you're right. I misunderstood
-the semantics here. riscv,guest-index-bits is used to describe the
-guest-index field in the IMSIC address layout and therefore determines
-the per-hart address stride; it does not directly represent the number
-of guest interrupt files actually implemented.
+The initial K3 device tree used generic/placeholder values for the
+IMSIC guest configuration:
 
-Thanks to you & sashiko-bot for pointing this out.
+  riscv,num-guest-ids    = <511>;
 
->
-> >
-> > >                       riscv,hart-index-bits =3D <4>;
-> > > -                     riscv,num-guest-ids =3D <511>;
-> > > +                     riscv,num-guest-ids =3D <63>;
-> >
-> > This change looks good to me.
-> Thx for the review.
->
-> >
-> > >                       riscv,num-ids =3D <511>;
-> > >               };
-> > >
-> > > @@ -1168,9 +1168,7 @@ mimsic: interrupt-controller@f1000000 {
-> > >                                             <&cpu4_intc 11>, <&cpu5_i=
-ntc 11>,
-> > >                                             <&cpu6_intc 11>, <&cpu7_i=
-ntc 11>;
-> > >                       msi-controller;
-> > > -                     riscv,guest-index-bits =3D <6>;
-> > >                       riscv,hart-index-bits =3D <4>;
-> > > -                     riscv,num-guest-ids =3D <511>;
-> > >                       riscv,num-ids =3D <511>;
-> > >                       status =3D "reserved";
-> > >               };
-> >
-> > For the mimsic part, I already sent a related fix earlier:
-> > https://lore.kernel.org/linux-riscv/20260729-k3-mimsic-fix-v1-1-368c0ae=
-c04b9@pigmoral.tech/
-> Okay, I would remove the mimsic part.
->
-> >
-> > If you would like, you can pick that patch and combine the two changes
-> > into a v2, as Yixun suggested.
->
-> --
-> Best Regards
->  Guo Ren
+According to the SpacemiT K3 User Manual this values is incorrect
+for the X100 cores:
 
+ - Advanced Interrupt Architecture (AIA):
+    - M-mode MSI: 512
+    - S-mode MSI: 512
+    - VS-mode MSI: 64
 
+Therefore, S-mode IMSIC (simsic) needs num-guest-ids = 63.
 
---=20
-Best Regards
- Guo Ren
+Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
+Cc: stable@vger.kernel.org
+Cc: Guodong Xu <docular.xu@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>
+Signed-off-by: GUO Ren (XuanTie) <guoren@kernel.org>
+---
+V2:
+ - Drop the riscv,guest-index-bits change for simsic: the property
+   describes the number of guest index bits in the MSI target address,
+   and the per-hart stride on K3 is 0x40000 = 2^(6 + 12), so 6 is
+   correct as is.
+ - Drop the mimsic changes: already fixed by Junhui.
+ - Reword the subject and commit log accordingly.
+---
+ arch/riscv/boot/dts/spacemit/k3.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index 19fc9b49668e..4a4a9ec7c981 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -1129,7 +1129,7 @@ simsic: interrupt-controller@e0400000 {
+ 			msi-controller;
+ 			riscv,guest-index-bits = <6>;
+ 			riscv,hart-index-bits = <4>;
+-			riscv,num-guest-ids = <511>;
++			riscv,num-guest-ids = <63>;
+ 			riscv,num-ids = <511>;
+ 		};
+ 
+-- 
+2.43.0
+
