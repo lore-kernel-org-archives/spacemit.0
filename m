@@ -1,89 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605A3463B98
-	for <spacemit@lists.linux.dev>; Tue, 18 Aug 2026 11:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94FE3B841C
+	for <spacemit@lists.linux.dev>; Wed, 19 Aug 2026 16:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787054281; cv=none; b=iCDqroJNIABqH13YREwNcfSjGA1jem59ElTKETAbHm/wLLSYP3jNVSvzwO485N4X142Qp+HUQv1FgzzJYG+zgUReqPlWGFeKQAP93cZORmbKZcdfb6xVWQ1fNlcCYqvr0Ai4SFhe1i0dCS8sjVdCvgBduX4bi5nLgI89gWxNYSs=
+	t=1787156978; cv=none; b=W7MqVynsq0H+qY7pxM37adaEfXPj4E5VTGn1e8pS6oNl1mOkCYq9dWKdwEEkLq9MqHd3juxjMy/T3dt6NqCAiCj+4geM1FzpqKeqY3brqvcrc3L4G5Ib945ewXwR2vFYmq8njepDwM1R1vDvSAK9qg170qTC9QfrwzUE/nsymNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787054281; c=relaxed/simple;
-	bh=XKvpuhGOPbv8JCt779JZ4GIg/qJ5Sfy6ojxNg7/AzzQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sLtt2LsIzjitHKuXOMdcfT1h3kWPsenj51OwlRzmFpS3OgdZIKSiZCf6mYokhjHQWq3jbo/lSuGYU6Rb6/q2FH2HKTtMf9dPS20FKtLll2EDpfA/CpPpJZwOBtp/rnoOY5WTEFxyduQHIrM9UFou9P0Mb3OnmLErisxSiKUN9ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2itKOHZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787156978; c=relaxed/simple;
+	bh=4cVOUvzUto+rXsfnI84d79kiJwDFmq4Z44k5q5g5UI4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ADl4DrEbA/dRhHuj9Ufa8NXnQraMJL7dq7N2IZbWGYJs78wtOa9m3Ii52MO+upNzZo0UpmlXBdpK5Fuzyii1Zshi4EnpCS/b+5xS+SD5n1pYt2kv5GRqLVc/HZ+NlIWywdxySHKLjCZfyxKV8Z8QUv9YrP2wxb62WwrwkR67ig8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=vW9kfX3t; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2itKOHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4EC1F00A3F
-	for <spacemit@lists.linux.dev>; Tue, 18 Aug 2026 11:58:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787054280;
-	bh=XKvpuhGOPbv8JCt779JZ4GIg/qJ5Sfy6ojxNg7/AzzQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=Y2itKOHZ1Mnet1zHwg5XtX1JhFrFSmUObrDdtPi12AxNF5VMjvFPNo8kqGlpnpeAn
-	 NTS3pnbO1qM+nhrpTCFn5AlETHOXPAHh+NN2dKDSuKxb4E4Hq8keA3rtE1Gobr9gxs
-	 c1bizEj38yKoa9EoXQhLMLFN33faqhMKNdFrJGPfnjI2QIMUCYT+Iwx3H+A57nVTSd
-	 CclTRaaJR+ow2lz9L/Nc2RpLmriXlQD/iOqJagXKzYuhIDVQ/y5ZHBDj2mw3Y/F233
-	 BLQfO1LmolBF6fzxuUNujNphjxReJkk6ijWzuSewWCnAs8CEbGDyM/6wQS/ErtNCqS
-	 ENidzBiQt6Szw==
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-39c8e65e3f5so34806581fa.0
-        for <spacemit@lists.linux.dev>; Tue, 18 Aug 2026 04:58:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+RqHyLM/LrHeK0fWdB7SxDeY4r2U56mzj+dMocUXhZQ/TZ98Tl1S52bcyqH2PRmEtcFKcfCk7g4YsQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw+zEhwQg9DfbZiun1HXt9Pwu02wR2gEHTwcCpvNd9tOkneZJLk
-	pfFeaW4/vOL06GIqVmmLiO1gEGHsVdAffqga6PiKFkx/E104apAAjfABxg16XKoIxt3Pe3HMdP6
-	DhjN09ZIOtwU8J33cbj+lkKTb2sW6BWc=
-X-Received: by 2002:a05:651c:30ca:b0:3a1:1d3b:67f1 with SMTP id
- 38308e7fff4ca-3a1751ed6f9mr11681411fa.7.1787054278515; Tue, 18 Aug 2026
- 04:57:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="vW9kfX3t"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 398854E412D3;
+	Wed, 19 Aug 2026 16:29:33 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id F1AB25FF42;
+	Wed, 19 Aug 2026 16:29:32 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 75DD211C75909;
+	Wed, 19 Aug 2026 18:29:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1787156968; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=dA/9EZ9q53klXGxSMo1BE6kAbWq3qo7qffJ+f8rPyrY=;
+	b=vW9kfX3tJSa4RM6w2+LuBmB03C7AuJy0pJfGTXDfgiKx4YLzGSSGKzSJ3ahMWzO/Ii9qUT
+	h+xqWhkvcM4XV4hNxWZ/6MWHEV7JikuGagdGpJ9lSZLSdJcpJNAkneKh+pqrWAqEuEwyFu
+	6TRr1MVf/NVKtvzfyix9EBaPI+u6h1/w/WvfYTgyXiXI1+SGmF8NAWAgREa4A+csCGSYTZ
+	lEGvl5HDRSy9b7Zp8ppHPVriCHByMBmP1ZmuId4GSYG2qTZIRr/Z1X32/huTYcvvQH4ERW
+	+WHVk3TZ6FFyVjUHDd94OE52JctQ+vdphM2KdrczT2UbBL9hGW0QB+xlQ/dOxQ==
+Date: Wed, 19 Aug 2026 18:29:23 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: dlan@kernel.org, elder@riscstar.com, kr494167@gmail.com
+Cc: linux-rtc@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] rtc: spacemit: handle regmap_test_bits() error return
+Message-ID: <178715693830.130787.3002190547423884283.b4-ty@b4>
+References: <20260724135803.81223-1-kr494167@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAJZ5v0g3pVxLgXBAHho5B+kfAiQQkQHGoO-1uBxp0OyXiGGcRQ@mail.gmail.com>
- <20260818034110.1067658-1-peixin.xie@linux.spacemit.com>
-In-Reply-To: <20260818034110.1067658-1-peixin.xie@linux.spacemit.com>
-From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Date: Tue, 18 Aug 2026 13:57:29 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0jwAvynHo+ctq_CJJCKPDFct7DBj8SbDhKvWp7KZM0wwQ@mail.gmail.com>
-X-Gm-Features: AcwNN1VT3s4C1GHK_DVVrKqoeuQkWt6_4B_3wLCbIvEsEaFXd2oU1DdrdTKsH9I
-Message-ID: <CAJZ5v0jwAvynHo+ctq_CJJCKPDFct7DBj8SbDhKvWp7KZM0wwQ@mail.gmail.com>
-Subject: Re: [PATCH] ACPI: scan: Drop power resource references for deferred devices
-To: Peixin Xie <peixin.xie@linux.spacemit.com>
-Cc: rafael@kernel.org, dlan@kernel.org, lenb@kernel.org, 
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260724135803.81223-1-kr494167@gmail.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Tue, Aug 18, 2026 at 5:41=E2=80=AFAM Peixin Xie
-<peixin.xie@linux.spacemit.com> wrote:
->
-> On Wed, Aug 12, 2026 at 03:15:27PM +0200, Rafael J. Wysocki wrote:
-> > Have you considered dropping the acpi_bus_init_power() call from
-> > acpi_bus_get_power_flags() and doing it only once when the device gets
-> > ready for enumeration?
->
-> Thank you for the suggestion. I tested this approach on the SpacemiT K3
-> platform and it works as expected.
->
-> In addition to removing the acpi_bus_init_power() call, I set
-> device->flags.initialized to false at the end of acpi_bus_get_power_flags=
-()
-> to mark the device power state as not yet initialized.
+On Fri, 24 Jul 2026 19:28:03 +0530, kr494167@gmail.com wrote:
+> p1_rtc_read_time() called if (!regmap_test_bits(regmap, RTC_CTRL, RTC_EN))
+> to check if the RTC was enabled.
+> 
+> regmap_test_bits() returns 1 if the bit is set, 0 if not set, and a
+> negative error code (e.g. -EIO) if reading the control register fails.
+> Using !regmap_test_bits(...) evaluates a negative error code as boolean
+> false, causing I2C/regmap read failures to be ignored and incorrectly
+> proceeding to read time registers from a failing device.
+> 
+> [...]
 
-Instead of doing this, IMV it would be better to remove the setting of
-device->flags.initialized to 1 in acpi_init_device_object() and set it
-to 1 in acpi_add_power_resource().
+Applied, thanks!
 
-> This causes the existing path in acpi_bus_attach() to call acpi_bus_init_=
-power() once the
-> device is ready for enumeration.
->
-> The power resource references are now balanced and runtime suspend and
-> resume continue to work correctly. I will send a v2 in next couple days.
+[1/1] rtc: spacemit: handle regmap_test_bits() error return
+      https://git.kernel.org/abelloni/c/092755367e1a
 
-Please do, but please take the comment above into consideration.
+Best regards,
 
-Thanks!
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
