@@ -1,116 +1,184 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20E380FCE;
-	Thu, 20 Aug 2026 15:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1C933B6EF
+	for <spacemit@lists.linux.dev>; Thu, 20 Aug 2026 18:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239052; cv=none; b=sFGLT1w1n2XR+bKasXivSK2P5PCP5/gImQEeH8LdaoTmyL/HU9JSgeCzGmzZw9gIJ1iR7S3fizVsCd9PqVNo6crA3Is+zZDoB6WEdkgdHNuBVVXT0MgsTZTAM89LBsRGsYuzyFrxAmxwtHId64yw3xPUre40d0z+yNHmzX9ODaU=
+	t=1787251556; cv=none; b=NzC/D+TVFy9pIBoZWJfr1sJjL6OqLJI/82DgI7HC1lkqVHx8b4z1ja3k/aysou0tAe5FT88NjIq45xdDmH519/pVdLvBX9C3OyBQqsOxlhKSWBroNCyxLJdpF08gP9SgO5JwVk/W9y8wcFxuQH8U6hOLdC96Jk1b5q8hjj/+3NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239052; c=relaxed/simple;
-	bh=cWpIAtyTCdPlakiXlW38UncZwFCKnczScJWBpx1E6I4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k57FWVmD57qbW6Gv4+y6qk2ijXE0YwyMlyGu3hJbfDaTB14O1WjDA8sRLMdxpG6QEY8iTsbeNhc5nOTsj6y21etRrhT7ALxudMYuI5aXtqNflhSNDD/Uf3JfKNHBGeqY2evb1ObsjGFi9HDu6zDZUUCcqXD1xgda4kcpec54eiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=jz7Yb4NV; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1787251556; c=relaxed/simple;
+	bh=Kxj72uJxMJgTN8QsLiK7yqQbiy536nQgV+BgpdQfmaI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OlpDtQ0Q7SGqCiQ5oy3JybL3DNRnNssQRtpLW++B8YZh7S1BulbamjGuXkEj2TEOoq66QEb9eIi9QBPnob28mZGLREgvqsl9K3nSv7lxbf0CKxlXG7F9i/dgK0TIyc8a6Beo7v+OG59szLk5hs8I4odb2x98hgL7RUz55bW8B2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e/+La2GY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="jz7Yb4NV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=hCBCfkhuylDswajnEAey0yhp/w2gaAIUfLfZkrqLJZI=;
-	b=jz7Yb4NV2f4ape26Kp1GE/Cg4BTdXVJCyxo9NcOQCjfIZGGbmJazQ27Qg+bQ8E
-	K9iqAp0NKgajM4aFMscqoafCMxBrzSFXaGCX0qxzW+EEXJDVnZ6q9s4aaPkyr85P
-	DVveMqpuEMuJ7rSa8XEECERFA43Wfvq3V2lj4f80cLFVM=
-Received: from [IPV6:240e:b8f:91b3:d000:fc9b:5f4:477a:dca5] (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wCHTa9jGodqjxLpQQ--.14990S2;
-	Thu, 20 Aug 2026 23:16:52 +0800 (CST)
-Message-ID: <a2f0c2d6-750e-4076-aae2-6efaba1009a1@163.com>
-Date: Thu, 20 Aug 2026 23:16:50 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e/+La2GY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D371F1F00A3E
+	for <spacemit@lists.linux.dev>; Thu, 20 Aug 2026 18:45:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787251554;
+	bh=YVb4J1V0CMvgwLitjlRlo9yrvIFqh3ZSrAUYXqj6bIs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=e/+La2GY4UAk5VcwL4muLjCKn2rx880XpGq0C5KgbU1DtW1UMyDREDlr5v0wC2bDn
+	 JJ0HZIRbNSwCcFnNhcIuYctP2YK8pwl6adfCUoKkkKRlgUAX5XTyO/Ev1Yn9zpmLQi
+	 K6PC+1fhC8DScW+2dFN0XBhyIkxQd9AxZC6YHGUWkecMeTaL+UDybyuv/6fm8qgV6K
+	 aqtcw3IgVMYuFNJzm6VOGVwOvQNuurOMyfdErNwWT2RayKu8uVP/nUHff6MvTe5gsW
+	 C06TFCHa+pUv558ENfF5BzP2jhGE/CEGfdBwB9jB6iPiCYv5PCk9NcmMNEb17nEPv+
+	 WFsCBEnuIXm+A==
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5b14d1f9315so152027e87.2
+        for <spacemit@lists.linux.dev>; Thu, 20 Aug 2026 11:45:54 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RpGv6uOzX2wntk0GcxUKJEWaIYkXhd47BcHTO5KGoPDQU01aNafg4U6o16rRyKmrXJc21B0FRPhqQ==@lists.linux.dev
+X-Gm-Message-State: AFuF++nfkfzaQN4vGsTHR/HgKwBUVbDFEpiF+vdbiUQpHQn8rydY3cvM
+	e/jzePx9Ol/9yHQgJlJep9aYSq0fueLUJtRxgvurxQOcv7pCxHn7BTwjPYVQ2nbXc3uxOwfGp5A
+	A6HS4vyzdjR7mM8sxIVydAi29pQfEdq0=
+X-Received: by 2002:a05:6512:3b90:b0:5b4:5846:d925 with SMTP id
+ 2adb3069b0e04-5b484233905mr120830e87.21.1787251553281; Thu, 20 Aug 2026
+ 11:45:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/16] PCI: dwc: Use cached PCIe capability offset in
- core
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- jingoohan1@gmail.com, imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260720150619.24733-1-18255117159@163.com>
- <20260720150619.24733-3-18255117159@163.com>
- <ps2qzgcb5lixkoqz2xbofdurkgmsiojg7e5ueqfdhyissqvzf2@tuderrjgzg6b>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <ps2qzgcb5lixkoqz2xbofdurkgmsiojg7e5ueqfdhyissqvzf2@tuderrjgzg6b>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wCHTa9jGodqjxLpQQ--.14990S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KF15GFy5tryfZw17uFy8Zrb_yoW8ur18p3
-	yaqr4ayr4kZrW2vFWxJa1YqF10gF98trW3J3s3Kr15ZwsxCFWxJrW2yryYvF9rGrWqyr1F
-	kF4UXryDur98AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRi2-OUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7AQcv2qHGmR67gAA3M
+References: <20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com>
+In-Reply-To: <20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com>
+From: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Date: Thu, 20 Aug 2026 20:45:19 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0hxNALP_GRBk+QpfrpSAwJxbhjcvdYWkh8aakTppZnHSQ@mail.gmail.com>
+X-Gm-Features: AcwNN1Xkgg8dkhd5DrHEclBbxpwM5hJZxuiRpd3gKjDhZGY6sALVJ87AqhbLVIw
+Message-ID: <CAJZ5v0hxNALP_GRBk+QpfrpSAwJxbhjcvdYWkh8aakTppZnHSQ@mail.gmail.com>
+Subject: Re: [PATCH v2] ACPI: scan: Defer device power initialization
+To: Peixin Xie <peixin.xie@linux.spacemit.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Aug 20, 2026 at 7:56=E2=80=AFAM Peixin Xie
+<peixin.xie@linux.spacemit.com> wrote:
+>
+> acpi_bus_get_power_flags() initializes the device power state while the
+> ACPI device object is being created, before checking whether the device
+> is ready for enumeration.
+>
+> If enumeration is deferred, acpi_bus_attach() clears the initialized and
+> power_manageable flags. When the dependency is later satisfied,
+> acpi_bus_init_power() is called again and takes additional references to
+> the power resources used by the device. These references prevent the
+> resources from being turned off when the device enters D3.
+>
+> Remove the early acpi_bus_init_power() call and leave regular ACPI device
+> objects uninitialized until acpi_bus_attach() runs after the device is
+> ready for enumeration.
+>
+> Power resource objects are initialized through acpi_add_power_resource()
+> and do not require the generic initialization in acpi_bus_attach(), so
+> mark them as initialized there.
+>
+> This also avoids powering up devices before their dependencies are
+> available.
+>
+> Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
+> ---
+> This issue was reproduced on a SpacemiT K3 RISC-V Pico-ITX. The affected
+> device uses a power resource through _PR0 and has an automatically derive=
+d
+> dependency on its interrupt controller.
+>
+> Before the change, the initial power initialization acquires a power
+> resource reference. The device is then deferred, but that reference is no=
+t
+> dropped. When the dependency becomes available, power initialization
+> acquires another reference. Consequently, entering D3 only drops the
+> reference count from 2 to 1 and _OFF is not evaluated:
+>
+>  [    0.314611] ACPI Debug:  "I2P2 _STA"
+>  [    0.318260] ACPI: \_SB_.I2P2: ACPI: PM: Power resource is on
+>  [    0.323998] ACPI: \_SB_.I2P2: New power resource
+>  [    0.382108] ACPI Debug:  "I2P2 _STA"
+>  [    0.478964] ACPI Debug:  "I2P2 _ON"
+>  [    0.482498] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned on
+>  [    0.488597] ACPI Debug:  "I2C2, PS0"
+>  [    0.863170] ACPI: \_SB_.I2P2: ACPI: PM: Power resource already on
+>  [    0.873686] ACPI Debug:  "I2C2, PS0"
+>  [    2.416055] ACPI Debug:  "I2C2, PS3"
+>  [    2.423397] ACPI: \_SB_.I2P2: ACPI: PM: Power resource still in use
+>
+> After the change, device power state initialization is deferred until its
+> dependency is met. Since no reference is acquired before then, the power
+> resource left on by firmware is turned off as unused after the namespace
+> scan. Once the dependency is met, the resource is turned on once for the
+> device and is turned off normally when the device later enters D3:
+>
+> [    0.314628] ACPI Debug:  "I2P2 _STA"
+>  [    0.318277] ACPI: \_SB_.I2P2: ACPI: PM: Power resource is on
+>  [    0.324016] ACPI: \_SB_.I2P2: New power resource
+>  [    0.382118] ACPI Debug:  "I2P2 _STA"
+>  [    0.496116] ACPI: \_SB_.I2P2: ACPI: PM: Turning OFF
+>  [    0.501081] ACPI Debug:  "I2P2 _OFF"
+>  [    0.504705] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned off
+>  [    1.415899] ACPI Debug:  "I2P2 _ON"
+>  [    1.418866] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned on
+>  [    1.424947] ACPI Debug:  "I2C2, PS0"
+>  [    2.647655] ACPI Debug:  "I2C2, PS3"
+>  [    2.654856] ACPI Debug:  "I2P2 _OFF"
+>  [    2.654866] ACPI: \_SB_.I2P2: ACPI: PM: Power resource turned off
+> ---
+> Changes in v2:
+> - Replace the D3cold transition added in v1 with deferred device power
+>   initialization, as suggested by Rafael.
+> - Mark power resource objects as initialized in their dedicated creation
+>   path.
+> - Link to v1: https://patch.msgid.link/20260811-acpi-power-resource-ref-f=
+ix-v1-1-828f1c383831@linux.spacemit.com
+> ---
+>  drivers/acpi/power.c | 1 +
+>  drivers/acpi/scan.c  | 4 ----
+>  2 files changed, 1 insertion(+), 4 deletions(-)
+>
+> diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+> index d4131c184be8..4f1479103bfe 100644
+> --- a/drivers/acpi/power.c
+> +++ b/drivers/acpi/power.c
+> @@ -955,6 +955,7 @@ struct acpi_device *acpi_add_power_resource(acpi_hand=
+le handle)
+>         INIT_LIST_HEAD(&resource->dependents);
+>         device->power.state =3D ACPI_STATE_UNKNOWN;
+>         device->flags.match_driver =3D true;
+> +       device->flags.initialized =3D true;
+>
+>         /* Evaluate the object to get the system level and resource order=
+. */
+>         status =3D acpi_evaluate_object(handle, NULL, NULL, &buffer);
+> diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+> index 9a7ac2eb9ce0..489352ba80e1 100644
+> --- a/drivers/acpi/scan.c
+> +++ b/drivers/acpi/scan.c
+> @@ -1141,9 +1141,6 @@ static void acpi_bus_get_power_flags(struct acpi_de=
+vice *device)
+>                 if (!list_empty(&device->power.states[ACPI_STATE_D3_HOT].=
+resources))
+>                         device->power.states[ACPI_STATE_D3_COLD].flags.va=
+lid =3D 1;
+>         }
+> -
+> -       if (acpi_bus_init_power(device))
+> -               device->flags.power_manageable =3D 0;
+>  }
+>
+>  static void acpi_bus_get_flags(struct acpi_device *device)
+> @@ -1822,7 +1819,6 @@ void acpi_init_device_object(struct acpi_device *de=
+vice, acpi_handle handle,
+>         acpi_init_properties(device);
+>         acpi_bus_get_flags(device);
+>         device->flags.match_driver =3D false;
+> -       device->flags.initialized =3D true;
+>         device->flags.enumeration_by_parent =3D
+>                 acpi_device_enumeration_by_parent(device);
+>         acpi_device_clear_enumerated(device);
+>
+> ---
 
-
-On 8/13/26 14:06, Manivannan Sadhasivam wrote:
-> On Mon, Jul 20, 2026 at 11:06:05PM +0800, Hans Zhang wrote:
->> Modify the DWC core functions to use the cached pcie_cap offset instead
->> of calling dw_pcie_find_capability() each time.
->>
->> In the DWC core, dw_pcie_find_capability() is called at several locations:
->> - dw_pcie_ep_init_non_sticky_registers()
->> - dw_pcie_wait_for_link()
->> - dw_pcie_link_set_max_speed()
->> - dw_pcie_link_get_max_link_width()
->> - dw_pcie_link_set_max_link_width()
->>
->> The cached offset is initialized after hardware is ready:
->> - In host mode: dw_pcie_host_init() calls pp->ops->host_init() (enables
->>    clocks/resets), then dw_pcie_get_pcie_cap() caches the offset.
->> - In endpoint mode: the core no longer caches automatically. Instead,
->>    drivers must call dw_pcie_get_pcie_cap() after hardware is enabled
->>    (e.g., after PERST# deassert).
-> 
-> But you didn't modify all DWC EP drivers to call dw_pcie_get_pcie_cap(). This
-> can lead to pcie_cap being 0.
-> 
->> dw_pcie_ep_init_non_sticky_registers()
->>    is called after that point, so it can safely use pci->pcie_cap.
->>
->> dw_pcie_ep_init_non_sticky_registers() now assumes pci->pcie_cap is
->> valid. if not, it prints a warning and skips the operation.
-> 
-> Where is this warning printed?
-> 
-> These are already pointed out by Sashiko. You should go really go through all of
-> them (not the pre-existing issues) and comment whether the issues are valid or
-> false positive. For a series touching many controller drivers, this is necessary
-> to avoid introducing regressions.
-> 
-> I'm not going to merge this series until you fix the real issues Sashiko
-> reported or mark them as false positive if not valid.
-
-Hello Mani,
-
-I'm truly sorry. Recently, due to work commitments, I haven't had any 
-spare time. I plan to handle this series after v7.3-rc1 is released. 
-Thank you very much for your reply. I will carefully consider the 
-subsequent review comments regarding Sashiko. Thank you again.
-
-
-Best regards,
-Hans
-
-> 
-> - Mani
-> 
-
+Applied as 7.3-rc material, thanks!
