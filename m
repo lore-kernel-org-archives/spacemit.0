@@ -1,153 +1,160 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145F6482D4
-	for <spacemit@lists.linux.dev>; Sat, 22 Aug 2026 02:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787365042; cv=none; b=SZ4mIBXrUoqxBxmI65oUzxXeS5AZV9fk72QNG/Yp1nPI04nD8K5ym+ADvocjVwjpVB75cMy6o7AH38dDJ2Ty20uc/zcQ13t/VWgw8VcyZzHzsc1r6TRRWGH7fTuvXY8m+1RWsVMaJS+ixQ9/ePjqn+YMl7sTAhVlPtMC3qlLGRA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787365042; c=relaxed/simple;
-	bh=qc2anr7nuQF/LqCHg9nhqL04YcXIusix9EyDPOqm5RA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ObFGEQfwwO/9ulmQtjsxwJcshiZT2HTWchgKdq3mtOqgW3G366a/kjwi7uCCO6kx7745O3lE6GqODdaKlNpzFTS/xyML4Zz7qf4jDdp94bRk61z1eWlV5U60H7xLXe5UAM+NAGzo4bsbWCmxMSW1vu9WYkiPCaiJUnDIUfRnsNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YDu7yu5x; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0358367B73
+	for <spacemit@lists.linux.dev>; Sat, 22 Aug 2026 08:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787389097; cv=pass; b=MqR+hNuomWB9LmsveuaKUs/US0K8brcNQE4Vp7h6qjCcO2tc3lMxa/WZxPtqpbm/FeDkWUEiwXlcG9HlIzhY3oH9IFUG6lpzE/+a+v2k6u6qJY+YhZG9piWssYcpucJkKZPr2jTW0n1pvN4OfYN72UeHcFDpqgs5ILR9h5nKlhg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787389097; c=relaxed/simple;
+	bh=kvlWf2zySoabQt8RFJImil2B9f9gs0ZgElenWE+H4t4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WfUgUJLA848bR4ikuWmRosUuUE70ypE2KHlua7B10BpigFVfNF8SVP8Ry0oT+KzbW0Y9wejFYXVeUn3Nf2qv94OFfLXQG86rsBEEeStDCIcxZxPIdZ0v9K4a/46DcyPY2P4L7Sr3KXSsPBe2yTI8yZ/GgurFhbQGNPSEkbeTOPc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=i8CX1uaI; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDu7yu5x"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38deea72eebso1743707a91.1
-        for <spacemit@lists.linux.dev>; Fri, 21 Aug 2026 19:17:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787365040; x=1787969840; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=/PxFsvPnSSLfiQZIwj6VRATAaTC/AW3c6fVX+c2YbXM=;
-        b=YDu7yu5xC6btqS6rM9p/wtgUcvt+k6Rw+mC00EoS1QLqnTqXjipTPnIftw2AnHovOg
-         HrJZNG8Ujn5uFns7KD7BI+FdpccOtKcv39xh9W1h78H3y2sN5SCss1XmwFXLaOh4uRuo
-         Gaqs530bLIOqxwpum6VVsbZXVCz6B8aDVuqpKRDyWU1dAlFjYQ62uesUDITt4LWFfXfe
-         P9jS8C0yFRPV/4KVSXK4kx5MrmjDnHx4s3TpLoxjJdunZZPJvP5E/76T0V/qx6P43i/k
-         tWEOXqv/oryRz0Taanb0jXyUjZrepgYaKPMIQgsjU4z/rVcY/XnzyBcIIefDBTLAfgLF
-         IFFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787365040; x=1787969840;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/PxFsvPnSSLfiQZIwj6VRATAaTC/AW3c6fVX+c2YbXM=;
-        b=O5zeavHLkOVBk5ytoM6JNIriflBLnELTNeUzgMQh8U0EK/6qqlfCyQPA4wVkmOhXa8
-         SdAXqk/bqZP+fG2eyd53EIvRDDlb3IBkkzKCP0eBbbd+kGTqTJzkMZwgjJ0qexRl6NYT
-         QtKxus38x1kVQnJMYibtC7SodgRP0Xj+ZqukfVOfKzN0jAYiREMgvvw/tJAo80jTvc+M
-         BWAGAAFfrFoTUEp6AlkovQ3b7W5bkQMGZntPmGXTe73YiWoeeDW+/m/YcANLH0gh43AA
-         Ak/WHhmQ2ZYsoKYt3IlOOYCFOX3uXPoiSRHdHjzka+BxcsnmooPEBErBkj6j5VMCwW00
-         kpfA==
-X-Forwarded-Encrypted: i=1; AHgh+RpacRHPMR3G9pGy72qQyPV2YDhc7Um2Gs+n6IA/eNYbu/0833MFhyuLzimDWuR9DFAoS0p5R2EThw==@lists.linux.dev
-X-Gm-Message-State: AFuF++ll7Tp5/xh52sYY0sxSBHh+6Ff5WTKWOJI+vC4wuQrGLmfTsSVC
-	e39v6dE0cjnBIpcMVmCKCg4kovn95J8aOKtfLhbp2u2LriZ+lT6fYFkC
-X-Gm-Gg: AR+sD12u+N5s2cZs1Dv4/89Hv/TxzElDgJ04LdyEn8DKcXxhM+1Z0R1pr4YuIcjvJFd
-	dTWGiITN3I+7J51uSmZeWIC9Q+9opnxmioXu0PpEB4jkrqyAEBLiXofB8fIJug10bZbAZanlA3L
-	glFsnNmtZZO3lMvJJVFNnr6cpnqOAc9kxcTLV1mFhtD/1a/N32nxTiahtbptlP8luS7WwvAxdpf
-	+1IQw5OpSf9FEAhsPGyuBxNzgvoc87PmvZdwAMh+h/cUrejNZcgib1PSPTWYEj4yjfAxDQndLAf
-	gHdD5NpBb6aooU48u9g3Zxq8twrJ0LzzzGABphbLEX/0qr6sgo3Kkims7LhvePsvC5EQ9Zj/xJU
-	mP2Y78IAP49BNxqIf8deUR0uX/ujvGq67RWyndMwPe9Gm9OFZ3zno7GaxCLnzflGrFtlbnO7dqO
-	su9dnbnGrTVneV5t+0IXL2d/ttzCFI05SPEjtzU//tCcT5Efvf11C7q4NnDy9vfjq3VXUeFA==
-X-Received: by 2002:a17:90b:5790:b0:38e:9045:babe with SMTP id 98e67ed59e1d1-395deecf08fmr5441511a91.7.1787365040304;
-        Fri, 21 Aug 2026 19:17:20 -0700 (PDT)
-Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395e49b406bsm961123a91.8.2026.08.21.19.17.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 19:17:19 -0700 (PDT)
-Date: Sat, 22 Aug 2026 10:17:17 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Aurelien Jarno <aurelien@aurel32.net>, linux-kernel@vger.kernel.org, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v3 1/5] riscv: dts: spacemit: k3: move USB3 phy to board
- level
-Message-ID: <aokGbT7XTCbxUQzl@inochi.infowork>
-References: <20260819162115.2252812-1-aurelien@aurel32.net>
- <20260819162115.2252812-2-aurelien@aurel32.net>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="i8CX1uaI"
+ARC-Seal: i=1; a=rsa-sha256; t=1787389083; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Mji1j0NZhDXWu+xwYVd3cCzndxc6ooo4ngjINSWdWsY7pl3LYS/Cvw7FHk4j23t6TqN6KJxUY92uK/92kUMbP2Ias9qtl5XK5o30phXu2DRx+KnTDGLeujO3qnQvPEYd8e4RHzHsbXYBUpuG9FC9cWGk71BIpPXoE03zvx+OXCs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1787389083; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=EpVsutJ7yw0MJ2DK7FKUnEADtl4Oz0oQwe86Yo8xAhg=; 
+	b=M0QH/kS8kbdBUa+NPorrEzUdQJpVTkpqcefH7ZdmdnSCYr78+iJZLG8CeKjPbzHBv/xXfK5+89g8RKeaZO+IqXDQuIyOP8yYfPYPbL1TNMJeTXOfEkRW8eIygaTfOeg4wkXy1TZwlevwKGm0hI6Ee3wADmnwnhnliBivkQ+iSuM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1787389083;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=EpVsutJ7yw0MJ2DK7FKUnEADtl4Oz0oQwe86Yo8xAhg=;
+	b=i8CX1uaIdednr6D8ptvyZgt93Ru4DrKZPN6R1d+eoASwQ2sEK07O7ZXltgYDIn0Q
+	s2I3/dhurpHayop51H0k71dkCbF8fMCF6bGmg4/qtGxKp3NL628dq9HOSGHgKOazgyU
+	JlXEk6y5elrocpGqwO+TAOTGl9Shu/xsTBrz98uM=
+Received: by mx.zohomail.com with SMTPS id 1787389081734440.4493253970717;
+	Sat, 22 Aug 2026 01:58:01 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH 0/2] tools: mkimage: add SpacemiT K3 AIHD image support
+Date: Sat, 22 Aug 2026 16:56:46 +0800
+Message-Id: <20260822-spacemit-aihd-v1-0-bf4c41993891@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260819162115.2252812-2-aurelien@aurel32.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBG4avIrA3EoCH0KuJiGn91BK1kbCmId
+ ze2y2/x3kGKJFB6FAclfETltWZUZUFx4nWEkT6bnHXeBmeNbhyxyG5Ypt7YJtaeGSF4UG62hEG
+ +v1/b/a3v54y43xM6zwtyW7iCcQAAAA==
+X-Change-ID: 20260820-spacemit-aihd-05c46aae886e
+To: u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, Junhui Liu <junhui.liu@pigmoral.tech>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, Simon Glass <sjg@chromium.org>, 
+ Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Kory Maincent <kory.maincent@bootlin.com>, 
+ Guodong Xu <guodong.xu@oss.qualcomm.com>, Yixun Lan <dlan@kernel.org>, 
+ spacemit@lists.linux.dev
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2501;
+ i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
+ bh=kvlWf2zySoabQt8RFJImil2B9f9gs0ZgElenWE+H4t4=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLI6UxpnbSw4cO9+wY4Pman539vmZ7vVBT8U/qpXrDBvq
+ 2pYWdSfjlIWBjEuBlkxRRYuf/F/1jo8344ItN6HmcPKBDKEgYtTACZyo42R4c21/cd3MHyZc7/3
+ ZlrU5RsbLv1VWe92M9jrxirxGVN+Frxg+MVsmHGg+8THesP7LDHLzunfO7TkTbSU6KyzsjuPn42
+ 3KuUFAA==
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
+ fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
+X-ZohoMailClient: External
 
-On Wed, Aug 19, 2026 at 06:15:42PM +0200, Aurelien Jarno wrote:
-> On the SpacemiT K3 SoC, the combo phy provides 8 lines that can
-> either be used for PCIe or USB3, depending on its configuration
-> (spacemit,apmu). This configuration is defined at the board level, and
-> assigning a phy line to a USB3 controller while it is configured as PCIe
-> results in an "Invalid PHY mode" error.
-> 
-> Move the USB3 phy at the board level, the as it is done for the
-> submitted PCIe controller [1]. Keep the USB2 phy at the SoC level as
-> there is one phy per USB controller.
-> 
-> [1] https://lore.kernel.org/20260727094726.890179-3-inochiama@gmail.com/
-> 
-> Fixes: 46380e4b1534c1626cecd7f4d0abb5e0cce09af6 ("riscv: dts: spacemit: k3: add USB controller and USB phy support")
-> Cc: Inochi Amaoto <inochiama@gmail.com>
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 3 +++
->  arch/riscv/boot/dts/spacemit/k3.dtsi         | 5 ++---
->  2 files changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> index b084a35aa00e..171bd2f40aa6 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> @@ -328,5 +328,8 @@ &usb3d_u2phy {
->  };
->  
->  &usb3d {
-> +	phys = <&usb3d_u2phy>,
-> +	       <&combophy 4 PHY_TYPE_USB3>;
-> +	phy-names = "usb2-phy", "usb3-phy";
->  	status = "okay";
->  };
-> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> index c3f2dce0969c..3e24054d2084 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> @@ -452,9 +452,8 @@ usb3d: usb@81a00000 {
->  				 <&syscon_apmu RESET_APMU_USB3_D_VCC>,
->  				 <&syscon_apmu RESET_APMU_USB3_D_PHY>;
->  			reset-names = "ahb", "vcc", "phy";
+The SpacemiT BootROM loads a first-stage bootloader from storage or over
+USB in MaskROM mode. Vendor firmware packages this bootloader as FSBL.bin.
+Its headers use the magic "AIHD".
 
-> -			phys = <&usb3d_u2phy>,
-> -			       <&combophy 4 PHY_TYPE_USB3>;
-> -			phy-names = "usb2-phy", "usb3-phy";
-> +			phys = <&usb3d_u2phy>;
-> +			phy-names = "usb2-phy";
+This series documents the AIHD image format and adds the "aihdimage"
+mkimage type for the CRC32-protected K3 variant used in non-secure boot
+mode. It provides the FSBL packaging needed for future K3 SPL support.
+Select K3 with "-n k3" when creating an image.
 
-I suggest removing this completely as we can not determine the
-phy we used. I think it is suitable for setting this in board
-file only
+K1 and K3 secure boot use RSA authentication and are not supported yet.
 
-Regards,
-Inochi
+How to test
+-----------
 
->  			phy_type = "utmi";
->  			snps,dis_enblslpm_quirk;
->  			snps,dis_u2_susphy_quirk;
-> -- 
-> 2.53.0
-> 
-> 
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Rebuild mkimage, wrap a small UART test payload, and load it through K3
+MaskROM fastboot. The payload is linked at 0xc0801000 because the BootROM
+places the complete image at 0xc0800000 and enters the payload after the
+4 KiB prefix. UART0 should print "Hello SpacemiT K3!" and then loop
+indefinitely.
+
+  $ make tools-only_defconfig
+  $ make tools-only
+
+  $ cat > k3-uart.S << 'EOF'
+  	.equ	UART0_THR, 0xd4017000
+	.equ	UART0_LSR, 0xd4017014
+
+	.section	.text
+	.global	_start
+_start:
+	la	s0, str
+1:
+	lbu	a0, (s0)
+	beqz	a0, exit
+	call	uart_send
+	addi	s0, s0, 1
+	j	1b
+
+exit:
+	j	exit
+
+uart_send:
+	li	t0, UART0_LSR
+	lw	t1, (t0)
+	andi	t1, t1, 0x20
+	beqz	t1, uart_send
+	li	t0, UART0_THR
+	sw	a0, (t0)
+	ret
+
+	.section	.rodata
+str:
+	.asciz	"Hello SpacemiT K3!\n"
+EOF
+
+  $ riscv64-linux-gnu-gcc -nostdlib -fno-builtin -fno-pie -no-pie -static \
+    -march=rv64gc -mabi=lp64 -g -Wall -Wl,--build-id=none \
+    -Ttext=0xc0801000 -o k3-uart.elf k3-uart.S
+  $ riscv64-linux-gnu-objcopy -O binary k3-uart.elf k3-uart.bin
+  $ ./tools/mkimage -T aihdimage -n k3 -d k3-uart.bin k3-uart-aihd.bin
+
+Hold the FDL button, power on the board to enter MaskROM, then run
+fastboot on host:
+
+  $ fastboot stage k3-uart-aihd.bin
+  $ fastboot continue
+
+---
+Junhui Liu (2):
+      tools: mkimage: add SpacemiT K3 AIHD image support
+      doc: board: spacemit: document the AIHD image format
+
+ boot/image.c                 |   1 +
+ doc/board/spacemit/aihd.rst  | 145 +++++++++++++++++++++++++++++++
+ doc/board/spacemit/index.rst |   2 +-
+ include/image.h              |   1 +
+ tools/Makefile               |   3 +-
+ tools/aihdimage.c            | 202 +++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 352 insertions(+), 2 deletions(-)
+---
+base-commit: 6073c36b2c8d39afe3ecc789b281667a3ddebc70
+change-id: 20260820-spacemit-aihd-05c46aae886e
+
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
+
