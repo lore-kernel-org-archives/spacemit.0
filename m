@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2398A23BCED
-	for <spacemit@lists.linux.dev>; Tue, 25 Aug 2026 04:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEED23BCED
+	for <spacemit@lists.linux.dev>; Tue, 25 Aug 2026 04:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787631911; cv=none; b=VjgNus+5YYlD4syFx7s7ckRUpTH4Q+LGZU/CQuY7IxCGRzZ//GkleY0EmgrzPHY07NGQsRwL+9GSDsEgpitsa0TqEsv59zqu0e15LnY0XtfHaTtEdmB6eCxnZuXaT6ZhaEfZLbjxX7/w73v+1M1A6wgG+b3yL8Wk7BDI5Xj5St8=
+	t=1787631914; cv=none; b=laIju+cKylCMmNsC7i27lx8xEHM5GP3wBc6ZWJsfRkJ1D7mV34J0UFYmDBCBOA+cY7yqYwIinXUuCmlRF/vRkOZm3ZS9dHTcUmTdOCbCvOQIhf2RKvXa3OHkL9JT+QPKHLYR5a6MKltPQfoS2lb8LsmgN3J7PJ0dVbiwSmgf0Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787631911; c=relaxed/simple;
-	bh=6b0z52n/W0GMXn6vksZC3wPCqgn1ZBxSy4MBhqdVo28=;
+	s=arc-20240116; t=1787631914; c=relaxed/simple;
+	bh=NRLwp8NB1IxmSa8mEQExvHg9nJZQbtlW+HLuENSffDg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rBB3KklupVCxBjQV7ZrIEzZ0lIK9RyDT7dq4evsR52TLb88YXrgWNvntVM32SxOM0ETV+eLCyI4LL51e3cQyT96MFzLAU7ERNV7J+tesuTM7bOjG6MigBLd5YUpsvuzo9mQIqCtMw9PI1KOwyZrG/22Qpa8D4rf3lhg7+PY+ais=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKF+BF1i; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=gMpAKDTWSmwrIS5JFhGvQDIBf0wzujw+Z7HvHJHu/KpklsRVXNdfhTtMtASuSL2n9feCSIHNa4jb/Q3IRkhmoSOdvrzqB3Wn3N+jFCFRdSCoUaKSqicI5/UIw/tIIbaUORcHrlnEfjasTfftqB7yEm8oRKg2n7VXyg7EhyNcB5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cG75mCin; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKF+BF1i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C801F00A3A;
-	Tue, 25 Aug 2026 04:25:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cG75mCin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ADA1F000E9;
+	Tue, 25 Aug 2026 04:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787631910;
-	bh=9WgpHdJRdQK3IRrTzd/Q+VQ6N8VI4jkfl5z/Mlgz2EA=;
+	s=k20260515; t=1787631913;
+	bh=xVDLYm7Vc4eS7g7lUhStZtpiZZEIXN58iH76x5D+dEk=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=fKF+BF1iJ/mdO6kO/8as8MHIuGFlocHeqycYij5FF4b4HQu+suS42n2sKSXvPhctf
-	 kfacySNESRFBQLYjrexb9roLgNvSxubn+LsFFNcSI1a2w+mDooJErxmLDEEb5wW1Rn
-	 derK/V+lzYXtXW7xi/85etsqX8ofFoixa1YqNUg1yRhsg2yxKuX7oVg8TFeNFJKYRv
-	 kNW6tiqk7fpxi3CDLgbQPT1RwyLUQ0SaSRpdNup/oTAa2q15XUH+iPR/U3LMxMFYF0
-	 Fw+3AM3Ae5JiNOa4NOmeVof+S8uYDAP84gnWBujCYn9LZgi1hN0u9xRWgY229Frnfh
-	 HJNy1DQqSbvhw==
+	b=cG75mCinIZY6vXK7Li4vs3p5dtpsoGUt/0KT0hfV5idNZA+Hp/qucEEhTpTBqaTep
+	 iUXi+OuIVCGwHpi4Ld7Yzlt5npjWoag67npxyVXQe+d5eAf/axQ+yG6m59gFDNTH6w
+	 vQvLZAb1XFTq5Fnsllw2U3vFZvsefv3UeFhDmewygfF8ZFMy9GMmasfxyvZlH321Jo
+	 Uz3WwHfKz0Ip40lA21j9f5j8CVp76m1Yg01GcbEz2fR0ppZmwV0lN6/GH9g0G8CeJW
+	 1xgOiSMWMsKrlHMNehKD2shG1Mlo2HPcSv+A3lz5wulbE4RHIWkIzZaNb9m1bg1c8r
+	 n8tmQAoN+eKNw==
 From: Yixun Lan <dlan@kernel.org>
-Date: Tue, 25 Aug 2026 04:24:11 +0000
-Subject: [PATCH 1/8] clk: spacemit: ccu_mix: fix inverted condition in
- ccu_mix_trigger_fc()
+Date: Tue, 25 Aug 2026 04:24:12 +0000
+Subject: [PATCH 2/8] clk: spacemit: ccu_mix: add inverted enable gate clock
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -38,7 +37,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260825-01-k3-clock-reset-support-v1-1-c430253e759c@kernel.org>
+Message-Id: <20260825-01-k3-clock-reset-support-v1-2-c430253e759c@kernel.org>
 References: <20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org>
 In-Reply-To: <20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org>
 To: u-boot@lists.u-boot-project.org
@@ -51,49 +50,115 @@ Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io,
  Jonas Karlman <jonas@kwiboo.se>, Alexey Charkov <alchark@flipper.net>, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=847; i=dlan@kernel.org;
- h=from:subject:message-id; bh=6b0z52n/W0GMXn6vksZC3wPCqgn1ZBxSy4MBhqdVo28=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqjRkGdCAWNncikRKWoAMMoixxfZwWAQbjE669W
- WMXv2g6B8iJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCao0ZBhsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3297; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=NRLwp8NB1IxmSa8mEQExvHg9nJZQbtlW+HLuENSffDg=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqjRkJXq+Tbcjg1zHZOLuCSpE7BJ5jo8nF6qtX/
+ Mv/gh7AJkGJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCao0ZCRsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1Adw/9HgcH0tm8ji6ekHtXpV93WqyRdPrNfO4onemVZyrwZ+1ARr9qkVWS5
- 4TCtyhNG4tCRx0jew0yx+CcoC+OEsPuCJYJbeYvixh6mwUYbvPRsJbmw8kPlETSfMMqnSfO+ddm
- 4zphg4wi7eQm1+TniQ2J8/7Fd7hzqbDvKxwjL36Cf6lcKVI0CFeM7OTTetmFzbB+VwzBf3THTxN
- b7bWNj+63mbyTat7rjWJ/yk5WULazFB19W+gS6MG3PDQn8MFv9CoW6wj9yHHH1gUA7Y9BwhVJNE
- y3wYxGjRYNsfm+3+m7AV2Jfz9iCei+L7jZXnhPQEh1vjC4FctPEVSmCY8msEl+7Y2nPRDX7Tluy
- AEpVF99QJwRQcrhOGU2JCMSH5+CkM2KBj0ZsHOq2vwkkSt8lm45c+fi4mQeS5WMElzZq97lemPp
- Jd4KXhFRF1nx+yCgCxTFUF48R5828VmOQUvTpG2RNZXBbjPQByOYV+MeLPU2Rxadx1BvlxvJYFR
- /kO1n6WHR38atXrZnfTeYLeWFsIwnaz5AOz/xxyVcAcvALsASYZQmhHVryrmZfjIVnDy7m0qpKY
- Icg0XSzPMUb+mACpLxDwlNMev5AfEYPbeu6sK/S5sPvSwfDbqnCcF2HqtHrFj10kKVIBisTzHdA
- PZtLefRzfLOtOpdSLFdw3VfaIEc64w=
+ QACgkQMarqR1lNu+29ig/+IdtL5ZnZh6NbxOmu9wp6qCmxNrhkzOYQDl+xVl93PQ7vygpwg4aNK
+ v6SpNlQf9ug9gAwDToGgDW5OFZ5LSO41A8aTGKVbK7n1r/idv4m3O/VDqaF2T0fFiwprDbbuKPT
+ 1aqoGP6a0f1CWhsG65z6YRV7oKHULhGg8cB/dpEt0yAxXVHR/UgeI8WB7Jms+GYczi6fUF4KL/a
+ UBvUeN/71ExlwfZIii7877Hg+uVI3Ln1uItIhEzVvSTptXuy3kWudx8L2orPI+GE7PzeKCU07fT
+ 5i1Z/DwZWlql+0ZO1kD0RbeTEtQU9kBsIgS8OKJxUz7wGFdQB5O6pKAk9D31EL0tiD+xO/jhg6s
+ Vv9HPc5tk7n1XSz5E/1t2jqTdwFUgWpTduPIaIuNnrgVnziSKkchpEyVjzhTGMHPHraBXGKV5eY
+ Kfaco3loKJYeA6S6iC4lCNKlfBcTaZX8sla2Pb/QXX2UWKnFoWeyGJ6WbLumwv+/OigVxHreTyQ
+ uNgqRxTvXNQ+SeaA0lPkB7oQu37Tn/csxUA5e8oz/1A0UeEnj5A7yxcXQhhmRo2ZBWUkCfJdcOI
+ 1wthitIql4lpxG3OmkKEQCZMZy8tVbZOmPIOzS4hoZnhBmDW1Z8bXSpttjPa2LDgm/+lOD0lxpG
+ e3b1725+NQ5f7dhtt9mLBr0WKaMx7s=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Based on upstream commit:
-  54e97360b44b ("clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()")
+Based on upstream linux:
+  ace73b7e2763 ("clk: spacemit: ccu_mix: add inverted enable gate clock")
 
-Fix inverted condition that skips frequency change trigger,
-causing kernel panics during cpufreq scaling.
+K3 SoC has the clock IP which support to write value 0 for enabling the
+clock, while write 1 for disabling it, thus the enable BIT is inverted.
+So, introduce a flag to support the inverted gate clock.
 
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
- drivers/clk/spacemit/clk_mix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/spacemit/clk_mix.c |  7 +++++--
+ drivers/clk/spacemit/clk_mix.h | 17 +++++++++++++----
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/clk/spacemit/clk_mix.c b/drivers/clk/spacemit/clk_mix.c
-index a1158512a92..45bf2c72375 100644
+index 45bf2c72375..b0d1a506851 100644
 --- a/drivers/clk/spacemit/clk_mix.c
 +++ b/drivers/clk/spacemit/clk_mix.c
-@@ -78,7 +78,7 @@ static int ccu_mix_trigger_fc(struct clk *clk)
- 	struct ccu_common *common = clk_to_ccu_common(clk);
- 	unsigned int val;
+@@ -33,8 +33,10 @@
+ int ccu_gate_disable(struct clk *clk)
+ {
+ 	struct ccu_mix *mix = clk_to_ccu_mix(clk);
++	struct ccu_gate_config *gate = &mix->gate;
++	u32 val = gate->inverted ? gate->mask : 0;
  
--	if (common->reg_fc)
-+	if (!common->reg_fc)
- 		return 0;
+-	ccu_update(&mix->common, ctrl, mix->gate.mask, 0);
++	ccu_update(&mix->common, ctrl, gate->mask, val);
  
- 	ccu_update(common, fc, common->mask_fc, common->mask_fc);
+ 	return 0;
+ }
+@@ -43,8 +45,9 @@ int ccu_gate_enable(struct clk *clk)
+ {
+ 	struct ccu_mix *mix = clk_to_ccu_mix(clk);
+ 	struct ccu_gate_config *gate = &mix->gate;
++	u32 val = gate->inverted ? 0 : gate->mask;
+ 
+-	ccu_update(&mix->common, ctrl, gate->mask, gate->mask);
++	ccu_update(&mix->common, ctrl, gate->mask, val);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/clk/spacemit/clk_mix.h b/drivers/clk/spacemit/clk_mix.h
+index 26a12cedd0d..4ac61b55546 100644
+--- a/drivers/clk/spacemit/clk_mix.h
++++ b/drivers/clk/spacemit/clk_mix.h
+@@ -20,9 +20,11 @@
+  *
+  * @mask:	Mask to enable the gate. Some clocks may have more than one bit
+  *		set in this field.
++ * @inverted:	Enable bit is inverted, 1 - disable clock, 0 - enable clock
+  */
+ struct ccu_gate_config {
+ 	u32 mask;
++	bool inverted;
+ };
+ 
+ struct ccu_factor_config {
+@@ -48,15 +50,17 @@ struct ccu_mix {
+ 	struct ccu_common common;
+ };
+ 
+-#define CCU_GATE_INIT(_mask)		{ .mask = _mask }
++#define CCU_GATE_INIT(_mask)		{ .mask = _mask, .inverted = false }
++#define CCU_GATE_FLAGS_INIT(_mask, _inverted)	\
++	{ .mask = _mask, .inverted = _inverted }
+ #define CCU_FACTOR_INIT(_div, _mul)	{ .div = _div, .mul = _mul }
+ #define CCU_MUX_INIT(_shift, _width)	{ .shift = _shift, .width = _width }
+ #define CCU_DIV_INIT(_shift, _width)	{ .shift = _shift, .width = _width }
+ 
+-#define CCU_GATE_DEFINE(_id, _var, _name, _parent, _reg_ctrl,		\
+-			_mask_gate, _flags)				\
++#define CCU_GATE_FLAGS_DEFINE(_id, _var, _name, _parent, _reg_ctrl,	\
++			      _mask_gate, _inverted, _flags)		\
+ static struct ccu_mix _var = {						\
+-	.gate	= CCU_GATE_INIT(_mask_gate),				\
++	.gate	= CCU_GATE_FLAGS_INIT(_mask_gate, _inverted),		\
+ 	.common	= {							\
+ 		.reg_ctrl	= _reg_ctrl,				\
+ 		CCU_COMMON(_id, _name, _parent, spacemit_gate_init,	\
+@@ -64,6 +68,11 @@ static struct ccu_mix _var = {						\
+ 	}								\
+ }
+ 
++#define CCU_GATE_DEFINE(_id, _var, _name, _parent, _reg_ctrl,		\
++			_mask_gate, _flags)				\
++	CCU_GATE_FLAGS_DEFINE(_id, _var, _name, _parent, _reg_ctrl,	\
++			      _mask_gate, false, _flags)
++
+ #define CCU_FACTOR_DEFINE(_id, _var, _name, _parent, _div, _mul)	\
+ static struct ccu_mix _var = {						\
+ 	.factor	= CCU_FACTOR_INIT(_div, _mul),				\
 
 -- 
 2.55.0
