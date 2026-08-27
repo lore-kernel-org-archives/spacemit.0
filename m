@@ -1,129 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-41.mta1.migadu.com [95.215.58.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8593BB690;
-	Wed, 26 Aug 2026 08:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96A363095
+	for <spacemit@lists.linux.dev>; Thu, 27 Aug 2026 06:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787733196; cv=none; b=VmHZjy/SaobYIlcT9ojKMBhVQWP6wac7Rp/U728ucHCp8c5o77w/zrP6AhIlowA84FI0m4wZRAWQfCBYeCHwjgs5cvwra5XFyw3M+wbaVPxq1rjmeVQZ4P2UMgF8wpfn75yUkstEXVOY/OTel8vZJPgHPW53tAdHYWm1XmvBQF8=
+	t=1787812805; cv=none; b=bQLC19OnMSf3FkxpWnGTeSh+JevQLzF9WExCiZvlRZd8WV1i52Li4+4nQIvVzC+yOY4irF0/f/FFW5xhgxJdla+PlQA2hZqEx2HHnSzc5TVFRjBMLBLTygBo92l7EyTTx5q8mY4CozmJqzUgvoKRL84YQ+hgXezN9wvxZJYf1Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787733196; c=relaxed/simple;
-	bh=fzhDF0dvgJS6W87StX6JIFYQ2j99cPUROcHAUjnhtmw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eedfk0UwRBwbx6Mmg1SjeoTMkeJtN5fZ12QfG9pPMTOYykfUoH+t3VmTMKsGq5BfGPeHqbBgLd8wUtWfR9+PgfhZ+j8yuR0yOQHa/zDjlPptoNKL6t4ZLJza+XvuMV8C8dkWEnJxZa7C80mfpwhnqgBdaG0EXBZsyvliEAnMU6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=onPz2caq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787812805; c=relaxed/simple;
+	bh=m3EBblnKDAGIdH9tcjTA1Ngw0Wg21uv1CZPG3SHJxuA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 In-Reply-To:References; b=D+VS1tt7fuz0djo5ANP6nYKWKkgbH/8Tv58WIG+Cf84HdRhZxIEejbkIramfK8N1SZzwHBK4yvMAZ7pIGkdhCowhQmHO9DFDIBTYmUgHJdqsZL6Dpg0eCIwjtkN/02tSUtTva/E4oW6iBDe/UyXqfj4oLkQwITbaqmLAR1571VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uMNycoz5; arc=none smtp.client-ip=95.215.58.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="onPz2caq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C2B1F00A3A;
-	Wed, 26 Aug 2026 08:33:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787733194;
-	bh=dv8cFC9XikMoCLZHrZr3gRKX91068B0YkFD4yX25Jig=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=onPz2caqwsW2180hKxPhENUOJ4wYAgbHcUinkmMOHTTV+yUrDQiyR9fY+rdVgiC0+
-	 xgfM9tdxW1cdTW1eJzIF7WRYyRk1T9xHsz9xdw86d737pQUFe1GnwPSrS52eq+lqrb
-	 J8JHEM8Ek7vmmXSrIsIIrF2p8/1VELq3RCbuqcqRK6dY9ZDCfR3qVEUOS7cMYWYJHV
-	 pBeYcP3hTVGXp50Zff0a3L76CDbQoKdcXwE3N+oMT0oEzRERKsYmTw9LDX0Rn3kJHt
-	 MIKSmwC57tv6/m4NPYOok/cPmi8fF1AfZWi83kmxI7kSbXQIOkP4whaee7otGZ5CrA
-	 6YJqLgEL3UoMg==
-Date: Wed, 26 Aug 2026 09:33:10 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Bruno Banelli <bbanelli@gmail.com>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Alex Elder <elder@riscstar.com>, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] riscv: defconfig: enable dwc3 and the SpacemiT K1
- thermal sensor
-Message-ID: <20260826-ought-tableware-73678af4dd1f@spud>
-References: <20260825052233.66850-1-bbanelli@gmail.com>
- <20260825224905-GKD631715@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uMNycoz5"
+X-Envelope-To: spacemit@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=m3EBblnKDAGIdH9tcjTA1Ngw0Wg21uv1CZPG3SHJxuA=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787812801; v=1; x=1788417601;
+ b=uMNycoz5nqVOQ9i8+cdDP+jjzmN9IhQLfPDokmNhzeXuUnPueUqSwQHBERR0Ep2XtYX15VGR
+ M7ANjiZvBbclQhVluxV9f7r8zeVFhNZpqt0LuTVNJef1RksQ2R2MrVWylo22q8PXn5pHRc6/pP5
+ xJjNyxYk8KUkPEFAkbwHPvGU=
+X-Envelope-To: spacemit@lists.linux.dev
+Received: from localhost (8.211.180.184)
+	by mta10.migadu.com with ESMTPS id 5cc20cb2f0893b0a;
+	Thu, 27 Aug 2026 06:39:59 +0000
+X-Mizu-Trace-ID: 5cc20cb2f0893b0a
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j24adMGA/uAym/Uy"
-Content-Disposition: inline
-In-Reply-To: <20260825224905-GKD631715@kernel.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 27 Aug 2026 14:39:49 +0800
+Message-Id: <DKZIQPBOE02W.2DFMAOQGYO442@linux.dev>
+Cc: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-hwmon@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-doc@vger.kernel.org>
+Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
+From: "Troy Mitchell" <troy.mitchell@linux.dev>
+To: "Troy Mitchell" <troy.mitchell@linux.dev>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
+ <dlan@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>, "Shuah Khan"
+ <skhan@linuxfoundation.org>
+In-Reply-To: <DKL487DPH7KA.3GNYMRSBR1JY3@linux.dev>
+References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
+	<20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
+	<20260805134119-GKJ77474@kernel.org>
+	<DKL487DPH7KA.3GNYMRSBR1JY3@linux.dev>
 
---j24adMGA/uAym/Uy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-On Tue, Aug 25, 2026 at 10:49:05PM +0000, Yixun Lan wrote:
-> Hi Bruno,
->=20
-> On 07:22 Tue 25 Aug     , Bruno Banelli wrote:
-> > Two blocks on SpacemiT K1 boards are unreachable from a stock defconfig
-> > build:
-> >=20
-> >  - USB_DWC3 is not enabled, so the dwc3 controller that drives all of
-> >    the USB 3.0 ports on boards like the Milk-V Jupiter never probes.
-> >=20
-> >  - SPACEMIT_K1_TSENSOR has no default in its Kconfig and is not listed
-> >    here, so a K1 board comes up with no temperature readings at all,
-> >    even though k1.dtsi describes five thermal zones.
-> >=20
-> > Enable both.
-> >=20
-> The patch itself looks good to me, but since it deal with two diferent dr=
-ivers
-> So, can you split it into two patches? which easy to review and manage
+On Mon, Aug 10, 2026 at 04:20:05PM +0800, Troy Mitchell wrote:
+> My intention here was to keep all board-specific pin configuration
+> overrides under a single &pinctrl block, so that they can be found and
+> maintained in one place. Using a separate top-level reference for each pi=
+n
+> group would tend to scatter those overrides throughout the board DTS as
+> more groups are customized. The &pinctrl block is also placed immediately
+> before the &i2c6 consumer.
+>
+> Would keeping the current structure be acceptable for that reason? If you
+> still prefer the direct reference, I will change it to &i2c6_1_cfg in the
+> next revision.
 
-IMO it's fine being one patch, but this temp sensor should probably be a
-module?
+I withdraw my earlier suggestion to keep all board-specific pin
+configuration overrides under a single &pinctrl block.
 
->=20
-> > Signed-off-by: Bruno Banelli <bbanelli@gmail.com>
-> > ---
-> >  arch/riscv/configs/defconfig | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >=20
-> > diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-> > index 04ae305d5..03d9ac2f7 100644
-> > --- a/arch/riscv/configs/defconfig
-> > +++ b/arch/riscv/configs/defconfig
-> > @@ -209,6 +209,8 @@ CONFIG_USB=3Dy
-> >  CONFIG_USB_OTG=3Dy
-> >  CONFIG_USB_XHCI_HCD=3Dy
-> >  CONFIG_USB_XHCI_PLATFORM=3Dy
-> > +CONFIG_USB_DWC3=3Dy
-> > +CONFIG_USB_DWC3_GENERIC_PLAT=3Dy
-> >  CONFIG_USB_EHCI_HCD=3Dy
-> >  CONFIG_USB_EHCI_HCD_PLATFORM=3Dy
-> >  CONFIG_USB_OHCI_HCD=3Dy
-> > @@ -260,6 +262,7 @@ CONFIG_CLK_SOPHGO_SG2042_PLL=3Dy
-> >  CONFIG_CLK_SOPHGO_SG2042_CLKGEN=3Dy
-> >  CONFIG_CLK_SOPHGO_SG2042_RPGATE=3Dy
-> >  CONFIG_SPACEMIT_K1_CCU=3Dy
-> > +CONFIG_SPACEMIT_K1_TSENSOR=3Dy
-> >  CONFIG_SPACEMIT_K3_CCU=3Dy
-> >  CONFIG_SUN8I_DE2_CCU=3Dm
-> >  CONFIG_SUN50I_IOMMU=3Dy
-> >=20
-> > base-commit: 66498c75b4f8017f62d720d9b59675bdf3abce91
-> > --=20
-> > 2.43.0
-> >=20
->=20
-> --=20
-> Yixun Lan (dlan)
+After checking existing board DTS files, I found that the direct-reference
+style is already in use. For example:
 
---j24adMGA/uAym/Uy
-Content-Type: application/pgp-signature; name=signature.asc
+  arch/arm64/boot/dts/allwinner/sun50i-a64-bananapi-m64.dts
+
+adds the board-specific bias-pull-up setting directly through &i2c1_pins.
+Likewise:
+
+  arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
+
+extends &mmc0_pins directly.
+
+Both forms produce the same node override, but since the reference-based
+form is already used in the tree, we should follow it instead of introducin=
+g
+a different structure here. I will change the board-level override to
+&i2c6_1_cfg in the next version.
+
+                                            - Troy
+
+--f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCao6kxgAKCRB4tDGHoIJi
-0v5VAQDYT8jhm+YKA8FT1Q7h0iuPmAOmrpY0WCsMjmlbUFM3SgD+NRQmA/aRKSzC
-oKHb76m702nIoXoRdTDuwGBv8GgNbgE=
-=XCwW
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCao/btSEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/6QAEA8dCtfup87U2o
+snvjwoIwNCa2Z99Am38hnnyreNWzGecA/03n71wIE+T3csVbRbAT21+VwQ2RuK80
+7pZ57h/HWuEH
+=bLKp
 -----END PGP SIGNATURE-----
 
---j24adMGA/uAym/Uy--
+--f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64--
