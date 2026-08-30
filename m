@@ -1,114 +1,106 @@
-Received: from mta1.migadu.com (out-41.mta1.migadu.com [95.215.58.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96A363095
-	for <spacemit@lists.linux.dev>; Thu, 27 Aug 2026 06:40:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC13B3BEF;
+	Sun, 30 Aug 2026 17:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787812805; cv=none; b=bQLC19OnMSf3FkxpWnGTeSh+JevQLzF9WExCiZvlRZd8WV1i52Li4+4nQIvVzC+yOY4irF0/f/FFW5xhgxJdla+PlQA2hZqEx2HHnSzc5TVFRjBMLBLTygBo92l7EyTTx5q8mY4CozmJqzUgvoKRL84YQ+hgXezN9wvxZJYf1Po=
+	t=1788110722; cv=none; b=q4FRvRsegkaWIe+wk1Dd96FcM3y7+S0Lz59JdIq3JP6Z7aAFQbIqTutgODLdP+L2gOS9yXlLe/z3svSIG76C0rWP4gCW5F95xss3v0Bdb2vLBW5Cbr1zSJ9pzRzOou0gyV0fk5ksVcpgDd1Uslvv6yWpfUj/kgvIUfwwuhRGsLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787812805; c=relaxed/simple;
-	bh=m3EBblnKDAGIdH9tcjTA1Ngw0Wg21uv1CZPG3SHJxuA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 In-Reply-To:References; b=D+VS1tt7fuz0djo5ANP6nYKWKkgbH/8Tv58WIG+Cf84HdRhZxIEejbkIramfK8N1SZzwHBK4yvMAZ7pIGkdhCowhQmHO9DFDIBTYmUgHJdqsZL6Dpg0eCIwjtkN/02tSUtTva/E4oW6iBDe/UyXqfj4oLkQwITbaqmLAR1571VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uMNycoz5; arc=none smtp.client-ip=95.215.58.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788110722; c=relaxed/simple;
+	bh=7Kcxt4n4z1wUxpiPg8IIO3Kpa7/+jVPmblGMAR1TAAk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l6xazcc6JT/jCWRSuKOtNShFkL9nGCQ1WEVORFdPsGBlEKm1ZlZyL5+qVYkJS72LI0ucgGEKE5/1eS7yQ9rV5W/tstlUj/noF76vmw7wQJTqJW7/BsXvF912xI1vAsCev+VWhs7C8lxtAyzxUwb4Y8YUFZ+jJaaO2LUjbQ1zP5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=GAo4sAYp; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uMNycoz5"
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=m3EBblnKDAGIdH9tcjTA1Ngw0Wg21uv1CZPG3SHJxuA=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787812801; v=1; x=1788417601;
- b=uMNycoz5nqVOQ9i8+cdDP+jjzmN9IhQLfPDokmNhzeXuUnPueUqSwQHBERR0Ep2XtYX15VGR
- M7ANjiZvBbclQhVluxV9f7r8zeVFhNZpqt0LuTVNJef1RksQ2R2MrVWylo22q8PXn5pHRc6/pP5
- xJjNyxYk8KUkPEFAkbwHPvGU=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: from localhost (8.211.180.184)
-	by mta10.migadu.com with ESMTPS id 5cc20cb2f0893b0a;
-	Thu, 27 Aug 2026 06:39:59 +0000
-X-Mizu-Trace-ID: 5cc20cb2f0893b0a
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="GAo4sAYp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=QQV/uWRS7tgfezg/sawm+VTmjnW6NBkrHD0CZvG0/go=; b=GAo4sAYpo7eX+8qk04GvnaEk2z
+	dbpNKa9EoHp7mQBVIhlLLlmUa0NwEBc1NxubyY67SeWjNyitZcQEUV/9hT9aUOt5Grh9l7qFn7cwh
+	1Gs6b+DS7TTczjg1kkWSozcp1/upncYkp1siitfK9BbGgE4MqEmdpJKAGHpRofd3PhsJia4kHTyL2
+	e3tkOjG/vRbllxlYen5j2JFJrK4QpjK1CBNnRs8pHNCXsrK49IfeOZYI6+iTUYovjP0/8jfqKeDRU
+	DI+w7pWD98ZT49yqwjpwnQBfWakzDgsk4oMpQj350IMPq+uMeXT7m4YciFKgvdpqtqlAF0CgmWpv2
+	RxSz7S2w==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1x0jHF-0000000ACVU-0Zvn;
+	Sun, 30 Aug 2026 19:25:05 +0200
+Date: Sun, 30 Aug 2026 19:25:04 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@outlook.com>,
+	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Subject: Re: [PATCH v2] clk: spacemit: k3: add 1.8 GHz PLL5 and PLL8 rates
+Message-ID: <apRncBmtm7w0Emwf@aurel32.net>
+Mail-Followup-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@outlook.com>,
+	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+References: <20260810-k3-pll5-pll8-1800mhz-v2-1-aabff510a797@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 27 Aug 2026 14:39:49 +0800
-Message-Id: <DKZIQPBOE02W.2DFMAOQGYO442@linux.dev>
-Cc: <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-hwmon@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-doc@vger.kernel.org>
-Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-To: "Troy Mitchell" <troy.mitchell@linux.dev>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
- <dlan@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>, "Shuah Khan"
- <skhan@linuxfoundation.org>
-In-Reply-To: <DKL487DPH7KA.3GNYMRSBR1JY3@linux.dev>
-References: <20260805-ctl2301-v3-0-fd4b8ffb5b0d@linux.dev>
-	<20260805-ctl2301-v3-6-b86c75d1c552@linux.dev>
-	<20260805134119-GKJ77474@kernel.org>
-	<DKL487DPH7KA.3GNYMRSBR1JY3@linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260810-k3-pll5-pll8-1800mhz-v2-1-aabff510a797@linux.spacemit.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
---f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Troy,
 
-On Mon, Aug 10, 2026 at 04:20:05PM +0800, Troy Mitchell wrote:
-> My intention here was to keep all board-specific pin configuration
-> overrides under a single &pinctrl block, so that they can be found and
-> maintained in one place. Using a separate top-level reference for each pi=
-n
-> group would tend to scatter those overrides throughout the board DTS as
-> more groups are customized. The &pinctrl block is also placed immediately
-> before the &i2c6 consumer.
->
-> Would keeping the current structure be acceptable for that reason? If you
-> still prefer the direct reference, I will change it to &i2c6_1_cfg in the
-> next revision.
+On 2026-08-10 16:46, Troy Mitchell wrote:
+> K3 boot firmware configures the C2 and C3 CPU clock domains at
+> 1.8 GHz. PLL5 feeds C2 and PLL8 feeds C3, but their rate tables
+> currently contain only the 2 GHz overclocking operating point.
+> 
+> Add the nominal 1.8 GHz configuration as the first entry in both
+> tables. This lets determine_rate() and set_rate() select the firmware
+> operating point while retaining 2 GHz as a supported overclocking rate.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+> The related U-Boot change is available at:
+> https://github.com/spacemit-com/uboot-2022.10/commit/fb95cf3d848b771c61b5a1b3e5cbbee223faf352
+> ---
+> Changes in v2:
+> - Drop "clk: spacemit: re-enable PLLs after init"; the PLL init issue
+>   will be handled in a separate series.
+> - Send the K3 PLL5 and PLL8 1.8 GHz rate-table update as a standalone
+>   patch.
+> - Clarify that 1.8 GHz is nominal and 2 GHz is an overclocking rate.
+> - Link to v1: https://patch.msgid.link/20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com
 
-I withdraw my earlier suggestion to keep all board-specific pin
-configuration overrides under a single &pinctrl block.
+This make sense and looks good:
 
-After checking existing board DTS files, I found that the direct-reference
-style is already in use. For example:
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
 
-  arch/arm64/boot/dts/allwinner/sun50i-a64-bananapi-m64.dts
+I wonder if it should be backported to stable, as users will deploy 
+newer firmware.
 
-adds the board-specific bias-pull-up setting directly through &i2c1_pins.
-Likewise:
+Regards
+Aurelien
 
-  arch/riscv/boot/dts/starfive/jh7110-starfive-visionfive-2.dtsi
-
-extends &mmc0_pins directly.
-
-Both forms produce the same node override, but since the reference-based
-form is already used in the tree, we should follow it instead of introducin=
-g
-a different structure here. I will change the board-level override to
-&i2c6_1_cfg in the next version.
-
-                                            - Troy
-
---f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCao/btSEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/6QAEA8dCtfup87U2o
-snvjwoIwNCa2Z99Am38hnnyreNWzGecA/03n71wIE+T3csVbRbAT21+VwQ2RuK80
-7pZ57h/HWuEH
-=bLKp
------END PGP SIGNATURE-----
-
---f6f49b862d884bb785fffb47c78ded9bdb2222b8f0b517953386ece06d64--
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
