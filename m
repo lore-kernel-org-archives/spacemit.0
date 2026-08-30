@@ -1,101 +1,114 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108803B058F;
-	Sun, 30 Aug 2026 18:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E153070808
+	for <spacemit@lists.linux.dev>; Sun, 30 Aug 2026 20:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788113527; cv=none; b=HD4WcJTcnvSFOdEvxv8hH9F3Mqg03RnFY2JDZYkl2/PkyNukcRvCSF3s5GGxrU/1b70fTg+zoqsv2aT0lrPhp4o/9kuY7SVOlzx+4HbN+bfSqhWstBAUN0S6H41hH3vI9y1+knhgVLVEzwbqVAi7/b63/uTnMwoTsjm9grERP6s=
+	t=1788123164; cv=none; b=cFMMG0sCRBUHAQIDtr6QcpiKSm94YExeh27sjseiEY+Bwd4Nc1f9ficSgR6w3PcKufbdkr37fZdbFkZJnLyImYt0HaC8THv1HFGGpi25KWaGx814TMtGJT8Ai1BKF2rWnhUr6C7ZEivdnaVzCaiWNlePmA/Z7GvjG/ofD1fe0Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788113527; c=relaxed/simple;
-	bh=j67ld83gH2XJLzRBZYyBGsxZX/bLvVfdRgwPXzcQ1TI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GS8HWfWJWCA0dFn5qHkVatxAB5puuYCmpyhBfmq9Dssl106SzX7LrtD6LY6w87CYAXxGs3cfvz3/mn15syyGhKbEFrVTS5/f0QIauDGWfXyXx1rsH+HE3LiEdbdY7bO3iTNw6hxinuXHkCAmAU0uuNn1MFy3qnHu41mG1VtMwok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=IUqju8Nu; arc=none smtp.client-ip=195.154.119.183
+	s=arc-20240116; t=1788123164; c=relaxed/simple;
+	bh=FalA2fp8jhv2fXljyw3CNW6Wz6zMReGGgxbJJZiT4bM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=krOy0jLtaXdiTFvmXMJoiWJykBcthL+VvSOnpd3sSFY/g0x/gpFU1NIK/W6mzaPulx2nJqxi4m5Rg1uEFwVZk8Nv27CwehSWSipyqP09uj0j7VAk9hOQmkBBXzpcopvPKsD19un416mDPglum0vELiQYxzLpve9I2x4Kem/1SNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=sCP10NAl; arc=none smtp.client-ip=195.154.119.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="IUqju8Nu"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="sCP10NAl"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=63q7KWBMMKfdpLCByy632p3117VO9cL13L0VjuNmpXY=; b=IUqju8NuF+y1DWb4nUmKzJWfQ3
-	N0m1q9iCHezmZbicx5R39zA2YYDvI2YBN56wDD/ArDPkJE3t8+HWIj8Dp1xagBj/TUiYg2DK8umVk
-	6c/G3kXmtGtIDL5XnEyIaOlk1o7mFYNtKEZJ64oh9uug6TV6XriyCzelJ9k6F+eUX/EdXi8LwGaU7
-	LYy26CgZD3ilHCtmFys5LmHLT8qIgHdkdELF1iJVnHxw3N2aaqcG+7oWQXKvL9dNSteXH3KokOJv1
-	A44YcpT8KuXsp3Sv5f1owBZxpWmOGbPfpnwkEG1dLS3Mgyspau+SduFH6dZ9SwEzySSDXODSVWTwo
-	2eLmUORA==;
+	; s=202004.hall; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:Content-ID:
+	Content-Description:In-Reply-To:References:X-Debbugs-Cc;
+	bh=Vi9/2T/HEIiA1kXPJ5Aifd2KfnGzYJRS9bTtPPU2i1Q=; b=sCP10NAlfiOO7/35vImC/QBmzF
+	MNVSsNiTEX04DPRVbWRhbVmbVa+p0W/w2WkblpWW/PXu2+8FFL9D+YY1l4lAG+VdDYm7v/nqMR4+c
+	7ucUkJxmddCIxi3hg10byruRBeyNMd10nqTVmZblbSQUrx/uI23IjgHhiUvN6T5ROl9ez1z2iaxO1
+	8+ru2oGyXm0m19cV2oXWzByTi1LOfFu2gg4q9x0dlW34WSVNac92aqEQRzdZO4RZ+T8di0S/5LJqQ
+	tlx+cd3805wbjsIK4GJZzrBotMDtbPR1vN+THFM//kPHBtRJvoF8zNuaPgCVjQk7+FThnfyI9Zn4L
+	ZbfDm3QQ==;
 Received: from authenticated user
 	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1x0k0f-0000000AF5E-3gxL;
-	Sun, 30 Aug 2026 20:12:01 +0200
-Date: Sun, 30 Aug 2026 20:12:01 +0200
+	id 1x0mW7-0000000ANuY-2oP0;
+	Sun, 30 Aug 2026 22:52:39 +0200
+Date: Sun, 30 Aug 2026 22:52:39 +0200
 From: Aurelien Jarno <aurelien@aurel32.net>
-To: linux-kernel@vger.kernel.org,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, stable@kernel.org,
-	"open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH] clk: spacemit: k3: add 2.0 GHz PLL3 and PLL4 rates
-Message-ID: <apRyccJsMjI8Qc4z@aurel32.net>
-Mail-Followup-To: linux-kernel@vger.kernel.org,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, stable@kernel.org,
-	"open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20260830172925.3245444-1-aurelien@aurel32.net>
+To: spacemit@lists.linux.dev
+Cc: linux-riscv@lists.infradead.org
+Subject: Random corruption on SpacemiT K1 with RVV and THP
+Message-ID: <apSYF5x1Tu7PlyL1@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260830172925.3245444-1-aurelien@aurel32.net>
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Mutt/2.4.1 (2026-07-04)
 
-On 2026-08-30 19:28, Aurelien Jarno wrote:
-> Starting with version k3-br-v1.0.7, the vendor U-Boot configures the C0
-> and C1 CPU clock domains (X100 cores) to 2.0 GHz instead of 2.2 GHz.
-> PLL3 feeds C0 and PLL4 feeds C1, but their rate tables currently contain
-> only the 2.2 GHz overclocking operating point. This causes the linux
-> kernel to hang at boot.
-> 
-> Add the 2.0 GHz configuration in both tables to fix the issue. Tested
-> with both k3-br-v1.0.5 (X100 running at 2.2 GHz) and k3-br-v1.0.7 (X100
-> cores running at 2.0 GHz).
-> 
-> Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Cc: stable@kernel.org
-> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
-> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> ---
->  drivers/clk/spacemit/ccu-k3.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> The related U-Boot change is available at:
-> https://github.com/spacemit-com/uboot-2022.10/commit/274f664150dade144df265baf7dc8e15dd9cce52
+Dear all,
 
-FYI, this is the Sashiko review:
-https://lore.kernel.org/20260830173644.193B21F000E9@smtp.kernel.org
+For the last weeks, I have been tracking a random memory corruption and
+relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It=20
+started upgrading to glibc 2.43, which does memset() through vector=20
+instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1=20
+kernel, but I have also been able to reproduce it with a vanilla 7.2.2=20
+kernel, using a similar configuration to the Debian kernel. The board=20
+uses OpenSBI 1.9 and the vendor U-Boot.
 
-While I agree we can fix the SpacemiT clock driver, we'll need to add 
-this rate anyway, and it immediately fixes the issue. Fixing the clock 
-driver is more work and this will take more time to fix.
+Typically it manifests itself with the following kind of error, when=20
+running g++ from GCC 16 as part of building software (e.g. OpenJDK,=20
+Blender, Dolfin, Qt6):  =20
 
-Regards
+Assembler messages:
+{standard input}:284588: Error: unknown pseudo-op: `.uleb1'
+{standard input}:284588: Error: unrecognized opcode `=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BFvl874'
+
+The broken chars are 0xff and it seems there are always 240 (but with=20
+poor statistics). Sometimes it instead causes a GCC ICE instead.
+
+Using glibc 2.44 instead of glibc 2.43, which does a lot of string=20
+operations through vector instructions, increases the probability to=20
+have corruption, makes it a bit more reproducible, but it always seems=20
+to manifest as a GCC ICE. It typically happens withing one hour when=20
+running on the 8 cores instead of every 1 or 2 days. From there I have=20
+been able to determine the following things:
+
+- Disabling vector instructions (by patching the DTB to remove "v",=20
+  "zvhf" and "zvtk") fixes the issue
+
+- Disabling THP (by setting /sys/kernel/mm/transparent_hugepage/enabled=20
+  to never instead of always) also seems to fix the issue. Keeping it=20
+  enabled with defrag=3Dnever or use_zero_page=3D0 doesn't change anything.
+
+- The issue is reproducible with or without swap enabled.
+
+I have not been able to reproduce the issue on other non RVV boards=20
+(Unmatched, VF2) nor on a SpacemiT K3 board.
+
+I am not really sure how to debug that further. I tried a few ways to=20
+reproduce the issue with a small C code around the glibc memset code=20
+(including triggering unaligned accesses and page faults), but failed to=20
+do so. I therefore welcome any idea about the issue or how to debug it=20
+further.
+
+Thanks
 Aurelien
 
--- 
+--=20
 Aurelien Jarno                          GPG: 4096R/1DDD8C9B
 aurelien@aurel32.net                     http://aurel32.net
