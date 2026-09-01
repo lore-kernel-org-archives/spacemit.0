@@ -1,144 +1,173 @@
-Received: from mta0.migadu.com (out-251.mta0.migadu.com [91.218.175.251])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5360369D59
-	for <spacemit@lists.linux.dev>; Tue,  1 Sep 2026 06:23:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.251
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23EF470E8E
+	for <spacemit@lists.linux.dev>; Tue,  1 Sep 2026 08:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788243831; cv=none; b=GlkcY7iAQKTcGILMO6g3M94rVEtPYjopyLWPHEPHpyGrjWlh7uuj0R/DyBVQQPhVBasy9dkcpDeoupZusDj6aV7NPQpzY2tKbM/rs3b0XSLyrGF/UOV/V0WrOEjVXL2KqEWWslap6y4XRZSjiq2QHQDQ209kyFJBQqlXE623qtw=
+	t=1788249677; cv=none; b=JKuvDg2o+F9/guYCIp0+8EN5HKcbZKNdsqZjV3jR8EPWnA3jgVFZB6nj4ViKLUIFdEGPZ3/RKsSicUUdRIqWCOWgPF9svJeisZPJPUS73oAaxX+TqxXIoVDSTucvZ3eD7StbEeIDdrEEOdPTxi8NBt3sf6ri/lUWKkntXjP58Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788243831; c=relaxed/simple;
-	bh=JYWgi8laE2xRmYqAktJ5/SY0SxkpUmzm3vsS4saBqCs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 In-Reply-To:References; b=uvzKyp38O50s6CBEoMbRgqR/DiT37lMg8NnCdY63ZFl4/3T6gi1sN8hV8EgfDRvZy2QAH4L4EDhv9SnQeT40itvBYVdF5FBkHpnJnV01QrJlJMJ4FgVhZITLhE/aGZ/Q0B4IlOuYt6n/4WWMk7uh3QkXvUU0+LiEbEY7bf909J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tvZJo/lO; arc=none smtp.client-ip=91.218.175.251
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tvZJo/lO"
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=JYWgi8laE2xRmYqAktJ5/SY0SxkpUmzm3vsS4saBqCs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788243827; v=1; x=1788848627;
- b=tvZJo/lONEGG33RxIAI2uh4WeJpN8rDLDnOe1iyzX6NjrztypfMyq0QXvRzmk1xta8zfPdaz
- BOVmEewBVrrKENqDk0K0EKH+4jRl86fvdem/AV7JFLL2hKgh8uw3W9cGGs2OH/JoRkAN7cJC+So
- biHGz89sN9qpjOcvNDQn/elA=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 8f859e5041177fe5;
-	Tue, 01 Sep 2026 06:23:47 +0000
-X-Mizu-Trace-ID: 8f859e5041177fe5
-X-Migadu-Flow: FLOW_OUT
+	s=arc-20240116; t=1788249677; c=relaxed/simple;
+	bh=SBQVFXu4Hkm86nKKIITXhGPCuIrIj0+/drAKI6pWu1U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IH4L1hmpcPenrzrxXfh3ACKYtmjb4XT8yPkhpj9adulml38Stnv35slzybLckLG0SnKbtyuOP3CSEl5C0tJzSAnHyGUm011f+tYHPkUSHNnIjWsA4Ys9ORLJ6pm+RPwR5olSByEaTFNhGki3a+Mfnwy0fimE9UwySRek8h5vlgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [14.220.232.127])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4c15431b1;
+	Tue, 1 Sep 2026 16:01:05 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] riscv: dts: spacemit: enable onboard eeprom for OrangePi
+Date: Tue,  1 Sep 2026 16:00:10 +0800
+Message-Id: <20260901080010.95040-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=f5ad3a7a520e0675d3a1ee0e96ded0c415497e37ee75d1d57e33fbe0b954;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 01 Sep 2026 14:23:42 +0800
-Message-Id: <DL3RJ2VF605G.2L1HBQB1CUEGA@linux.dev>
-Cc: "Troy Mitchell" <troy.mitchell@linux.dev>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-hwmon@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-doc@vger.kernel.org>, "Jean Delvare" <jdelvare@suse.de>
-Subject: Re: [PATCH v4 4/6] hwmon: (lm63) Add Sensylink CTF2301 support
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-To: <sashiko-reviews@lists.linux.dev>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Guenter Roeck" <linux@roeck-us.net>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
- <dlan@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>, "Shuah Khan"
- <skhan@linuxfoundation.org>, "Randy Dunlap" <rdunlap@infradead.org>
-In-Reply-To: <20260831163256.784771F000E9@smtp.kernel.org>
-References: <20260831-ctl2301-v4-0-b335d52a0570@linux.dev>
-	<20260831-ctl2301-v4-4-b335d52a0570@linux.dev>
-	<20260831163256.784771F000E9@smtp.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa05bfc6eb003a2kunm57d234c21a3678
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDGUpLVhlMGBpNShoZTR8dHVYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKT1VJSUtVSUhJVUpJTFlXWRYaDxIVHRRZQVlPS0hVSktISk
+	5MTlVKS0tVSkJLS1kG
 
---f5ad3a7a520e0675d3a1ee0e96ded0c415497e37ee75d1d57e33fbe0b954
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Enable the i2c2 bus and add the connected GT24C02B EEPROM.
 
-On Mon, Aug 31, 2026 at 04:32:56PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [Medium] TEMP12_TO_REG and software caching logic fail to align with
-> 12-bit hardware truncation, causing sysfs cache inconsistency.
->
-> [...]
->
-> @@ -121,6 +126,9 @@ static const unsigned short normal_i2c[] =3D { 0x18, =
-0x4c, 0x4e, I2C_CLIENT_END };
->  							    127000), 1000)
->  #define TEMP8U_TO_REG(val)	DIV_ROUND_CLOSEST(clamp_val((val), 0, \
->  							    255000), 1000)
-> +#define TEMP12_FROM_REG(reg)	DIV_ROUND_CLOSEST((s16)(reg) * 1000, 256)
-> +#define TEMP12_TO_REG(val)	DIV_ROUND_CLOSEST(clamp_val((val), -128000, \
-> +							     127937) * 256, 1000)
->  #define TEMP11_FROM_REG(reg)	((reg) / 32 * 125)
->  #define TEMP11_TO_REG(val)	(DIV_ROUND_CLOSEST(clamp_val((val), -128000, =
-\
->  							     127875), 125) * 32)
->
-> [...]
->
-> @@ -594,6 +692,21 @@ static ssize_t set_temp8(struct device *dev, struct =
-device_attribute *devattr,
->  		return err;
-> =20
->  	mutex_lock(&data->update_lock);
-> +	if (data->kind =3D=3D ctf2301 && nr =3D=3D 1) {
-> +		temp =3D TEMP12_TO_REG(val);
-> +		err =3D i2c_smbus_write_byte_data(client, LM63_REG_LOCAL_HIGH,
-> +						temp >> 8);
-> +		if (!err)
-> +			err =3D i2c_smbus_write_byte_data(client,
-> +							CTF2301_REG_LOCAL_HIGH_LSB,
-> +							temp & 0xf0);
-> +		if (!err)
-> +			data->temp1_max =3D temp;
->
-> [Severity: Medium]
-> Does this sequence cause the sysfs cache to become inconsistent with the
-> hardware state?
->
-> The TEMP12_TO_REG macro scales the value but does not align or quantize i=
-t
-> to a 12-bit hardware boundary, leaving fractional bits present in the
-> lowest 4 bits. Here in set_temp8, those lowest 4 bits of temp are masked
-> out with 0xf0 when writing to the hardware register, but the unmasked tem=
-p
-> is saved in data->temp1_max.
->
-> If a user writes a temperature limit that is not a perfect multiple of
-> 0.0625 degrees Celsius, will this cause the sysfs interface to return the
-> un-truncated value immediately after the write, but later shift to the
-> truncated value upon the next device poll?
+[   6.766] TlvInfo Header:
+[   6.766]    Id String:    TlvInfo
+[   6.769]    Version:      1
+[   6.772]    Total Length: 38
+[   6.775] TLV Name             Code Len Value
+[   6.779] -------------------- ---- --- -----
+[   6.783] Base MAC Address     0x24   6 .....
+[   6.788] MAC Addresses        0x2A   2 2
+[   6.792] Product Name         0x21  15 x1_orangepi-r2s
+[   6.797] Unknown              0x41   1  0x01
+[   6.801] CRC-32               0xFE   4 0xE5A74B18
+[   6.806] Checksum is valid.
 
-This is a bug. TEMP12_TO_REG() currently produces an unaligned 8.8
-fixed-point value. The register write discards bits 3:0, while the cache
-retains them, so an immediate sysfs read can differ from the value read
-back from the device after the next update.
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+This patch depends on the following to avoid conflicts:
+https://lore.kernel.org/lkml/20260802100101.327815-1-amadeus@jmu.edu.cn/
+---
+ .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 30 ++++++++++++++++++
+ .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 31 +++++++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-I will fix this in the next version by quantizing the converted value to
-the CTF2301's 0.0625 degree C resolution before using it for both the
-register writes and the cache update.
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index 2d1ba34cb00e..7125f2882ce8 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -13,6 +13,7 @@ / {
+ 	compatible = "xunlong,orangepi-r2s", "spacemit,k1";
+ 
+ 	aliases {
++		i2c2 = &i2c2;
+ 		i2c8 = &i2c8;
+ 		serial0 = &uart0;
+ 		ethernet0 = &eth0;
+@@ -112,6 +113,35 @@ rgmii1: phy@1 {
+ 	};
+ };
+ 
++&i2c2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c2_0_cfg>;
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c02";
++		reg = <0x50>;
++		pagesize = <16>;
++		size = <256>;
++		read-only;
++		vcc-supply = <&buck3_1v8>;
++
++		nvmem-layout {
++			compatible = "onie,tlv-layout";
++
++			mac-address {
++				#nvmem-cell-cells = <1>;
++			};
++
++			num-macs {
++			};
++
++			product-name {
++			};
++		};
++	};
++};
++
+ &i2c8 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c8_cfg>;
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index f7547a4da71a..837616255464 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -17,6 +17,8 @@ aliases {
+ 		serial0 = &uart0;
+ 		ethernet0 = &eth0;
+ 		ethernet1 = &eth1;
++		i2c2 = &i2c2;
++		i2c8 = &i2c8;
+ 		mmc0 = &emmc;
+ 		mmc1 = &sdhci0;
+ 	};
+@@ -138,6 +140,35 @@ rgmii1: phy@1 {
+ 	};
+ };
+ 
++&i2c2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c2_0_cfg>;
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c02";
++		reg = <0x50>;
++		pagesize = <16>;
++		size = <256>;
++		read-only;
++		vcc-supply = <&buck3_1v8>;
++
++		nvmem-layout {
++			compatible = "onie,tlv-layout";
++
++			mac-address {
++				#nvmem-cell-cells = <1>;
++			};
++
++			num-macs {
++			};
++
++			product-name {
++			};
++		};
++	};
++};
++
+ &i2c8 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c8_cfg>;
+-- 
+2.34.1
 
-                                            - Troy
-
---f5ad3a7a520e0675d3a1ee0e96ded0c415497e37ee75d1d57e33fbe0b954
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCapZvbiEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/UBQD/Y06tRaTFNMju
-NM/etVWC7V4lTIYgMiT04x1oaUoz20cA+gOu2r4waOeMxc0picDYJZruXgDd4WEC
-8kbzz6TfWb8A
-=zcf8
------END PGP SIGNATURE-----
-
---f5ad3a7a520e0675d3a1ee0e96ded0c415497e37ee75d1d57e33fbe0b954--
