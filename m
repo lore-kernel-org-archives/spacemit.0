@@ -1,108 +1,129 @@
-Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B554D431E5E
-	for <spacemit@lists.linux.dev>; Wed,  2 Sep 2026 10:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638F633A708;
+	Wed,  2 Sep 2026 13:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788343901; cv=none; b=IkREmVD3RmKLuRaOWeVSqP82WnZ6vmiVQ7nElNZNr1ukssr3+7x5tghlm0BO42Dq3M0pS4854VtITs+hNLKDxqbFPthUdXl7WKH+UKUwzkMlUc0vO1bEfnfCr1RYlHCjZVuxmAtXT96t9X3Na2vbasno/v3xV9N/P4woyKoYeag=
+	t=1788356579; cv=none; b=nqydg0+GHu6YsHTeLpOSggJOzES/eYoe8bBvMtAv+kDg5N44zjkUI90wjqw/yYIti6JlfJ+dCuau1g0NyPwTLdFd97FnY4T6b6J0gk8JA1cnQUX7C4s6p0C0r2S6ZoQzvGV8v1Fdw4p8uoe8mH8U3VQLmVjJphrrTL9n67SYpHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788343901; c=relaxed/simple;
-	bh=NaUMWOkmvqHx2SAeXBZ6E4hS/R5iElAvvNMbKjghopE=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=atthakNe03kKAH8I/Jv0ysk31u8fGw1XjCIAxYVucez+y+Og8PkvZkNDPd9H/xmlLZke+7Ex7v9RRvwG3gZjwjYirrGioqLsYQ4TeCAIlHjx+uCzcYj/1DDkO1TU3+Emj6w2puvW1CPRDdVUsJtec1iWmiWF0RHQj3LU+1NI35A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
-Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
-	by Atcsqr.andestech.com with ESMTP id 6829ub7r074751
-	for <spacemit@lists.linux.dev>; Wed, 2 Sep 2026 17:56:37 +0800 (+08)
-	(envelope-from tim609@andestech.com)
-Received: from mail.andestech.com (atcpcs55.andestech.com [10.0.1.155])
-	by Atcsqr.andestech.com with ESMTPS id 6829tX54074367
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 2 Sep 2026 17:55:33 +0800 (+08)
-	(envelope-from tim609@andestech.com)
-Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs55.andestech.com
- (10.0.1.155) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.43; Wed, 2 Sep
- 2026 17:55:33 +0800
-Received: from swlinux01 (10.0.15.55) by ATCPCS34.andestech.com (10.0.1.134)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 2 Sep
- 2026 17:55:32 +0800
-Date: Wed, 2 Sep 2026 17:55:24 +0800
-From: Tim Ouyang <tim609@andestech.com>
-To: Yixun Lan <dlan@kernel.org>
-CC: <u-boot@lists.u-boot-project.org>, <spacemit@lists.linux.dev>,
-        <u-boot-spacemit@groups.io>, Lukasz Majewski <lukma@denx.de>,
-        Tom Rini
-	<trini@konsulko.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
-        Raymond Mao
-	<raymond.mao@riscstar.com>,
-        Guodong Xu <guodong.xu@oss.qualcomm.com>,
-        "Peng
- Fan" <peng.fan@nxp.com>, Torsten Duwe <duwe@suse.de>,
-        Ryan Chen
-	<ryan_chen@aspeedtech.com>, Jonas Karlman <jonas@kwiboo.se>,
-        Alexey Charkov
-	<alchark@flipper.net>, <oyst.lnx@gmail.com>
-Subject: Re: [PATCH 6/8] clk: spacemit: k3: reduce clock tree for SPL build
-Message-ID: <shthcaz5wjcp2vwd2c2i74axiayf4zhlgsoq5fbswofld5poq4@znfx5b2yby2t>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-References: <20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org>
- <20260825-01-k3-clock-reset-support-v1-6-c430253e759c@kernel.org>
+	s=arc-20240116; t=1788356579; c=relaxed/simple;
+	bh=HimctPAdl4uhknz5inQXUbfZ8T9s+MHwTRvwmhBPoIs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=toETEDzHa7y5Mccl7iPS1avLoyPiOOTLfuIZD2fAV7kkuIUWP8g3GZzc7SiF6X0xQxiDSj349f4wdqNggd8rIbU7VpgBD8cGc+TIF0+V9sN4lHsE2kwZ7JNGj7nE6XICFmdlYIthjJiGAwWf1uB+yxaQfoMxnzyxk9cxq0xgjaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IbnRy+qB; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IbnRy+qB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7843C1F00A3F;
+	Wed,  2 Sep 2026 13:42:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788356575;
+	bh=qhAEz77Y2kZ1jZ+VILUhus+BJGUXN2LMY1ixFi2XZHY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=IbnRy+qBeV/o5vIsvzltys0xmFQ+2EOsgmvL/OsE6rAhpziJhvHXVb+YAAttbvzwj
+	 7j5k5CvFbSNpW6oj6nO9yeIXIUTa8LLtPgqiWImU+W9307XnaADrwZgoGmvYPqcK16
+	 HqgwxzO/N+GwvjTGmjfTtJAr3fw/ExygS0DSWxlL0PEELwaNLTOor73xtveXYYbWRY
+	 gNIGaeb6gaZ4k2pljjeTrik6Jy0IGFQkegPbRp0J8epAB+Icu+s4WfwbN31rF5Bnyf
+	 BdUTuoSxzyHs+/ZdFPoTpyysUZYuiSudwxLRpUtVXY/vmx+IZMAj/485sCT6pNYizH
+	 fJq2J2O6mzp9w==
+Date: Wed, 2 Sep 2026 15:42:41 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: spacemit@lists.linux.dev, Alex Elder <elder@riscstar.com>, 
+	Bruno Banelli <bbanelli@gmail.com>
+Cc: linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, Alex Elder <elder@riscstar.com>, Yixun Lan <dlan@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof Wilczynski <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Danilo Krummrich <dakr@kernel.org>, Uwe Kleine-Koenig <u.kleine-koenig@baylibre.com>, 
+	Javier Martinez Canillas <javierm@redhat.com>, linux-kernel@vger.kernel.org
+Subject: Re: [BUG] PCI: spacemit-k1: port C probe hard-hangs a CPU with one
+ endpoint on Milk-V Jupiter
+Message-ID: <c24pt2ls62rxxg77xjbng7dmiflgdjlqd3mkoxehc2rvjgh7ai@dcxvmau3ykmt>
+References: <20260825052249.66921-1-bbanelli@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260825-01-k3-clock-reset-support-v1-6-c430253e759c@kernel.org>
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs55.andestech.com; dkim=none;
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:Atcsqr.andestech.com 6829ub7r074751
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260825052249.66921-1-bbanelli@gmail.com>
 
-On Tue, Aug 25, 2026 at 04:24:16AM +0000, Yixun Lan wrote:
-> Due to SPL image running in a memory space constraint SRAM environment,
-> so reduce the whole clock tree a bit to make it fit for final runtime
-> requirement, only a subset clock tree is registered, which includes UART,
-> SDHCI, I2C (TWSI), and their PLL/MPMU/APMU/APBC ancestors; while the
-> full clock tree is retained in non-SPL build.
->
-> Where surviving SPL CCU definitions reference parent clocks outside
-> that subset tree, it will use "clock-dummy" as name of clock parent to
-> ensure the framework still successfully resolves the parent clock lookup.
->
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
+On Tue, Aug 25, 2026 at 07:22:49AM +0200, Bruno Banelli wrote:
+> Hi,
+> 
+> On a Milk-V Jupiter, probing the PCIe controller at ca800000 (port C, the
+> card slot) permanently wedges the CPU that runs the probe when one
+> particular add-in card is installed.  The CPU stops responding to NMI, and
+> because the probe is asynchronous, kernel_init() then blocks forever in
+> async_synchronize_full() and the machine never finishes booting.
+> 
+> The same card, in the same slot, on the same board, does *not* hang the
+> vendor 6.6 kernel -- it reports "Phy link never came up" and boots normally.
+> Six other cards do not hang mainline either.  So whatever the electrical
+> cause, this looks like a robustness problem in pcie-spacemit-k1: an endpoint
+> should not be able to hang a host-side DBI register access.
+> 
+> 
+> HARDWARE
+> --------
+>   Milk-V Jupiter v1.1, SpacemiT M1 (socinfo: CPU[M1-8571] REV[C] DRO[130]),
+>   16 GiB LPDDR4X.
+>   Firmware: stock vendor U-Boot 2022.10 (k1-bl-v2.2.9), unmodified.
+>   Port B (ca400000, M.2) has a Samsung PM9B1 NVMe and works throughout.
+>   Port C (ca800000) is the card slot -- an x8-length connector, silkscreened
+>   PCIE_X2, wired x2.
+> 
+> 
+> REPRODUCED ON
+> -------------
+>   v7.1 and v7.2, riscv defconfig (plus PHY_SPACEMIT_K1_USB2, USB_DWC3,
+>   SPACEMIT_K1_TSENSOR, IGB, IGC, NVMe/ext4 built in).
+>   gcc 13.3.0 (cross) and gcc 16.2.0 (native, Debian sid).
+>   Identical failure in all combinations.  Not a regression -- port C has
+>   never worked with this card on mainline.
+> 
+> Command line:
+>   console=ttyS0,115200 earlycon root=/dev/nvme0n1p2 rootwait rw
+>   swiotlb=65536 clk_ignore_unused pd_ignore_unused
+> 
+> 
+> SYMPTOM
+> -------
+> Port C prints its address ranges and then never speaks again.  (Log below is
+> from a run with port B disabled in DT, so nothing is interleaved.)
+> 
+>   [ 1.290074] spacemit-k1-pcie ca800000.pcie: host bridge /soc/pcie-bus/pcie@ca800000 ranges:
+>   [ 1.297283] spacemit-k1-pcie ca800000.pcie:       IO 0x00b7002000..0x00b7101fff -> 0x0000000000
+>   [ 1.312783] spacemit-k1-pcie ca800000.pcie:      MEM 0x00a0000000..0x00afffffff -> 0x00a0000000
+>   [ 1.326753] spacemit-k1-pcie ca800000.pcie:      MEM 0x00b0000000..0x00b6ffffff -> 0x00b0000000
+>   [22.348490] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+>   [22.351764] rcu:     4-...0: (12 GPs behind) idle=051c/1/0x4000000000000000 softirq=43/43 fqs=1908
+>   [22.367040] Sending NMI from CPU 2 to CPUs 4:
+>   [32.367049] After 10 seconds, these CPUS still haven't responded to the NMI: 4
+> 
+> The CPU ignoring an NMI for ten seconds is why I read this as an MMIO access
+> that never receives a completion rather than a spin or a deadlock.
+> 
+> 
+> LOCALISATION
+> ------------
+> I added a dev_info() before each step of k1_pcie_init() (patch at the end of
+> this mail).  The last marker port C prints is the one immediately before the
+> first DBI access:
+> 
+>   [1.347050] spacemit-k1-pcie ca800000.pcie: K1DBG 1 toggle_soft_reset
+>   [1.362635] spacemit-k1-pcie ca800000.pcie: K1DBG 2 enable_resources
+>   [1.370918] spacemit-k1-pcie ca800000.pcie: K1DBG 3 first DBI write (vendor/device ID)
+>   <nothing further>
 
-[...]
+Sounds weird that an endpoint is causing DBI write hang.
 
->  /* APMU clocks start */
-> +#if IS_ENABLED(CONFIG_SPL_BUILD)
-> +static const char * const axi_clk_parents[] = {
-> +       "pll1_d8_307p2", "pll1_d6_409p6",
-> +};
-> +CCU_MUX_DIV_FC_DEFINE(CLK_APMU_AXICLK, axi_clk, axi_clk,
-> +                     axi_clk_parents, ARRAY_SIZE(axi_clk_parents),
-> +                     APMU_ACLK_CLK_CTRL, APMU_ACLK_CLK_CTRL, 1, 2,
-> +                     BIT(4), 0, 1, 0);
-> +#else
->  static const char * const axi_clk_parents[] = {
->         "pll1_d8_307p2", "pll1_d6_409p6",
->  };
+Can Alex or someone from Spacemit look into this issue?
 
-The SPL clock subset does not seem to include all the clocks described
-in the commit message. For example, the SDH0/1/2 clocks are excluded
-from the SPL build.
+- Mani
 
-Is this intentional?
---
-Best regards,
-Tim Ouyang
+-- 
+மணிவண்ணன் சதாசிவம்
