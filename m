@@ -1,83 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FB14AA581;
-	Thu,  3 Sep 2026 13:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32D736B910;
+	Thu,  3 Sep 2026 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788440452; cv=none; b=u3PbT57PiePTylQzmbgZjEQHhq7In7Mxko9Xg8Al1CXU1gWkg327lgiYsXJ2ikaD7gPxHuPLir5kntlAINB7SSJAL2mGwKk+cm9/O3HOWxgKep+HF1Y50DIak30Ft8B603JKg6s7zi/vga96CvVYZVW42DH+7GrA+ioGzTTtGqc=
+	t=1788452967; cv=none; b=UZnC2oN/0Eyw/9+km8RslAGwCi1/04i6mmqEWgAX3A+yPN76adLPbG1e/yBzVda0USDmjnr8dESuG8p8Kg7rbGweFa7YUTFvgU8oFl2BGDFetxD5Yf2rDsIGAPromco5BtEl1oDQ3/DKI7aeK9E7iM8vYS+HXrXw+NNODa/aM+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788440452; c=relaxed/simple;
-	bh=2jCCbt+FQXCbWg0CbWpY7BWoaZps7tU2RqU8vFlYFJQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R4p5LtOxPF7O+FeY4mfDxoVAok/rXkEsnH7u6OWokgGul7vlIBoL77BSx+VbEXyfR287crK5BcmpsdUFYklcuxMfSaHveine4KKOlVeBs1Sr/3HioOePcHrWTzeqNggBwQxJnsymPKEG//6Zs6UHae6CzsXufLbI5r8xvUsxIMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuaBmTRR; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788452967; c=relaxed/simple;
+	bh=URwc2WaXEk7sHvA8iTN/N7OCzQa7/xrni0fWLoz0LPQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=IxAbubAc6HeXtaa8Fapm85j19ztHwVxyZ4+oYJZ5NZK/y9RsD7Ef9pPHPsupCRkcFFVaVGcINXZG02kirh3NkWvob7IE4uIZ1jy/9zJRXRdDMjgemx4zjfpSOsfdKD/qATQsC76GkUbJwim6AOdsATI/PWhqQP8tjsvgKJXGWCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owWrTvcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuaBmTRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BC11F000E9;
-	Thu,  3 Sep 2026 13:00:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owWrTvcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5391F000E9;
+	Thu,  3 Sep 2026 16:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788440443;
-	bh=iegNva3kkOGJqjCoKK1iRqK5iFz7ZD4YDy8u6AOCQVc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JuaBmTRR2rTrs+dzlAeqYCZZFwDrmCKGd3uT8IPDU4YSqKWK3PnBdTDk20//uAy14
-	 VhPiw1hy90EnkF/yrhvEX7blaDtM3iCXX1+a9rm4cqngxZCvjrdIUo8N781ht6zl+n
-	 ZGoDZzuJJYpfO52npPPSmT0MeXUx02U5Q0coe1Wf3yoobyrmJ5UjDj6FcyKudyS2Jj
-	 X0T8F3vy4cqCKhKe6SXb8Ug76wWClmniPyilsvJylEG194A+/lA3V9k/cDkCjZB0+G
-	 2R/m1C6D5+LwDKC5MglHBL2ieJISBwnsUKXQX1y0uJFG+uUeYP6EymykyJ8k++0rUo
-	 0vWPUZHVHHUZQ==
-Date: Thu, 3 Sep 2026 15:00:39 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Long Wan <long.wan@linux.spacemit.com>, 
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: mmc: spacemit,sdhci: Add tx delay
- property
-Message-ID: <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
-References: <20260902-07-k3-sdhci-dts-v1-0-4e7909cf4233@kernel.org>
- <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
+	s=k20260515; t=1788452966;
+	bh=cfSjg9mYPeipAFTfWafkpUPGHsGkJcChBkU88AONxrA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=owWrTvcHaaMVBQz0yIU2NpcrGuguWiwBZTGUVFQ0ZFUSnmfTGWIGq+p9biUqiODWH
+	 cZ44Uz+/THd7Vv4jmtP3GNtw/0YSAyrEdRMWDNkvSx6hX6McW7Sjiw3TJVRweiqqGF
+	 74AyXYJiBbR/g/Dca2Exuh+HmHvAhOFPpLM5Zio9sIDWZmgYgLKTFEYPh2D4j9O8kA
+	 obatEXDz6FjrSxl+xiAXA2oTzqaQvNUm1dwWhw+kV0B5rVqvIBGGnIn9WCWkRbOq/W
+	 w2PPc0DHEsby3+zbGlIU7r4qsgW0cC1imIlhg4E6K6GWpBnconCjSQF4QeNMAjTLXK
+	 /mZWznQ4oINzA==
+From: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Guodong Xu <docular.xu@gmail.com>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+In-Reply-To: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
+References: <20260727-k3-pdma-fix-drcmr-base-v2-1-afba55cba1f3@linux.spacemit.com>
+Subject: Re: [PATCH v2] dmaengine: mmp_pdma: fix wrong extended DRCMR base
+ for SpacemiT K3
+Message-Id: <178845296259.1679748.15919618755814250880.b4-ty@kernel.org>
+Date: Thu, 03 Sep 2026 21:59:22 +0530
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Wed, Sep 02, 2026 at 07:03:13AM +0000, Yixun Lan wrote:
-> From: Long Wan <long.wan@linux.spacemit.com>
-> 
-> Introduce a vendor specific property to configure the step count of TX
-> delay line which should be applied before RX tuning, compensating for
-> board level trace differences. The TX delay line result comes from test
-> out of real board which vary from different hardware layout.
-> 
-> Signed-off-by: Long Wan <long.wan@linux.spacemit.com>
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
->  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> index f35bf7ce08dd..3399a2d076dc 100644
-> --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> @@ -63,6 +63,16 @@ properties:
->    pinctrl-1:
->      description: Optional pinctrl state for 1.8V UHS operation with "uhs" name
->  
-> +  spacemit,tx-delay:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 0
-> +    maximum: 255
 
-default: 0, I guess?
+On Mon, 27 Jul 2026 01:26:15 -0700, Troy Mitchell wrote:
+> The extended DRCMR window on SpacemiT K3 starts at 0x1100. Commit
+> 6587b8661a0b ("dmaengine: mmp_pdma: add SpacemiT K3 support") incorrectly
+> set it to 0x1000, causing DRCMR accesses for request IDs >= 64 to target
+> offsets 0x100 too low.
+> 
+> The 0x1100 base has been verified on K3 silicon using real SPI and QSPI
+> DMA transactions. The K3 DMA documentation [1] was updated on June 24,
+> 2026, to reflect the corrected register addresses.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/1] dmaengine: mmp_pdma: fix wrong extended DRCMR base for SpacemiT K3
+      commit: d1fc569fcbc7be6de06b034cf954a95e30ca1fb2
 
 Best regards,
-Krzysztof
+-- 
+~Vinod
+
 
