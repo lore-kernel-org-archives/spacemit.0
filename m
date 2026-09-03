@@ -1,206 +1,282 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0B1282F03
-	for <spacemit@lists.linux.dev>; Thu,  3 Sep 2026 01:06:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F00283FDC
+	for <spacemit@lists.linux.dev>; Thu,  3 Sep 2026 03:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788397604; cv=none; b=DdHl0H6QYNWmep/JBcof4dQPth7+J2cuoDqv9U8lybwkcppg0ZRd5b0aZ51WP2B9Yi0xMQEfHJjbZAJMDA0RZRJuw0Qx4d77iGaN2o5Be6lPWm0mUgc6+DHoycE8r6Y58MkXH49lUsGe/fW8gLk/r/5DXrtEuqegaz3R9LBD2Lc=
+	t=1788404827; cv=none; b=ECfHTEyxJcZw9HPuSwPeDG7k5uAQApMm8vpeWcYTgBVREIBkTxp5o4IbLdyU73Woleowe0ix6tyEM3CzE6tzQ8NV3ZTwG/9MC3qu+LtUgAykGXnLkvjRq67Tb6GStSVA6IBOZDr1FObNpMVukkMMSgBDUF/8WmLz58LFtTVDyYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788397604; c=relaxed/simple;
-	bh=XpWzIn8Uvb7NNHEaVjshPZhpM82BAdAdxiGWa5vs8rE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=RRwKG15KzjXJefOuoljBe38IQ5oa0cTv2CPFOSqhL6AB5fmgH67+Onua6/pQKlPapWUDTK1/5DGQo9iYvTSgfDCmFKQT6dYLluXBx5g6T+GFfF4qffpjaf3c7MLZVOIEUY9Cf1SBiT0UuzVqfFXJerKlXP00SL2mjVKmDzkDGoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=RqnpHb89; arc=none smtp.client-ip=54.206.34.216
+	s=arc-20240116; t=1788404827; c=relaxed/simple;
+	bh=AYVuTRo93DbErgNAym134QGDBTmnOER6GCL1ZICH6RQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PlauD+wd/epkjRfg1Zz+x5LFf7+9V1hn1Gfq+YA4KVsEcTy2HtnZQuspG8ROAFXc0IofX9r1H8P0UHQ3PJv6P2xEk90DA7c1kqMRB8WTXbBcNm4xQQeoFAoZwZyiZnwZpqP49VP5FO/jsfkjHbjcbUGB8ehw2niXpnTUut1ZKZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=TVvsUY97; arc=none smtp.client-ip=54.254.200.128
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="RqnpHb89"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="TVvsUY97"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788397596;
-	bh=sn4Zqvuy3iv8MXIhtE8ntlyyLJ+J0+s0jH6g+E8SxjY=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=RqnpHb89/01yM+Bz0hysKu2yS9fOhB/gzyhw2zbf7YZF1TIOGecEq3pHEq1jxf5cW
-	 pptd9UVk0Fn+kfIFE7vEQS9QUo3AUbn6Ulmfes2BldVr2RR9mMtinBM9ILqbbN/hma
-	 JOuQVSvV+g0ouNGQIydZ+ul2tIlU5kW64VEX1P1g=
-X-QQ-mid: zesmtpgz6t1788397590t809805a0
-X-QQ-Originating-IP: VhXi++IEq6mjKwdvVbXNY7Td/lOsJov/j5KV2ygThxU=
-Received: from = ( [120.237.158.181])
+	s=mxsw2412; t=1788404801;
+	bh=iBShIJ2d+BzB2SF86DEbL9Cr3jsm4doMaMu+2XL052I=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=TVvsUY97/dYnghNseodXeQUgWjNY1u7bYpxFDQI6t9w9XVyzE6rc8mqLtaoH4GKBy
+	 snpMjm2yUAcI8lao0oaUfahI4GKWSqEsp+iCWzBV2L3si0wWKXEfFoJMuZ/lmGPccA
+	 sYoCvelo4v2DIVlzOP6B6TFWCJwfurzUnHA2pXwk=
+X-QQ-mid: zesmtpgz4t1788404798tc132e466
+X-QQ-Originating-IP: K8Ail5GM7w1X5jisPHX0MXDA+essN8k4gh/zW3TFcFo=
+Received: from = ( [58.254.69.95])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 03 Sep 2026 09:06:28 +0800 (CST)
+	id ; Thu, 03 Sep 2026 11:06:35 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 15480183741827357636
-EX-QQ-RecipientCnt: 16
+X-BIZMAIL-ID: 7870038824526874509
+EX-QQ-RecipientCnt: 19
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Thu, 03 Sep 2026 11:06:24 +0800
+Subject: [PATCH v4] clk: spacemit: k3: add CPU PLL rate tables
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=5aa6fa5638c6e4ef04b289541629de5e53ccc8327148dde49673ae679c24;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 03 Sep 2026 09:06:25 +0800
-Message-Id: <DL5A18T0GPB5.32JI7ECB3UCRX@linux.spacemit.com>
-Subject: Re: [BUG] PCI: spacemit-k1: port C probe hard-hangs a CPU with one
- endpoint on Milk-V Jupiter
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Alex Elder" <elder@riscstar.com>, "Manivannan Sadhasivam"
- <mani@kernel.org>, <spacemit@lists.linux.dev>, "Bruno Banelli"
- <bbanelli@gmail.com>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-Cc: <linux-pci@vger.kernel.org>, <linux-riscv@lists.infradead.org>, "Yixun
- Lan" <dlan@kernel.org>, "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
- "Krzysztof Wilczynski" <kwilczynski@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Bjorn Helgaas" <bhelgaas@google.com>, "Danilo
- Krummrich" <dakr@kernel.org>, "Uwe Kleine-Koenig"
- <u.kleine-koenig@baylibre.com>, "Javier Martinez Canillas"
- <javierm@redhat.com>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260825052249.66921-1-bbanelli@gmail.com>
- <c24pt2ls62rxxg77xjbng7dmiflgdjlqd3mkoxehc2rvjgh7ai@dcxvmau3ykmt>
- <7a29717b-dc62-4421-b783-7b78e4375268@riscstar.com>
-In-Reply-To: <7a29717b-dc62-4421-b783-7b78e4375268@riscstar.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260903-k3-pll5-pll8-1800mhz-v4-1-afafd9cb47d9@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XNTW7CMBAF4Ksgrxk0Y8exw4p7IBaDcRqX/CkOE
+ RTl7o2pKrEgm5Ge9OZ7TxH9EHwU+81TDH4KMXTtErLtRriK2y8P4bJkIVHmaFHCVUFf1zodC2Q
+ Rm+oHnCVrNCMXWSaW137wZbi/2OPpL8fb+du7MVmpUYU4dsPjtTtR6v1PZJ8nJgIEVmy0zXPnl
+ TzUob3dd7Fn55sw7lzXiLQ1yTeNcEWTQMB8LktNyKYwq5p60xStaGrRtEJ/wcLYnPRHbZ7nX16
+ AbwBvAQAA
+X-Change-ID: 20260802-k3-pll5-pll8-1800mhz-c81875a0a944
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Inochi Amaoto <inochiama@outlook.com>, Alex Elder <elder@riscstar.com>, 
+ Haylen Chu <heylenay@4d2.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>, stable@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
+ Jerome Brunet <jbrunet+clk@baylibre.com>, Yixun Lan <dlan@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10027;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=AYVuTRo93DbErgNAym134QGDBTmnOER6GCL1ZICH6RQ=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFkznljN2CP2d4Pjs1QhvQgJkSA+8Q72hg8ireEKFaFnf
+ zQuDMvuKGVhEONikBVTZOl+wLOtwCfKtkCg0BdmDisTyBAGLk4BmIh5BSPD076p2ZYRnRYMAWUn
+ Sz0vNb4xXlF3YaKQXOqZjbvy2pl/M/zPnMiSV7lmV8SkCrcK3ssW4mdr5uad5Po92e6A5rON3gl
+ sAA==
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OegHrGdQ9dQUM4rcL/UVOoWjrJLz5Nzb+TUFTx9WDCS/0LAq3sT6vH3w
-	6AdDiFHcsZrwbamOt53PT02mSiYLUkBPQe8b/i1vkM+DAJweZ7vuGsCaxlUSnkccplSujVi
-	v7wE4m+MjxB5f3VqTNRTS9PfvH7L745KMN1pBngIzRSxNQqQc3lJiKrybCdwhJ7ytb9ASBI
-	SOgGJwAsFwP6S6hIve5vRGRjo9Pq/kGfU3q+zU6Z16icv301xRAD7EoeGMo5amb6nXAoS/u
-	n3jIjX7L46pAMhuFMEOsfcmyoCy3VOZcgdrAy19t+8F2yN4L3di1y492cgD+EVUDpgq70u8
-	06SRwVqeCzXHOxofTq93/osYqdXEvrV0+tAoRzp7CYmtIFLkaIGLy9oH8el8r+v/B0Ih8cU
-	e/pa0ti9LXzZedI9dL8ETMy0+ZOU618H5klM/70jVfJtERUAa3lSCW4XYAKhp6YeYNsLKnq
-	M/Pb6AIrOph3lluQ9ZjHOy6aVbXB6/qmbp2bD3qry2t3GUmGdmhw9lm0W2+0xb0WZ2zXI1k
-	bgHvmJKFtjvP11gLRl3pbvaUwvVAQnwZfxbOEt+YG+vbuUdOKul0rsbq4U5EvuquoMUBj/t
-	WXSPne41/uaZ5D9ZwuOHSQpEUBSNL1JY+9HMKOknAnKppuNQ/JaQNAo39bURWmY7iadMJ9t
-	g6EKdUhT/E9LzN3to3paW5pHSs5fv7fdDTrXAXF1vYii1UCJA/pN1hanKXv1q/zNfQ0yIJ/
-	GnwhIfrmLJ3L3exHyVPvSim4rHTL4VMU7Lke86wfKHJ3wfcNpCrnj+okSL4//2CRN6vBRNl
-	ccw0SJoJNu4BM6SGVfaqB40w37Qi10rhJpZe12m3qNe/ccS62KYze3MMDCp7COAqRLha9Kh
-	I92V3DnbZ4ag5uZkNhxLZn/GGnUg3DpV+BZrgkMpf6YJmTAH7TzBiCi7B2/3dqgQqxmlgic
-	pkozDRFAZD3OmS2m1ftuD4X4xM2D5DEmhKewq2qm9uFGT7Ui6ypjEbgjmeFqi9CYmXSdnJW
-	RouKzzAL2WvVMpofuyjdB/VBJuzTe3rb7CEE419g/3H6OQzw8YHV3Iir89oSr4MA411TnBg
-	rX7p2Ae+JpDOViZCGivtFmZxG/6tZeFb3WQ7OzbZGMN
+X-QQ-XMAILINFO: Msr5cRGAMwRoKoBTG7dioCq6sNLlmj73S25UsNL48iaFCZa5/0y/eIPr
+	W7dzJCOhoro7VMmp+4hbVq7JBeOptRaCNwNZbHOuXNPlvn3TN1hKuBnVlZbJUEE8bDwpjVb
+	ucE1s2CvdlGJOdxdxb9cTrIJP9+KkWMxorLfE7swjUyJfqTS5ACEbOhwLdQaNsmMEfdJP+L
+	ETfVnIehOP1S8iLkSv984YmZ1ytKZkCXv9WYelduq9GS9KUZQDI7gqQ35NZxZoOQbUCZeCz
+	vpwrZT6AV32Y0nDuc6SdkZ1MTvjzDcBAlF19IUKl9+NOf7RTVDzcD4uePFVECZO3U6EQztg
+	3Jo1nyUDMYBIsekZMmWQlymjp4CXTyYn3rv9H/bK+zzRynpHVeRHFrKLg6i/KFYUskFbq2j
+	Bu89czRqNU7MVSezrouY+48Sl0nvi6rC/A0b9ZSyjqewpCTsuPhOGdmupr/2QWRLCH0YrPY
+	n/4xSGS9mlAaEKGlY+uoSe6lWXLV8j0+i+8SfhFqPmhsraTYCbbt4zdFVCp1l8ypwwoKq0X
+	uhZdu1jyAiTjfnFmJzszBqlyZDEgAVhpboKlVHoQ2tpQCKP19w6ZuqFJwbAze4OvGV1zsZD
+	SQQ6mvAXkVEr2kKm3xcV1gvVCqyxyvFVLcSwa/bM8Xu634rvFNgj10YOd+LQXiPgr/MVXlJ
+	j5Dvk0hhc/9eBhY2XUCum0ZvuH5MPgk923bIrKYZ2LE7DuxHy7WFoLuCkQEbrYkyqikLhAB
+	ihx9eXMjOfRcRGyKui/HcmNCkSxLhICBtHDbfAqKB4hUBcJ5U1+ajmWELeI5y+JmceeWd2N
+	4rglvK5RiI6a+yr94tGwg/SKxICFlkbsbpi2ARceug1srVROwRwe2t36cuOG3mlwfJbZ6Zo
+	4JbCmN2Ph6IVsFXYWhOKZM7zkoDFgmOEgv5o0/pD18CjzES68U6aU2DD/JcloJY+Hd/dWYX
+	zdajdtxtVDbvR5gFvh4B7q2908KcbO3s5FOrBDJd/8Uh9r/cOMDInNCdbfbe2c4Lg/6OW0T
+	OjmNQAeSqjelkOnNCRQkz/VBdX5zpHh5EFMkiu0rhJAvpvP3/JNyxwubdXYXcdRjynmC6pv
+	/aZChh6gCDN9EJovyzRtgtaAoTa6YzswGdkvKH49E/3CA6UFtXbsta097L8p9P799YjNrdl
+	MPLJ+XG93042hcub4R0v/3qJXL8fDxaQ3ZEj
 X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
 X-QQ-RECHKSPAM: 0
 
---5aa6fa5638c6e4ef04b289541629de5e53ccc8327148dde49673ae679c24
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+The K3 CPU PLL rate tables currently describe only one rate per PLL,
+although the hardware supports a wider range.
 
-On Wed Sep 2, 2026 at 9:56 PM +08, Alex Elder wrote:
-> On 9/2/26 8:42 AM, Manivannan Sadhasivam wrote:
->> On Tue, Aug 25, 2026 at 07:22:49AM +0200, Bruno Banelli wrote:
->>> Hi,
->>>
->>> On a Milk-V Jupiter, probing the PCIe controller at ca800000 (port C, t=
-he
->>> card slot) permanently wedges the CPU that runs the probe when one
->>> particular add-in card is installed.  The CPU stops responding to NMI, =
-and
->>> because the probe is asynchronous, kernel_init() then blocks forever in
->>> async_synchronize_full() and the machine never finishes booting.
->>>
->>> The same card, in the same slot, on the same board, does *not* hang the
->>> vendor 6.6 kernel -- it reports "Phy link never came up" and boots norm=
-ally.
->>> Six other cards do not hang mainline either.  So whatever the electrica=
-l
->>> cause, this looks like a robustness problem in pcie-spacemit-k1: an end=
-point
->>> should not be able to hang a host-side DBI register access.
->>>
->>>
->>> HARDWARE
->>> --------
->>>    Milk-V Jupiter v1.1, SpacemiT M1 (socinfo: CPU[M1-8571] REV[C] DRO[1=
-30]),
->>>    16 GiB LPDDR4X.
->>>    Firmware: stock vendor U-Boot 2022.10 (k1-bl-v2.2.9), unmodified.
->>>    Port B (ca400000, M.2) has a Samsung PM9B1 NVMe and works throughout=
-.
->>>    Port C (ca800000) is the card slot -- an x8-length connector, silksc=
-reened
->>>    PCIE_X2, wired x2.
->>>
->>>
->>> REPRODUCED ON
->>> -------------
->>>    v7.1 and v7.2, riscv defconfig (plus PHY_SPACEMIT_K1_USB2, USB_DWC3,
->>>    SPACEMIT_K1_TSENSOR, IGB, IGC, NVMe/ext4 built in).
->>>    gcc 13.3.0 (cross) and gcc 16.2.0 (native, Debian sid).
->>>    Identical failure in all combinations.  Not a regression -- port C h=
-as
->>>    never worked with this card on mainline.
->>>
->>> Command line:
->>>    console=3DttyS0,115200 earlycon root=3D/dev/nvme0n1p2 rootwait rw
->>>    swiotlb=3D65536 clk_ignore_unused pd_ignore_unused
->>>
->>>
->>> SYMPTOM
->>> -------
->>> Port C prints its address ranges and then never speaks again.  (Log bel=
-ow is
->>> from a run with port B disabled in DT, so nothing is interleaved.)
->>>
->>>    [ 1.290074] spacemit-k1-pcie ca800000.pcie: host bridge /soc/pcie-bu=
-s/pcie@ca800000 ranges:
->>>    [ 1.297283] spacemit-k1-pcie ca800000.pcie:       IO 0x00b7002000..0=
-x00b7101fff -> 0x0000000000
->>>    [ 1.312783] spacemit-k1-pcie ca800000.pcie:      MEM 0x00a0000000..0=
-x00afffffff -> 0x00a0000000
->>>    [ 1.326753] spacemit-k1-pcie ca800000.pcie:      MEM 0x00b0000000..0=
-x00b6ffffff -> 0x00b0000000
->>>    [22.348490] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
->>>    [22.351764] rcu:     4-...0: (12 GPs behind) idle=3D051c/1/0x4000000=
-000000000 softirq=3D43/43 fqs=3D1908
->>>    [22.367040] Sending NMI from CPU 2 to CPUs 4:
->>>    [32.367049] After 10 seconds, these CPUS still haven't responded to =
-the NMI: 4
->>>
->>> The CPU ignoring an NMI for ten seconds is why I read this as an MMIO a=
-ccess
->>> that never receives a completion rather than a spin or a deadlock.
->>>
->>>
->>> LOCALISATION
->>> ------------
->>> I added a dev_info() before each step of k1_pcie_init() (patch at the e=
-nd of
->>> this mail).  The last marker port C prints is the one immediately befor=
-e the
->>> first DBI access:
->>>
->>>    [1.347050] spacemit-k1-pcie ca800000.pcie: K1DBG 1 toggle_soft_reset
->>>    [1.362635] spacemit-k1-pcie ca800000.pcie: K1DBG 2 enable_resources
->>>    [1.370918] spacemit-k1-pcie ca800000.pcie: K1DBG 3 first DBI write (=
-vendor/device ID)
->>>    <nothing further>
->>=20
->> Sounds weird that an endpoint is causing DBI write hang.
->>=20
->> Can Alex or someone from Spacemit look into this issue?
->
-> I think Yixun Lan or maybe Troy Mitchell should investigate.
->
-> I have not done anything on the Milk-V Jupiter and have no
-> access to any board of that type.
-This seems to be device-specific. Some of our team members are already look=
-ing into it.
+PLL3 and PLL4 support rates from 1.05 to 2.4 GHz, while PLL5 and PLL8
+support rates from 1.05 to 2 GHz. Populate the tables with every
+supported rate in 50 MHz steps.
 
---=20
-Troy Mitchell
+Cc: stable@vger.kernel.org # 7.0+
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+The corresponding U-Boot changes are available at:
 
+- Add the CPU PLL rate tables:
+  https://github.com/spacemit-com/uboot-2022.10/commit/787b5cf44c8dbc99db886d5522c0c9cd5a96ffd6
+- Correct the 1.10 GHz and 2.15 GHz table entries:
+  https://github.com/spacemit-com/uboot-2022.10/commit/16a775c20e9efb54ca55352215e76eb3f12e6cf0
+---
+Changes in v4:
+- Expand the update to every supported PLL3, PLL4, PLL5 and PLL8 rate.
+- Drop Aurelien Jarno's Reviewed-by and Tested-by trailers because the
+  patch scope has expanded.
+- Add U-Boot references for the complete tables and corrected entries.
+- Link to v3: https://patch.msgid.link/20260831-k3-pll5-pll8-1800mhz-v3-1-530ed0978615@linux.spacemit.com
 
---5aa6fa5638c6e4ef04b289541629de5e53ccc8327148dde49673ae679c24
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in v3:
+- Mark the change for stable kernels starting with v7.0.
+- Add Aurelien Jarno's Reviewed-by and Tested-by trailers.
+- Rebase onto v7.3-rc1.
+- Link to v2: https://patch.msgid.link/20260810-k3-pll5-pll8-1800mhz-v2-1-aabff510a797@linux.spacemit.com
 
------BEGIN PGP SIGNATURE-----
+Changes in v2:
+- Drop "clk: spacemit: re-enable PLLs after init"; the PLL init issue
+  will be handled in a separate series.
+- Send the K3 PLL5 and PLL8 1.8 GHz rate-table update as a standalone
+  patch.
+- Clarify that 1.8 GHz is nominal and 2 GHz is an overclocking rate.
+- Link to v1: https://patch.msgid.link/20260804-k3-pll5-pll8-1800mhz-v1-0-a3a75866ce32@linux.spacemit.com
 
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCapjIEQ0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQv/3sA/3cB2V5ShRbpFKlrOGG/ak5AYZnPZSI4Cj9mD/S8
-v+bfAP9TR48gN2ZQ6yxgPavM/EQxD9OF1y6BdJfsu6pnp6BtAA==
-=unDq
------END PGP SIGNATURE-----
+To: Stephen Boyd <sboyd@kernel.org>
+To: Brian Masney <bmasney+clk@redhat.com>
+To: Jerome Brunet <jbrunet+clk@baylibre.com>
+To: Yixun Lan <dlan@kernel.org>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-clk@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
+---
+ drivers/clk/spacemit/ccu-k3.c | 96 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
---5aa6fa5638c6e4ef04b289541629de5e53ccc8327148dde49673ae679c24--
+diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
+index 92b930d5ff30..950bf531c734 100644
+--- a/drivers/clk/spacemit/ccu-k3.c
++++ b/drivers/clk/spacemit/ccu-k3.c
+@@ -29,15 +29,91 @@ static const struct ccu_pll_rate_tbl pll2_rate_tbl[] = {
+ 	CCU_PLLA_RATE(3000000000UL, 0x0b3e2000, 0x00000000, 0xa0558c8c),
+ };
+ 
++/* Keep the firmware default as the first entry. */
+ static const struct ccu_pll_rate_tbl pll3_rate_tbl[] = {
++	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
++	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
++	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
++	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
++	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
++	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
++	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
++	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
++	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
++	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
++	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
++	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
++	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
++	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
++	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
++	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
++	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
++	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
++	CCU_PLLA_RATE(2050000000UL, 0x0b2a2d55, 0x00005500, 0xa0558686),
++	CCU_PLLA_RATE(2100000000UL, 0x0b2b3000, 0x00000000, 0xa0558787),
++	CCU_PLLA_RATE(2150000000UL, 0x0b2c32aa, 0x0000ab00, 0xa0558787),
+ 	CCU_PLLA_RATE(2200000000UL, 0x0b2d3555, 0x00005500, 0xa0558787),
++	CCU_PLLA_RATE(2250000000UL, 0x0b2e3800, 0x00000000, 0xa0558888),
++	CCU_PLLA_RATE(2300000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0558888),
++	CCU_PLLA_RATE(2350000000UL, 0x0b303d55, 0x00005500, 0xa0558888),
++	CCU_PLLA_RATE(2400000000UL, 0x0b320000, 0x00000000, 0xa0558989),
+ };
+ 
++/* Keep the firmware default as the first entry. */
+ static const struct ccu_pll_rate_tbl pll4_rate_tbl[] = {
++	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
++	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
++	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
++	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
++	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
++	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
++	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
++	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
++	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
++	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
++	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
++	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
++	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
++	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
++	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
++	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
++	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
++	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
++	CCU_PLLA_RATE(2050000000UL, 0x0b2a2d55, 0x00005500, 0xa0558686),
++	CCU_PLLA_RATE(2100000000UL, 0x0b2b3000, 0x00000000, 0xa0558787),
++	CCU_PLLA_RATE(2150000000UL, 0x0b2c32aa, 0x0000ab00, 0xa0558787),
+ 	CCU_PLLA_RATE(2200000000UL, 0x0b2d3555, 0x00005500, 0xa0558787),
++	CCU_PLLA_RATE(2250000000UL, 0x0b2e3800, 0x00000000, 0xa0558888),
++	CCU_PLLA_RATE(2300000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0558888),
++	CCU_PLLA_RATE(2350000000UL, 0x0b303d55, 0x00005500, 0xa0558888),
++	CCU_PLLA_RATE(2400000000UL, 0x0b320000, 0x00000000, 0xa0558989),
+ };
+ 
++/* Keep the firmware default as the first entry. */
+ static const struct ccu_pll_rate_tbl pll5_rate_tbl[] = {
++	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
++	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
++	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
++	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
++	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
++	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
++	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
++	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
++	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
++	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
++	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
++	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
++	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
++	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
++	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
++	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
++	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
+ 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
+ };
+ 
+@@ -49,7 +125,27 @@ static const struct ccu_pll_rate_tbl pll7_rate_tbl[] = {
+ 	CCU_PLLA_RATE(2800000000UL, 0x0b3a1555, 0x00005500, 0xa0558b8b),
+ };
+ 
++/* Keep the firmware default as the first entry. */
+ static const struct ccu_pll_rate_tbl pll8_rate_tbl[] = {
++	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
++	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
++	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
++	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
++	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
++	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
++	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
++	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
++	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
++	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
++	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
++	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
++	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
++	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
++	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
++	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
++	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
++	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
+ 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
+ };
+ 
+
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260802-k3-pll5-pll8-1800mhz-c81875a0a944
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
+
