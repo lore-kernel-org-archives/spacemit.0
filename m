@@ -1,156 +1,83 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BC04A0F19
-	for <spacemit@lists.linux.dev>; Thu,  3 Sep 2026 12:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788437426; cv=pass; b=aPYcCDZp1pYVHvfW3Z2UncGhKZtFKahBPTGhp+O8BP+Sz09WdEb/Gzggs58XMKj5vgK69bOp8Qwa5ECHxG7zI5A08SfD1/dvQZkhOV9JGQO703M7huAs6cAp84i63sFGlhA17zQeXdyq4H3606g9zShKMU+cSqx+6AMNpATbNe8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788437426; c=relaxed/simple;
-	bh=63YRcxrFcbqSkKQOUbtiKeloTiw2IC7QOnv7nHbacC0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=sgqYoyefWDMKm5SYaeAfn4LEIRVH1qONCB+FVAjYdlkQQL1vqiWCouM0cPVmg8ytT+BXTAqCYbkbVJ4B5M9D3bQAZlEHZ4Iz/5+ggLq1WXrNxkW2zrre7uqanHv/u23fJHRGOiYGTSXh/a5byXMGDJSCF5MJ6SHbnvLtV1TksaQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me; spf=pass smtp.mailfrom=icenowy.me; dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b=hTGjefJu; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FB14AA581;
+	Thu,  3 Sep 2026 13:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788440452; cv=none; b=u3PbT57PiePTylQzmbgZjEQHhq7In7Mxko9Xg8Al1CXU1gWkg327lgiYsXJ2ikaD7gPxHuPLir5kntlAINB7SSJAL2mGwKk+cm9/O3HOWxgKep+HF1Y50DIak30Ft8B603JKg6s7zi/vga96CvVYZVW42DH+7GrA+ioGzTTtGqc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788440452; c=relaxed/simple;
+	bh=2jCCbt+FQXCbWg0CbWpY7BWoaZps7tU2RqU8vFlYFJQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R4p5LtOxPF7O+FeY4mfDxoVAok/rXkEsnH7u6OWokgGul7vlIBoL77BSx+VbEXyfR287crK5BcmpsdUFYklcuxMfSaHveine4KKOlVeBs1Sr/3HioOePcHrWTzeqNggBwQxJnsymPKEG//6Zs6UHae6CzsXufLbI5r8xvUsxIMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuaBmTRR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b="hTGjefJu"
-ARC-Seal: i=1; a=rsa-sha256; t=1788437392; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Zc6xuJ3xl49VRPhcniB/3ZakchN1aZhf0cfhA9pujCw8BTWIBbuOJNaEZD7FBgBuMmflkIaIj0t/I1Zr5MXrPnXM2ZVpY0kcXn7r1pBHlbdZK9sA3PGFsax4Sg4pYf7q6xx1TV6/7mt0FzHtTziNgdXNZco/t9RBvPg7KKaLJZo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1788437392; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=udLpqyCAmF5x6NjypD7ZgtL4WKgcLBmXurRxSamaIC8=; 
-	b=VX8V98MFSDeLC7wSiSHo3oJo/P3uGJu3G+RCcjOqPG3lTkTQKWcS4997IRLXg5MqrSLEhW1eXMbaSXe+0iCCCRbDi+aJBIckRX9GYBrLTmek3+2RA6Ppo6eLZHtvWTQQCJXs2RSP316zCkNTCtChOYoNduQQdss0ssaYhgd6LX0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=icenowy.me;
-	spf=pass  smtp.mailfrom=uwu@icenowy.me;
-	dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788437392;
-	s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
-	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=udLpqyCAmF5x6NjypD7ZgtL4WKgcLBmXurRxSamaIC8=;
-	b=hTGjefJujyRPquMYHt1PxDjFJRQiLBSiwixit7f44eOGk/AkBVY7n+YwleID99bG
-	SXjZo446kyxFCFYE5T7XX3whUoRj5fh9RteO+romCHm3gMD/o8HfCe8nhTXDAJ+Ss3G
-	Cztc9JEW5MTmjIYsLxV2Jfb86fEKSiIc2LtdvEcMRutiARlEeyhQtcf1UYCVQnTHqn2
-	1sJ1Pnq5vW46tfI/a9JqouniyOcZDn98v/P0tU8iz/w/Z4YCtm7E00zcIIdJVuSqzgl
-	WY/s/rRSl6bZlTxkrFZYdN2EXPX1fiTpaNizRi1NSLxKNV0zNvZ5aPR7GpFJnokQbU9
-	Rb8Jd0Klzg==
-Received: by mx.zohomail.com with SMTPS id 1788437390405973.4421037897633;
-	Thu, 3 Sep 2026 05:09:50 -0700 (PDT)
-Message-ID: <576146d4f2752c3c3f6ec6c42812cb9956406383.camel@icenowy.me>
-Subject: Re: [PATCH v2 15/17] riscv: dts: spacemit: k3-pico-itx: enable the
- DisplayPort output
-From: Icenowy Zheng <uwu@icenowy.me>
-To: codykang.hk@gmail.com, David Airlie <airlied@gmail.com>, Simona Vetter	
- <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann
- <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,  Krzysztof Kozlowski	
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan	
- <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>, Neil Armstrong	
- <neil.armstrong@linaro.org>, Haylen Chu <heylenay@4d2.org>, Michael
- Turquette	 <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
- Brian Masney	 <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley	 <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou	 <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yao Zi
- <me@ziyao.cc>,  Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=	
- <u.kleine-koenig@baylibre.com>, Guodong Xu <docular.xu@gmail.com>
-Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org, 
-	devicetree@vger.kernel.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-clk@vger.kernel.org
-Date: Thu, 03 Sep 2026 20:09:42 +0800
-In-Reply-To: <20260809-k3-display-v2-15-327d7910bf71@gmail.com>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
-	 <20260809-k3-display-v2-15-327d7910bf71@gmail.com>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuaBmTRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BC11F000E9;
+	Thu,  3 Sep 2026 13:00:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788440443;
+	bh=iegNva3kkOGJqjCoKK1iRqK5iFz7ZD4YDy8u6AOCQVc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JuaBmTRR2rTrs+dzlAeqYCZZFwDrmCKGd3uT8IPDU4YSqKWK3PnBdTDk20//uAy14
+	 VhPiw1hy90EnkF/yrhvEX7blaDtM3iCXX1+a9rm4cqngxZCvjrdIUo8N781ht6zl+n
+	 ZGoDZzuJJYpfO52npPPSmT0MeXUx02U5Q0coe1Wf3yoobyrmJ5UjDj6FcyKudyS2Jj
+	 X0T8F3vy4cqCKhKe6SXb8Ug76wWClmniPyilsvJylEG194A+/lA3V9k/cDkCjZB0+G
+	 2R/m1C6D5+LwDKC5MglHBL2ieJISBwnsUKXQX1y0uJFG+uUeYP6EymykyJ8k++0rUo
+	 0vWPUZHVHHUZQ==
+Date: Thu, 3 Sep 2026 15:00:39 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Long Wan <long.wan@linux.spacemit.com>, 
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: mmc: spacemit,sdhci: Add tx delay
+ property
+Message-ID: <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
+References: <20260902-07-k3-sdhci-dts-v1-0-4e7909cf4233@kernel.org>
+ <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
 
-=E5=9C=A8 2026-08-09=E6=97=A5=E7=9A=84 21:14 +0800=EF=BC=8CCody Kang via B4=
- Relay=E5=86=99=E9=81=93=EF=BC=9A
-> From: Cody Kang <codykang.hk@gmail.com>
->=20
-> Pico-ITX brings the second DPU's output to an external DisplayPort
-> connector. Enable that DPU and the DisplayPort controller it feeds.
-
-The connector available on the Pico-ITX mainboard isn't a DisplayPort
-port -- it's a USB Type-C port instead.
-
-I think you need to model the Type-C port and alt functions of it.
-
-Thanks,
-Icenowy
-
->=20
-> Signed-off-by: Cody Kang <codykang.hk@gmail.com>
->=20
+On Wed, Sep 02, 2026 at 07:03:13AM +0000, Yixun Lan wrote:
+> From: Long Wan <long.wan@linux.spacemit.com>
+> 
+> Introduce a vendor specific property to configure the step count of TX
+> delay line which should be applied before RX tuning, compensating for
+> board level trace differences. The TX delay line result comes from test
+> out of real board which vary from different hardware layout.
+> 
+> Signed-off-by: Long Wan <long.wan@linux.spacemit.com>
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
-> v2:
-> - no change
-> ---
-> =C2=A0arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 11 +++++++++++
-> =C2=A0arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi | 11 +++++++++++
-> =C2=A02 files changed, 22 insertions(+)
->=20
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> index b89c1521e6649..6c31460990a75 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> @@ -6,6 +6,7 @@
-> =C2=A0#include <dt-bindings/gpio/gpio.h>
-> =C2=A0
-> =C2=A0#include "k3.dtsi"
-> +#include "k3-display.dtsi"
-> =C2=A0#include "k3-pinctrl.dtsi"
-> =C2=A0
-> =C2=A0/ {
-> @@ -221,3 +222,13 @@ hub@1 {
-> =C2=A0&usb2_phy {
-> =C2=A0	status =3D "okay";
-> =C2=A0};
-> +
-> +&dpu1_crtc0 {
-> +	status =3D "okay";
-> +};
-> +
-> +&dp1 {
-> +	pinctrl-names =3D "default";
-> +	pinctrl-0 =3D <&dp1_1_cfg>;
-> +	status =3D "okay";
-> +};
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-> b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-> index 3ee1471f37985..2f36eba20f1ee 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-> @@ -11,6 +11,17 @@
-> =C2=A0#define K3_GPIO(x)	(x / 32) (x % 32)
-> =C2=A0
-> =C2=A0&pinctrl {
-> +	/omit-if-no-ref/
-> +	dp1_1_cfg: dp1-1-cfg {
-> +		dp1-pins {
-> +			pinmux =3D <K3_PADCONF(24, 6)>;	/* dp1 hpd
-> */
-> +
-> +			bias-disable;
-> +			drive-strength =3D <25>;
-> +			power-source =3D <3300>;
-> +		};
-> +	};
-> +
-> =C2=A0	gmac0_rgmii_0_cfg: gmac0-rgmii-0-cfg {
-> =C2=A0		gmac0-rgmii-0-pins {
-> =C2=A0			pinmux =3D <K3_PADCONF(0, 1)>,	/*
-> gmac0_rxdv */
+>  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> index f35bf7ce08dd..3399a2d076dc 100644
+> --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> @@ -63,6 +63,16 @@ properties:
+>    pinctrl-1:
+>      description: Optional pinctrl state for 1.8V UHS operation with "uhs" name
+>  
+> +  spacemit,tx-delay:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 255
+
+default: 0, I guess?
+
+Best regards,
+Krzysztof
+
