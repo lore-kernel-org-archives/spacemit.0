@@ -1,149 +1,117 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A48D4503E8
-	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 13:55:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788530139; cv=pass; b=X0cjQMwwoLC7cOn3kJjLHMbINhSZxP9+H/+KT3k4KqxkZDpR1915w4tzOyUeSPseGRkm0pCvonZF/YztrJi+iSgRdF5QK9rs8CSeFbrnE6AmVZx7RDJX+jrG45tF0nBagOJDT8K1PnfRxwYCPH/v6AkfajsO5nuW3dcw+qor7V0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788530139; c=relaxed/simple;
-	bh=aYGTw43PGiruYrbCRK8lrDyOCcUgVMqsAo0cR/fDfeY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uwz05copn2EozITHlwsphONAsAFUidTUqDTFgGxPLACXpin8EROGypKBJnxyLqNgL1f9MZ8oKoFYdYeCQgoFsDx8tsriOzrwzaqXwCnj6WknbnoOjwtnAd9Cn2Cxn8BlkOoLK5E4Ec0LGImF7glWXu2jsCIpMVl7lFpZ5Bka33g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jAKTW+Lp; arc=pass smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jAKTW+Lp"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-69c600f76ccso1317460a12.0
-        for <spacemit@lists.linux.dev>; Fri, 04 Sep 2026 06:55:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1788530134; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ff28EKXZXE/PMSENwuRwcx3hwBqr9uWSqxPkMyMYFcT3H8pdsgcmPkpOGFUMO+7F5w
-         RJgs4tHwOklTlfL19zXJ+V0kleZ9OsPq7rVIZvLrQaGIVuKULXXYX3yVndDMsBkbgFRW
-         VMQcDS2URGr3y7lJQfn4njJBTLh7qTBHetAPQ0PQDZ+NjxZIvAnQdmalA/8JnuCHX+dC
-         liONOOcCMkbPNwdBD/MmXI8iYUYHEgJKU5pyCZO8w352HoZrznsHniyoDNI1Le5C02wG
-         MeKaWv3FCqJWQLRKl36nc1UeoL4R7KacTPKTbNrhWsX81HUr6OT8O2SUCTgxbLMbV7OD
-         aaxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=pkjDjgzDaw86AXoG1909ddrRynkL4ufeKlwmjCrQJhQ=;
-        fh=syw+NCrNAZ6nNC+tjxPO1JeBDYOKxPG5BDxMf4oiY+4=;
-        b=Cv01fqKX6kexcWjzd71e3Z5QnqcJEvq8Ks3nsHnwmxA/I3B3BpvKNVPdI1PJu8LgHQ
-         SCr7kROufCFWUvY751xf0IZqG5oGPL1eB6YUolaRI42rZ+VYI1vKWDQIp1TxlyM6WKKs
-         508XubjCLQF9MpH8y+z/RjjoDFC4IayzY8LAnWNKA80LtXuAyM0chpV5+N6NslRYabSG
-         hRj9HUQUTzguiNcCuwKprrzgw9bgVenJCzObnQEtm+wLjbqkEdf4rHrs4WyNQoJLe2jS
-         OpJqJDsdS5ZAgQ6ArXtXbuxK5AZI/sjgBLWw5uch8Zu6wa56p9kYl6YCL6LuJtf/ar+P
-         gERg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788530134; x=1789134934; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=pkjDjgzDaw86AXoG1909ddrRynkL4ufeKlwmjCrQJhQ=;
-        b=jAKTW+LpWdHT2jtAEkdeREeQFvDH9/RQ8wdZWuzZzXL96c7TA94peuX1Rs58pwAVXz
-         Hu9PvkwfIy2UHiS8LcAUGHNTXWZnKM4KuOBiKy2kLRs6GQ9vi8TSsKrnma0pOe9uPbnw
-         SMYsycn0f1pI6GjUkCYPNut6umPrBB69Bpmyb+F9/GNbxq09Qc5I6+fNUYqLbkaF2nOH
-         pRmSXC8x6jofJp8VorShXvkwbnpihmnbhkI+OPBUPkSfSFjduS4hZcJbJNyCSOTi3MI7
-         mmvsJ8NbZtbIkYSbzARuK1bGYc6zS39A5wRj5Yb0G38cRfWtwVCHQaCIKXIucvh6ih7v
-         12PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788530134; x=1789134934;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pkjDjgzDaw86AXoG1909ddrRynkL4ufeKlwmjCrQJhQ=;
-        b=Zj39lgBAy2OtCsLO/gcdfhBJkDSarEikRECr63yICw70bHNIbPFlmJ3zSgHc8ogJ+k
-         fSm6MRFnx297Eh10vCgN6OgbYx13Xc/e14FOoL54fj9dgRwCa2LoOSL/9ZlVqYvToHRD
-         uZgeoj3QwubHAQ8xvRuotetNNWk9lZfCet7Dzp2RZ95nNg5z6a7nEVDZ8NjZ/kh49KTx
-         pWzKq4X6mEYy7mI+FrAjkvLUxLtaaNV7QdAry0uIdQkLkTasuQRLXAJxzoMCkL7Gznck
-         ck7VtU/JjQFVA75MgYpfas/30u7sc5V3/0kfOfyKvBpXeW0dSS4z8YXrrHHIXjAUAiC6
-         NvwA==
-X-Forwarded-Encrypted: i=1; AKwUvByNPrutWkWwWkA5bQNkbujSxDmtSmfszDG/lJQcc6M328nO+H8eaWD+rdCC5t4GOv7r8+cRESyEow==@lists.linux.dev
-X-Gm-Message-State: AFuF++kMgzwrkpHbguPsFJ3gJZSOSp/tTKRYu91TFCqynBuFy3qOdEwb
-	Jd+DlfAGF0/FYsKgwUcx3zDr5hhQdwUUyIzI7tRh4d8ba2VgbkQVUfKMFs0FobFsoolrqVIQ2wC
-	qPiIu5M5P9BlaJFOLjQuIadjadGABo4U=
-X-Gm-Gg: AYBFou2iUEUyuDmqxFYeUfVxS3X7BEPzvQkrPUvGc/qLWlkIfM5URyNRd79dPn0uRFv
-	K2k8Ucr79O++bO5IGsbBBQvpS+l1nqxYitKlznF8SSwco6MjjSWccNkeEtvvlfG3NqxTEKy0FqS
-	mCYxuTLjPebX3WCmr77USmF2jyQDkRjP56YcliXRoJTvZM+NFV1pmWEDSiCEgfCC4qpF15IPUuJ
-	Gij2vlKmnNvVhr8bwq7keXhd/JqaLd0fdlISfIImDWF47Y6G1dpy1TZF5W3VERpYWGp9QYzxO+N
-	a8toR974NO9O3+g86cnEDkNBplpMi+bNuGKN4GT4Fk/aSB/4QedrCepzYpJd
-X-Received: by 2002:a17:907:720f:b0:c25:5d2:acf0 with SMTP id
- a640c23a62f3a-c260c8c21d3mr311924666b.8.1788530134042; Fri, 04 Sep 2026
- 06:55:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01428378824
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 14:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788531655; cv=none; b=Axk9wafdU39pWrrnj/NghqlWHBtAGhbThaz7kFYfXjlh+e3LXof/6Qr4fSj5OY3mq/pkPqYEg9Mobifou0d9gPcnqWI/eyAL4ZdC9Dd3xUMflq/f7Ao1unsgda2qIJOjTYI7kiAERFpHMWQWtcvZNsi5YdwNxBdqOkB72UO1PoE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788531655; c=relaxed/simple;
+	bh=NMqR8rOzZ9pIXQI46p/r7yGV/Ufqh7GeI8P/WtA7WK8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MZZ1sT0AruQUDoyz4XKVG8jXtHYcx7Mipe5w0/jImMAwO8RvCR3LdFksXtRA4DavSmr/P7wL3ct/ymn6u7wFSZi1ZluImABANPd4dt96B+mSxRMUvEYZw/MuRUVkArT4CEGCTISm87BpN6h4GXNEGT4MTT9w/b/2cDjtelDfMdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.113] (unknown [123.118.210.34])
+	by APP-01 (Coremail) with SMTP id qwCowAB3Se1v05pqrLYrBw--.65223S2;
+	Fri, 04 Sep 2026 22:19:28 +0800 (CST)
+Message-ID: <da1da563-1011-4b0c-a480-9d3d3acb6441@iscas.ac.cn>
+Date: Fri, 4 Sep 2026 22:19:27 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260904043724.2955444-1-s-vadapalli@ti.com> <20260904043724.2955444-21-s-vadapalli@ti.com>
-In-Reply-To: <20260904043724.2955444-21-s-vadapalli@ti.com>
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Date: Fri, 4 Sep 2026 10:55:19 -0300
-X-Gm-Features: AcwNN1WkMLBcSKjjx-549nVRZ1ZETkJHm5sDyQYa7o61EdbIDExabOintEMeFfo
-Message-ID: <CAJq09z44PfcEKsoH9eP+c5rxmzQ52hQO33k8sO-e6po1bpE6rQ@mail.gmail.com>
-Subject: Re: [PATCH net-next 20/33] net: dsa: realtek: rtl8365mb: Remove comma
- after sentinel-entry in match-table
-To: Siddharth Vadapalli <s-vadapalli@ti.com>
-Cc: dario.binacchi@amarulasolutions.com, mkl@pengutronix.de, 
-	mailhol@kernel.org, msp@baylibre.com, florian.fainelli@broadcom.com, 
-	jonas.gorski@gmail.com, andrew@lunn.ch, olteanv@gmail.com, 
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
-	kurt@linutronix.de, hauke@hauke-m.de, chester.a.unal@arinc9.com, 
-	daniel@makrotopia.org, matthias.bgg@gmail.com, 
-	angelogioacchino.delregno@collabora.com, ansuelsmth@gmail.com, 
-	linusw@kernel.org, alvin.sipraga@analog.com, clement.leger@bootlin.com, 
-	justin.chen@broadcom.com, dlan@kernel.org, rogerq@kernel.org, 
-	hkallweit1@gmail.com, linux@armlinux.org.uk, rjui@broadcom.com, 
-	sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com, 
-	opendmb@gmail.com, andrei.botila@oss.nxp.com, wangruikang@iscas.ac.cn, 
-	amadeus@jmu.edu.cn, kees@kernel.org, tmshlvck@gmail.com, c-vankar@ti.com, 
-	horms@kernel.org, vadim.fedorenko@linux.dev, daniel.zahka@gmail.com, 
-	nora.schiffer@ew.tq-group.com, v-singh1@ti.com, oss@vassilevski.com, 
-	haokexin@gmail.com, alex@sverdlin.org, aleksandr.loktionov@intel.com, 
-	lgs201920130244@gmail.com, linux-can@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-omap@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 25/33] net: spacemit: k1_emac: Remove comma after
+ sentinel-entry in match-table
+To: Siddharth Vadapalli <s-vadapalli@ti.com>,
+ dario.binacchi@amarulasolutions.com, mkl@pengutronix.de, mailhol@kernel.org,
+ msp@baylibre.com, florian.fainelli@broadcom.com, jonas.gorski@gmail.com,
+ andrew@lunn.ch, olteanv@gmail.com, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, kurt@linutronix.de, hauke@hauke-m.de,
+ chester.a.unal@arinc9.com, daniel@makrotopia.org, matthias.bgg@gmail.com,
+ angelogioacchino.delregno@collabora.com, ansuelsmth@gmail.com,
+ linusw@kernel.org, luizluca@gmail.com, alvin.sipraga@analog.com,
+ clement.leger@bootlin.com, justin.chen@broadcom.com, dlan@kernel.org,
+ rogerq@kernel.org, hkallweit1@gmail.com, linux@armlinux.org.uk,
+ rjui@broadcom.com, sbranden@broadcom.com,
+ bcm-kernel-feedback-list@broadcom.com, opendmb@gmail.com,
+ andrei.botila@oss.nxp.com, amadeus@jmu.edu.cn, kees@kernel.org,
+ tmshlvck@gmail.com, c-vankar@ti.com, horms@kernel.org,
+ vadim.fedorenko@linux.dev, daniel.zahka@gmail.com,
+ nora.schiffer@ew.tq-group.com, v-singh1@ti.com, oss@vassilevski.com,
+ haokexin@gmail.com, alex@sverdlin.org, aleksandr.loktionov@intel.com,
+ lgs201920130244@gmail.com
+Cc: linux-can@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-omap@vger.kernel.org
+References: <20260904043724.2955444-1-s-vadapalli@ti.com>
+ <20260904043724.2955444-26-s-vadapalli@ti.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20260904043724.2955444-26-s-vadapalli@ti.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qwCowAB3Se1v05pqrLYrBw--.65223S2
+X-Coremail-Antispam: 1UD129KBjvdXoWruFW5ur1kJFyxAr18Xr1UZFb_yoWkKrbE9r
+	1fXas3Jr4DCryv9a4akF1avrWkKrs8Xr48Was7KrW3ZasrWr1kArWkCF97t34furWrXFZ3
+	GrnxKF48Aw17KjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbsAYjsxI4VW3JwAYFVCjjxCrM7AC8VAFwI0_Wr0E3s1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVWrXVW3AwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_Wrv_Gr1UMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
+	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
+	UI43ZEXa7IUnGZX7UUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Em sex., 4 de set. de 2026 =C3=A0s 01:39, Siddharth Vadapalli
-<s-vadapalli@ti.com> escreveu:
->
+On 9/4/26 12:36, Siddharth Vadapalli wrote:
+
 > Since sentinel is the last entry and we do not expect further entries
 > following it, remove the comma.
 >
 > Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 > ---
->  drivers/net/dsa/realtek/rtl8365mb_main.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/net/ethernet/spacemit/k1_emac.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> diff --git a/drivers/net/dsa/realtek/rtl8365mb_main.c b/drivers/net/dsa/r=
-ealtek/rtl8365mb_main.c
-> index 4c305756116c..f8220d832e46 100644
-> --- a/drivers/net/dsa/realtek/rtl8365mb_main.c
-> +++ b/drivers/net/dsa/realtek/rtl8365mb_main.c
-> @@ -3352,7 +3352,7 @@ const struct realtek_variant rtl8365mb_variant =3D =
-{
->
->  static const struct of_device_id rtl8365mb_of_match[] =3D {
->         { .compatible =3D "realtek,rtl8365mb", .data =3D &rtl8365mb_varia=
-nt, },
-> -       { /* sentinel */ },
-> +       { /* sentinel */ }
+> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+> index f7f16397a2c2..29385d78fc4b 100644
+> --- a/drivers/net/ethernet/spacemit/k1_emac.c
+> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
+> @@ -1161,7 +1161,7 @@ static const struct ethtool_rmon_hist_range emac_rmon_hist_ranges[] = {
+>  	{  512, 1023 },
+>  	{ 1024, 1518 },
+>  	{ 1519, 4096 },
+> -	{ /* sentinel */ },
+> +	{ /* sentinel */ }
 >  };
->  MODULE_DEVICE_TABLE(of, rtl8365mb_of_match);
->
-> --
-> 2.51.1
->
+>  
+>  /* Like dev_fetch_dstats(), but we only use tx_drops */
+> @@ -2066,7 +2066,7 @@ static const struct dev_pm_ops emac_pm_ops = {
+>  
+>  static const struct of_device_id emac_of_match[] = {
+>  	{ .compatible = "spacemit,k1-emac" },
+> -	{ /* sentinel */ },
+> +	{ /* sentinel */ }
+>  };
+>  MODULE_DEVICE_TABLE(of, emac_of_match);
+>  
 
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Acked-by: Vivian Wang <wangruikang@iscas.ac.cn>
+
+Regards,
+Vivian "dramforever" Wang
+
