@@ -1,103 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A55448D14
-	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 20:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF67547887E
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 22:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788555132; cv=none; b=ApcnNztjojp98c6kZ+oerjrXKybGNK+YSkzZGHIInrDTIqEsMqbQ2tYJoR2KSQxMzl8r2pn9A3e3DYknT0nZd3d1XPLIPFkSP9pWMSSYxKKON+2Wm4k2Ye+79rkEyGz//0Tt62mt9u+NBdOWYoh+1lPvgNQO2yArjtZHrDA3f3Y=
+	t=1788561268; cv=none; b=mLSYzCkRuptUYTpPENq0BbmOSisqIq502LiX+LnOVY7TGKnQtw12wNxF/Li8JOWAX09P3ek3fu6AASAbLU4NnDGMyYrGY8GPJTCOrrOUMWOdoPR7XqYoWfXdy6xr+APZgPTaWrjdolIuxzGA6fGFFxUTxCEEsmRwkTa6FwAaJeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788555132; c=relaxed/simple;
-	bh=c30PDiddrLA4oyHlYfg02onRKnBMXzqv4IbLFULbIeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d4+Mxuey4ecuzY4CKIp++WkMdwYvgxqh4nnCDnxtOebo3bWH50F/XJN85ibwM3ELuO/vOZPZFHss3nUvZD2A8/hbCtM7LkRwoiLXV0/5m0Kn9OZxPy9ZOvQWqWfU6YJOKPGbSOV5HZ4CpXpqQ9Vxm3No5YQT/HEqDP0Gt/t19NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fU9si/dV; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788561268; c=relaxed/simple;
+	bh=dft8jIKZLyvDmq/LPRhVyMm6r8WW3Y1LCnA91drhmyY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kE3M3r+wK+ZAi9QIK3p9Dm0Z06cLaZkfIoHwU8tfSf54+C23XnA8ERtPcH63BaflSch4eAKIBKCZf8JpvCD3i/UtMUGvblc4yJc+lCgLGyEHCWAj5WfCXpslU0K9CyFmorcVbdsP9wBilTm4uXHd5qrAfhaMkthSdE+ulQ/+XiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JYoDekoI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fU9si/dV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEBD1F00A3D;
-	Fri,  4 Sep 2026 20:52:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JYoDekoI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753DC1F0155A
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 22:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788555123;
-	bh=6GQcHgR85XdlVHpXTOOmvcdOAAPtunBQvPqpohTbcTc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fU9si/dVdej8WMy/sABljKGhehyDdd9jeXzw0BEoItdKMY40wA8R3QfCR0rpmxnNO
-	 uCRlf4b906O3gHpjUSoBTYXzN7wZ9rd8R4lOx2klnL8ckPdNg9fWELfRvnbcLXrqpp
-	 DKpzolsh8zZU/BtjLaA8eDKg+/JQmjv6YoyBADtOzrzYBJD3jzSn4z2cvgBcVO2YeU
-	 vEUe71vc6wrdAdFGhTiI0CqYGvtKY5PSGcWErOhnYwzWWEk7gn2pLMNsoz8RIupKQE
-	 P2slcOJmv6KoR6YLOhdzYU6ny5/5Q2YudCCd50u0OaPcGewBk0p0gz2iK+qjKcuBXI
-	 W+ZLYoloFauiA==
-Date: Fri, 4 Sep 2026 20:52:00 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Tim Ouyang <tim609@andestech.com>
-Cc: u-boot@lists.u-boot-project.org, spacemit@lists.linux.dev,
-	u-boot-spacemit@groups.io, Lukasz Majewski <lukma@denx.de>,
-	Tom Rini <trini@konsulko.com>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Raymond Mao <raymond.mao@riscstar.com>,
-	Guodong Xu <guodong.xu@oss.qualcomm.com>,
-	Peng Fan <peng.fan@nxp.com>, Torsten Duwe <duwe@suse.de>,
-	Ryan Chen <ryan_chen@aspeedtech.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Alexey Charkov <alchark@flipper.net>, oyst.lnx@gmail.com
-Subject: Re: [PATCH 6/8] clk: spacemit: k3: reduce clock tree for SPL build
-Message-ID: <20260904205200-GKB53903@kernel.org>
-References: <20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org>
- <20260825-01-k3-clock-reset-support-v1-6-c430253e759c@kernel.org>
- <shthcaz5wjcp2vwd2c2i74axiayf4zhlgsoq5fbswofld5poq4@znfx5b2yby2t>
+	s=k20260515; t=1788561267;
+	bh=dft8jIKZLyvDmq/LPRhVyMm6r8WW3Y1LCnA91drhmyY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=JYoDekoIWqbyA2d6AFs9pkfIIIPviX99b4PNrXAxgbCQQF1dL9694ILlfzsOF9bjh
+	 EDHjfFBj2rg1kN5BUPZ7sWwgCJdF1O2LBadFOYioLe3NL6Z0UxgN8bQZIPykzb0kIV
+	 CeP2V94/YysKm8y7qehaNBmQINcQeTkVH3rYQZFzRNSJADYXZ6FaZoxF7+yGFHc7bL
+	 j29jH+Fm2j64ewfDLmTZ/aVDHVwg5weAwMpu4nTwJimPoca4wLEQjEhcIXxlIJ7Aso
+	 N2p5m9b0qKictMOibmx7IdV2ehpyhNL4kLPEvcWp4PUPxcQfEqdR6Xu/62SYhhmq8h
+	 QX8pZpIOeK8Tw==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5b4ae3e201cso1401581e87.2
+        for <spacemit@lists.linux.dev>; Fri, 04 Sep 2026 15:34:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBxOGCYZqSLOB3q83Py/IXiX4d5ji+T1YZQeI+qoURveDdfQ5jwKEsncqSdJI4KVg2PWaFpew86O8g==@lists.linux.dev
+X-Gm-Message-State: AFuF++k5JRaXKqJIxHyv1YyeOUYEd3/t+MfL09YZAM5d2L3OqWYMuyWI
+	t9HmkxLx7M2mZLVGeOWhjST+RgSDnHbwkQ1hVedG9XAKPIT2RYO8twWtanFT1UdLOErxOBlr05r
+	rKJpCYo69xtUkrmix9ckHo7ptx1pNxzI=
+X-Received: by 2002:a05:6512:1313:b0:5b0:22a6:6b13 with SMTP id
+ 2adb3069b0e04-5b616e717cfmr1606890e87.0.1788561266181; Fri, 04 Sep 2026
+ 15:34:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <shthcaz5wjcp2vwd2c2i74axiayf4zhlgsoq5fbswofld5poq4@znfx5b2yby2t>
+References: <20260904043724.2955444-1-s-vadapalli@ti.com> <20260904043724.2955444-21-s-vadapalli@ti.com>
+In-Reply-To: <20260904043724.2955444-21-s-vadapalli@ti.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sat, 5 Sep 2026 00:34:13 +0200
+X-Gmail-Original-Message-ID: <CAD++jL=V6eLEywiyKKFCQMZikQ79ULaq1uPYAQxu-rtYuSW7CA@mail.gmail.com>
+X-Gm-Features: AcwNN1X2dJF1quKIRJ19ZE4zvP-mImnANUJmKgqRVeK17MZA2wOCllak4fdVdf4
+Message-ID: <CAD++jL=V6eLEywiyKKFCQMZikQ79ULaq1uPYAQxu-rtYuSW7CA@mail.gmail.com>
+Subject: Re: [PATCH net-next 20/33] net: dsa: realtek: rtl8365mb: Remove comma
+ after sentinel-entry in match-table
+To: Siddharth Vadapalli <s-vadapalli@ti.com>
+Cc: dario.binacchi@amarulasolutions.com, mkl@pengutronix.de, 
+	mailhol@kernel.org, msp@baylibre.com, florian.fainelli@broadcom.com, 
+	jonas.gorski@gmail.com, andrew@lunn.ch, olteanv@gmail.com, 
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
+	kurt@linutronix.de, hauke@hauke-m.de, chester.a.unal@arinc9.com, 
+	daniel@makrotopia.org, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, ansuelsmth@gmail.com, 
+	luizluca@gmail.com, alvin.sipraga@analog.com, clement.leger@bootlin.com, 
+	justin.chen@broadcom.com, dlan@kernel.org, rogerq@kernel.org, 
+	hkallweit1@gmail.com, linux@armlinux.org.uk, rjui@broadcom.com, 
+	sbranden@broadcom.com, bcm-kernel-feedback-list@broadcom.com, 
+	opendmb@gmail.com, andrei.botila@oss.nxp.com, wangruikang@iscas.ac.cn, 
+	amadeus@jmu.edu.cn, kees@kernel.org, tmshlvck@gmail.com, c-vankar@ti.com, 
+	horms@kernel.org, vadim.fedorenko@linux.dev, daniel.zahka@gmail.com, 
+	nora.schiffer@ew.tq-group.com, v-singh1@ti.com, oss@vassilevski.com, 
+	haokexin@gmail.com, alex@sverdlin.org, aleksandr.loktionov@intel.com, 
+	lgs201920130244@gmail.com, linux-can@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-omap@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Tim,
+On Fri, Sep 4, 2026 at 6:39=E2=80=AFAM Siddharth Vadapalli <s-vadapalli@ti.=
+com> wrote:
 
-On 17:55 Wed 02 Sep     , Tim Ouyang wrote:
-> On Tue, Aug 25, 2026 at 04:24:16AM +0000, Yixun Lan wrote:
-> > Due to SPL image running in a memory space constraint SRAM environment,
-> > so reduce the whole clock tree a bit to make it fit for final runtime
-> > requirement, only a subset clock tree is registered, which includes UART,
-> > SDHCI, I2C (TWSI), and their PLL/MPMU/APMU/APBC ancestors; while the
-> > full clock tree is retained in non-SPL build.
-> >
-> > Where surviving SPL CCU definitions reference parent clocks outside
-> > that subset tree, it will use "clock-dummy" as name of clock parent to
-> > ensure the framework still successfully resolves the parent clock lookup.
-> >
-> > Signed-off-by: Yixun Lan <dlan@kernel.org>
-> > ---
-> 
-> [...]
-> 
-> >  /* APMU clocks start */
-> > +#if IS_ENABLED(CONFIG_SPL_BUILD)
-> > +static const char * const axi_clk_parents[] = {
-> > +       "pll1_d8_307p2", "pll1_d6_409p6",
-> > +};
-> > +CCU_MUX_DIV_FC_DEFINE(CLK_APMU_AXICLK, axi_clk, axi_clk,
-> > +                     axi_clk_parents, ARRAY_SIZE(axi_clk_parents),
-> > +                     APMU_ACLK_CLK_CTRL, APMU_ACLK_CLK_CTRL, 1, 2,
-> > +                     BIT(4), 0, 1, 0);
-> > +#else
-> >  static const char * const axi_clk_parents[] = {
-> >         "pll1_d8_307p2", "pll1_d6_409p6",
-> >  };
-> 
-> The SPL clock subset does not seem to include all the clocks described
-> in the commit message. For example, the SDH0/1/2 clocks are excluded
-> from the SPL build.
-> 
-> Is this intentional?
+> Since sentinel is the last entry and we do not expect further entries
+> following it, remove the comma.
+>
+> Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-You right, but I will update the commit message instead of changing the code.
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
-The lastest dts in u-boot next branch just synced with upstream kernel v7.2
- which doesn't include SDHCI support (need to wait for v7.3), also the SDHCI
-for SPL support still needs some testing, so I will postpone it in later patches
-
--- 
-Yixun Lan (dlan)
+Yours,
+Linus Walleij
