@@ -1,218 +1,206 @@
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DC630D41F
-	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 03:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788492302; cv=none; b=u2qRpcQmTDQlEDGH81Tm9qnmJrDsZtwn8d1p2BWXVikgnOKiHTWB7QHwtECNWb+6QNl1LVToFOF/n7Ou12zB7c0yBGb+iqp/ggVG+DAfJ6dQh/Ur76sUb7vKovxqWNH5HCJT8aKNi4IN+c9bSbtq9J7LEwLR7c0IMTCfxf/xoVc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788492302; c=relaxed/simple;
-	bh=6RFwegYkZvXOWUnvdsJi8ZI8LqlLw0kxnIMTaIT7GiQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=LcfMzLFSMneSHbMLuMCdyRDa93wTPngMKnvV6zw7eWEjSGZIrWVTmVh6ljpDnglsTJpyxqxYqfyq5p5cHsyOq4nD3kXXJQOsE60tc0QdBJaUkZl40hJhmTcola8uaD1Ejds88IHtsj3uHxkjVNblO2LaJeWfzWPbsHQENo55Ujg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Zj8yLUQl; arc=none smtp.client-ip=54.206.16.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DA63EC684
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 04:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.150.75
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788496536; cv=fail; b=tNbOnQ6ltOGXaIUoSnDdA6h6I0M0vHf2lanK2FNPZFvPaqW0TW17kCvP4u9togucaAzj+u9LWGiQ2637ntMKGOhLt5VhW01qjY4IQOtXKhe0AYKvHsajFPVzPE4FIxlIcKeD7N5FAXsNJBn3bwDjrB69lwzOTeF8pAvCd+tjCAU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788496536; c=relaxed/simple;
+	bh=VQrY57kwcXOOWbavPWvrbrP7cTs4HIXMF7X6wZ94rhY=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=vF6J9jp1WwHJ5LPQV4+4T43/W50A7zaOdnw5ff9+lL4BBSwUSWvY9+rtWKlr5Z6s/41KzdQvQr9EDmCePIAtG9AHAQ8Kfcwr5fFIuTGFd97GZas4uuuMnebDeQSBJje8W6JXbDZQRU9AEVFUAy2DK7jfb/v3l1r6S30E6TjwRz0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=Td3KE/nz; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=dZWCs0fG; arc=fail smtp.client-ip=148.163.150.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Zj8yLUQl"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788492269;
-	bh=+fjce5Gv68gDb4c/l/fe5+Q4SZGtlsosTF1WEjjxUK8=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=Zj8yLUQlyL2m6aW139jNLntDDWwOrrsU4IJ5v7dA4/ogtjFSLT7ga397YGm8m0fLP
-	 VR6QQcq+e07+VFKYPKW3A2kPtwwOWmw7ucELMob7u3CQdStIYPfjxTLBn7xtKkK+yP
-	 rjcANDqptKp07AifhFMujrBNb72RNpM8HH/TXIRA=
-X-QQ-mid: zesmtpsz4t1788492267t97a1c389
-X-QQ-Originating-IP: UUFOhxrmyWmafniu2RpwCuAxO+jazOpB/m3P/JOKzfU=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 04 Sep 2026 11:24:25 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16749050241281996791
-EX-QQ-RecipientCnt: 19
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="Td3KE/nz";
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="dZWCs0fG"
+Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
+	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 6842sT6B1100045;
+	Thu, 3 Sep 2026 23:34:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=mO5xQaZj6u4TBt8A/FD+zc11mmNwC1ikHTOnR9Ktt
+	Wg=; b=Td3KE/nzOGakCtn3VKUiCx88kDZKymjdhl8Pmgz3WK1bO6GWznEuaRXHn
+	kE2iY36D6fQkubUcfiVT/LzRXMSw/OpiyWT2VIx7hF1QHyWEp6g57GdXaRLXAL2p
+	KorILOmSWf/kp2K6G9zSchglwp4UQ3xoMTAvIPa3/cQtmhP3S9Ylhvs+tqmaYZoL
+	FHqRtLyYQow67e3UsYsGitjw+hcbpO7s4ZJTKu0bigbIEkjvUNuYQQxaH7aEBCVm
+	PxnjqfJpD8QjJvWg6LnlM20fnTJhjdTU7HF0Re+fJL2UdCY+wOpLmMS8xx+PWlX9
+	0X/MVmXdDsDCrQ31zp5t6KhyMSYbA==
+Received: from ph0pr06cu001.outbound.protection.outlook.com (mail-westus3azon11011052.outbound.protection.outlook.com [40.107.208.52])
+	by m0384305.ppops.net (PPS) with ESMTPS id 4gf0jv8n53-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 03 Sep 2026 23:34:18 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hKvwsRJbf475LJOwCBHRosu5t/WCH0CRsGslzO+z8MYAPeqGQ3P2S9IEB4vAFgXOvSAvs3nDS/h8diVEHv4yt+Sr43jlK7Iz0pvZyR4sg5CK0g+S0THRcSlgmfb899BzZ7S1Ba0jWme5IsqsppHc10mIVuMottcaaUcKHscNChzEBw2HImE5pxHopZZAwQ+oDQl2KDFovaUtl32UO3sxxuNYPD04TcqtopcRfxNBf8C2buYplgk4Ax3z6b5dkSysqKpfpFL26QiCGJciFAxdFeLEPRrLtdSn57juyu4c0DuVRkBhefg400G49efS4pMH71dvbIYQHZi6iGVqZ3OKzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mO5xQaZj6u4TBt8A/FD+zc11mmNwC1ikHTOnR9KttWg=;
+ b=s+DpR/mH/1cOFEP4FeKTYXU0Am9ak+F6B8B85xB6IENZGlzLI4veQnTAtjdaAQVLM5b5X/AaQBjnMjrJiM5q0PpG2XH7RMDNYcao0vYD3reYnZ1ey8bo3aOweS385zbeQTm+MHovTmxk7gP14eZ/5IHltK34XkAKz/zI0DfyVDG2MbGBukBqi4FZWwQEm5Nv1bXzWHj2VY+dc/ldAQ7HG8U5s16wD6MF1x9lqY0m5z5c1R+ixKnHDrZFbsvgkc4H0y6WrY34tcbd33YaZUPBYhD+WsGZoHzu0wKc9rhJZdecRKoqIPgvYA5aIruxsl0sASPjloMTQxfqraZrrBSe+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.194) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=ti.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mO5xQaZj6u4TBt8A/FD+zc11mmNwC1ikHTOnR9KttWg=;
+ b=dZWCs0fG3VdLdeOe5J0xCPs4GwMO82IF1Q6pw0VO7fO5zuu+9m16Nu7rSkubIOAZP/5FLXlZcdCm6Qb02aCv098nClGDmr4q8L3vU5uNXdINS3uc50oflWAHXMWcMPnCUKoJMk8rxcUc+YnoLxj6FCf8d7HteERE2yq3zO0xeY0=
+Received: from MW4PR04CA0228.namprd04.prod.outlook.com (2603:10b6:303:87::23)
+ by CY5PR10MB5916.namprd10.prod.outlook.com (2603:10b6:930:2c::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.10; Fri, 4 Sep
+ 2026 04:34:14 +0000
+Received: from SJ1PEPF000023D3.namprd21.prod.outlook.com
+ (2603:10b6:303:87:cafe::35) by MW4PR04CA0228.outlook.office365.com
+ (2603:10b6:303:87::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.12 via Frontend Transport; Fri, 4
+ Sep 2026 04:34:14 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 198.47.23.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
+Received: from lewvzet200.ext.ti.com (198.47.23.194) by
+ SJ1PEPF000023D3.mail.protection.outlook.com (10.167.244.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.382.0 via Frontend Transport; Fri, 4 Sep 2026 04:34:14 +0000
+Received: from DLEE211.ent.ti.com (157.170.170.113) by lewvzet200.ext.ti.com
+ (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 3 Sep
+ 2026 23:34:12 -0500
+Received: from DLEE213.ent.ti.com (157.170.170.116) by DLEE211.ent.ti.com
+ (157.170.170.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 3 Sep
+ 2026 23:34:12 -0500
+Received: from lelvem-mr05.itg.ti.com (10.180.75.9) by DLEE213.ent.ti.com
+ (157.170.170.116) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Thu, 3 Sep 2026 23:34:12 -0500
+Received: from toolbox.dhcp.ti.com (uda0492258.dhcp.ti.com [10.24.68.110])
+	by lelvem-mr05.itg.ti.com (8.18.1/8.18.1) with ESMTP id 6844Xh1H3831572;
+	Thu, 3 Sep 2026 23:33:58 -0500
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
+To: <dario.binacchi@amarulasolutions.com>, <mkl@pengutronix.de>,
+        <mailhol@kernel.org>, <msp@baylibre.com>,
+        <florian.fainelli@broadcom.com>, <jonas.gorski@gmail.com>,
+        <andrew@lunn.ch>, <olteanv@gmail.com>, <davem@davemloft.net>,
+        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+        <kurt@linutronix.de>, <hauke@hauke-m.de>, <chester.a.unal@arinc9.com>,
+        <daniel@makrotopia.org>, <matthias.bgg@gmail.com>,
+        <angelogioacchino.delregno@collabora.com>, <ansuelsmth@gmail.com>,
+        <linusw@kernel.org>, <luizluca@gmail.com>, <alvin.sipraga@analog.com>,
+        <clement.leger@bootlin.com>, <justin.chen@broadcom.com>,
+        <dlan@kernel.org>, <rogerq@kernel.org>, <hkallweit1@gmail.com>,
+        <linux@armlinux.org.uk>, <rjui@broadcom.com>, <sbranden@broadcom.com>,
+        <bcm-kernel-feedback-list@broadcom.com>, <opendmb@gmail.com>,
+        <andrei.botila@oss.nxp.com>, <wangruikang@iscas.ac.cn>,
+        <amadeus@jmu.edu.cn>, <kees@kernel.org>, <tmshlvck@gmail.com>,
+        <c-vankar@ti.com>, <horms@kernel.org>, <vadim.fedorenko@linux.dev>,
+        <daniel.zahka@gmail.com>, <nora.schiffer@ew.tq-group.com>,
+        <v-singh1@ti.com>, <oss@vassilevski.com>, <haokexin@gmail.com>,
+        <alex@sverdlin.org>, <aleksandr.loktionov@intel.com>,
+        <lgs201920130244@gmail.com>
+CC: <linux-can@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-renesas-soc@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+        <spacemit@lists.linux.dev>, <linux-omap@vger.kernel.org>,
+        <s-vadapalli@ti.com>
+Subject: [PATCH net-next 01/33] can: bxcan: Remove comma after sentinel-entry in match-table
+Date: Fri, 4 Sep 2026 10:06:07 +0530
+Message-ID: <20260904043724.2955444-2-s-vadapalli@ti.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20260904043724.2955444-1-s-vadapalli@ti.com>
+References: <20260904043724.2955444-1-s-vadapalli@ti.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=a1891db0d9ec175249303eb0426fd87ee9cd330fcbf1e2986c4b86e25967;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 04 Sep 2026 11:24:22 +0800
-Message-Id: <DL67LEVCXFA5.39M5FO7JGKWZS@linux.spacemit.com>
-Subject: Re: [PATCH v4] clk: spacemit: k3: add CPU PLL rate tables
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Aurelien Jarno" <aurelien@aurel32.net>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Cc: "Michael Turquette" <mturquette@baylibre.com>, "Inochi Amaoto"
- <inochiama@outlook.com>, "Alex Elder" <elder@riscstar.com>, "Haylen Chu"
- <heylenay@4d2.org>, <stable@vger.kernel.org>, "Stephen Boyd"
- <sboyd@kernel.org>, "Brian Masney" <bmasney+clk@redhat.com>, "Jerome
- Brunet" <jbrunet+clk@baylibre.com>, "Yixun Lan" <dlan@kernel.org>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
- <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260903-k3-pll5-pll8-1800mhz-v4-1-afafd9cb47d9@linux.spacemit.com> <apmuG46sBg2rGzCD@aurel32.net>
-In-Reply-To: <apmuG46sBg2rGzCD@aurel32.net>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MOsVgoF62rlXg2jMy+En6/iirgDaQNRxZyXqrMP91f3S8ZHwZMVbtaJr
-	7xM27fIaocapgAnzKqQp5stV87/ZpBc/zKO6PJuvevedWvY9zw5FFoz/3JV0FOolmEnfyGC
-	KjDSRkS7G/2zDvIQYc3c4B43MSMHXs+QROIIVuMkfPItNf6WkF9Y7SStWvLuxgOpFKYstbO
-	E8ya/Mp+URQBbu6hVxKByMG0w+zbXAdmPf4QIWRia/xGiAoA12zo5abK8p5vKQw175Y/fqy
-	QhpqPQ7UJt2FJz9OOEJ/4y1oK3RUMbKLQ9qE2VzjsksyZfQLQ+L7WkXbBGnLnwwC16AdJQL
-	c3om90lp2j49lBfkHhaXBT7xKbsguaHKhqILVfhS/FVpujLYZ2JPS+QfDKgQETZtj6uqOxh
-	kg6X35hm8x8RgX2peklC9yHTyQ3f3e/fdPc7s87d3fTANlIn/T8XqpEl/3/bGsPnONcXa7B
-	0sXLQttbLYKutcn0LixM7wet4tI/8mKTCd3h41glH6cC7jGk8rlri4LtHSnzkd1jZcKripf
-	j7xzsm+0gP1mZZk/bF5J9/xb2RSeGI6hWIsllNWajCGLR9ti/kF4k2PvomRof0NrYDxxKro
-	W6KEdmFMWSElR4hqEOvGx1ZOYr+w5X7FeR5N8RSwpQe1dSyyrM+gEZHcSvJylse8N9FQik2
-	2PcCN3bSLovT8BTREGCD3WTHja5a50R/R/KpXxpI5+QRi5gzv3Hm/sSnLiBVPsf12OqNpyS
-	3KakqTIoiABkNOmDDT8RHZAfjdN+kZDsUFc1ALiUafPZ6gkvJ1JyAwRJ98NRSbV+78b8Phx
-	ZPdnVCBsgFGHCQ4Rf12cdikVShykaPvkxFI+XLlvYy+FKt1oWpbdqslGxmNZwFH95egsF/T
-	6VBlf4GICSzNhi9PV+KiqZX88el5Wuso/zbDHiYVf6lzHJ/w6BtvayOw1V7/gR/NZgx9px2
-	JLd+d7MiCfKzoOmm1Feg3zd+IJ9kHQAfgo8M5sadAOwNonVfZoPYpXdoNwGjciuTFzjgjrf
-	XysuNksj4lxi/ZCYbN2eZu3ZD0rjZd35uug+7OwcN6CVmuRDz1lpqsHCNPFuuWfG3kT/8nV
-	WrB8WGoZVJunAMSLegddIhyZNsCfJsctV3Zpd4M/EhdJybl7oSG+olr+UCqxZK7nw==
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D3:EE_|CY5PR10MB5916:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8d0ec47-dff6-485a-ba2f-08df0a3dc633
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|1800799024|23010399003|82310400026|36860700016|10067099003|56012099006|22082099003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info:
+	009uTKOu/+7W2NqrG5eDh7VFZm80dmOtpYa+FPYg8fR7RklwYe2x6+cWoR3GrrGFixPKJnYCqmfSijNw1vlyMKyNLJq62Zf9BakSONaUh5ZdNaJDfaf/yto+dIFKSVN4uKQVetLCUGeI6A4bZsfPxbzO8QsrScdEfXVSfvApDHTZ55s0T7qhOn52JRXsM+evxtKIBkjclda7Frcwg5g9YK5tnTuB+K9CRyy1Xtmer2c6GQvEWpCUIQINZ1LMQx6bAoqnq+9zh2AVWh25iVL46c4/8h6C+Kdh+M8ebNdnMWO9Fn8i1/VALossgi6A4L6UZNo8D/vveS5qju4dyGi3Dc3ojN0xVJQRTUNiQCvX5Z1vUR6jjVDBE2mqXgVM2UQO/PpnfVSTMqhQldLfXhXtWbedf4GSOErB6JsRUJv7MIazFPtzJYuFblDqaPlz5sB3eeDu25u5FzRa8TOK4ZJCDiIo6np3VrGPANXmJToh7mo0P2sZxXXWmjrLInommnbYVhKzhvcAKRwf9DJNYZOJKtSC9ovMxSNXs76NNVK4eWzMa7gh9RK1/XQma6haEVd+NpBSyAmAPEdc4ILs01/HRig7WjAUXgzEh7hlg3kBNQqqDtoegpGGkCBQK/1bMQ/o8g3yr0R+23LXRfxokoDeeYP+ltZ1RaK2AXNnELxk4RSJZYZfCtVpEBGIkv5MShWEscoZIT2weQNOuq8oV40X+ls2i6hKMp+zl4avUinICdGA88hUW7axSOwWDWVe87X/
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(82310400026)(36860700016)(10067099003)(56012099006)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	no/zPQKaUkwNrwfZGkvFzQGjZY+bC4XyZ8sx2nscEkcdJazShj2cA1Rt5Qfhm3knk24GyNNiCbdE8NUS5sdv7PFVFW+DJngweeYEK1kGb3ugsMFaTQBuvPKH4B5SHICkhWc7jQs4An6HBlzJzT0RX+1BUMk8PmcXqQcKehqeixFf7ISslJ9Z85BG8ggl7AU4bCXWuLkG3FbYbc0Y9yyure32Psw0ESyDyiLZ6Fi6ZnAaOgB4vaBXWvAjHrdlcFsfXxRXBKo7jQcMds7+FaG015QA205sXaPj4Pkga7yMHscvSYOBIMYxmX6ckFygBCwmWTLxI2B60en4/geVLAnEqoWv24e8fe3JFlq59eznCN+vbtYVYpo0N+Ls/daLfJ0eOxsaTfnz3wKtzCgcLjoNCNX+yLG5QO5VBhvMMO8gVCwZbaEzuzLy8nRcp5ZKLze2
+X-Exchange-RoutingPolicyChecked:
+	4Bk8EFsyHEngbX5Hl+Swvqw1auYxbavS3LOalpPeCn4G4rlf9TGPlYo3R3VG6h3zjUx3XIgWIqfHI06oDq4PwruTpfoe1LiMnpXjdXsaF5+ze2S6SP8kKAOwZC/UpTSQ9F0W2yxLP4xumB1e9W2NN033Vzt7FYy0Opx/qSDAc/XvAOx7lKHto/7Bcqi9qeqjfd9OugjDiKzfQQD9K9TB36Rk3XcfFH8rRrqR1c5ccZsAADz8z3haTkh+YakiRy7/qG3HKSqgVA8JjJ+k5M+WaKBOnpuFaWFoEuMDusXyWUrCbA/7psJ1A8iwNehCDRCkXUDypdxp2tQyzALMS2ylUw==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2026 04:34:14.3546
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8d0ec47-dff6-485a-ba2f-08df0a3dc633
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ1PEPF000023D3.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR10MB5916
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTA0MDA0MCBTYWx0ZWRfX6ITMVTERyD0y
+ mk7XDGhbQDobnxjkHnAXK1FQHXN2GJcaNh/V+dIX5nkjaaCgKUOnjjJUTIGqu3Rd6WNkD44fWiD
+ J2/IidxuB6tTQ7EQ112WsqdlML5bEyo=
+X-Authority-Analysis: v=2.4 cv=J6eaKgnS c=1 sm=1 tr=0 ts=6a9a4a4a cx=c_pps
+ a=DEJEzXtY41/hIaqkAZCRpw==:117 a=WotqVVQAdb04rnGuttW3Kw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=VdqzKS8jKosA:10 a=s63m1ICgrNkA:10
+ a=V5UXEbMT0ywA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22
+ a=taLDd7a_hP9WKsMzeGRc:22 a=sozttTNsAAAA:8 a=YpTJUd8zm14dbW4r80wA:9
+X-Proofpoint-GUID: KixRttyvGMyHVPKfNwf4LgX1_bUXrTFK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTA0MDA0MCBTYWx0ZWRfX4ytMjjpTtgXZ
+ cR0BxwogdFDTH1nNLsZXoZTQR/33HuyOEGN4zBDN2n3mAij9bgNcXgj1mkdjWgkZbMiCL7OWumg
+ CNoVqEuXYachkQ36fz4iz4a1mZHjsMBSonlbTtswjFtT49BGqiXnJLQUVD2R26CWUYFw9areY5N
+ oaEPKSoUKjkvxc1/SFgj0VcU140BT/6vVE0WfBxRGVeS72tjyJhls2XAsEo3jKXk6Tf5VuMP2BU
+ s13igyWZxil8jgL9CBmhQczafHBpVSSBhDxId+43Pn1xoiPrQSBTMXl+70r5w/02CkXBuaGbgKT
+ 6o136TkReh8eY7JTGNeCxDOH0uwOiHQI89VG8tp3IziWJWI5VxStGjlGzNn074yy0gI9gEdyDXK
+ rWqQHzegY393JWDw4G6cHEf/rRcmgSs+gmrvxnfxjhlOcONCbKXNm1VOsMPZ0b4fgUbFJ0CBIwW
+ 9WXYFUn6Sa3+aShuv3A==
+X-Proofpoint-ORIG-GUID: KixRttyvGMyHVPKfNwf4LgX1_bUXrTFK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-04_01,2026-09-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 clxscore=1011 adultscore=0 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2609040040
 
---a1891db0d9ec175249303eb0426fd87ee9cd330fcbf1e2986c4b86e25967
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Since sentinel is the last entry and we do not expect further entries
+following it, remove the comma.
 
-Hi Aurelien,
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+---
+ drivers/net/can/bxcan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Fri Sep 4, 2026 at 1:27 AM +08, Aurelien Jarno wrote:
-> Hi Troy,
->
-> On 2026-09-03 11:06, Troy Mitchell wrote:
->> The K3 CPU PLL rate tables currently describe only one rate per PLL,
->> although the hardware supports a wider range.
->>=20
->> PLL3 and PLL4 support rates from 1.05 to 2.4 GHz, while PLL5 and PLL8
->> support rates from 1.05 to 2 GHz. Populate the tables with every
->> supported rate in 50 MHz steps.
->>=20
->> Cc: stable@vger.kernel.org # 7.0+
->> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
->> ---
->> The corresponding U-Boot changes are available at:
->>=20
->> - Add the CPU PLL rate tables:
->>   https://github.com/spacemit-com/uboot-2022.10/commit/787b5cf44c8dbc99d=
-b886d5522c0c9cd5a96ffd6
->> - Correct the 1.10 GHz and 2.15 GHz table entries:
->>   https://github.com/spacemit-com/uboot-2022.10/commit/16a775c20e9efb54c=
-a55352215e76eb3f12e6cf0
->> ---
->> Changes in v4:
->> - Expand the update to every supported PLL3, PLL4, PLL5 and PLL8 rate.
->> - Drop Aurelien Jarno's Reviewed-by and Tested-by trailers because the
->>   patch scope has expanded.
->> - Add U-Boot references for the complete tables and corrected entries.
->> - Link to v3: https://patch.msgid.link/20260831-k3-pll5-pll8-1800mhz-v3-=
-1-530ed0978615@linux.spacemit.com
->>=20
->> Changes in v3:
->> - Mark the change for stable kernels starting with v7.0.
->> - Add Aurelien Jarno's Reviewed-by and Tested-by trailers.
->> - Rebase onto v7.3-rc1.
->> - Link to v2: https://patch.msgid.link/20260810-k3-pll5-pll8-1800mhz-v2-=
-1-aabff510a797@linux.spacemit.com
->>=20
->> Changes in v2:
->> - Drop "clk: spacemit: re-enable PLLs after init"; the PLL init issue
->>   will be handled in a separate series.
->> - Send the K3 PLL5 and PLL8 1.8 GHz rate-table update as a standalone
->>   patch.
->> - Clarify that 1.8 GHz is nominal and 2 GHz is an overclocking rate.
->> - Link to v1: https://patch.msgid.link/20260804-k3-pll5-pll8-1800mhz-v1-=
-0-a3a75866ce32@linux.spacemit.com
->>=20
->> To: Stephen Boyd <sboyd@kernel.org>
->> To: Brian Masney <bmasney+clk@redhat.com>
->> To: Jerome Brunet <jbrunet+clk@baylibre.com>
->> To: Yixun Lan <dlan@kernel.org>
->> To: Paul Walmsley <pjw@kernel.org>
->> To: Palmer Dabbelt <palmer@dabbelt.com>
->> To: Albert Ou <aou@eecs.berkeley.edu>
->> To: Alexandre Ghiti <alex@ghiti.fr>
->> Cc: linux-clk@vger.kernel.org
->> Cc: linux-riscv@lists.infradead.org
->> Cc: spacemit@lists.linux.dev
->> Cc: linux-kernel@vger.kernel.org
->> ---
->>  drivers/clk/spacemit/ccu-k3.c | 96 ++++++++++++++++++++++++++++++++++++=
-+++++++
->>  1 file changed, 96 insertions(+)
->
-> Thanks for the patch, it makes sense to add all the values, to support=20
-> future firmware changes. The values match the ones in the vendor kernel.
-I forgot that you had a similar patch as well..
+diff --git a/drivers/net/can/bxcan.c b/drivers/net/can/bxcan.c
+index baf494d20bef..4bddd015775b 100644
+--- a/drivers/net/can/bxcan.c
++++ b/drivers/net/can/bxcan.c
+@@ -1080,7 +1080,7 @@ static SIMPLE_DEV_PM_OPS(bxcan_pm_ops, bxcan_suspend, bxcan_resume);
+ 
+ static const struct of_device_id bxcan_of_match[] = {
+ 	{.compatible = "st,stm32f4-bxcan"},
+-	{ /* sentinel */ },
++	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, bxcan_of_match);
+ 
+-- 
+2.51.1
 
->
->> diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3=
-.c
->> index 92b930d5ff30..950bf531c734 100644
->> --- a/drivers/clk/spacemit/ccu-k3.c
->> +++ b/drivers/clk/spacemit/ccu-k3.c
->> @@ -29,15 +29,91 @@ static const struct ccu_pll_rate_tbl pll2_rate_tbl[]=
- =3D {
->>  	CCU_PLLA_RATE(3000000000UL, 0x0b3e2000, 0x00000000, 0xa0558c8c),
->>  };
->> =20
->> +/* Keep the firmware default as the first entry. */
->>  static const struct ccu_pll_rate_tbl pll3_rate_tbl[] =3D {
->> +	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
->
-> Is it really necessary to put this entry first? I guess it's the current=
-=20
-> default frequency, but we have seen it can evolve. From my tests, the=20
-> driver seems to just keep the value configured by the firmware=20
-> independently from the table order, so I am not sure it's necessary.
-I think keeping it first is necessary. If the current register settings do
-not match any entry in the table, ccu_plla_init() falls back to the first
-entry:
-
-
-	ccu_plla_update_param(pll, &pll->config.rate_tbl[0]);
-
-[...]
-
->>  };
->
-> I have tested the patch, and I confirm it fixes the boot hang with newer=
-=20
-> firmware, and will fix it if the default firmware values change again.=20
-> My comments are just minor ones, so:
->
-> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Thanks for the tags.
-
->
-> Regards
-> Aurelien=20
-
-
---=20
-Troy Mitchell
-
---a1891db0d9ec175249303eb0426fd87ee9cd330fcbf1e2986c4b86e25967
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCapo55g0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvWBABAOrdMzrm+oSmpz+4PbCFYU/sKXN1r/pnmybu2iWq
-K9rlAQDr7ekCrcf/gUilgr3y2rN7N0vIvjxWJ3Sylb1GzzXXAA==
-=DS8M
------END PGP SIGNATURE-----
-
---a1891db0d9ec175249303eb0426fd87ee9cd330fcbf1e2986c4b86e25967--
