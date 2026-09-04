@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9608D52E041;
-	Fri,  4 Sep 2026 20:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A55448D14
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 20:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788553948; cv=none; b=OmDQZXAp5l+ZufsxAlxNdASxZb7/rzUdnEWvu63q79UstljKrP0Qt00EujHn2gsbuZZ6bflVsoVSpb2DiC4d7CvTpIzVvlbjFODlQgOZV8v3fqbVLiqel29oIds5CNqysXGq7kx0h2pfSkoLWor90YhD9vCARy/pD84ybiut8xA=
+	t=1788555132; cv=none; b=ApcnNztjojp98c6kZ+oerjrXKybGNK+YSkzZGHIInrDTIqEsMqbQ2tYJoR2KSQxMzl8r2pn9A3e3DYknT0nZd3d1XPLIPFkSP9pWMSSYxKKON+2Wm4k2Ye+79rkEyGz//0Tt62mt9u+NBdOWYoh+1lPvgNQO2yArjtZHrDA3f3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788553948; c=relaxed/simple;
-	bh=BiOxyZNflQ6jKLPZfSmDsv65jE+qkHmXoaUaxz6rFc8=;
+	s=arc-20240116; t=1788555132; c=relaxed/simple;
+	bh=c30PDiddrLA4oyHlYfg02onRKnBMXzqv4IbLFULbIeQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eXk/ifuIpMeQgGmcUVvC49lOlA5744vaHohV8eB3rl9kuBJAJRIrD6TrC6TeISyhSoicjNu/VOsbLTFgjRhrjlcIrdHQ4ftF8ifvb9xO79kOMZEAMiBCpypUE7SaGdYuEhh6c/zqtR5mk9wm4BowopbRqGDp3DLr9tSHq6zq6DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNXVkHm2; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=d4+Mxuey4ecuzY4CKIp++WkMdwYvgxqh4nnCDnxtOebo3bWH50F/XJN85ibwM3ELuO/vOZPZFHss3nUvZD2A8/hbCtM7LkRwoiLXV0/5m0Kn9OZxPy9ZOvQWqWfU6YJOKPGbSOV5HZ4CpXpqQ9Vxm3No5YQT/HEqDP0Gt/t19NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fU9si/dV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNXVkHm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F421F00ACF;
-	Fri,  4 Sep 2026 20:32:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fU9si/dV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEBD1F00A3D;
+	Fri,  4 Sep 2026 20:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788553941;
-	bh=faGt6RM9nZNDLVI5nWQekSsP9/y8RIHlIgi2gEzyN+8=;
+	s=k20260515; t=1788555123;
+	bh=6GQcHgR85XdlVHpXTOOmvcdOAAPtunBQvPqpohTbcTc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=BNXVkHm2rG8675ikzmcjNnHgunSqXRbTTuayweLcKMp8l7UE7v92MRw5pWImYbIz5
-	 lGYTGnfotzQUypdlQyN7Yc51U7QJ5LLsGIhcBgkp965Qb2y8OUXTpQpulEcztklLIW
-	 iPRAYMyLchGPR1us8b4z6VcIyOqcyTX1RzEGyPXuRdFVLIbj9IiciQUehrSMirVvWg
-	 ZAOBV2jL5frRz9h01vDYBVEYypKroLjgNUFpuMV5o2Hyt6XBxXeYMqmsPnBelfmqDl
-	 /cltB37YfZEdHn0FG0F6R30iQ3ZjfIG1mmYh9KAAA683HakS8XUxINeWODQGHQlCGx
-	 XYTOO9LiVe8aQ==
-Date: Fri, 4 Sep 2026 20:32:19 +0000
+	b=fU9si/dVdej8WMy/sABljKGhehyDdd9jeXzw0BEoItdKMY40wA8R3QfCR0rpmxnNO
+	 uCRlf4b906O3gHpjUSoBTYXzN7wZ9rd8R4lOx2klnL8ckPdNg9fWELfRvnbcLXrqpp
+	 DKpzolsh8zZU/BtjLaA8eDKg+/JQmjv6YoyBADtOzrzYBJD3jzSn4z2cvgBcVO2YeU
+	 vEUe71vc6wrdAdFGhTiI0CqYGvtKY5PSGcWErOhnYwzWWEk7gn2pLMNsoz8RIupKQE
+	 P2slcOJmv6KoR6YLOhdzYU6ny5/5Q2YudCCd50u0OaPcGewBk0p0gz2iK+qjKcuBXI
+	 W+ZLYoloFauiA==
+Date: Fri, 4 Sep 2026 20:52:00 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Long Wan <long.wan@linux.spacemit.com>, linux-mmc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] dt-bindings: mmc: spacemit,sdhci: Add tx delay
- property
-Message-ID: <20260904203219-GKC1974@kernel.org>
-References: <20260902-07-k3-sdhci-dts-v1-0-4e7909cf4233@kernel.org>
- <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
- <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
+To: Tim Ouyang <tim609@andestech.com>
+Cc: u-boot@lists.u-boot-project.org, spacemit@lists.linux.dev,
+	u-boot-spacemit@groups.io, Lukasz Majewski <lukma@denx.de>,
+	Tom Rini <trini@konsulko.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Raymond Mao <raymond.mao@riscstar.com>,
+	Guodong Xu <guodong.xu@oss.qualcomm.com>,
+	Peng Fan <peng.fan@nxp.com>, Torsten Duwe <duwe@suse.de>,
+	Ryan Chen <ryan_chen@aspeedtech.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Alexey Charkov <alchark@flipper.net>, oyst.lnx@gmail.com
+Subject: Re: [PATCH 6/8] clk: spacemit: k3: reduce clock tree for SPL build
+Message-ID: <20260904205200-GKB53903@kernel.org>
+References: <20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org>
+ <20260825-01-k3-clock-reset-support-v1-6-c430253e759c@kernel.org>
+ <shthcaz5wjcp2vwd2c2i74axiayf4zhlgsoq5fbswofld5poq4@znfx5b2yby2t>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -50,45 +52,52 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
+In-Reply-To: <shthcaz5wjcp2vwd2c2i74axiayf4zhlgsoq5fbswofld5poq4@znfx5b2yby2t>
 
-Hi Krzysztof,
+Hi Tim,
 
-On 15:00 Thu 03 Sep     , Krzysztof Kozlowski wrote:
-> On Wed, Sep 02, 2026 at 07:03:13AM +0000, Yixun Lan wrote:
-> > From: Long Wan <long.wan@linux.spacemit.com>
-> > 
-> > Introduce a vendor specific property to configure the step count of TX
-> > delay line which should be applied before RX tuning, compensating for
-> > board level trace differences. The TX delay line result comes from test
-> > out of real board which vary from different hardware layout.
-> > 
-> > Signed-off-by: Long Wan <long.wan@linux.spacemit.com>
+On 17:55 Wed 02 Sep     , Tim Ouyang wrote:
+> On Tue, Aug 25, 2026 at 04:24:16AM +0000, Yixun Lan wrote:
+> > Due to SPL image running in a memory space constraint SRAM environment,
+> > so reduce the whole clock tree a bit to make it fit for final runtime
+> > requirement, only a subset clock tree is registered, which includes UART,
+> > SDHCI, I2C (TWSI), and their PLL/MPMU/APMU/APBC ancestors; while the
+> > full clock tree is retained in non-SPL build.
+> >
+> > Where surviving SPL CCU definitions reference parent clocks outside
+> > that subset tree, it will use "clock-dummy" as name of clock parent to
+> > ensure the framework still successfully resolves the parent clock lookup.
+> >
 > > Signed-off-by: Yixun Lan <dlan@kernel.org>
 > > ---
-> >  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > index f35bf7ce08dd..3399a2d076dc 100644
-> > --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
-> > @@ -63,6 +63,16 @@ properties:
-> >    pinctrl-1:
-> >      description: Optional pinctrl state for 1.8V UHS operation with "uhs" name
-> >  
-> > +  spacemit,tx-delay:
-> > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > +    minimum: 0
-> > +    maximum: 255
 > 
-> default: 0, I guess?
+> [...]
 > 
-It's actually 127, I will fix it in next version
+> >  /* APMU clocks start */
+> > +#if IS_ENABLED(CONFIG_SPL_BUILD)
+> > +static const char * const axi_clk_parents[] = {
+> > +       "pll1_d8_307p2", "pll1_d6_409p6",
+> > +};
+> > +CCU_MUX_DIV_FC_DEFINE(CLK_APMU_AXICLK, axi_clk, axi_clk,
+> > +                     axi_clk_parents, ARRAY_SIZE(axi_clk_parents),
+> > +                     APMU_ACLK_CLK_CTRL, APMU_ACLK_CLK_CTRL, 1, 2,
+> > +                     BIT(4), 0, 1, 0);
+> > +#else
+> >  static const char * const axi_clk_parents[] = {
+> >         "pll1_d8_307p2", "pll1_d6_409p6",
+> >  };
+> 
+> The SPL clock subset does not seem to include all the clocks described
+> in the commit message. For example, the SDH0/1/2 clocks are excluded
+> from the SPL build.
+> 
+> Is this intentional?
 
-Also in my second thought, I will change the data type to uint8
-then drop this additional minimum/maximum property, which will
- also simplify the code with device_property_read_u8() a bit
+You right, but I will update the commit message instead of changing the code.
+
+The lastest dts in u-boot next branch just synced with upstream kernel v7.2
+ which doesn't include SDHCI support (need to wait for v7.3), also the SDHCI
+for SPL support still needs some testing, so I will postpone it in later patches
 
 -- 
 Yixun Lan (dlan)
