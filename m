@@ -1,92 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6824F052D;
-	Fri,  4 Sep 2026 15:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9608D52E041;
+	Fri,  4 Sep 2026 20:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788537494; cv=none; b=Lx1skuFPWQWOPbx/aFwTPUvipdUb/8Z3+nVC3JP/wGfxyHFCjDgMuEFhBOzz84748WiHFo32nWuQ0C2lHiOtc+O1/daGgT1XhwEh/xMu3vb4a0qGAPLB9nyQl849IMzdSgdIxBjrsW765sATXvopTSQEp4D5+KivL8LakIx6Mzk=
+	t=1788553948; cv=none; b=OmDQZXAp5l+ZufsxAlxNdASxZb7/rzUdnEWvu63q79UstljKrP0Qt00EujHn2gsbuZZ6bflVsoVSpb2DiC4d7CvTpIzVvlbjFODlQgOZV8v3fqbVLiqel29oIds5CNqysXGq7kx0h2pfSkoLWor90YhD9vCARy/pD84ybiut8xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788537494; c=relaxed/simple;
-	bh=MAMHc3lcCEx7Gz9i6NwKaBAiqbW/7oSEolLbycKUbPU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HymG4gMpbjuwtdR5sHZXfp/PRlIuWCP6TuKhoTqEx9PoqwAKmC2TWgAbR3/VqdZToXdPuevvh1FDK4u2e/cSfHe5JCspUC76TV51XVIcoZ47rdxFK1mS6oGnPtkE+TXmen6rWYY2RTx0JT5M3OHuJ5XxcT53yDx4Ha/o/szKoA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YeoORvmH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788553948; c=relaxed/simple;
+	bh=BiOxyZNflQ6jKLPZfSmDsv65jE+qkHmXoaUaxz6rFc8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eXk/ifuIpMeQgGmcUVvC49lOlA5744vaHohV8eB3rl9kuBJAJRIrD6TrC6TeISyhSoicjNu/VOsbLTFgjRhrjlcIrdHQ4ftF8ifvb9xO79kOMZEAMiBCpypUE7SaGdYuEhh6c/zqtR5mk9wm4BowopbRqGDp3DLr9tSHq6zq6DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNXVkHm2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YeoORvmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D661F00A3D;
-	Fri,  4 Sep 2026 15:58:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNXVkHm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F421F00ACF;
+	Fri,  4 Sep 2026 20:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788537493;
-	bh=xFBkR9T0SQCtUDwL8PQObCORwH0zWTKutCjB4dzETP4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=YeoORvmHxqLmUVtXYpglFo8Xgu1ji5AKGIXIO6Mm8N5xIm4dXmqXD+clgqcWKLeY3
-	 TQXS47+v9ZKtzRnB9bwcmz/xuaotwZQZt+msSrow1xFdWHhWuZI7rpSimHlnU7ercc
-	 qq8732lFwY9ju3z4VMdciwyPv6/45agXQqEHVc/j1wIeyMWtwmURw6TnxLOh6kUjXE
-	 qt2RQj1/NpPKFcBnXJsX+gLYdYGuK6yw7/7pPoiKZQlxG6bMMx5OD2cxw6yQjanA0O
-	 l6mxQekLsEfYk02DnMQQtBWF+b1uSpc35BoRUjFKJ/MvNqfSS5szwk94rmCJUfqbjD
-	 pTinIofYxQYWg==
-Date: Fri, 4 Sep 2026 08:58:11 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Siddharth Vadapalli <s-vadapalli@ti.com>
-Cc: <dario.binacchi@amarulasolutions.com>, <mkl@pengutronix.de>,
- <mailhol@kernel.org>, <msp@baylibre.com>, <florian.fainelli@broadcom.com>,
- <jonas.gorski@gmail.com>, <andrew@lunn.ch>, <olteanv@gmail.com>,
- <davem@davemloft.net>, <edumazet@google.com>, <pabeni@redhat.com>,
- <kurt@linutronix.de>, <hauke@hauke-m.de>, <chester.a.unal@arinc9.com>,
- <daniel@makrotopia.org>, <matthias.bgg@gmail.com>,
- <angelogioacchino.delregno@collabora.com>, <ansuelsmth@gmail.com>,
- <linusw@kernel.org>, <luizluca@gmail.com>, <alvin.sipraga@analog.com>,
- <clement.leger@bootlin.com>, <justin.chen@broadcom.com>, <dlan@kernel.org>,
- <rogerq@kernel.org>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
- <rjui@broadcom.com>, <sbranden@broadcom.com>,
- <bcm-kernel-feedback-list@broadcom.com>, <opendmb@gmail.com>,
- <andrei.botila@oss.nxp.com>, <wangruikang@iscas.ac.cn>,
- <amadeus@jmu.edu.cn>, <kees@kernel.org>, <tmshlvck@gmail.com>,
- <c-vankar@ti.com>, <horms@kernel.org>, <vadim.fedorenko@linux.dev>,
- <daniel.zahka@gmail.com>, <nora.schiffer@ew.tq-group.com>,
- <v-singh1@ti.com>, <oss@vassilevski.com>, <haokexin@gmail.com>,
- <alex@sverdlin.org>, <aleksandr.loktionov@intel.com>,
- <lgs201920130244@gmail.com>, <linux-can@vger.kernel.org>,
- <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>,
- <linux-mediatek@lists.infradead.org>, <linux-renesas-soc@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-omap@vger.kernel.org>
-Subject: Re: [PATCH net-next 00/33] Remove comma after sentinel entries in
- match table
-Message-ID: <20260904085811.7e2c2db6@kernel.org>
-In-Reply-To: <20260904043724.2955444-1-s-vadapalli@ti.com>
-References: <20260904043724.2955444-1-s-vadapalli@ti.com>
+	s=k20260515; t=1788553941;
+	bh=faGt6RM9nZNDLVI5nWQekSsP9/y8RIHlIgi2gEzyN+8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BNXVkHm2rG8675ikzmcjNnHgunSqXRbTTuayweLcKMp8l7UE7v92MRw5pWImYbIz5
+	 lGYTGnfotzQUypdlQyN7Yc51U7QJ5LLsGIhcBgkp965Qb2y8OUXTpQpulEcztklLIW
+	 iPRAYMyLchGPR1us8b4z6VcIyOqcyTX1RzEGyPXuRdFVLIbj9IiciQUehrSMirVvWg
+	 ZAOBV2jL5frRz9h01vDYBVEYypKroLjgNUFpuMV5o2Hyt6XBxXeYMqmsPnBelfmqDl
+	 /cltB37YfZEdHn0FG0F6R30iQ3ZjfIG1mmYh9KAAA683HakS8XUxINeWODQGHQlCGx
+	 XYTOO9LiVe8aQ==
+Date: Fri, 4 Sep 2026 20:32:19 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Long Wan <long.wan@linux.spacemit.com>, linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: mmc: spacemit,sdhci: Add tx delay
+ property
+Message-ID: <20260904203219-GKC1974@kernel.org>
+References: <20260902-07-k3-sdhci-dts-v1-0-4e7909cf4233@kernel.org>
+ <20260902-07-k3-sdhci-dts-v1-2-4e7909cf4233@kernel.org>
+ <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260903-tactful-scorpion-from-nibiru-a4ebe2@quoll>
 
-On Fri, 4 Sep 2026 10:06:06 +0530 Siddharth Vadapalli wrote:
-> This series removes the comma present after sentinel entries in the match
-> tables across all networking subsystem drivers, with the exception of the
-> davinci_mdio.c driver, for which, the patch posted by Geert at:
-> https://lore.kernel.org/r/e481b6de46cecc6ea604ae165272c667274cc621.1788437140.git.geert+renesas@glider.be/
-> does the same.
-> 
-> Since I inquired about a cleanup across the entire networking subsystem but
-> didn't get a response:
-> https://lore.kernel.org/r/b3d19098-eccd-4619-b667-ad3b7e0a4422@ti.com/
-> I decided to post this series. Given that Andrew Lunn acknowledged the
-> cleanup of the davinci_mdio driver:
-> https://lore.kernel.org/r/abec6831-d344-489d-b70c-1e5dd4d43c2d@lunn.ch/
-> and I don't see why the cleanup is specific to davinci_mdio driver alone,
-> I am hoping that this series is treated identically to the patch that
-> Geert had posted for the davinci_mdio driver.
-> 
-> Series is based on commit
-> 6ebcf5074cff net: openvswitch: don't schedule rebalancing if there are no datapaths
-> of the 'main' branch of the net-next tree.
+Hi Krzysztof,
 
-You failed to specify why this "cleanup" makes a difference.
-have you ever seen the sentinel not be the last entry?
+On 15:00 Thu 03 Sep     , Krzysztof Kozlowski wrote:
+> On Wed, Sep 02, 2026 at 07:03:13AM +0000, Yixun Lan wrote:
+> > From: Long Wan <long.wan@linux.spacemit.com>
+> > 
+> > Introduce a vendor specific property to configure the step count of TX
+> > delay line which should be applied before RX tuning, compensating for
+> > board level trace differences. The TX delay line result comes from test
+> > out of real board which vary from different hardware layout.
+> > 
+> > Signed-off-by: Long Wan <long.wan@linux.spacemit.com>
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > index f35bf7ce08dd..3399a2d076dc 100644
+> > --- a/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > +++ b/Documentation/devicetree/bindings/mmc/spacemit,sdhci.yaml
+> > @@ -63,6 +63,16 @@ properties:
+> >    pinctrl-1:
+> >      description: Optional pinctrl state for 1.8V UHS operation with "uhs" name
+> >  
+> > +  spacemit,tx-delay:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    minimum: 0
+> > +    maximum: 255
+> 
+> default: 0, I guess?
+> 
+It's actually 127, I will fix it in next version
+
+Also in my second thought, I will change the data type to uint8
+then drop this additional minimum/maximum property, which will
+ also simplify the code with device_property_read_u8() a bit
+
+-- 
+Yixun Lan (dlan)
