@@ -1,16 +1,16 @@
 Received: from pidgin.makrotopia.org (pidgin.makrotopia.org [185.142.180.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7441D3D1AA6
-	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 10:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74E44C4FD
+	for <spacemit@lists.linux.dev>; Fri,  4 Sep 2026 10:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.142.180.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788516008; cv=none; b=mfPAUt8BC0gmoUBEriGtq77ohL4z892cOMN7/Bixb7TnS/ltif7BVoHOPQBjWi19B14ur8RqLIjIAV+9hRPAnOsrzemlfVD2QuS/UYIBOGpHSLIrJol8/T7FQN/V7dlJ+JilhJ0RGXOGGlr8Fe7m+wLM7hF8SgFkHXe47Nkfuog=
+	t=1788516012; cv=none; b=AuqxBmR/VqX3nN8qPiosShVfZSg7sve9MhHPO5AY/bMnaK/il0y6CaZX49KiTLhRQFef4qHvjGqKPOuKkn14MgtQJB+CVaZJ2oxkbMF0ri4MVuptNxYsQ1NM0XG0KiZAyzlZWMqL9aYx6Qg2NuxjR1SBqwU7Jf4JWbbxKfyUK1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788516008; c=relaxed/simple;
-	bh=4vIUmkA6Pe9QUAFpPsHhWTe8LIuufy8nVnd/oha/RPU=;
+	s=arc-20240116; t=1788516012; c=relaxed/simple;
+	bh=w09DMddOuGH16pShKIio3HoUGAGCtGbJiCYSRyp434c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NoBtCPo8Alv0DrNB+eEc5uVg1x+Iz8SnYuu7AFOyHedCx7ac5wAmEcmd4Tmn8hkYTdJNa3vbX8j/qbavysSw+aPfY+pvfJR1flr0i9riSZHgAS9ObRVScEL80DeKO7r0/NaY8K1u+sO8pWNrRxkZ2tHVqKz0gVjKoiOtf+fNbHk=
+	 Content-Type:Content-Disposition:In-Reply-To; b=LR2GZIzOJwxFdPhAaFPXpC/GxNkCTvAmwNSo55rSPF/glhkaewqoyeHGFdM/doI4F5Mp9GX5WVkdPvQK7dgmDH4C4bTaO5wR01ONl5+bvLo9vUFR2nEsiUn4giCueMZQF4pBoMfQpg+R1Kl9TeuwKEiaChNraCUjuZzaqna/fVI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org; spf=pass smtp.mailfrom=makrotopia.org; arc=none smtp.client-ip=185.142.180.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=makrotopia.org
@@ -18,9 +18,9 @@ Received: from local
 	by pidgin.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256:X25519MLKEM768)
 	 (Exim 4.100)
 	(envelope-from <daniel@makrotopia.org>)
-	id 1x2Qi8-000000001t9-2vtc;
-	Fri, 04 Sep 2026 09:59:52 +0000
-Date: Fri, 4 Sep 2026 10:59:47 +0100
+	id 1x2Qhj-000000001se-1EmA;
+	Fri, 04 Sep 2026 09:59:27 +0000
+Date: Fri, 4 Sep 2026 10:59:21 +0100
 From: Daniel Golle <daniel@makrotopia.org>
 To: Siddharth Vadapalli <s-vadapalli@ti.com>
 Cc: dario.binacchi@amarulasolutions.com, mkl@pengutronix.de,
@@ -47,11 +47,11 @@ Cc: dario.binacchi@amarulasolutions.com, mkl@pengutronix.de,
 	linux-mediatek@lists.infradead.org,
 	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-omap@vger.kernel.org
-Subject: Re: [PATCH net-next 16/33] net: dsa: mt7530: mmio: Remove comma
- after sentinel-entry in match-table
-Message-ID: <apqWk8Fh3WhEjzuI@makrotopia.org>
+Subject: Re: [PATCH net-next 14/33] net: dsa: mxl-gsw1xx: Remove comma after
+ sentinel-entry in match-table
+Message-ID: <apqWeTNBFzOJptkf@makrotopia.org>
 References: <20260904043724.2955444-1-s-vadapalli@ti.com>
- <20260904043724.2955444-17-s-vadapalli@ti.com>
+ <20260904043724.2955444-15-s-vadapalli@ti.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,28 +60,27 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260904043724.2955444-17-s-vadapalli@ti.com>
+In-Reply-To: <20260904043724.2955444-15-s-vadapalli@ti.com>
 
-On Fri, Sep 04, 2026 at 10:06:22AM +0530, Siddharth Vadapalli wrote:
+On Fri, Sep 04, 2026 at 10:06:20AM +0530, Siddharth Vadapalli wrote:
 > Since sentinel is the last entry and we do not expect further entries
 > following it, remove the comma.
 > 
 > Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 > ---
->  drivers/net/dsa/mt7530-mmio.c | 2 +-
+>  drivers/net/dsa/lantiq/mxl-gsw1xx.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/net/dsa/mt7530-mmio.c b/drivers/net/dsa/mt7530-mmio.c
-> index fd68b1cd0630..cf3bdb23a2d5 100644
-> --- a/drivers/net/dsa/mt7530-mmio.c
-> +++ b/drivers/net/dsa/mt7530-mmio.c
-> @@ -14,7 +14,7 @@ static const struct of_device_id mt7988_of_match[] = {
->  	{ .compatible = "airoha,en7581-switch", .data = &mt753x_table[ID_EN7581], },
->  	{ .compatible = "econet,en7528-switch", .data = &mt753x_table[ID_EN7528], },
->  	{ .compatible = "mediatek,mt7988-switch", .data = &mt753x_table[ID_MT7988], },
+> diff --git a/drivers/net/dsa/lantiq/mxl-gsw1xx.c b/drivers/net/dsa/lantiq/mxl-gsw1xx.c
+> index a1104b2f92a9..347e16e9fdc1 100644
+> --- a/drivers/net/dsa/lantiq/mxl-gsw1xx.c
+> +++ b/drivers/net/dsa/lantiq/mxl-gsw1xx.c
+> @@ -918,7 +918,7 @@ static const struct of_device_id gsw1xx_of_match[] = {
+>  	{ .compatible = "maxlinear,gsw140", .data = &gsw140_data },
+>  	{ .compatible = "maxlinear,gsw141", .data = &gsw141_data },
+>  	{ .compatible = "maxlinear,gsw145", .data = &gsw140_data },
 > -	{ /* sentinel */ },
 > +	{ /* sentinel */ }
 >  };
->  MODULE_DEVICE_TABLE(of, mt7988_of_match);
 
 Reviewed-by: Daniel Golle <daniel@makrotopia.org>
