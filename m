@@ -1,100 +1,183 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DB124EA90;
-	Sat,  5 Sep 2026 22:17:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D6F2576E
+	for <spacemit@lists.linux.dev>; Sun,  6 Sep 2026 11:21:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788646669; cv=none; b=JTdgpvdgZX+sFRd0dWUjArpYZ58I7/G/N/awJm+bcy4fNIj6BGOn4umgZ99TkZWpUrH0sUSjb7EU5K5vDNQmBMwUH+JrTRx6ydTdSwt9ZJso/QMltn6O+ZBpxOYwJbQZeCh+doC5137WDaO/FZEVgrC+5pViynrZfL6gqHESch8=
+	t=1788693681; cv=none; b=gSEXgye3ubJNK25DKvxCdMbtBo1RESQtdiVqaRf6x7VU8es3pyYIeF1AKUCxuvzq7w3CMU8udGpAlRLMhuBdjLpajeHKigml9ol6PEF0Vq54vTon3O9e7unfErO6bke4YrugaPMDUuD6AfOfF+Pn3TAaN7J8XG2W+CQnHH1wFRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788646669; c=relaxed/simple;
-	bh=wDN0PizPRhba+RCXt7Tpycb6CAxeNKQO1MZS6V/mCwE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P36n/EZCeI74HZai3BsH97hYhPgjR5PKlcQLwL5JPy4F2fi+RE4MXmXtzLkEyVKMTsflQ3bBB/DX5g8q4loNaTPGe84VQNdXS1PbmBEPmqH+jfbt1wHcBB+K/QKvHes1I5uMPoJvM15BQmdo0/682Ix/eXFC4Lq0iEkihKIkgF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hpBXobmf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788693681; c=relaxed/simple;
+	bh=64JzUqT0jBXtjS2UM/g4PJirm8Yphht5T0U3TxzkjWU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=e0KgShVYbmkyWFi7ZgfNu1U1dUMfLtnYsfIIaCRzItOOo+KZAFp6C5fyiPuRDJfBYFO+rEWNBYS/78o1euSIl9egX77jTp4mm368dqH8O39YcM9NZqDxwXS/+4W+LzMs5NWXSdjHigtSwhFjv8E+tbSdCFrhVyG7eQdiul4esZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jGTIPV8W; arc=none smtp.client-ip=18.169.211.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hpBXobmf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD1D1F00A3A;
-	Sat,  5 Sep 2026 22:17:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788646668;
-	bh=A3eZZ8TfJYlcw34wez1Kdovv/0mAJhnU0+7MF4+bJt0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hpBXobmfFLzOBMwLPse7sAFp5zbwefy5aTtb/vORaTrjkt/P9uTxdANRvLZVrpmLt
-	 +zEPvzOp2Yu0GvURsinUtEJDbNmdboecSYEG6bYv6uMO+Ff7BT0GDy2EQyAPzfaUio
-	 R/EISh/y5qsxPgx4wFvxB02mhMSxEpoAzMbZcuaD8s8NR/GGQE67+aygvuvDWl4ow2
-	 GUs7olSmjsr4S9pxATVt/+B38ASZ7BVIWBqgcSWpWNVPaeJtSQIWpbJdY4pZAh9Xbs
-	 SygLvRQBUVrfmHj6wBTDw/5/LVNyf/sVmg7hLKG8c/GaWX/HF3tx828FdEUsb/BDtd
-	 q+GW9WGUIUK+g==
-Date: Sat, 5 Sep 2026 22:17:46 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
-	Aurelien Jarno <aurelien@aurel32.net>, stable@vger.kernel.org,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] clk: spacemit: k3: add CPU PLL rate tables
-Message-ID: <20260905221746-GKD53903@kernel.org>
-References: <20260903-k3-pll5-pll8-1800mhz-v4-1-afafd9cb47d9@linux.spacemit.com>
- <uyl23bmb7dtvkneu7wbpmq24gkmrpmr5n5xkanjrnjf27xsp6g@gcjezv6xwolx>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jGTIPV8W"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1788693647;
+	bh=hU5drRsukxKTZr6Wttsq4VqOiCpjnWKHL3L2R4CN/6o=;
+	h=Mime-Version:Date:Message-Id:From:To:Subject;
+	b=jGTIPV8WnA7IDUuELWPdtVK2O0eDDJojlQ13jKbgAuAI1eru93zjxltQE1QYq+btf
+	 ABVL9nZ1NJr8FSGRCTp9iA+/BxwUqFhMr4QSAeneZp/Aiw5IPLK/RwdqS1xmWcRWsZ
+	 +FXnEuxFtgiqmDIvkZBo1eCuqx04FktT+7dwzeas=
+X-QQ-mid: zesmtpsz9t1788693645td04f833d
+X-QQ-Originating-IP: DTpauE77uDk1X7buhFaDFSwHJ4/UV6jAd8hGgoHJ2L4=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 06 Sep 2026 19:20:43 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6232298470301250172
+EX-QQ-RecipientCnt: 19
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <uyl23bmb7dtvkneu7wbpmq24gkmrpmr5n5xkanjrnjf27xsp6g@gcjezv6xwolx>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=536c7c79d9464b992ad1d7b5be05ae3641e4b875bba8fe2b43dc9e787550;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sun, 06 Sep 2026 19:20:40 +0800
+Message-Id: <DL86Z6P8P2YI.160YXDVBSSC6I@linux.spacemit.com>
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Yixun Lan" <dlan@kernel.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+Cc: "Aurelien Jarno" <aurelien@aurel32.net>, "Michael Turquette"
+ <mturquette@baylibre.com>, "Inochi Amaoto" <inochiama@outlook.com>, "Alex
+ Elder" <elder@riscstar.com>, "Haylen Chu" <heylenay@4d2.org>,
+ <stable@vger.kernel.org>, "Stephen Boyd" <sboyd@kernel.org>, "Brian Masney"
+ <bmasney+clk@redhat.com>, "Jerome Brunet" <jbrunet+clk@baylibre.com>, "Paul
+ Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
+ Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4] clk: spacemit: k3: add CPU PLL rate tables
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260903-k3-pll5-pll8-1800mhz-v4-1-afafd9cb47d9@linux.spacemit.com> <apmuG46sBg2rGzCD@aurel32.net> <DL67LEVCXFA5.39M5FO7JGKWZS@linux.spacemit.com> <20260905220746-GKC53903@kernel.org>
+In-Reply-To: <20260905220746-GKC53903@kernel.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NGf6Juddf2av1Bk8NfLKPcxvsFIALwEmDxNU0SXF7DhV2BjuVFczEfwY
+	htGBs9UrUW2g01HBaf3PYHQEPBbEAFKJMkgPqfklaw14hJa146zEVYgNoVAu5pi1+y/vm0+
+	sknWUEKuL7RRn9vBURBozE/F8Ix80dIx73+UskZL6KdM9L/TlmXtpGNGVAr++cRKTi6DZxd
+	KYsfletsNI0co3Tr1Gsm7CDG6vZQlDr5Mib3V2io14GwwOHywbrg4Yv3Ajq2NxnQApc7cin
+	7frk8Zvem3GJ+tZ8vXTcw1W/AESr7tkxMys4mAhWl3NhsXjLMigz+ewR5wBPFqpuxRFT3bg
+	Wy1H08tbESosANSaIpplzCEsHQJiL9zugfvwimN1JuHPLg/VPiB8A5E1KmyRGwv4oL5gydy
+	+YyAqTBzB5fu4CaOAOGtcx5IQ983rxUHkUU+T7Cs4HYhpVCbFlDHNxmZB6kCuUfJNO/fp+i
+	NV6hnRxQ+nZqrOUOcc8ANvoKjFXCKnvaTKdP1CNc2WjfxttRC20WBjnVYBaSf/DGp3Zfw+F
+	M13LTFGeymqG+/Z/OfW3jP1V5VntKUK/uIY0xLZGvJ3gD8Enagj1RHVDUHBjsipfJVmKNee
+	ABv3lC/vlgW25+PDX2iZYbUqPw/2z2DsL8MGgWmgDyUBYCI0fN0e/JGxLAXQGKdwDD1/PYk
+	J2a6/WBgbjjIyIUBKmo0XUsR7E5mgnNebKiLjIDFlTSMzmTlcsr62UCZXzub3Cr76xb0vfb
+	aDDrZjhWd0bmjeouQscdj6img/k9w0+N9/hS8aNNNlSbo8GABhIjM3vQrblXolEnON+VXtJ
+	g4kdifuEVS9pYHuuwgHD0+q6BMU93Lj7uo4p16delEx4w0IHw5yWp1wVqayi26t1aP5sHXJ
+	BZa09ftphjJtRC882MTF3WVYlakJW6ONMaZNeqB5f8eiDfh2dis9w9cXfc/P7guY41IgmHO
+	B1uel3MGhme/iyz3Pjpbw4miiNktGwmFv8Lk3nfClmxI0QA8PsWrRmaUkXYZf9HJjwPRie9
+	L4ljc/liPlIbUPxxH93QDtULvq9p+2r1ctQI7/XIEFs/2BBOmeoXiQ9kEyWVKhpkBaUpIU9
+	Bt+hahoSmjCcEEMTEg+37UFzSRBjrz9mw8KSophvK7m2Moop6xGYrOmRoKYCEDvKg==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-Hi Anirudh,
+--536c7c79d9464b992ad1d7b5be05ae3641e4b875bba8fe2b43dc9e787550
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-On 11:41 Sat 05 Sep     , Anirudh Srinivasan wrote:
-> Hi Troy,
-> 
-..
-> >  drivers/clk/spacemit/ccu-k3.c | 96 +++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 96 insertions(+)
-> >
-> 
-> On a recently new K3 board (shipped with OpenSBI/U-boot dated
-> end of July), I was seeing upstream kernel boot hang after IMSIC
-> initialization. Some logging indicated that it was hanging around the
-> clock controller initializations (k3_ccu_driver_init).
-> 
-> On a board running older U-boot/OpenSBI from May, I originally didn't
-> observe this hang, but doing multiple repeated boots showed a rare
-> instance of this hang happening. Some changes were added to OpenSBI in 
-> this period (end of June) that trap clock controller registers to M 
-> Mode and handle reads/writes there.
-> 
-> Yixun pointed me to this patch, and it seems to fix the boot hang on 
-> the board runner newer OpenSBI. I think this avoids some kind of a 
-> race condition with disabling/re-enabling a PLL that the clock driver
-> does. I'm finding it a bit hard to explain/understand what exactly it
-> the reason though.
-> 
-..
-> Yixun, could this patch get added in soon?
-> 
-Let's wait a bit, the patch itself do solve the problem, but Aurelien
-and me still have some minor concern, see other post in this thread
+Hi Yixun, Aurelien
 
-Although the problem is a combination of vendor firmware + upstream kernel,
-but it will affect quite widely and probably last for quite long time, so I
-think it would warrant a Fix tag and back port to old stable versions..
+On Sun Sep 6, 2026 at 6:07 AM +08, Yixun Lan wrote:
+> Hi Aurelien, Troy,
+>
+> On 11:24 Fri 04 Sep     , Troy Mitchell wrote:
+>> Hi Aurelien,
+>>=20
+>> On Fri Sep 4, 2026 at 1:27 AM +08, Aurelien Jarno wrote:
+>> > Hi Troy,
+>> >
+> ..
+>> >>  drivers/clk/spacemit/ccu-k3.c | 96 +++++++++++++++++++++++++++++++++=
+++++++++++
+>> >>  1 file changed, 96 insertions(+)
+>> >
+>> > Thanks for the patch, it makes sense to add all the values, to support=
+=20
+>> > future firmware changes. The values match the ones in the vendor kerne=
+l.
+>> I forgot that you had a similar patch as well..
+>>=20
+>> >
+>> >> diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu=
+-k3.c
+>> >> index 92b930d5ff30..950bf531c734 100644
+>> >> --- a/drivers/clk/spacemit/ccu-k3.c
+>> >> +++ b/drivers/clk/spacemit/ccu-k3.c
+>> >> @@ -29,15 +29,91 @@ static const struct ccu_pll_rate_tbl pll2_rate_tb=
+l[] =3D {
+>> >>  	CCU_PLLA_RATE(3000000000UL, 0x0b3e2000, 0x00000000, 0xa0558c8c),
+>> >>  };
+>> >> =20
+>> >> +/* Keep the firmware default as the first entry. */
+>> >>  static const struct ccu_pll_rate_tbl pll3_rate_tbl[] =3D {
+>> >> +	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
+>> >
+>> > Is it really necessary to put this entry first? I guess it's the curre=
+nt=20
+>> > default frequency, but we have seen it can evolve. From my tests, the=
+=20
+>> > driver seems to just keep the value configured by the firmware=20
+>> > independently from the table order, so I am not sure it's necessary.
+>
+> I agree with Aurelien here, the default frequency isn't a solid stable se=
+ttings,
+> which it may changes in the future
+>
+>> I think keeping it first is necessary. If the current register settings =
+do
+>> not match any entry in the table, ccu_plla_init() falls back to the firs=
+t
+>
+> Isn't it a bug if all frequencies added still couldn't cover all settings=
+?
+> I'd simply suggest to bail out and yell loudly if there is a mismatch
+>
+> I just don't like putting specific frequency at first one as default,
+> this logic is kind of fragile and tend to fail easily..
+I checked the Rockchip PLL driver. The RK3036, RK3066 and RK3399
+implementations calculate the current rate directly from the hardware
+register parameters. If that rate is absent from the rate table, their PLL
+init callbacks return without reprogramming the PLL. With
+ROCKCHIP_PLL_SYNC_RATE enabled, they only synchronize the parameters when
+the current rate matches a table entry but the register parameters differ
+from those in that entry.
 
-> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> 
-Thanks for the testing
+This approach seems preferable to me. Would it make sense to sort the rate
+tables by frequency in the next revision, and follow up with a separate
+series to calculate the current rate from the registers and preserve
+configurations whose rates are absent from the table, as Rockchip does?
+>
+>> entry:
+>>=20
+>>=20
+>> 	ccu_plla_update_param(pll, &pll->config.rate_tbl[0]);
+>>=20
 
--- 
-Yixun Lan (dlan)
+
+--=20
+Troy Mitchell
+
+
+--536c7c79d9464b992ad1d7b5be05ae3641e4b875bba8fe2b43dc9e787550
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCap1MiA0caUB0cm95LXku
+b3JnAAoJEJgJ74D5MzQv+TcBAKuYgm3NzSdu2AewDdZD9GRhXTKU8Kg7xc4yVrlo
+nVfcAQC2ZNkxsjsFJBZyiwSwQYWdYZq+bsxMX1yf4dEkWAOCAg==
+=J7rf
+-----END PGP SIGNATURE-----
+
+--536c7c79d9464b992ad1d7b5be05ae3641e4b875bba8fe2b43dc9e787550--
