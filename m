@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763553A3E88;
-	Mon,  7 Sep 2026 07:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C8D416878;
+	Mon,  7 Sep 2026 07:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788767001; cv=none; b=RH0B+fix6/eNXTCC4+9BoSY1ALVS438bDvivi0EZ4iojCR6pGamYYkvflnKDLXKf9wlgjIMAzDuNKEOUwo1hJndk+fd5q/LkqXGL0tu6CKZaeg6xGH1dw++7ADpobXGH6dBcPqncHPVg/gOpRvKX5CdDNZNjlgpJcOPZju+ajrg=
+	t=1788767066; cv=none; b=BrEdYVR3VB1zkB24GwbWSMAa8SQDBn2JenmchXIxHS+xodh53HPGBsN9/dI87/MiZwj6BrfXWVm3k6vwWXtiXFMXhTgRqjz4uyuEGSyg0bv9hxvuxB1BCpEkYO+pD7aC8wMjMmV0GAZVEq6Rz3oRLJ82FRV1Mbj0fKUV92pqF1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788767001; c=relaxed/simple;
-	bh=gE26fmAVmlGPrHZNY+Mz82jfGvwSpLVDxURtnfKB2Ug=;
+	s=arc-20240116; t=1788767066; c=relaxed/simple;
+	bh=Ek3ocIy7wpS/IDiiwHj1J4m0liDxgBs9O9i0RBBDWWI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lXrJcSmYEP5LdWBsnXtH+0qB4fB0x/TFlxLXfZwpwzC1n8AM/tIXq3WPlN3tA1pVCtvIB5zWIRiycgSeggHSZI8B82VBAWkuWvbALHp7UnkGAIA4kuDWJDeFbWH1dIyLUCOzG02AwDtyswkP/MKSwQRah0bw1+uZTcQTAPvcDUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AeQB8rer; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=QdnmB3i09nkv2RzDFfYiKe5TE5myv039Nb4HxWZnLcu/cssMYQRnfPsotST8RtU5RBmn70W/stkmoxFGhr/9RNw14zecu8e/O2MRwnwhnZ/2ff2WrWL3xHO3oQmTqsHwaA2VFKGgRK4TvF44PiWBwxNx9eP/epLqB3/cVuTYFfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NcLnmAz0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AeQB8rer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B81E1F00A3A;
-	Mon,  7 Sep 2026 07:43:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NcLnmAz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962F71F00A3A;
+	Mon,  7 Sep 2026 07:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788767000;
-	bh=Zr7A1tEkdrp6PUTPuyC3f4qOvrO1WN8HeZNd7b+EEUc=;
+	s=k20260515; t=1788767064;
+	bh=6iv+CaoP1NDRXPBD5zrkJNqyxtCMxrNtTEasdO12PNA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AeQB8rer4btJEQehOGOZQzkGmqSKHoF1A2AQ0KWb7GqXcwXkzwQhi2qQFlycyFhH4
-	 m4QX7T5IY5HfTPSgfCYUIH8hH/mbaWVBR7qPeDd3iFP5z1AscBuF9OlaQfgoD9mla0
-	 AWWaeS8EPGVER4XHkmflz/OIUvRXXF7EosYS+CjfbQpJbl2G2+t2DGW/6mxHxpeSyq
-	 1cWbjl6gZ7vNGqW4O9VgVktFugiG7/UKkczJmD3b669H+L7dnhMkMKu+F0hzWN1zTK
-	 JFg+Qu+hLKR3c+woX0+CaNJnBnxjghNENqUYreylOl/EsQEbqmzqoeuWQVWuJippc8
-	 LUNWhoHyZOoBA==
-Date: Mon, 7 Sep 2026 07:43:16 +0000
+	b=NcLnmAz0hi7VC85mVR4FNbQyG73njKOVusDoroz9b6n4K+7kCSwM6cxPSrtzHQzE/
+	 KIA51TUQO6cSfMqJMQoQORZgiCiSAJXyEUinrbQbLrB1MOI7Lkoebzn5QBkWoj8HOx
+	 5oKyy6O92mpR0Wy/2liCTApG/WCC/zPVSY7GNGmhTp4YWxyIlHlXsEQ43uziZ1XZ6x
+	 LqA8HsXVGXAzDHoTqJ8NzCNg0pbY+aOBoUz44f6fYiRFJjoEGdjWapREEXwQiGjVI9
+	 MAxxSFOfoYEaWQLgXswGvJrNv0zQmjxnQvD5h96IHWnl++RsfLJEyQCbOfk+T9USHR
+	 xUXpekM2dQK6g==
+Date: Mon, 7 Sep 2026 07:44:21 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
-	Aurelien Jarno <aurelien@aurel32.net>, stable@vger.kernel.org,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] clk: spacemit: k3: add CPU PLL rate tables
-Message-ID: <20260907074316-GKC2330@kernel.org>
-References: <20260907-k3-pll5-pll8-1800mhz-v5-1-5cc96d716b0a@linux.spacemit.com>
+	Guodong Xu <guodong@riscstar.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: spacemit: k3: Drop guest properties from
+ M-level IMSIC
+Message-ID: <20260907074421-GKD2330@kernel.org>
+References: <20260729-k3-mimsic-fix-v1-1-368c0aec04b9@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -52,22 +48,33 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260907-k3-pll5-pll8-1800mhz-v5-1-5cc96d716b0a@linux.spacemit.com>
+In-Reply-To: <20260729-k3-mimsic-fix-v1-1-368c0aec04b9@pigmoral.tech>
 
-On 09:54 Mon 07 Sep     , Troy Mitchell wrote:
-> The K3 CPU PLL rate tables currently describe only one rate per PLL,
-> although the hardware supports a wider range.
+Hi Junhui,
+
+On 00:40 Wed 29 Jul     , Junhui Liu wrote:
+> The mimsic node describes the machine-level IMSIC, whose MMIO region is
+> 0x10000 (64 KiB) for all 8 harts. However, the node also specifies
+> riscv,guest-index-bits = <6>, and per the AIA specification the
+> per-hart stride is 2^(guest-index-bits + 12) bytes when guest interrupt
+> files exist, i.e. 2^(6 + 12) = 256 KiB per hart and 2 MiB for all 8
+> harts. The described region cannot hold even a single hart's files, so
+> the node contradicts itself. OpenSBI enforces exactly this constraint in
+> imsic_data_check() and rejects the node with -EINVAL, preventing the
+> M-level IMSIC from initializing:
 > 
-> PLL3 and PLL4 support rates from 1.05 to 2.4 GHz, while PLL5 and PLL8
-> support rates from 1.05 to 2 GHz. Populate the tables with every
-> supported rate in 50 MHz steps.
+>   fdt_driver_init_by_offset: interrupt-controller@f1000000 (riscv,imsics) init failed: -3
+>   init_coldboot: irqchip init failed (error -3)
 > 
-> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
-> Cc: stable@vger.kernel.org # 7.0+
-> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Moreover, guest interrupt files exist to act as the supervisor-level
+> interrupt files of virtual harts; there is no machine-level counterpart.
+> riscv,num-guest-ids is equally meaningless for the machine-level IMSIC.
+> 
+> Drop both "riscv,guest-index-bits" and "riscv,num-guest-ids" properties
+> from the mimsic node so the node matches the actual hardware layout.
+> 
+> Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
 
 Reviewed-by: Yixun Lan <dlan@kernel.org>
 
