@@ -1,71 +1,75 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE113B14CF
-	for <spacemit@lists.linux.dev>; Mon,  7 Sep 2026 06:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763553A3E88;
+	Mon,  7 Sep 2026 07:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788762637; cv=none; b=UtCNRzolljlx+cj/w861EWZ1yjUEmQQ3mqK3Bz2GGHJMGNExSRocYVBObyLzPIJCJMnSLTpzZavxIRKGEb0/MMOzCRRP7/ifBKAr3DyPzotfKdwbAWQElH4aepdqo5XpRPJhlsl1N1FvxelBCPIYtBQl8lO9CUx8u2OwTFNCb5I=
+	t=1788767001; cv=none; b=RH0B+fix6/eNXTCC4+9BoSY1ALVS438bDvivi0EZ4iojCR6pGamYYkvflnKDLXKf9wlgjIMAzDuNKEOUwo1hJndk+fd5q/LkqXGL0tu6CKZaeg6xGH1dw++7ADpobXGH6dBcPqncHPVg/gOpRvKX5CdDNZNjlgpJcOPZju+ajrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788762637; c=relaxed/simple;
-	bh=rs27ygsYJCGDtfxVVxP/oIq8K0T2ks5aIvLOIkjg8RU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=LxIp+e3b6CuPg7MxUVA477xzpVjf8bv9FakrIhKrcGcqZbxKD5PfL96nHFLaioJa1qsQmGEuaMhH23j1uP3MuF4Uv1zdDb/qpSAkmXnzDlx1uzxKgD8A8Y4rFt2GBhHoqp+ik/8KQ14iRf8TZQcIGugv9kfO+oT77aG6GqAWiUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.. (unknown [14.220.232.127])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4cc5f275b;
-	Mon, 7 Sep 2026 14:30:20 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: gsh517025@gmail.com
-Cc: alex@ghiti.fr,
-	amadeus@jmu.edu.cn,
-	aou@eecs.berkeley.edu,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dlan@kernel.org,
-	krzk+dt@kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	pjw@kernel.org,
-	robh@kernel.org,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/1] riscv: dts: spacemit: enable onboard eeprom for OrangePi
-Date: Mon,  7 Sep 2026 14:30:10 +0800
-Message-Id: <20260907063010.1882362-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <4e8e6f90-9731-4416-8b1a-be1cef12bb72@gmail.com>
-References: <4e8e6f90-9731-4416-8b1a-be1cef12bb72@gmail.com>
+	s=arc-20240116; t=1788767001; c=relaxed/simple;
+	bh=gE26fmAVmlGPrHZNY+Mz82jfGvwSpLVDxURtnfKB2Ug=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lXrJcSmYEP5LdWBsnXtH+0qB4fB0x/TFlxLXfZwpwzC1n8AM/tIXq3WPlN3tA1pVCtvIB5zWIRiycgSeggHSZI8B82VBAWkuWvbALHp7UnkGAIA4kuDWJDeFbWH1dIyLUCOzG02AwDtyswkP/MKSwQRah0bw1+uZTcQTAPvcDUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AeQB8rer; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AeQB8rer"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B81E1F00A3A;
+	Mon,  7 Sep 2026 07:43:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788767000;
+	bh=Zr7A1tEkdrp6PUTPuyC3f4qOvrO1WN8HeZNd7b+EEUc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AeQB8rer4btJEQehOGOZQzkGmqSKHoF1A2AQ0KWb7GqXcwXkzwQhi2qQFlycyFhH4
+	 m4QX7T5IY5HfTPSgfCYUIH8hH/mbaWVBR7qPeDd3iFP5z1AscBuF9OlaQfgoD9mla0
+	 AWWaeS8EPGVER4XHkmflz/OIUvRXXF7EosYS+CjfbQpJbl2G2+t2DGW/6mxHxpeSyq
+	 1cWbjl6gZ7vNGqW4O9VgVktFugiG7/UKkczJmD3b669H+L7dnhMkMKu+F0hzWN1zTK
+	 JFg+Qu+hLKR3c+woX0+CaNJnBnxjghNENqUYreylOl/EsQEbqmzqoeuWQVWuJippc8
+	 LUNWhoHyZOoBA==
+Date: Mon, 7 Sep 2026 07:43:16 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Inochi Amaoto <inochiama@outlook.com>,
+	Alex Elder <elder@riscstar.com>, Haylen Chu <heylenay@4d2.org>,
+	Aurelien Jarno <aurelien@aurel32.net>, stable@vger.kernel.org,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney+clk@redhat.com>,
+	Jerome Brunet <jbrunet+clk@baylibre.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5] clk: spacemit: k3: add CPU PLL rate tables
+Message-ID: <20260907074316-GKC2330@kernel.org>
+References: <20260907-k3-pll5-pll8-1800mhz-v5-1-5cc96d716b0a@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa07a8f81c903a2kunmf8319171daf5f
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCQ01OVkhOTkgZSx8dTEIYSVYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKT1VJSUtVSUhJVUpJTFlXWRYaDxIVHRRZQVlPS0hVQkJJTk
-	tVSktLVUpCS0JZBg++
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260907-k3-pll5-pll8-1800mhz-v5-1-5cc96d716b0a@linux.spacemit.com>
 
-Hi,
+On 09:54 Mon 07 Sep     , Troy Mitchell wrote:
+> The K3 CPU PLL rate tables currently describe only one rate per PLL,
+> although the hardware supports a wider range.
+> 
+> PLL3 and PLL4 support rates from 1.05 to 2.4 GHz, while PLL5 and PLL8
+> support rates from 1.05 to 2 GHz. Populate the tables with every
+> supported rate in 50 MHz steps.
+> 
+> Fixes: e371a77255b8 ("clk: spacemit: k3: add the clock tree")
+> Cc: stable@vger.kernel.org # 7.0+
+> Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-> -         mac-address {
-> +         mac_address: mac-address {
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-This requires removing the aliases for Ethernet.
-
-> But I am not sure whether this wiring should be part of this patch.
-> Without such wiring, the kernel falls back to random MAC addresses
-> on this board.
-
-Currently, U-Boot patches the MAC address using the Ethernet alias
-from the Device Tree. The vendor U-Boot reads the MAC address from
-the eeprom. I think the mainline U-Boot will add this feature, so
-we don't need to add this one?
-
-Thanks,
-Chukun
+-- 
+Yixun Lan (dlan)
