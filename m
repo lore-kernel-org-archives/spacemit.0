@@ -1,168 +1,159 @@
-Received: from mta0.migadu.com (out-142.mta0.migadu.com [91.218.175.142])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80F3559CA0
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 14:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.142
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788877042; cv=none; b=ti1NTEdB3euYwSewyjatq97asOwfy2GII5gP3xNGKiVoa6Rd4Rh33hG7N2lqlsk5Kwe1/ihL1mKO212rvH3iWLfuTKwsKAoFlenjD0eEFSidFI4lBbg1hMhU5udkZVI91CCBjCeeDJQ03wlWsd8aNtL5YvpBR2XZolpm9mhiO20=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788877042; c=relaxed/simple;
-	bh=AtllziWAEBylwDOWuicoRwDn5AZurYw0+Fy/xhiHsj0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=iktGH7bLPItUQu1A3IDzci4Efohi0I580zh/cp15nsvIOTmS+hDJ7ay6OWPKsekeGUC46MF/met2UFpK3/Dz1ZMfGAIR4VKasrk/YYyhTzvUM0eDlHMcNNd/liuP+9Q90Q0P9Id1UpVEtek6ZXNdGO1Hampwzz6MRC05EP6hmJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Tz8t8nLj; arc=none smtp.client-ip=91.218.175.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FBF572673
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 16:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788884989; cv=pass; b=VqaNdIhbuJzmnSzskfTxUG6eTR7sCD5HsEFu4LGx7izK9f0sNPqvrBJ1cu2bMtqh78RfpyYFtS+219egKZ8YVHnWYkSZL/AEq/vgpmKbb1DVZPHKUlIpF05D2uqEwdZG7mQ/hI22K6DhX+ygUnYQy0XW3I2u9MIi7oUkTZ+ateU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788884989; c=relaxed/simple;
+	bh=n0RwmVYfL4xTZKBJL8mGbYS60sV/U2MaKAHBgZld1S0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hwIbZEIzLbnRRq+COD8hPm52bgrM+UR/jffkie6CS2Xw7mGELZwrzVZJ7w134JCr7nPPolF0jpEi4lEkUXZU7+79rhRU4roPCZieg62G3FPUzLIacqnXeANKTstJG/62RZfXWBMI/fKQT2X4iQgeui5jPygqsfoixMqPrPDLaJM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=fRHK4dN7; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Tz8t8nLj"
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=AtllziWAEBylwDOWuicoRwDn5AZurYw0+Fy/xhiHsj0=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788877029; v=1; x=1789481829;
- b=Tz8t8nLj+OIB9JqmyuLa1vS3oBTrhaxt6P2PAJreFOoYu6Tliy+E1/xloyjhW5CtYLpocr1G
- VU03NoMwczbXQQvEWGEtnGPIb5g7QOeRlgJt1P+boVVKma+6hmj9P/sLJRseFA4jmuWJ8vtuw69
- BUuQWaZSBwq5/2w1LsugUhkg=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id a34898e233871779;
-	Tue, 08 Sep 2026 14:17:09 +0000
-X-Mizu-Trace-ID: a34898e233871779
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="fRHK4dN7"
+ARC-Seal: i=1; a=rsa-sha256; t=1788884959; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hRcIu/kDve20s5QxX53vTX9xFddWSTmceSQVwzKQ1ODxTRfHOA3gmYG5Z4IniW5Y0yo/xBMDX1EQfLrlaIx2UsUvs/mNY+Qy0mbJjd+8dZ9y6jl2K/1cCoRUE//JhroiMpf5p5KRFFSS+r6qcVD1UxHuBcoG5ExqKGYjeFsR3D8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1788884959; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=D8qxbwrZwATsoR3QHFGwMxcNbr4zYF2x2RxDDaZcC44=; 
+	b=SEfRB2UgduhZLyT7c5jAYdvdQKRMILS6P4gDCWWrSTMDqpR7VJv6DrCQwyv9Me3R8Y5bAGq5hf/Yq+CThBv6VF3dOK3yUdGv8F1Teqa2mxMCd24gCqcM4wjcVh0gNu3byoJQULF0adWmlnwgHt1FA9F3oZWBgs7/b5aAGrBPjh4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788884959;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=D8qxbwrZwATsoR3QHFGwMxcNbr4zYF2x2RxDDaZcC44=;
+	b=fRHK4dN7YIPk+hRAxc8+W8ScDuHeoFG58ePScaLgggQD4n2eG6+g+OIVia/0s0g6
+	wTxg9CAQOaf/a8mAOoUA5VJZ4r1msG5WQcibEjFvRDEFDVUahKIRi/fLamGhoO6MzH1
+	3KyBWtqfSsg9QrJWV0GCEQjlKy522niXf3gMG4R4=
+Received: by mx.zohomail.com with SMTPS id 178888495744144.65748997996377;
+	Tue, 8 Sep 2026 09:29:17 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v2 0/6] spacemit: k3: Replace bad CLINT node with ACLINT
+ nodes
+Date: Wed, 09 Sep 2026 00:28:43 +0800
+Message-Id: <20260909-k3-aclint-v2-0-7931e5bc86ad@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=a7ff6faabc94381f35eb70cb994205d1a66fcd018b82abba28681d1ee3fa;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 08 Sep 2026 22:16:56 +0800
-Message-Id: <DL9ZZ8F7HTZT.1IUMD1ECSOZXL@linux.dev>
-Cc: <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, "Troy
- Mitchell" <troy.mitchell@linux.dev>
-Subject: Re: [PATCH v2] usb: dwc3: core: resume xHCI child on runtime resume
- in host mode
-From: "Troy Mitchell" <troy.mitchell@linux.dev>
-To: "Junzhong Pan" <panjunzhong@linux.spacemit.com>, "Thinh Nguyen"
- <Thinh.Nguyen@synopsys.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260908-resume-xhci-v1-1-aca107602e9c@linux.spacemit.com>
-In-Reply-To: <20260908-resume-xhci-v1-1-aca107602e9c@linux.spacemit.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NQQ6CMBAAv0L2bA0tiMWT/zAcatnCKhTSVqIh/
+ bsUrx4nmcys4NERerhkKzhcyNNkNxCHDHSvbIeM2o1B5KLKz6Jmz4IpPZANrC61qtvCSC4NbP7
+ s0NB7b92aH/vX/YE6pEAyevJhcp99tvDk/esunOVMoZGy4mVbqNN1pm6cnBqOAXUPTYzxC89Mx
+ ka4AAAA
+X-Change-ID: 20260729-k3-aclint-94ca9d3f818f
+To: Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Inochi Amaoto <inochiama@outlook.com>, Radu Rendec <radu@rendec.net>, 
+ Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Anup Patel <anup@brainfault.org>, 
+ Guodong Xu <docular.xu@gmail.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3822;
+ i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
+ bh=n0RwmVYfL4xTZKBJL8mGbYS60sV/U2MaKAHBgZld1S0=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLIWmO+9w2V4MJcppifUcbfIbLHPLuLzrvbubJB1sv+78
+ 8k135MdHaUsDGJcDLJiiixc/uL/rHV4vh0RaL0PM4eVCWQIAxenAEykcTUjQxPb/WNShsanpFM/
+ Jl6tUXOJjQgoFpc6IfhW83bciqlVOxkZFifIOOYJu1XlJq9sdP91f0uV/KuIS7Oc5LgU1SdXT37
+ DDgA=
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
+ fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
+X-ZohoMailClient: External
 
---a7ff6faabc94381f35eb70cb994205d1a66fcd018b82abba28681d1ee3fa
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+When testing OpenSBI with the upstream Device Tree, the CLINT controller
+failed to function properly with the irqchip.riscv_imsic_noipi boot
+parameter:
 
-On Tue Sep 8, 2026 at 10:01 PM +08, Junzhong Pan wrote:
-> USB controller runtime suspend halts the controller on disconnection.
-> It relies on platforms with custom connection notification to start
-> the controller again.
->
-> The host branch of dwc3_runtime_resume() does nothing currently. There
-> are two paths that can trigger a runtime resume of the dwc3 core in
-> host mode:
->
-> (a) Wake lands on the xHCI child (DT platforms, e.g. Qualcomm, i.MX8MP)
->     A platform wakeup IRQ fires and the glue handler calls
->     pm_runtime_resume(&xhci->dev). Runtime PM walks upward, resumes
->     the dwc3 parent first, then resumes xHCI. Both wake correctly.
->
-> (b) Wake lands on the dwc3 parent (ACPI platforms)
->     When an ACPI Notify(ACPI_NOTIFY_DEVICE_WAKE) targets the dwc3
->     parent device -- for example via a Generic Event Device on a
->     hardware-reduced platform where dwc3 is enumerated as an ACPI
->     device without a glue driver -- the ACPI core turns this into
->     pm_request_resume(dwc3_dev). Runtime PM does not propagate resume
->     downward, so the xHCI child stays suspended. Root hub polling is
->     never re-armed, and a device plugged in while suspended is silently
->     dropped.
->
-> This patch fills in the host branch to cover case (b) by requesting an
-> async resume of the xHCI child so xhci_resume() can restore the port
-> state machine and re-arm root hub polling. Glue drivers in case (a)
-> resume xHCI directly, an extra call introduced by this change, but
-> runtime PM can serialize those requests and skip device already active,
-> so the extra resume call is safe. Those calls can be replaced with
-> resume calls to dwc3 device later.
->
-> Tested on SpacemiT K3 Pico-ITX, covering both wakeup paths: an ACPI
-> boot with a GED device notifying the dwc3 node (HID 808622B7), and a
-> DT boot with a modified dwc3-generic-plat driver exposing a wakeup IRQ
-> similar to dwc3-qcom.c and dwc3-imx8mp.c. This is not validation on
-> actual Qualcomm or i.MX8MP hardware, changing those drivers would still
-> need platform-specific testing.
->
-> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-> Assisted-by: Opencode:claude-opus-5
-> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
-> ---
-> Changes since RFC:
-> - add Assisted-By tag and collect tag
-> - refine the commit message and comments as suggested
->
-> Link to RFC: https://lore.kernel.org/linux-usb/20260811090817.109350-1-pa=
-njunzhong@linux.spacemit.com/
-> ---
->  drivers/usb/dwc3/core.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> index fd5c2cd36c59..76883dc6184c 100644
-> --- a/drivers/usb/dwc3/core.c
-> +++ b/drivers/usb/dwc3/core.c
-> @@ -2739,6 +2739,18 @@ int dwc3_runtime_resume(struct dwc3 *dwc)
->  		}
->  		break;
->  	case DWC3_GCTL_PRTCAP_HOST:
-> +		/*
-> +		 * Only the xHCI child's resume re-arms root hub polling, which
-> +		 * is what rediscovers a device plugged in while suspended.
-> +		 * Runtime PM doesn't resume children, so request it here.
-> +		 * Keep it asynchronous to avoid waiting for the parent's resume
-> +		 * callback to finish from inside it. Glue drivers may also
-> +		 * resume xHCI directly, but runtime PM will serialize those
-> +		 * requests and skips an already-active device.
-> +		 */
-> +		if (dwc->xhci)
-> +			pm_request_resume(&dwc->xhci->dev);
-> +		break;
-Could we also check a parent-only resume with no USB wake event? For
-example, reading the DWC3 debugfs lsp_dump file calls
-pm_runtime_resume_and_get(dwc->dev). With both devices suspended, this
-change would wake xHCI too.
+  Platform IPI Device         : aclint-mswi
+  Platform Timer Device       : aclint-mtimer @ 24000000Hz
+  
+  Domain0 Region03            : 0x00000000e081c000-0x00000000e081ffff M: (I,R,W) S/U: ()
+  
+  [    0.091014] smp: Bringing up secondary CPUs ...
+  [   10.104917] CPU1 failed to report alive state
+  [   20.118689] CPU2 failed to report alive state
+  [   30.132288] CPU3 failed to report alive state
+  [   40.145953] CPU4 failed to report alive state
+  [   50.159604] CPU5 failed to report alive state
+  [   60.173212] CPU6 failed to report alive state
+  [   70.186981] CPU7 failed to report alive state
+  [   70.191411] smp: Brought up 1 node, 1 CPU
 
-Would both devices return to autosuspend after the read and still
-detect a subsequent plug-in? This would help cover the non-wakeup
-case.
->  	default:
->  		/* do nothing */
->  		break;
->
-> ---
-> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
-> change-id: 20260908-resume-xhci-0fa34ff9b332
->
-> Best regards,
+Through exploring and testing, I discovered that the K3 actually
+provides all three complete ACLINT components, and subsequent
+confirmation with the vendor yielded the following information:
 
+The ACLINT controllers are mapped to two physical memory regions:
+secure (0xf1810000-0xf1820000) and non-secure (0xe0810000-0xe0820000),
+with varying accessibility per controller and execution mode:
 
---=20
-Troy Mitchell
++---------+--------+------------------------+-----------------------+
+| Offset  | Module | Secure Region          | Non-Secure Region     |
++---------+--------+------------------------+-----------------------+
+| +0x0000 | MSWI   | 0xf1810000-0xf1813fff  | 0xe0810000-0xe0813fff |
+|         |        | (M-mode only)          | (Inaccessible)        |
++---------+--------+------------------------+-----------------------+
+| +0x4000 | MTIMER | 0xf1814000-0xf181bfff  | 0xe0814000-0xe081bfff |
+|         |        | (M-mode only)          | (Inaccessible)        |
++---------+--------+------------------------+-----------------------+
+| +0xc000 | SSWI   | 0xf181c000-0xf181ffff  | 0xe081c000-0xe081ffff |
+|         |        | (M-mode only if efused)| (M/S-mode Accessible) |
++---------+--------+------------------------+-----------------------+
 
+Taking these constraints into account, we choose the secure region
+(0xf1810000-0xf181bfff) for the M-mode ACLINT components (MSWI and
+MTIMER), and the non-secure region (0xe081c000-0xe081ffff) for the
+S-mode SSWI component.
 
---a7ff6faabc94381f35eb70cb994205d1a66fcd018b82abba28681d1ee3fa
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+---
+Changes in v2:
+- Drop the generic riscv,aclint-* fallback compatibles and use only
+  SpacemiT K3-specific compatibles.
+- Match spacemit,k3-aclint-sswi directly in the SSWI driver.
+- Squash the ACLINT MSWI and MTIMER DT additions into the patch that
+  replaces the incorrect CLINT node.
+- Link to v1: https://patch.msgid.link/20260729-k3-aclint-v1-0-aef88614d3a5@pigmoral.tech
 
------BEGIN PGP SIGNATURE-----
+---
+Junhui Liu (6):
+      dt-bindings: timer: thead,c900-aclint-mtimer: Add SpacemiT K3
+      dt-bindings: interrupt-controller: thead,c900-aclint-mswi: Add SpacemiT K3
+      dt-bindings: interrupt-controller: thead,c900-aclint-sswi: Add SpacemiT K3
+      dt-bindings: timer: sifive,clint: Deprecate spacemit,k3-clint
+      irqchip/aclint-sswi: Add support for SpacemiT K3
+      riscv: dts: spacemit: k3: Replace incorrect CLINT node with ACLINT nodes
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqAY2CEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC93lQEAnfUXUqFGj8nw
-pq/QcoMwv8/AZglrFri8AwmbKiziyQ0BALR07IvfqVq06ZjfzBNg2XwB0u4Kf28m
-MbT8XWa53wIE
-=yhFf
------END PGP SIGNATURE-----
+ .../thead,c900-aclint-mswi.yaml                    |  1 +
+ .../thead,c900-aclint-sswi.yaml                    |  5 +--
+ .../devicetree/bindings/timer/sifive,clint.yaml    |  5 ++-
+ .../bindings/timer/thead,c900-aclint-mtimer.yaml   |  1 +
+ arch/riscv/boot/dts/spacemit/k3.dtsi               | 37 ++++++++++++++++------
+ drivers/irqchip/irq-aclint-sswi.c                  |  1 +
+ 6 files changed, 37 insertions(+), 13 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260729-k3-aclint-94ca9d3f818f
 
---a7ff6faabc94381f35eb70cb994205d1a66fcd018b82abba28681d1ee3fa--
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
+
