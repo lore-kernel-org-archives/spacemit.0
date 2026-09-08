@@ -1,73 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D53B483BDE;
-	Tue,  8 Sep 2026 21:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A22B48F000;
+	Tue,  8 Sep 2026 22:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788902872; cv=none; b=tolatJP7YrYIvDtvxwvqlnfZ4EK27eVQ6f+J//LaPHO++xEpOUXxbMQKHTp1SxbH7emCMYlddafuInXaIidbPHO2kodmjyWUdztCwlUMKxfO07/H/h4nMEQeh7JfF2uO+FPxKFMrwDKNkKPnULskTxxYJqUhGRQnPX0uzw61I6M=
+	t=1788905227; cv=none; b=rN++RDQaMnj9uXIyeSGX8oYGU7Rt8kHTAeRIrQQDof3g5gmqud4+Gb3KSjgFISGVNaKj4pS6dNLb98yTchz7tRI2AOgwzLbj2Tiv+mkI3cVb0j/Uy3Us0BI2tLj9h8qU8R4Mk/VBpuJrIe6jFid/JwXQDFCs0nb0m574oHTDOls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788902872; c=relaxed/simple;
-	bh=nKfl4qroJvlsNG9b/JDeXtvQA6ocWF5QlvNPK3Zjg94=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AY/oq+2ijgPq7OwHZdVMHVgtnA6aCqFTNhXfoq7LnSl+YjvmSA1/8WHajzn7Ee0D4wUogg9+xQSOsZA4jUJn1eBveQwv7qs+9mV0uiRy9JmkGoEagkja9UMVDFL0Wf5yA1+BxrDFn1UYkHsLRUMfT6k8Ru1KLalRXXICStNovXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dtiU6qAO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788905227; c=relaxed/simple;
+	bh=WepsCeX0ALim39H0LbQaoGEyC562nyyVvoxEGggtHR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xh1F9Yy4fneREeDb4so7bWsm7ZBIN5HUSTKn+CehxFL45BoRVaZVPsIHwCD91mTJkdMaBZEwHCgTRTm4FNKBQncR44HSf7pTdfdmQO2T06MhbpuO3NV6aQnrgFScgJzIserQrO3u9jR3lZ7FoFQfoNXTRaqekRvRHWIhGvNj92U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ht1oyT2p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dtiU6qAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B14D1F00A3A;
-	Tue,  8 Sep 2026 21:27:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ht1oyT2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB041F00A3A;
+	Tue,  8 Sep 2026 22:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788902870;
-	bh=857GXWh5Wp+T+/E/9iEX9gx5IzxzoNleNVwqN+hai+0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dtiU6qAOIMB++ZEgT7ArQ8A+1eY9m0aeMRbEECD3xRT2B/ws4In3noMgrNS5nR1KS
-	 m4VCI6nzngZOd1tbotVNI1/O/0eRPg1j2dE5zyiNCx+NwsK8xh+ezs9451E2l1tvu3
-	 6zdVf2sq/Rgwe6BoM7QyTvF5blVU7jnLDHxD3FW1NXB5FFot+lq5USwP0cYgV5TQx8
-	 WK8oCBGkvl3yYSPxysiq8ZRZNcqHyx6Ij7PG2u4vke5Yk1TGZX2dcIIanY+n43yhi+
-	 IGOTGtg+1m/6Z2O8tdDC1BD3LzlPWNWpW0fCHuToGYxUI2RTlbMu5JuwDebH6ZUE+E
-	 ysT9xDAklx7Og==
+	s=k20260515; t=1788905225;
+	bh=JoK2n9Z7urXwu7MomxxLbY36ml5lzGDpWoJEJWTo6Js=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Ht1oyT2pmfS8hYNjLMLZv8UUdLolw9bM0vdtZG4PTG8bQMpx9IU1W+LbDS4g9HbEY
+	 qnbKlwUqqY+or2QCAlEyVAo1riElAbTP21bEZDYkxNHH5klnLBe6TmZF5TQupdeUyg
+	 WQI+OzzrdXlS9dsds4R9kVBJl+JlOCDNyyiQx7bLfxdbYXumGT7xcfwA1QMv/P+gn3
+	 CYID6n1aMc84oLxAOpBcyHmazgNi24qXeS9bF3Ip886d7DlV5Via6OEMcm8gs1bPF6
+	 wYV0IxvuLLAXfqSWjcmdJZXf+ALB8ZTHsKf3ZZe04KAY9MT/VCntZJrUUAhGbXM3R5
+	 RaDxaspaqSnMg==
+Date: Tue, 8 Sep 2026 22:07:03 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Guo Ren <guoren@kernel.org>
-Cc: Yixun Lan <dlan@kernel.org>,
-	devicetree@vger.kernel.org,
+To: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Xu Yang <xu.yang_2@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>, Peter Chen <peter.chen@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev,
-	junhui.liu@pigmoral.tech,
-	stable@vger.kernel.org,
-	Guodong Xu <docular.xu@gmail.com>
-Subject: Re: [PATCH V2] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
-Date: Tue,  8 Sep 2026 21:27:45 +0000
-Message-ID: <178890281743.280809.6794567458346046104.b4-ty@b4>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260817033038.2286436-1-guoren@kernel.org>
-References: <20260817033038.2286436-1-guoren@kernel.org>
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Ze Huang <huang.ze@linux.dev>
+Subject: Re: [PATCH v2 9/9] riscv: defconfig: enable ChipIdea USB controller
+ support
+Message-ID: <20260908220703-GKD2346@kernel.org>
+References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
+ <20260908-b4-spacemit-k1-usb2-v2-9-f07342ffa051@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260908-b4-spacemit-k1-usb2-v2-9-f07342ffa051@linux.spacemit.com>
 
+Hi Junzhong,
 
-On Mon, 17 Aug 2026 03:30:38 +0000, Guo Ren wrote:
-> The initial K3 device tree used generic/placeholder values for the
-> IMSIC guest configuration:
+On 17:48 Tue 08 Sep     , Junzhong Pan wrote:
+> Enable the ChipIdea USB2 controller and SpacemiT K1 USB2 PHY to support
+> USB2.0 controllers on the SpacemiT K1 SoC.
 > 
->   riscv,num-guest-ids    = <511>;
+> Tested-by: Ze Huang <huang.ze@linux.dev>
+> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+> ---
+>  arch/riscv/configs/defconfig | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> According to the SpacemiT K3 User Manual this values is incorrect
-> for the X100 cores:
+> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+> index 04ae305d5511..5b556488de66 100644
+> --- a/arch/riscv/configs/defconfig
+> +++ b/arch/riscv/configs/defconfig
+> @@ -222,6 +222,9 @@ CONFIG_USB_CDNS3_HOST=y
+>  CONFIG_USB_CDNS3_STARFIVE=m
+>  CONFIG_USB_MUSB_HDRC=m
+>  CONFIG_USB_MUSB_SUNXI=m
+> +CONFIG_USB_CHIPIDEA=y
+> +CONFIG_USB_CHIPIDEA_UDC=y
+> +CONFIG_USB_CHIPIDEA_HOST=y
+I know some prefer to enable as loadable module for non major drivers
+so, can you check if it works as module? and alter the config
+
+>  CONFIG_NOP_USB_XCEIV=m
+>  CONFIG_USB_GADGET=y
+>  CONFIG_USB_CONFIGFS=m
+> @@ -272,6 +275,7 @@ CONFIG_PWM=y
+>  CONFIG_PWM_PXA=m
+>  CONFIG_THEAD_C900_ACLINT_SSWI=y
+>  CONFIG_PHY_SUN4I_USB=m
+> +CONFIG_PHY_SPACEMIT_K1_USB2=y
+>  CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
+>  CONFIG_PHY_STARFIVE_JH7110_PCIE=m
+>  CONFIG_PHY_STARFIVE_JH7110_USB=m
 > 
-> [...]
+> -- 
+> 2.34.1
+> 
 
-Applied, thanks!
-
-[1/1] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
-      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=69f95409f0053f787ad60175944080621a8b7d95
-
-Best regards,
 -- 
-Yixun Lan <dlan@kernel.org>
+Yixun Lan (dlan)
