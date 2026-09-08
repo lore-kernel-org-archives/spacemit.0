@@ -1,113 +1,272 @@
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E9F55821D
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 13:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788873169; cv=none; b=OSjBY4sRJD4lw3yhIzVabsZg9Z387ITiIXnAGf3ARFZViDmyyaOtp0Ouzmg3zXkEmiN+hm1TsVO7cGK0r3s4MjXD6/ub1GOHV7LmSFmn5Cjpo9BZpbLKxJ0E0YAQSyWNQVLM/SjNHCR7DaDzmRBlKRrZHxc+l7+KXP5Dz96twzs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788873169; c=relaxed/simple;
-	bh=mIWyqqRMsfpDKfz/nz9NbsL48iyrcIIeqP8orz9L/8M=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=EiNBxYi8xYWuWHry8H8r1K3JWPrDstNbqsZ95G9omxVfSwj6BM29zmQ1pxDkUVl7vNuIpgc7uM8QOX2q6ubtQjv2KpHljnUUjLQEFM0SLDHrMjV7AgzdnoDrqmKFt4MMBYqMsF2yiTWTufJnjFkcMAPmg+8HSYEOdS4gdhrYxzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=FTMLz2Es; arc=none smtp.client-ip=54.206.34.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FB7559CA2
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 13:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788874428; cv=fail; b=RAc802ffKTXo//BfKbUlAcWLTCMQYq5xqXwGzNpsJxDynAjIM6ReAvAuFHdKD1Q8I3/s5emMK9Sqm05PD/ukCdl0HozSSquzRnL5KW2vdeaUzrElgjn2EL060svtY811A5El2PgeuBJG8Qt5PkpdrPy6VKUnDwcxzbkPxus/G6k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788874428; c=relaxed/simple;
+	bh=w037SQnPopZStC335sgre0FdEchqYHc3VfbeT/VaBlk=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Ct+owYX3D/tA5CqGcb3uSrjgchI7aTBoMPb7AfO6+ZfMe73hQmVYmhOr8JDebAXy5Vl6f3UEzUblqrmRXdS7tDFrdfdgmbklnZl+iLU6luesKg1B86kc0HgKfFj6Fvt0XQ3e2a4jwEJrhnztNeWEMA5yjIacn67OFj9Z4ER01PQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ARbb01Nz; arc=fail smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="FTMLz2Es"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788873126;
-	bh=mIWyqqRMsfpDKfz/nz9NbsL48iyrcIIeqP8orz9L/8M=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=FTMLz2EsWPsSiHxnudJaDopeTZI2t1PwzM7zATruCquh7F0eFfZhPak9fSP4kHP5l
-	 KAdJL2XNBagLwhHX4Bzm+uFCVwvlxtWMFFe606Zylb01dcxRNLHZO7Qjq+ZDJ+4+ll
-	 lkG7oNOK0gPockjo4nVsN7S4UYZkrGyBBNzXB55Y=
-X-QQ-mid: esmtpsz21t1788873119tb9caac5d
-X-QQ-Originating-IP: OzT991yKTm8aPCZVAdh22ewUudNoGlUr/PsMZfz1plg=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 08 Sep 2026 21:11:57 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 17554750982614222209
-EX-QQ-RecipientCnt: 21
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ARbb01Nz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788874417; x=1820410417;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=w037SQnPopZStC335sgre0FdEchqYHc3VfbeT/VaBlk=;
+  b=ARbb01NzJyFebE7SNZdLCH2If5grZdgr+ALoKqSHVvfPzWGFRFONgbmE
+   BnX+KeCt4f21Tx0nBYVWSeEMR1t+oa1Ru/+x611/Jnlb74Nib9DKrtsM4
+   zAGP6ZFBFZSgTvW3KP7gFMedD5ttEq9HF7xDIaQ+jn65r5rQw0N/9Pb54
+   5TRckfvuCbKQRiaM0u2vNqj1uj72T/+9ysOEhxm3H2FtiGLLht0CsOpFW
+   x/JgBZoXO9oitAy6yTcrkLgQIUKT/PQTpSKu4831hDe/Lw90Cd5W7GICF
+   ZX0f8KHeMoWv6y7nUi1nwHgvR8BZ+kqZR6A7kTJrdduW4kIHwpPEhU/Xu
+   Q==;
+X-CSE-ConnectionGUID: bpC7W+yoRzGVODW9FOgczA==
+X-CSE-MsgGUID: j+8iKt9zTj63qke8Q+wbWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="89148900"
+X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
+   d="scan'208";a="89148900"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 06:33:32 -0700
+X-CSE-ConnectionGUID: 0gQuASwsS+ilsuf6DStnWg==
+X-CSE-MsgGUID: 8uIPbpYkTQuBYCe5TzzDHg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
+   d="scan'208";a="267755251"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 06:33:31 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 8 Sep 2026 06:33:31 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Tue, 8 Sep 2026 06:33:31 -0700
+Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.10) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 8 Sep 2026 06:33:20 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZVZ4aFphJC1zvZnLfp0y5u71hN/JV6SNhqPJ6xQsBOZgsKBIFKiagRKSKGYNZHwbmxL/3JxjxDd7J1/12EQ8vUBPZGVvOuIWiQptz/7PqKjD8S9jL9vtf8MG0rT8Atse6ygylN6VRxa0HT7XRSQa5QygFkgrJ8kGyEomFjPbfy6JHQzZY1NiGCGSnaIqmANO8ehHFLqODuZ4SBskQ962QJx3LDd1L5ZtYOaHynUA7wpxmAX3GO+oes7OG472cF63cg8teVy0veM6oFj0pJ7vjR4lZWWxu6k1U0N3d/4+/Mcc0CFzLlem3/sapvYuIz1aNBcmtUjvWyWajOccOgA47A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oBFNVj2kLlU69sIJYvOKKWz0Sx+Dkf5W3Wxl62ossz8=;
+ b=PrxlAt1lVVVjvPGd/vPCd3JcQ3zps1cPit/+P3GzrCODuUiQAL3+uiUw0YqyJgEih03q4qwSzfu9r53yVRvomFUw9QEeV96uar+WHfZ4ZMIQRZXQNKLhMED/JLlNF0GUkIBC8z0FmLMuYMZL8INxVC9/3qJkey3FhTZjYGSQgKd09MLRuGIyl0w4JBvY5nhmIvlad2iFKd5beo2yL5mBJrsaH12Zf260oV7lQfgRdJNskMVzhwQIdXOjSZBGwlYPA7I7V3ymLhSYio5TyNe6nZm8hnYwCXfikPyYKBIZxAsr+1qXTNaxiMMNikhIedKVg0tDsvB3NelyIDN9uEQVHA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB8986.namprd11.prod.outlook.com (2603:10b6:208:577::21)
+ by DS0PR11MB7832.namprd11.prod.outlook.com (2603:10b6:8:f5::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
+ 2026 13:33:12 +0000
+Received: from IA3PR11MB8986.namprd11.prod.outlook.com
+ ([fe80::e6f0:6afb:6ef9:ab5c]) by IA3PR11MB8986.namprd11.prod.outlook.com
+ ([fe80::e6f0:6afb:6ef9:ab5c%6]) with mapi id 15.21.0406.005; Tue, 8 Sep 2026
+ 13:33:11 +0000
+From: "Loktionov, Aleksandr" <aleksandr.loktionov@intel.com>
+To: Siddharth Vadapalli <s-vadapalli@ti.com>,
+	"dario.binacchi@amarulasolutions.com" <dario.binacchi@amarulasolutions.com>,
+	"mkl@pengutronix.de" <mkl@pengutronix.de>, "mailhol@kernel.org"
+	<mailhol@kernel.org>, "msp@baylibre.com" <msp@baylibre.com>,
+	"florian.fainelli@broadcom.com" <florian.fainelli@broadcom.com>,
+	"jonas.gorski@gmail.com" <jonas.gorski@gmail.com>, "andrew@lunn.ch"
+	<andrew@lunn.ch>, "olteanv@gmail.com" <olteanv@gmail.com>,
+	"davem@davemloft.net" <davem@davemloft.net>, "edumazet@google.com"
+	<edumazet@google.com>, "kuba@kernel.org" <kuba@kernel.org>,
+	"pabeni@redhat.com" <pabeni@redhat.com>, "kurt@linutronix.de"
+	<kurt@linutronix.de>, "hauke@hauke-m.de" <hauke@hauke-m.de>,
+	"chester.a.unal@arinc9.com" <chester.a.unal@arinc9.com>,
+	"daniel@makrotopia.org" <daniel@makrotopia.org>, "matthias.bgg@gmail.com"
+	<matthias.bgg@gmail.com>, "angelogioacchino.delregno@collabora.com"
+	<angelogioacchino.delregno@collabora.com>, "ansuelsmth@gmail.com"
+	<ansuelsmth@gmail.com>, "linusw@kernel.org" <linusw@kernel.org>,
+	"luizluca@gmail.com" <luizluca@gmail.com>, "alvin.sipraga@analog.com"
+	<alvin.sipraga@analog.com>, "clement.leger@bootlin.com"
+	<clement.leger@bootlin.com>, "justin.chen@broadcom.com"
+	<justin.chen@broadcom.com>, "dlan@kernel.org" <dlan@kernel.org>,
+	"rogerq@kernel.org" <rogerq@kernel.org>, "hkallweit1@gmail.com"
+	<hkallweit1@gmail.com>, "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+	"rjui@broadcom.com" <rjui@broadcom.com>, "sbranden@broadcom.com"
+	<sbranden@broadcom.com>, "bcm-kernel-feedback-list@broadcom.com"
+	<bcm-kernel-feedback-list@broadcom.com>, "opendmb@gmail.com"
+	<opendmb@gmail.com>, "andrei.botila@oss.nxp.com" <andrei.botila@oss.nxp.com>,
+	"wangruikang@iscas.ac.cn" <wangruikang@iscas.ac.cn>, "amadeus@jmu.edu.cn"
+	<amadeus@jmu.edu.cn>, "kees@kernel.org" <kees@kernel.org>,
+	"tmshlvck@gmail.com" <tmshlvck@gmail.com>, "c-vankar@ti.com"
+	<c-vankar@ti.com>, "horms@kernel.org" <horms@kernel.org>,
+	"vadim.fedorenko@linux.dev" <vadim.fedorenko@linux.dev>,
+	"daniel.zahka@gmail.com" <daniel.zahka@gmail.com>,
+	"nora.schiffer@ew.tq-group.com" <nora.schiffer@ew.tq-group.com>,
+	"v-singh1@ti.com" <v-singh1@ti.com>, "oss@vassilevski.com"
+	<oss@vassilevski.com>, "haokexin@gmail.com" <haokexin@gmail.com>,
+	"alex@sverdlin.org" <alex@sverdlin.org>, "lgs201920130244@gmail.com"
+	<lgs201920130244@gmail.com>
+CC: "linux-can@vger.kernel.org" <linux-can@vger.kernel.org>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-mediatek@lists.infradead.org"
+	<linux-mediatek@lists.infradead.org>, "linux-renesas-soc@vger.kernel.org"
+	<linux-renesas-soc@vger.kernel.org>, "linux-riscv@lists.infradead.org"
+	<linux-riscv@lists.infradead.org>, "spacemit@lists.linux.dev"
+	<spacemit@lists.linux.dev>, "linux-omap@vger.kernel.org"
+	<linux-omap@vger.kernel.org>
+Subject: RE: [PATCH net-next 24/33] net: bcmasp: Remove comma after
+ sentinel-entry in match-table
+Thread-Topic: [PATCH net-next 24/33] net: bcmasp: Remove comma after
+ sentinel-entry in match-table
+Thread-Index: AQHdPCeKBSwgpc1pS06aFMpAiLgvX7bEtGPg
+Date: Tue, 8 Sep 2026 13:33:11 +0000
+Message-ID: <IA3PR11MB8986ECEFACA574777AADC435E5B12@IA3PR11MB8986.namprd11.prod.outlook.com>
+References: <20260904043724.2955444-1-s-vadapalli@ti.com>
+ <20260904043724.2955444-25-s-vadapalli@ti.com>
+In-Reply-To: <20260904043724.2955444-25-s-vadapalli@ti.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB8986:EE_|DS0PR11MB7832:EE_
+x-ms-office365-filtering-correlation-id: ae12aab5-b457-4c03-6621-08df0dadba70
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|7416014|366016|1800799024|376014|10067099003|6133799003|18002099003|22082099003|56012099006|4143699003|11063799006|921020|38070700021;
+x-microsoft-antispam-message-info: hw8kdjPtnPPZG3Y3T1H6o/QF0gzBz+xN9XDHV4anfVfFcuLJxKQ/TlhmmMLuy8x5vtdPbr2fQvoLlXEZ1mC87LA65eJmmNhzSoZZpAEjJeR8/sRighdmwDWlTpwhH8iWzVH5VgAs8AxEdXOFzVO04PfxOeUqw+qQZzSOPCo6GF1VLf/AbwabXWSLExHA2bf7ZrZ9olzFDI8VFGX+8GcZa8vbynubSRoXSnfx5Fyci6SYOiekyoZicSQkuAtKhwl6Mt90ZBMtyu6dd4TYAWfCIiUEmZbrVP8LPlIohP0vnDpgk/QYl4yu9P9M+Z0GQPuo1uk+p+1btdz5G2+wCAAHWZkpc9oolSsgnbcKB9mXshvsLZsDTWBdNBKJ3sbHEvyscD5NgxNu2WiSdLk7bcblee9Fh/KwOYSyZ2Bh8M5gsuwqKiNhib8VKV711WaXpbPuFkSS2JyO3XGE5twzp9bCM+a+xdLWHrcp1lCDcH2qCl1UxPB+HvhMkTk3VCCHpCvDtM01f4zc5mxBZbFtp2MyrLUODg21+hx38hP9VPzWYyirFnzt99WrSdKoOkF/anySrrkyLx0+jun9VIsH+tGvZjs847IFrM4BRz5FrFnxw+CdltVZVa0G58nAPridSDKpb/oCEId6sCgzO5v4sXolK7ziDPWkd5DWMut8myTf4PO9DXWCLoou+FHbuU2BaElzSgPIU2K7iAV1CZI0zXCZCAvyHlIheHp3sw4EJoXjgiBKdd6RJFwMIhWYuujVQfgg
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA3PR11MB8986.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(366016)(1800799024)(376014)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(921020)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?5x4VDUIPtziJ+lyRqm7W0MXB7T68QKBc+6ZVDDvDjm8kAmmZR8FZzirgfZ59?=
+ =?us-ascii?Q?bi65sE60iAhLJaKMwoTkBjlJ8FD2c1bPnwQwuEOpoBuq8WHvOxs7HFQ1XZIZ?=
+ =?us-ascii?Q?HvT7YHeI+Pc+IK1zzFYQ8PN0nrd51f16wafhKYfSVmyOFJV892LI77RYQcGn?=
+ =?us-ascii?Q?xwpM9pggsJ0/rbk9ApJv6oSTZxlDz76ATDhr1EEgWVTt1u929fpSlaNoJa6I?=
+ =?us-ascii?Q?JycBD/tW4RgumOMIrlXv6wWhApw+MoF2k+veF4lt+dcHlh4Le+zLOuZuM+4C?=
+ =?us-ascii?Q?B3JajVY+0R9w+zk7+0X+s+3GfaFnFQssP+fgy/bpnhZjLqFMVym+9yIJS6Cy?=
+ =?us-ascii?Q?qLMZ00MHmROb28GpfFEFccKuaL+0Vp3ejCMNLBuxC8xA5k1xArijN8KYyWAP?=
+ =?us-ascii?Q?e2szXKVMkMxJoCPuqnEzMPY4axSmKNPRD2qapZd6RHucSPSSk1m1a16nrnGb?=
+ =?us-ascii?Q?FAjUOvoRdK8msfx7Pgz4zr/h0bpmupNMXTkLJSr/x18T6J7FzBkU+pMdJuag?=
+ =?us-ascii?Q?ZeTIt19VCP69PCev9N5iiE+tJTqersuhyM7Cfsul0wWxGRslr4HHZ9rxy5We?=
+ =?us-ascii?Q?Ed1dEI1I5ZYxb2CP/4Q9nokPuzSQJSIUsSGmuzdljayZlgCnfFG+WV5JV30P?=
+ =?us-ascii?Q?6GIAbtFrUe9II6kS39BMX0XQTxr4NleqchWYXJv1jCoz7HfJp9hNuEcDWWuF?=
+ =?us-ascii?Q?bTV/q6kagp5QGrdP/LAonQHZr3qfTc0wuyrDNbXygHYCfzzcVC7QDiRLKXpI?=
+ =?us-ascii?Q?k7uo+l/n+Y60CW7aEJDQHieWkWyQ0pL3rkXm+61/B6XjAoRWQVCkCM1AXyom?=
+ =?us-ascii?Q?7N0GteaVymo/Qw/Aw02vQqZka+2QJv1tCJuFr3A1z0XC4fhWeHRud73/3Au6?=
+ =?us-ascii?Q?IeqF4MO66QInAzOSVVkqIGaiCmDt+AHFpaOMZMBJ7+pL3FqK331I7r+eGT/M?=
+ =?us-ascii?Q?b7YiNhHpw0jjatOcmFzPB5QAvbzy12BGxpPBmG9Boq91IovxAGsmrWqKhJbZ?=
+ =?us-ascii?Q?+xoT93gw+8SIHXflafBo1oJ7c1inFf8X9Tbu1mqECQ+WJS1w94+KV+PpRAk+?=
+ =?us-ascii?Q?Ul+zA0njLmJrUKsNuWdJyJ9BAhxpe7pCr5iNjn06XlZtLMQIubzxBWOwrAm6?=
+ =?us-ascii?Q?M/m5c+IRwSj0b34+cuP0P0Z/jwHypo5O0jwOCo+kxgIpj6rROJHsPRu4b4/b?=
+ =?us-ascii?Q?oe3cyHawXFsHHl/UKeQKizVjZIY0Yzu8bPzB58JW5OCClsO/m3ouo9wUyFSN?=
+ =?us-ascii?Q?scq55gbXj73KykJqv0Cr3TvIk2+hLM6pEimv2T8iCJenlVkRBEyJOlDZkrNI?=
+ =?us-ascii?Q?hienSJCAFH2pE+sTcyDuzpwJ6UD6Ewaf5hTMctqUcn7C0j7u5+Zfn+UM17D4?=
+ =?us-ascii?Q?nGKUvJr+GtSfUzZXKSCnyC/XvCQ7+xZVRQvT4QBuklcc37cZ7hvFlLdWY7sf?=
+ =?us-ascii?Q?wPnovXWcOdN/LSJS1EFwtpv82lk0PXlipGO3GS1bJGQTAGkf5/hOB0/YACc1?=
+ =?us-ascii?Q?IL6nr5gwX31eaPre4t9I7gY7t/rj/PxTa329ka0oMKS9rd/CFnDL/1ADrnU4?=
+ =?us-ascii?Q?XJsIldpONZ1JloiUVPsM8HNnm7LoJ8IsgTKfm0F3CKRlTMH3cczIoxWmjF88?=
+ =?us-ascii?Q?7p6f0o+GJMESEh1l43PMjCVdxLR9ysjpgAljEVlZI6+Sx10E0WFkG9nCkpAw?=
+ =?us-ascii?Q?edrbA4P9XrvGDUAICAJIqifTPLplmdL+2lJr+7Sd0xvvIMbuMUDM6tXFQA+E?=
+ =?us-ascii?Q?hl3oH+7d0YRxwXanj1AcZGyAo46zDNo=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=c8689e971497ee65ed5d0babc05266408e6f8eba1d89b75ccbd7b9d886cb;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 08 Sep 2026 21:11:54 +0800
-Message-Id: <DL9YLFXV5XHU.2GLN2OSEB8EV@linux.spacemit.com>
-Cc: <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Ze Huang" <huang.ze@linux.dev>
-Subject: Re: [PATCH v2 5/9] usb: chipidea: usb2: add SpacemiT K1 support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Junzhong Pan" <panjunzhong@linux.spacemit.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Yixun Lan" <dlan@kernel.org>, "Xu Yang" <xu.yang_2@nxp.com>, "Peng Fan"
- <peng.fan@nxp.com>, "Peter Chen" <peter.chen@kernel.org>, "Philipp Zabel"
- <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com> <20260908-b4-spacemit-k1-usb2-v2-5-f07342ffa051@linux.spacemit.com>
-In-Reply-To: <20260908-b4-spacemit-k1-usb2-v2-5-f07342ffa051@linux.spacemit.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NOSiq+6X1Fi2h96Ve7jtwZRi4zyHPpUx4yY2i1Wz+CloC3OzfV/KJww2
-	ioJLxYrTwx9BTJk7Cg2AcHWll571CY7ZIxkNuhGXlQEJ+x9A3y1XAKX6mLfPigK4nwCzKBW
-	M07bO1UefBd2BKZZVYkefDz1RS5wigfHTYuesYlPeM/CP36u0QnulTx1UDojC74fbhl5yvh
-	hblfK4rgt8B+3mFo+rrbOkRlrEvc0qROqtO/7edaGK3/Y8kvKFuLTXRY+f3u15JCXn9CSBm
-	vPRcUqxpf53DWPvt7+KOb5I7j3kB2glYCnnRj8LNSEtGmi8FzinkE/h8mbKX6amJKnOw1AN
-	kTkYo0R+ELBP6JIe6v4rwqp9bWW5KRwcYkG2cMZP+CrgJdDmezhFFSIi1D6JxWaf5OtSm7u
-	SLNAEanUjuyQs6qbS4koaPwwI/NcotQzlmloWUJ8224o2veInNasOHuTGx+t8qNL9WmEyd2
-	m/nmM/RaC8h4Y+kD0UeWDyVxMBt+w4fF4YHaiSOoT7ptZeKjdiBznJcEmFAf5wqf9xGAS6d
-	Zzz8cbKm+8lzRAbnp2YTQNpy0/ZZw4orAjRQmyGvwu284eb+UxtBB2BjuMCPsaF43TcE/ol
-	iRKNiX7P8OlOUt8wX1f6Agodm3svsbZS0nwCy3NRmCMZ+gugrqNEnPcgGkSAwpoeEjz6WqS
-	K8Kakho+QZv84ymQsI2dfni/eRv7NABPJCSiwZdnGeUz/GVJRtnUA2eh+ZekOq6QYgfSihI
-	rLv2P26xZ/iN1sqIQXZNvJ50uTqlfeJNnBycnooZrs6mhR+WbNVWZAwutZjqd4bX9wzpdch
-	QRICN1OAeQ+07XtsjV4jlTcoJAGqoTmRefRv7VbnIWucOqnjhlC5lQbvhz4LUazfL932kck
-	8DkAZ9FId8TjvQ7tx8LV3h5Xw3ifx3cJe9+ERolvW3LwnAgASZ6H18CaJJfRK2t4RmRZjmm
-	+tNZfids3xUStUyuC4HK0COsbX/4eiv55bgdAh6d2NVHgaPgIalg0MiZd5Y7sRH7XCjKQkH
-	/omtsvyh7r1Ch1G6SZkyCDGtJ0M7ONKME4oqmeKEaUBJNxNm8ulj4nfyKnxWzzkTZoeuaz7
-	6PmAM622eIsmwCCzBEPAAJcfexy89sM2g==
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
-
---c8689e971497ee65ed5d0babc05266408e6f8eba1d89b75ccbd7b9d886cb
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-
-On Tue Sep 8, 2026 at 5:48 PM +08, Junzhong Pan wrote:
-> Add a compatible for SpacemiT K1, and add platform data with correct
-> flag since the hardware doesn't have internal otg register support.
->
-> Acked-by: Peter Chen <peter.chen@kernel.org>
-> Tested-by: Ze Huang <huang.ze@linux.dev>
-> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-
---=20
-Troy Mitchell
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: wlcc5ISkoypEYVAtCOrg5CDhXGmgp9fFaAA0SrTAhh7YDuoG4LPk+dcarx1vmh2jx9d3SF363/i/woAYg4oTRN/VXUgt5ddMzrNrirDHtGrZDMarFS48bjrnmx8gnSBkppGwlrZyA6p+1tlZXen0PC0yOKyH44NYW17Js0vV+rMit0mwgTiqMYVpZKCFGgmMRg7zqHzOHyPYC2Cyqs5vp4T4zgzYRv6fMxT1Lm+ELsMA3TmZuByaNcHKGPX2EJ6LOi82w+osUMOn38OOadi/+m0f+1r4Eyl6qjztjjY5QO+jwLqHjb9NXJ81wnscQumPLXgdAeIzzPW3C3BQgLUt1A==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB8986.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae12aab5-b457-4c03-6621-08df0dadba70
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2026 13:33:11.7963
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VR1ptsVnR/Wv6wi69lFixfUtSZA1M8c3Gmdl7MBIvpgpIxU3cMEzYncdJjjaDe3dk3aciGl72eGFpztrpkoGhBITYWgDEw+zS40fKEZUBSI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7832
+X-OriginatorOrg: intel.com
 
 
---c8689e971497ee65ed5d0babc05266408e6f8eba1d89b75ccbd7b9d886cb
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+> -----Original Message-----
+> From: Siddharth Vadapalli <s-vadapalli@ti.com>
+> Sent: Friday, September 4, 2026 6:37 AM
+> To: dario.binacchi@amarulasolutions.com; mkl@pengutronix.de;
+> mailhol@kernel.org; msp@baylibre.com; florian.fainelli@broadcom.com;
+> jonas.gorski@gmail.com; andrew@lunn.ch; olteanv@gmail.com;
+> davem@davemloft.net; edumazet@google.com; kuba@kernel.org;
+> pabeni@redhat.com; kurt@linutronix.de; hauke@hauke-m.de;
+> chester.a.unal@arinc9.com; daniel@makrotopia.org;
+> matthias.bgg@gmail.com; angelogioacchino.delregno@collabora.com;
+> ansuelsmth@gmail.com; linusw@kernel.org; luizluca@gmail.com;
+> alvin.sipraga@analog.com; clement.leger@bootlin.com;
+> justin.chen@broadcom.com; dlan@kernel.org; rogerq@kernel.org;
+> hkallweit1@gmail.com; linux@armlinux.org.uk; rjui@broadcom.com;
+> sbranden@broadcom.com; bcm-kernel-feedback-list@broadcom.com;
+> opendmb@gmail.com; andrei.botila@oss.nxp.com; wangruikang@iscas.ac.cn;
+> amadeus@jmu.edu.cn; kees@kernel.org; tmshlvck@gmail.com; c-
+> vankar@ti.com; horms@kernel.org; vadim.fedorenko@linux.dev;
+> daniel.zahka@gmail.com; nora.schiffer@ew.tq-group.com; v-
+> singh1@ti.com; oss@vassilevski.com; haokexin@gmail.com;
+> alex@sverdlin.org; Loktionov, Aleksandr
+> <aleksandr.loktionov@intel.com>; lgs201920130244@gmail.com
+> Cc: linux-can@vger.kernel.org; netdev@vger.kernel.org; linux-
+> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
+> mediatek@lists.infradead.org; linux-renesas-soc@vger.kernel.org;
+> linux-riscv@lists.infradead.org; spacemit@lists.linux.dev; linux-
+> omap@vger.kernel.org; s-vadapalli@ti.com
+> Subject: [PATCH net-next 24/33] net: bcmasp: Remove comma after
+> sentinel-entry in match-table
+>=20
+> Since sentinel is the last entry and we do not expect further entries
+> following it, remove the comma.
+>=20
+> Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+> ---
+>  drivers/net/ethernet/broadcom/asp2/bcmasp.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+> b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+> index 972474893a6b..3393b5dcbc9a 100644
+> --- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+> +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+> @@ -1209,7 +1209,7 @@ static const struct of_device_id
+> bcmasp_of_match[] =3D {
+>  	{ .compatible =3D "brcm,asp-v2.1", .data =3D &v21_plat_data },
+>  	{ .compatible =3D "brcm,asp-v2.2", .data =3D &v22_plat_data },
+>  	{ .compatible =3D "brcm,asp-v3.0", .data =3D &v30_plat_data },
+> -	{ /* sentinel */ },
+> +	{ /* sentinel */ }
+>  };
+>  MODULE_DEVICE_TABLE(of, bcmasp_of_match);
+>=20
+> @@ -1217,7 +1217,7 @@ static const struct of_device_id
+> bcmasp_mdio_of_match[] =3D {
+>  	{ .compatible =3D "brcm,asp-v2.1-mdio", },
+>  	{ .compatible =3D "brcm,asp-v2.2-mdio", },
+>  	{ .compatible =3D "brcm,asp-v3.0-mdio", },
+> -	{ /* sentinel */ },
+> +	{ /* sentinel */ }
+>  };
+>  MODULE_DEVICE_TABLE(of, bcmasp_mdio_of_match);
+>=20
+> --
+> 2.51.1
 
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqAJmg0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQv4x0A/j9HUTzRUUs/A5yTaji1bts8yMGFvIYujiOYT58W
-BYd+AP97yqSaybxN4+y/r68x8lBLo8FQ4tFvWHotMVs37WmsBQ==
-=cVfF
------END PGP SIGNATURE-----
+For me it looks like this PR doesn't clean up anything meaningful.
+Is there a different opinion?
 
---c8689e971497ee65ed5d0babc05266408e6f8eba1d89b75ccbd7b9d886cb--
+
