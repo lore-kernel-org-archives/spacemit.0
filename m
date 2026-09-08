@@ -1,162 +1,159 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF02212F89
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 00:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5534619F115
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 04:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788825676; cv=none; b=KIrqXdYWPDnyAcOIevIGgTp3UQcqIhE8sbtxYC2gjbPKUsZLSTXIXR1xFf/y3WOekvKEhkmbAE9Vn04x3jHKWdTbI4psomlfbdbL46PU/qas15XAxlgG4vxJeXFddfnPKo12a7ZzqvZbFrq4qs+M/52eh7Ajobp9yE1NNSw9jiU=
+	t=1788842540; cv=none; b=F+QLV+lftKM15V8u80zNDJpieMffH0gITD8YzWvVYnwX8FWH2KJ62RFBtaRtGoATfWgzVW+SBDFUoGoOpfNJWAX5zMQ1LnOQmeBDNaHC3PHaft6lXvOnxv1Xe2YoTLdfD3Fo92fjGpAoNWZ+Oq0hYW+xO8i05jYBRXqDaSicFRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788825676; c=relaxed/simple;
-	bh=tXiqMqDakfvlY2dupDubgTSMtlJnNbg4eRmckHJ+NEQ=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=K48S/kuwsEEmrDtitlanH+mnoHvhIfm1DgnPdsJjvHXNEiRM5KP5NsDYffYZ3yLYCyZ4yHzTG5VxBDkQXaUYe2I3yAqOpSQaMMrWeehsv78SwN1QDbIhz3kD97lKJjpQCZVdp8E2nmYKvMHPCOAoG0kACRxuIaX99ZCCk7LK2cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QieT0c/h; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788842540; c=relaxed/simple;
+	bh=x6kQx25IJwgp05TqroMqPHrWpz0ht9yREBOZISt2VuQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tJ4UAR+X3oWcFF8df8g5RaQvyX9thjr201ClYFhCYD5sc7w2NQ+YwExCNRii6K3uInEl0XBDyRD5AGwVRy+2ypx/KpnCd7JGn/4+Yc93+PiD97+itcUY4aHK8VTz+rQhukV6Az4QcmGpdtxckfCcTNKIENYYiknIjdjVQHfpBeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=drlqnM6M; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QieT0c/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BF71F00A3A;
-	Tue,  8 Sep 2026 00:01:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788825675;
-	bh=bcbXPgqqmhCGAYehVpdlPlHAVlBttNgjeXnR1sVfUjg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=QieT0c/hEJuFm2V6fmOk29kMSBvFDbkIgsgSb6O2FnZgG/eWwIBwY7a7zrFi22m2e
-	 kbRJ5PRU2DEGfr8SpR3aD9y3j8k1lJAjt/6D5wx12NqREIHoI8WVA3H6bRDQxMVV3t
-	 MzOztgSXL1SfVGaG6oz82vSAuWh+VgCZQ08/lpuqhfzQQ+NfN5Fghwss5du/mdjlK0
-	 MGahfnhuHRV6OjOqoRger4y85JkAE3DOkBN3iWLnQGNZ8Sl/EVjajesxaScF6FEzBn
-	 E3Wivo9yluKmAC0megzUZptoDMe1OTCA+yP+K5CH1kvgt4gO+uE1vRTOV8S70Gf/Vb
-	 iUHZh9IHG5XfQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 56B3039E8A5A;
-	Tue,  8 Sep 2026 00:00:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="drlqnM6M"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=pJTC0xXNuB6/FR3SFnQD89wasUY2SzDpeY/IZfDA5kY=; b=drlqnM6MJd1QipihzHmVJOJRhK
+	RGMPHGb7pK+htvEo71E5ODyA2DmlsQ6c4159CLGxIKE1pzapMO6MQcUieiavXiZ+S6tSK6xKnOMxE
+	Sz+NC/zU/a3NdoNDHrb+3p4EGW7Tx/85zkHWb5TIyyMEDrnplXrF9e3b09qPCSZkg43FSBEWjax8G
+	baHMDvzObQiP/tVxB9+JbR6M8+YECbHgRMLUREkv0Z6vVqzXslvhLFVAv08h0zws8M26wg4C8OAFG
+	ECnSvQdyA8Ld7qzVpSTCNxKIsT35avz0BbFjJix6hhVTHrTcHKFWHEj6IPdhGIu0AsQZXAFV43xAP
+	CTw/HkJg==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1x3nes-0000000423P-0ynJ;
+	Tue, 08 Sep 2026 06:42:10 +0200
+Date: Tue, 8 Sep 2026 06:42:09 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: spacemit@lists.linux.dev
+Cc: linux-riscv@lists.infradead.org
+Subject: Re: Random corruption on SpacemiT K1 with RVV
+Message-ID: <ap-SIQ9DLt-CfAx6@aurel32.net>
+References: <apSYF5x1Tu7PlyL1@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 00/33] Remove comma after sentinel entries in
- match
- table
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <178882561388.3212362.1851608781908345741.git-patchwork-notify@kernel.org>
-Date: Tue, 08 Sep 2026 00:00:13 +0000
-References: <20260904043724.2955444-1-s-vadapalli@ti.com>
-In-Reply-To: <20260904043724.2955444-1-s-vadapalli@ti.com>
-To: Siddharth Vadapalli <s-vadapalli@ti.com>
-Cc: dario.binacchi@amarulasolutions.com, mkl@pengutronix.de,
- mailhol@kernel.org, msp@baylibre.com, florian.fainelli@broadcom.com,
- jonas.gorski@gmail.com, andrew@lunn.ch, olteanv@gmail.com,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- kurt@linutronix.de, hauke@hauke-m.de, chester.a.unal@arinc9.com,
- daniel@makrotopia.org, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, ansuelsmth@gmail.com,
- linusw@kernel.org, luizluca@gmail.com, alvin.sipraga@analog.com,
- clement.leger@bootlin.com, justin.chen@broadcom.com, dlan@kernel.org,
- rogerq@kernel.org, hkallweit1@gmail.com, linux@armlinux.org.uk,
- rjui@broadcom.com, sbranden@broadcom.com,
- bcm-kernel-feedback-list@broadcom.com, opendmb@gmail.com,
- andrei.botila@oss.nxp.com, wangruikang@iscas.ac.cn, amadeus@jmu.edu.cn,
- kees@kernel.org, tmshlvck@gmail.com, c-vankar@ti.com, horms@kernel.org,
- vadim.fedorenko@linux.dev, daniel.zahka@gmail.com,
- nora.schiffer@ew.tq-group.com, v-singh1@ti.com, oss@vassilevski.com,
- haokexin@gmail.com, alex@sverdlin.org, aleksandr.loktionov@intel.com,
- lgs201920130244@gmail.com, linux-can@vger.kernel.org, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-omap@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <apSYF5x1Tu7PlyL1@aurel32.net>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hello:
+Dear all,
 
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+I have done some small progress on that issue. Help is still wanted and=20
+would be appreciated.
 
-On Fri, 4 Sep 2026 10:06:06 +0530 you wrote:
-> Hello,
-> 
-> This series removes the comma present after sentinel entries in the match
-> tables across all networking subsystem drivers, with the exception of the
-> davinci_mdio.c driver, for which, the patch posted by Geert at:
-> https://lore.kernel.org/r/e481b6de46cecc6ea604ae165272c667274cc621.1788437140.git.geert+renesas@glider.be/
-> does the same.
-> 
-> [...]
+On 2026-08-30 22:52, Aurelien Jarno wrote:
+> Dear all,
+>=20
+> For the last weeks, I have been tracking a random memory corruption and
+> relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It=20
+> started upgrading to glibc 2.43, which does memset() through vector=20
+> instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1=20
+> kernel, but I have also been able to reproduce it with a vanilla 7.2.2=20
+> kernel, using a similar configuration to the Debian kernel. The board=20
+> uses OpenSBI 1.9 and the vendor U-Boot.
 
-Here is the summary with links:
-  - [net-next,01/33] can: bxcan: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/3fb94a277ff8
-  - [net-next,02/33] can: c_can: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/fa7291a2527a
-  - [net-next,03/33] can: flexcan: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/4b7e7da65530
-  - [net-next,04/33] can: ifi_canfd: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/e6f3617decf3
-  - [net-next,05/33] can: m_can: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/6c507ab36a83
-  - [net-next,06/33] can: sja1000: f81601: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/44ef827c95a8
-  - [net-next,07/33] can: sja1000_platform: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/5b01d5766043
-  - [net-next,08/33] net: dsa: b53: mdio: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/9869b64b320d
-  - [net-next,09/33] net: dsa: b53: srab: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/30fccb0c4e76
-  - [net-next,10/33] net: dsa: bcm_sf2: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/2d08ac30e2ed
-  - [net-next,11/33] net: dsa: hellcreek: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/4ea4ec365378
-  - [net-next,12/33] net: dsa: lan9303: i2c: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/a650dd1fc254
-  - [net-next,13/33] net: dsa: lan9303: mdio: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/4caa67d082f6
-  - [net-next,14/33] net: dsa: mxl-gsw1xx: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/9a580b3496c4
-  - [net-next,15/33] net: dsa: mt7530: mdio: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/e86151633076
-  - [net-next,16/33] net: dsa: mt7530: mmio: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/f9bcf01a6608
-  - [net-next,17/33] net: dsa: mv88e6060: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/6011d062dc7d
-  - [net-next,18/33] net: dsa: mv88e6xxx: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/ead589471593
-  - [net-next,19/33] net: dsa: qca8k: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/c45695468377
-  - [net-next,20/33] net: dsa: realtek: rtl8365mb: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/6233d1ee3771
-  - [net-next,21/33] net: dsa: realtek: rtl8366rb: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/068d6ebde398
-  - [net-next,22/33] net: dsa: rzn1_a5psw: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/39063420326f
-  - [net-next,23/33] net: dsa: sja1105: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/2b46b5c9efc9
-  - [net-next,24/33] net: bcmasp: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/a450f7315155
-  - [net-next,25/33] net: spacemit: k1_emac: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/435d4b4aa9c8
-  - [net-next,26/33] net: ti: am65-cpsw-nuss: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/8b7eacd62198
-  - [net-next,27/33] net: ethernet: ti: cpsw: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/1cdf69f1e9a0
-  - [net-next,28/33] net: ethernet: ti: cpsw_new: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/6d1c7d7a0731
-  - [net-next,29/33] net: mdio: bcm-iproc: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/93b9f4f13608
-  - [net-next,30/33] net: mdio: bcm-unimac: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/dd7a0a755874
-  - [net-next,31/33] net: pcs: xpcs-plat: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/3fc32eb28f15
-  - [net-next,32/33] net: phy: nxp-c45-tja11xx: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/af86c0a58007
-  - [net-next,33/33] net: wan: slic_ds26522: Remove comma after sentinel-entry in match-table
-    https://git.kernel.org/netdev/net-next/c/8afd6adb0717
+I have been able to rule out OpenSBI from the issue, I have checked=20
+there is not trap top OpenSBI when the problem happens.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> Typically it manifests itself with the following kind of error, when=20
+> running g++ from GCC 16 as part of building software (e.g. OpenJDK,=20
+> Blender, Dolfin, Qt6):  =20
+>=20
+> Assembler messages:
+> {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
+> {standard input}:284588: Error: unrecognized opcode `=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BFvl874'
+>=20
+> The broken chars are 0xff and it seems there are always 240 (but with=20
+> poor statistics). Sometimes it instead causes a GCC ICE instead.
 
+I have identified that the 0xff comes from the poisoning done for v0 in
+__riscv_v_vstate_discard(), which should only happen for a syscall.=20
+Indeed changing the value to different ones propagates to the above=20
+error message.
 
+Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE=20
+doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD=20
+changes the number of broken bytes.
+
+Disabling the vectored user code entirely with the following patch seems
+to prevent the issue (or make it sufficiently rare that I have not=20
+encountered it):
+
+--- a/arch/riscv/lib/riscv_v_helpers.c
++++ b/arch/riscv/lib/riscv_v_helpers.c
+@@ -25,7 +25,7 @@ asmlinkage int enter_vector_usercopy(void *dst, void *src=
+, size_t n,
+        size_t remain, copied;
+=20
+        /* skip has_vector() check because it has been done by the asm  */
+-       if (!may_use_simd())
++       if (!may_use_simd() || true)
+                goto fallback;
+=20
+        kernel_vector_begin();
+
+Overall, while the corruption happens randomly, the corruption itself=20
+seems to be deterministic, and the data source of the corruption is=20
+identified. But I don't understand how those values propagate to user=20
+space. It is not clear to me if it is a bug somewhere in the context=20
+switching code, or a bug in __asm_vector_usercopy_sum_enabled fixup=20
+code, with the values just being the one at the entry of the function.
+Also I can't completely rule out a CPU bug.
+
+> Using glibc 2.44 instead of glibc 2.43, which does a lot of string=20
+> operations through vector instructions, increases the probability to=20
+> have corruption, makes it a bit more reproducible, but it always seems=20
+> to manifest as a GCC ICE. It typically happens withing one hour when=20
+> running on the 8 cores instead of every 1 or 2 days. From there I have=20
+> been able to determine the following things:
+
+I have stopped using glibc 2.44 as a reproducer, and it generate=20
+different type of crashes, and there could be another set of bugs on top=20
+of the one I am trying to identify. This however means it takes a lot of=20
+time to test any change.
+=20
+> - Disabling vector instructions (by patching the DTB to remove "v",=20
+>   "zvhf" and "zvtk") fixes the issue
+>=20
+> - Disabling THP (by setting /sys/kernel/mm/transparent_hugepage/enabled=
+=20
+>   to never instead of always) also seems to fix the issue. Keeping it=20
+>   enabled with defrag=3Dnever or use_zero_page=3D0 doesn't change anythin=
+g.
+
+I don't think this is a good direction, my impression is that it just=20
+changes timing a bit, which just hide the issue, or require different=20
+condition to trigger it.
+
+Regards
+Aurelien=20
+
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
