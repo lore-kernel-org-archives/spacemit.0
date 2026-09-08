@@ -1,41 +1,40 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB0351A732
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 09:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DE849E5DD
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 09:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788860984; cv=none; b=ZSV50zdVUGAIY0Gp7if0xV7OetjN3mLcHGoWGWlHeGkK0ShVpuOnqFAgZzE0REjTjV1shA9HoT04Tk8f4svtyNbw84GhNFwS7sgXNfzB1eRX0GCclyTGRkYmhfLEhrXBsymojNvhYgGN60GpZYR8E2VzS/t/ie6MwloUxACaBtY=
+	t=1788860989; cv=none; b=VWmXa5BW3fwzfBPZFc1fqKBi5Q296UlYfbdYIaH0p+VXG7qtqoftvdU3WO75cHPjGia6HrJH3rcoXlBPIi4yMO2TDmh6/Z11Yn3d6D6Gd6XPcvGvmzjEMIdqizwZ7NDO0PGHQhlCmKvNj9w5+StZ8ApS9WTiP0vKYElKUR0QheE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788860984; c=relaxed/simple;
-	bh=Dk03C1Ofq1DHFOFMa+0x/K/3hWeLs2f+OrehTQUIJU8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oOfA8Gm3B4JDSCBnTVkqYRUlDCYUh1mcm3DRgFVd0OfjcvNK2EWQwEMf3VCzlChIVi+S0yfwvS91wMMwqYjdB3c7UFaHzAy60Jf1hbOYxm8NtHtQClbPBDmsRky3bGcM0FSruzQfkEvyfCndAbjvNOCbzlWx2fO5MFoGm/Yhrpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=x/UYs/IJ; arc=none smtp.client-ip=18.194.254.142
+	s=arc-20240116; t=1788860989; c=relaxed/simple;
+	bh=Di+zPYQrmx8YPR59j7x1NjBpZu1CpEk8kjenbyRJxG8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AkEhd99ecBFUZgG1coxSbg1w486UTojXuzaZLmJwI+rbMg/SpPKX/b2Gdn+iePJ8J5v9NH/nQUB++8JsL+OCPc7iyXTtr6oCyDbbZDA2uj4gtvRPOmSdL2f29YtjBrk9BFALA0ndecEDNg7BGv0A24+9QsORitKc+NFZonoImwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=VqmP1CVJ; arc=none smtp.client-ip=54.92.39.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="x/UYs/IJ"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="VqmP1CVJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788860952;
-	bh=I+Vu7fTqPDS7uHl1O5LjwEVmP9LuWPbD3w6IaB+q1tg=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=x/UYs/IJ7j1KiMYGON+8/Q1RkbD3mWTc7ZaKnD9dFjlXn5NBtotEhF6nHVFo/bAwE
-	 K/FlVZmRhj/iyKbdspJHgIdiGaxj3ou2NuOK8Msr7QqInD8Fkn1eCMP2Lpaf0g/lNl
-	 EDzowgSyk/7GpsiaF8k8irrBDpNQzpLJ9NbuRW9o=
-X-QQ-mid: zesmtpgz5t1788860946t3bb411f3
-X-QQ-Originating-IP: UPsFbPPKTvUV/JKdVFRKrciHZNpUy3cUzD8ChJOoVIo=
+	s=mxsw2412; t=1788860932;
+	bh=ThDT4tVj+YPojmgqj2lbcYBtKEEAUeWWPDjR4MEplgU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=VqmP1CVJhHOV5Zce0Aqt5WsKEEcy7mKqmOWGUzAx4QEeuRmU/MjK4LsexYNEzYoIF
+	 BySZ7pW4p/ogSWfi3hrIcWasfYBU+Et6Y0XpFDDPyfr1Z6e4PppjyUzQfNdVuQyyeb
+	 lAO1rNUpHecC5oIIgTUYKWv7OA3WFxDCo9UiNMAA=
+X-QQ-mid: zesmtpgz5t1788860923t90e5fe56
+X-QQ-Originating-IP: qSRbQhLZ1bovcmOa+a9gCuzdjVIHFFNrdZXd0PpfhGM=
 Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 08 Sep 2026 17:49:03 +0800 (CST)
+	id ; Tue, 08 Sep 2026 17:48:38 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8338871879744466596
-EX-QQ-RecipientCnt: 21
+X-BIZMAIL-ID: 15635221017366424496
+EX-QQ-RecipientCnt: 23
 From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Date: Tue, 08 Sep 2026 17:48:44 +0800
-Subject: [PATCH v2 7/9] riscv: dts: spacemit: enable USB2.0 controllers on
- BananaPi F3
+Subject: [PATCH v2 0/9] Add SpacemiT K1 USB2.0 controllers support
+Date: Tue, 08 Sep 2026 17:48:37 +0800
+Message-Id: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -44,9 +43,11 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260908-b4-spacemit-k1-usb2-v2-7-f07342ffa051@linux.spacemit.com>
-References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
-In-Reply-To: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAPXZn2oC/32NwQ6CMBBEf4Xs2SV0FS2e/A/DAcpWNkohLRAM4
+ d+tJF49vsnMmxUCe+EA12QFz7ME6V0EOiRg2so9GKWJDJTROdOKsD5hGCrDnYz4VDiFmrC4VI0
+ 1pI9NriEuB89Wlt16LyO3Esbev/eTWX3T/75ZYYaWtLFUcE5U317ipiX9FVPTd1Bu2/YBjlrKX
+ r8AAAA=
+X-Change-ID: 20260812-b4-spacemit-k1-usb2-97adfc283d58
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
@@ -58,84 +59,87 @@ Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
  Ze Huang <huang.ze@linux.dev>, 
- Junzhong Pan <panjunzhong@linux.spacemit.com>
+ Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Peter Chen <peter.chen@kernel.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788860920; l=1150;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788860920; l=2304;
  i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
- bh=Dk03C1Ofq1DHFOFMa+0x/K/3hWeLs2f+OrehTQUIJU8=;
- b=XJsgp0QA2Yl6QC+Laa4zgll9PbvBXv7T4SioUrFdB4EpemAkrRk7ug4yWss6YSv4MsEpd08gg
- MnPGiullYNqBJzOVtDugRF7gFN0yA4tEILM38INSuU7EaJqSqV2e8NQ
+ bh=Di+zPYQrmx8YPR59j7x1NjBpZu1CpEk8kjenbyRJxG8=;
+ b=RD4yw5F0Pyp1Qj+JzsXRr6wgCoagoFelv/EpLdhpqhHNSdFXA+Jv68ADUaBHx4ZzsgTC79/HS
+ JEBrKktHRY5AfsGXmUjUNADFx4eM8m5Ku1M02trwG6K2UywQ8ukhPc8
 X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
  pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: OIAhyvcErFZXgJ5Lz5nEBiq+vBkT5pmwffoZYJBjj9irusbZRIdcJnHh
-	PI0Ls9b2I5PeQMN6rtGegcFsOzrwV03LMXUutUV0vrTu7Njtqd8NjieIatBnw3RpTnw1BHL
-	LTOyeb9crWYUtebWQq5iqC3ZX8TeT/UbJCPzCSRig5XAmbIzgCwuVS1vqp7pHu0ywnRFPsZ
-	uSDKnuXI12jmkzhVi/kfC3o9RDF8tJOG6KLbRAPoyLTp3FSxQkr/KM43Qv3TIoTpWrJq6OO
-	BnBt81f5i9jsx0Ii/zfW85TMj3QoEqJBOyk8nEYyzaQlgrwc5UY44xCiB7IXYzqVqwf4KHc
-	pO7bt7OjicI4cfZ2IFgtV8VbM79QmOFaIxM1taIvqzarzdT3knHKaC/JaWlrMr4M1qNZO6h
-	vXYz8BQu5yOTZPjEN8ew3Z9elZqVPGq1WweC5A3E5u/hMKs/x+9LhOGE7fL5wHjhoJRbcj+
-	mu1Q/uzPfydNxUJqEhvtvhbRNqeR0ENbpg1CC4D+0j653pbM0TFEpeGRM4mo4B6vuQAvzEz
-	Tkzq+iBwYi037YAgzka3YEWhSYGL2X3px24FzMw93Ly5yuEzGkfqwLOujQ3Mmy3ELgXhOc7
-	eFqE5v4S6u2+YquKA+Jxswg5D0PxU/JojMWeEPx1huRmqvtKZxZk/kGVw55QVbNl4neItNK
-	oJIqHmv/l2GkRS2fFkgZ5xKeEly59uaYjt936yLwnu9liHjJODCZ7eJ6cXm/ZIsHmtAqiEU
-	6k46XbQardFj0QyWncLib8CiNoYuyIUfnZdWkFYVNq5mCusUDzaf2bmAEs+4WeSdSR9f2yy
-	td3RkJz7h9OKtaUdHDj+WJ5IJWVta8Mx0WBjnW0YsNBESlrHemJFRTuFtIpu0NaN2DUCKr6
-	ee+grCHl+jan+2EuRkuS+UH/lQQoT1djoXFuFWBEJ/j1QrUQ7Hezp3ziP0NpG3jTVxZo2Jq
-	EzxeHDzxRafatgI6k3j3w3kFWwUfd/HDd5tpNHn8c2BUZdSz9mTQKfxrSVlaOFZU9gM4ql8
-	prrLw0RHsoAqtmR0MyZXk9zBsK3htMc/JejpmB/V+Iy/KPF67pPQmLfVy3TA2WiTC7FydBM
-	kBByM5a440Sh86QaFijRraKqreZcN5isiy+BX8pcWPMAM/ZZO3aJ7pWUfQTKO5sTL9LFEy/
-	Tn11lsmTLz7HHdNIvq6tg7uaH0qJef55bLMdeHZqByvRHHo=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-XMAILINFO: ONNzAaE3j5jCWVEMxszg/KhjL+fl4/m8t7hSIqyUQleacN9ECcdzr5Rd
+	Qw4Rd8XDTpaOVWQ/c85sdrzvt3UcoyacVgpKCMKlNvmMQIt72KTDc9fVeeCt8lsBd7Pv7b1
+	IPbTW8mcCSV8HRl06tjzz1Bd8iuRYzaOBL5yoUkEnhvqvVfZ0W1UUimkkDQsJFoMsSwuFtU
+	ODK3rjToAPpzZmdzQ76TNjDxPDO8rAFdVkg+A80Tv4SpD6okC2ZseMohmsWssWmttHbWiRi
+	vaSUZbFtd55agxr9y8nZiyih+pHA0FxvtqFmtXxJXFpAz+flZUXl+rg/xHsXN1mtMwldQ2h
+	7Z/CSifOkRobaUdvwJ7B7ZjOay+pETnZnG5O0X0L08md3FWSdKOykTWaQ5GGLFlQnfX7ZD3
+	6pvuARfoKcX1oVdKbYoIl/aApCkBGl1vbSNTMkSSeDxrTbMpVZ7D3jowI1Z34AW2ETa3nlA
+	M5AvcboSwCTqcE1GCt8GlOHQ9h8w7E7aFgrik/CL1gsJzQcl6kui7UWxmGD/wqYE5c5/Hdv
+	5Rxb9rLaFXNrIlgoawV7zluDOKy8qP5gO45xaZKQps1AB5j8nfbW1yJdGAP/Gdz4w0sTUXx
+	yjFkOYPiXVYneAeKXHDqg6iSGHQQou4eKwxOQGCh0OTvwNQE6gNezrQp5acJcwE56yglHap
+	MrO1QO//AtFB663s9kDyKhhf1HAy2jj1JM5W9PyDNBFPSKbSUGlxsHpRIrjGSH+aWVF29jL
+	wJQsXjndCtJasOLhNtVNJvV0Z6E1eoFqDV/XFjp4C65BnOoxX5kei+/36ceuiJu4B+6syQX
+	m5wHEAs3aamVgysBp2dS5HQjwrNMCOGWsY2vc2MEoWuiHqajfHmNwUn0hohYWkZi7TDQFk2
+	qHm6pLbJx+o4j/XkkMLfYYSMeE5dkWGLhulmMGZBdVNYoKacnE2MnvoAVu0WwDIX7kpVx0g
+	UdiGw4JiDBiZEuDVoXoRiWc9BF5e3t8Ah52n4yJKWbL+P/+n+hiN8EupfiJzSp0sm+PbrfZ
+	1ZKYZWziiw1SH2lL5b9t320Lg9aPBJzB+kJoSNUERlsaPWQPryBt6aWdOUk+xmrnmQ3Ip1q
+	+8iQpDTDkDNElpqhClBsR1+f2Yy4Y7t/K//lZf35tpuKN8/fvccoADmABKUSSzQDo/q+F6U
+	f+D/EjP1EoJVBfoRwwPfnazRyaG7dAf4qW/6GVb/iYHS+pj5DQ+kS1yL17EocrvmyOgHPef
+	s4/FHD2k=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
-On BananaPi F3, usb2_0 is connected to a Type-C connector at device
-mode by default. This port have no VBUS supply capability, thus host
-mode only works with self-powered device or hub. User could switch the
-role in sysfs.
+The SpacemiT K1 SoC has two USB2.0 controllers, one has Dual-Role
+support, but the hardware has no internal OTG registers, the other is
+Host only. These controllers are compatible with Chipidea USB2 driver
+with some flags set and reset control support.
 
-And the usb2_1 is connected to the USB2.0 pins of the Mini PCIe slot to
-support cellular modules.
+This series is based on 7.3-rc1 and has been tested on Banana Pi F3
+development board.
 
-Tested-by: Ze Huang <huang.ze@linux.dev>
+A self-powered USB device/hub is needed to test the host function of the
+dual-role controller on Banana Pi F3, a MINI-PCIe USB2.0 module (a
+cellular module e.g.) is needed to test the host only controller.
+
 Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
 ---
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Changes in v2:
+- rebase on 7.3-rc1 and collect tags
+- reorder the usbphy and usb nodes in k1-bananapi-f3
+- add constraint for spacemit,k1-usb2 in dt-binding
+- add OrangePi RV2 device-tree change
+- use devm_clk_get_optional_enabled() for driver according to sashiko's advice
+- Link to v1: https://lore.kernel.org/r/20260812-b4-spacemit-k1-usb2-v1-0-f28cf29e522b@linux.spacemit.com
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 58035d886bf6..ce36250e2deb 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -383,10 +383,26 @@ &uart0 {
- 	status = "okay";
- };
- 
-+&usbphy0 {
-+	status = "okay";
-+};
-+
-+&usbphy1 {
-+	status = "okay";
-+};
-+
- &usbphy2 {
- 	status = "okay";
- };
- 
-+&usb2_0 {
-+	status = "okay";
-+};
-+
-+&usb2_1 {
-+	status = "okay";
-+};
-+
- &usb_dwc3 {
- 	dr_mode = "host";
- 	#address-cells = <1>;
+---
+Junzhong Pan (9):
+      dt-bindings: usb: ci-hdrc-usb2: add spacemit,k1-usb2 compatible
+      dt-bindings: usb: ci-hdrc-usb2: require clocks and resets for spacemit,k1-usb2
+      usb: chipidea: usb2: use devm_clk_get_optional_enabled()
+      usb: chipidea: usb2: add optional reset support
+      usb: chipidea: usb2: add SpacemiT K1 support
+      riscv: dts: spacemit: add USB2.0 controller nodes for K1
+      riscv: dts: spacemit: enable USB2.0 controllers on BananaPi F3
+      riscv: dts: spacemit: enable USB2.0 controllers on OrangePi RV2
+      riscv: defconfig: enable ChipIdea USB controller support
 
+ .../devicetree/bindings/usb/ci-hdrc-usb2.yaml      | 15 ++++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    | 16 +++++++++
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   | 28 +++++++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 40 ++++++++++++++++++++++
+ arch/riscv/configs/defconfig                       |  4 +++
+ drivers/usb/chipidea/ci_hdrc_usb2.c                | 30 +++++++++-------
+ 6 files changed, 121 insertions(+), 12 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260812-b4-spacemit-k1-usb2-97adfc283d58
+
+Best regards,
 -- 
-2.34.1
+Junzhong Pan <panjunzhong@linux.spacemit.com>
 
