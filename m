@@ -1,40 +1,41 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A60A34F48F
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 09:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CE83264CF
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 09:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788860980; cv=none; b=jJrDZLBef6uiN4MY9iGcgrG52ZJBBGxXwxUvrqmMPoW3S9gzMp43yC2im3tVnymJ5ECZBfJDn0GZX+K/iw/WfXkBrXF7zUSJw6eSAsrBkoPRszjOpd1Dyxd6W1qVe10qgcCyIEUymTFxt2gK8CzMxoSqtnPXAEPmlrcL98Or+cw=
+	t=1788860982; cv=none; b=fyOrYtuOKp84J77i6iyvU3Ly1FjVGRnton/XSir5tUuR+ARXZ2tw8kiu6Jre/Avsu+zP8nyArH7jPPkvPcLo+KyMxytH726YuQaWktJGu2P4w76CldZ2sR6CfCfd3V1GStHyXH/d0FT7aRrdaoTU7BpCmNeYIjUm/xaJMTKYIDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788860980; c=relaxed/simple;
-	bh=ILxkccm3lB4FrNMTwjEzpIQqeCQda7C5IPIEL5GC+lg=;
+	s=arc-20240116; t=1788860982; c=relaxed/simple;
+	bh=7V2sCrOXsm3hdCkEQkfRa7vLu5JS5k/AqoPTQm3Idak=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XXQPISKy5E9sIsD8oU2vb2kk9i45SDOmx2uenQhNlG3so7maGAt+lFECg1Jg/ayY++nFRsk8TOen7UTvaXBQJPmw4bG7BTON7DFnDldpU+egipdT5oKlksTfWH3W8zuD7xswF76e0/dwmOA2vJm46mREq9ob1+RheTm578Oj8z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Fx9hWMBH; arc=none smtp.client-ip=54.243.244.52
+	 In-Reply-To:To:Cc; b=C/9TXc0nm6e9wOK8Zn05lPzfceK0M6kyArzOiK4XSLo0R3xpVfVGPiOWLAbW/WjJhl1QKFpwX+PYEzab/olCkIzZIDwuObVVQ5bIN9oeb1RyfQ5HPa7gnWw1tByCtv4Vk0/ANXG8Udu8I92GHCiI2r3mSx5bsg/Y8XjYEFbxUgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=GBY7IXn+; arc=none smtp.client-ip=54.92.39.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Fx9hWMBH"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="GBY7IXn+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788860938;
-	bh=dAtRVl8U9qhQzc+cO8qYDvos4RNAOBx2aHMRDfT9Vg0=;
+	s=mxsw2412; t=1788860949;
+	bh=Zp0jR+ttGiC9kR0lE5ZKHD9MI/6rhTQKpS8mPg9WYWg=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=Fx9hWMBHipwSMDOYk2gWbaPAv+K165gKZ3JwetsbWebn0IB7Ik0AQ96T4qdDCJv2B
-	 fmPc4k4C/5f9NDrzeYd9oey5x7aFqA0cC328Lm5e9qFOHzKq6N7qIxUlwkgpV974z1
-	 76vbEqtO2L8FAiYw7yNTeJy66Ig1i+/EIL/WPW3Q=
-X-QQ-mid: zesmtpgz5t1788860936tbb038d01
-X-QQ-Originating-IP: V4usWl30VbC52pKBiMxB7fj5Oqgi44cy6MBkVw0IMuU=
+	b=GBY7IXn+0u5nSLkzHiBMXUX5/lZhHhSk6YRiYXPHZKzUA1zi5P3cZmnBL2ynHCx8x
+	 1XTLBTFtwclXGfeEQ15OH0xsBHu6Z4XyDqedPIfhbpl7Cx68nh+SrK/KfA6Pf8oilP
+	 x2WM7s/LPXi7xgvSOU0bQaDY+324RqYechMOE2y0=
+X-QQ-mid: zesmtpgz5t1788860942tec2aa3ff
+X-QQ-Originating-IP: HtX6zyX2pzMGwi20jWZDcgIEbBe86DF+3wgT1sKBZG4=
 Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 08 Sep 2026 17:48:54 +0800 (CST)
+	id ; Tue, 08 Sep 2026 17:49:00 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 799141904883977626
-EX-QQ-RecipientCnt: 22
+X-BIZMAIL-ID: 4771292410545852391
+EX-QQ-RecipientCnt: 21
 From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Date: Tue, 08 Sep 2026 17:48:41 +0800
-Subject: [PATCH v2 4/9] usb: chipidea: usb2: add optional reset support
+Date: Tue, 08 Sep 2026 17:48:43 +0800
+Subject: [PATCH v2 6/9] riscv: dts: spacemit: add USB2.0 controller nodes
+ for K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -43,7 +44,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260908-b4-spacemit-k1-usb2-v2-4-f07342ffa051@linux.spacemit.com>
+Message-Id: <20260908-b4-spacemit-k1-usb2-v2-6-f07342ffa051@linux.spacemit.com>
 References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
 In-Reply-To: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
@@ -57,83 +58,108 @@ Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
  spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
  Ze Huang <huang.ze@linux.dev>, 
- Junzhong Pan <panjunzhong@linux.spacemit.com>, 
- Peter Chen <peter.chen@kernel.com>
+ Junzhong Pan <panjunzhong@linux.spacemit.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788860920; l=1604;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788860920; l=2144;
  i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
- bh=ILxkccm3lB4FrNMTwjEzpIQqeCQda7C5IPIEL5GC+lg=;
- b=SP+EtLL5mSAQSo+J8pUsM662GkuefM5JDnaWHX7n19eKg8dZgd7iA5ZID2OYyZjzL8dyENTGs
- rOaxi9KeFK9AJ5TXelGcR9eZBWp/33hlSKI5QJIJk6Z/OOkgfbsJxJU
+ bh=7V2sCrOXsm3hdCkEQkfRa7vLu5JS5k/AqoPTQm3Idak=;
+ b=VJywLSUJYPJnvtO9/a4Z4oJSfeAYGZIUdDEVoUFz/EyqzDA/EhIRrgeqLj133VitVMC+b2xC9
+ iq9PMMQGCbHCRnkEaDBnSZRzXJr4m61zPuJftG5O4RPwOMN7s4Lpjkc
 X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
  pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: ONlHltnRcUd4OwnNgn8Cbh4qmjbjDIElbVojQ7M6bl5HkcGYkb+9Tr1n
-	vN6jerBW9AXMEFzeUJMYidtYOVUJp5IrvHDVnsG6CW4h93zKbF1wn3B9v0j89Pm8KFiJzL7
-	RNJLcEo6zaW+tY9TvBZ7qIlqgL9VfIQ59HVGaPCrWVz+QTA3mJSIt08iUzNScQiLcGQ9CGC
-	3m95IqpnYn/Bi6QIS5OHleOOtxJLA5Krn4DoHTkv5KF63l73T3gFlWkMhjTOjLwwQcL4M3I
-	hSEh5XNH+0p/De89YtEftZkqOBLiMxVZflEZePNDd7w6YqIuwcHWRuCHPxYwvsIN1Imqy+c
-	/ZtAPN8x2XwQ7V5bBeByji2L/Cz1GmM6Y5r4yGlsZshVgk9Slv4uLCpYLonvIZnGW2CehkI
-	xWWJiTCPHtLp8FXSCM4CbRrDlBcJ2MZ9IVVUF+0FOQQUgfOEVogrZW4W7xkXBQCJj7C4cHt
-	/WQ6fLAUdEyLwC8QRNYTOiowiXRR5oDYfILd5Bh0lJx/Bq4loGH+EnJ/VdIQDirFFu6U7to
-	M10lXX2XJHoiCe4/ZqZhWdUA1VoD/qrSM4VBlBT42Toq5JB79ahpKNQyrgDLN8aS2NYXian
-	BaGRqCck74uIduX6qQxcsMabXZpMrYqpphLQH2Op+WUoboN8QXm3Ymd9tUe+y7GIjik+Yn8
-	peo6LRici8EYfhGJmZocazQRwBJQIqY7bZZKskWWkt4X/7ojdJ6AclqYVQzbCa8BYuskQJV
-	IO4h1llRZV7myfZ6414vysuTxx3BWUg7tgOIksyUfvLKyg/J83+rLBg8B4ct4ipqGrxKgrm
-	cqpP/6WI4iWiFJWO62H60xZhZyhubveU7Y8dSt2o52kmnGr4MZims4OUGhBWgcrlV6766+B
-	kjN7HO71wDazSYrSOt5K9apQWywd3fZkVlXiEQF8Luacy4xqLnUeg0TIVTg0F8ipOs7piMa
-	ILTlNnjV2LoHqGYxvd6J8NcsdftQq6Cc/gu2/y6HhaXMWGH3A2Nt0KXVVcMFAxiaQNbMYvO
-	c5YO4qU2lOK6PYIw48h6BX6xY9YBGf1SOwZr0gNQKWSoQhcbTaMxdSM/S6fJySGPPeRdUai
-	+8Z1HZyuqceMa3nh4XbSJ5v3Sl49GCIA9/4gHN/jvwuKkSnhJWELxCWo+Hb69b7MR3nFPBr
-	XP+ScQyQF3oUT+NO3heJXNgWgvR3UmwNAqW/sOcCxnSyJjzS/YrSc+KcHHZcDqB+V4UXKHV
-	TCgd4aUg=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-XMAILINFO: NSegwrIO7C6EVlJjdehajp11BgvTzu5qXYWrQ8KX0sNiwpkYrwJE3a62
+	BBFr5wXuMzdG3Uk9fj+zI2pn2AQyWc3uQjZtf5ZPfhwd0TkErWT5RGstExNAtRom6o2PTYE
+	yVcVBd4O/sxAhfdMsKnVrHcu9WejxQESzpVqzXMJl44Y7+L6teBsv78lxTCirD51BVE9V/t
+	jsmM6+6DGFHgzYuN8f79FIEsqDUenGtB4SUzrfh6cLbMld77dRV23Ih4tLgDkGVsniNusPO
+	otmWEhT/epbY0A/pOvHocBMIWA8rhfAFgS6Lp7x8S9EbA3p2NLhkW2Cg3FkJ2j+Vhn+dk6O
+	ARutYuytzRgtLFtmRSrnQBxtShqSH/iEJAGmWniiMEMTWrV3a9ElViWamJsmmQXMkkXUUrE
+	hUcqmr1GooS3Xl0ODC7inivr6/UCvCSz+xDB0hQFaRXOyYdau2QNnCbEhEHJsyOIYMl1lTT
+	tPcsCik9Cna1XMwhPXtUjq+bEWLwJjL9exKFVflIQWsgGtCYYyb0KhOzHuKCahmc6b0TAYw
+	jsm4r3AijNumjgeXn6eIAK+/p0xrRsQubLjmNQJTR6+jexy0gwFBfJ9c7wS6MCPAquOTzAx
+	fNMomuHxhHnlGUa7MokeedphwT2DflrO7jsPZ4/1ukjS9a7vDkxbII1GXVN6o2ujS6WI5Iw
+	rSWveIADU0boKmxvUBcg9xEwWD6d4jES3fqQ9Wsuysm2M+Dd11c2oKFOjKkoDGEmQ7tdSID
+	KfAChwimXyfXBlXBHF8xoQedzm8/Oaups1ZxWt1cyw3Hg/jw1/ya7jOP6w+aZVfVO2p1yEO
+	zJZOa931GtoftoWtT3QRchTJZwkTZxO1dEjXvGYzGue4YF0c0zKCzMQ30NZXv5NcZsDSCrO
+	EaAbOPlDAUFmvTTPUu6IVj2Qv1BR/uS34youFEKUvxy0FmN+yjf1IHmaEDk3uq/lOQndIQS
+	fOQHOcn9V0/CXJRmr1aG8MYEChGqD8g/f7nn4wpF3p0gnh8oY5rGa0BtgmYA61GWxh6z6aO
+	HAV5D0ywYcBaxKMZVUhUXgRlORB+IJkeRRCnONI4hiGMG4YBCN+yJwL0O/QXuMdMDloRdxE
+	wf+TAFmES+Pf6zI73UZ3catEOU3tqLO+jDb1gA5KmarwgOvV67yzVvYJI0nwpiA8zaARfqm
+	42Ipc//6GoFwqeWzQ79lU+vAW+OXlHSK0AxCzbWNNJ+s6j7K29Wez4dWNg==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
 X-QQ-RECHKSPAM: 0
 
-The USB2 controller of SpacemiT K1 SoC requires reset support, to keep
-compatibility, add optional reset support.
+The SpacemiT K1 SoC has two ChipIdea USB2.0 controllers.
+- USB2.0 Dual-Role
+- usb2.0 Host Only
 
-Acked-by: Peter Chen <peter.chen@kernel.com>
+Add the controller and PHY nodes.
+
 Tested-by: Ze Huang <huang.ze@linux.dev>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
 ---
- drivers/usb/chipidea/ci_hdrc_usb2.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 40 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_usb2.c b/drivers/usb/chipidea/ci_hdrc_usb2.c
-index 6fae2d4a053a..f81673edca3c 100644
---- a/drivers/usb/chipidea/ci_hdrc_usb2.c
-+++ b/drivers/usb/chipidea/ci_hdrc_usb2.c
-@@ -12,6 +12,7 @@
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
- #include <linux/property.h>
-+#include <linux/reset.h>
- #include <linux/usb/chipidea.h>
- #include <linux/usb/hcd.h>
- #include <linux/usb/ulpi.h>
-@@ -21,6 +22,7 @@
- struct ci_hdrc_usb2_priv {
- 	struct platform_device	*ci_pdev;
- 	struct clk		*clk;
-+	struct reset_control	*reset;
- };
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 3fabfd34114b..22896e757dbb 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -459,6 +459,22 @@ syscon_rcpu2: system-controller@c0888000 {
+ 			#reset-cells = <1>;
+ 		};
  
- static const struct ci_hdrc_platform_data ci_default_pdata = {
-@@ -75,6 +77,11 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(priv->clk),
- 				     "failed to get or enable the clock\n");
- 
-+	priv->reset = devm_reset_control_get_optional_exclusive_deasserted(dev, NULL);
-+	if (IS_ERR(priv->reset))
-+		return dev_err_probe(dev, PTR_ERR(priv->reset),
-+				     "failed to get or deassert the reset control\n");
++		usbphy0: phy@c0940000 {
++			compatible = "spacemit,k1-usb2-phy";
++			reg = <0x0 0xc0940000 0x0 0x200>;
++			clocks = <&syscon_apmu CLK_USB_AXI>;
++			#phy-cells = <0>;
++			status = "disabled";
++		};
 +
- 	ci_pdata->name = dev_name(dev);
++		usbphy1: phy@c09c0000 {
++			compatible = "spacemit,k1-usb2-phy";
++			reg = <0x0 0xc09c0000 0x0 0x200>;
++			clocks = <&syscon_apmu CLK_USB_P1>;
++			#phy-cells = <0>;
++			status = "disabled";
++		};
++
+ 		usbphy2: phy@c0a30000 {
+ 			compatible = "spacemit,k1-usb2-phy";
+ 			reg = <0x0 0xc0a30000 0x0 0x200>;
+@@ -1301,6 +1317,30 @@ storage-bus {
+ 			#size-cells = <2>;
+ 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
  
- 	priv->ci_pdev = ci_hdrc_add_device(dev, pdev->resource,
++			usb2_0: usb@c0900000 {
++				compatible = "spacemit,k1-usb2";
++				reg = <0x0 0xc0900000 0x0 0x4100>;
++				interrupts = <105>;
++				clocks = <&syscon_apmu CLK_USB_AXI>;
++				resets = <&syscon_apmu RESET_USB_AXI>;
++				phys = <&usbphy0>;
++				phy-names = "usb-phy";
++				dr_mode = "otg";
++				status = "disabled";
++			};
++
++			usb2_1: usb@c0980000 {
++				compatible = "spacemit,k1-usb2";
++				reg = <0x0 0xc0980000 0x0 0x4100>;
++				interrupts = <118>;
++				clocks = <&syscon_apmu CLK_USB_P1>;
++				resets = <&syscon_apmu RESET_USBP1_AXI>;
++				phys = <&usbphy1>;
++				phy-names = "usb-phy";
++				dr_mode = "host";
++				status = "disabled";
++			};
++
+ 			usb_dwc3: usb@c0a00000 {
+ 				compatible = "spacemit,k1-dwc3";
+ 				reg = <0x0 0xc0a00000 0x0 0x10000>;
 
 -- 
 2.34.1
