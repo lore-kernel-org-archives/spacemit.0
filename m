@@ -1,44 +1,41 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5534619F115
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 04:42:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958D2372B3C;
+	Tue,  8 Sep 2026 07:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788842540; cv=none; b=F+QLV+lftKM15V8u80zNDJpieMffH0gITD8YzWvVYnwX8FWH2KJ62RFBtaRtGoATfWgzVW+SBDFUoGoOpfNJWAX5zMQ1LnOQmeBDNaHC3PHaft6lXvOnxv1Xe2YoTLdfD3Fo92fjGpAoNWZ+Oq0hYW+xO8i05jYBRXqDaSicFRc=
+	t=1788851410; cv=none; b=IfNb+Kq3flCg+z+g4OSXh/fnC4A9R8IOjKLIhZuMfIWB6NUt18I90yM2OnGx5x0+qAAYdC5RlE0zlAw6dMqoQSH1F0BfBgkOASXZFzNzan69Gb1EVRoo4J7UZntH7FBwuhaM5FBAOGXqvTzwAMTJJWkr1ufb8l8RUTWlXA88Lww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788842540; c=relaxed/simple;
-	bh=x6kQx25IJwgp05TqroMqPHrWpz0ht9yREBOZISt2VuQ=;
+	s=arc-20240116; t=1788851410; c=relaxed/simple;
+	bh=9I/F2D/VeTFND7TmCx4VAvkT0VihmIR6iZEsj1zartE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJ4UAR+X3oWcFF8df8g5RaQvyX9thjr201ClYFhCYD5sc7w2NQ+YwExCNRii6K3uInEl0XBDyRD5AGwVRy+2ypx/KpnCd7JGn/4+Yc93+PiD97+itcUY4aHK8VTz+rQhukV6Az4QcmGpdtxckfCcTNKIENYYiknIjdjVQHfpBeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=drlqnM6M; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=MDZtom3MF5592kzDezrNTb+Y2PhsnnDAsO4sIHCM3oK3R1nXH+mv61VpWjq3zUUuoPnopat+k5qUyA5O3cgsOqzRppe7zIgzD8UrWQ0yCfTk04T9hVobRpLIJzgexcy+dqIsAnpaebQLfi0ED2sDFX3fuUINJBZijtnlSRrHOhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AELUli2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="drlqnM6M"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=pJTC0xXNuB6/FR3SFnQD89wasUY2SzDpeY/IZfDA5kY=; b=drlqnM6MJd1QipihzHmVJOJRhK
-	RGMPHGb7pK+htvEo71E5ODyA2DmlsQ6c4159CLGxIKE1pzapMO6MQcUieiavXiZ+S6tSK6xKnOMxE
-	Sz+NC/zU/a3NdoNDHrb+3p4EGW7Tx/85zkHWb5TIyyMEDrnplXrF9e3b09qPCSZkg43FSBEWjax8G
-	baHMDvzObQiP/tVxB9+JbR6M8+YECbHgRMLUREkv0Z6vVqzXslvhLFVAv08h0zws8M26wg4C8OAFG
-	ECnSvQdyA8Ld7qzVpSTCNxKIsT35avz0BbFjJix6hhVTHrTcHKFWHEj6IPdhGIu0AsQZXAFV43xAP
-	CTw/HkJg==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1x3nes-0000000423P-0ynJ;
-	Tue, 08 Sep 2026 06:42:10 +0200
-Date: Tue, 8 Sep 2026 06:42:09 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: spacemit@lists.linux.dev
-Cc: linux-riscv@lists.infradead.org
-Subject: Re: Random corruption on SpacemiT K1 with RVV
-Message-ID: <ap-SIQ9DLt-CfAx6@aurel32.net>
-References: <apSYF5x1Tu7PlyL1@aurel32.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AELUli2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6641F00A3A;
+	Tue,  8 Sep 2026 07:10:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788851408;
+	bh=tASNgWLVTewlPxH9GFItCaaNFjGZpPtTNZ4AsX2lYbA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=AELUli2++W+6IC7Q2pnh/aDqU3jAPlJxSfmPEX4tN32DDcO7NeRqXvkBvmzy1ICVF
+	 rSaE9HpWuapopCKjHYTuvhTUOutqD0cEqeiVH0w64k9scZm58F70dwyQNtmGUOCFSd
+	 Ve5U43ctxIDIy6pBGZyc7p0dT/VLiEM2LdAuP0g7dMNTCZXna3nCypNz2ujAO6wrUM
+	 e2RVY2tRmhufR7h0Wtn2yRONVAbESnQF3cTqFk6MXM+JHp98hMF7z2691L5ghz06W7
+	 +FyZz/Ya2cgeP6oXZWHfspQinwlh9IQL7b5fBJwi0j6TZQ5go4lG13CtAc/XRKTdZb
+	 vtdumZ7ZScHsQ==
+Date: Tue, 8 Sep 2026 07:10:04 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, linux-scsi@vger.kernel.org, robh@kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: k3: Add UFS support
+Message-ID: <20260908071004-GKB2346@kernel.org>
+References: <20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org>
+ <20260806-08-k3-ufs-support-v3-3-037fb322acdb@kernel.org>
+ <20260806031259.01EF91F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -47,113 +44,196 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <apSYF5x1Tu7PlyL1@aurel32.net>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260806031259.01EF91F000E9@smtp.kernel.org>
 
-Dear all,
+Hi All,
 
-I have done some small progress on that issue. Help is still wanted and=20
-would be appreciated.
+On 03:12 Thu 06 Aug     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [High] Failure to enter HIBERN8 state is ignored before forcibly powering down the M-PHY.
+> - [High] Missing DME attributes configuration for TX lane 1 and inconsistent MIB selector usage.
+> - [Medium] The retrieved connected TX lanes value is silently discarded.
+> - [Low] Redundant and ineffective call to `ufshcd_vops_phy_initialization`.
+> - [Low] The device tree references an undefined clock macro `CLK_APMU_UFS_REFCLK`, which causes a Device Tree compilation failure.
+> --
+> 
+> --- Patch [3]: [PATCH v3 3/3] riscv: dts: spacemit: k3: Add UFS support ---
+> commit 7b2ecae3ba0ff920d65fce0475cce3fc5045f08d
+> Author: Yixun Lan <dlan@kernel.org>
+> Subject: riscv: dts: spacemit: k3: Add UFS support
+> 
+> Add UFS Host Controller support for SpacemiT K3 SoC, and enable
+> it both on Pico-ITX and CoM260-IFX boards.
+> 
+> > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > index 19fc9b49668ed..cee1569608ea2 100644
+> > --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> > @@ -469,6 +469,28 @@ usb2_phy: phy@c0a20000 {
+> >  			status = "disabled";
+> >  		};
+> >  
+> > +		ufshc: ufshc@c0e00000 {
+> > +			compatible = "spacemit,k3-ufshc";
+> > +			reg = <0x0 0xc0e00000 0x0 0x40000>;
+> > +			clocks = <&syscon_apmu CLK_APMU_UFS_ACLK>,
+> > +				 <&syscon_apmu CLK_APMU_UFS_REFCLK>;
+> 
+> [Severity: Low]
+> Does this reference an undefined clock macro?
+> 
+> The device tree references CLK_APMU_UFS_REFCLK, but this macro appears to be
+> undefined. Will this cause a compilation failure when building the device tree?
+> 
+this should be solved in v7.3-rc1, which ufs clock driver has been merged
 
-On 2026-08-30 22:52, Aurelien Jarno wrote:
-> Dear all,
->=20
-> For the last weeks, I have been tracking a random memory corruption and
-> relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It=20
-> started upgrading to glibc 2.43, which does memset() through vector=20
-> instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1=20
-> kernel, but I have also been able to reproduce it with a vanilla 7.2.2=20
-> kernel, using a similar configuration to the Debian kernel. The board=20
-> uses OpenSBI 1.9 and the vendor U-Boot.
+> [ ... ]
+> 
+> > diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
+> > new file mode 100644
+> > index 0000000000000..94942ea27fb7d
+> > --- /dev/null
+> > +++ b/drivers/ufs/host/ufs-spacemit.c
+> > @@ -0,0 +1,687 @@
+> 
+> [ ... ]
+> 
+> > +static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
+> > +{
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> 
+> [ ... ]
+> 
+> > +		/* TX HB8_TIME CAP */
+> > +		{ UIC_ARG_MIB_SEL(0x000F, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x64 },
+> > +		{ UIC_ARG_MIB_SEL(0x000F, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1)), 0x64 },
+> > +		/* RX HB8_TIME CAP */
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x64 },
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x64 },
+> > +		/* TX EQ 3DB */
+> > +		{ UIC_ARG_MIB_SEL(0x00CD, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),  0x5 },
+> 
+> [Severity: High]
+> Are we missing the TX EQ 3DB configuration for lane 1 here?
+> 
+> The device tree specifies lanes-per-direction = <2>, but this DME attribute
+> is only configured for TX lane 0. Could this leave lane 1 with undefined or
+> default parameters and prevent successful 2-lane initialization?
+> 
+No need, false report..
+The configuration ally to lane 1 too
+> [ ... ]
+> 
+> > +static int ufs_spacemit_link_startup_post_change(struct ufs_hba *hba)
+> > +{
+> > +	/* Add 0xe8 make UFS2.1 run GEAR3 + 2Lane@409M */
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x97 },
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0xd7 },
+> > +		{ UIC_ARG_MIB_SEL(0xe8, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)), 0x17 },
+> 
+> [Severity: High]
+> Is the DME configuration for TX lane 1 missing?
+> 
+> Similar to ufs_spacemit_uniprov1p6_init(), attribute 0xe8 is explicitly
+> targeting only lane 0. Does lane 1 also need to be configured for 2-lane mode?
+> 
+no need, false report
+same reason as above
 
-I have been able to rule out OpenSBI from the issue, I have checked=20
-there is not trap top OpenSBI when the problem happens.
+> > +		{ UIC_ARG_MIB(DL_AFC0REQTIMEOUTVAL), UFS_DL_AFC0REQTIMEOUTVAL_MAX },
+> > +	};
+> > +	u32 tx_lanes;
+> > +	int err;
+> > +
+> > +	err = ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
+> > +	if (err < 0)
+> > +		return err;
+> > +
+> > +	return ufs_spacemit_get_connected_tx_lanes(hba, &tx_lanes);
+> 
+> [Severity: Medium]
+> Is the retrieved tx_lanes value meant to be used?
+> 
+> The value of tx_lanes is populated by ufs_spacemit_get_connected_tx_lanes()
+> but is then silently discarded when returning. Should this value be verified
+> against the configuration?
+> 
+tx_lanes is not used, I will drop this
 
-> Typically it manifests itself with the following kind of error, when=20
-> running g++ from GCC 16 as part of building software (e.g. OpenJDK,=20
-> Blender, Dolfin, Qt6):  =20
->=20
-> Assembler messages:
-> {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
-> {standard input}:284588: Error: unrecognized opcode `=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BFvl874'
->=20
-> The broken chars are 0xff and it seems there are always 240 (but with=20
-> poor statistics). Sometimes it instead causes a GCC ICE instead.
+> [ ... ]
+> 
+> > +static void ufs_spacemit_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+> > +{
+> > +	static const struct ufshcd_dme_attr_val setup_attrs[] = {
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x84 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x84 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x80 },
+> > +		{ UIC_ARG_MIB_SEL(0xf1, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x80 },
+> > +		{ UIC_ARG_MIB(0xdd), 0x57 },
+> > +		{ UIC_ARG_MIB(0xdd), 0xd7 },
+> > +		{ UIC_ARG_MIB(0xe8), 0x57 },
+> > +		{ UIC_ARG_MIB(0xe8), 0xd7 },
+> > +	};
+> > +
+> > +	if (cmd == UIC_CMD_DME_HIBER_ENTER) {
+> > +		ufs_spacemit_check_hibern8(hba);
+> > +
+> > +		ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs));
+> > +
+> > +		/* Power down M-PHY */
+> > +		ufshcd_writel(hba, 0x0, UFS_PHY_MNG_BASE + UFS_MPHY_PU_CTRL);
+> 
+> [Severity: High]
+> Should we check the return value of ufs_spacemit_check_hibern8(hba) before
+> powering down the M-PHY?
+> 
+will check return value, and give a warning 
 
-I have identified that the 0xff comes from the poisoning done for v0 in
-__riscv_v_vstate_discard(), which should only happen for a syscall.=20
-Indeed changing the value to different ones propagates to the above=20
-error message.
+> If the HIBERN8 check times out and returns -ETIMEDOUT, the error is ignored
+> and the driver unconditionally powers down the PHY. Can this cause a bus lockup
+> or hardware error if the M-PHY isn't actually in the HIBERN8 state?
+> 
+I'm not sure what's the best way to deal with this.. any suggestion?
 
-Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE=20
-doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD=20
-changes the number of broken bytes.
+> [ ... ]
+> 
+> > +static int ufs_spacemit_init(struct ufs_hba *hba)
+> > +{
+> > +	int err = 0;
+> > +	struct device *dev = hba->dev;
+> > +	struct ufs_spacemit_host *host;
+> > +	struct reset_control *rst;
+> > +
+> > +	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+> > +	if (!host)
+> > +		return -ENOMEM;
+> > +
+> > +	rst = devm_reset_control_get_exclusive_deasserted(dev, NULL);
+> > +	if (IS_ERR(rst))
+> > +		return dev_err_probe(dev, PTR_ERR(rst), "Failed to get reset control\n");
+> > +
+> > +	host->hba = hba;
+> > +	ufshcd_set_variant(hba, host);
+> > +	ufs_spacemit_advertise_quirks(hba);
+> > +
+> > +	err = ufshcd_vops_phy_initialization(host->hba);
+> > +	return err;
+> > +}
+> 
+> [Severity: Low]
+> Is this call to ufshcd_vops_phy_initialization() effective?
+> 
+> ufs_hba_spacemit_vops does not define the phy_initialization callback, so
+> the wrapper function will silently return 0. Does this need to be called here,
+> or is it redundant since the real PHY initialization occurs in
+> ufs_spacemit_link_startup_pre_change()?
 
-Disabling the vectored user code entirely with the following patch seems
-to prevent the issue (or make it sufficiently rare that I have not=20
-encountered it):
+Indeed, there is no phy_initialization(), I will drop this code
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org?part=3
 
---- a/arch/riscv/lib/riscv_v_helpers.c
-+++ b/arch/riscv/lib/riscv_v_helpers.c
-@@ -25,7 +25,7 @@ asmlinkage int enter_vector_usercopy(void *dst, void *src=
-, size_t n,
-        size_t remain, copied;
-=20
-        /* skip has_vector() check because it has been done by the asm  */
--       if (!may_use_simd())
-+       if (!may_use_simd() || true)
-                goto fallback;
-=20
-        kernel_vector_begin();
-
-Overall, while the corruption happens randomly, the corruption itself=20
-seems to be deterministic, and the data source of the corruption is=20
-identified. But I don't understand how those values propagate to user=20
-space. It is not clear to me if it is a bug somewhere in the context=20
-switching code, or a bug in __asm_vector_usercopy_sum_enabled fixup=20
-code, with the values just being the one at the entry of the function.
-Also I can't completely rule out a CPU bug.
-
-> Using glibc 2.44 instead of glibc 2.43, which does a lot of string=20
-> operations through vector instructions, increases the probability to=20
-> have corruption, makes it a bit more reproducible, but it always seems=20
-> to manifest as a GCC ICE. It typically happens withing one hour when=20
-> running on the 8 cores instead of every 1 or 2 days. From there I have=20
-> been able to determine the following things:
-
-I have stopped using glibc 2.44 as a reproducer, and it generate=20
-different type of crashes, and there could be another set of bugs on top=20
-of the one I am trying to identify. This however means it takes a lot of=20
-time to test any change.
-=20
-> - Disabling vector instructions (by patching the DTB to remove "v",=20
->   "zvhf" and "zvtk") fixes the issue
->=20
-> - Disabling THP (by setting /sys/kernel/mm/transparent_hugepage/enabled=
-=20
->   to never instead of always) also seems to fix the issue. Keeping it=20
->   enabled with defrag=3Dnever or use_zero_page=3D0 doesn't change anythin=
-g.
-
-I don't think this is a good direction, my impression is that it just=20
-changes timing a bit, which just hide the issue, or require different=20
-condition to trigger it.
-
-Regards
-Aurelien=20
-
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+-- 
+Yixun Lan (dlan)
