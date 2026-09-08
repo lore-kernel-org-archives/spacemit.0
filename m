@@ -1,272 +1,170 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FB7559CA2
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 13:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788874428; cv=fail; b=RAc802ffKTXo//BfKbUlAcWLTCMQYq5xqXwGzNpsJxDynAjIM6ReAvAuFHdKD1Q8I3/s5emMK9Sqm05PD/ukCdl0HozSSquzRnL5KW2vdeaUzrElgjn2EL060svtY811A5El2PgeuBJG8Qt5PkpdrPy6VKUnDwcxzbkPxus/G6k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788874428; c=relaxed/simple;
-	bh=w037SQnPopZStC335sgre0FdEchqYHc3VfbeT/VaBlk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Ct+owYX3D/tA5CqGcb3uSrjgchI7aTBoMPb7AfO6+ZfMe73hQmVYmhOr8JDebAXy5Vl6f3UEzUblqrmRXdS7tDFrdfdgmbklnZl+iLU6luesKg1B86kc0HgKfFj6Fvt0XQ3e2a4jwEJrhnztNeWEMA5yjIacn67OFj9Z4ER01PQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ARbb01Nz; arc=fail smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BD854B1CC
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 14:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788876162; cv=none; b=nf1Sgf/1h4gT4qmx9BRdScvDytVQygzxK4lvxEi5rXyNqJnlBXEcds+k0QJSZQgHFnz2LeHnpVRIZfLnW6Lg4VAMyjr9Iphq7nlH5ECUycD/kJcmj1JV7HZUE4cfJEBt5iiIE4W6siDilQpSzUDMfsYDtOkPFmhM75rECQvTdpA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788876162; c=relaxed/simple;
+	bh=pMSN8Aa6SA//FJWOWSAwmKzpRwkXWyJEfgwCETNLt/A=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DDVjnKPghwVI2x3KFRrsAiWkr7EFlcsbzPq9uP86Uhq00Cg8KMgd9sHXrf3NDXzTm78oF/LxXP3WOMjPX+N5++ID88jjLhMKMHBMmcWyG2upVLHBFwzb8kFe6NXqczSoXRdrTL04I2AcBerYNvWEAMIX9608B7rhhbw7OwAx3bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=O4lkqtsF; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ARbb01Nz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788874417; x=1820410417;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=w037SQnPopZStC335sgre0FdEchqYHc3VfbeT/VaBlk=;
-  b=ARbb01NzJyFebE7SNZdLCH2If5grZdgr+ALoKqSHVvfPzWGFRFONgbmE
-   BnX+KeCt4f21Tx0nBYVWSeEMR1t+oa1Ru/+x611/Jnlb74Nib9DKrtsM4
-   zAGP6ZFBFZSgTvW3KP7gFMedD5ttEq9HF7xDIaQ+jn65r5rQw0N/9Pb54
-   5TRckfvuCbKQRiaM0u2vNqj1uj72T/+9ysOEhxm3H2FtiGLLht0CsOpFW
-   x/JgBZoXO9oitAy6yTcrkLgQIUKT/PQTpSKu4831hDe/Lw90Cd5W7GICF
-   ZX0f8KHeMoWv6y7nUi1nwHgvR8BZ+kqZR6A7kTJrdduW4kIHwpPEhU/Xu
-   Q==;
-X-CSE-ConnectionGUID: bpC7W+yoRzGVODW9FOgczA==
-X-CSE-MsgGUID: j+8iKt9zTj63qke8Q+wbWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="89148900"
-X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
-   d="scan'208";a="89148900"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 06:33:32 -0700
-X-CSE-ConnectionGUID: 0gQuASwsS+ilsuf6DStnWg==
-X-CSE-MsgGUID: 8uIPbpYkTQuBYCe5TzzDHg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,269,1779174000"; 
-   d="scan'208";a="267755251"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 06:33:31 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 8 Sep 2026 06:33:31 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Tue, 8 Sep 2026 06:33:31 -0700
-Received: from SA9PR02CU001.outbound.protection.outlook.com (40.93.196.10) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 8 Sep 2026 06:33:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZVZ4aFphJC1zvZnLfp0y5u71hN/JV6SNhqPJ6xQsBOZgsKBIFKiagRKSKGYNZHwbmxL/3JxjxDd7J1/12EQ8vUBPZGVvOuIWiQptz/7PqKjD8S9jL9vtf8MG0rT8Atse6ygylN6VRxa0HT7XRSQa5QygFkgrJ8kGyEomFjPbfy6JHQzZY1NiGCGSnaIqmANO8ehHFLqODuZ4SBskQ962QJx3LDd1L5ZtYOaHynUA7wpxmAX3GO+oes7OG472cF63cg8teVy0veM6oFj0pJ7vjR4lZWWxu6k1U0N3d/4+/Mcc0CFzLlem3/sapvYuIz1aNBcmtUjvWyWajOccOgA47A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oBFNVj2kLlU69sIJYvOKKWz0Sx+Dkf5W3Wxl62ossz8=;
- b=PrxlAt1lVVVjvPGd/vPCd3JcQ3zps1cPit/+P3GzrCODuUiQAL3+uiUw0YqyJgEih03q4qwSzfu9r53yVRvomFUw9QEeV96uar+WHfZ4ZMIQRZXQNKLhMED/JLlNF0GUkIBC8z0FmLMuYMZL8INxVC9/3qJkey3FhTZjYGSQgKd09MLRuGIyl0w4JBvY5nhmIvlad2iFKd5beo2yL5mBJrsaH12Zf260oV7lQfgRdJNskMVzhwQIdXOjSZBGwlYPA7I7V3ymLhSYio5TyNe6nZm8hnYwCXfikPyYKBIZxAsr+1qXTNaxiMMNikhIedKVg0tDsvB3NelyIDN9uEQVHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB8986.namprd11.prod.outlook.com (2603:10b6:208:577::21)
- by DS0PR11MB7832.namprd11.prod.outlook.com (2603:10b6:8:f5::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.15; Tue, 8 Sep
- 2026 13:33:12 +0000
-Received: from IA3PR11MB8986.namprd11.prod.outlook.com
- ([fe80::e6f0:6afb:6ef9:ab5c]) by IA3PR11MB8986.namprd11.prod.outlook.com
- ([fe80::e6f0:6afb:6ef9:ab5c%6]) with mapi id 15.21.0406.005; Tue, 8 Sep 2026
- 13:33:11 +0000
-From: "Loktionov, Aleksandr" <aleksandr.loktionov@intel.com>
-To: Siddharth Vadapalli <s-vadapalli@ti.com>,
-	"dario.binacchi@amarulasolutions.com" <dario.binacchi@amarulasolutions.com>,
-	"mkl@pengutronix.de" <mkl@pengutronix.de>, "mailhol@kernel.org"
-	<mailhol@kernel.org>, "msp@baylibre.com" <msp@baylibre.com>,
-	"florian.fainelli@broadcom.com" <florian.fainelli@broadcom.com>,
-	"jonas.gorski@gmail.com" <jonas.gorski@gmail.com>, "andrew@lunn.ch"
-	<andrew@lunn.ch>, "olteanv@gmail.com" <olteanv@gmail.com>,
-	"davem@davemloft.net" <davem@davemloft.net>, "edumazet@google.com"
-	<edumazet@google.com>, "kuba@kernel.org" <kuba@kernel.org>,
-	"pabeni@redhat.com" <pabeni@redhat.com>, "kurt@linutronix.de"
-	<kurt@linutronix.de>, "hauke@hauke-m.de" <hauke@hauke-m.de>,
-	"chester.a.unal@arinc9.com" <chester.a.unal@arinc9.com>,
-	"daniel@makrotopia.org" <daniel@makrotopia.org>, "matthias.bgg@gmail.com"
-	<matthias.bgg@gmail.com>, "angelogioacchino.delregno@collabora.com"
-	<angelogioacchino.delregno@collabora.com>, "ansuelsmth@gmail.com"
-	<ansuelsmth@gmail.com>, "linusw@kernel.org" <linusw@kernel.org>,
-	"luizluca@gmail.com" <luizluca@gmail.com>, "alvin.sipraga@analog.com"
-	<alvin.sipraga@analog.com>, "clement.leger@bootlin.com"
-	<clement.leger@bootlin.com>, "justin.chen@broadcom.com"
-	<justin.chen@broadcom.com>, "dlan@kernel.org" <dlan@kernel.org>,
-	"rogerq@kernel.org" <rogerq@kernel.org>, "hkallweit1@gmail.com"
-	<hkallweit1@gmail.com>, "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
-	"rjui@broadcom.com" <rjui@broadcom.com>, "sbranden@broadcom.com"
-	<sbranden@broadcom.com>, "bcm-kernel-feedback-list@broadcom.com"
-	<bcm-kernel-feedback-list@broadcom.com>, "opendmb@gmail.com"
-	<opendmb@gmail.com>, "andrei.botila@oss.nxp.com" <andrei.botila@oss.nxp.com>,
-	"wangruikang@iscas.ac.cn" <wangruikang@iscas.ac.cn>, "amadeus@jmu.edu.cn"
-	<amadeus@jmu.edu.cn>, "kees@kernel.org" <kees@kernel.org>,
-	"tmshlvck@gmail.com" <tmshlvck@gmail.com>, "c-vankar@ti.com"
-	<c-vankar@ti.com>, "horms@kernel.org" <horms@kernel.org>,
-	"vadim.fedorenko@linux.dev" <vadim.fedorenko@linux.dev>,
-	"daniel.zahka@gmail.com" <daniel.zahka@gmail.com>,
-	"nora.schiffer@ew.tq-group.com" <nora.schiffer@ew.tq-group.com>,
-	"v-singh1@ti.com" <v-singh1@ti.com>, "oss@vassilevski.com"
-	<oss@vassilevski.com>, "haokexin@gmail.com" <haokexin@gmail.com>,
-	"alex@sverdlin.org" <alex@sverdlin.org>, "lgs201920130244@gmail.com"
-	<lgs201920130244@gmail.com>
-CC: "linux-can@vger.kernel.org" <linux-can@vger.kernel.org>,
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-mediatek@lists.infradead.org"
-	<linux-mediatek@lists.infradead.org>, "linux-renesas-soc@vger.kernel.org"
-	<linux-renesas-soc@vger.kernel.org>, "linux-riscv@lists.infradead.org"
-	<linux-riscv@lists.infradead.org>, "spacemit@lists.linux.dev"
-	<spacemit@lists.linux.dev>, "linux-omap@vger.kernel.org"
-	<linux-omap@vger.kernel.org>
-Subject: RE: [PATCH net-next 24/33] net: bcmasp: Remove comma after
- sentinel-entry in match-table
-Thread-Topic: [PATCH net-next 24/33] net: bcmasp: Remove comma after
- sentinel-entry in match-table
-Thread-Index: AQHdPCeKBSwgpc1pS06aFMpAiLgvX7bEtGPg
-Date: Tue, 8 Sep 2026 13:33:11 +0000
-Message-ID: <IA3PR11MB8986ECEFACA574777AADC435E5B12@IA3PR11MB8986.namprd11.prod.outlook.com>
-References: <20260904043724.2955444-1-s-vadapalli@ti.com>
- <20260904043724.2955444-25-s-vadapalli@ti.com>
-In-Reply-To: <20260904043724.2955444-25-s-vadapalli@ti.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB8986:EE_|DS0PR11MB7832:EE_
-x-ms-office365-filtering-correlation-id: ae12aab5-b457-4c03-6621-08df0dadba70
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|7416014|366016|1800799024|376014|10067099003|6133799003|18002099003|22082099003|56012099006|4143699003|11063799006|921020|38070700021;
-x-microsoft-antispam-message-info: hw8kdjPtnPPZG3Y3T1H6o/QF0gzBz+xN9XDHV4anfVfFcuLJxKQ/TlhmmMLuy8x5vtdPbr2fQvoLlXEZ1mC87LA65eJmmNhzSoZZpAEjJeR8/sRighdmwDWlTpwhH8iWzVH5VgAs8AxEdXOFzVO04PfxOeUqw+qQZzSOPCo6GF1VLf/AbwabXWSLExHA2bf7ZrZ9olzFDI8VFGX+8GcZa8vbynubSRoXSnfx5Fyci6SYOiekyoZicSQkuAtKhwl6Mt90ZBMtyu6dd4TYAWfCIiUEmZbrVP8LPlIohP0vnDpgk/QYl4yu9P9M+Z0GQPuo1uk+p+1btdz5G2+wCAAHWZkpc9oolSsgnbcKB9mXshvsLZsDTWBdNBKJ3sbHEvyscD5NgxNu2WiSdLk7bcblee9Fh/KwOYSyZ2Bh8M5gsuwqKiNhib8VKV711WaXpbPuFkSS2JyO3XGE5twzp9bCM+a+xdLWHrcp1lCDcH2qCl1UxPB+HvhMkTk3VCCHpCvDtM01f4zc5mxBZbFtp2MyrLUODg21+hx38hP9VPzWYyirFnzt99WrSdKoOkF/anySrrkyLx0+jun9VIsH+tGvZjs847IFrM4BRz5FrFnxw+CdltVZVa0G58nAPridSDKpb/oCEId6sCgzO5v4sXolK7ziDPWkd5DWMut8myTf4PO9DXWCLoou+FHbuU2BaElzSgPIU2K7iAV1CZI0zXCZCAvyHlIheHp3sw4EJoXjgiBKdd6RJFwMIhWYuujVQfgg
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA3PR11MB8986.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(7416014)(366016)(1800799024)(376014)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(921020)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?5x4VDUIPtziJ+lyRqm7W0MXB7T68QKBc+6ZVDDvDjm8kAmmZR8FZzirgfZ59?=
- =?us-ascii?Q?bi65sE60iAhLJaKMwoTkBjlJ8FD2c1bPnwQwuEOpoBuq8WHvOxs7HFQ1XZIZ?=
- =?us-ascii?Q?HvT7YHeI+Pc+IK1zzFYQ8PN0nrd51f16wafhKYfSVmyOFJV892LI77RYQcGn?=
- =?us-ascii?Q?xwpM9pggsJ0/rbk9ApJv6oSTZxlDz76ATDhr1EEgWVTt1u929fpSlaNoJa6I?=
- =?us-ascii?Q?JycBD/tW4RgumOMIrlXv6wWhApw+MoF2k+veF4lt+dcHlh4Le+zLOuZuM+4C?=
- =?us-ascii?Q?B3JajVY+0R9w+zk7+0X+s+3GfaFnFQssP+fgy/bpnhZjLqFMVym+9yIJS6Cy?=
- =?us-ascii?Q?qLMZ00MHmROb28GpfFEFccKuaL+0Vp3ejCMNLBuxC8xA5k1xArijN8KYyWAP?=
- =?us-ascii?Q?e2szXKVMkMxJoCPuqnEzMPY4axSmKNPRD2qapZd6RHucSPSSk1m1a16nrnGb?=
- =?us-ascii?Q?FAjUOvoRdK8msfx7Pgz4zr/h0bpmupNMXTkLJSr/x18T6J7FzBkU+pMdJuag?=
- =?us-ascii?Q?ZeTIt19VCP69PCev9N5iiE+tJTqersuhyM7Cfsul0wWxGRslr4HHZ9rxy5We?=
- =?us-ascii?Q?Ed1dEI1I5ZYxb2CP/4Q9nokPuzSQJSIUsSGmuzdljayZlgCnfFG+WV5JV30P?=
- =?us-ascii?Q?6GIAbtFrUe9II6kS39BMX0XQTxr4NleqchWYXJv1jCoz7HfJp9hNuEcDWWuF?=
- =?us-ascii?Q?bTV/q6kagp5QGrdP/LAonQHZr3qfTc0wuyrDNbXygHYCfzzcVC7QDiRLKXpI?=
- =?us-ascii?Q?k7uo+l/n+Y60CW7aEJDQHieWkWyQ0pL3rkXm+61/B6XjAoRWQVCkCM1AXyom?=
- =?us-ascii?Q?7N0GteaVymo/Qw/Aw02vQqZka+2QJv1tCJuFr3A1z0XC4fhWeHRud73/3Au6?=
- =?us-ascii?Q?IeqF4MO66QInAzOSVVkqIGaiCmDt+AHFpaOMZMBJ7+pL3FqK331I7r+eGT/M?=
- =?us-ascii?Q?b7YiNhHpw0jjatOcmFzPB5QAvbzy12BGxpPBmG9Boq91IovxAGsmrWqKhJbZ?=
- =?us-ascii?Q?+xoT93gw+8SIHXflafBo1oJ7c1inFf8X9Tbu1mqECQ+WJS1w94+KV+PpRAk+?=
- =?us-ascii?Q?Ul+zA0njLmJrUKsNuWdJyJ9BAhxpe7pCr5iNjn06XlZtLMQIubzxBWOwrAm6?=
- =?us-ascii?Q?M/m5c+IRwSj0b34+cuP0P0Z/jwHypo5O0jwOCo+kxgIpj6rROJHsPRu4b4/b?=
- =?us-ascii?Q?oe3cyHawXFsHHl/UKeQKizVjZIY0Yzu8bPzB58JW5OCClsO/m3ouo9wUyFSN?=
- =?us-ascii?Q?scq55gbXj73KykJqv0Cr3TvIk2+hLM6pEimv2T8iCJenlVkRBEyJOlDZkrNI?=
- =?us-ascii?Q?hienSJCAFH2pE+sTcyDuzpwJ6UD6Ewaf5hTMctqUcn7C0j7u5+Zfn+UM17D4?=
- =?us-ascii?Q?nGKUvJr+GtSfUzZXKSCnyC/XvCQ7+xZVRQvT4QBuklcc37cZ7hvFlLdWY7sf?=
- =?us-ascii?Q?wPnovXWcOdN/LSJS1EFwtpv82lk0PXlipGO3GS1bJGQTAGkf5/hOB0/YACc1?=
- =?us-ascii?Q?IL6nr5gwX31eaPre4t9I7gY7t/rj/PxTa329ka0oMKS9rd/CFnDL/1ADrnU4?=
- =?us-ascii?Q?XJsIldpONZ1JloiUVPsM8HNnm7LoJ8IsgTKfm0F3CKRlTMH3cczIoxWmjF88?=
- =?us-ascii?Q?7p6f0o+GJMESEh1l43PMjCVdxLR9ysjpgAljEVlZI6+Sx10E0WFkG9nCkpAw?=
- =?us-ascii?Q?edrbA4P9XrvGDUAICAJIqifTPLplmdL+2lJr+7Sd0xvvIMbuMUDM6tXFQA+E?=
- =?us-ascii?Q?hl3oH+7d0YRxwXanj1AcZGyAo46zDNo=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="O4lkqtsF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1788876098;
+	bh=7LGo2OQ7yhwaHNuhcrdYROzYNe6ldJsLGDujKMNtqX4=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=O4lkqtsFvyJp9DLNxlJY70i9Ff6oCMmJmWO1ujAt/dkY4SNIC2LjOmeQ5U+mkx9Rn
+	 WyjFYJnirxj4Y/Smtp6cKzSXpXSev+vibsG4+B19bYPuALWByocm+P4oBiwTnTc4e4
+	 IbVLyfKSkcPyYTnYV5jwaeCh4Fo/LLEprnBTw7tk=
+X-QQ-mid: esmtpsz16t1788876093t830e6267
+X-QQ-Originating-IP: TXCl4lwqu38gDlsMHp3gXdusF0fFEpvpfPPyidqgCjw=
+Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 08 Sep 2026 22:01:30 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4229499913339683584
+EX-QQ-RecipientCnt: 8
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Date: Tue, 08 Sep 2026 22:01:20 +0800
+Subject: [PATCH v2] usb: dwc3: core: resume xHCI child on runtime resume in
+ host mode
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: wlcc5ISkoypEYVAtCOrg5CDhXGmgp9fFaAA0SrTAhh7YDuoG4LPk+dcarx1vmh2jx9d3SF363/i/woAYg4oTRN/VXUgt5ddMzrNrirDHtGrZDMarFS48bjrnmx8gnSBkppGwlrZyA6p+1tlZXen0PC0yOKyH44NYW17Js0vV+rMit0mwgTiqMYVpZKCFGgmMRg7zqHzOHyPYC2Cyqs5vp4T4zgzYRv6fMxT1Lm+ELsMA3TmZuByaNcHKGPX2EJ6LOi82w+osUMOn38OOadi/+m0f+1r4Eyl6qjztjjY5QO+jwLqHjb9NXJ81wnscQumPLXgdAeIzzPW3C3BQgLUt1A==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB8986.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae12aab5-b457-4c03-6621-08df0dadba70
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2026 13:33:11.7963
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VR1ptsVnR/Wv6wi69lFixfUtSZA1M8c3Gmdl7MBIvpgpIxU3cMEzYncdJjjaDe3dk3aciGl72eGFpztrpkoGhBITYWgDEw+zS40fKEZUBSI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7832
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260908-resume-xhci-v1-1-aca107602e9c@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAC8VoGoC/x3MQQqAIBBA0avErBNMI7KrRAuzMWeRhZII4t2Tl
+ m/xf4GIgTDC0hUImCjS7RuGvgPjtD+R0dEMgouJKz6zgPG9kGVniHGr5Wit2qUU0IonoKX831Z
+ IArZaPywgqxhhAAAA
+X-Change-ID: 20260908-resume-xhci-0fa34ff9b332
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Troy Mitchell <troy.mitchell@linux.dev>, 
+ Junzhong Pan <panjunzhong@linux.spacemit.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788876092; l=3482;
+ i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
+ bh=pMSN8Aa6SA//FJWOWSAwmKzpRwkXWyJEfgwCETNLt/A=;
+ b=TjYm4zrYsOmLRXr3kGWuVs5PgsRI7x00Nys61ULIxgVQVzPs3DOJJL/r09tYIwaB7iCDDN4ds
+ hH41StJeNxVB516z28V1clYWHpnd+nH1Z6k7tUTyPzGzRwBB7w8VCPh
+X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
+ pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: Od5ZbCMDTYwa7n7DsJaT5UDKfx7jqPeJcQy7a35xtycoTfHT9y+uoSRl
+	zZgLdpiUtwvU44YOeYkJjLPE0e5hCYSI3/N4LNyHBXMrG/jYO9ltxnTgfPPr6TmYEOileMo
+	ujCQnErMze79dQLClbBj5PmM0QZ0D1q9qWVnOnDm8xrDwH7VYWtKIAj3JrewBq55ed7v+qs
+	PdQGBcn+epDEVakL7hm3AM8qNdnR3lvWAbrV0Gz43qI306Ofv8SwDa3kf0E7dsfXhircgmc
+	YjnX8rDoR8O/bEYxW7GK8o3kFvgUjRGgMuJXVq5rSo5+888iy1Zvxa2hiM7JJEzo/IsgFwX
+	/iuxSWdakNRpPQn4JnDByUR91HH9qQXMgTvfGtOepVqCoorxU2l48dIyUXmRblpcd49zi/W
+	GzxYsZWz39HxfkWS4FMMRtf1siSuPWWJXijdAuFFpzRRhtBoAsUj1Qh4LWPT5NXhekGhbz/
+	MXAwZ2p9VEcKTKeiGeCACOTrLrrdESwUxaICU8RWtsEfQ49EmHf7s64E4KBxtfv+j9Arv1b
+	vVwWuQkLCWPJ+bVltIv75ytUkPGRSmoT0QVAe2U7aEqi19963CZq3zOrFXwDZ7CXnWfw8t9
+	LQyj3pP/cjQSbppaEOw/X93EpSJrq+znj59QNBTQlzvYldGR0Mzo4txl0mvfmSYVmfhRN82
+	FpzPiZtKYL475f9sdEBGyrf/cN5X2JFIDr/uierD/Si+DBMQsP29YWufdnK2rLSSQxKnEaO
+	zyCiMoQvAAdD5T90TTUiiJO9InjchrDvsC8/3YlwLRtcvGblRuv7kRneKx+x9/cU4fI0RFo
+	Q9+zpTtJEGDUOY5BxzrYGerPTMpWhbG/pYQWADKPYnIQiz0SuftbLsn0hYvSQH7uFhm5y+t
+	Xtk6eBTCubySRx+p3cQ1Is9JZk9UKI5czVFKdIcDcdu/U3G/0sHa3ULA+j6aSa9aKdiVDiE
+	QmEZ30tImHpv6UDpRVYMSd9aqoorEWsCocOPaW7iv1KXfHCypFxR13Ul4IJFRhisQ6iInD6
+	DL3c0ftVa3TfLX7YKt5GEXo2xPQjTntvbWmb9sfzGISphdF4vTjQkOJy1g3Gm/Rwx0Snozr
+	GH/1DpIfMBaThTJXdmeSWYSi3+BsrdKOQi/IPkDghUEiJLt/HiadnftR1ocQB4/SKeLho+N
+	2rgsA/+pRDUP/RsjJrkI/oqm+g0h2nA90RQ7
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-RECHKSPAM: 0
 
+USB controller runtime suspend halts the controller on disconnection.
+It relies on platforms with custom connection notification to start
+the controller again.
 
+The host branch of dwc3_runtime_resume() does nothing currently. There
+are two paths that can trigger a runtime resume of the dwc3 core in
+host mode:
 
-> -----Original Message-----
-> From: Siddharth Vadapalli <s-vadapalli@ti.com>
-> Sent: Friday, September 4, 2026 6:37 AM
-> To: dario.binacchi@amarulasolutions.com; mkl@pengutronix.de;
-> mailhol@kernel.org; msp@baylibre.com; florian.fainelli@broadcom.com;
-> jonas.gorski@gmail.com; andrew@lunn.ch; olteanv@gmail.com;
-> davem@davemloft.net; edumazet@google.com; kuba@kernel.org;
-> pabeni@redhat.com; kurt@linutronix.de; hauke@hauke-m.de;
-> chester.a.unal@arinc9.com; daniel@makrotopia.org;
-> matthias.bgg@gmail.com; angelogioacchino.delregno@collabora.com;
-> ansuelsmth@gmail.com; linusw@kernel.org; luizluca@gmail.com;
-> alvin.sipraga@analog.com; clement.leger@bootlin.com;
-> justin.chen@broadcom.com; dlan@kernel.org; rogerq@kernel.org;
-> hkallweit1@gmail.com; linux@armlinux.org.uk; rjui@broadcom.com;
-> sbranden@broadcom.com; bcm-kernel-feedback-list@broadcom.com;
-> opendmb@gmail.com; andrei.botila@oss.nxp.com; wangruikang@iscas.ac.cn;
-> amadeus@jmu.edu.cn; kees@kernel.org; tmshlvck@gmail.com; c-
-> vankar@ti.com; horms@kernel.org; vadim.fedorenko@linux.dev;
-> daniel.zahka@gmail.com; nora.schiffer@ew.tq-group.com; v-
-> singh1@ti.com; oss@vassilevski.com; haokexin@gmail.com;
-> alex@sverdlin.org; Loktionov, Aleksandr
-> <aleksandr.loktionov@intel.com>; lgs201920130244@gmail.com
-> Cc: linux-can@vger.kernel.org; netdev@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org; linux-
-> mediatek@lists.infradead.org; linux-renesas-soc@vger.kernel.org;
-> linux-riscv@lists.infradead.org; spacemit@lists.linux.dev; linux-
-> omap@vger.kernel.org; s-vadapalli@ti.com
-> Subject: [PATCH net-next 24/33] net: bcmasp: Remove comma after
-> sentinel-entry in match-table
->=20
-> Since sentinel is the last entry and we do not expect further entries
-> following it, remove the comma.
->=20
-> Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-> ---
->  drivers/net/ethernet/broadcom/asp2/bcmasp.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-> b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-> index 972474893a6b..3393b5dcbc9a 100644
-> --- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-> +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-> @@ -1209,7 +1209,7 @@ static const struct of_device_id
-> bcmasp_of_match[] =3D {
->  	{ .compatible =3D "brcm,asp-v2.1", .data =3D &v21_plat_data },
->  	{ .compatible =3D "brcm,asp-v2.2", .data =3D &v22_plat_data },
->  	{ .compatible =3D "brcm,asp-v3.0", .data =3D &v30_plat_data },
-> -	{ /* sentinel */ },
-> +	{ /* sentinel */ }
->  };
->  MODULE_DEVICE_TABLE(of, bcmasp_of_match);
->=20
-> @@ -1217,7 +1217,7 @@ static const struct of_device_id
-> bcmasp_mdio_of_match[] =3D {
->  	{ .compatible =3D "brcm,asp-v2.1-mdio", },
->  	{ .compatible =3D "brcm,asp-v2.2-mdio", },
->  	{ .compatible =3D "brcm,asp-v3.0-mdio", },
-> -	{ /* sentinel */ },
-> +	{ /* sentinel */ }
->  };
->  MODULE_DEVICE_TABLE(of, bcmasp_mdio_of_match);
->=20
-> --
-> 2.51.1
+(a) Wake lands on the xHCI child (DT platforms, e.g. Qualcomm, i.MX8MP)
+    A platform wakeup IRQ fires and the glue handler calls
+    pm_runtime_resume(&xhci->dev). Runtime PM walks upward, resumes
+    the dwc3 parent first, then resumes xHCI. Both wake correctly.
 
-For me it looks like this PR doesn't clean up anything meaningful.
-Is there a different opinion?
+(b) Wake lands on the dwc3 parent (ACPI platforms)
+    When an ACPI Notify(ACPI_NOTIFY_DEVICE_WAKE) targets the dwc3
+    parent device -- for example via a Generic Event Device on a
+    hardware-reduced platform where dwc3 is enumerated as an ACPI
+    device without a glue driver -- the ACPI core turns this into
+    pm_request_resume(dwc3_dev). Runtime PM does not propagate resume
+    downward, so the xHCI child stays suspended. Root hub polling is
+    never re-armed, and a device plugged in while suspended is silently
+    dropped.
 
+This patch fills in the host branch to cover case (b) by requesting an
+async resume of the xHCI child so xhci_resume() can restore the port
+state machine and re-arm root hub polling. Glue drivers in case (a)
+resume xHCI directly, an extra call introduced by this change, but
+runtime PM can serialize those requests and skip device already active,
+so the extra resume call is safe. Those calls can be replaced with
+resume calls to dwc3 device later.
+
+Tested on SpacemiT K3 Pico-ITX, covering both wakeup paths: an ACPI
+boot with a GED device notifying the dwc3 node (HID 808622B7), and a
+DT boot with a modified dwc3-generic-plat driver exposing a wakeup IRQ
+similar to dwc3-qcom.c and dwc3-imx8mp.c. This is not validation on
+actual Qualcomm or i.MX8MP hardware, changing those drivers would still
+need platform-specific testing.
+
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Assisted-by: Opencode:claude-opus-5
+Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+---
+Changes since RFC:
+- add Assisted-By tag and collect tag
+- refine the commit message and comments as suggested
+
+Link to RFC: https://lore.kernel.org/linux-usb/20260811090817.109350-1-panjunzhong@linux.spacemit.com/
+---
+ drivers/usb/dwc3/core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index fd5c2cd36c59..76883dc6184c 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -2739,6 +2739,18 @@ int dwc3_runtime_resume(struct dwc3 *dwc)
+ 		}
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
++		/*
++		 * Only the xHCI child's resume re-arms root hub polling, which
++		 * is what rediscovers a device plugged in while suspended.
++		 * Runtime PM doesn't resume children, so request it here.
++		 * Keep it asynchronous to avoid waiting for the parent's resume
++		 * callback to finish from inside it. Glue drivers may also
++		 * resume xHCI directly, but runtime PM will serialize those
++		 * requests and skips an already-active device.
++		 */
++		if (dwc->xhci)
++			pm_request_resume(&dwc->xhci->dev);
++		break;
+ 	default:
+ 		/* do nothing */
+ 		break;
+
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260908-resume-xhci-0fa34ff9b332
+
+Best regards,
+-- 
+Junzhong Pan <panjunzhong@linux.spacemit.com>
 
