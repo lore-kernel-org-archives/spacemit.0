@@ -1,140 +1,123 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866AD4D2EDA
-	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 10:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB6A50EC11
+	for <spacemit@lists.linux.dev>; Tue,  8 Sep 2026 10:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788861767; cv=none; b=R4ZbKNN56JbBcH+EPH8k3gBFRId1s1Ic8jHGcddAk1MVQ838J60/pzaVX7Mqc0L5giKGf+PoXoRQff21ed8HxhMjn2t83byohNrv7Nx/FdrLj5MKp+LdWuSKwZ4pYeOBsR1GfZplHCUqg/vS63r9mnmBz4c7EiFtHW5Nzlnp0kE=
+	t=1788863217; cv=none; b=Smkccc09ZRD6Gt4Q0WEqfRzl5vkF9d6fr14abqM2G5ZyG3Vz1Q042ossvEKhKhsr3k4duXp5SXaRyCmvpjWhIioPo2sW+B4xSCzgTWm6oc1hXO7GbW5L73Db/wqYuPtmIl0s8+7VR9KrdfYO6dlKa42TqloEYJX6T75Hl34Wav4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788861767; c=relaxed/simple;
-	bh=vQIBuuR/BmwsBY5JOxkTHsS75Xhl8dHGbo7qnFPGjH0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EupTaYWXuFKX6+Llf5o5VOVs9sxHi7HCh1OAJwGvEKMTun400p3tKJYsYurSn0GL5v2l9JrG7n24VAzxejNYd7mLMsLkk4GMGGlkYJeizrnrYNqIa1GLVdV087mNfKCxIPVwY3ze/GkJdkWoLo3DezYW/HJ5B6hdKk0JONvmjBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=IWGY9+g0; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1788863217; c=relaxed/simple;
+	bh=NRw+ETGIsTmdeUKeknoQ0Yj1vx+B3Gy2R9aH3D5k+KM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=swgUckGItn+FvHLS/+Hv2LKQEQFdEYEFF4aG4iJEmiazLISFTeiBYwf8LWDQ08uLh7WE/oyoNsHZcJ24pUF9Ftf4XTts6cMmJXk7zL5S58/YIsG7GqekNHZKKrV5cE3GKB4Rkgn+ffu7xoXy8YPhY5AyQiID3FrSVIYdNnlMUSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K/XLMwxy; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="IWGY9+g0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788861730;
-	bh=AsIdMehAHVx8Vn9co92csSXF/XK0Y8AfqFEfTMs6vWU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=IWGY9+g0N4J643i6P6VTebvhRdq9bdF/HKLJuHhy/DDLPuTuF30MWpbuAk9imMU5/
-	 n80sPjYLcZ/tTKq6hXiQZ7sHUijOo5jpVTTAd8Z00nafIZjheK05ZInQzRACNQFNds
-	 gARtKOaZnZDOrnTe8xsFTNRj3GYRFsZz4I8z1yZk=
-X-QQ-mid: zesmtpgz4t1788861723t07d26cc1
-X-QQ-Originating-IP: gaC7llghVtvXGohF4L9JNRie7K9GccucX/uj9em3fyM=
-Received: from [192.168.1.100] ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 08 Sep 2026 18:02:00 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7742146852528035138
-EX-QQ-RecipientCnt: 20
-Message-ID: <140A6F61DCF6A29E+a53e2017-306b-460b-bce2-a269c3491509@linux.spacemit.com>
-Date: Tue, 8 Sep 2026 18:01:52 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K/XLMwxy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1788863215; x=1820399215;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NRw+ETGIsTmdeUKeknoQ0Yj1vx+B3Gy2R9aH3D5k+KM=;
+  b=K/XLMwxyRlchtNhGAMZaxdK3O6RRyMXMh/LKjC4Xw+DWmZ93YvHlpZU2
+   OBcplq/TNofQJCj90yaB9G2Xe4ivIWPV2rWmp1AqtzP6H8dv/ZX/8e9at
+   dwiIK5vWedPApuDnvGpSkI4q0Vtdj6L2pejcSTnEh4EbuIVrYty2oIJYB
+   8NDrq94MNlllNilGIoIuZuP78RtQmt7zG8xKWw0iIW5ji6V6XX/Tp+jHs
+   zeURjNJIULeQJllVO+KGVANVfVZVaITHwbLTcF8q5nArsTeRhkZHjxbRH
+   3rrfFANTAYGHwfjlvqNnKxrRTXg+Hnmpmk3BzF1IBTNqwbOHkfit/O5Fe
+   w==;
+X-CSE-ConnectionGUID: Hy/huUMtQoq7ewckBJ3Fsg==
+X-CSE-MsgGUID: 8ALhuIm8Qrav61ZxgwYlvw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11899"; a="93125262"
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="93125262"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 03:26:54 -0700
+X-CSE-ConnectionGUID: AWLCOjaVT36BCPSmrDCMmQ==
+X-CSE-MsgGUID: NbW/xd5MTgKX83yqBbb0VQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,268,1779174000"; 
+   d="scan'208";a="271468162"
+Received: from smoticic-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.92])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2026 03:26:47 -0700
+Date: Tue, 8 Sep 2026 13:26:44 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Frank Li <Frank.Li@nxp.com>, Niklas Cassel <cassel@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
+	Christian Bruel <christian.bruel@foss.st.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Alex Elder <elder@riscstar.com>,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
+	Randolph Lin <randolph@andestech.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v5 1/6] PCI: spacemit-k1: Add device data support
+Message-ID: <ap_i5Pw4nVB4LZ-7@ashevche-desk.local>
+References: <20260907112606.465778-1-inochiama@gmail.com>
+ <20260907112606.465778-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] usb: chipidea: usb2: use
- devm_clk_get_optional_enabled()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
- Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Ze Huang <huang.ze@linux.dev>
-References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
- <20260908-b4-spacemit-k1-usb2-v2-3-f07342ffa051@linux.spacemit.com>
-Content-Language: en-US
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-In-Reply-To: <20260908-b4-spacemit-k1-usb2-v2-3-f07342ffa051@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: MhBjP4hWpZv/XkDWrLgj2CupeClGVTds+5kNmXaVIvtbVU2lEoup+HHG
-	j97unkHczhBBlTv5PeZaMSe9a22cFTYVIzVlaKeu8HOsKLygM8+xakNCXNBm/PFP23B5/3p
-	yhlbnz2cB5vsflLo2qT6wKSsTpi3gM556vAMZz10PlcKmx+wIiGMaFbxVHuQS7kdU5CF5mO
-	irLeQMpuZo82gmRk+vRZ/Ndro+bXXwNyLzXjq0wOe5fnBAn4ZEOtOIwOso0Ff4E1twARpd6
-	Tt2OzgsnB3y/X+ePDHhOsYt936zZY2DCFDWi5Ec5B8LmY/P/7cd3ZMydOP49RNqVcr6xUud
-	oUQUbaBMzvYSOMv+ZwmTTEi8KfnUu+291BzhRHB+NDOwPNYoLXv4UZaNoQLvShojbE00W51
-	T9YYScjU2b1i0K4/FEKeY6h3Q2e99uYevTyw8skWU5aFDe4bn2ahGuurP7cFxSI8wb2qbxx
-	eFnXbU6yOc/AoOIkmRobrmDYq+U7sZRgxbDOWDVyFN/xGmApCByeMwNcgjb/u0WWYHxQDps
-	Uz3pn0+sq/QnF1fF7lBm4P18kzEjjEH55QN5KMFKnAjbEgumubwaFSpHilxZcl0t3BqIDUA
-	rCkNkiUCNYo19CuX4Gp3DFFGT0tdNc1SNgMMgmJbcRJX507lGJi2TLDhyeuDtc+GO/vbJ92
-	S6O1McPDVUSuIBm971o1QaytITY49aFqaI/rTxKbAzNH71BLH83prXefrvXv++z/6ZNELjA
-	Wk51d9uVPr21OfaEgDq8AeO9kE9bNznN5HVKW3PUFljdqO8BKY3rAKaetaqKjGzqu+aSGMl
-	eNIel9wLVvoA0v8bnPowxlXw5tyeA/Mr9w5xbL4bG8S11a+m9nsSWFoW7JtP0yWe1n1I2Ai
-	EiMrhiOUaK+m+2xFxvwmkaM3dgP347JOl09qy/xJYAdk8bBON5BzZ1/IZSLqj+EuQ74u/xt
-	oGZsdGqUV40656LOkJzbA5qrANjpIr2O8+He98T1zIJZ0sjkWSJtT8Bjqogy7OI7SD+B8oC
-	jbXJpYkTtEJByELZcf27Bfkgxwbym8ya3ysnczvuwUsAoIt6yW/gcBEXaFba6ZP0Mw8T5+g
-	oNJ46xPKrDp22gVA7SgOiavgxSyVgzV9b4PX94xIlXNS5+WHQwKH8zM6b2ODA9Y9w==
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260907112606.465778-2-inochiama@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On 9/8/2026 5:55 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Double disable and unprepare of the clock during device removal.
-> --
-> 
-> commit d2e0018bd6f14cd49dfa6012d83048e3abde69f6
-> Author: Junzhong Pan <panjunzhong@linux.spacemit.com>
-> 
-> usb: chipidea: usb2: use devm_clk_get_optional_enabled()
-> 
-> Convert devm_clk_get_optional() and clk_prepare_enable() into a single
-> call devm_clk_get_optional_enabled().
-> 
->> diff --git a/drivers/usb/chipidea/ci_hdrc_usb2.c b/drivers/usb/chipidea/ci_hdrc_usb2.c
->> index 8ffa1e95d8e86..6fae2d4a053a1 100644
->> --- a/drivers/usb/chipidea/ci_hdrc_usb2.c
->> +++ b/drivers/usb/chipidea/ci_hdrc_usb2.c
-> [ ... ]
->> @@ -99,10 +94,6 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
->>  	pm_runtime_enable(dev);
->>  
->>  	return 0;
->> -
->> -clk_err:
->> -	clk_disable_unprepare(priv->clk);
->> -	return ret;
->>  }
->>  
->>  static void ci_hdrc_usb2_remove(struct platform_device *pdev)
-> 
-> [Severity: High]
-> Does this conversion also require removing the manual cleanup in
-> ci_hdrc_usb2_remove()?
-> 
-> Since the clock is now managed by devm_clk_get_optional_enabled(), it will
-> automatically handle disabling and unpreparing the clock when the device
-> is removed. 
-> 
-> Leaving the manual clk_disable_unprepare(priv->clk) in ci_hdrc_usb2_remove():
-> 
-> static void ci_hdrc_usb2_remove(struct platform_device *pdev)
-> {
-> 	struct ci_hdrc_usb2_priv *priv = platform_get_drvdata(pdev);
-> 
-> 	pm_runtime_disable(&pdev->dev);
-> 	ci_hdrc_remove_device(priv->ci_pdev);
-> 	clk_disable_unprepare(priv->clk);
-> }
-> 
-> appears to result in a double disable and unprepare of the clock during
-> device removal, which could lead to unbalanced reference counts and trigger
-> kernel warnings.
+On Mon, Sep 07, 2026 at 07:26:00PM +0800, Inochi Amaoto wrote:
+> To reuse the K1 PCIe driver logic for K3 PCIe controller, add device
+> data to handle the K1 specific logic and make room for the incoming
+> logic for K3.
 
-Ok, I will fix this in v3. Thanks.
+...
+
+>  static int k1_pcie_probe(struct platform_device *pdev)
+>  {
+> +	const struct k1_pcie_device_data *data;
+>  	struct device *dev = &pdev->dev;
+>  	struct k1_pcie *k1;
+>  	int ret;
+>  
+> +	data = device_get_match_data(dev);
+> +	if (!data)
+> +		return -ENODEV;
+
+It's better to use -ENODATA which will help to distinguish from other ENODEV
+cases (which are more often to happen).
+
+>  	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
+>  	if (!k1)
+>  		return -ENOMEM;
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
