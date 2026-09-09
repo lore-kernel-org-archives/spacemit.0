@@ -1,128 +1,166 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1B457C717
-	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 14:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964037; cv=none; b=jF05fKc5xgdbD+5VgCZXMm+qnW4WBPoh7QUy1e4wcxThgVuP3oMbeY+bd7MPOAXR5b37WtON9OYr6nREqoW15gi79y6iJWLqs4YlUJKYWysaXRFQrgX2d40AxU7XRsz2Ra44OOATZRvqKvGDodR0wrPCV5jXFU2rUtzG9TIiQ3U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964037; c=relaxed/simple;
-	bh=Xzc9CDaEataSODX3+D8tIBpZnqAi1qMg/rSgS+n+z2s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KuWtKPqp9iSt+39JVvIudDc0Ao2wT7Ubna28TiKWEZdG/n3PHjWDw/oDsvMFmamzTXvK6wJw1njfU4JYasqVTgX7gVvTMJcSGRk9WXjuKGzIrpCS7kFM7l+QuqNi5hE404Z76SomA6g8+mABVEJP2ineyrmy5wAknSM/4D65V9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hpCzk5Y0; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5933C271443
+	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 15:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788969140; cv=pass; b=oq6LKPE/OTeYIKbPZA35B3ZWxZnkoCGOkTQIliTQZ3U3fpFzJAvqu8kzuoivLMHpC7KaplW8OBqOdjRjwMAYoRYff+5WNX47OgXGisNQayYpDwvY+XoZWYNQKmPVkEv6hRvGtHdcluoo7bcpbkwg7XcnZGQ9labOyG6syeyF4DY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788969140; c=relaxed/simple;
+	bh=yPBLvKfNkdscClw6kvY4qBBn2L3O/X+7KkIqhI0Y5Nc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XshJYi3jCaI9V+wFbaijD2K33InnJQi6Gjpnh5Ey/oNJdLDoUf05J5994A5YN942hzzKlrcoPv8ICPYX89ZtFGm8oxYRtOUTGxUgjLB5eQnExSV12n72JtMy1LXZfIBqTxmJnOqCEx3pD7i4mDt2JGJhhYK5WG8neeCmDlC2xxE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=MdVwZdmj; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hpCzk5Y0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788964035; x=1820500035;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Xzc9CDaEataSODX3+D8tIBpZnqAi1qMg/rSgS+n+z2s=;
-  b=hpCzk5Y0BdH966YP/VSV4n07VtcZ0ptkt5AfDCluym00s/AanVEh9+vd
-   tZxCkPyngRBsJeSh2XlOEhrHcHKR1f4KA/4Pn1iF0IbXCSqH5DGOfG7NW
-   Q98biVB9dlPR28ViOAhMiXCFLhig96P5p5ngDX30WYeLTEGy5Fgm5jxy6
-   4Hu33uGcRr66U0R27CBh9xwL+2kolmVAv7YThszhbgnPvZvAQj7tTPvI2
-   p8ZxIyiC3mQ9RJqFsSZM1ILlYy9EV1x7H1o0wU31HgcjqMKYyz+p71cMK
-   ZG9EOcpjrDYZgePZmXF6roiAMoXIxK9EAabTPzuuqiEtjB1vOtvTVJ0tx
-   Q==;
-X-CSE-ConnectionGUID: IKc5zLyfTT21cjmasBHI3A==
-X-CSE-MsgGUID: dVpBKmS0RHu6hcvPz2ldpA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="106908358"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="106908358"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 07:27:14 -0700
-X-CSE-ConnectionGUID: O1CZCFz7Qyap+OeL8wYAUA==
-X-CSE-MsgGUID: 8DeSi4z3Shev8h1HQmYGKw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="301221372"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.249])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 07:27:06 -0700
-Date: Wed, 9 Sep 2026 17:27:03 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Frank Li <Frank.Li@nxp.com>, Niklas Cassel <cassel@kernel.org>,
-	Sherry Sun <sherry.sun@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
-	Alex Elder <elder@riscstar.com>,
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
-	Randolph Lin <randolph@andestech.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v5 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-Message-ID: <aqFst9QH9YTFlY3X@ashevche-desk.local>
-References: <20260907112606.465778-1-inochiama@gmail.com>
- <20260907112606.465778-3-inochiama@gmail.com>
- <ap_jh_NAqHnIlZeu@ashevche-desk.local>
- <aqEQnkrPSKB-3fam@inochi.infowork>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="MdVwZdmj"
+ARC-Seal: i=1; a=rsa-sha256; t=1788969126; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=PqrMT/c3JbQQE0Omryw7vk4c1uHG4BMsb3vPexJndQdOaO3XF2JPkC6aNXMRyU9KXcxLjXLGVXwmdJbd/RGbEL8u3C0Ae4dU9Sy63MRZhPci8AQhiHHYKlMPE88gOb152y7QzqlVjDbgKSoS1G4Z3imNuJlQ7hDdswStOKiS/1w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1788969126; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=JP+N5lCYfyP8jJB+cDu/whBsQIsnR9yEX6s5RN6AVDA=; 
+	b=T1JDUoE1cAbI3+UNPUUZ3ZzY2RgVbF9eZW8r8Zw3KiprO+SxjBMoG5qSZ8tgRUn1akV7hxFf+WCXsFnPzMuE3LOsUK7F7i0Bx4U+pItHmp+EQDcRxf6fHInNn2ZzcVWayn2yzG7zkVYnfQhf4UWF6a0g3PLAeKGincD2J2OP3sM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788969126;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=JP+N5lCYfyP8jJB+cDu/whBsQIsnR9yEX6s5RN6AVDA=;
+	b=MdVwZdmjB03UZM1Wo00qxlCFqdwdSMtrrKa7yfEiY+xPdyXauF+c6k0b4KJsRfvJ
+	cD+kdX7uWUj8bh6AjyNAWtnuZquAkS0YTsmeOflIV1HCFiHap1kt/JuM1J4meqBE65/
+	rRWMa6/jTdLRyaBN2YK0XeBV4btcxquTTvDw1kD0=
+Received: by mx.zohomail.com with SMTPS id 1788969124329972.2090186596714;
+	Wed, 9 Sep 2026 08:52:04 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v2 0/2] tools: mkimage: add SpacemiT K3 boot image support
+Date: Wed, 09 Sep 2026 23:51:07 +0800
+Message-Id: <20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aqEQnkrPSKB-3fam@inochi.infowork>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/12NwQ6CMBAFf4Xs2Zq2VlI8+R+GQykLXSOUtLXRE
+ P5dwHjxOMm8eTNEDIQRLsUMATNF8uMK8lCAdWbskVG7MkguS64lZ3EyFgdKzJBrGT9bVRqDWpc
+ I62YK2NFr793qL8dnc0ebtshmOIrJh/d+mMXm/dryr50F46zplFWiqk66EteJ+sEH8zgmtA7qZ
+ Vk+Jq+9FsAAAAA=
+X-Change-ID: 20260820-spacemit-aihd-05c46aae886e
+To: u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Glass <sjg@chromium.org>, 
+ Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Kory Maincent <kory.maincent@bootlin.com>, E Shattow <e@freeshell.de>, 
+ Yixun Lan <dlan@kernel.org>, spacemit@lists.linux.dev
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2703;
+ i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
+ bh=yPBLvKfNkdscClw6kvY4qBBn2L3O/X+7KkIqhI0Y5Nc=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLIWNkwJOPj5qafKdpcw+RXmqe2H4ziXRUxgvdz+fU58e
+ ZnV+vOnO0pZGMS4GGTFFFm4/MX/WevwfDsi0HofZg4rE8gQBi5OAZiI+lNGhif2Hz54Hpn0uzvC
+ 6Pjm3cov2stOz5jTLFjAtchm9qK6vxoM/2s+Xu7S3nEueN0jv40L6jjWeaTvuiqwRtHZW39RzW+
+ li8wA
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
+ fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
+X-ZohoMailClient: External
 
-On Wed, Sep 09, 2026 at 04:00:15PM +0800, Inochi Amaoto wrote:
-> On Tue, Sep 08, 2026 at 01:29:27PM +0300, Andy Shevchenko wrote:
-> > On Mon, Sep 07, 2026 at 07:26:01PM +0800, Inochi Amaoto wrote:
+The SpacemiT BootROM loads a first-stage bootloader from storage or over
+USB in MaskROM mode. Vendor firmware packages this bootloader as FSBL.bin.
 
-...
+This series documents the SpacemiT boot image format and adds the
+"smtimage" mkimage type for the CRC32-protected K3 variant used in
+non-secure boot mode. It provides the FSBL packaging needed for future
+K3 SPL support. Select K3 with "-n k3" when creating an image.
 
+K1 and K3 secure boot use RSA authentication and are not supported yet.
 
-> > > +	count = devm_of_phy_bulk_get_all(dev, node, &k1->phys);
-> > > +	if (count < 0)
-> > > +		return count;
-> > > +	if (count == 0 || count > data->max_phy_count)
-> > > +		return -EINVAL;
-> > 
-> > Elsewhere we distinguish count == 0 with -ENOENT.
-> 
-> Is there is an example? I think it is suitable for its internal check 
-> to translate -ENOENT to count 0, because no phys property means no
-> phy. For a get helper with optional semantics. I think it is fine
-> to return 0.
+How to test
+-----------
 
-This the brief list of what I roughly grepped with word "count" in the name.
+Rebuild mkimage, wrap a small UART test payload, and load it through K3
+MaskROM fastboot. The payload is linked at 0xc0801000 because the BootROM
+places the complete image at 0xc0800000 and enters the payload after the
+4 KiB prefix. UART0 should print "Hello SpacemiT K3!" and then loop
+indefinitely.
 
-gpiod_count()
-of_hte_req_count()
-i2c_acpi_resource_count()
-ice_sriov_set_msix_vec_count()
-reset_control_get_count()
+  $ make tools-only_defconfig
+  $ make tools-only
 
--- 
-With Best Regards,
-Andy Shevchenko
+  $ cat > k3-uart.S << 'EOF'
+  	.equ	UART0_THR, 0xd4017000
+	.equ	UART0_LSR, 0xd4017014
 
+	.section	.text
+	.global	_start
+_start:
+	la	s0, str
+1:
+	lbu	a0, (s0)
+	beqz	a0, exit
+	call	uart_send
+	addi	s0, s0, 1
+	j	1b
+
+exit:
+	j	exit
+
+uart_send:
+	li	t0, UART0_LSR
+	lw	t1, (t0)
+	andi	t1, t1, 0x20
+	beqz	t1, uart_send
+	li	t0, UART0_THR
+	sw	a0, (t0)
+	ret
+
+	.section	.rodata
+str:
+	.asciz	"Hello SpacemiT K3!\n"
+EOF
+
+  $ riscv64-linux-gnu-gcc -nostdlib -fno-builtin -fno-pie -no-pie -static \
+    -march=rv64gc -mabi=lp64 -g -Wall -Wl,--build-id=none \
+    -Ttext=0xc0801000 -o k3-uart.elf k3-uart.S
+  $ riscv64-linux-gnu-objcopy -O binary k3-uart.elf k3-uart.bin
+  $ ./tools/mkimage -T smtimage -n k3 -d k3-uart.bin k3-uart-smt.bin
+
+Hold the FDL button, power on the board to enter MaskROM, then run
+fastboot on host:
+
+  $ fastboot stage k3-uart-smt.bin
+  $ fastboot continue
+
+---
+Changes in v2:
+- Use "smtimage" for the image type
+- Update the documentation and command examples to match
+- Link to v1: https://patch.msgid.link/20260822-spacemit-aihd-v1-0-bf4c41993891@pigmoral.tech
+
+---
+Junhui Liu (2):
+      tools: mkimage: add SpacemiT K3 boot image support
+      doc: board: spacemit: document the SpacemiT boot image format
+
+ boot/image.c                    |   1 +
+ doc/board/spacemit/index.rst    |   2 +-
+ doc/board/spacemit/smtimage.rst | 143 ++++++++++++++++++++++++++++
+ include/image.h                 |   1 +
+ tools/Makefile                  |   1 +
+ tools/smtimage.c                | 202 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 349 insertions(+), 1 deletion(-)
+---
+base-commit: 6073c36b2c8d39afe3ecc789b281667a3ddebc70
+change-id: 20260820-spacemit-aihd-05c46aae886e
+
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
 
