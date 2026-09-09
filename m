@@ -1,135 +1,132 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9CE55295E
-	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 12:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCC8568FD3
+	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 14:08:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788957155; cv=none; b=e+wIUcwn8dRq6Uw9dZU0LAA6zXPUGUqHuk09muIzGJ8JWcguhA/wVRVZeKs6l8FPOFGjGgE1OR3XKbbQ0MdxCw7z6G49MruBX/s4Nv5LjzB5qqQxaspBa1ZKazHjF+EO6gQ2U9RQG0exs6NuczDx4+LpIWw7gXa+khJFTl7E93c=
+	t=1788962893; cv=none; b=sJsxIdYhysb4CI9qW6TXK17lBwF/L9AfOUDa0fhSknthuqHHe4mPUPdXklRa9UgN7509ehI2J+VkS4fGysiaN5irbJqTICnoKV01AhQTQBXMXbZzdYuziZRS/V7G5J58PtLWLyrvRAeuMfo3/2GsS40CqO9K8LEfnqDp0suz7io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788957155; c=relaxed/simple;
-	bh=e90jeBaJFtxZSWJZN1IEIDkW2eyHfOI7sEySc9wlHHI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z0FO0ODSNwAdgwyKYm6qH35suSE+5qO1de35aRe3BWoe2H6QdozPa03RPZdhYb8EaHbKn3HSHBvqb44Avy7IKTcwtMBwjLaROdXX2a1TRMk5EQMk7l67sDiyblOkZjm9xQ/IwNgPU9Z6jBDnE39MRPNwATHHK7FpomW5ls1IW3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jMPWBiIc; arc=none smtp.client-ip=54.243.244.52
+	s=arc-20240116; t=1788962893; c=relaxed/simple;
+	bh=wQNud0kEsTSOp1R+Gv0Q92P1f5sdKHbucbO9OsVAuq4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RfHMDf2NFW5GQKNFPTti8qjviABYRWP+vqbJO0j1+Yei7w5HU67mQxE2i7Ng4tC1hUYpvji4AvMTup2M9eAQBNGe8OBXxFsnX45bu6qQRYT7mZ3wGAUgfOI6KEkbhuOFNokynPzkRuGyqkI9FcUvoJdSveGacjuWn2CTuRW3YUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=T/V5F4AN; arc=none smtp.client-ip=54.92.39.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jMPWBiIc"
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="T/V5F4AN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1788957118;
-	bh=sjk67Ioebab+5NpGEhrLJAO6LV79F9ONQNj/H2RXh7g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=jMPWBiIcB4w7JYdCn8dUPaSIn618AveLhhscGmPcNqbByQPxZ+YaLdGAhpHUB/0Dw
-	 niF+uyy6uHqTqrCGb1KkKExiLUmlYY8ubiiTV9CUrDr5N+9KJdowDNiw/71n2pBigu
-	 5CLd8NHh8/D6XXTqLnHPhzuwqLfqVfbfZgOH5MYI=
-X-QQ-mid: zesmtpgz7t1788957111ta125882b
-X-QQ-Originating-IP: E9f8bbQMzUxXirUNijXwNOEm6p/ZyvW5uLcJaAfZTxo=
-Received: from [192.168.1.100] ( [120.237.158.181])
+	s=mxsw2412; t=1788962834;
+	bh=rdxtsC5FGSM610q9x9cjd+jqKpTMaFc1fUwPTup7fho=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=T/V5F4ANRbs3TmRh8jo76Yq4Ja6HBp31figQ9mS6QGGGVRa9cs+EatbwKxlWZ08Ho
+	 9hgCA8yEbkDyzg29mG6kNpFaBoizHPtzjIOIJLOrT82efJepeg6LEXF8MGX8H9HHUP
+	 mf8LeWf31W9Jj9DW5Lh4IgTvqupBBNfPXg5yJ5/U=
+X-QQ-mid: zesmtpgz6t1788962832t950897d7
+X-QQ-Originating-IP: 46inqLcoNwJCWbThTDJYTUkHgzGHF8rQss84kWW0nCU=
+Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 09 Sep 2026 20:31:48 +0800 (CST)
+	id ; Wed, 09 Sep 2026 22:07:09 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8949304572229022244
-EX-QQ-RecipientCnt: 20
-Message-ID: <0B02CB706C22EF91+afa052e7-3ecd-455d-b176-b86d3e0a5116@linux.spacemit.com>
-Date: Wed, 9 Sep 2026 20:31:48 +0800
+X-BIZMAIL-ID: 11212110114369243432
+EX-QQ-RecipientCnt: 12
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH 0/5] clk: spacemit: preserve and safely synchronize
+ firmware PLLs
+Date: Wed, 09 Sep 2026 22:07:00 +0800
+Message-Id: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 9/9] riscv: defconfig: enable ChipIdea USB controller
- support
-To: Yixun Lan <dlan@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Xu Yang <xu.yang_2@nxp.com>,
- Peng Fan <peng.fan@nxp.com>, Peter Chen <peter.chen@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Ze Huang <huang.ze@linux.dev>
-References: <20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com>
- <20260908-b4-spacemit-k1-usb2-v2-9-f07342ffa051@linux.spacemit.com>
- <20260908220703-GKD2346@kernel.org>
-Content-Language: en-US
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-In-Reply-To: <20260908220703-GKD2346@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBCF4avIrA2kQ6jEq4gLE6d1RGPIxFIQ7
+ 25qd+9bvP8AocQk0FYHJPqw8BYKHnUFfhrCmxSPxYAan9rqRkkcPK2cVVwWxaEMbw06h8aiMVB
+ +MdGLv3ez6/+W3c3k8y8E53kBYMoYInUAAAA=
+X-Change-ID: 20260907-spacemit-pll-init-c942bb249244
+To: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
+ Jerome Brunet <jbrunet+clk@baylibre.com>, Yixun Lan <dlan@kernel.org>, 
+ Alex Elder <elder@riscstar.com>, Inochi Amaoto <inochiama@outlook.com>, 
+ Haylen Chu <heylenay@4d2.org>
+Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1885;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=wQNud0kEsTSOp1R+Gv0Q92P1f5sdKHbucbO9OsVAuq4=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFkLM1iXdUzZ4LTLJfp4yMfj/2NeTdYxkOe8Zuef8q9WT
+ s+PMep4RykLgxgXg6yYIkv3A55tBT5RtgUChb4wc1iZQIYwcHEKwER2fmBk+CO9wdHJ48jkXAc+
+ 5yxnL/adxzznvnZImqVskSXlKPPGgZFhBYeaoOn/d5X1T0/NUlwh6KLcOiEvPEG+Jn96TZTOWnY
+ mAA==
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: Nj5kRNzaiqTLQK0CQ2cDYsk7lCWrU6SKlPyOXBQG8iER1oNdhzwFOlwo
-	cfCOr5SzQMqllB2BZU/svqc2xCy8K0sEvVCnOYtGOKuDqq834b9SuLu4Lcl9NAFp57VTvgA
-	5rlEfBcihzA8j5zt/POSWuBPTiHZlGXbYE/ki6JX9vWS0sJdNrYMEC9/DdhK1FMUjRrvKIn
-	daFEpdSs7SBCuTSkBka+qxp9i4prvYessqjd5MUXF+5TC4pBgFDLVr2pCrZee0emo/pcMac
-	TfLir2ITi6TtIlK2nqsuWk4Yg2wKGy4W4xmESmykbelebTbE5LScOyX6KAi7RBExFACEoZz
-	2TQyXBOsRXnE70rnlhPdZyiUPqqP37CS8KvC0DL0mKMXdV7ncEqIh7qyhlZml8KB+qGtQ7u
-	JxC6t8QwkCXervI8faCuLv+k2jktoanDCj3gCvRFDs7whxozpT5TIi8g+KrTCAH3zP9fjAL
-	d6ODw58bDQgQdWmOE0cG2bnRhGO9Cy+5y3W0GD0rkD5P1DBgID+pGDSk86jKLCXMxA3lCeP
-	s7BkdJevukFD+UZ90Q0Bgju3pAt8Qr9PHE66/9Yyw5VfApXdSL2wSK1Ua9XX4geraYlKZ+v
-	mM9AsUDftZFfeUCQzMGNrhZk9P3byI1cTaGCLpTPObQT8tB7khEKZJ4+OIMdkHLKU465NcS
-	fzibwZG1XCqeHf+XJx2WAJDO3OOfD6xHIGpnKSTIxdwUy6emyKma/4y/dFCECgOshSMaAnn
-	d8MjVrWerPVzIsrJD7FAw12dQxh7Gdr3Byrb0kuGobetw0xujgbVsp+Rxko8BFbmwm7zwM6
-	ag06rzWOBayHeeM7+nf8aGtvxcNbH2LnVxGLV1hL+i4QrC2xKWxsHXdXZ/Q9975t/NWi2++
-	HVk1MjLzvyafMb9+7KYh04txA1MxWUVUlYL9M9Xw8osuiy0PAl90pZe43wo9oRBHDeqgKdi
-	php63nUKrym130QtZIbP7tzYmn3EIZSiPc0k5F1t3PxxE7+A7/rnBg1MRk5DgGxYzDgntuf
-	L+vRMYi5yHhUlDmRJtQUmALpn6zNZoEKCCizsouUkEMIp15BgiNcrkipkZoFvgNEuUyCYVk
-	NSHmrWVez8N52yDs25UjUBu7cAhOqm+QWF+Ff3z8N8OQu5c4awf2n7BPgYqw7bTx1IeG6xE
-	7g3ovkjcj6/DNL4uhKUuuFUl7BOHw3Wu9Cg/
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MUZVN6GmaGOthUDQyPAmlFeYynRItECDOFA3oHm5nWlc4bGCoibTXueH
+	+mXaq8iaAZHZlFi6bpykLepkfGVsDnfXZmBUCKSAjMLTAxRFGc7LMOUF94bCfsjESfXA3cp
+	NUQtlWknTbKg/HiiTOLuWJcrAe9wmsgnXCYpbTDq0VdFAvYgCkYps8aEetdj8VLtN3c0nKb
+	CgtrJGMVVcime2TeA5H6MtAhDVUh7A00w4UgUt+ZbodUmoPyXdyp/6XBBTHEM3rI2kA5B/B
+	GaoW2N79R+QOCTxZUtgVLf2nfQxmsUAtvABfC2Q+ACgS+A5P6s1DCZsLlRGRGzIqBKtoWWa
+	ggp3qRowbnNFIrLZMIj9Zv3wrM5lIoOTKXIkgjLJlxws5mpr43EzVV0/Ag7+Y0gDZ69dW3y
+	6Ra9SxKpSqtKGj6AUd9aPlAzMRnpYDJF+lSF1tShapdfh848Dp3zHOTQSByWez1rxShEfUx
+	6fNbxxIHpo4JY4SOkqcR05Ps6SaOw/DKJo2ncY//USrMXdJaZeuf0jU2ywht5/xXT5Zwbtn
+	Hrl7mcmAB6wZXuMCLVdTygGjzgBB+MIsUMMu+QR1tf8q2V7kKid/qsVCOIu0gC6E1pD5qdN
+	ld7KSskWRaDhCMqY/wNfaMG2tyOqYU1glBLPU1ZO0s1l7y2mv6mamJb5rM7dQfeJAilNqwT
+	cY3VTHsvJ7uV7jUezbHq8MkjCrQ5o+1tI1xm65ofF94Uu5tqG3ia28A8nEdviItrwlN5rgE
+	laZwL5rlHCWlPo+c46Eps36yu4ataJTxwlaJMhzt6/LuBHsdldJL7ImV5wx7AzfIpR2uAzz
+	rXABNffHbhgMcp44NpRAAC1RQ+/1aC3MfftUy3bhrH4N8oGa3qWE3ZIDiu9tnDsGyFj5sMP
+	k5iEtlFrCSuJbglMJbgXrMbgHb3iLpxS+0VrK0viJggqAhSrCL9TNIciHJyLF0+hGr70O1O
+	Ma4EwsaFEI0I5daqpIBZUCL8rPJKRW9b5xxoFLQTNCnJ8qZSfYOrv3n40S7lfbhAtVDhph9
+	swMSnpdiMl7PBDWYaq8/CkU27v0wCX0KvDrXNiQE4X41nKqqgB3+GhcZDfUzcd8xXhk2X1v
+	BIs4he8p8AqksHvCdktXHONjTzb3zP311OISleOZ85kNJKuknbAOELbx4Jj+gGtW8xFwl8b
+	3ofF
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
 X-QQ-RECHKSPAM: 0
 
-On 9/9/2026 6:07 AM, Yixun Lan wrote:
-> Hi Junzhong,
-> 
-> On 17:48 Tue 08 Sep     , Junzhong Pan wrote:
->> Enable the ChipIdea USB2 controller and SpacemiT K1 USB2 PHY to support
->> USB2.0 controllers on the SpacemiT K1 SoC.
->>
->> Tested-by: Ze Huang <huang.ze@linux.dev>
->> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
->> ---
->>  arch/riscv/configs/defconfig | 4 ++++
->>  1 file changed, 4 insertions(+)
->>
->> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
->> index 04ae305d5511..5b556488de66 100644
->> --- a/arch/riscv/configs/defconfig
->> +++ b/arch/riscv/configs/defconfig
->> @@ -222,6 +222,9 @@ CONFIG_USB_CDNS3_HOST=y
->>  CONFIG_USB_CDNS3_STARFIVE=m
->>  CONFIG_USB_MUSB_HDRC=m
->>  CONFIG_USB_MUSB_SUNXI=m
->> +CONFIG_USB_CHIPIDEA=y
->> +CONFIG_USB_CHIPIDEA_UDC=y
->> +CONFIG_USB_CHIPIDEA_HOST=y
-> I know some prefer to enable as loadable module for non major drivers
-> so, can you check if it works as module? and alter the config
-> 
+Firmware may leave PLLs running with valid settings absent from Linux's
+rate tables. Replacing those settings during clock registration can
+stop CPUs that depend on them.
 
-Okay, if it works, I will alter those to =m in v3. Thanks
+This series removes the init fallback to the first rate-table entry,
+decodes hardware rates directly and preserves unlisted rates. Opt-in
+synchronization applies only to differing parameters for the same
+decoded rate. It temporarily moves mapped CPU consumers to validated
+PLL1 branches and restores their parents after the reprogrammed PLL
+locks. PLL1 itself is not synchronized, and enabled outputs outside the
+managed CPU paths prevent synchronization.
 
->>  CONFIG_NOP_USB_XCEIV=m
->>  CONFIG_USB_GADGET=y
->>  CONFIG_USB_CONFIGFS=m
->> @@ -272,6 +275,7 @@ CONFIG_PWM=y
->>  CONFIG_PWM_PXA=m
->>  CONFIG_THEAD_C900_ACLINT_SSWI=y
->>  CONFIG_PHY_SUN4I_USB=m
->> +CONFIG_PHY_SPACEMIT_K1_USB2=y
->>  CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
->>  CONFIG_PHY_STARFIVE_JH7110_PCIE=m
->>  CONFIG_PHY_STARFIVE_JH7110_USB=m
->>
->> -- 
->> 2.34.1
->>
-> 
+The series also corrects CPU divider and shared-parent modeling and
+makes MIX rate selection agree with programming. Runtime PLL rate
+changes still require a stopped PLL; automatic DVFS switching and new
+rate-table entries are outside this series.
+
+---
+Troy Mitchell (5):
+      clk: spacemit: derive PLL rates from hardware
+      clk: spacemit: make MIX rate selection consistent
+      clk: spacemit: describe CPU clock dividers and shared PLL muxes
+      clk: spacemit: reject rate changes to running firmware PLLs
+      clk: spacemit: safely synchronize PLL parameters during init
+
+ drivers/clk/spacemit/ccu-k1.c     |  60 +++--
+ drivers/clk/spacemit/ccu-k3.c     | 137 +++++++---
+ drivers/clk/spacemit/ccu_common.c |  12 +
+ drivers/clk/spacemit/ccu_common.h |   2 +
+ drivers/clk/spacemit/ccu_mix.c    |  35 ++-
+ drivers/clk/spacemit/ccu_mix.h    |  18 ++
+ drivers/clk/spacemit/ccu_pll.c    | 535 +++++++++++++++++++++++++++++++-------
+ drivers/clk/spacemit/ccu_pll.h    |  43 ++-
+ 8 files changed, 689 insertions(+), 153 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260907-spacemit-pll-init-c942bb249244
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
