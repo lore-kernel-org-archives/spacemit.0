@@ -1,173 +1,177 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881CD47CA89
-	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 08:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788943244; cv=fail; b=HVCgwOYFs4ZieU7C1VMXeSDzIEKHRgQntPC6r4FsxQryLfVj4pdOI30Fe/ucS1pyg/PEhlbmU2SeEJZlwkw/1fUpLhwYqFtcxH7mMljJqxEr27DAAA8YuwhwAGyI5RNSY/dYvDCL0VWM3IjDiC3QKq+lD4TvkDcLXRkm0sdPM/o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788943244; c=relaxed/simple;
-	bh=DiCOBhqPRhlDog3gTviTE70AZ1ce45egB0jknk/nHHs=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=DlCYxOTjZ1dqJWBLJ2upqK0gCSpYThce3G5R3j8m50v5O46qP4E0BZm9n+mrkwbKRVki1jRLPHNHJHKzk+32weV3zkUUmNa+N3jPMNkqwbNvX8co3E7c/3dUBEfePzOPXmUAyOKP6RRXZRFaeFVeTJ98JtHTMP+soEc1PwTg/aw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XZEFSLeS; arc=fail smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9FC5519B3
+	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 12:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788956990; cv=none; b=JwKH21i/f077Tad4tVJOLjKUL2fvJS2vag3Lw3ZgXeD0gT2I1K4Z+VwAbsc9c2ht38WtxcN9yKca3zSRD5mZUtIgvTaYf0BYIOYtORzN81ZUFRje/ZMq2kdEZtE/sG6Jgmq4kwI3am5vpDugN8jYMyu0IvYObOnKMR/WgdxzeHM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788956990; c=relaxed/simple;
+	bh=NqGy6hIXcY4gDq+NTJQchl2Qf5eZxe6SHEnUw1M93BY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t/ftzJ2NGU2PSBOZL6AdELBBKmS0+YX1uiodmpF/hdAAEC+51UKgCNc4vqRv0UsKQq6xpwMkcNPpyTuD+aiKF9uDTQNYmiEEJaJ1kPRc2kyujDi3zccVVnAVD4iSY3kR5Lh9F5Uv2I7lehqtanPIkEfXqAFm7WiZxxjKiYfhTNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=Ou70p9+N; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XZEFSLeS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1788943242; x=1820479242;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=DiCOBhqPRhlDog3gTviTE70AZ1ce45egB0jknk/nHHs=;
-  b=XZEFSLeSjE6fE777ptM+0o3vjPzpsfRhDapcPQDqXTqIXefmYknEc83z
-   gsSGDh67hdaiW+8P760gvN7ey2W6DfFAjElsek0jyjzUL20L2uv7klddI
-   nUF53TVboYoYbY3NDfJvn0kQCjzt+g3c5E5xbMBdBM18dBTlctPZxlJKc
-   AywX7wJYMoM+XWG5JTte0A1AhjyJcX21KmXFcxCVAdoNQHj/Uhy1V8LXD
-   bXOvbkaPYVmgSwLBxg+C1ShFCseo1jjaRiFE9O6tg2UbGc/X/Qsxeh4Xw
-   TlRyC0EFqYI+tPkM5/6ujArwtPdEP0NEjdR131N2zeovB12q5heZ4ZDYK
-   g==;
-X-CSE-ConnectionGUID: vnun7/POQ1qwIVcEjg1QrQ==
-X-CSE-MsgGUID: uRhPrViDSxefXI1zLm7miw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="99689170"
-X-IronPort-AV: E=Sophos;i="6.25,270,1779174000"; 
-   d="scan'208";a="99689170"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 01:40:42 -0700
-X-CSE-ConnectionGUID: H0By0LwkS/utNdt5TmymhQ==
-X-CSE-MsgGUID: Dp+Yvma9T5imGxT/jUkk0g==
-X-ExtLoop1: 1
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 01:40:42 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 01:40:41 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 9 Sep 2026 01:40:41 -0700
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.45)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 9 Sep 2026 01:40:41 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HVF/96ObmWZPWPSpUU82unT78XjGBxiEg0Gju4O4HxeSAFPFE6AT3895v39vnXw5cVhxrujo4CcE8SBvc3JOP6cfoJMIgJ33YLtlvl7JevcbRm19G/GX9DxHSY4QPhhcJJZM87xpPK2uOLhBvwV0ZjVMzwjIOb+bsY9/rZ/vxlG9RaelowfoO2dTCLfK2MVhXcTLzn9I5pe/fJriORBtk+AhlcOxSECvQOFIZO7Au5rKpgJh8Aae763cmgYWaLN/Gtz9HvDu6cZp/DH/+qw8U6oh0LzZdqHGIYU1Zkj8V88f4/6c40IbB0lxKFbjGZ7dFpRo5LKyInPwfMl3cbRjwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9WkjPjMm3GcMqq45BwJQdyCzWZ0xdUpCJ5B57sNtlTI=;
- b=h91qXTCjY155ZasEpV27rrprWCCHEi1Qy65P65v+OY1xt+wLdjuOrjabeQU3n3sLh5OfTHoBhuX+yAnxa4LaWRR6Sp1RT0MtzsF31YhWqMMstuEkA09fwMA+cSrHCG0ICzzUmXNdFu4yfLht+0AndLqM9hsxezqBmfYERjfvF735kI7DEi+co9KfmSFaVxVBPAxfwWybINVKrLeZ9yojRiZVvm+L8vndHSuA07Mrc0VJLqVaEo1st6JszVb0eY6z/LLUliYz6bGo0hhzhioD0wFr7H5ZpBC8vCXlIDkxjUiQeIMBh7TJJTEoPUIP3euRn9umMDMBxEp3I3xCwtn17w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
- by DM4PR11MB6454.namprd11.prod.outlook.com (2603:10b6:8:b8::5) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.406.7; Wed, 9 Sep 2026 08:40:37 +0000
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0406.005; Wed, 9 Sep 2026
- 08:40:36 +0000
-Message-ID: <3973e934-df9f-457e-bba5-7dea5f782931@intel.com>
-Date: Wed, 9 Sep 2026 11:40:31 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] mmc: spacemit: improve clock and tuning logic
-To: Yixun Lan <dlan@kernel.org>, Ulf Hansson <ulfh@kernel.org>
-CC: Long Wan <long.wan@linux.spacemit.com>, <linux-mmc@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
-	<spacemit@lists.linux.dev>
-References: <20260902-07-k3-sdhci-fix-v1-0-b15c5d0f64fd@kernel.org>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
- 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
- 4, Domiciled in Helsinki
-In-Reply-To: <20260902-07-k3-sdhci-fix-v1-0-b15c5d0f64fd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DU6P191CA0015.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:10:540::16) To IA1PR11MB7198.namprd11.prod.outlook.com
- (2603:10b6:208:419::15)
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="Ou70p9+N"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1788956942;
+	bh=C2S7dFgrFR2UVsQVVBeuk6XfCFWA9wrDEPE+fq83Yxo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=Ou70p9+NDG4z5c0Q7ksw9p3VKS3uKV1ySllHMaxcbNx+SKW66s2lAf6zPdKXE4MWh
+	 VY81c0BtWiIAhxg/+BEXI4dqCYOpREnvPsx/Gg/iwQNjhOWQ2TsTf/GwPfxXwMjeaF
+	 r/6gkFnAU3Q7i4KT8ZM4FhgP9mftG35zOWTWkJxQ=
+X-QQ-mid: esmtpgz11t1788956936tc860ccf5
+X-QQ-Originating-IP: h3Eg+sQTt311ySAh+/RtmDu0Zm0fZFzy5GGqlSDlFIc=
+Received: from [192.168.1.100] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 09 Sep 2026 20:28:54 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 13942927660563248268
+Message-ID: <566DD22E9074C793+eaef8bb4-9602-4f76-8915-6e322387c7aa@linux.spacemit.com>
+Date: Wed, 9 Sep 2026 20:28:53 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|DM4PR11MB6454:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9468858a-7147-4671-b50b-08df0e4e050a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|10067099003|6133799003|18002099003|22082099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info: AdAPFkk8A4J/UZYAnHDA8Z1ovNmjjDrMgz3UyOtK9nM8Uhrg+ev2j78E1KLFWpLTgl0isqe3rEbaOCJWNEAORybDp2GUYljHBCerA6oJPq/zr5rh0dqsWycYUxw+MvqHb/yyaQ3xvqxrcv/oJVPo7sHP9yCq/6b0w9Q/jOFqBykAvILbOkwhURn9cRTJDm4KGPFfaFNg6qBs6gbotAYGLnPmh2xT3t2foCThlVG6i9+oSGIRudP6yfMSvHZHXcRbFl7YUb0QLadekU3+c9HTEqkw/pWFQUxFSd8KYsp9r2TlUaRMv1mt5hQp5eVuHt1ly0wcRNcjwi81ofRjBigc81kijJDkaGCJVwDNotG0ef7D29Jq43m+Rnhr7J+HqW0Tnxr3U10rK1mcXLNRHV6LSK2VUoRE2/0+qm8VmOdRIAXTDFZqp50ORnGLobfgai0HOhpePt2ICjI+oqxrHkRAqnY0XvN2cjYxyPkUplfyawvSIhobSenMtsn/4hKzuNmvaDdkyuh6w46ddTLL/za/Oq4IBBLRo4tZ5s/qO896XnQ/trBlwWcC85Z3eUCNyrKl/6/qZU9VCdor6aZfRANcis7JrcV6fzmj7Rut2L+FbRM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MXpGM0wvemh4RDMraEFzYjlyNkliTXpEc1prYmFiZ3JORHFiMUJmQ3dRZmgx?=
- =?utf-8?B?bkFpai9YcURFZnc0NytYMUZvZGNDWmlTSXE2dzdkYVNob2pBMUw2MzRrWFdt?=
- =?utf-8?B?RGg4ekRweEhmeFBtaVFMek9uMjJ6NnUvZlNnU1dTM3lEUytrWEZVV05jSnFY?=
- =?utf-8?B?bTJpejBNT2ZLWUpEd245NHl5SlVZOGh4K211YzJZd2JhZXZWT1VRVWZ3bTFU?=
- =?utf-8?B?REZwSlVMeXRIUHpXRTcxckdOcG9PREkzVnRpSndnVzQzaTlhTVphNkI2T05T?=
- =?utf-8?B?Ykd6MnVhNHdkZFdOdlRKdVcrVmtwemZlNUlwV1J2SjBaNXM1SHZ0QmxnOEdP?=
- =?utf-8?B?NUFqeUFSbGZhVmcvN2N1a0p2RU9ISVZ3QnNqUWVxYUlsNXlFWDhmdkJNUzZE?=
- =?utf-8?B?Wlc0RFIwc1VIUTg3WVdWWXZsQ0ZMQTdZU1RLaWZ4Y1k4SnRxL1NFdXcwUmxz?=
- =?utf-8?B?dzJON3Z6aStsMXlRUEZFT2hUU2p3eGYzUGdHUTJiby9QVGJYV2hMNGZKZTZ6?=
- =?utf-8?B?WWZUbndxZTlIU3lJK0pZMFVsa3c5ZEgyKzA5V0grcnlMY21lbjNFTkNmWERu?=
- =?utf-8?B?eXNwdW50UmMzeWZvbWhOVDM3UlNWKzVwSkdVYXF6OGZnU1pmU1lHbGVjaDYw?=
- =?utf-8?B?RGlqcDF4ajd6ZENZRjNKcGVlcXBCMmJ2TVFQWjZpNkRTbFFvK2RQUkdHb0x2?=
- =?utf-8?B?VG44OFhmUlJvQS9jTW4vZXNsSzh3S3FhbDhlcUtiRmFRUm9zamswOXA1djlr?=
- =?utf-8?B?TE1iN1lDeGJmV0dHdDVzQUJERHo0QXdZMWtEYmVBRjJQTkZESEFvNkZLaDZM?=
- =?utf-8?B?UjlJaFRHRzFSOXJobmZ4dHBqT0szVzBCK1RNMm5oWDd1NEtsaXR6VHhqZWk3?=
- =?utf-8?B?TlhscXdUSDMyeTRSRThjTFF0TUJ5aDdINHZ2WFpKWUhBdG9xdjd0MGdhVXV6?=
- =?utf-8?B?SFV6azgzcnNITGtyWlE5YXU3clBmMGNhNHBiWFl1c2lKbEZEeWVuTmYwQ2tQ?=
- =?utf-8?B?YkdYRk1HdW10UDBZR3Z2Z0VSMFI4ZFVQVVljQ2xOT0tmb0ZDYk9saXdKMGpv?=
- =?utf-8?B?MHNaNURPRUZ0YjRkVTVaWStYaTlDVGgzZXgyTVhZYXRMZi9EWktuMXdtV0V6?=
- =?utf-8?B?amdjeUMwL1lUTzlVaEFCeHpLWGNqUkkzK1FoNHgyMWVHVGl3Y0RZRCtuZG5H?=
- =?utf-8?B?cTFaWkdJL0F4WGpaSE94ejgvR1g2cU51em5NNmEreHdSYUpjYjMzblIrTnNn?=
- =?utf-8?B?YmdFVUdTdy82cG9ERW13M3RjSWY5aklUTVB5b1R0RGcreFB4aFNyYWxDYjQ0?=
- =?utf-8?B?VW1wU1g3d0dvci9pc3Q4RUxnR0tkMHBGanZOSHZ5QU9XZUl0TUZBM1puR0Zq?=
- =?utf-8?B?a0VWL2RIN3EvczF0dHd6U1BDK2xwTHpkQ3ZNTjE1ZkdCd05IdERsM2NxRXMv?=
- =?utf-8?B?MDNET0NtZnlXZ3FwV2VXNGFPRjU2QjlsaXZVR1M4UU5Cc0RyQWFGbkc4NXh5?=
- =?utf-8?B?SU9NK1lIcEpMOE83V2kwRktJWTRESjFvMTF0cFhOZWpHZ01uUXVGYXdyS2w3?=
- =?utf-8?B?ZzZmVWl6SzlaeWxkaEZZQzdkZXRIeElycnRmbjNWRUhZMzVjc1diUVIwWEFt?=
- =?utf-8?B?U3pVNnBtNnhoWm5iYTd1b012RUE1MTh3OUlFcDJGTnNmbDRUY1hremxubEtS?=
- =?utf-8?B?SkhYOFlpM2F3dVN0VlNrdEVkNTF2TmhuQzVZVnJmK2NNeEdPUTJPL2IxaGhZ?=
- =?utf-8?B?VkgzUDYyWGxqQXFJYXp3U25sTW54a2NSRW94bGhydXZHbUd6OUFwa3MrOGZ0?=
- =?utf-8?B?TkJDNWhCUit1eFFtZ2VXdEFIZnpiVytKaUU3b0YwVllkZC9KZmFzRGNjVVEv?=
- =?utf-8?B?UHdnVUh3SWZLTmlxK1Y4SUhtYk5LNzIvU2lwRUNNSVp6TlFXS3BhWkw5YlNH?=
- =?utf-8?B?cHlENWpmdVFXOG1qV0hnNFZwNWgxNVNuTmVvSzJ6bHlTWXpiRVhtcGdaTUwr?=
- =?utf-8?B?d0xMeUE2d3p3ZjE3b1IrMFJzb2V4Z2FDU202Rm1HYmorNmhROXRBTUwwOG5B?=
- =?utf-8?B?Zkp3MFVNL2pBNzBLdEVyazNJN3FUeUsxM3Q2a0tKTHNXcDkxRlpMR3pKM3V0?=
- =?utf-8?B?ZVhrMHNKUnVqQ3NqTmdmYTM5Tms3YnBGS1NsWXdxblJwWXBQaXRIa0tuMS9k?=
- =?utf-8?B?SGp6YzhzbitUZkp4YkhDc1pzam4vZ1h6cnlyeFVla3ByNmcxN3loUU45OW5s?=
- =?utf-8?B?d3pMY05tYkVQdGJ5eitwUGo5UDBXV2J1UDhILzNzYVUxb0pRQ25MZlpYNEJS?=
- =?utf-8?B?YmpkWTdnQVBDMlp2ZmZXanUzdW4zSUx2T0FoKzZkNWZmVFlpT0RpOEdNc2FB?=
- =?utf-8?Q?Oj4EpfMlSGp4iEqc=3D?=
-X-Exchange-RoutingPolicyChecked: dtUFv+HQ1EDlX5O6lIlfGadAUHp1OsHQX4zBxJJMhMaF/4BXu1a6NIr/yMOmlaW/zmzldwpBUcJ+qk5ezhODe1vuuIlKfirZ08UHxbE8j3dQnG8vnWCxaQ/VFazYhn0rdeS7SKbdh96AW7O8nqw012pyKstBOG6Rn5ILZAFQB6O3wilKzRoNoGTQc4CKMHThz91Y2rGmjBgDaNpSfdvVZw0t+Z5AHk84YM7nFE0O2Sz1K94M/6VaDn5HAgxBVCm+7oocP3cTcz+lncN8IrO4KzNMWN8gLW8fwBTD9MtzDKtoSJRTHI2jD41GNaJQNZYkTmb4pLgUHV9lyaJsqoyNVA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9468858a-7147-4671-b50b-08df0e4e050a
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Sep 2026 08:40:36.7887
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SpzUGRiRp3w+gb9e+crXikt/CtmXmb93de8G1tcTfbLNiho0K5Iwp60j9kteRL5MrwcpEhgbKMXU6to3BCcEXA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6454
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] usb: dwc3: core: resume xHCI child on runtime resume
+ in host mode
+To: Troy Mitchell <troy.mitchell@linux.dev>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+References: <20260908-resume-xhci-v1-1-aca107602e9c@linux.spacemit.com>
+ <DL9ZZ8F7HTZT.1IUMD1ECSOZXL@linux.dev>
+Content-Language: en-US
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+In-Reply-To: <DL9ZZ8F7HTZT.1IUMD1ECSOZXL@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: OSKIRUYof16RjqqdbG+gVfpyHd1KyaLGRllpkrhPCbQWJJbmk7n46Aee
+	DrlR0F38NPNsN9zk19fD+foh1foFuBw2v5GjN01pSznBpZGB2Hc8igHcEHT7aJkrljBBfNC
+	LSToICgJebFizsaigNqvR+q2Lx7NpxrkZI8UgEa1Zn9eE91xcmnj3NS5Ai6avD6o+u/pkbH
+	KS6k9nw16EyW1hwHj7F/ht1qJlew+T6yEiymDtv4eH6jDPqWe/k17QciROLOPpHBL7scGCn
+	wg14IED8nZhtql9/VkmQYtkVNzbmSzbHVZV+ChJ/2+qpgBCXerL08UAHTel1zsFTo5qwD76
+	upvynMBfBclESEalHV5uciEsC87peyzeNaD4CBw3dVBfE39eKU7Puwp9F5aNPaq095dTd9b
+	9jmbeCh8NFYarp4xsycAHNHgXkW7YtOTpDT3XEFdPus2+E4FYplhO4LAutFAC0E7bpB38YR
+	c0lQ8KlabH0ypS51Xse/GLuOeICLq2r9eVLYp8ZIqYnfZteDkFVCAcQBEvSazb3icCBjr0p
+	X7oX6F6jJ4Y2nibEKLXSV+iCanWlWX7iP1e39fGoJuaB6jA5etoiq4ghkRnJGwgPLSnXoOU
+	5ommdQeBEzGl5yno3QFJ+a/GY61jhrrgezvNrS9NOWCLSnDWI5N1LChowRTbvfXP9+xa692
+	ZrCl0JEYRZQgmYuOGOOSD2xRRVZ6S41EjPkC1KeAf7PUiZytK5SkGa9TF11376Cjrr8Ymzz
+	i28r+qyXYTEVrZ57q7hhA9/48BPnSARd71Z1LZbxaPRcUfMKEmsoIcI2RW3fvW4cFaNG8K1
+	0IcCx7MXWPT1Y7KVptWSyqKcDr4A9tvzNOKX7TclmtyP247lEfY+9oNHxQ5IvAYs+4aO66N
+	Gh+qPTAdkDTOqL+UbedG8DWtDtJDRlfiBCwp2gUFid9XRPQWt0mWPyX4firF8hlBd0xMQUl
+	1YVejVaN3NJtmSj1Pf3m3wyIej2jeNeeb3KP07QGHtckXq5y17OdeowQS96MxXtnRTj/So5
+	MbY1sHyujZMlspim4uPff+bEzZp4zoMbcnZGZqiIBl/DJg47vmYQH8YPdci4Oy+mld7fM9C
+	wIuhaBlnFTAWfl3RpIG6BanEqIBgmwYk2eliBgsDyhr
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On 02/09/2026 11:04, Yixun Lan wrote:
-> This series includes some bug fixes and improvement to
-> SpacemiT SDHCI driver, which relate to pinctrl, PHY,
-> clock, tuning logic. Most of them are quite independent,
-> but put them together here for people to easy review.
+On 9/8/2026 10:16 PM, Troy Mitchell wrote:
+> On Tue Sep 8, 2026 at 10:01 PM +08, Junzhong Pan wrote:
+>> USB controller runtime suspend halts the controller on disconnection.
+>> It relies on platforms with custom connection notification to start
+>> the controller again.
+>>
+>> The host branch of dwc3_runtime_resume() does nothing currently. There
+>> are two paths that can trigger a runtime resume of the dwc3 core in
+>> host mode:
+>>
+>> (a) Wake lands on the xHCI child (DT platforms, e.g. Qualcomm, i.MX8MP)
+>>     A platform wakeup IRQ fires and the glue handler calls
+>>     pm_runtime_resume(&xhci->dev). Runtime PM walks upward, resumes
+>>     the dwc3 parent first, then resumes xHCI. Both wake correctly.
+>>
+>> (b) Wake lands on the dwc3 parent (ACPI platforms)
+>>     When an ACPI Notify(ACPI_NOTIFY_DEVICE_WAKE) targets the dwc3
+>>     parent device -- for example via a Generic Event Device on a
+>>     hardware-reduced platform where dwc3 is enumerated as an ACPI
+>>     device without a glue driver -- the ACPI core turns this into
+>>     pm_request_resume(dwc3_dev). Runtime PM does not propagate resume
+>>     downward, so the xHCI child stays suspended. Root hub polling is
+>>     never re-armed, and a device plugged in while suspended is silently
+>>     dropped.
+>>
+>> This patch fills in the host branch to cover case (b) by requesting an
+>> async resume of the xHCI child so xhci_resume() can restore the port
+>> state machine and re-arm root hub polling. Glue drivers in case (a)
+>> resume xHCI directly, an extra call introduced by this change, but
+>> runtime PM can serialize those requests and skip device already active,
+>> so the extra resume call is safe. Those calls can be replaced with
+>> resume calls to dwc3 device later.
+>>
+>> Tested on SpacemiT K3 Pico-ITX, covering both wakeup paths: an ACPI
+>> boot with a GED device notifying the dwc3 node (HID 808622B7), and a
+>> DT boot with a modified dwc3-generic-plat driver exposing a wakeup IRQ
+>> similar to dwc3-qcom.c and dwc3-imx8mp.c. This is not validation on
+>> actual Qualcomm or i.MX8MP hardware, changing those drivers would still
+>> need platform-specific testing.
+>>
+>> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+>> Assisted-by: Opencode:claude-opus-5
+>> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+>> ---
+>> Changes since RFC:
+>> - add Assisted-By tag and collect tag
+>> - refine the commit message and comments as suggested
+>>
+>> Link to RFC: https://lore.kernel.org/linux-usb/20260811090817.109350-1-panjunzhong@linux.spacemit.com/
+>> ---
+>>  drivers/usb/dwc3/core.c | 12 ++++++++++++
+>>  1 file changed, 12 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index fd5c2cd36c59..76883dc6184c 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -2739,6 +2739,18 @@ int dwc3_runtime_resume(struct dwc3 *dwc)
+>>  		}
+>>  		break;
+>>  	case DWC3_GCTL_PRTCAP_HOST:
+>> +		/*
+>> +		 * Only the xHCI child's resume re-arms root hub polling, which
+>> +		 * is what rediscovers a device plugged in while suspended.
+>> +		 * Runtime PM doesn't resume children, so request it here.
+>> +		 * Keep it asynchronous to avoid waiting for the parent's resume
+>> +		 * callback to finish from inside it. Glue drivers may also
+>> +		 * resume xHCI directly, but runtime PM will serialize those
+>> +		 * requests and skips an already-active device.
+>> +		 */
+>> +		if (dwc->xhci)
+>> +			pm_request_resume(&dwc->xhci->dev);
+>> +		break;
+> Could we also check a parent-only resume with no USB wake event? For
+> example, reading the DWC3 debugfs lsp_dump file calls
+> pm_runtime_resume_and_get(dwc->dev). With both devices suspended, this
+> change would wake xHCI too.
+> 
 
-Please cc the authors and testers of the fixed commits.
-Also have a look at Sashiko comments:
+Thanks for pointing out, I did missed those paths before, I will do some
+investigation and testing on the two non-wakeup path:debugfs attr access
+and the dwc3_set_mode() path then report back.
 
-	https://sashiko.dev/#/patchset/20260902-07-k3-sdhci-fix-v1-0-b15c5d0f64fd%40kernel.org
+> Would both devices return to autosuspend after the read and still
+> detect a subsequent plug-in? This would help cover the non-wakeup
+> case.
+>>  	default:
+>>  		/* do nothing */
+>>  		break;
+>>
+>> ---
+>> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+>> change-id: 20260908-resume-xhci-0fa34ff9b332
+>>
+>> Best regards,
+> 
+> 
+
+
