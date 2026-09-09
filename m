@@ -1,249 +1,176 @@
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364E6563297
-	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 15:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788969148; cv=pass; b=GqogJKt1tbQqy7MO/aZiOdl/KFVHW+6qzMy1p/5MNbtVRmvo00wCOj6uyoKQs/d5k096lDfygsYKlYUOZclWUJduiaFx3jF4bsn9oF4Ebhe6bqGXAqpK0N/E6FRGZzDBwnlC8S2zzp6dZnIWpgo7VhJ0jX/desE/hIZ0Em4StDo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788969148; c=relaxed/simple;
-	bh=3uvel5a9qRu2FYnNf3EA6uNL6gvopvxjdQ2FmJxvde4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HX+yQkAffeJImxElIdaVztrVwqQMP5VbvAv8fJxcxcVV+hHVn82izKLAw55UGaMDtNX4d94QnAOgJbO7at7WBfSwd8ACQiF+cAqfaCTP46bI1StgCOKBy/n0FRWUsIYVZ5crD0cPxQuuIL4B7roIp/l8gh84Cb9kp32hZ2FL15o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=o8qnqSzJ; arc=pass smtp.client-ip=165.173.182.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1011D5146
+	for <spacemit@lists.linux.dev>; Wed,  9 Sep 2026 16:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788972329; cv=none; b=U/Fa6tUdBuYoduNr9HogTpHO/+IKpu4dDYqFpL2xh0VI9HVQXbTtMPfh6wjwZkAVtha+V134Ug4h7h0vNTRQSV5o1TPLzRINEJkKp8M9HHTxHVtcJQm6L+q+gCww26dDlMT6fMW5T1GGE4RE7fdWv3oMCAVrQZ3mehYGzRsCado=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788972329; c=relaxed/simple;
+	bh=eFdVLOoXp72a2hn6HZfKme7GOcWEzAXJkqBnWJLawBM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fR1L+LNtig5QyUOxc5dCAINCBoIyMq5rUfZ7V6ApISWS/GCZTLkgSRKprd4FVjhZMFf1LoscdVrK+9xZzi6adNSN6nVpbvZX+aA8jGDlLS4xVi5oGMSetfNub4FQLU77caNPhgf83dtuuaSShrfH8AVxu56EEIcbMhWvdLXVSAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=DBrutNc9; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="o8qnqSzJ"
-ARC-Seal: i=1; a=rsa-sha256; t=1788969142; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=MZzo1loyiqQByPKxiiwJiOjGwzOjt7Lx1+Bbt0hJ1yqy64f/ONWuPmlvXUvxZFyg6RRlQ7vuREDN/YdgvPCKDZ7gjZ3C0cOywyfj1nadpqxZKNX4fxy0o5REXRLYmx2l8O4b6Ce7mjGtclvUM519ByFLEBmkR4C5nQInlAwnfGA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1788969142; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=w6zzq4tGGhquLe6UQ/IqzEJFehOL6lsEtW+jwzPJSfk=; 
-	b=a3t0/izeoF6LY7Sqh8GJBuffJi+/nJwWTCIdG2XyX4E4/CbYXrWhtUsC8PDcRQVzD6VCnYVKD886hvpPEevYeFtPVl2ZHKwTRm2eUPLTQuQAk7+RA7GSB6DTYVesCu8II8Q6uE3H0hV6wKciIsRTpCnsRXM1ciEovQ7vBwrFvQI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1788969142;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=w6zzq4tGGhquLe6UQ/IqzEJFehOL6lsEtW+jwzPJSfk=;
-	b=o8qnqSzJD6z07NF+CNXe6KOAaqy4pBdYp9SnE+Al6Xi22LpBXtnnYmQZ5vwOLYaH
-	ZOqIzEfaOBGch2K0oIupdky9qTZfdCsoRcx353cK9TqbYV00MpP0ZrPjQIyka4gHgJH
-	JcsKqNmuK+s23rkGySGzLDUpLLxHvim4druVNxYQ=
-Received: by mx.zohomail.com with SMTPS id 178896914030794.50219767383362;
-	Wed, 9 Sep 2026 08:52:20 -0700 (PDT)
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Wed, 09 Sep 2026 23:51:09 +0800
-Subject: [PATCH v2 2/2] doc: board: spacemit: document the SpacemiT boot
- image format
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="DBrutNc9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=WFdVhop09Vwq0/XYl66myl8jDJXz4Vz1i8q3oxQjIHw=; b=DBrutNc9RFlubJ2gG1RpH/cT97
+	PsTQ8Z8VQ+QwlAA8aJvFoVflT2N6yqKBi7P3HZpcmcUR2xOVVq3V3G+1LYliywJ4jgH3qKFnpM8+z
+	uFoh/jtbj3SFt2B/50fL4Tb8darUGo1mXr94Wp8BuPs5uG4wGC26Z8QhyUzcVfp5KikKlqtxQ83TL
+	lkTFAFi/ILOhIeIDnmxTPqpnmfxVp1+ALprvHmPBL5ClE0CQiPiS4Pr9Pi8zDe8wA5Dqqi6/1gBgR
+	KkGmhd1iYscP/dqnC/iO5Stfn2wAZnHXLhLHy5X8hMqJlku49miUDZLjHiyVfL15HGOjfV4Al68sM
+	UMoz1Akw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1x4LQC-0000000684v-0GIB;
+	Wed, 09 Sep 2026 18:45:16 +0200
+Date: Wed, 9 Sep 2026 18:45:14 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: spacemit@lists.linux.dev
+Cc: linux-riscv@lists.infradead.org, Andy Chiu <tchiu@tenstorrent.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>
+Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
+Message-ID: <aqGNGp8PInSV4vty@aurel32.net>
+References: <apSYF5x1Tu7PlyL1@aurel32.net>
+ <ap-SIQ9DLt-CfAx6@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260909-spacemit-aihd-v2-2-780e98cf2fec@pigmoral.tech>
-References: <20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech>
-In-Reply-To: <20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech>
-To: u-boot@lists.u-boot-project.org
-Cc: Tom Rini <trini@konsulko.com>, 
- Quentin Schulz <quentin.schulz@cherry.de>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, Simon Glass <sjg@chromium.org>, 
- Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
- Kory Maincent <kory.maincent@bootlin.com>, E Shattow <e@freeshell.de>, 
- Yixun Lan <dlan@kernel.org>, spacemit@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5374;
- i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
- bh=3uvel5a9qRu2FYnNf3EA6uNL6gvopvxjdQ2FmJxvde4=;
- b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLIWNsx2VXx38KjylMa9/7h+RrmuWb1M/1tJuOqUsh9z4
- p99Y4qS6ChlYRDjYpAVU2Th8hf/Z63D8+2IQOt9mDmsTCBDGLg4BWAix70ZGbqOhnvVqG+9eO6V
- e/7rhQ3BP6Vmyt/NXpBq9XbSb509DksZ/ucxe1/lWZBiUC19njmqoXx377aP904e/6+9+v7N/jm
- 5J5gA
-X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
- fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ap-SIQ9DLt-CfAx6@aurel32.net>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Document the boot image layout shared by the SpacemiT K1 and K3
-BootROMs, including the metadata headers and authentication areas.
+[Added Andy and Karl in Cc: as they have been involved in the vectored=20
+user copy code and fighting similar issues]
 
-Describe the K3 non-secure CRC32 path supported by mkimage and provide
-an example using the "smtimage" image type with "-n k3".
+Hi,
 
-Tested-by: E Shattow <e@freeshell.de>
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
----
- doc/board/spacemit/index.rst    |   2 +-
- doc/board/spacemit/smtimage.rst | 143 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 144 insertions(+), 1 deletion(-)
+Some more progress on that topic.
 
-diff --git a/doc/board/spacemit/index.rst b/doc/board/spacemit/index.rst
-index a5e35ee12ab6..5797ada37d15 100644
---- a/doc/board/spacemit/index.rst
-+++ b/doc/board/spacemit/index.rst
-@@ -7,4 +7,4 @@ SpacemiT
- 
-    bananapi-f3
-    k1-spl
--
-+   smtimage
-diff --git a/doc/board/spacemit/smtimage.rst b/doc/board/spacemit/smtimage.rst
-new file mode 100644
-index 000000000000..edcc3091e8e7
---- /dev/null
-+++ b/doc/board/spacemit/smtimage.rst
-@@ -0,0 +1,143 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+SpacemiT boot image format
-+=========================
-+
-+The SpacemiT K1 and K3 BootROMs load a SpacemiT boot image as the first-stage
-+bootloader (FSBL), either from persistent storage or over USB in MaskROM mode.
-+
-+Image layout
-+------------
-+
-+K1 and K3 share the same layout. A fixed 4 KiB prefix contains two 32-byte
-+metadata headers, key slots, and signature slots. The aligned SPL payload and
-+a trailing authentication area follow::
-+
-+    offset                                    size
-+    0x000  +-------------------------------+
-+           | root RSA-2048 modulus         |  0x100
-+    0x100  +-------------------------------+
-+           | header0                       |  0x020
-+    0x120  +-------------------------------+
-+           | key-selection metadata        |  0x1e0
-+    0x300  +-------------------------------+
-+           | OEM public-key slots          |  0x800
-+    0xb00  +-------------------------------+
-+           | signature0                    |  0x100
-+    0xc00  +-------------------------------+
-+           | reserved                      |  0x3e0
-+    0xfe0  +-------------------------------+
-+           | header1                       |  0x020
-+    0x1000 +-------------------------------+
-+           | SPL payload (32-byte aligned) |
-+           +-------------------------------+
-+           | signature1                    |  0x100
-+           +-------------------------------+
-+
-+For payload size ``P`` and ``A = ALIGN(P, 32)``, the image size is
-+``0x1000 + A + 0x100``.
-+
-+Metadata header
-+---------------
-+
-+Both header0 and header1 use the following format:
-+
-+.. list-table::
-+   :header-rows: 1
-+
-+   * - Offset
-+     - Size
-+     - Field
-+     - Description
-+   * - 0x00
-+     - 4
-+     - ``magic``
-+     - ``AIHD``
-+   * - 0x04
-+     - 1
-+     - ``version``
-+     - Anti-rollback image version
-+   * - 0x05
-+     - 1
-+     - ``secure``
-+     - Zero selects anti-rollback bank 0
-+
-+       Non-zero selects anti-rollback bank 1
-+   * - 0x06
-+     - 2
-+     - ``reserved``
-+     - Reserved
-+   * - 0x08
-+     - 8
-+     - ``image_size``
-+     - header0: prefix information
-+
-+       header1: aligned payload size
-+   * - 0x10
-+     - 8
-+     - ``load_addr``
-+     - Unused by the common authentication code
-+   * - 0x18
-+     - 4
-+     - ``header_crc``
-+     - K3: CRC32 over header bytes ``[0x00, 0x18)``
-+   * - 0x1c
-+     - 4
-+     - ``image_crc``
-+     - K3: CRC32 over the payload in header1 only
-+
-+``header1.image_size`` records the aligned payload size and therefore
-+determines the location of signature1.
-+
-+Authentication
-+--------------
-+
-+K1 and K3 apply different authentication policies:
-+
-+.. list-table::
-+   :header-rows: 1
-+
-+   * - Area
-+     - K1
-+     - K3 non-secure boot mode
-+     - K3 secure boot mode
-+   * - Root and OEM keys
-+     - RSA-2048 moduli with an eFuse root-hash check when secure boot is
-+       enabled
-+     - Unused
-+     - RSA-2048 moduli with an eFuse root-hash check
-+   * - Header CRC
-+     - Not checked separately
-+     - header1 verified
-+
-+       header0 ignored
-+     - Both verified and covered by RSA
-+   * - Image CRC
-+     - Not checked separately
-+     - Payload CRC32 in header1
-+     - Covered by RSA but not checked separately
-+   * - signature0
-+     - Verified with the root key over ``[0x100, 0xb00)``
-+     - Unused
-+     - Verified with the root key over ``[0x100, 0xb00)``
-+   * - signature1
-+     - Verified with the SPL key over header1 and the aligned payload
-+     - Unused
-+     - Verified with the SPL key over header1 and the aligned payload
-+
-+K1 verifies both signatures even without a programmed root-key hash. In this
-+case, the root key comes from the image and is not authenticated by hardware,
-+so the image, keys, and signatures can be replaced together.
-+
-+K3 uses CRC32 in non-secure boot mode and hardware-rooted RSA in secure boot
-+mode.
-+
-+Creating an image
-+-----------------
-+
-+U-Boot currently creates only K3 images for non-secure boot mode. Package an
-+SPL payload with::
-+
-+    $ tools/mkimage -T smtimage -n k3 -d u-boot-spl.bin FSBL.bin
-+
-+K1 images and RSA-authenticated K3 images are not yet supported.
+On 2026-09-08 06:42, Aurelien Jarno wrote:
+> Dear all,
+>=20
+> I have done some small progress on that issue. Help is still wanted and=
+=20
+> would be appreciated.
+>=20
+> On 2026-08-30 22:52, Aurelien Jarno wrote:
+> > Dear all,
+> >=20
+> > For the last weeks, I have been tracking a random memory corruption and
+> > relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It=20
+> > started upgrading to glibc 2.43, which does memset() through vector=20
+> > instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1=20
+> > kernel, but I have also been able to reproduce it with a vanilla 7.2.2=
+=20
+> > kernel, using a similar configuration to the Debian kernel. The board=
+=20
+> > uses OpenSBI 1.9 and the vendor U-Boot.
+>=20
+> I have been able to rule out OpenSBI from the issue, I have checked=20
+> there is not trap top OpenSBI when the problem happens.
+>=20
+> > Typically it manifests itself with the following kind of error, when=20
+> > running g++ from GCC 16 as part of building software (e.g. OpenJDK,=20
+> > Blender, Dolfin, Qt6):  =20
+> >=20
+> > Assembler messages:
+> > {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
+> > {standard input}:284588: Error: unrecognized opcode `=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
+=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
+=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BFvl874'
+> >=20
+> > The broken chars are 0xff and it seems there are always 240 (but with=
+=20
+> > poor statistics). Sometimes it instead causes a GCC ICE instead.
+>=20
+> I have identified that the 0xff comes from the poisoning done for v0 in
+> __riscv_v_vstate_discard(), which should only happen for a syscall.=20
+> Indeed changing the value to different ones propagates to the above=20
+> error message.
+>=20
+> Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE=20
+> doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD=20
+> changes the number of broken bytes.
 
--- 
-2.55.0
+The values from __riscv_v_vstate_discard() end-up there because they are=20
+the last values written to the vector registers. I have added some=20
+poisoning in __asm_vector_usercopy_sum_enabled before the loop, and=20
+those values appear instead. Using different values per vector register,=20
+I have found that the corruption comes from a partial load of the vle8.v=20
+instruction, while the result of the poisoning and the partial load are
+then both written by the vse8.v:
 
+ loop:
+        vsetvli iVL, iNum, e8, ELEM_LMUL_SETTING, ta, ma
+        fixup vle8.v vData, (pSrc), 10f
+        sub iNum, iNum, iVL
+        add pSrc, pSrc, iVL
+        fixup vse8.v vData, (pDst), 11f
+        add pDst, pDst, iVL
+        bnez iNum, loop
+
+One hypothesis could be that for some reason, an exception (page table=20
+fault, irq, ...), the vle8.v instruction is interrupted, and only=20
+partially loads the vector register from memory. This stops at a 16-byte=20
+boundary (at least on the K1), and the remaining part of the v0-v7=20
+register is left with the previous value (with the original kernel that=20
+is the poisoning done in __riscv_v_vstate_discard). In theory when the=20
+instruction is interrupted, vstart is set to a non-zero value (for=20
+instance 16), and it should get re-executed after the exception. In=20
+practice, in some very rare cases, it doesn't happen and the next=20
+executed instruction is the following sub.
+
+That said with exceptions and vector context switches, the explanation=20
+is likely way more complex. [1] gives a possible different scenario,=20
+involving an interrupt or a fault between the vsetvli and vle8.v/vse8.v=20
+instructions. However it doesn't fix the issue, neither patch [2]
+(in that case tested with CONFIG_RISCV_ISA_V_PREEMPTIVE=3Dy).
+
+
+> Disabling the vectored user code entirely with the following patch seems
+> to prevent the issue (or make it sufficiently rare that I have not=20
+> encountered it):
+
+A much better way to do that is setting RISCV_ISA_V_UCOPY_THRESHOLD=3D-1. =
+=20
+
+I also tried the same kernel on a K3, and it appears to improve=20
+stability, getting rid of issues that I attributed to thermal issues. =20
+(due to the absence of fan driver, I run the fan as a fixed speed=20
+~4000rpm). The symptoms are however quite different, it's GCC crashes=20
+with "The bug is not reproducible, so it is likely a hardware or OS=20
+problem.".
+
+Regards
+Aurelien
+
+[1] https://lore.kernel.org/20260806193241.10552-1-kmehltretter@gmail.com/
+[2] https://lore.kernel.org/all/20260810172255.1532787-2-tchiu@tenstorrent.=
+com/
+
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
