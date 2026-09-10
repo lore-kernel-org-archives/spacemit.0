@@ -1,265 +1,359 @@
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E56482D4
-	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 09:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0CD37FF75
+	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 10:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789033935; cv=none; b=JhroYJgvAlQjtDE9z1uNmqzEmSJuvHN5ZcymLx+DMRWZGWs/8OUZoA9++aBZOkbqkdpaO82ZvqnXqM/DxaA8jJNsu485p+kz/2unHwhLyf5Z695HJDBaxH0uLuCmy5YMdL2HegVDx2UZRDbZNEQF1jWYMwTtB3YvOnwYwniocUY=
+	t=1789034556; cv=none; b=FmKZqvr9rneOBBUa/9R4i/rvcVhNB09LwuyMskANFE3QC9/hEnte9yCeu/DcWjF0fL7GQGeJCLgxhQLuIQlXKTe/+9OegmHyHfLQ3vFNHeJBnDFfP8vWOpoNoV1MmBXtCLQBjVTQk8BFlCwAybF0wHZtyOwcPxJgXHtUWE2PMuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789033935; c=relaxed/simple;
-	bh=QbVfbTPjA+0nznXPLlbTkBA4zLLyJWykRgFpQ4H7JiA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=bvWniXgfO3meSQbToe+wzIA4p0nspdo+4dcT2518ZyZKuxM2SZX7hTPxuY2zwy6yRyQkLWblwaxdkB6ZsFX7L8bHqNJBLMSzBtL7/06ZcznMJGBfc0UtWY1nTCFfUmsJcf20LRWxny9nr9RlrMwgWCS1OG2zn7KlqNIxNNiMFXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=jlfHboen; arc=none smtp.client-ip=18.169.211.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1789034556; c=relaxed/simple;
+	bh=AuL1NopOUDRlUm9/LjeQ25gulUiO2TrVF/co05BGUPA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tJ5t3STJVFjP05sOkP9JrVeT595FpwM8YRhCj7iYIIFcB2z7VrHU++wM8EK/RfnjW1vT9vv2ZfIdIYpkkkdL0iamhApJJLUV7X9L2tJTN47ccYf1CcVWTzYh1I81JlGRdlz83cFGyP5vz6Gm7qK3mHg5+XWK292irJamWe67OH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ngoq4AJ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="jlfHboen"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789033872;
-	bh=/jYHDEeDj6mTSil5AM0ztwiU+xkuIqY7l4GjrURkwMI=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=jlfHboencdVUt2pJfQtKOAB+6e5Ua3ZLRzn6l7ZA6XtNAEuWjYBlSCFNydW2y3CQp
-	 MztbtfMpdJ0Y5bYXe2KRkYYmqCUCzkmW2mF8Gk+HbznMuV8UAJtYD4jiTLXCtcYMsm
-	 6nexYAq5iUD8UPtCIyKxNL97JzAtrEfD6kSshZp4=
-X-QQ-mid: esmtpsz17t1789033870t1eda2e6e
-X-QQ-Originating-IP: f5kVe9DZlbg/hxKYwteXDSAPYMlVF5XmHtXimArN3mo=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 10 Sep 2026 17:51:07 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 9185703477099524702
-EX-QQ-RecipientCnt: 41
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ngoq4AJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891E01F000FF;
+	Thu, 10 Sep 2026 10:02:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789034554;
+	bh=+ENjMczPuH/fyANI/+/yq26/n7fvzUZFAAXgyCAWW+Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Ngoq4AJ3fRog5fjfiGV4mq1x3Dj99JaCs25ndwWB0HIpxjGGVczRdYQsNm9/G4A+7
+	 SLXts7YUcYo8jWDlCg6k8FWWFyNl7OiMUJyf86F99MG5kx/PfeRJesKYGop0Xstzwo
+	 fEDw0rAHMZ/g3HnyQoZNVGxc6LShlpxvTjheTwh7Xvfi0nEGKk6efU1MRkmO+9blzH
+	 M2i2pk6ZxuMY6QNl6IANL5NqqznDH0ri/mSiEzejDLyFvIAbNoh8MDHaleYej64f9w
+	 3TKxZZQpMD6EJ1mrzyptzCht2ISMDqXMqs2QULGh6PdlfXLVYGMGprLL5FkwLd0Tto
+	 l0gq2AT2bkYtw==
+Date: Thu, 10 Sep 2026 10:02:31 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: u-boot@lists.u-boot-project.org, Tom Rini <trini@konsulko.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Simon Glass <sjg@chromium.org>,
+	Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	E Shattow <e@freeshell.de>, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 1/2] tools: mkimage: add SpacemiT K3 boot image support
+Message-ID: <20260910100231-GKI2330@kernel.org>
+References: <20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech>
+ <20260909-spacemit-aihd-v2-1-780e98cf2fec@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=a3226df17150e624bf4bd069700ca9c5fbc60f85bc86f72fb8331621a4e0;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 10 Sep 2026 17:51:04 +0800
-Message-Id: <DLBJKRFHSLZ7.3OKDAR8I7V7JE@linux.spacemit.com>
-Cc: <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, "Yixun Lan" <dlan@gentoo.org>, "Longbin Li"
- <looong.bin@gmail.com>
-Subject: Re: [PATCH v5 6/6] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Inochi Amaoto" <inochiama@gmail.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Jingoo Han" <jingoohan1@gmail.com>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Lorenzo Pieralisi"
- <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, "Rob Herring" <robh@kernel.org>, "Bjorn Helgaas"
- <bhelgaas@google.com>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Frank Li"
- <Frank.Li@nxp.com>, "Niklas Cassel" <cassel@kernel.org>, "Sherry Sun"
- <sherry.sun@nxp.com>, "Arnd Bergmann" <arnd@arndb.de>, "Christian Bruel"
- <christian.bruel@foss.st.com>, "Krishna Chaitanya Chundru"
- <krishna.chundru@oss.qualcomm.com>, "Senchuan Zhang"
- <zhangsenchuan@eswincomputing.com>, "Alex Elder" <elder@riscstar.com>,
- "Xincheng Zhang" <zhangxincheng@ultrarisc.com>, "Randolph Lin"
- <randolph@andestech.com>, "Siddharth Vadapalli" <s-vadapalli@ti.com>, "Andy
- Shevchenko" <andriy.shevchenko@linux.intel.com>, "Vidya Sagar"
- <vidyas@nvidia.com>, "Neil Armstrong" <neil.armstrong@linaro.org>, "Danilo
- Krummrich" <dakr@kernel.org>,
- =?utf-8?b?VXdlIEtsZWluZS1Lw7ZuaWcgKFRoZSBDYXBhYmxlIEh1Yik=?=
- <u.kleine-koenig@baylibre.com>, "Pengpeng Hou" <pengpeng@iscas.ac.cn>,
- "Anirudh Srinivasan" <asrinivasan@oss.tenstorrent.com>, "Gustavo Pimentel"
- <gustavo.pimentel@synopsys.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260907112606.465778-1-inochiama@gmail.com>
- <20260907112606.465778-7-inochiama@gmail.com>
- <DL940SRP94AG.408BKFWHDVY3@linux.spacemit.com>
- <aqEOHmlKdKqQWYE8@inochi.infowork>
-In-Reply-To: <aqEOHmlKdKqQWYE8@inochi.infowork>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Nb/rFP+bFqfRNiLsXhvqF2ENneZoVNdNZ8dA2v4Ua/F3SG9Ob9QAWK6N
-	22Wl4CvyWhhc4Iw1TThY+ydbggIY3AoJ/FSLRZxi2he629oTJ9es/MmFAJ3AbcxBjTTuImF
-	fCuLQ8S17lSZLrBcgul1PaOdsaKccXDOsP9v6hTXFticXIYGCFkSTVokWBHYjKQC41XDKh3
-	vWJScXMYPgs7qLwyHd9ugVrjuyMUhf2JTHO7AUT19f/fR1y0qQujZzG6dDrEtc/3X0WOOvU
-	JieZAmPjs24uLHGBpUQjIBrGs5pa760S5oXbSKGWJVxG4E0SLoGfUWCBpo5O6q0FHKWFv1j
-	j5G6Ai4jmt3h1UQBR3ctBh3v7UbRLIBEtkp/hZrLSjvpyMtoYBAP4xFYmlkvQH1KR82HNOf
-	zZ1/GeyX71xgsZVn23yNFSOtYACN5hhPAny4zgH2r1Pur6RD/dO4/rLXInTkg6NLgZpJi4B
-	/jVj6ps/rlupCXMVO8yIz6qbPpbU/KGNQn1O7Sif4c3dGpVdJ7tHruSvXFQ3b8Pta4wnno4
-	GffQbMzXCn1l6vuFMmoQ7QxnpnNbk4y+4ZBD733d4OZmfFYSfDf3I1C1RIXAJ6faaOXrYJ0
-	ze+TAOHWPpc4GdSLrTN1fSW2sewY5Uz3QXvE+XJ/PcOeHMewdD1Nhb5KGeJT4ZHpmxOvBMy
-	20JzJ/e9qhiwJIo1Qc+5X//fKTaPOFYCUzodTeq/ewSoMUtY2r2oLAHn+K+cdD4dD0V+dYo
-	sJ2mw0Xk50fiGeHRHzZEOZXqrqsX/LmVAyqz89MzBNNgSUFq4XE5tlJH/tCSKhde3GYxNmf
-	iwHYap6bVsGz4edix50kFNRyr9Szzx6KyeH3K/SYnZ6aLg+URpvFgKu2GrZv9HWYdFdyLjN
-	RmYDoHTzv7PAAn5KKAecR2cyAqDI38KciEH7OD7UVQlhZ9KOjOBjY0gsyhvuVRmAHJkA4mV
-	LTnsl3jUHJuLmtpytmaro9r/axuLFG4HdDVKwVlsQyKjtcF1X0hiu4w21+W/NkSJNz/DuYa
-	0cAD5F8TgfqjXjK/p/mr/yUxtLaOp8Zf8/C5tLEaB/394ZlKr9Tq4a8MX3VtHFRZWbzEMTE
-	yT15VjNJkjJvI2cenlVjQlJAhfZpVOwxw==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260909-spacemit-aihd-v2-1-780e98cf2fec@pigmoral.tech>
 
---a3226df17150e624bf4bd069700ca9c5fbc60f85bc86f72fb8331621a4e0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Junhui,
 
-On Wed Sep 9, 2026 at 3:51 PM +08, Inochi Amaoto wrote:
-> On Mon, Sep 07, 2026 at 09:14:23PM +0800, Troy Mitchell wrote:
->> On Mon, Sep 7, 2026 at 07:26:05PM +0800, Inochi Amaoto wrote:
->> > [...]
->> >
->> > @@ -303,6 +316,116 @@ static int k1_pcie_parse_port(struct k1_pcie *k1=
-)
->> > [...]
->> >
->> > +static int k3_pcie_init(struct dw_pcie_rp *pp)
->> > +{
->> > +	struct dw_pcie *pci =3D to_dw_pcie_from_pp(pp);
->> > +	struct k1_pcie *k1 =3D to_k1_pcie(pci);
->> > +	u32 reset_ctrl =3D k1->pmu_off + PCIE_CLK_RESET_CONTROL;
->> > +	u32 val;
->> > +	int ret;
->> > +
->> > +	regmap_clear_bits(k1->pmu, reset_ctrl, LTSSM_EN);
->> > +
->> > +	k1_pcie_toggle_soft_reset(k1);
->> > +
->> > +	/* K3: Set IGNORE_PERSTN and drive PERSTN_OE high (assert reset) */
->> > +	regmap_update_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
->> > +			   PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE | PCIE_PERSTN_OUT,
->> > +			   PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE);
->> > +
->> > +	ret =3D k1_pcie_enable_resources(k1);
->> > +	if (ret)
->> > +		goto failed_resources;
->> > +
->> > +	regmap_set_bits(k1->pmu, reset_ctrl, PCIE_AUX_PWR_DET);
->> > +	regmap_clear_bits(k1->pmu, reset_ctrl, APP_HOLD_PHY_RST);
->> > +
->> > +	ret =3D phy_bulk_init(k1->phy_count, k1->phys);
->> > +	if (ret)
->> > +		goto failed_phy;
->> > +
->> > +	msleep(PCIE_T_PVPERL_MS);
->> > +
->> > +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
->> > +			PCIE_PERSTN_OUT | PCIE_PERSTN_OE);
->> > +
->>=20
->> Should we use pci->pe_rst when reset-gpios is provided, and keep the PMU=
- path as
->> a fallback? The SDK handles both cases. The DWC core requests that GPIO =
-with
->> GPIOD_OUT_HIGH, but this path only releases PERST# through the PMU, so a=
-n
->> endpoint using the GPIO would remain in reset.
->>=20
->
-> I do not think this should be included in this version. I found PICO-ITX
-> has no reset gpio support. This means I can not test this feature.
->
-> I suggest adding this function when there is a board using this function.
-Agreed, we can defer GPIO reset support until a board needs it and
-we can test it. I checked again, and the SDK only added this support
-recently. It provides GPIO-controlled PERST# as an alternative to
-the native PERST# control through the PMU.
->
->> > [...]
->> >
->> > +	/* Finally, as a workaround, disable ASPM L1 */
->> > +	k1_pcie_disable_aspm_l1(k1);
->> > +
->> > +	return 0;
->> > +
->>=20
->> Would we also need to configure IOMMU bypass during initialization? The =
-SDK sets
->> the PCIe A/B/C bypass bits in PMUA_PCIE_SUBSYS_MGMT when there is no usa=
-ble
->> iommu-map. The proposed K3 PCIe DTS has no iommu-map, and I could not fi=
-nd the
->> corresponding bypass setup in this series.
->>=20
->> Is bypass already guaranteed by firmware or the reset state, or should t=
-he
->> driver set it here? My concern is that enumeration could succeed while e=
-ndpoint
->> DMA still goes through an unconfigured IOMMU.
->>=20
->
-> I think the firmware should mark it bypassed as the default, at least
-> I have notice this behavior, but I am not sure whether it is the builtin
-> firmware or the uboot do this trick.
-I checked the register specification. The PCIe A/B/C IOMMU bypass
-bits reset to 1, so bypass is the hardware reset default and does
-not require firmware to enable it. That resolves my concern.
+The patch looks good to me, I only have a few minor comments.
 
->
->> > [...]
->> >
->> > +static int k3_pcie_parse_port(struct k1_pcie *k1)
->> > +{
->> > +	u32 status0, status1, status2;
->> > +
->> > +	/* This register require a RAW for cleanup */
->> > +	status0 =3D readl_relaxed(k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
->> > +	status1 =3D readl_relaxed(k1->link + INTR_STATUS);
->> > +	status2 =3D readl_relaxed(k1->link + K3_ADDR_INTR_STATUS1);
->> > +
->> > +	writel_relaxed(status0, k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
->> > +	writel_relaxed(status1, k1->link + INTR_STATUS);
->> > +	writel_relaxed(status2, k1->link + K3_ADDR_INTR_STATUS1);
->> > +
->> > +	return k1_pcie_parse_port(k1);
->> > +}
->> > +
->>=20
->> Are these status registers accessible before the controller clocks are e=
-nabled
->> and resets released? k3_pcie_parse_port() runs before dw_pcie_host_init(=
-), which
->> calls k3_pcie_init() to enable those resources.
->>=20
->
-> Yes they can. It is something interesting.
->
->> The SDK uses the same ordering, but I am not sure whether it relies on f=
-irmware
->> leaving the registers accessible. If so, would it be safer to move this =
-clearing
->> into k3_pcie_init(), after enabling the resources?
->>=20
->
-> In fact, I have no idea about which clock control this MMIO area, if it i=
-s dbi
-> clock (but I guest it is not), it is kind of weird for this clear and sho=
-uld
-> move to the init. Do you have some knowledge on this?
-I have not confirmed which clock controls this MMIO region yet.
-I have asked our clock team about its clock and reset dependencies
-and whether access before resource initialization is guaranteed.
-I will follow up once I have clarification.
+On 23:51 Wed 09 Sep     , Junhui Liu wrote:
+> The SpacemiT BootROM loads the FSBL from a boot image consisting of a
+> fixed 4 KiB header with two metadata headers and authentication
+> information, followed by a 32-byte-aligned SPL payload and a trailing
+> authentication area. K1 and K3 share the same layout, but use different
+> integrity and authentication schemes. K1 requires RSA-signed images,
+> while K3 uses CRC32 to verify images in non-secure boot mode.
+> 
+> Add mkimage type "smtimage" for the K3 CRC32 path. Populate both
+> metadata headers, fill their CRC32 values and the payload CRC32, and
+> reserve the authentication areas required by the layout.
+> 
+> The image header has no reliable K1/K3 identifier, so select the SoC
+> with -n. Omit dumpimage support since it cannot take -n to distinguish
+s/-n/-n option/
+> between the variants.
+> 
+> Only "-n k3" in non-secure boot mode is supported. Route SoC differences
+> through a variant table so K1 and RSA authentication support can be
+> added later.
+> 
+> Tested-by: E Shattow <e@freeshell.de>
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
+>  boot/image.c     |   1 +
+>  include/image.h  |   1 +
+>  tools/Makefile   |   1 +
+>  tools/smtimage.c | 202 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 205 insertions(+)
+> 
+> diff --git a/boot/image.c b/boot/image.c
+> index 185d52ba492f..3a31ef663710 100644
+> --- a/boot/image.c
+> +++ b/boot/image.c
+> @@ -179,6 +179,7 @@ static const table_entry_t uimage_type[] = {
+>  	{	IH_TYPE_TFA_BL31, "tfa-bl31",  "TFA BL31 Image", },
+>  	{	IH_TYPE_STM32IMAGE_V2, "stm32imagev2", "STMicroelectronics STM32 Image V2.0" },
+>  	{	IH_TYPE_AMLIMAGE,   "amlimage",   "Amlogic Boot Image" },
+> +	{	IH_TYPE_SMTIMAGE, "smtimage", "SpacemiT Boot Image" },
+I found most entry align with 4 space.. should do same as above line
 
->
-> Regards,
-> Inochi
+>  	{	-1,		    "",		  "",			},
+>  };
+>  
+> diff --git a/include/image.h b/include/image.h
+> index 6edcb1995bfe..53aad2dfde3f 100644
+> --- a/include/image.h
+> +++ b/include/image.h
+> @@ -235,6 +235,7 @@ enum image_type_t {
+>  	IH_TYPE_TFA_BL31,		/* TFA BL31 image */
+>  	IH_TYPE_STM32IMAGE_V2,		/* STMicroelectronics STM32 Image V2.0 */
+>  	IH_TYPE_AMLIMAGE,		/* Amlogic Boot Image */
+> +	IH_TYPE_SMTIMAGE,		/* SpacemiT Boot Image */
+>  
+>  	IH_TYPE_COUNT,			/* Number of image types */
+>  };
+> diff --git a/tools/Makefile b/tools/Makefile
+> index 535a5d51c89e..fc0aa52455aa 100644
+> --- a/tools/Makefile
+> +++ b/tools/Makefile
+> @@ -138,6 +138,7 @@ dumpimage-mkimage-objs := aisimage.o \
+>  			pbl_crc32.o \
+>  			renesas_spkgimage.o \
+>  			sfspl.o \
+> +			smtimage.o \
+>  			vybridimage.o \
+>  			stm32image.o \
+>  			$(ROCKCHIP_OBS) \
+> diff --git a/tools/smtimage.c b/tools/smtimage.c
+> new file mode 100644
+> index 000000000000..96e8b5d8d171
+> --- /dev/null
+> +++ b/tools/smtimage.c
+> @@ -0,0 +1,202 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * Copyright (C) 2026 Junhui Liu <junhui.liu@pigmoral.tech>
+> + *
+> + * The SpacemiT boot image consists of a fixed image header followed by an
+> + * aligned SPL payload and a trailing authentication area. The image header
+> + * contains two metadata headers and areas reserved for authentication data.
+> + *
+> + * The image layout is:
+> + *
+> + *   0x000             root key
+> + *   0x100             header0
+> + *   0x120             key metadata
+> + *   0x300             OEM keys
+> + *   0xb00             signature0
+> + *   0xfe0             header1
+> + *   0x1000            SPL payload, with its end aligned to 32 bytes
+> + *   payload end       signature1 (0x100 bytes)
+> + */
+> +
+> +#include <image.h>
+> +#include <u-boot/crc.h>
+> +#include "imagetool.h"
+> +
+> +#define SMT_MAGIC		"AIHD"
+..
+> +#define SMT_PAYLOAD_ALIGN	32
+it occur to me, it's not necessary to introduce a local macro which only
+ used once? while it's quite obvious what ALIGN() means
 
+> +#define SMT_AUTH_SIZE		0x100
+> +
+..
+> +#define SMT_FLAG_CRC32		(1U << 0)
+is this a local flag? how about defining as BIT(0)? which is more readable IMO 
 
---=20
-Troy Mitchell
+> +
+> +/**
+> + * struct smtimage_header - metadata header within a SpacemiT boot image header
+> + *
+> + * @magic:	Magic (must be SMT_MAGIC)
+> + * @version:	Image version used when anti-rollback is enabled by eFuse
+> + * @secure:	Version slot used when anti-rollback is enabled by eFuse
+> + * @reserved:	Reserved
+> + * @image_size:	Header0 stores the image header size
+> + *		Header1 stores the aligned payload size
+> + * @load_addr:	Unused
+> + * @header_crc:	Header0 and Header1 store the CRC32 of the preceding 24 bytes on K3
+> + * @image_crc:	Header1 stores the CRC32 of the aligned payload on K3
+> + */
+> +struct smtimage_header {
+> +	uint8_t magic[4];
+> +	uint8_t version;
+> +	uint8_t secure;
+> +	uint16_t reserved;
+> +	uint64_t image_size;
+> +	uint64_t load_addr;
+> +	uint32_t header_crc;
+> +	uint32_t image_crc;
+> +} __packed;
+> +
+> +/**
+> + * struct smtimage_image_header - fixed header area of a SpacemiT boot image
+> + *
+> + * @root_key:	Root public key
+> + * @header0:	Image layout and load information
+> + * @key_data:	Key metadata
+> + * @oem_keys:	OEM public-key area
+> + * @signature0:	Signature of the image configuration
+> + * @reserved:	Reserved
+> + * @header1:	SPL payload information
+> + */
+> +struct smtimage_image_header {
+> +	uint8_t root_key[0x100];
+> +	struct smtimage_header header0;
+> +	uint8_t key_data[0x1e0];
+> +	uint8_t oem_keys[0x800];
+> +	uint8_t signature0[SMT_AUTH_SIZE];
+> +	uint8_t reserved[0x3e0];
+> +	struct smtimage_header header1;
+> +} __packed;
+> +
+> +/**
+> + * struct smtimage_variant - SoC-specific image properties
+> + *
+> + * @name:	SoC name passed to mkimage with -n
+> + * @flags:	SoC-specific image flags
+> + */
+> +struct smtimage_variant {
+> +	const char *name;
+> +	unsigned int flags;
+> +};
+> +
+> +static const struct smtimage_variant smtimage_variants[] = {
+> +	{
+> +		.name = "k3",
+> +		.flags = SMT_FLAG_CRC32,
+> +	},
+you may want to define a macro if adding too many more variants which will
+ make code more compact..
+#define VARIANT(name, flag) 		\
+     {					\
+             .name = "k3",		\
+             .flags = SMT_FLAG_CRC32,	\
+     }
+but I'm fine with current version if you're relunctant to change
 
+> +};
+> +
+> +static const struct smtimage_variant *smtimage_get_variant(const char *name)
+> +{
+> +	int i;
+> +
+> +	if (!name || !*name)
+> +		return NULL;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(smtimage_variants); i++)
+> +		if (!strcmp(name, smtimage_variants[i].name))
+> +			return &smtimage_variants[i];
+> +
+> +	return NULL;
+> +}
+> +
+> +static void smtimage_init_header(struct smtimage_header *header, uint64_t image_size,
+> +				 const struct smtimage_variant *variant)
+> +{
+> +	uint32_t crc;
+> +
+> +	memcpy(header->magic, SMT_MAGIC, sizeof(header->magic));
+> +
+> +	header->image_size = cpu_to_le64(image_size);
+> +
+> +	if (variant->flags & SMT_FLAG_CRC32) {
+> +		crc = crc32(0, (uint8_t *)header,
+> +			    offsetof(struct smtimage_header, header_crc));
+> +		header->header_crc = cpu_to_le32(crc);
+> +	}
+> +}
+> +
+> +static int smtimage_check_params(struct image_tool_params *params)
+> +{
+> +	if (!smtimage_get_variant(params->imagename)) {
+> +		fprintf(stderr, "%s: SpacemiT SoC must be specified with -n\n",
+> +			params->cmdname);
+> +		return EXIT_FAILURE;
+> +	}
+> +
+> +	if (!params->dflag)
+> +		return EXIT_FAILURE;
+> +
+> +	return EXIT_SUCCESS;
+> +}
+> +
+> +static void smtimage_print_header(const void *buf, struct image_tool_params *params)
+> +{
+> +	const struct smtimage_image_header *image_header = buf;
+> +	const struct smtimage_header *header1 = &image_header->header1;
+> +	uint64_t payload_size = le64_to_cpu(header1->image_size);
+> +
+> +	printf("SpacemiT Boot Image (%s)\n", params->imagename);
+or make it slightly more readable
+        printf("Spacemit Boot Image\n");
+        printf("SoC Variant: %s\n", params->imagename);
 
---a3226df17150e624bf4bd069700ca9c5fbc60f85bc86f72fb8331621a4e0
-Content-Type: application/pgp-signature; name="signature.asc"
+> +	printf("Total Size: %llu bytes\n",
+> +	       (unsigned long long)(sizeof(*image_header) + payload_size + SMT_AUTH_SIZE));
+> +	printf("Payload Size: %llu bytes\n", (unsigned long long)payload_size);
+> +}
+> +
+> +static void smtimage_set_header(void *buf, struct stat *sbuf, int infd,
+> +				struct image_tool_params *params)
+> +{
+> +	const struct smtimage_variant *variant = smtimage_get_variant(params->imagename);
+> +	struct smtimage_image_header *image_header = buf;
+> +	struct smtimage_header *header0 = &image_header->header0;
+> +	struct smtimage_header *header1 = &image_header->header1;
+> +	size_t payload_size;
+> +	uint32_t crc;
+> +
+> +	payload_size = sbuf->st_size - sizeof(*image_header) - SMT_AUTH_SIZE;
+> +
+> +	smtimage_init_header(header0, sizeof(*image_header), variant);
+> +	smtimage_init_header(header1, payload_size, variant);
+> +
+> +	if (variant->flags & SMT_FLAG_CRC32) {
+> +		crc = crc32(0, (uint8_t *)(image_header + 1), payload_size);
+> +		header1->image_crc = cpu_to_le32(crc);
+> +	}
+> +}
+> +
+> +static int smtimage_check_image_type(uint8_t type)
+> +{
+> +	if (type == IH_TYPE_SMTIMAGE)
+> +		return EXIT_SUCCESS;
+> +
+> +	return EXIT_FAILURE;
+> +}
+> +
+> +static int smtimage_vrec_header(struct image_tool_params *params,
+> +				struct image_type_params *tparams)
+> +{
+> +	size_t payload_size = params->file_size - tparams->header_size;
+> +
+> +	tparams->hdr = calloc(tparams->header_size, 1);
+> +
+> +	return ALIGN(payload_size, SMT_PAYLOAD_ALIGN) - payload_size + SMT_AUTH_SIZE;
+> +}
+> +
+> +U_BOOT_IMAGE_TYPE(
+> +	smtimage,
+> +	"SpacemiT Boot Image support",
+> +	sizeof(struct smtimage_image_header),
+> +	NULL,
+> +	smtimage_check_params,
+> +	NULL,
+> +	smtimage_print_header,
+> +	smtimage_set_header,
+> +	NULL,
+> +	smtimage_check_image_type,
+> +	NULL,
+> +	smtimage_vrec_header
+> +);
+> 
+> -- 
+> 2.55.0
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqJ9iA0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvIEkBAI5lOSUmTC1KRnfbtQZq22dzmqYH4si4e04iOSyS
-qA0iAP4h5FpgcgN1hdhSj0naM37Eexy5IDGOkDub+ZEMcldRBQ==
-=7iXk
------END PGP SIGNATURE-----
-
---a3226df17150e624bf4bd069700ca9c5fbc60f85bc86f72fb8331621a4e0--
+-- 
+Yixun Lan (dlan)
