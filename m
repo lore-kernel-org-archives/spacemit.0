@@ -1,132 +1,84 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12B248CD54
-	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 14:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A5D44F57F;
+	Thu, 10 Sep 2026 21:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789050077; cv=none; b=CxJ8AvULbQnOEr4OR0nYSW45OgwakyleRbhC4mIChpn+l+4IuosXS/qdGMQsRIcg/lrGpyT30HnHVyTVqVckPDfSg+5PCNY2+gWsvUjUsaDc0D2/uiinN5uWikve8V8+UPYp01lseM72DCePEfoO8M+8Ztr3VPlzPYwH3T2mQyk=
+	t=1789076087; cv=none; b=tnL7fymceA4oCSWLdunKoY0T8XY54vyTyBlFBEWhRu5w4ILeRpvm6my7OBcoT/ArtWlKYKGNgYiqTk6oXk+AeeCiJMBnVWPKRaOUemoSFr6TFmaHvaErYLr362C9VVEXUP1T+oyaumBMbqY5+3t4w9HRFNUeHAxL5qAy75zeNXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789050077; c=relaxed/simple;
-	bh=xdNcRtr3Q1H8R8s6BA/OoSzY7Cs3ETsOgR+Zgda24Lc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 In-Reply-To:References; b=sdhODyCT3gy4JBhWnBPF6QkbtDMD+LT5Yy0c5oOVPMZ1QzQroG2YvpFy1PREysTutaUotLyH0M5LdCkwrYH2xZeDMBb2NrNBYfgWw5vQRIFysKXuUYf763bV0+0k3HEUKOskkgnLW8xO60L2StJtVtpq5/JNixYsZKacbiii0NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=KTN31E0L; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1789076087; c=relaxed/simple;
+	bh=ZGnms2TjxQoWacNdUmF0Qm+c+B3Whog03U4Pfq/FbIU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GGN8o4brCAI+IYgBRqmrW1aT+LUNx3LXfOBpoa/IYaCa8GTjgTtHXuxeb1WAippam9Le5tRN0kIg4CAUUCstAgGhd6/puggiZZCj3G/2FzdMQGgYrVnbVRlg4Cw8niicDGaLe+bJgGe8VNeblVPOFX982F9No5f9jDvV7Dnz/PE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMnwZ3m9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="KTN31E0L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789050006;
-	bh=3nZLJvFkotIH0hkZxh4gNEbBhFHsxNJJz5gCcWVLrcQ=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=KTN31E0LzJqJ5+n6sdnQ3saxk21R5q3x8bRi4eaOvbKPNfj0ij7i1LCyn37otAv2z
-	 ptYKJ8ojNky2OY505bbcz0sK5mjUtnBtgRfm3pjYWLyEAX6L6ZNWtUZ5qpb0bm8lVC
-	 v15smPAg+Wx+zyJ3epWSUqIndOgYjVr5jSe92fGQ=
-X-QQ-mid: zesmtpgz7t1789049999t835cac00
-X-QQ-Originating-IP: LvFWhnr8GQtHVtD5AxbXjVM2HEzA8EvNtZbuG/ISU7U=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 10 Sep 2026 22:19:57 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14213851598178055219
-EX-QQ-RecipientCnt: 13
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMnwZ3m9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2E81F000FF;
+	Thu, 10 Sep 2026 21:34:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789076084;
+	bh=PKXkT/ObO3AiQVnD0gr+mNUkvO7QaDovBbeHZ8BprGA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=LMnwZ3m9+8G6xA4eJcyg1vRKBen51ojARFFWQLxA+XAWKssNS5/JGUuIA9Q3kaQ4M
+	 7iDkzZTk6rPn3jQ6l0xCcb2z4KiVMYykFnFFeV/EOTCrDzyqXvNohLlz+1999VnLAy
+	 /VjLfQZk9KlFP1A+f3C5he1lBEooJPUm7ZFCo83a6U97ux7nvwX/qbC7gVZKXkiVBz
+	 xYJoK9fr3iuTrxVhyXoeg3MqRr2OvSuFmqthLdwvbz21VZ8ednjFGqp+VIpNHNuTCI
+	 rvhouhNv0hhn6eub0AnMJabvvlOw/AftJy2U7UalOkbDpLmBgd77l94K6XpSI9z3JU
+	 OxH2ys6sle/6w==
+Date: Thu, 10 Sep 2026 21:34:42 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Alex Elder <elder@riscstar.com>
+Subject: Re: [PATCH v2] MAINTAINERS: add entry for SpacemiT reset controller
+ driver
+Message-ID: <20260910213442-GKE2346@kernel.org>
+References: <20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
+ <62e1781e127176294088cee9c120b3173359ec4b.camel@pengutronix.de>
+ <my7qwtgrgph43hjxwmjm5hkeuxltlqjntnj5zdo7xqlrfrlffx@fp4mt7phdor4>
+ <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=9670b8df4f3eb1168009e4f7bd72c141133c505de3412c738ef408f1deee;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 10 Sep 2026 22:19:54 +0800
-Message-Id: <DLBPALH9J84H.6CTB8GOVYSZ@linux.spacemit.com>
-Cc: <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Yao Zi" <me@ziyao.cc>
-Subject: Re: [PATCH 2/5] clk: spacemit: make MIX rate selection consistent
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Stephen Boyd" <sboyd@kernel.org>, "Brian Masney"
- <bmasney+clk@redhat.com>, "Jerome Brunet" <jbrunet+clk@baylibre.com>,
- "Yixun Lan" <dlan@kernel.org>, "Alex Elder" <elder@riscstar.com>, "Inochi
- Amaoto" <inochiama@outlook.com>, "Haylen Chu" <heylenay@4d2.org>
-In-Reply-To: <aqKqKkXbTkcS-pnY@pie>
-References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com>
-	<20260909-spacemit-pll-init-v1-2-b3065ad5a4ac@linux.spacemit.com>
-	<aqKqKkXbTkcS-pnY@pie>
-Content-Transfer-Encoding: 8bit
-X-Unsent: 1
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: ND42uzdxTIzr9mYlDMBxYvGYaH25O3d4qbQeIVx9zCjRu1bKRQCQPQYr
-	9ThwbJ+HvmAa6+6QdJSCYZlE3A0Vw/IqS7JGGSDIDm0K0coYKWJy+xHRKmChsnJHWMY+7/x
-	vrl+V+YvkOjsd7lSIQtsBaB12FwJo4xB+283/kqP+3Zub1l0VFR2HZHVMdj9PJfZ1kV+DRW
-	XD3Q1f8Zs2lxtIjIh2C+zMb+snzW8OfbH9soHjShJ5/N3F5X6sntm3FW3kVQ2pCHkokBNad
-	wwvFe07YHxecDTIiTTBAj3OtVrXJ6be3eivV32C8rGqj7PTUJzBHmXVQ95PLKRTH+XdgqO5
-	BX3qVAoz/5+QGl9cEHk7oMIyv23CNPSa8ocmeqgCqKw9DAGkhgn4LZJpz6ENby7tLuhUzX4
-	nhNXrVzMGBBcQSOWbhLEDhQkra/SGTgoBzarMBEi1fzsDkzDdEaA1F+sQu2wCph5zs6d6xB
-	4vtgSdraQNI+oB7HC0heXTlnOWdetGfKjaTdkSJ+FWvTHIQPdd5KnwzYhpWFX1QRXgsYats
-	h8bywgGre1aks4Pya2pWDKeJ+r8CV1O8mfVh1X0ZUhH8lBCAfFhpCxEjyWClEGe7FRJpzuh
-	lRVG6vmqyJu8l5QKz3Tx/BAfRe9dUDPN8mggEILq3w4VIdSuRQz+3+x76SxHMdL3xvDV9uu
-	mzd6aOiSgMhu7sEQtaqgGNfvTfdT5R3JLbVxJ3L07kzHtreKObfusuFqTSFJ7WKafEFHeXe
-	kGTmTXx6W2z0rpxZIXQnlgTiRUTTnpDZDz8SBQEbJIqCq1CKUTsu2iBBLYjKWVdheq9EPuf
-	m9KqrZ8gUbrv1XxmNlujbRqELUCQDK1TEtf2cVP+sfD72p/vsVNXcGGX21Y41O7GanwpT6R
-	mHkQAKxSUvJUzGRWgECmfBzqKXHDeKSLUUh9dfJzJKyX74Hqhk66JyMtSt15L4Tmpdi2hmC
-	+GFV6JK+lOfY1ZsacL2Pt6YIfEcke6IlhkJJ34isheh06xxc0WTInU48jRdAzGI/5E0Eqsm
-	qIxUULVab5U1XrXshKACUatSqIA+wDO0WenEMpFg22CJAzm8+86Z2Pyl1YSND1rxJRFxsXG
-	PGw6F/iXUfWl1isEGEQbT8=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
 
---9670b8df4f3eb1168009e4f7bd72c141133c505de3412c738ef408f1deee
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Guodong, Philipp,
 
-On Thu, Sep 10, 2026 at 01:01:30PM +0000, Yao Zi wrote:
-> [...]
->
-> > @@ -107,22 +107,27 @@ ccu_mix_calc_best_rate(struct clk_hw *hw, unsigne=
-d long rate,
-> >  	struct ccu_mix *mix =3D hw_to_ccu_mix(hw);
-> >  	unsigned int parent_num =3D clk_hw_get_num_parents(hw);
-> >  	struct ccu_div_config *div =3D &mix->div;
-> > -	u32 div_max =3D 1 << div->width;
-> >  	unsigned long best_rate =3D 0;
-> > +	unsigned long best_delta =3D ULONG_MAX;
-> > =20
-> >  	for (int i =3D 0; i < parent_num; i++) {
-> >  		struct clk_hw *parent =3D clk_hw_get_parent_by_index(hw, i);
-> >  		unsigned long parent_rate;
-> > +		u32 div_max =3D 1 << div->width;
->
-> div_max should be invariant across iterations. Is there a reason moving
-> it inside the loop?
+On 10:09 Thu 10 Sep     , Guodong Xu wrote:
+> Hi Philipp,
+> 
+> On 2026-08-07 19:51, Guodong Xu wrote:
+> > On 2026-06-03 09:34, Philipp Zabel wrote:
+> > [ ... ]
+> > >Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+> >
+> > Gentle ping. All tags on this one are collected:
+> >
+> > Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+> > Reviewed-by: Yixun Lan <dlan@kernel.org>
+> > Acked-by: Alex Elder <elder@riscstar.com>
+> >
+> > Could you take it through the reset tree when convenient?
+> 
+> Second ping. This is a MAINTAINERS-only change and carries your
+> Acked-by, plus Reviewed-by from Yixun and Acked-by from Alex.
+> 
+> If it is easier for you, I'd like to ask Yixun whether it could go
+> through the SpacemiT SoC tree instead. Unless you object, I'd suggest
+> we go that way if it has not been picked up by 2026-09-17.
+> 
+Sounds a good plan, let's give Philipp some time to respond, if he still
+unable to proceed by that time, then I will pick it.. just want to avoid
+ collision that both of us picked accidently..
 
-It is invariant in this patch. Moving the declaration was preparation
-for patch 3, which makes the limit depend on the parent being considered:
-
-    u32 div_max =3D div->bypass & BIT(i) ? 1 : 1 << div->width;
-
-K3 bypasses the divider for some parents, so those parents must only be
-considered with a divisor of one.
-
-I will keep the declaration outside the loop in patch 2 and move it
-inside when introducing the bypass handling in patch 3. This does not
-change the final code.
-
-                                            - Troy
-
---9670b8df4f3eb1168009e4f7bd72c141133c505de3412c738ef408f1deee
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqK8ig0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQv5x4A/RFh51fufb9FcP636XKBGlniVIj2vsG1LHuvGbJC
-puCPAQDyBV2iTGZVCeXgQSOrvUYtmMpWmDu+kDhEiAGV7O8ZCQ==
-=jX00
------END PGP SIGNATURE-----
-
---9670b8df4f3eb1168009e4f7bd72c141133c505de3412c738ef408f1deee--
+-- 
+Yixun Lan (dlan)
