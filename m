@@ -1,88 +1,109 @@
-Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC31499F0B
-	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 13:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789047129; cv=pass; b=cv1FfKmxsdvgD34pay6AIyXyxtaWnc5yNdieEbDGiAhBycHifMLK5sBDZ2eef7AO0xJvffnIwKsdp/Y9M6HOUlKfnUmsFXtibHKDNDvHYvdVqxB88lhswe3mkkdBLiOmn9Kv+947CrK6c1WrYACET78JgZhDRO1GA2yUsSjCXTE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789047129; c=relaxed/simple;
-	bh=7vm9LXBnBksA7BUFdsEzvRoWR4iuOsiQeSyFd63loFk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mpqyJhI9zyNGMJHTSSb9R37lfDyBb7fGDBf1tE6NshOP4eVlB1riquCifc7Lub/pMaGUajiwVphcxipiAzs1HGHfUV3x0+9YaiV3GOGg74EjZ6iQEpIQp4bYS6a26YI0pooynW3GhxeLisDqpdV5H9dE2qb+yy1SE2C+/E+NZu8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=lgmF7+hd; arc=pass smtp.client-ip=165.173.180.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1904A0132
+	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 14:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789049388; cv=none; b=Cjpqvb0GeZ+TyN7Sc0SzZS/N8pCdSDXKDhhRlWbO0bi3IrCG6EYCawf1xGIKv3gtbT8L4i8g0yNR23gWV1p2ltzqfj30J1gj1z1nSkITGkc7qTTG/YeAmd8cJaTtYnYoGlSN8mOcFVmbsOPXNjxvJeUHDW/noVbf+hh1/DwBuv0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789049388; c=relaxed/simple;
+	bh=flauk2JAfyKEUjs5pcpTgaXIkDJP3xfV0YHLjD7hMCY=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ByulP5gR1xzztodF5YiE01KutDT8te1I6f3JYKix3hJ3IVSdKHEdix1V1AZVl2tui/sEhhINidi/3/uU3TWZBixw6jgpZk+HWVSZKAG8aQ9x7aF8++02at7idNSX/S78wY9K1TwurS/gIfXRUR6dkEov9erLJIXsuRDwdPwS350=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aGgVqqw0; arc=none smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="lgmF7+hd"
-ARC-Seal: i=1; a=rsa-sha256; t=1789047110; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=PWleW4TiyktR2f0EHZ9mwGoDojVKJftnewHry74RhnvpGAvtKipeyRDDUoOMARIcxwbFS4jCiyE2/dZquBT5Sufm/j84i8GEW8PjOTJ0KykuDLdvTZ5TBmkYUsAsb51lUkyWiCHaj2+jV9rZzy+k8U5mV6CQ5CYnR8ke+9lxxyQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789047110; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=QH+V9w9Z80FoWtzevrNm8AoJe6kQe6v9Q0++V5yLfDs=; 
-	b=cY+1fW+XDwvoCBE4MbMYO92tLurFAnByflni2Ex5Ygxhp/emLcfH9IalQZA8wIUcISNEmjmsxSci6/B073aRfE9jEoV68UNCn0zQ75yCeos0TFieIsfhtOVxFQVj2bXcEeIrTNL/DCk25gdIm2/r6YsjGsCChp828H3lVQGo59c=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789047110;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=QH+V9w9Z80FoWtzevrNm8AoJe6kQe6v9Q0++V5yLfDs=;
-	b=lgmF7+hdb6EFZi7h2f5+cgYne1yz7xjTWBiRWsQ3mii7W1ME9QtCkcjeAtete8yr
-	cwPdcrWSRlEJC4MW8wQR5cwxE9zB6wWsSL6iO9XX03uSGdV/XVLtOXcM1ivXoIKgppb
-	9ljJhdVT/4nE91vgBBLDqyfhRNNV+3UdQbxQvscs=
-Received: by mx.zohomail.com with SMTPS id 1789047108143553.7058137232074;
-	Thu, 10 Sep 2026 06:31:48 -0700 (PDT)
-Date: Thu, 10 Sep 2026 13:31:30 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Yixun Lan <dlan@kernel.org>, Alex Elder <elder@riscstar.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Haylen Chu <heylenay@4d2.org>
-Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	Yao Zi <me@ziyao.cc>
-Subject: Re: [PATCH 4/5] clk: spacemit: reject rate changes to running
- firmware PLLs
-Message-ID: <aqKxMmgpFLE3CmQ8@pie>
-References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com>
- <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aGgVqqw0"
+Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469e2254dso546310b3a.1
+        for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 07:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789049385; x=1789654185; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=flauk2JAfyKEUjs5pcpTgaXIkDJP3xfV0YHLjD7hMCY=;
+        b=aGgVqqw0HmQxAboDvcyTxIJIhC+/uKjdiTLerhMf2mKBhCokmBg4n2656IbkmSpuyX
+         wP6Bh5mrzEE2bQ/BE/+MCAjHBPBdxy1PV4HjBPVw49RURzTypgneRMyaaUURQKtXc8Uq
+         TmB9FgxofDHm3qBh5fFqlQR+/CuxGj3xKxmpaDb3axda0hUi4snVnP12tVUhygUCyAKM
+         FAzgpUnZPXrCWyHutMttSCcFYvfV8KZxQmUOUlbVFqnpuYqgcRvcWw0pYj9TBoZiNawu
+         oQWQ5XHk0D1z2msZZgjzNxzdOzBTi3Iyki8NB77mXWCTEGpz/atd4FKr0vHtOvba247M
+         i3WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789049385; x=1789654185;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=flauk2JAfyKEUjs5pcpTgaXIkDJP3xfV0YHLjD7hMCY=;
+        b=deRk6k2lz1FsBWlQUoPAxlrRnVQSQf1VXL3XmrMejeixhvOU9vwbyQmhtqIOoB3hEs
+         3Jh6uoelWxEI8VElBFqK00ABQRvja1AzDsFoLVIgL8yFEKkr5kQHu9nTNh1dsQiKXHn0
+         sX8S+y566sMDSQmxjwud0SoDqP6TaYp9vorDu34gtGGAdW4RCjg15YguLQq79xcXBTAd
+         MeSMs1WQc7LHJHX39rzvDmMVqhP2f9+XeKoDRRis83cF6xC/oAPPzW+F8f9qfDrR9gsQ
+         LOCXYNvmIVpg0FHMlEZHgMaBvo0H5IWqA1NjiOxCckbjn18ofywHLzI1M7Euru1uwa/w
+         EaKA==
+X-Forwarded-Encrypted: i=1; AKwUvBxuAIU7Bbz0Y+alboBuIh3NYEGtJBHxoc5tfrK0EQrFtjTCgjGEbKzuZeMN4aqxGPkFRSXkeQg0Ng==@lists.linux.dev
+X-Gm-Message-State: AFuF++mB4DEbr5+TDwKGsPUXBsjyhvqVhCrLlfSkSAZmOuX1XMvKcbRp
+	C1S+d25aipLvZoQLcjN75XadugptajbK2PmjXw2/4QloAtI8La0LQy4g
+X-Gm-Gg: AYBFou25BVALZUaMI4miz4X/IWbtbN4FX/CQj3LnD+gUeqB0rIr/gpI5T28NSfGFTxX
+	pqC3USwddbzAy1yfuKxhIOF4I0NvuBzp4ci77AtRLY1sAtFAxMBbm56zA1lZnoGiGnoBiq0bjSv
+	Ixa47p1AmgSMKLCcR3lOIil/xspcj3t+31n1rpWsdaTzCHtNiusZb+iXu435obalOwrZIqISvH4
+	4zW917fFLe02brGBt6JSyh4xa0GbwKAPnVh/HQkEq/4dCTPuHxM0rkRxTtq86HEALXl0kR6spSf
+	zvVuQZIDcNZ7uXE/41zn0zry/WnXP4n4nFZ/3jYG0kYkYYaHOP+d3I8esBDeoO+RU8m9eVMOPNl
+	e6QGt0qLZxUXhQ1VMV6+9Pa3MOv+x77OKECG4rXjFDG35NHUvta2tkBid27X2voV3PpTPOBALDS
+	gGNTLZPn9Gk5eKLPkw6v2dy51ywO0R9Whp/CPvpqlRTX6giO4sWRN/+A==
+X-Received: by 2002:a05:6a00:1807:b0:869:44c3:c24b with SMTP id d2e1a72fcca58-869ad9ba9d8mr3437552b3a.0.1789049384734;
+        Thu, 10 Sep 2026 07:09:44 -0700 (PDT)
+Received: from localhost ([2a12:a305:4::30fb])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86153f417f2sm8006059b3a.58.2026.09.10.07.09.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Sep 2026 07:09:43 -0700 (PDT)
+Date: Thu, 10 Sep 2026 10:09:37 -0400
+Message-ID: <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
+From: Guodong Xu <docular.xu@gmail.com>
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Yixun Lan <dlan@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ Alex Elder <elder@riscstar.com>
+Subject:
+ Re: [PATCH v2] MAINTAINERS: add entry for SpacemiT reset controller driver
+In-Reply-To: <my7qwtgrgph43hjxwmjm5hkeuxltlqjntnj5zdo7xqlrfrlffx@fp4mt7phdor4>
+References:
+ <20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
+ <62e1781e127176294088cee9c120b3173359ec4b.camel@pengutronix.de>
+ <my7qwtgrgph43hjxwmjm5hkeuxltlqjntnj5zdo7xqlrfrlffx@fp4mt7phdor4>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/289.29.40
-X-ZohoMailClient: External
 
-On Wed, Sep 09, 2026 at 10:07:04PM +0800, Troy Mitchell wrote:
-> CLK_SET_RATE_GATE only protects clocks prepared through CCF. A PLL left
-> running by firmware can have a zero prepare count, so this flag alone
-> cannot prevent set_rate() from reprogramming a live PLL.
+Hi Philipp,
 
-Would it be a better idea to simply turn off the PLL before reprogramming,
-since protected by CLK_SET_RATE_GATE, re-programming never happens when
-the PLL is required by downstream? This also seems to be simpler.
+On 2026-08-07 19:51, Guodong Xu wrote:
+> On 2026-06-03 09:34, Philipp Zabel wrote:
+> [ ... ]
+> >Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+>
+> Gentle ping. All tags on this one are collected:
+>
+> Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
+> Reviewed-by: Yixun Lan <dlan@kernel.org>
+> Acked-by: Alex Elder <elder@riscstar.com>
+>
+> Could you take it through the reset tree when convenient?
 
-> Check the hardware state and reject set_rate() while either the enable
-> or lock bit is set on K1 PLLs and K3 PLLAs. Propagate register read/write
-> failures and reject rate requests with no table candidate. Callers must
-> still move consumers away and stop the PLL before changing its rate.
-> 
-> Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-> Fixes: 3a086236c600 ("clk: spacemit: ccu_pll: add plla type clock")
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Second ping. This is a MAINTAINERS-only change and carries your
+Acked-by, plus Reviewed-by from Yixun and Acked-by from Alex.
 
-Best regards,
-Yao Zi
+If it is easier for you, I'd like to ask Yixun whether it could go
+through the SpacemiT SoC tree instead. Unless you object, I'd suggest
+we go that way if it has not been picked up by 2026-09-17.
+
+Guodong
