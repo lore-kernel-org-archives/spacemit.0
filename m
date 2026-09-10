@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A5D44F57F;
-	Thu, 10 Sep 2026 21:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDFB3AB272;
+	Thu, 10 Sep 2026 21:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789076087; cv=none; b=tnL7fymceA4oCSWLdunKoY0T8XY54vyTyBlFBEWhRu5w4ILeRpvm6my7OBcoT/ArtWlKYKGNgYiqTk6oXk+AeeCiJMBnVWPKRaOUemoSFr6TFmaHvaErYLr362C9VVEXUP1T+oyaumBMbqY5+3t4w9HRFNUeHAxL5qAy75zeNXs=
+	t=1789077249; cv=none; b=C4bDWfbkS00Mzzaar9I5DR0VstnHaB1vheW3yYHDbvG/yrVpdD5MkHsouLmA64oTSqm0E75HhsT7oe5GejWDT2XQsbifhiqGQIsWzAXW7gLuQRoG0nnIEYv5JCbdZVHy0ZWcKqR7tGxfnPjX4cf3xGcjvAYsa5qXD8NfO4tFDQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789076087; c=relaxed/simple;
-	bh=ZGnms2TjxQoWacNdUmF0Qm+c+B3Whog03U4Pfq/FbIU=;
+	s=arc-20240116; t=1789077249; c=relaxed/simple;
+	bh=scgTMn9cho5tbuQl+yLGplxtAJXjYo4bJI/GKQ5kJ0c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GGN8o4brCAI+IYgBRqmrW1aT+LUNx3LXfOBpoa/IYaCa8GTjgTtHXuxeb1WAippam9Le5tRN0kIg4CAUUCstAgGhd6/puggiZZCj3G/2FzdMQGgYrVnbVRlg4Cw8niicDGaLe+bJgGe8VNeblVPOFX982F9No5f9jDvV7Dnz/PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMnwZ3m9; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=APnG6Z4oFq22v6qWZ9VIp+Ivo2XeCjDAgNi7KKbjlPZNg7Cn1xCTIc0jo49tRhjCuWEsu3Jk3NMdgYSGt6b00MYbcUS+NgziCvRWTFmR5XVaIJZ09QwHAtNIfdj4/6hcSz2+xoIgiKQyS4tgGSPViVoR+LYxLMAdkBp/WuczVWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jp26CEy7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMnwZ3m9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2E81F000FF;
-	Thu, 10 Sep 2026 21:34:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jp26CEy7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18701F000FF;
+	Thu, 10 Sep 2026 21:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789076084;
-	bh=PKXkT/ObO3AiQVnD0gr+mNUkvO7QaDovBbeHZ8BprGA=;
+	s=k20260515; t=1789077247;
+	bh=nYeAcoA9jFFh9C8PqEV1VOBXg4x7U3Mq9X1SD9tZuNc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LMnwZ3m9+8G6xA4eJcyg1vRKBen51ojARFFWQLxA+XAWKssNS5/JGUuIA9Q3kaQ4M
-	 7iDkzZTk6rPn3jQ6l0xCcb2z4KiVMYykFnFFeV/EOTCrDzyqXvNohLlz+1999VnLAy
-	 /VjLfQZk9KlFP1A+f3C5he1lBEooJPUm7ZFCo83a6U97ux7nvwX/qbC7gVZKXkiVBz
-	 xYJoK9fr3iuTrxVhyXoeg3MqRr2OvSuFmqthLdwvbz21VZ8ednjFGqp+VIpNHNuTCI
-	 rvhouhNv0hhn6eub0AnMJabvvlOw/AftJy2U7UalOkbDpLmBgd77l94K6XpSI9z3JU
-	 OxH2ys6sle/6w==
-Date: Thu, 10 Sep 2026 21:34:42 +0000
+	b=Jp26CEy7TGxzHajIK1zKX5wUVTwsbFkA3dt5KTxF33+g54wVc28gdS/LuruIDC1m0
+	 b+3lxKbnzDqChUBuBLe13XTnfOTsQjVIN8swVwzqNCVNOmeh1EpVeN2k5OXWD3g5Oh
+	 emF6mG17b29j3xs5F2GqWLBbaBTbsXVxHq8wvDpKfWOLSfSkIrAmeuK080HKGBvqaL
+	 aFUuwCHtzc2PbLdv8TINXqhbbvWYwT+1S9XCSYKur2if1Jq+dzk3VCGlFNU8xr4ICE
+	 TBki/Mw6Gtjf4Ux1Ot0K9TcaJ3ATQkeQ8K/BXBftySKIUYq+hCQFlBdwzvcdFWzVQZ
+	 vTdmnZOn1pkbg==
+Date: Thu, 10 Sep 2026 21:54:05 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Alex Elder <elder@riscstar.com>
-Subject: Re: [PATCH v2] MAINTAINERS: add entry for SpacemiT reset controller
- driver
-Message-ID: <20260910213442-GKE2346@kernel.org>
-References: <20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
- <62e1781e127176294088cee9c120b3173359ec4b.camel@pengutronix.de>
- <my7qwtgrgph43hjxwmjm5hkeuxltlqjntnj5zdo7xqlrfrlffx@fp4mt7phdor4>
- <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH 1/1] riscv: dts: spacemit: enable onboard eeprom for
+ OrangePi
+Message-ID: <20260910215405-GKF2346@kernel.org>
+References: <20260901080010.95040-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,36 +47,34 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
+In-Reply-To: <20260901080010.95040-1-amadeus@jmu.edu.cn>
 
-Hi Guodong, Philipp,
-
-On 10:09 Thu 10 Sep     , Guodong Xu wrote:
-> Hi Philipp,
+On 16:00 Tue 01 Sep     , Chukun Pan wrote:
+> Enable the i2c2 bus and add the connected GT24C02B EEPROM.
 > 
-> On 2026-08-07 19:51, Guodong Xu wrote:
-> > On 2026-06-03 09:34, Philipp Zabel wrote:
-> > [ ... ]
-> > >Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-> >
-> > Gentle ping. All tags on this one are collected:
-> >
-> > Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-> > Reviewed-by: Yixun Lan <dlan@kernel.org>
-> > Acked-by: Alex Elder <elder@riscstar.com>
-> >
-> > Could you take it through the reset tree when convenient?
+> [   6.766] TlvInfo Header:
+> [   6.766]    Id String:    TlvInfo
+> [   6.769]    Version:      1
+> [   6.772]    Total Length: 38
+> [   6.775] TLV Name             Code Len Value
+> [   6.779] -------------------- ---- --- -----
+> [   6.783] Base MAC Address     0x24   6 .....
+> [   6.788] MAC Addresses        0x2A   2 2
+> [   6.792] Product Name         0x21  15 x1_orangepi-r2s
+> [   6.797] Unknown              0x41   1  0x01
+> [   6.801] CRC-32               0xFE   4 0xE5A74B18
+> [   6.806] Checksum is valid.
 > 
-> Second ping. This is a MAINTAINERS-only change and carries your
-> Acked-by, plus Reviewed-by from Yixun and Acked-by from Alex.
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> ---
+> This patch depends on the following to avoid conflicts:
+> https://lore.kernel.org/lkml/20260802100101.327815-1-amadeus@jmu.edu.cn/
+> ---
+>  .../boot/dts/spacemit/k1-orangepi-r2s.dts     | 30 ++++++++++++++++++
+>  .../boot/dts/spacemit/k1-orangepi-rv2.dts     | 31 +++++++++++++++++++
+>  2 files changed, 61 insertions(+)
 > 
-> If it is easier for you, I'd like to ask Yixun whether it could go
-> through the SpacemiT SoC tree instead. Unless you object, I'd suggest
-> we go that way if it has not been picked up by 2026-09-17.
-> 
-Sounds a good plan, let's give Philipp some time to respond, if he still
-unable to proceed by that time, then I will pick it.. just want to avoid
- collision that both of us picked accidently..
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
 -- 
 Yixun Lan (dlan)
