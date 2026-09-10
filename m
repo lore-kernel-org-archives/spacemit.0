@@ -1,42 +1,42 @@
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D842E38399A
-	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 13:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC31499F0B
+	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 13:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789045338; cv=pass; b=i5bGGG1B2N93pcjhyjAT8qc4PQCnE1cQN6pR/8n5iUV0BM1sU2J3Z5ioFt+s1KeSmkbRnX/RqBCF7geeTZKTRBWT9v9VeRY5/Nm6VYqnRt158KiS1YxoRKvkLR/09MyIhhgFwQ/ItTk9FlT/D1l9P4zTBs7pjWPK/dEDM497iJA=
+	t=1789047129; cv=pass; b=cv1FfKmxsdvgD34pay6AIyXyxtaWnc5yNdieEbDGiAhBycHifMLK5sBDZ2eef7AO0xJvffnIwKsdp/Y9M6HOUlKfnUmsFXtibHKDNDvHYvdVqxB88lhswe3mkkdBLiOmn9Kv+947CrK6c1WrYACET78JgZhDRO1GA2yUsSjCXTE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789045338; c=relaxed/simple;
-	bh=Ry9QkMDw/zkJ+YWqQ2iFcmSpH/1eNOCI1ejCIJpcBDI=;
+	s=arc-20240116; t=1789047129; c=relaxed/simple;
+	bh=7vm9LXBnBksA7BUFdsEzvRoWR4iuOsiQeSyFd63loFk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HSMdk+hqNB3slIhxxVFm2UJK0QFtqNdVPODnQY5x2ME9aTv7uDkhxQXTupqWq7O56X4/SFiY2PElPVdSFto+DJq8Bc0IRcB8V6zQf8ijcYttFJ15v+8UWLNl4ln7aU4FFBUvIYzoEMPqM4g0/4s+J4dqbrbEVfRSeBbAyU9QuVw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=ATru7tAn; arc=pass smtp.client-ip=165.173.182.15
+	 Content-Type:Content-Disposition:In-Reply-To; b=mpqyJhI9zyNGMJHTSSb9R37lfDyBb7fGDBf1tE6NshOP4eVlB1riquCifc7Lub/pMaGUajiwVphcxipiAzs1HGHfUV3x0+9YaiV3GOGg74EjZ6iQEpIQp4bYS6a26YI0pooynW3GhxeLisDqpdV5H9dE2qb+yy1SE2C+/E+NZu8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=lgmF7+hd; arc=pass smtp.client-ip=165.173.180.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="ATru7tAn"
-ARC-Seal: i=1; a=rsa-sha256; t=1789045318; cv=none; 
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="lgmF7+hd"
+ARC-Seal: i=1; a=rsa-sha256; t=1789047110; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=lHpaTgX2lR6byZhp3HNgrrg+eHsQoyKnpEOL3YjMpvnsDvc50yZBRpsUFirnmc3qQNzMBLtd4JF/+VyFIFaEEEvcyNStjT/dvbFKppFL3+VsOwdz5ibYeSnl//2mEY9Pg77ECz1T8ItGgeVP0uT+X6uJrfPWfUJvpGro2xi+8qA=
+	b=PWleW4TiyktR2f0EHZ9mwGoDojVKJftnewHry74RhnvpGAvtKipeyRDDUoOMARIcxwbFS4jCiyE2/dZquBT5Sufm/j84i8GEW8PjOTJ0KykuDLdvTZ5TBmkYUsAsb51lUkyWiCHaj2+jV9rZzy+k8U5mV6CQ5CYnR8ke+9lxxyQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789045318; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=45nffq/Zr2o5JdVjGW3q6mmCc+x5WnknLVPkYUCAZq4=; 
-	b=M7pZyTw5EtUm8IBdgFL7EicITtLG3RKxLGTFXRICT3osAtIpgk4cQjURjZwvvhLIEDLN8QI0NIeV7kqjhSUiXUP8QhJRpBdo6M+b22se7hRcT1n3nQJG7C+GzmjXh3jlbjptcDpI/+zfvXNxISu+Yi2g6r7ocZtiQFxvysEO1hk=
+	t=1789047110; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=QH+V9w9Z80FoWtzevrNm8AoJe6kQe6v9Q0++V5yLfDs=; 
+	b=cY+1fW+XDwvoCBE4MbMYO92tLurFAnByflni2Ex5Ygxhp/emLcfH9IalQZA8wIUcISNEmjmsxSci6/B073aRfE9jEoV68UNCn0zQ75yCeos0TFieIsfhtOVxFQVj2bXcEeIrTNL/DCk25gdIm2/r6YsjGsCChp828H3lVQGo59c=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=ziyao.cc;
 	spf=pass  smtp.mailfrom=me@ziyao.cc;
 	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789045318;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789047110;
 	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
 	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=45nffq/Zr2o5JdVjGW3q6mmCc+x5WnknLVPkYUCAZq4=;
-	b=ATru7tAnfYYtc0DMIMF6ID7+HJHOYpLIN/MZ6uzWOyq7Jhx+dbM2xD8jzSlLBZM5
-	XMY3BB7iJvqxpMkHygNJRTo1N+miXigrshtfW+MbItPWjPx4sKbW5nYfRi4m57ACH/t
-	HoL4nkg/jo8Pqs80yfNrFu/bOsZm3Z4vGFt9vdeU=
-Received: by mx.zohomail.com with SMTPS id 1789045316428631.4804164269831;
-	Thu, 10 Sep 2026 06:01:56 -0700 (PDT)
-Date: Thu, 10 Sep 2026 13:01:30 +0000
+	bh=QH+V9w9Z80FoWtzevrNm8AoJe6kQe6v9Q0++V5yLfDs=;
+	b=lgmF7+hdb6EFZi7h2f5+cgYne1yz7xjTWBiRWsQ3mii7W1ME9QtCkcjeAtete8yr
+	cwPdcrWSRlEJC4MW8wQR5cwxE9zB6wWsSL6iO9XX03uSGdV/XVLtOXcM1ivXoIKgppb
+	9ljJhdVT/4nE91vgBBLDqyfhRNNV+3UdQbxQvscs=
+Received: by mx.zohomail.com with SMTPS id 1789047108143553.7058137232074;
+	Thu, 10 Sep 2026 06:31:48 -0700 (PDT)
+Date: Thu, 10 Sep 2026 13:31:30 +0000
 From: Yao Zi <me@ziyao.cc>
 To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	Stephen Boyd <sboyd@kernel.org>,
@@ -48,10 +48,11 @@ To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 Cc: linux-clk@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Yao Zi <me@ziyao.cc>
-Subject: Re: [PATCH 2/5] clk: spacemit: make MIX rate selection consistent
-Message-ID: <aqKqKkXbTkcS-pnY@pie>
+Subject: Re: [PATCH 4/5] clk: spacemit: reject rate changes to running
+ firmware PLLs
+Message-ID: <aqKxMmgpFLE3CmQ8@pie>
 References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com>
- <20260909-spacemit-pll-init-v1-2-b3065ad5a4ac@linux.spacemit.com>
+ <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,66 +61,28 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260909-spacemit-pll-init-v1-2-b3065ad5a4ac@linux.spacemit.com>
+In-Reply-To: <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com>
 X-Zoho-Virus-Status: 1
 X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/289.29.40
 X-ZohoMailClient: External
 
-On Wed, Sep 09, 2026 at 10:07:02PM +0800, Troy Mitchell wrote:
-> CCF passes the selected parent's rate to set_rate(). Searching other
-> parents at that point can produce a divider for a different source,
-> making the programmed rate disagree with CCF's selection.
-> 
-> Restrict divider selection to the supplied parent rate and use the same
-> rounding as divider_recalc_rate(). Track the best error separately so
-> low-rate requests do not leave the initial zero-Hz candidate selected.
-> Skip zero-rate parents and have determine_rate() reject requests when no
-> usable parent exists.
+On Wed, Sep 09, 2026 at 10:07:04PM +0800, Troy Mitchell wrote:
+> CLK_SET_RATE_GATE only protects clocks prepared through CCF. A PLL left
+> running by firmware can have a zero prepare count, so this flag alone
+> cannot prevent set_rate() from reprogramming a live PLL.
+
+Would it be a better idea to simply turn off the PLL before reprogramming,
+since protected by CLK_SET_RATE_GATE, re-programming never happens when
+the PLL is required by downstream? This also seems to be simpler.
+
+> Check the hardware state and reject set_rate() while either the enable
+> or lock bit is set on K1 PLLs and K3 PLLAs. Propagate register read/write
+> failures and reject rate requests with no table candidate. Callers must
+> still move consumers away and stop the PLL before changing its rate.
 > 
 > Fixes: 1b72c59db0ad ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
+> Fixes: 3a086236c600 ("clk: spacemit: ccu_pll: add plla type clock")
 > Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  drivers/clk/spacemit/ccu_mix.c | 27 +++++++++++++++++++++------
->  1 file changed, 21 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/clk/spacemit/ccu_mix.c b/drivers/clk/spacemit/ccu_mix.c
-> index a8b407049bf4d..da3c5685d4f65 100644
-> --- a/drivers/clk/spacemit/ccu_mix.c
-> +++ b/drivers/clk/spacemit/ccu_mix.c
-> @@ -107,22 +107,27 @@ ccu_mix_calc_best_rate(struct clk_hw *hw, unsigned long rate,
->  	struct ccu_mix *mix = hw_to_ccu_mix(hw);
->  	unsigned int parent_num = clk_hw_get_num_parents(hw);
->  	struct ccu_div_config *div = &mix->div;
-> -	u32 div_max = 1 << div->width;
->  	unsigned long best_rate = 0;
-> +	unsigned long best_delta = ULONG_MAX;
->  
->  	for (int i = 0; i < parent_num; i++) {
->  		struct clk_hw *parent = clk_hw_get_parent_by_index(hw, i);
->  		unsigned long parent_rate;
-> +		u32 div_max = 1 << div->width;
 
-div_max should be invariant across iterations. Is there a reason moving
-it inside the loop?
-
->  		if (!parent)
->  			continue;
->  
->  		parent_rate = clk_hw_get_rate(parent);
-> +		if (!parent_rate)
-> +			continue;
->  
->  		for (int j = 1; j <= div_max; j++) {
-> -			unsigned long tmp = DIV_ROUND_CLOSEST_ULL(parent_rate, j);
-> +			unsigned long tmp = DIV_ROUND_UP_ULL(parent_rate, j);
-> +			unsigned long delta = abs_diff(tmp, rate);
->  
-> -			if (abs(tmp - rate) < abs(best_rate - rate)) {
-> +			if (delta < best_delta) {
-> +				best_delta = delta;
->  				best_rate = tmp;
->  
->  				if (div_val)
-
-Regards,
+Best regards,
 Yao Zi
