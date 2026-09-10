@@ -1,46 +1,52 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F73633A9C1
-	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 05:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789019155; cv=pass; b=rJ7VIu7vUZh12HVw4a+gCjRC89V2AncCUgeOvg6XY2+Qw40x18C7hp+lLMCAuVg9pduN3+sVDcCIOaho76ISbL2Da6ISezYu5h6PZz+yHbaCp8I2mQJ1hlUk2xkbB46CQHDPtNztoXomNDQkNIvK0rgPegflU8mPO1/JX7hAzbg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789019155; c=relaxed/simple;
-	bh=YtdP46YGsVfg6Y0jNMmBJjB9UHdT/wZMDHv9ZbhZUD4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D2130DEA6
+	for <spacemit@lists.linux.dev>; Thu, 10 Sep 2026 06:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789022588; cv=none; b=a70CUz/iksNrw7Pa7lkjTPHKE+nKp0ZtRiHSvdN9xrKWXEBKkPx1xOTx/GHGDlsTSkU8rDgwMjrEkHcLBsYv6g9Zw04hYLpFd1tAMgkzydjanhWmaZOopXpYOu/BiW97pHM3bSSdCmU+hsJO7/kE1Neu/U4+DpNh8FjLV6EZ10Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789022588; c=relaxed/simple;
+	bh=PnSdyt8IKSG7Cusf+et3nfCE6GN+a6K2xDtnxZ+Uwgk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KrKlTXcYXQcSzyT03u9ntjpCuJh/7eI0BWtD+bcNlTx4yHkndOCDGQbPrHZfZhdjDsMsCAiKJlUxp6jsnXyMDoPXOSdnWhCRS9BL9uXGPC7Ti8vYhY5cp4W5Xtov5oRlpPAVxiwCfnFMVaOROo9rlCDiQuZPyf69GLwc3KRGkIo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=BViIfc2j; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
+	 Content-Type:Content-Disposition:In-Reply-To; b=usu23/HqtSJHSy3XTI0Mh8/vErM6gY3ixKGe1f0cOMin+JUT66z8bsl76MCxu/bOtspgMTr2SnXrog606XDDmSLPh/qWW6/kRpgtd/RQg+JQul4eewn6VmZDu70hiZ4uWLBwzVYJO86EV2Kn11ky0aro0+s1E+AVvfsgHUZ/gfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nEGUocWT; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="BViIfc2j"
-ARC-Seal: i=1; a=rsa-sha256; t=1789019110; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=AkQWj5X2/WfkO6AuIy0TCQ1tG9312gOD3opHqvuSuXenAlsy6sjD8nEWUM6u/OxbXtSB7rcldEYAOYPoLVUDRc3tNkihEMnZYibMnkYG4XrnYV0wNB1Igh2Eo/Zw8VVBx4QtiYQvhe3grL3qBDxP4SVeMQuEcg7+mDfob1QDJ2o=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789019110; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=gSn3Fj7xFgo+r0eHxl6g7t6RSpvjjOk+wb4fUejubdY=; 
-	b=AUn5a2goTpVrQ8O17s8qeAvcAcpm9jWzPaN0TbprNnbB9r3ctPRCjjKZ3MKeIKWvfS271CSpRJ2O26M9Aa4xMRlxnIx4qhGruvbBHgCpGLGFdeNB7kbfDviPssfXPgqhKrhEvl5YyFB5gVisclvKa2Sh56s3OBL8e8Rp795XK0o=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=ziyao.cc;
-	spf=pass  smtp.mailfrom=me@ziyao.cc;
-	dmarc=pass header.from=<me@ziyao.cc>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789019110;
-	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=gSn3Fj7xFgo+r0eHxl6g7t6RSpvjjOk+wb4fUejubdY=;
-	b=BViIfc2jSXaV5qCndq2qxXIi/yhYpkr2fIHGSTQY7C4N4AQCC9L6shvguAwLLpa0
-	j0qgMZqfiWXFbLn3PMCzSfWmSGbsBCDRA1/uHBlxujS0Pjg/14q42l7vJdoewV+jxAJ
-	CnuNfTLwDFbsmRBBK0fKAAGmWU47BjYfznWfx104=
-Received: by mx.zohomail.com with SMTPS id 1789019108502587.6996467974229;
-	Wed, 9 Sep 2026 22:45:08 -0700 (PDT)
-Date: Thu, 10 Sep 2026 05:44:50 +0000
-From: Yao Zi <me@ziyao.cc>
-To: Inochi Amaoto <inochiama@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nEGUocWT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789022587; x=1820558587;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=PnSdyt8IKSG7Cusf+et3nfCE6GN+a6K2xDtnxZ+Uwgk=;
+  b=nEGUocWTzP0VqouPLnX+yoarTyWW14EGLl4QS/KOS2unNvPLw2i/Q7wM
+   m4C8oMJ9jf+5axPkLfGBRcC9d3wazWUXVgnq1tVHEEr3Mh8G6rfG6nKJH
+   OmvSyp7gJbQpiKbOurQIn8F5fAOx4dRBTgwMhS51pDhJSeBJBQXWIWBfg
+   BDtPnBub22nlOQrjMxIgLONyPFWjP5bJAg3x5aaIEbbkQTKE3P0rS5J4W
+   AG4KQdD7Xv5nLKAk4U0yXtkZ7e6AUlwNapcfxKGFR0n+++4tLS/ZtSlyf
+   H1j74oKQZFn3DySSI7Au/OOtg4mDKmrWU1hhZjqW9V7XK9UjWXEuFqlHN
+   g==;
+X-CSE-ConnectionGUID: 3p9GaxlCQUu93sX1bIWK2w==
+X-CSE-MsgGUID: 0ZebI3JMTLOkMZtTckjN4Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11900"; a="99792609"
+X-IronPort-AV: E=Sophos;i="6.25,271,1779174000"; 
+   d="scan'208";a="99792609"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 23:43:06 -0700
+X-CSE-ConnectionGUID: qMrwe2q5S86Ch2Xiv4qJ6A==
+X-CSE-MsgGUID: vOjSCGXARA64SzNa76+uMQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,271,1779174000"; 
+   d="scan'208";a="275058100"
+Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.177])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Sep 2026 23:42:58 -0700
+Date: Thu, 10 Sep 2026 09:42:55 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Yao Zi <me@ziyao.cc>
+Cc: Inochi Amaoto <inochiama@gmail.com>, Jingoo Han <jingoohan1@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
@@ -68,13 +74,14 @@ Cc: Jingoo Han <jingoohan1@gmail.com>,
 	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
 	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>, Yao Zi <me@ziyao.cc>
+	Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH v5 1/6] PCI: spacemit-k1: Add device data support
-Message-ID: <aqJDvogeo3avWWQ3@pie>
+Message-ID: <aqJRbzZhROtXncZu@ashevche-desk.local>
 References: <20260907112606.465778-1-inochiama@gmail.com>
  <20260907112606.465778-2-inochiama@gmail.com>
  <ap_i5Pw4nVB4LZ-7@ashevche-desk.local>
  <aqESGs3_BxOd4PYg@inochi.infowork>
+ <aqJDvogeo3avWWQ3@pie>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -83,52 +90,39 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aqESGs3_BxOd4PYg@inochi.infowork>
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/289.6.0
-X-ZohoMailClient: External
+In-Reply-To: <aqJDvogeo3avWWQ3@pie>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Wed, Sep 09, 2026 at 04:00:33PM +0800, Inochi Amaoto wrote:
-> On Tue, Sep 08, 2026 at 01:26:44PM +0300, Andy Shevchenko wrote:
-> > On Mon, Sep 07, 2026 at 07:26:00PM +0800, Inochi Amaoto wrote:
-> > > To reuse the K1 PCIe driver logic for K3 PCIe controller, add device
-> > > data to handle the K1 specific logic and make room for the incoming
-> > > logic for K3.
+On Thu, Sep 10, 2026 at 05:44:50AM +0000, Yao Zi wrote:
+> On Wed, Sep 09, 2026 at 04:00:33PM +0800, Inochi Amaoto wrote:
+> > On Tue, Sep 08, 2026 at 01:26:44PM +0300, Andy Shevchenko wrote:
+> > > On Mon, Sep 07, 2026 at 07:26:00PM +0800, Inochi Amaoto wrote:
+
+...
+
+> > > > +	data = device_get_match_data(dev);
+> > > > +	if (!data)
+> > > > +		return -ENODEV;
+> > > 
+> > > It's better to use -ENODATA which will help to distinguish from other ENODEV
+> > > cases (which are more often to happen).
 > > 
-> > ...
-> > 
-> > >  static int k1_pcie_probe(struct platform_device *pdev)
-> > >  {
-> > > +	const struct k1_pcie_device_data *data;
-> > >  	struct device *dev = &pdev->dev;
-> > >  	struct k1_pcie *k1;
-> > >  	int ret;
-> > >  
-> > > +	data = device_get_match_data(dev);
-> > > +	if (!data)
-> > > +		return -ENODEV;
-> > 
-> > It's better to use -ENODATA which will help to distinguish from other ENODEV
-> > cases (which are more often to happen).
-> > 
+> > OK, thanks
 > 
-> OK, thanks
+> Honestly, I don't think this should even happen, since every compatible
+> supported by the driver carries its own of_match_data, and failing to
+> do so is obviously a driver bug, so I think this branch could be
+> dropped.
 
-Honestly, I don't think this should even happen, since every compatible
-supported by the driver carries its own of_match_data, and failing to
-do so is obviously a driver bug, so I think this branch could be
-dropped.
+Does this driver do not support driver_override? How comes?
 
-> > >  	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
-> > >  	if (!k1)
-> > >  		return -ENOMEM;
-> > 
-> > -- 
-> > With Best Regards,
-> > Andy Shevchenko
-> > 
-> > 
-> 
+(Note, Sashiko is full of the issues of not checking for NULL the matching data
+ and hence it describes a scenario in which this leads to NULL pointer
+ dereference.)
 
-Best regards,
-Yao Zi
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
