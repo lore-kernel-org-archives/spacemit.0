@@ -1,117 +1,102 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCF93C3C06
-	for <spacemit@lists.linux.dev>; Fri, 11 Sep 2026 02:03:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789092232; cv=none; b=S0Yw/kSFC2mMQxTnsZ9YQ65/UBmm0BjZora76rgY1TBxMgAJjML9vLosdmYJOiFMKYMJD7mN9boTixSNI5hcDqzhSg+tLf83pOrLRMwdEKZuULJzhQG38xTbLTKT+p2xAzlDF2zK7Wg5HRjWcxHkA7g3IaceJXafHwymI+i34GY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789092232; c=relaxed/simple;
-	bh=p4+ap8iN4dSSeNIC2F+epq8WIYVdpPuH33P0vIVK/GU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=InD1P63xKF+GZSfPtOrwvWVxX6JNnKA/Eb+2WwwBvBVpv5wh8JRfm1p3OLtidtrTiNCQUj3GKDJDWN3yfB8M1wdkt2/cWyQPO0IYoM7FdfFrtXCf8ZKspGuQDJzERLxb9LILpfZcneE1fVskuQ+IVBJHeQ6HdHK5dBYyeqaVpZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=ciCR84JG; arc=none smtp.client-ip=52.59.177.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6511C3F58FF
+	for <spacemit@lists.linux.dev>; Fri, 11 Sep 2026 06:09:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789106976; cv=pass; b=XcWrqg6L+b4FKfJ3ljXdp7e1HxK/5ddAGYdaHpzApdvkG0T66oKLcBQastPj2Vqjm7e/bU2DkbACj0T4U6bkuBVxM/AS85DWdYGUObQijtjj0P3jxoX6eVEY2zj/zOnNH15zNw6jAWvmAtCWvxAXfBYH/TmYSwhaHyKPDzFFYIM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789106976; c=relaxed/simple;
+	bh=lXI6Xn+i8JvmZ2r1sj3SEtFizb9NlaHcaZbdD/xGw3w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=poAVzoSCJk5yXYrD84CEL/cCtcIh51AlDR77I4kw38oMxUMu1mns0ogCI/Evj8x5It6mokKnk8g4lcRIvfUsGn7qsIynRoDb1/qaB71RXWlHpzZt3WLHfCnkazZ+qA8g+F7hrtuClGCKF0p5SW4oEDvLhCPpxCWKK4tmlHpr2Pw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc; spf=pass smtp.mailfrom=ziyao.cc; dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b=EKdB/M5Y; arc=pass smtp.client-ip=165.173.182.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="ciCR84JG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789092180;
-	bh=p4+ap8iN4dSSeNIC2F+epq8WIYVdpPuH33P0vIVK/GU=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=ciCR84JG8J45yBUMsDQsuJUMc6ABdMe+Z2YL6pHg+/rt9iwLkcOBEnQ++YAoT8y90
-	 TVyUMKVYB80dNJLA9W/ZVz46y6lV5uoehYp2uCwYx+9B/g4N9U4o9826wF3uUb4igI
-	 KMhiDlJ0VKJDgnRJJj+xcTzBRMLJ36BOuSVRfSOs=
-X-QQ-mid: esmtpsz19t1789092172t4f8b07e9
-X-QQ-Originating-IP: aSvGHA2+aoIKS3fHxwTlfYEZdf0xYuWX7HM/PfxhtbM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 11 Sep 2026 10:02:50 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10264822679062085663
-EX-QQ-RecipientCnt: 13
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=me@ziyao.cc header.b="EKdB/M5Y"
+ARC-Seal: i=1; a=rsa-sha256; t=1789106942; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=MOdMMOA11nW6/J/W5UFmtmBK+Myeyrj9e4toNDjwVC6ozieasXr3f+Gddaim3g2OZAeFQRJuU9UugusvP3HdfByrZlAmNZWcOXjgFJtqD92zPZaMFi5AglvCYPahR33kuXXLGs85Gqjlu0O4EEZXQH2Gq+0QzzGjyCyDcOIzm10=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1789106942; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=BzCWIm9SHWefUAfRNuRqKetUCaMam98cRazVY0T6n/Q=; 
+	b=EHNXosPFiWD9gKtKX/rOoy0Aq0RPTa+lAyRI71yFewPwzVx6jrDCVloWAUhP33D+iJt3uLW1y7V0zdgvbqcWqRloTYD5oWMJXbtPMhKTNk8Q8jmVf3N8WBkK3VNbrYNxYgkT1MtxqYxU+FF+XMRRcjjyjxG+Itzu1xIpHWCJqYo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789106942;
+	s=zmail; d=ziyao.cc; i=me@ziyao.cc;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=BzCWIm9SHWefUAfRNuRqKetUCaMam98cRazVY0T6n/Q=;
+	b=EKdB/M5YRvPU4+d8P1+0AhgvguH8AVpGPwkMhjr+oAKdaz9S/KDjP3JkjXaerv4T
+	NcbFZiYWds6qL9sDauM0YUpxpUAh2fnAMC0HyvxzAfF60bkx76FTbC2cA8hDqbrHclM
+	Jxph0tnkk2lAiivc08DiQjMWfOyMwspreIS5IBqA=
+Received: by mx.zohomail.com with SMTPS id 1789106940627378.773449342185;
+	Thu, 10 Sep 2026 23:09:00 -0700 (PDT)
+Date: Fri, 11 Sep 2026 06:08:46 +0000
+From: Yao Zi <me@ziyao.cc>
+To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>,
+	"Yao Zi" <me@ziyao.cc>, "Stephen Boyd" <sboyd@kernel.org>,
+	"Brian Masney" <bmasney+clk@redhat.com>,
+	"Jerome Brunet" <jbrunet+clk@baylibre.com>,
+	"Yixun Lan" <dlan@kernel.org>, "Alex Elder" <elder@riscstar.com>,
+	"Inochi Amaoto" <inochiama@outlook.com>,
+	"Haylen Chu" <heylenay@4d2.org>
+Cc: <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/5] clk: spacemit: reject rate changes to running
+ firmware PLLs
+Message-ID: <aqOa7jnonuXhUoy5@pie>
+References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com>
+ <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com>
+ <aqKxMmgpFLE3CmQ8@pie>
+ <DLC48RE9YAU6.1YO47FZILOUWJ@linux.spacemit.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=215ee3cf27d68f54324eca2221f65eb243d448b430723bfe53a69c3edd9e;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 11 Sep 2026 10:02:47 +0800
-Message-Id: <DLC48RE9YAU6.1YO47FZILOUWJ@linux.spacemit.com>
-Subject: Re: [PATCH 4/5] clk: spacemit: reject rate changes to running
- firmware PLLs
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Yao Zi" <me@ziyao.cc>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Stephen Boyd" <sboyd@kernel.org>,
- "Brian Masney" <bmasney+clk@redhat.com>, "Jerome Brunet"
- <jbrunet+clk@baylibre.com>, "Yixun Lan" <dlan@kernel.org>, "Alex Elder"
- <elder@riscstar.com>, "Inochi Amaoto" <inochiama@outlook.com>, "Haylen Chu"
- <heylenay@4d2.org>
-Cc: <linux-clk@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260909-spacemit-pll-init-v1-0-b3065ad5a4ac@linux.spacemit.com> <20260909-spacemit-pll-init-v1-4-b3065ad5a4ac@linux.spacemit.com> <aqKxMmgpFLE3CmQ8@pie>
-In-Reply-To: <aqKxMmgpFLE3CmQ8@pie>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: ND42uzdxTIzrAUXRIQvKYrDAXR9xjCPK2SxrDkBOF/Ht8IhQa4fdQXo5
-	siNFl6sCpD4Cnn7FqEYx8IacMqqy26AJrkNM2hMaoH1URoLv46oyJYlo/JtxHQ4zT48UXaw
-	o6+6Wc6TwK+SZrxKTnG5LQw6oTRn9SiuhMpsA5bT6dnNOxMZLPDR1tZMIO8PLNeKm7rQB1A
-	Bea/gsjFkFeDoQqcYaymbudKKXnpL488FCdo/BqHBzH43kzPv2DeBgSKkmVDQ+ZwTQo5fAu
-	D0z76ghwqxsKdvf5eprwylYrnObBBQ93vRKJFFtjpGbKqRxRSyD003LhPubrhDjtKAjeACj
-	EJ4QXfL2RZH0gbBkw2tr68zTzfHa4EkaaGNpYR1tTBVQ1fJkDP0dzl51Eb6Z2ljo+TTzio/
-	2C7crv0vxaG5T7xtWOL2DhfSkch4JglXeZK2uZpEBeHB7u2BBwmEOhkygXledXvSwG6wvGk
-	KZVy20AafBQ/2+GHQK+jDcZ8NoAmZmLu5QWJ4KSXUS3pbzSw0a+9pXulN4cUqQO4tm5ogx+
-	jIQIg7tz/LXOW0Grq4lbwASWrtZIb9I4FohidJXd096q9s3bQzpms9+pd4ylJpnvbtI9xf9
-	S6JirXSa1uN3riJFxMqru7lIVAEjNcDUKXMEKAF7JrBHxiRzxo5zl3Rql4K96ZEMbgyVgFy
-	B3nOGaU6ccxpwISJMt6wNyUeSKUAxOx+UkgYfbUaD7vFTrhnMvMztlfY6c+XBCgygpe1LJC
-	pfoplvrxti0sqLro5HFCNBUghn7JSbRM/VvblNpJ27DrbBOY0UCu5dM8oOTKrbjQHqvpOCT
-	F+ApYaqBIM6BCkOxh1Kx39N0zM0NHeOmdxoF9e50xq9POgTHalifb2gZu+VJ5iQ5+MeS4ah
-	esXFaXh6WasB1LivaAImsXrfAriehAZwcnwLMTrKPP9wAPfaWGPEuhcxIHHTCNjJlpBnM0g
-	lwQxfP4R36xKBFiB3u1umhVTeIgiA3xR27o+gLzOGpowxaDFLWf3WW53Bq3/ZMaVVZTNycp
-	jlK55kkRPNIebTzd4bXGRZbYw6PYaLoVNC7lEYAFKpveAhZ2D5id8rn2c6gl0=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DLC48RE9YAU6.1YO47FZILOUWJ@linux.spacemit.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/289.97.79
+X-ZohoMailClient: External
 
---215ee3cf27d68f54324eca2221f65eb243d448b430723bfe53a69c3edd9e
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+On Fri, Sep 11, 2026 at 10:02:47AM +0800, Troy Mitchell wrote:
+> On Thu Sep 10, 2026 at 9:31 PM +08, Yao Zi wrote:
+> > On Wed, Sep 09, 2026 at 10:07:04PM +0800, Troy Mitchell wrote:
+> >> CLK_SET_RATE_GATE only protects clocks prepared through CCF. A PLL left
+> >> running by firmware can have a zero prepare count, so this flag alone
+> >> cannot prevent set_rate() from reprogramming a live PLL.
+> >
+> > Would it be a better idea to simply turn off the PLL before reprogramming,
+> > since protected by CLK_SET_RATE_GATE, re-programming never happens when
+> > the PLL is required by downstream? This also seems to be simpler.
+> Then assigned-clock-rates on the PLL provider node?
 
-On Thu Sep 10, 2026 at 9:31 PM +08, Yao Zi wrote:
-> On Wed, Sep 09, 2026 at 10:07:04PM +0800, Troy Mitchell wrote:
->> CLK_SET_RATE_GATE only protects clocks prepared through CCF. A PLL left
->> running by firmware can have a zero prepare count, so this flag alone
->> cannot prevent set_rate() from reprogramming a live PLL.
->
-> Would it be a better idea to simply turn off the PLL before reprogramming=
-,
-> since protected by CLK_SET_RATE_GATE, re-programming never happens when
-> the PLL is required by downstream? This also seems to be simpler.
-Then assigned-clock-rates on the PLL provider node? I tested this
-on K3: .set_rate() was called during provider registration, with PLL3's
-prepare count still zero while the CPUs were running on it. Disabling
-PLL3 hung the board. CLK_SET_RATE_GATE therefore does not protect users
-that CCF has not yet accounted for.
+Protecting PLL from rate-changing when it's enabled, and re-programming
+the PLL to a recommended rate, are separate goals. This review comment
+only focuses on the former (i.e. changes in this patch).
 
+> I tested this
+> on K3: .set_rate() was called during provider registration, with PLL3's
+> prepare count still zero while the CPUs were running on it. Disabling
+> PLL3 hung the board. CLK_SET_RATE_GATE therefore does not protect users
+> that CCF has not yet accounted for.
 
---=20
-Troy Mitchell
+I think it's caused by asynchronous probing. The APMU controller might
+probe and register clocks after the PLL one, so the prepare/enable
+counters of the PLLs might not match the reality during the gap.
 
+> 
+> -- 
+> Troy Mitchell
+> 
 
---215ee3cf27d68f54324eca2221f65eb243d448b430723bfe53a69c3edd9e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqNhRw0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvFiQA/1yR1e1N5dqm/JjKEw3dfM8yjqKmhTeY4evjauQO
-6r/JAQC+EVD4ZL95QJzBkQT+HKp2w5tll5d/gI8NIB1sW9JeDg==
-=Z8ol
------END PGP SIGNATURE-----
-
---215ee3cf27d68f54324eca2221f65eb243d448b430723bfe53a69c3edd9e--
+Best regards,
+Yao Zi
