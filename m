@@ -1,34 +1,49 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011031.outbound.protection.outlook.com [52.101.65.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8CF43713C;
-	Fri, 11 Sep 2026 22:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789164733; cv=none; b=ew4ce9SXPPjJQS+0XRxs4Hvn9w8zJ3GiUPkoADgHh9lOGDG9dvDh9AI4I8mW8HtZF2JbD3CBU6mrXALUsqPbILOkCRjt8h6QAoIYNhayBRkd7a7Pi+nnIDQD23pCUUvSKpJ9e5bA747pPzs2hDFVm5xj8z29XigVbU9WyY/Yldc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789164733; c=relaxed/simple;
-	bh=7SacOg1IENiLKpqU81RPB0pY6bRjEI9ald8g9YA+/JA=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=ZzbqqbE74canXHyXIHMJKKET/hV7ctskd86qoUbjs5IntBYVeFCAr3q7psIQJrYs0CM3p9QpPlcgfdvS09Yt9YLfpLcWNA/Y113kt+nRMr2DAo9W1oNHMlYiIPHVsjaZ04TGboO3kua6GqwJAMTopDVuMCgUhxId1c9BGCeMG+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fpZSM3z6; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E1D41F35E
+	for <spacemit@lists.linux.dev>; Sat, 12 Sep 2026 11:39:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.31
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789213194; cv=fail; b=EkUcaPVs3Lwl793cHnxCxsQgWCibS399B1Vz2nBoG01N5E7xZnjtqCLT0IPurwDhsa0yK5swHwDdqoAxCxd4MlybjDFZQN2b5akyUSujwKz4XH0r/CCapBPog2ntYlUj2X4UregJW6RG2Ji7/xQhblVXfk0JiJhaE5Qo7VumrHk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789213194; c=relaxed/simple;
+	bh=iaGAZMQBaVpj20yCLgbDXRI03eUiffKlJXF0mm51P9E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=sSue9AtsV8fYjJDuKORLW4GGAXg0FTWX7qFOkde6VpYUdGFmFU8oTaLzlPr2wCZgdf8hA1Y1IMsVKMzLaNgXlRV4BUL9x2WSlceie8N01awceZGSYFFLN384hAcOR2aKugp3PRufMyPUU4+tW5uoAdtgU3mKC9zQ51/nVlHbk+c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=FvLZghkN; arc=fail smtp.client-ip=52.101.65.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fpZSM3z6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6811F000FF;
-	Fri, 11 Sep 2026 22:12:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789164731;
-	bh=zcSpC8B/zBe1QBiSP3SsQ8IbOXdwAlEg8XGj9L10bq8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To;
-	b=fpZSM3z6PJ9swFzsvH+djv6QNuc3r3Jbh6fc5fg1plDIs1WScdIHvAlLBKslHFOpC
-	 VUlgeo0f4KrBy7cqz2x9XD+Eh3NSgeWTi4XevOllxU7aRx6le8EGCRlOn+NRS1y7ZT
-	 GYBZJbc5xO7X6hzpn+Zvxucqhh1evUkZ/RnAsEuHLV1vwBDcR/+mcWL3e5UX0jetdV
-	 yVMQfWSmiYNtJBa+MBKplM6FwGvkAsIabg7ccf5NsRaHmsVooL7N1AKbaAWG/Rv2bV
-	 0AwWtnXJG/bkaR0cMvSqKCps8HWA3DXqOgv3MqLk2Vx/pAe1cBKiOZbR7fWWy90N/G
-	 b2VIe389tv9qg==
-Date: Fri, 11 Sep 2026 17:12:09 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="FvLZghkN"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JdcpBzsSKVAK+pm3sl1YucjVdWApB2JlvXrLGbhBQ8LPXJF8Z2eFovtyQqQmqFuzb2TYFWdGK/VPFj6g2NDR+BbIFc71+ztaMCvugYAxjBXTFafK04h8g/LFRQznNOIKdL3S1nE5fyIcgZgr+ZP1kj1PGHKX4ROPBKzTyAHJ9QrS8oDAzMW13UdXGLKF9tSIw+99SCzBfMXupnVlJiD7vn4g60xu6SPN/6dc9JFqmhrL9Eg0VnORS8JbRs9z0fRi9X6+qkH2ygChy9Ok3CRq9g7hhSsb2GcrXv6lJ+CaTUtIyPIOoSbsNNhkRTgq9KUvFCaOUTpF/NR4aBHtxdzYaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KZXJwnSdWWnCiHu6CFBEOlgICtMyxV/EetgcKlS2Cas=;
+ b=cRTxvsigtntLNxWeswnVGwxpGeQ+g1dGKccBkl6nHiU6kHMFpDiMM4Tj4qW+PvsVCbdmF/eEh2mEf/gcgtAz3Z5DHBmJtQpW18vD7LjLejEeMSeuztrxvA9CezvTHTVBBSmcjh7poFR+Dwp718Ah5HrZJv1W8sAVoso2VVcx3+C1uUFVo5VC0XWKnH6DcVhWIWGxv8Xm8jJoqulLcciZEwuRDfranQeusDxMrZQC1jx07CBykmg14nbyOlkf4onjUuQKKnCXwNaHGIGSkmDzy1HFYAKHuH7sCAAD8jO5tI24fYGKk97DT4i/vbmq2l3nygXxQjxRbNf1jZrkpRacPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KZXJwnSdWWnCiHu6CFBEOlgICtMyxV/EetgcKlS2Cas=;
+ b=FvLZghkNn0zv7J9GhwZ3upjMDpnYn7us826ks3pF1QdBD3l0d6EFcdxnc71oodkIkKhQnO8ye2JJnwkoTVyK9vKYXpTbrKtew3yekmD57C21tL23etoUkTza4x3Zqwn78tUors3I73MBBDGRLMqcHd80bJHnNmHZrk4cg9FwBMCXNAjRJlfb+QOExAQACoJgskSaU3z/O3XbZkBdN8Ih2bvia3nogbBArEeLxdyzBZw0KABRgWs2UR7iO0FMRM+tNms7qOCgJJp1z+5ApR+glQEiEH6f2ERX2auq4IqK/a5IHfn1+WrpA5VKKWhg7Oes4IpPuHGyjQHjHGWvMluaJA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com (2603:10a6:208:17d::10)
+ by DBAPR04MB7478.eurprd04.prod.outlook.com (2603:10a6:10:1b3::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.11; Sat, 12 Sep
+ 2026 11:39:49 +0000
+Received: from AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023]) by AM0PR04MB6900.eurprd04.prod.outlook.com
+ ([fe80::7fda:8431:ca1b:b023%4]) with mapi id 15.21.0406.007; Sat, 12 Sep 2026
+ 11:39:48 +0000
+Date: Sat, 12 Sep 2026 14:39:44 +0300
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
+To: Bjorn Helgaas <helgaas@kernel.org>
 Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
 	linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
@@ -42,331 +57,103 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
 	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Felix Gu <ustc.gu@gmail.com>
 Subject: Re: [PATCH v9 3/3] PCI: Remove device links to PHY
-Message-ID: <20260911221209.GA587622@bhelgaas>
+Message-ID: <20260912113944.cfs6tebsv2eqctvw@skbuf>
+References: <20260810124315.433448-4-vladimir.oltean@nxp.com>
+ <20260911221209.GA587622@bhelgaas>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260911221209.GA587622@bhelgaas>
+X-ClientProxiedBy: WA2PEPF000008BA.POLP291.PROD.OUTLOOK.COM
+ (2603:10a6:1d8::696) To AM0PR04MB6900.eurprd04.prod.outlook.com
+ (2603:10a6:208:17d::10)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260810124315.433448-4-vladimir.oltean@nxp.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM0PR04MB6900:EE_|DBAPR04MB7478:EE_
+X-MS-Office365-Filtering-Correlation-Id: 99f746bd-4296-43f1-cf9a-08df10c28d04
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|19092799006|7416014|10070799003|366016|23010399003|1800799024|10067099003|4143699003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	OFLgkwxff8Qo7TmyuPs+uO7hfEbjjkc286NGkhmmX5v+qijUUUfIq2M0A949+bajRBzKcqEjdmVoVNPOS3sqoRmKri20dNp7sXR5+6aiJFMDkB2gfWdEyqw1BqK3IlYvBBG9mmHUkAEe0eir8apcMI30JoFBqak1f9wjVrlKDA1w1xdhltG7KyfQpz6qQcClwL5ALLzMiephZdUipHL6WVKDjdJBnx9goJnWMUU2t1RQie1G4zyp/HQr0vimycT4GM+MqZvDunzAi0zvbMF4SIpvq+a02QOa6Dx2ztQ6V/EShB+GfJksEUIXDRCLdMKyJ/hI/zUUjj0GhbH8V37pqQ9b3h5NdF4htbjN0p2uZ+Ke/VI052BmXTulmX6bILjq2youLVXzp1t2PcYxMPZume2Buqno8h5vsT9YIq6l1AJfcqlqDpM1+6CDOETvvtGnmDG9NqOdH5ORNGSpgQ+1rBAG3NbHq+uQ04Zl1Bz8xE/eK+VH86Vtt2DBLc91//gj0a4mPbMqmsXb7w1Z9oth1fosC7vqrpEqkOfeRXj44VPnH2L9HeuxbDpt3H5k8L68SaVac4tFPRz2LqlWBK5kpVVvnRCzdiLDHYKL3f0y7vF7ERnuUM0NeUBlDrnWC9Ke9ZPvfMcwc3fAJvm4bPf0+2i8S9muNJjIGuP8ewdS8Xk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR04MB6900.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(19092799006)(7416014)(10070799003)(366016)(23010399003)(1800799024)(10067099003)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ZbFA1VgxTCNW2fgmxPxG2MWdcUtZSlQsJUKPq8lIiX+OPFCJK6OA8CW8FOAS?=
+ =?us-ascii?Q?KZXVIQ/Dl+3bZeHZxvTuekz8LnL9+4uJAge+eXTLlpZE61rWixVNkV9JZlUt?=
+ =?us-ascii?Q?0wuOaZLvdgH72b340bsXYgxCB3fNuutHA7tdl0aLQ4+IQ2+l2JLt9dUoIFXE?=
+ =?us-ascii?Q?Fc3z9HS6JLzr1cNG5hhzG3QIxEInARNy3bmBgtxbVe5JPMdAr+RYBbJGVC2m?=
+ =?us-ascii?Q?bP4u9yKOUiozffkfb5gW0hasLpaQOhOGLuBTBX5xU45j8f4GLLy0nc7czJDX?=
+ =?us-ascii?Q?w9IccBq6Y4IgiGrtbmBX1fFqoLJImNNb6RGbyomMm60QC1ngQwm+G8m4Cmq4?=
+ =?us-ascii?Q?swBl3vB7334VjEB7+Lg4Lub+IYnczRCZWB53NX3O0rowEggyeIUcM4Cm8EMH?=
+ =?us-ascii?Q?AqB5bQqn8J/fw4KOg33tTWP4DAzOTma724yx1DrF4QxThGnR+OdICTS5BzaB?=
+ =?us-ascii?Q?QUrqKEiKZrUZ7sMYCTd9mxYf9MXbGvx/RZa3xlgWDw8nhctw7e9yyf7f3V+Z?=
+ =?us-ascii?Q?Mw1LP1SEhEQvYsnPJmqItFLIJuwAwLsqYg1RK/zT8viD5QYS51RCXfQhh3uR?=
+ =?us-ascii?Q?PaZnpcH3SlRJlOsX5U4JYYqU5vpIChBMqoTZFiIaDzEon9SNynu2kCshQWST?=
+ =?us-ascii?Q?lh2uH8wB3nLpW+taW0mMwNwUtYAat6MjpbIQ9mDrR9CsN1RurGbSlvQEIz6h?=
+ =?us-ascii?Q?19wwSBXYg3tBHEKw7PQ1spW8nzPxuGV8QwRQ5SeJz7iV838t4DKcfTp0RflO?=
+ =?us-ascii?Q?hvoiydFZY6sfII9E2kC0GBkN8r4Ea6wXNw3RKxE+wI7K6rDLYdHxuEGqTNDZ?=
+ =?us-ascii?Q?9WtbJq8mDV+yaVn3leqLqO6SQxkqejzraMvFY0t/SzbhmO2T5LfoHWHRQ8iQ?=
+ =?us-ascii?Q?tK7Wqn2BzaTkZeERzvQJLTz83QGWiGNfRTkebhm4ISphH/uGMczq1oj+CL6d?=
+ =?us-ascii?Q?SdLxhvtOFSeE8cO6aMdBrDj+g39w87JOJ1zguEPPJa/hsk6U70+ifrf18Dhj?=
+ =?us-ascii?Q?YNbkV/HDbA9BtIybK2mhPRLDD/GZT8+++kvKCGb1od8JlXKkQz2u/qBKB0zA?=
+ =?us-ascii?Q?hCeg/lGl00JE9AGaX9AH/wDZR6ZVOApCznyyNAdYSsLsxo0A/TboPXtXQubA?=
+ =?us-ascii?Q?70hc0vQ/KIkHQUuFeBmzld8qCGJny7TNFNv1Q4IgTfVQroadL84JRrTU6tjc?=
+ =?us-ascii?Q?V45CyVGfF7UdKppa1xcdbyoDzVq5W2opDiEG2wVua85ZPski/af+knnmcYE7?=
+ =?us-ascii?Q?QXqLaxe36VeG0AoAp3xMg0uOX0rBidCr1JUvUgdN0QLQjr4cBq3lQYZOFVU9?=
+ =?us-ascii?Q?SdGV3pKB7SXao2YLWLethKD2w+fXomdKxqB2gYhHWeKCzWbuS0nbk4Fo03d7?=
+ =?us-ascii?Q?7wd5w2FKK+N174w8gnWu2PzD3vq7Ef6jcGrrLeABMwFpxisqG156xhFQdyQ+?=
+ =?us-ascii?Q?JBi28TVjxWvEgA7es9vg3baCbpC3aCQySQVzM96ZxhduTrWSVR8zUMZLRy4t?=
+ =?us-ascii?Q?u99MglhhOGICARDYerU9tHUzmYNwuJROb80kV2AOTcFX9HD9Chk53glW5WiI?=
+ =?us-ascii?Q?lz3LA9xd2hbzN30N/XRDpggs+j3pdKF+Sv5JfgO3C89h+ID0wQRIx9NqjOIH?=
+ =?us-ascii?Q?ht5RBBax4R/hZeqfGcTnpMaM8+4mbpJEvQ5bjKhtg3LfWSxzFMhx1RPTMicW?=
+ =?us-ascii?Q?4rRd6RivMi7IHXqpzLTQZbF0uqbtNBc/WpV6RdQ/pZ8v+HsIdzvBvUyCRNbu?=
+ =?us-ascii?Q?JQp5g0OdB26YtnxUWGA5th/OnjL4rAP+GebtqhHOe946dX8Y05KbeFGinIjS?=
+X-MS-Exchange-AntiSpam-MessageData-1: dNtMtMYXUgQSnUy/gsk+UN5EEpuXOrnKD7I=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 99f746bd-4296-43f1-cf9a-08df10c28d04
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB6900.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2026 11:39:48.7224
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vLpPF5QL4+Onm1IH+aj4H4dV17uZmYO3RmcAF2OYL0OtM0o5Ymsfe3FEmlbm+kgQBNb0+uZzPHIRkoKGUnipRw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR04MB7478
 
-[+cc Felix, author of device link leak fixes]
+Hi Bjorn,
 
-On Mon, Aug 10, 2026 at 03:43:15PM +0300, Vladimir Oltean wrote:
-> This is practically a full revert of commit
-> 7a4db656a635 ("PCI: dra7xx: Create functional dependency between PCIe and PHY")
-> and a partial revert of the device link pieces from commits
-> dfb80534692d ("PCI: cadence: Add generic PHY support to host and EP drivers")
-> 49229238ab47 ("PCI: keystone: Cleanup PHY handling")
-
-Can we split this into three commits (dra7xx, cadence, keystone)?
-This combined commit is applied on the pci/controller/misc branch, and
-then we have conflicts between that branch and
-pci/controller/dwc-dra7xx.
-
-I think if we split this into three separate commits, we can apply the
-dra7xx one on pci/controller/dwc-dra7xx and drop Felix's device link
-leak fixes below so we don't clutter the git history with conflict
-resolutions or irrelevant commits:
-
-  https://git.kernel.org/cgit/linux/kernel/git/pci/pci.git/commit/?id=2b9a036b568c ("PCI: dra7xx: Fix device link leak when devm_phy_get() fails")
-
-  https://git.kernel.org/cgit/linux/kernel/git/pci/pci.git/commit/?id=bdfdf654b4b2 ("PCI: dra7xx: Fix device links leak when dra7xx_pcie_enable_phy() fails")
-
-> The trouble with these commits is that they dereference fields inside
-> struct phy from a consumer driver, which will become no longer possible.
+On Fri, Sep 11, 2026 at 05:12:09PM -0500, Bjorn Helgaas wrote:
+> [+cc Felix, author of device link leak fixes]
 > 
-> Since commit 987351e1ea77 ("phy: core: Add consumer device link
-> support") from 2019, the PHY core also adds a device link to order PHY
-> provider and consumer suspend/resume operations. All reverted commits
-> are from 2017-2018, and what they do should actually be redundant now.
+> On Mon, Aug 10, 2026 at 03:43:15PM +0300, Vladimir Oltean wrote:
+> > This is practically a full revert of commit
+> > 7a4db656a635 ("PCI: dra7xx: Create functional dependency between PCIe and PHY")
+> > and a partial revert of the device link pieces from commits
+> > dfb80534692d ("PCI: cadence: Add generic PHY support to host and EP drivers")
+> > 49229238ab47 ("PCI: keystone: Cleanup PHY handling")
 > 
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-> Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> ---
-> Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
-> Cc: "Krzysztof Wilczyński" <kwilczynski@kernel.org>
-> Cc: Manivannan Sadhasivam <mani@kernel.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Bjorn Helgaas <bhelgaas@google.com>
-> Cc: Vignesh Raghavendra <vigneshr@ti.com>
-> Cc: Siddharth Vadapalli <s-vadapalli@ti.com>
+> Can we split this into three commits (dra7xx, cadence, keystone)?
+> This combined commit is applied on the pci/controller/misc branch, and
+> then we have conflicts between that branch and
+> pci/controller/dwc-dra7xx.
 > 
-> v8->v9: none
-> v7->v8: only context change - "return 0" became "return ret" for
->         cdns_plat_pcie_probe()
-> v6->v7: none
-> v5->v6: collect tag from Manivannan Sadhasivam
-> v3->v5: none
-> v2->v3:
-> - remove dangling set but unused phy_count local variable in
->   cdns_plat_pcie_probe()
-> v1->v2:
-> - fully remove struct device link **link from struct cdns_pcie and from
->   cdns_plat_pcie_probe() error path
-> - collect tag from Bjorn Helgaas
-> - adjust commit title
-> ---
->  .../controller/cadence/pcie-cadence-plat.c    |  4 ---
->  drivers/pci/controller/cadence/pcie-cadence.c | 16 +---------
->  drivers/pci/controller/cadence/pcie-cadence.h |  2 --
->  drivers/pci/controller/dwc/pci-dra7xx.c       | 16 ----------
->  drivers/pci/controller/dwc/pci-keystone.c     | 31 +++----------------
->  5 files changed, 5 insertions(+), 64 deletions(-)
+> I think if we split this into three separate commits, we can apply the
+> dra7xx one on pci/controller/dwc-dra7xx and drop Felix's device link
+> leak fixes below so we don't clutter the git history with conflict
+> resolutions or irrelevant commits:
 > 
-> diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-> index 8aed8b4c3e11..13edc6be21f5 100644
-> --- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
-> +++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-> @@ -41,7 +41,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
->  	struct pci_host_bridge *bridge;
->  	struct cdns_pcie_ep *ep;
->  	struct cdns_pcie_rc *rc;
-> -	int phy_count;
->  	bool is_rc;
->  	int ret;
->  
-> @@ -122,9 +121,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
->  	pm_runtime_put_sync(dev);
->  	pm_runtime_disable(dev);
->  	cdns_pcie_disable_phy(cdns_plat_pcie->pcie);
-> -	phy_count = cdns_plat_pcie->pcie->phy_count;
-> -	while (phy_count--)
-> -		device_link_del(cdns_plat_pcie->pcie->link[phy_count]);
->  
->  	return ret;
->  }
-> diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-> index a1eada56edba..0ac980249941 100644
-> --- a/drivers/pci/controller/cadence/pcie-cadence.c
-> +++ b/drivers/pci/controller/cadence/pcie-cadence.c
-> @@ -222,7 +222,6 @@ int cdns_pcie_init_phy(struct device *dev, struct cdns_pcie *pcie)
->  	struct device_node *np = dev->of_node;
->  	int phy_count;
->  	struct phy **phy;
-> -	struct device_link **link;
->  	int i;
->  	int ret;
->  	const char *name;
-> @@ -238,10 +237,6 @@ int cdns_pcie_init_phy(struct device *dev, struct cdns_pcie *pcie)
->  	if (!phy)
->  		return -ENOMEM;
->  
-> -	link = devm_kcalloc(dev, phy_count, sizeof(*link), GFP_KERNEL);
-> -	if (!link)
-> -		return -ENOMEM;
-> -
->  	for (i = 0; i < phy_count; i++) {
->  		of_property_read_string_index(np, "phy-names", i, &name);
->  		phy[i] = devm_phy_get(dev, name);
-> @@ -249,17 +244,10 @@ int cdns_pcie_init_phy(struct device *dev, struct cdns_pcie *pcie)
->  			ret = PTR_ERR(phy[i]);
->  			goto err_phy;
->  		}
-> -		link[i] = device_link_add(dev, &phy[i]->dev, DL_FLAG_STATELESS);
-> -		if (!link[i]) {
-> -			devm_phy_put(dev, phy[i]);
-> -			ret = -EINVAL;
-> -			goto err_phy;
-> -		}
->  	}
->  
->  	pcie->phy_count = phy_count;
->  	pcie->phy = phy;
-> -	pcie->link = link;
->  
->  	ret =  cdns_pcie_enable_phy(pcie);
->  	if (ret)
-> @@ -268,10 +256,8 @@ int cdns_pcie_init_phy(struct device *dev, struct cdns_pcie *pcie)
->  	return 0;
->  
->  err_phy:
-> -	while (--i >= 0) {
-> -		device_link_del(link[i]);
-> +	while (--i >= 0)
->  		devm_phy_put(dev, phy[i]);
-> -	}
->  
->  	return ret;
->  }
-> diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-> index b4d51adefea5..4a96e1869e53 100644
-> --- a/drivers/pci/controller/cadence/pcie-cadence.h
-> +++ b/drivers/pci/controller/cadence/pcie-cadence.h
-> @@ -260,7 +260,6 @@ struct cdns_plat_pcie_of_data {
->   * @is_hpa: indicates if the architecture is HPA
->   * @phy_count: number of supported PHY devices
->   * @phy: list of pointers to specific PHY control blocks
-> - * @link: list of pointers to corresponding device link representations
->   * @ops: Platform-specific ops to control various inputs from Cadence PCIe
->   *       wrapper
->   * @cdns_pcie_reg_offsets: Register bank offsets for different SoC
-> @@ -276,7 +275,6 @@ struct cdns_pcie {
->  	bool				     is_hpa;
->  	int			             phy_count;
->  	struct phy		             **phy;
-> -	struct device_link	             **link;
->  	const  struct cdns_pcie_ops          *ops;
->  	const  struct cdns_plat_pcie_of_data *cdns_pcie_reg_offsets;
->  	int				     max_link_speed;
-> diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-> index 3fc889944f02..bf6c5b86bb27 100644
-> --- a/drivers/pci/controller/dwc/pci-dra7xx.c
-> +++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-> @@ -9,7 +9,6 @@
->  
->  #include <linux/clk.h>
->  #include <linux/delay.h>
-> -#include <linux/device.h>
->  #include <linux/err.h>
->  #include <linux/interrupt.h>
->  #include <linux/irq.h>
-> @@ -678,7 +677,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
->  	int i;
->  	int phy_count;
->  	struct phy **phy;
-> -	struct device_link **link;
->  	void __iomem *base;
->  	struct dw_pcie *pci;
->  	struct dra7xx_pcie *dra7xx;
-> @@ -726,10 +724,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
->  	if (!phy)
->  		return -ENOMEM;
->  
-> -	link = devm_kcalloc(dev, phy_count, sizeof(*link), GFP_KERNEL);
-> -	if (!link)
-> -		return -ENOMEM;
-> -
->  	dra7xx->clk = devm_clk_get_optional(dev, NULL);
->  	if (IS_ERR(dra7xx->clk))
->  		return dev_err_probe(dev, PTR_ERR(dra7xx->clk),
-> @@ -744,12 +738,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
->  		phy[i] = devm_phy_get(dev, name);
->  		if (IS_ERR(phy[i]))
->  			return PTR_ERR(phy[i]);
-> -
-> -		link[i] = device_link_add(dev, &phy[i]->dev, DL_FLAG_STATELESS);
-> -		if (!link[i]) {
-> -			ret = -EINVAL;
-> -			goto err_link;
-> -		}
->  	}
->  
->  	dra7xx->base = base;
-> @@ -851,10 +839,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
->  	pm_runtime_disable(dev);
->  	dra7xx_pcie_disable_phy(dra7xx);
->  
-> -err_link:
-> -	while (--i >= 0)
-> -		device_link_del(link[i]);
-> -
->  	return ret;
->  }
->  
-> diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-> index e9b012a5ea9a..8085c4f61403 100644
-> --- a/drivers/pci/controller/dwc/pci-keystone.c
-> +++ b/drivers/pci/controller/dwc/pci-keystone.c
-> @@ -130,7 +130,6 @@ struct keystone_pcie {
->  	int			num_lanes;
->  	u32			num_viewport;
->  	struct phy		**phy;
-> -	struct device_link	**link;
->  	struct			device_node *msi_intc_np;
->  	struct irq_domain	*intx_irq_domain;
->  	struct device_node	*np;
-> @@ -1130,7 +1129,6 @@ static int ks_pcie_probe(struct platform_device *pdev)
->  	enum dw_pcie_device_mode mode;
->  	struct dw_pcie *pci;
->  	struct keystone_pcie *ks_pcie;
-> -	struct device_link **link;
->  	struct gpio_desc *gpiod;
->  	struct resource *res;
->  	void __iomem *base;
-> @@ -1201,31 +1199,17 @@ static int ks_pcie_probe(struct platform_device *pdev)
->  	if (!phy)
->  		return -ENOMEM;
->  
-> -	link = devm_kcalloc(dev, num_lanes, sizeof(*link), GFP_KERNEL);
-> -	if (!link)
-> -		return -ENOMEM;
-> -
->  	for (i = 0; i < num_lanes; i++) {
->  		snprintf(name, sizeof(name), "pcie-phy%d", i);
->  		phy[i] = devm_phy_optional_get(dev, name);
->  		if (IS_ERR(phy[i])) {
->  			ret = PTR_ERR(phy[i]);
-> -			goto err_link;
-> -		}
-> -
-> -		if (!phy[i])
-> -			continue;
-> -
-> -		link[i] = device_link_add(dev, &phy[i]->dev, DL_FLAG_STATELESS);
-> -		if (!link[i]) {
-> -			ret = -EINVAL;
-> -			goto err_link;
-> +			goto err;
->  		}
->  	}
->  
->  	ks_pcie->np = np;
->  	ks_pcie->pci = pci;
-> -	ks_pcie->link = link;
->  	ks_pcie->num_lanes = num_lanes;
->  	ks_pcie->phy = phy;
->  
-> @@ -1235,7 +1219,7 @@ static int ks_pcie_probe(struct platform_device *pdev)
->  		ret = PTR_ERR(gpiod);
->  		if (ret != -EPROBE_DEFER)
->  			dev_err(dev, "Failed to get reset GPIO\n");
-> -		goto err_link;
-> +		goto err;
->  	}
->  
->  	/* Obtain references to the PHYs */
-> @@ -1250,7 +1234,7 @@ static int ks_pcie_probe(struct platform_device *pdev)
->  
->  	if (ret) {
->  		dev_err(dev, "failed to enable phy\n");
-> -		goto err_link;
-> +		goto err;
->  	}
->  
->  	platform_set_drvdata(pdev, ks_pcie);
-> @@ -1337,25 +1321,18 @@ static int ks_pcie_probe(struct platform_device *pdev)
->  	pm_runtime_disable(dev);
->  	ks_pcie_disable_phy(ks_pcie);
->  
-> -err_link:
-> -	while (--i >= 0 && link[i])
-> -		device_link_del(link[i]);
-> -
-> +err:
->  	return ret;
->  }
->  
->  static void ks_pcie_remove(struct platform_device *pdev)
->  {
->  	struct keystone_pcie *ks_pcie = platform_get_drvdata(pdev);
-> -	struct device_link **link = ks_pcie->link;
-> -	int num_lanes = ks_pcie->num_lanes;
->  	struct device *dev = &pdev->dev;
->  
->  	pm_runtime_put(dev);
->  	pm_runtime_disable(dev);
->  	ks_pcie_disable_phy(ks_pcie);
-> -	while (num_lanes--)
-> -		device_link_del(link[num_lanes]);
->  }
->  
->  static struct platform_driver ks_pcie_driver = {
-> -- 
-> 2.34.1
+>   https://git.kernel.org/cgit/linux/kernel/git/pci/pci.git/commit/?id=2b9a036b568c ("PCI: dra7xx: Fix device link leak when devm_phy_get() fails")
 > 
+>   https://git.kernel.org/cgit/linux/kernel/git/pci/pci.git/commit/?id=bdfdf654b4b2 ("PCI: dra7xx: Fix device links leak when dra7xx_pcie_enable_phy() fails")
+
+Isn't this patch already merged in pci/next as
+https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/?id=9a9d18547ddc97a73d5d90cff4d5aef90bd8c15d
+?
