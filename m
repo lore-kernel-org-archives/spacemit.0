@@ -1,186 +1,244 @@
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF14B24A06D
-	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 14:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5724A3AA4EF
+	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 18:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789310616; cv=none; b=R/Z17YwTVAJiZX53jBKeOdKjCh9ZsKr50V+612b01agjbiRE89nSPF0gMZ0BPREHKCvhjmf4rHqKvMMAynv2rDQOL1RiAjtMQapF9RsPkjD/niO4r4c3iKEBd5c3Fm2y56UbQw2CjEdC357sxNREYdvjOkZpAUR3+KrHoaNrNVs=
+	t=1789323913; cv=none; b=LWeCU6vd68gh1d6LXovm1P+eWq0hq/MXMQpoCLl2tKzVGPu6WJtqyUiQSrEMkTP5f9wdNXR5MYivTF7Q3sExvtPVHVzjNHNQfNV5DKAmKQyqvNsAq0HQqUGKLAOfQ/b2IMPJxJRzyHUSrUxWz8vP04bTVVoVM7mXaoLRxhqqxlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789310616; c=relaxed/simple;
-	bh=XT8FfD4NmF6lYMpg9hBHkdINnzuuQPwagoPHTRzOL2A=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=noRe/GEWm+oIgWFpZQOwcNWBq9lv4x4Xv7efYADYF+zsjL9hXZtjlpazoxQcbZ3VCnX58amL0FNHGaTTXlpgVeX53jnZJX2ANT6gEBzY86fuse/tQy7swg3cEY8X1aYgGF1fPj3ZsYoHCr3NUmeiBswmdAPO84/EQhyqQE9U6vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TSL789gO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S2RjS3jf; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1789323913; c=relaxed/simple;
+	bh=Oua4x0xBd8TZMilI1qAPMvSZRZQ82sr3amusq4fS9Bo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=qc49Nch3wpdPE9FlR26EOOXo3ac85LjnQyMKwp2IcNKqNDlmLm83Rnln58+NTZWxJSf632eEzKgRYMeuFPvKWFLY/8gZTlZy3JrtpR6cAy48SbKYlALpWSRcHdQ36HWFcXxIGpphvuk0TcbBwYpTSGXqPWuHt6fa55087Tohsxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KJB0+VLI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RRiv3z1C; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TSL789gO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S2RjS3jf"
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68DE01b01200137
-	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 14:43:34 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KJB0+VLI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RRiv3z1C"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68DI2beV2450902
+	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 18:25:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ug9C98lp7dxvXE0xHoDWZuW7wCnDxbIOXSGXdFquQ9U=; b=TSL789gOq5pq0OEL
-	mPpWLg8wu0wB4YS2uFYCegeGt0/9p97h9+jSfsJdXCmgTPtJ7eYDLz/ZGByhHbrV
-	fyeKvqNV5vVfi4biBdAR/LD9wAHgaGvrnWkWgsOVKxqRM2ARUf9O8zXiKyIDDILu
-	D3alpKxJrW2fK/eOL9u8U1V4b2/fNsKx3LCmMeN+kGGUi0HvZlWdH3uAJa/JuMBi
-	lxcTi2+svJcxw4glr+yBX2XKAF+qMeR9NpMwwDoLrI9llReJY3vxfzP3vSTBGsZL
-	QwOL8mO7Etmg6A4jHUjI8UxmTIwnuR6iyAQtNlWgd2gmdXEVhMnkngiAoEBoHNXW
-	LU9cGg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gn018kccf-1
+	GkLKYhzdmWx8ASPEw+bfyEGrvJszZcX0ihy3/m9xYe4=; b=KJB0+VLID+cSRmJc
+	EIWHRn+VH954/zglrkOFq0tU03iOMtCk3ZmbQ1nHHCR7xGASsfHWNfQzFHb6SL8F
+	hB3ePZ9kXc70wJrEGbmCVFCaTZxBtAWG9i+7hs/u4fTdvL7KmApI8X6QgmazBr21
+	XFrx8wSTeIMym88Phf2iEdH/oPL/dSa/JBqgjxS3IyII/CBoFp5JGZ74Et9K3lgw
+	rorHUMAZYOvgZ1fSFTdMKjSjX4cn0XaH9S/qLAaEMuW9JF3ufYY3whAgKr9Im115
+	er5/s5kUXytHDQdXAOqKKibQnyFR2fLZGvu6YZmoPcODjCylab61rPc68nsMLyFJ
+	8FSXRg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gmy9d3v8d-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 14:43:34 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-38ec0f510a9so5389623a91.2
-        for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 07:43:34 -0700 (PDT)
+	for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 18:25:11 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cb11535e6a1so2029215a12.0
+        for <spacemit@lists.linux.dev>; Sun, 13 Sep 2026 11:25:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1789310613; x=1789915413; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Ug9C98lp7dxvXE0xHoDWZuW7wCnDxbIOXSGXdFquQ9U=;
-        b=S2RjS3jfnIpHmXnMwo7dhWrInLCKxVUZUR5rMwa/yIgNZjrysSMmEJcqGjFbA7tfBc
-         zhFUnOFavbNmeb9re4jP0tIkOelcCz+EpOnhq1ukVaCfyIvBfRRR0aTW3CS64+HepOIx
-         2bitzwYbkla0aREBZalNghYL2pokiLDLVuTxc3SdA1LYjvV/OGLhXrVmjTc/n+fqECeM
-         GJeq+MEp+tfXjVcwh3/JYopYA84n5Q7OacCvhpy15vsMscNleLqU/5Fi2U6m2OYd5iJ1
-         bxsnyrfJHbcH8eYLYDW0VyyYygnnCz/7AFyNzyS8OUHMRV021rY45Cjyj1475LfCMpwD
-         rs7Q==
+        d=oss.qualcomm.com; s=google; t=1789323911; x=1789928711; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=GkLKYhzdmWx8ASPEw+bfyEGrvJszZcX0ihy3/m9xYe4=;
+        b=RRiv3z1CCxhv3PiIPvY3yvKGqgKSgKortxxq30XvwQ/D/Jbr3IzZK7OAqUxEmcdvtC
+         wmgtAQCuvXl8O6c2TOo+UIRUr3cOdFn912Dd/0FfEO+MZ03O4eFOWYR7d5i/qsuc0UKg
+         7C1KGk/NKpXclp4mlBd7IVbaZhsifziX1p4me2USQehOAmeGGTl/I0QOWUSU+FaQ9sbC
+         vpoayYMMd9POvzTFCqnScEnfADiQgnJDIXAPSi1qzT2hTV5WL0pmNcF4PrJKbTnrVUpy
+         ls8MDC993J3KDc29GIkX8Zp5GJ24Y/62RXpRWxgBuQvnc7n7rObAaSbvvhhCFEFx7Ext
+         hofA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789310613; x=1789915413;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1789323911; x=1789928711;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Ug9C98lp7dxvXE0xHoDWZuW7wCnDxbIOXSGXdFquQ9U=;
-        b=Tio8+iddrgldsbOntesEjZKI8/Ash/MwCsmjCIOkSXKIjID211IKgac1AtpLP1P28j
-         8zGn2EmPKEcKo1znHZZJKiCiyZGsKZkTqLtsPw1DnaQF3dgBqq/z8kCmhkEcnUsU0E2g
-         fuO5VrLWfky6AxhkMIPd2dF3ZMemjHd6YJ7PtLvPcCiz7kLdfObR5LuRNRrn8925nWTp
-         pOAtYBE50ZcnEkcGcsusp7ec8zQ9d+8CwJGVJc3LTwjtDJjY0wOveV349KOC6YN1o5xG
-         zzcDyihT0BrIuAlJQCgZ/sAngOOwUQqgeVjYWJ7wymUPUZDJEaE1x8DfFoiHkWUqezoH
-         t6eg==
-X-Forwarded-Encrypted: i=1; AKwUvBzjkzMT91kjSI0wbEWxMRe0p2kp8KAEabn9C0mpfO4JCcksV7poWhhGlUnXo/stMsA2pk3tLdy4Ig==@lists.linux.dev
-X-Gm-Message-State: AFuF++ndEgBeFLQ3tj7w5eux9SdFfmM4ETN7cB3kYwEKGrAmrTz9vCpy
-	8e5XjjA7g4NwuMwIFySUDqJSIF2GTZaa+9swLMZqj1Ck89M4PluoIE4qzJWWvHHUR9ENfjT62T6
-	8v6llOIoiNa1dGb9tBF/AdrMssq6tdQa+CyfKrI1zM2LgBTRvhOPM4wWBK690eA==
-X-Gm-Gg: AYBFou3t4aZpLWec3/RNoVW4G+fDzINZ1VMCgM8qh8kLN+sfL+UGupb4n7A67CTURmx
-	534ovXvAkdsND3xMostjr6YiALrRSSHZv/USzbtZrqJoXtkfMxqcZXUbGZeZAQ2XSNFQvbKG3WO
-	ZCqKc4fpTdrsgtSrj3BCduAk0i62ZVrHYd9xxwhackwUavHwSJoBiFG+tuaGClBJNoH87L5omXv
-	Di8VxUbb7kbWnwEaUkwsQTdb70dIpxW5rYJPcLzTlg+ZquybPFq+72RzkqGtASyC6+KFsqCq7H8
-	WwztOZowhyEhl4JJvm4FKLK8dqwl8hedcJyAgVekU0RlIKa18bdTmf3y7w==
-X-Received: by 2002:a17:90b:586f:b0:39b:66ee:a14 with SMTP id 98e67ed59e1d1-39d9c374d49mr21935976a91.25.1789310613413;
-        Sun, 13 Sep 2026 07:43:33 -0700 (PDT)
-X-Received: by 2002:a17:90b:586f:b0:39b:66ee:a14 with SMTP id 98e67ed59e1d1-39d9c374d49mr21935918a91.25.1789310613011;
-        Sun, 13 Sep 2026 07:43:33 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::30fb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d99531b16sm16780590a91.14.2026.09.13.07.43.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Sep 2026 07:43:32 -0700 (PDT)
-Date: Sun, 13 Sep 2026 10:43:28 -0400
-Message-ID: <c24e720e279fed0296f1f78630b6a471.guodong.xu@oss.qualcomm.com>
-From: Guodong Xu <guodong.xu@oss.qualcomm.com>
-To: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
-        Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-        Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>
-Cc: linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Paul Walmsley <paul.walmsley@sifive.com>,
-        Conor Dooley <conor@kernel.org>, devicetree@vger.kernel.org,
-        spacemit@lists.linux.dev, sophgo@lists.linux.dev,
-        linux-kselftest@vger.kernel.org,
-        Andrew Jones <andrew.jones@oss.qualcomm.com>
-Subject: Re: [PATCH v6 11/11] riscv: hwprobe: Introduce rva23u64 base behavior
-In-Reply-To:
- <20260812-rva23u64-hwprobe-v2-v6-11-c985af3256b8@oss.qualcomm.com>
-References: <20260812-rva23u64-hwprobe-v2-v6-0-c985af3256b8@oss.qualcomm.com>
- <20260812-rva23u64-hwprobe-v2-v6-11-c985af3256b8@oss.qualcomm.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        bh=GkLKYhzdmWx8ASPEw+bfyEGrvJszZcX0ihy3/m9xYe4=;
+        b=Ir3Z03QGDgMFPDLh5CQWTR+UxZZxQywqh2Ba8TuHPdClPuPnzX6TrkcQ4+AdoFuKPQ
+         rReJ9fcOm+eY22hwmrl7D4UUa+9mEstas+aeO9c8sS/G0daxYzLqoYVwcwKFLWKIgEKS
+         3rfiY8HjaewIy5bGaAeDgUcyejToq1fQFHgzT3w7nEiyw27FjJm3L8PKRzHWAKsV2FL3
+         kVHg+HwcEL3Svq6rCP3gLzX4j0e5+/dZ7r+psrO6fj0bEVV5a/0aFvPqH7tmMw4Cd1Y1
+         hO1dMjPyrwES8AoJClYXdhOq7rLVb0dG4PbMKeS4lguKpY+r+ZxlsXAFLjwSd9Th6yzV
+         BrhA==
+X-Forwarded-Encrypted: i=1; AKwUvBxkDtKoSXcTZk2V1KPYLd9VA1aBlZSN34BXdBwBGav2yDuni4OZ5g/czmvbB0CwAPBd991JOLZ3cQ==@lists.linux.dev
+X-Gm-Message-State: AFuF++mHchP/1yMf5gsPJCCWvJK5yqHpeEZf7O2UrvLxPdO6bS2l87rx
+	fYuIOtI0kNSimiNayNWE2TqwMqGjt+xrXcBzz8QTzyDADY92QeKKB1D/BdqHuMyZybavsKlWWhR
+	4vesGvlziOiDJWyXc4aokb9bZXRRWpWa/fO6Csp7i7iPQTS5SLKZyVnLaXaMfWA==
+X-Gm-Gg: AYBFou1yypJnSLA0Nx554LiFXZJH5TBj1fOWjEQGMMY1eAATuqgq09zVo3y0zUIlYnS
+	e0wG7BPvOWEySG325RzfhZLV7BqVaGfB1SPeb8Wd+WuL6XjqK4S89wUNYSDkrTUYmNFf+/Hxc3B
+	h8qgCfgXO1t/F8n7k9Kh3TXaGVBg1oP3Kg1vX832md4ImbQ2uZgKEnhLH6klmBBBq9e+CXAwLIG
+	uhjR7ViNZYoMjxpptPsFDlAnh4+FjwTsDusltX+jGupx7RQJ4k54NlUdPvB7BkpiVUFM65nFBnn
+	f3AuSTNpLXWLQv+S7E8fn7AV93eynlKNKiVIPvFbQ7h90CepDhckDSipaRq9l6ROSSt+wZpyQ04
+	7LTQ=
+X-Received: by 2002:a05:6a21:6016:b0:3cc:9618:f51a with SMTP id adf61e73a8af0-3db0e0ea40amr13919548637.8.1789323910652;
+        Sun, 13 Sep 2026 11:25:10 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6016:b0:3cc:9618:f51a with SMTP id adf61e73a8af0-3db0e0ea40amr13919502637.8.1789323910173;
+        Sun, 13 Sep 2026 11:25:10 -0700 (PDT)
+Received: from localhost ([155.117.96.35])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33ba4cf72dbsm23050289eec.3.2026.09.13.11.25.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Sep 2026 11:25:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-Authority-Analysis: v=2.4 cv=c4g+0h9l c=1 sm=1 tr=0 ts=6aa6b696 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=0YUHzDklBslsgzCo5oAA:9
- a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEzMDIxMCBTYWx0ZWRfX5bpn8/bXvNDc
- X9RWcws4OxAaiF7a5/BWrkmgMBSmK4R8O0SGn7512Y6yuPPHXEDWJWK/K7ngHy8XQKJ7SA8I0n/
- GXsH61C63eeS6jQZj4aq8PUV1wQHW0U=
-X-Proofpoint-GUID: GrBGDSohJlU7w4WmpVYLE6CCfnPQ4m62
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEzMDIxMCBTYWx0ZWRfX/jAXMCGCJXDO
- 4EkaqDndmjkiF/b5zcJQ/eZ/6kuKnHLDMCvGDg0PRPBj0W0MGfNiDM1wDY53SJrofM3uDvsdjju
- 91pbvZybW6XVXhDYNBEsSalQF6aiVrTHmr0sFo2xv/YiPpxhW3Rq6spB1WSySq/osE8xQALcsdz
- 1x+LnMC5RppMk1LR/HNk71tIxKmo6U+wRDQvYzoX1hxWudra2I4Fhop9JM/XWMOkF/mFZd+DoY8
- w/3/636P8O9grvftiTmeJspo/MD57yxUry8PBNpPncAdzXenjRKHmrd202qA12qUuH4mkIzAqL6
- 8c2Z47J8JTo2QChsyAbnGmkZKjulZjAuxqiC5+VKRpEDbEdCh9NkX571Elu+87AqqhILz8vSb00
- rshxCjgk2XzjnmUX1mizsD9vVZKuo96mtCO+KML6oHCpybd8Kpo8YOeZpHU5DDysHtculGkespX
- zjhZ/N1l/zVDa26f5Bg==
-X-Proofpoint-ORIG-GUID: GrBGDSohJlU7w4WmpVYLE6CCfnPQ4m62
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 14 Sep 2026 02:24:58 +0800
+Message-Id: <DLEEDV17BW1I.2QLKNNOLNOTGS@oss.qualcomm.com>
+Cc: <dri-devel@lists.freedesktop.org>, <linux-riscv@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <spacemit@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v2 00/17] drm/spacemit: add SpacemiT K3 display support
+From: "Ze Huang" <ze.huang@oss.qualcomm.com>
+To: <codykang.hk@gmail.com>, "David Airlie" <airlied@gmail.com>,
+        "Simona
+ Vetter" <simona@ffwll.ch>,
+        "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>,
+        "Maxime Ripard" <mripard@kernel.org>,
+        "Thomas Zimmermann" <tzimmermann@suse.de>,
+        "Rob Herring" <robh@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        "Conor Dooley"
+ <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>,
+        "Vinod Koul"
+ <vkoul@kernel.org>,
+        "Neil Armstrong" <neil.armstrong@linaro.org>,
+        "Haylen
+ Chu" <heylenay@4d2.org>,
+        "Michael Turquette" <mturquette@baylibre.com>,
+        "Stephen Boyd" <sboyd@kernel.org>, "Brian Masney" <bmasney@redhat.com>,
+        "Philipp Zabel" <p.zabel@pengutronix.de>,
+        "Paul Walmsley" <pjw@kernel.org>,
+        "Palmer Dabbelt" <palmer@dabbelt.com>,
+        "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+        "Yao Zi" <me@ziyao.cc>,
+        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+        "Guodong
+ Xu" <docular.xu@gmail.com>
+X-Mailer: aerc 0.22.0.r10.g73f20125
+References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
+In-Reply-To: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTEzMDI1OSBTYWx0ZWRfX7FrQxwwPQ5bj
+ 1xF+s/Bp2io5AUatmmpxF3ZHKCA0QQaH1E69gHsM8Mm/bFN28OSVe3PS2GwvYoZ7y4WoI9zYWbR
+ dmQ/CgXpUXAYQIJrd/4HvN8zKb9nkDI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTEzMDI1OSBTYWx0ZWRfX2+L3DpDRqpHl
+ jihxGM8Hsf3EZ7LCLuZ3fO4pfIfw8NFftUCcatg7LbqZGNFy4PEJCzJPhg2gCK0RXg+PBRBkHQp
+ pwsVi+BqXqoTwIW0CD71zsQKpvf0CUlhQNOky7N2BwYEwBM7GxTAjSa/otkyx6sHb9G6jJJEBKY
+ uRh64wgO9a2IPi6j0dJUGxteivYvBrKS6RSVef4dhMs7MlVxaWSu5cPMhL65IC03ZyVSU++kOuR
+ NeLmNV7nP1I8tHBBfJoHR5E3oibuofKTNKjgC5JSbJ2nVmZaaqe8PRXOxj5RDq9hrq016NfHgL2
+ UFOxlb5gan8X+6y1NvR53BsDGnLTpwhKBiAFn8EuB0VW9IOzZw6XXbK7tPHfb+bTq9YJoVb69bc
+ Xg0SJJcIaqNa1ul5WuEfieLSV5FMTPePzo62Fz9ISNc4vrxgYiC+1yHqklFUN1Wt0VECD+ZIeRG
+ vuM8u/il+MiPzW8meoA==
+X-Authority-Analysis: v=2.4 cv=IOSXmQvG c=1 sm=1 tr=0 ts=6aa6ea87 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=Ilsi1XWDFcrB9FjxRIUvHg==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=rqWh80hda8-QOrsfWKMA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-ORIG-GUID: -Y2WvDEbKZWOW66Uj74bHAKGNGFrTI_W
+X-Proofpoint-GUID: -Y2WvDEbKZWOW66Uj74bHAKGNGFrTI_W
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-13_05,2026-09-11_02,2025-10-01_01
+ definitions=2026-09-13_06,2026-09-11_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 impostorscore=0
- malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609130210
+ bulkscore=0 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 impostorscore=0 clxscore=1011
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609130259
 
-On Wed, 12 Aug 2026 19:33:57 -0400, Guodong Xu wrote:
-> [...]
+On Sun Aug 9, 2026 at 9:14 PM CST, Cody Kang via B4 Relay wrote:
+> This series adds display support for the SpacemiT K3 [2], a RISC-V SoC:
+> a new DRM driver, a new PHY driver and three new bindings.
 >
-> diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
-> index 656cb100ac48..a18465e734b5 100644
-> --- a/arch/riscv/kernel/sys_hwprobe.c
-> +++ b/arch/riscv/kernel/sys_hwprobe.c
+> The display path is three blocks deep:
 >
-> [...]
+>   Saturn DPU -> Innosilicon DP/eDP controller -> Innosilicon DP PHY
 >
->  	case RISCV_HWPROBE_KEY_BASE_BEHAVIOR:
-> -		pair->value = RISCV_HWPROBE_BASE_BEHAVIOR_IMA;
-> +		pair->value = 0;
+> In v2, two major improvements:
+>
+> - Module unload is now robust.
+> - The bindings now require the controller's output port (port@1).
+>
+> The rest of the v2 changes please see below, with details in each patch's
+> changelog.
+>
+> Sashiko AI review contributed total review comments: 57 items, which I
+> accepted: 14 items.
+>
+> v2 repeated the full v1 test matrix on both boards, in built-in and
+> modular configurations, plus the new module load/unload rounds.
+>
+> The v1 cover letter follows below, unchanged, to provide some backgroud
+> (I can remove them from cover letter in next version):
+>
+> The Saturn DPU is SpacemiT's own display processing unit. It has a privat=
+e
+> address translation unit and a command-list composer that replays a batch
+> of register writes when a flush is latched. It exposes one CRTC with one
+> primary plane. The K3 instantiates two DPUs, one per display path.
+>
+> The DPU driver arrives as five staged patches to keep each one a
+> reasonable size. The driver only becomes buildable with that last patch.
+> Bisect safe.
+>
+> The DP/eDP controller and its PHY are Innosilicon IP, also two instances
+> of each. An instance behaves as embedded DisplayPort or as external
+> DisplayPort purely according to what its output port is wired to, so the
+> bindings do not distinguish them. The PHY's registers are interleaved
+> with the controller's inside one MMIO window, which is why it is
+> described as a child node and shares the controller's regmap.
+>
+> The pixel clock is generated by the DP PHY's PLL, and the SoC's APMU
+> pixel-clock mux takes that PLL as an input. Rather than let the display
+> driver reach into PHY registers, the PHY registers its PLL as a clock
+> provider and the APMU mux is parented to it through the clock framework.
+> That is what patches 2, 4, 5 and 6 are for, and it is also what keeps the
+> APMU and the DP/eDP controller out of a devicetree provider cycle.
+>
+> As a first posting of the K3 display subsystem, this patchset supports:
+> a single primary plane per CRTC, linear RGB scanout (no plane scaling,
+> rotation, YUV or writeback). It does not support DSI, DSC or DP audio,
+> and link rates are capped at HBR2.
+>
+> Based on drm-misc-next at commit 5b9af25f2d0b ("accel/ivpu: Remove
+> unnecessary min_t()/max_t() usage"), v7.2-rc2 based.
+>
+> Testing this series needs a SpacemiT u-boot carrying display support
+> [1]. SpacemiT expects to add that support into an official u-boot
+> release in August 2026.
+>
+> Tested on two K3 boards:
+>
+>   - Pico-ITX: an eDP panel and an external DisplayPort monitor.
+>   - CoM260-IFX: DisplayPort only, no eDP.
+>
+> Note: The eDP panel DTS enablement is not part of this series; a separate
+>       series will follow showing how eDP can be verified.
+>
+> What was run on both boards, with modetest from libdrm and with kmscube:
+>
+>   - modetest -s, looped over 1920x1080, 1280x720 and 3840x2160
+>     on DisplayPort and 2560x1600 on eDP
+>   - kmscube, on each head and on both at once
+>   - hot-plug and sink swap on the DisplayPort connector
 
-Today while testing this series with glibc's glibc IFUNC resolver on QEMU
-(-cpu rva23s64), I found that this hunk introduces an initialization
-ordering bug, which affects the KEY_BASE_BEHAVIOR valude in vDSO.
+Hi Cody,
 
-> +		if (hwprobe_has_isa_base(cpus, RISCV_ISA_BASE_IMA))
-> +			pair->value |= RISCV_HWPROBE_BASE_BEHAVIOR_IMA;
-> +		if (hwprobe_has_isa_base(cpus, RISCV_ISA_BASE_RVA23U64))
-> +			pair->value |= RISCV_HWPROBE_BASE_BEHAVIOR_RVA23U64;
->  		break;
+Tested the series on a K3 Pico-ITX (mainline v7.3-rc2 + these patches,
+display drivers built in). On the DisplayPort output:
 
-Both bits are now derived from hart_isa[cpu].isa_bases, which patch v6
-09/11 populates in riscv_init_isa_bases() at subsys_initcall. The vDSO
-snapshot of all hwprobe values, init_hwprobe_vdso_data(), runs at
-arch_initcall_sync, which is earlier. So the vDSO copy of
-RISCV_HWPROBE_KEY_BASE_BEHAVIOR is taken from empty bitmaps and reads 0:
+- modetest -s: 1920x1080 and 1280x720 OK (native 2560x1440 as well);
+3840x2160 not tested: my monitor has no such mode.
+- kmscube: OK.
+- hot-plug: unplug/replug detected, output re-enables fine.
 
-  raw syscall            : key=3 value=0x3  (IMA | RVA23U64)
-  __riscv_hwprobe (vDSO) : key=3 value=0x0
+Tested with the stock vendor U-Boot (2022.10); DP works fine with it.
 
-Mainline returns 0x1 on both paths, so this also regresses the IMA bit
-for every vDSO user of key 3. The selftests did not catch it because
-they call the system call directly (sys_hwprobe.S); glibc's
-__riscv_hwprobe() takes the vDSO fast path and did.
-
-The fix is to register riscv_init_isa_bases() at arch_initcall instead
-of subsys_initcall. That is still after core_initcall(tagged_addr_init),
-which it depends on, and before arch_initcall_sync. It belongs in patch
-09/11 and I will fold it in there in v7. With it both paths return 0x3,
-and the hwprobe, cbo and which-cpus selftests pass on rva23s64,
-rva22s64 and on mainline.
-
-I will send v7. Thanks for your patience.
-
-BR,
-Guodong
+Tested-by: Ze Huang <ze.huang@oss.qualcomm.com>
