@@ -1,201 +1,102 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9314A9D4D
-	for <spacemit@lists.linux.dev>; Mon, 14 Sep 2026 15:14:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789398885; cv=pass; b=L6jfhsLZIsd4zFTVIvnMfghzrSOMdV4lUKzOACjeSaVw8IebluWfDfy93/lRj5GBZ0PZgpM5GhMTWRrQLnoCYJk/zxNQHOAmw3xoQnQdBkm5lDwhohYL56kaaYs+mZcf0l55I7Hy7v6xb/8tw4tzfFDXPpGv9qHc5KX8fExoX4Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789398885; c=relaxed/simple;
-	bh=0e21yf2uanhh0Tn0XDJ3lH29RdLVpcU5SaZe4luxrLs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=aohhhx32uqYq7ixNDk4aL/nu+1hqUly8wx1aMEqocdYgvEKn3jqUVvRGv79zfA9R7v8b3YrYwexuFVN604U/ADEOWMD8xLwdMcWtXtEYFwgrSoLGZPMe0cJUzM6q2bkCT8zzzB6JQHvn2FmUAuUfFUUBUgDkQqvO9li7+t9ebtE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=oT3SAa7X; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D116B47A861
+	for <spacemit@lists.linux.dev>; Mon, 14 Sep 2026 15:26:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789399602; cv=none; b=HckZabzXjWmNtl6BlDGrQlpvuU5ge5Yi5OFmiq8GxQ/VDCfPush83VsloUCxORepadOoQ+5rlZHGlR/PxK4hbYogdSAq+pnaRX2JKc3Zcuya/VIDOdY++bGNLbIYairLBqvY5UN5392ly7onw1N+BY1Vfz4ymtZqlC/aS2Hccno=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789399602; c=relaxed/simple;
+	bh=A+WJXH8LEWEmVEvHuluPt5ZSvK79HhNgL+/k4aL7GRQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZJdR+4xyUq97KRXMKHgA5YqbMFX9GaLofJLCxf/Phkf9NIVQQmgX84p0xuaO8MceOAQ0bIvikMJzTandYAdB14JQ+WT1ZyCCpWcNthdax5+i4p2jHcEmChHeuEag2TWq7U7kV1M0K7rMt2VIsioBQVoAAyyIQ5Kzgw7YqEeDE3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PjtmZUry; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="oT3SAa7X"
-ARC-Seal: i=1; a=rsa-sha256; t=1789398855; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=Irqx1V1AthWJNQBn/S/ODjf+0ExifuYZ8G2sz8z6BTyysw2MaHMYUKgxKRu2DgwCYzMCqKl/xGqhJzOYD0l3gP5xWaARcrRWu0O0HT523IOo5QlyDr4ofFdPWyrO/0OKwTSZUon04K3r0dQLf/7buMuFsm94JHyWcJ5njk9mXW8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789398855; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=oRJUYEcqncIkzz6dZZOHcKExune/t93QAkusNCDdmps=; 
-	b=fEsrz2QgIOwOlaxu2DOqx0n52Myzrh42iLdVtCAHO0Ak0kVj36796yFLtaSKUc0P4zF3XELOu4uDIKxKWFqVALAD06hIE5VYUvJNdAfEsfvk5MCt4fLcGRsuLvWKl+35fO38YglNvYBJNVxd8ZunqiPpDIZhbEnDmg7OSfgVgn0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789398855;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Subject:Subject:From:From:To:To:Cc:Cc:In-Reply-To:Reply-To;
-	bh=oRJUYEcqncIkzz6dZZOHcKExune/t93QAkusNCDdmps=;
-	b=oT3SAa7XsMa0TWFR/bjHksG/1MepRFwrQ4CPzBWQw32HeDlEQBrzytn28+HsXEV1
-	sOEyljOcCan5FI/lGw2ur6FooEvtoWmwLz51FUiI6c9gwuyuJ2tzGSpuFJQXGag5F0s
-	XsTe0FgS6E7QdXTmAxJ28gmbo/Zy+MUNqlkM9Qao=
-Received: by mx.zohomail.com with SMTPS id 1789398853058146.74593238812224;
-	Mon, 14 Sep 2026 08:14:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PjtmZUry"
+Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d8fb334ddcso21705075ad.0
+        for <spacemit@lists.linux.dev>; Mon, 14 Sep 2026 08:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789399599; x=1790004399; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:sender:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=JSZQy8BrbphsTuB3PP3GNkS6dKaTus6BUKVlBhlcQXk=;
+        b=PjtmZUryHVckmE0dMKc2tK7uRxLMlECowGz66nbqDn5vN6mAG3bsQHoLLl+sizToYJ
+         jaD1HZgizTggY8b2QVb89rV4s8hz+N4ppDyJnigI6ASMFgmHy3jxJxfb2XaO//6dxaP4
+         wMWLQ0XrCG8heQyjArbtwYKSHlHDwX+7fEGE9BHTdL4euhTWbn9R2NZ2QWeMzcS925ug
+         6sSieb58zJKpr81r20stogn91fGyUtxDa2X4VzF4SyaJz3UeSIZzi+F72h00rOcxBdhU
+         cThIqzRlyG5g7bv5JzBNbqv1Tf+JvYGIC+jMLlbyscVeaZRuDPfHMVvcja0uZ7Txw8B2
+         GUUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1789399599; x=1790004399;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:sender:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JSZQy8BrbphsTuB3PP3GNkS6dKaTus6BUKVlBhlcQXk=;
+        b=ReC2EVG9MNrIEWDcX5S/7gbcNQTCZaxLa6eFKk0CzP7oFV8TLrEZ47rV0KdWiCvf+A
+         DJm+G0stVIUQgqLKf0TPENT7m88Kwwbq2ZdcWwxmAOd08vCD6zZBzpFXyN5aSnlWynUr
+         AaHj04oAOcH7n6fWlMpTLpUxYnQU0N9r2kuOCGlENXFk/cgr61uNKcJQZaFk37o/CkDL
+         YsCIIQ2CnEzvc94eVA5xAR6TFv74VA0iw3Jc7u+huAOvbTOIlvFNpa2uDF59NxHGXvlI
+         vUmUvMHv7K4v0T6G8hfwBGTJQ5J5JWi1fxV2LGqHNTA4ylWrFQmkUSINos8EWl+wVEjc
+         tI0A==
+X-Forwarded-Encrypted: i=1; AKwUvBwllCS8ioOC5krER8HCNm4wFsN94ugzJrGy0D6fx+saLgkvSwf03pzJBxOt5FOtFNq4h+e0WETgVw==@lists.linux.dev
+X-Gm-Message-State: AFuF++kwY6hJnIfzwFpck4Kx9x/7v+E1/TTI6MkVIczP8HkmP7ZpGZUg
+	D6tP+Nq/UVHAViVk00jy+nZHXCzcB+533X7FdxLwJ7VG5Y1gY0DskLnw
+X-Gm-Gg: AYBFou1TPGfsUhX6NgfjDFzoJKtOmNwPTu9g/WtYfR0Mnp6ExrsT+bwvZULkvPXd08S
+	LhZpReu0AlIAgtnTsHkG0osmyxxmo4EJD4aecPheE6IfLSDnOFj453nW8MePeN2j3dtfhLW5D4X
+	IY3I/e2Y0uj/q5S/a0p3QTCsVN9/EVVuvZH1YIM0489QPWHdlhMjYmKttHn37vhZ18ItgDEwzdu
+	va2wIwF2zry2UtviYXfCtDGd/5jZ3kLVbLU2VQ7tMNPg98yNAyIOYbtaZS4QjhOb1U+fZD7DvLq
+	SPDT208tsfUFUSAJr+HQIJd0XQVaYXv6K/xUe40Ayo5hqItPiqTaIxqXq1MrMsP/LO1FYMUwhO5
+	4+zY9vAgImKTQDMcUYAONJCSk/pGK6aoJR422B4s8tFoO+vRWJDQAZnWYhSDAMz0rCjgpS0GepF
+	aoktzG2I9kwEMCTmGF0cqkPI5MTUXMgavHdWHUzBjC6DyXKCpbLCxpgS+YK4ZWexVfaatCKvUVw
+	tN2MuVUDXsA
+X-Received: by 2002:a17:903:35c6:b0:2db:73fc:b57f with SMTP id d9443c01a7336-2dd6c6c0cc0mr59735695ad.10.1789399599255;
+        Mon, 14 Sep 2026 08:26:39 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2cfdc15esm51211505ad.66.2026.09.14.08.26.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 08:26:37 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 14 Sep 2026 08:26:36 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Troy Mitchell <troy.mitchell@linux.dev>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v5 1/6] dt-bindings: vendor-prefixes: Add Sensylink
+Message-ID: <35ea8534-5446-40fc-b1a7-72a115bc40b6@roeck-us.net>
+References: <20260914-ctl2301-v5-0-b44b81cd2c3c@linux.dev>
+ <20260914-ctl2301-v5-1-b44b81cd2c3c@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 14 Sep 2026 23:14:05 +0800
-Message-Id: <DLF4Y9FCAUGU.2INMPZ254T13Z@pigmoral.tech>
-Subject: Re: [PATCH v2 0/6] spacemit: k3: Replace bad CLINT node with ACLINT
- nodes
-From: "Junhui Liu" <junhui.liu@pigmoral.tech>
-To: "Bo Gan" <ganboing@gmail.com>, "Junhui Liu" <junhui.liu@pigmoral.tech>,
- "Daniel Lezcano" <daniel.lezcano@kernel.org>, "Thomas Gleixner"
- <tglx@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan"
- <dlan@kernel.org>, "Inochi Amaoto" <inochiama@outlook.com>, "Radu Rendec"
- <radu@rendec.net>, "Paul Walmsley" <pjw@kernel.org>, "Samuel Holland"
- <samuel.holland@sifive.com>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Anup
- Patel" <anup@brainfault.org>, "Guodong Xu" <docular.xu@gmail.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>
-Cc: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, "Conor
- Dooley" <conor.dooley@microchip.com>
-X-Mailer: aerc 0.22.0
-References: <20260909-k3-aclint-v2-0-7931e5bc86ad@pigmoral.tech>
- <0f82c603-0ddd-4d01-bf48-56d0ffcd29b0@gmail.com>
-In-Reply-To: <0f82c603-0ddd-4d01-bf48-56d0ffcd29b0@gmail.com>
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260914-ctl2301-v5-1-b44b81cd2c3c@linux.dev>
 
-Hi Bo,
+On Mon, Sep 14, 2026 at 04:03:53PM +0800, Troy Mitchell wrote:
+> Add the vendor prefix for Sensylink Microelectronics.
+> 
+> Link: https://en.sensylink.com/
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
 
-On Fri Sep 11, 2026 at 4:43 PM CST, Bo Gan wrote:
-> Hi Junhui,
->
-> Thanks for your patch. This would give me more clarity while reviewing
-> the OpenSBI patchset from Troy, and I was wondering why Troy sent this
-> https://lore.kernel.org/opensbi/20260908-ipi-clear-all-v1-1-b1bd5d016eb6@=
-linux.dev/T/#u
->
-> Now it's much clearer -- K3 has two ways to do IPI, ACLINT and IMSIC.
->
-> One thing that may help us further: Can you clarify on the exact meaning
-> of "M-mode only"? OpenSBI would use PMP to protect those MSWI/MTIMER
-> regions, so I wonder if you meant that it's enforced by the PMP settings,
-> or it's *actually* enforced by the device itself (or fabric)? AFAIK, to
-> achieve this, the device must have a way to distinguish the privilege-
-> level of the CPU at the time it initiated the MMIO request. Hence, the
-> core must be putting the privilege level as some kind of attribute in the
-> MMIO request. Is that the case in k3? Can you confirm with SpacemiT?
+Applied.
 
-Thanks for pointing this out. I have double-checked and found that my
-earlier "M-mode only" description was incorrect. The restriction depends
-on the eFuse configuration rather than CPU privilege modes. Under the
-relevant eFuse configuration, the non-secure address window becomes
-inaccessible, while the secure window remains available. PMP handles
-access restrictions based on privilege mode.
-
-I also verified that S-mode can read MSIP and MTIME through the secure
-window once PMP allows those reads.
-
-I will correct the explanation and use the secure address window
-consistently for all ACLINT components in the next version.
-
->
-> On 9/8/26 09:28, Junhui Liu wrote:
->> When testing OpenSBI with the upstream Device Tree, the CLINT controller
->> failed to function properly with the irqchip.riscv_imsic_noipi boot
->> parameter:
->>=20
->>    Platform IPI Device         : aclint-mswi
->>    Platform Timer Device       : aclint-mtimer @ 24000000Hz
->>   =20
->>    Domain0 Region03            : 0x00000000e081c000-0x00000000e081ffff M=
-: (I,R,W) S/U: ()
->>   =20
->>    [    0.091014] smp: Bringing up secondary CPUs ...
->>    [   10.104917] CPU1 failed to report alive state
->>    [   20.118689] CPU2 failed to report alive state
->>    [   30.132288] CPU3 failed to report alive state
->>    [   40.145953] CPU4 failed to report alive state
->>    [   50.159604] CPU5 failed to report alive state
->>    [   60.173212] CPU6 failed to report alive state
->>    [   70.186981] CPU7 failed to report alive state
->>    [   70.191411] smp: Brought up 1 node, 1 CPU
->>=20
->> Through exploring and testing, I discovered that the K3 actually
->> provides all three complete ACLINT components, and subsequent
->> confirmation with the vendor yielded the following information:
->>=20
->> The ACLINT controllers are mapped to two physical memory regions:
->> secure (0xf1810000-0xf1820000) and non-secure (0xe0810000-0xe0820000),
->> with varying accessibility per controller and execution mode:
->>=20
->> +---------+--------+------------------------+-----------------------+
->> | Offset  | Module | Secure Region          | Non-Secure Region     |
->> +---------+--------+------------------------+-----------------------+
->> | +0x0000 | MSWI   | 0xf1810000-0xf1813fff  | 0xe0810000-0xe0813fff |
->> |         |        | (M-mode only)          | (Inaccessible)        |
->> +---------+--------+------------------------+-----------------------+
->> | +0x4000 | MTIMER | 0xf1814000-0xf181bfff  | 0xe0814000-0xe081bfff |
->> |         |        | (M-mode only)          | (Inaccessible)        |
->> +---------+--------+------------------------+-----------------------+
->> | +0xc000 | SSWI   | 0xf181c000-0xf181ffff  | 0xe081c000-0xe081ffff |
->> |         |        | (M-mode only if efused)| (M/S-mode Accessible) |
->> +---------+--------+------------------------+-----------------------+
->>=20
->> Taking these constraints into account, we choose the secure region
->> (0xf1810000-0xf181bfff) for the M-mode ACLINT components (MSWI and
->> MTIMER), and the non-secure region (0xe081c000-0xe081ffff) for the
->> S-mode SSWI component.
->>=20
->> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
->> ---
->> Changes in v2:
->> - Drop the generic riscv,aclint-* fallback compatibles and use only
->>    SpacemiT K3-specific compatibles.
->> - Match spacemit,k3-aclint-sswi directly in the SSWI driver.
->> - Squash the ACLINT MSWI and MTIMER DT additions into the patch that
->>    replaces the incorrect CLINT node.
->> - Link to v1: https://patch.msgid.link/20260729-k3-aclint-v1-0-aef88614d=
-3a5@pigmoral.tech
->>=20
->> ---
->> Junhui Liu (6):
->>        dt-bindings: timer: thead,c900-aclint-mtimer: Add SpacemiT K3
->>        dt-bindings: interrupt-controller: thead,c900-aclint-mswi: Add Sp=
-acemiT K3
->>        dt-bindings: interrupt-controller: thead,c900-aclint-sswi: Add Sp=
-acemiT K3
->>        dt-bindings: timer: sifive,clint: Deprecate spacemit,k3-clint
->>        irqchip/aclint-sswi: Add support for SpacemiT K3
->>        riscv: dts: spacemit: k3: Replace incorrect CLINT node with ACLIN=
-T nodes
->>=20
->>   .../thead,c900-aclint-mswi.yaml                    |  1 +
->>   .../thead,c900-aclint-sswi.yaml                    |  5 +--
->>   .../devicetree/bindings/timer/sifive,clint.yaml    |  5 ++-
->>   .../bindings/timer/thead,c900-aclint-mtimer.yaml   |  1 +
->>   arch/riscv/boot/dts/spacemit/k3.dtsi               | 37 ++++++++++++++=
-++------
->>   drivers/irqchip/irq-aclint-sswi.c                  |  1 +
->>   6 files changed, 37 insertions(+), 13 deletions(-)
->> ---
->> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
->> change-id: 20260729-k3-aclint-94ca9d3f818f
->>=20
->> Best regards,
->> --
->> Junhui Liu <junhui.liu@pigmoral.tech>
->>=20
->>=20
->> _______________________________________________
->> linux-riscv mailing list
->> linux-riscv@lists.infradead.org
->> http://lists.infradead.org/mailman/listinfo/linux-riscv
->
-> Bo
-
---=20
-Best regards,
-Junhui Liu
+Thanks,
+Guenter
