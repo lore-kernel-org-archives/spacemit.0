@@ -1,91 +1,110 @@
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F9934D90D
-	for <spacemit@lists.linux.dev>; Tue, 15 Sep 2026 15:39:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.200.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBC4481FA1;
+	Tue, 15 Sep 2026 16:52:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789486788; cv=none; b=LUPoOq+2j2xIvRUh0bZQxvRLy2IQTIgNw/mPP/tK7YQb0TprP4KVT/4245NGQSvJoD3Sz+eCC7IYjzMFntNQcL9JUCfH7N+uzB6TrwwlFUSQVdOMwXXfembSHGL6rx2TJP27dAgxC/UOGhondy4Ilr9dCaWmDWYRPBffiiYR9ow=
+	t=1789491152; cv=none; b=b8gi//R5FtFvgu1mv4Ke0ilAfMXY8N22gXF3GAz8cgwtKQ51Ccl3vONNHz0PQoDNiA8jTwH5U63dhUTwGDgIcj1HNfIIBX4wsT/D9ngKM14fW8WhK8B7M6rGPnD43BbGrk1ed12Q/I0+nfTnCRdk0WgJYIHkF+PHGG8WAl7Jr30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789486788; c=relaxed/simple;
-	bh=EsG+067bb217qUQEWA8/hszA9nlOO111GMkVPl6tJVw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ijwJKj1A0Ex2cdwYBTR4wO6CrRybfjz7XDW0XqN8UAbQKF2qipSvBBM/lJ95jxt/qWYpfuntcqvZAZTxM2fr8yDjudv/Zc/D7U6Qjz1a2p07CMtjEc4XbWsbPTAxBOpgkN56cxI5WzqMFKH+OFxRUokyCj/PiAucNbO/FoZ97WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.200.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-X-PTX-Original-Recipient: dlan@kernel.org
-X-PTX-Original-Recipient: docular.xu@gmail.com
-X-PTX-Original-Recipient: pjw@kernel.org
-X-PTX-Original-Recipient: palmer@dabbelt.com
-X-PTX-Original-Recipient: aou@eecs.berkeley.edu
-X-PTX-Original-Recipient: alex@ghiti.fr
-X-PTX-Original-Recipient: linux-kernel@vger.kernel.org
-X-PTX-Original-Recipient: linux-riscv@lists.infradead.org
-X-PTX-Original-Recipient: spacemit@lists.linux.dev
-X-PTX-Original-Recipient: elder@riscstar.com
-Received: from [IPv6:2a0a:edc0:0:900:1d::4e] (lupine.office.stw.pengutronix.de [IPv6:2a0a:edc0:0:900:1d::4e])
-	(Authenticated sender: pza@pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 127DD2059C8;
-	Tue, 15 Sep 2026 17:39:33 +0200 (CEST)
-Message-ID: <7f227c6bc72eb93096e77e6158e394b79801e997.camel@pengutronix.de>
-Subject: Re: [PATCH v2] MAINTAINERS: add entry for SpacemiT reset controller
- driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Yixun Lan <dlan@kernel.org>, Guodong Xu <docular.xu@gmail.com>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- linux-kernel@vger.kernel.org, 	linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, Alex Elder	 <elder@riscstar.com>
-Date: Tue, 15 Sep 2026 17:39:32 +0200
-In-Reply-To: <20260910213442-GKE2346@kernel.org>
-References: 
-	<20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
-	 <62e1781e127176294088cee9c120b3173359ec4b.camel@pengutronix.de>
-	 <my7qwtgrgph43hjxwmjm5hkeuxltlqjntnj5zdo7xqlrfrlffx@fp4mt7phdor4>
-	 <43ce274d284a4f94815ec25f5ca0604f.docular.xu@gmail.com>
-	 <20260910213442-GKE2346@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	s=arc-20240116; t=1789491152; c=relaxed/simple;
+	bh=ypzeoRTb6xYEsb/0WCuvTZKzTa2DaEvHlXj54ddwHQY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N7hYa4lrVtnxf5x5UhpgXyqTt1UBwcejW8SJu9EobR8bx4wdu6kyeHbh2pL/At+Isl4Iikp5k4Wooomm4mjNQ70I5X0nvgqFWMxO4b4fuB+iEt97jxK9UbFBZTgSbOTE9CGetkLVSNzqHkslhdAl2QOMT7Ywq+h/ZmyMeUDfzro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cuDOM1nN; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cuDOM1nN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB07D1F000FF;
+	Tue, 15 Sep 2026 16:52:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789491151;
+	bh=ypzeoRTb6xYEsb/0WCuvTZKzTa2DaEvHlXj54ddwHQY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=cuDOM1nNDsxtF7PlFuKdms5h3NHvIeOPwqUQNtOl5kbk9O5dbaHIR/RrEzZUyG/3i
+	 qSeL1n5WZRN1ll37KYIKax7VZLddYiaN5mCgEA+o5Jyf4GNB5aC/E77HsxtUsnI0Nl
+	 TizghtMccZece/nmMV3joeDyInkBxIB4OBAn5L2KplAWNR6bK5s1N1tafFN5vdesA0
+	 mzBUc/1bIzzXDMQsb27ampVmHD+ZSaxXeuOhxBtBRcKTAhYKq3nIPvhi6hW3nkeHk/
+	 x8tY7cksKZJULwkgj3LWM16v3X62dPLE/HyWNWZe9O8tqegycyv7ZTSrdYI+6t4ilu
+	 /oyUBJKLv7xuw==
+Date: Tue, 15 Sep 2026 17:52:23 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Guodong Xu <guodong.xu@oss.qualcomm.com>
+Cc: Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Chen Wang <chen.wang@linux.dev>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+	sophgo@lists.linux.dev, linux-kselftest@vger.kernel.org,
+	Palmer Dabbelt <palmer@sifive.com>,
+	Andy Chiu <tchiu@tenstorrent.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Peter Bergner <bergner@oss.tenstorrent.com>,
+	Zihong Yao <zihong.plct@isrc.iscas.ac.cn>,
+	Mark Harris <mark.hsj@gmail.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Andrew Jones <andrew.jones@oss.qualcomm.com>
+Subject: Re: [PATCH v7 09/11] riscv: cpufeature: Introduce ISA bases bitmap
+ and rva23u64 detection
+Message-ID: <20260915-widget-defiling-e22497c228cc@spud>
+References: <20260915-rva23u64-hwprobe-v2-v7-0-aa35ebd9ae96@oss.qualcomm.com>
+ <20260915-rva23u64-hwprobe-v2-v7-9-aa35ebd9ae96@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HzK562KHekWwgPYZ"
+Content-Disposition: inline
+In-Reply-To: <20260915-rva23u64-hwprobe-v2-v7-9-aa35ebd9ae96@oss.qualcomm.com>
 
-On Do, 2026-09-10 at 21:34 +0000, Yixun Lan wrote:
-> Hi Guodong, Philipp,
+--HzK562KHekWwgPYZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Sep 15, 2026 at 03:15:35AM -0400, Guodong Xu wrote:
+> Introduce a per-hart and host-wide bitmap of conformant ISA "bases"
+> (named profile-class sets such as IMA and RVA23U64), computed at init
+> time by riscv_init_isa_bases().
 >=20
-> On 10:09 Thu 10 Sep     , Guodong Xu wrote:
-> > Hi Philipp,
-> >=20
-> > On 2026-08-07 19:51, Guodong Xu wrote:
-> > > On 2026-06-03 09:34, Philipp Zabel wrote:
-> > > [ ... ]
-> > > > Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-> > >=20
-> > > Gentle ping. All tags on this one are collected:
-> > >=20
-> > > Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-> > > Reviewed-by: Yixun Lan <dlan@kernel.org>
-> > > Acked-by: Alex Elder <elder@riscstar.com>
-> > >=20
-> > > Could you take it through the reset tree when convenient?
-> >=20
-> > Second ping. This is a MAINTAINERS-only change and carries your
-> > Acked-by, plus Reviewed-by from Yixun and Acked-by from Alex.
-> >=20
-> > If it is easier for you, I'd like to ask Yixun whether it could go
-> > through the SpacemiT SoC tree instead. Unless you object, I'd suggest
-> > we go that way if it has not been picked up by 2026-09-17.
-> >=20
-> Sounds a good plan, let's give Philipp some time to respond, if he still
-> unable to proceed by that time, then I will pick it.. just want to avoid
->  collision that both of us picked accidently..
+> Register riscv_init_isa_bases() as an arch_initcall. That is late
+> enough that core_initcall(tagged_addr_init) has probed senvcfg.PMM and
+> populated have_user_pmlen_*; without that ordering,
+> riscv_have_user_pmlen(7) would still return its default false and the
+> RVA23U64 detection path would always bail. It is also early enough that
+> arch_initcall_sync(init_hwprobe_vdso_data) finds the bases populated
+> when it snapshots the hwprobe values into the vDSO data page.
+>=20
+> Consider this as the cache that subsequent consumers (hwprobe's
+> RVA23U64 base behavior bit, /proc/cpuinfo's "isa bases" lines, etc.)
+> can read without recomputing, which keeps them consistent with
+> each other.
+>=20
+> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+> Signed-off-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
 
-Please feel free to pick it up into the SpacemiT SoC tree.
+Something is wrong here with the signoffs here, Drew's probably missing
+either authorship or a Co-developed-by tag?
 
-regards
-Philipp
+--HzK562KHekWwgPYZ
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaql3xwAKCRB4tDGHoIJi
+0j7yAP91eT382HzKXLp423gHB51yfWxN+iAs4R+MhBlF05j5GwEA5GjMcnOJVD8Y
+sEFBqUBTL8evUR1CilJLWuZxaN1wQAU=
+=myHc
+-----END PGP SIGNATURE-----
+
+--HzK562KHekWwgPYZ--
