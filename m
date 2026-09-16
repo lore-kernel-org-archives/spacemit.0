@@ -1,171 +1,316 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2017536998A
-	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 03:33:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A523E51C346;
+	Wed, 16 Sep 2026 16:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789529614; cv=none; b=cd+bbh1PLbyAs/2BTLjZafk7/k0imN9RcDGzAfZugjIGvOjcn1zuT9a/8Ca+cv7amisv4hJDDsUGcYqOv5rp8rIuOOmSqIcAyZOjCpwUQyijRziuPaQW9Q3Jim+Ic++Ka53A4ptKHQOp3scyd67ITRFjGNsi45IITQ5k0UeFhvs=
+	t=1789576011; cv=none; b=RKMs7uo1Tx5do/W6YvhnwnyuDjnWWYwyxJSHptk1CojYnBwRVh97OcCf6x4EePbn+xPvLZYLm94o1b6Plxolut3nOJ3b/WmSNTBK8vxuF0JuQLn5xgtGigExDiEwxEdYYA7ezOseGhU4W1zCO5njW9Q3MQB7brtKaOGlVe+HYsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789529614; c=relaxed/simple;
-	bh=GWfqXLYYCHe9VaUeBW4xpD6QKWRpX0SDJV1KO3ZQE2g=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 In-Reply-To:References; b=rlhJhLhfDPwVfg1tHYve7Sxl2nvN42GKfLRKYwva7IKF0BYgQj9uzWM4R9xl6oWP1koDBkTlL+JnBctQxcpHbyirWaMV7fEQ1h8BxHFMdZilwmTwqg7y/6icnYhZnItMQSnzVb41lMk0z/6wyX7N4KTjpPv5w9SicaOZP4t0Cqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=h6lM0rmM; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1789576011; c=relaxed/simple;
+	bh=bQmq8/4nlMdLauAhTzUH5s0o+HDsPJ1FRtZT/0Avn6U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GuQbjCiTLR9L5URUEoWbOe66S72uS4kftFvBEAWrSQ9/8swbOVENhoxiu7byWlEoiPlRKb3AT+wEXyhsSQGFRNTjf9wCB6Et9pGLkXQWWnu4Dhco1/XKW7g6+Uj6aw8JqOQ872UZUJrSYL113ayQRaIPXbw9rHb4VCDJBuc/1d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=JNyglAw6; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="h6lM0rmM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789529553;
-	bh=jWMvUUzOrPmrKHCXu38aWsr263gil8jmTfO2LCzoeEQ=;
-	h=Mime-Version:Date:Message-Id:To:Subject:From;
-	b=h6lM0rmM+keBiaqQ47c6pYEwBA++ynrOjk2F8jjtQNoV0bkNIS/mzeogjaUD/Q8SG
-	 9pLqBLZfOb6nrDxtKYuTVwClFDzUhzsVqfm1Ef22yeGv3MMBFJALVTb8TBNXZBk2I+
-	 NMqiLjhhBC4CXG4LFN/ZKdcdzXt9x/FvaDFCNIbA=
-X-QQ-mid: esmtpgz12t1789529551tb0ab28aa
-X-QQ-Originating-IP: p22YVTVAZzBPPbaX54GpBXgf19M7GP9hjLcXXtG9R94=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 16 Sep 2026 11:32:27 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8476099243940458162
-EX-QQ-RecipientCnt: 41
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="JNyglAw6"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=yoAeTRTh0GroYZP/sXmvaOQSkoa3dgKrLu2uFbFrXCA=; b=JNyglAw6hJJA6CBUPLi/mrxM0l
+	rdDH3hKaTjUDvoJS/4sTPH/B5i4E+u5nf05r9TNc9rpfjHgw+2PH3ZSq3F1oEE5pR/+toQGrYmOtP
+	d1t6nuOugXZCVLehFxAdBhaSHpDE6lCZDYFf3dqr/Mq+faIeKUIcUEg8FdQYXn0AvlTHZRwmys/a6
+	P/iWd5yuvUKuocOahpLyrMHfS2x4Qt97xrUxNSDIn7CxaF3I9f3BnebSp+M0YIz7PenYxpbexwcbq
+	2QraS9bXI20zZgfLwhJe0aUCi2De7x4O0Xp+i+OfxBKTq20tQg9aZTezRNRQnsmbBF8njtxUwuDQP
+	8zhyNQOQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1x6sSn-0000000FfA5-3Vzq;
+	Wed, 16 Sep 2026 18:26:25 +0200
+Date: Wed, 16 Sep 2026 18:26:25 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"Martin K. Petersen" <mkp@kernel.org>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 2/3] scsi: ufs: spacemit: k3: Add UFS Host Controller
+ driver
+Message-ID: <aqrDMVMMtTfVVu8X@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	"Martin K. Petersen" <mkp@kernel.org>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+References: <20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org>
+ <20260916-08-k3-ufs-support-v5-2-1f5d71f1027d@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=98c1991e3a84cabccc87599576fe5533e92c3b07b62de26e2101639d3652;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 16 Sep 2026 11:32:24 +0800
-Message-Id: <DLGFA3K9UNL9.AZCYNV8V9WM6@linux.spacemit.com>
-To: "Inochi Amaoto" <inochiama@gmail.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Jingoo Han" <jingoohan1@gmail.com>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Lorenzo Pieralisi"
- <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, "Rob Herring" <robh@kernel.org>, "Bjorn Helgaas"
- <bhelgaas@google.com>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Frank Li"
- <Frank.Li@nxp.com>, "Niklas Cassel" <cassel@kernel.org>, "Sherry Sun"
- <sherry.sun@nxp.com>, "Arnd Bergmann" <arnd@arndb.de>, "Christian Bruel"
- <christian.bruel@foss.st.com>, "Krishna Chaitanya Chundru"
- <krishna.chundru@oss.qualcomm.com>, "Senchuan Zhang"
- <zhangsenchuan@eswincomputing.com>, "Alex Elder" <elder@riscstar.com>,
- "Xincheng Zhang" <zhangxincheng@ultrarisc.com>, "Randolph Lin"
- <randolph@andestech.com>, "Siddharth Vadapalli" <s-vadapalli@ti.com>, "Andy
- Shevchenko" <andriy.shevchenko@linux.intel.com>, "Vidya Sagar"
- <vidyas@nvidia.com>, "Neil Armstrong" <neil.armstrong@linaro.org>, "Danilo
- Krummrich" <dakr@kernel.org>,
- =?utf-8?b?VXdlIEtsZWluZS1Lw7ZuaWcgKFRoZSBDYXBhYmxlIEh1Yik=?=
- <u.kleine-koenig@baylibre.com>, "Pengpeng Hou" <pengpeng@iscas.ac.cn>,
- "Anirudh Srinivasan" <asrinivasan@oss.tenstorrent.com>, "Gustavo Pimentel"
- <gustavo.pimentel@synopsys.com>
-Cc: <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, "Yixun Lan" <dlan@gentoo.org>, "Longbin Li"
- <looong.bin@gmail.com>
-Subject: Re: [PATCH v5 6/6] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-In-Reply-To: <aqEOHmlKdKqQWYE8@inochi.infowork>
-References: <20260907112606.465778-1-inochiama@gmail.com>
- <20260907112606.465778-7-inochiama@gmail.com>
- <DL940SRP94AG.408BKFWHDVY3@linux.spacemit.com>
- <aqEOHmlKdKqQWYE8@inochi.infowork>
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N5YGPHbvgCRTpV7+YJPgE95YSIdsTl7xwOgA7r+yMD53mG6YY5im8Men
-	0raC+xB89Gm5EY5f/LEAE0IX6f+W1CjuCYup5dxSxeAP7wZMqqHkXDeuvvA+dx0BCJPzEzF
-	erPGCuu0I7kykIHDKkzuqhkczkF2cICLNzdeqz784h8szuMKLzfV5H+q18vxFg93KJ3vpL7
-	T3w0C7rLbT+iVpPl8dL72tskpN7VDAdREiaNj0J2at0ORQhyHUrfhZSbxk08EdklUQ4w+fb
-	l05og5qGg+tR9/W/ouTsG3FPrH/YRjXjTNVfF9f4T1NEed7UB+/VBVkq4txMyYjrE+TZI2n
-	RN4MVBoFG9MRFsNl9U4NOe7S1VmhiX9KaZMB3j7G0Uu3ZDx1ORI8Ie4XnfJKQHhrf5aU1w0
-	sTJkyzl/VVOpL1cPbNdPIpsHhE4FQeWIdAn3/qJhDn6Sszx5UI+3mrPsANtZYOOzb0VLpLH
-	P1Q2lXBL0yTkQBKbDiZ08FTg0DFat9Vq5xosc6kYPu53skH6Gs8OnPrRQdLfbWq3wfVyzvg
-	NgZcDbjMS0DTcSgQBssrKoMoaolxA/ewRsrQLW1R1lpeLDZ+seUbGScJpWxQWyM0GzmFDXb
-	cRyrAtoeVxxLpo9n22VPw+aNd2ArR+iJ/EdeTMFScp0tZu66QiaLwpVYiBcYTgNl7f+QY6f
-	ardz5fKKOCiK6C+H9m1KJ6U1Qx8GIarNREbRx1uDgGuA4JqD1N7tOoBD5NehxOnad9yDxgn
-	kZredNGB4HwrE0xSGjwHNQTCdw/DgzHHs43WlIIVEHGsFgXpiT7y+4QuLULeU0g6su9HRlK
-	9scRckj4Xa+U/xmwnQxE3+vK47QrFiao1qnr+Q6003/e5eBT/4XZgTuovVDGtm7u4PmozK/
-	cfL0uC5BVyLlWZIuXo+ilJFthwUfyzaOVxlVL2PfU67r02Vfx5mIku5YHvzHTxRKcNZ1m6C
-	A8DSmTF9mVh4eP+Xq0tHvS0Oio3+hIxrv+F2N0bNrurxkT5Vied2iba/wy5aafjkuov69oA
-	8AE9tIC+AkspZ5Dx+dySXhedljuqTcr4grkdRdEBRjPlavAbSzg09rX1NVDWKixZlrw4LQm
-	A==
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260916-08-k3-ufs-support-v5-2-1f5d71f1027d@kernel.org>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
---98c1991e3a84cabccc87599576fe5533e92c3b07b62de26e2101639d3652
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Yixun,
 
-On Wed, Sep 09, 2026 at 03:51:02PM +0800, Inochi Amaoto wrote:
-> [...]
->
-> > > +static int k3_pcie_parse_port(struct k1_pcie *k1)
-> > > +{
-> > > +	u32 status0, status1, status2;
-> > > +
-> > > +	/* This register require a RAW for cleanup */
-> > > +	status0 =3D readl_relaxed(k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> > > +	status1 =3D readl_relaxed(k1->link + INTR_STATUS);
-> > > +	status2 =3D readl_relaxed(k1->link + K3_ADDR_INTR_STATUS1);
-> > > +
-> > > +	writel_relaxed(status0, k1->link + K3_PHY_AHB_IRQSTATUS_INTX);
-> > > +	writel_relaxed(status1, k1->link + INTR_STATUS);
-> > > +	writel_relaxed(status2, k1->link + K3_ADDR_INTR_STATUS1);
-> > > +
-> > > +	return k1_pcie_parse_port(k1);
-> > > +}
-> > > +
-> >
-> > Are these status registers accessible before the controller clocks are =
-enabled
-> > and resets released? k3_pcie_parse_port() runs before dw_pcie_host_init=
-(), which
-> > calls k3_pcie_init() to enable those resources.
-> >
->
-> Yes they can. It is something interesting.
->
-> > The SDK uses the same ordering, but I am not sure whether it relies on =
-firmware
-> > leaving the registers accessible. If so, would it be safer to move this=
- clearing
-> > into k3_pcie_init(), after enabling the resources?
-> >
->
-> In fact, I have no idea about which clock control this MMIO area, if it i=
-s dbi
-> clock (but I guest it is not), it is kind of weird for this clear and sho=
-uld
-> move to the init. Do you have some knowledge on this?
+On 2026-09-16 02:59, Yixun Lan wrote:
+> SpacemiT K3 SoC consist of UFS (Universal Flash Storage) Host Controller
+> which has features compatible with JEDEC UFS 2.2, MIPI UniPro v1.61 and
+> M-PHY v3.0 standard.
+> 
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  drivers/ufs/host/Kconfig        |  12 +
+>  drivers/ufs/host/Makefile       |   1 +
+>  drivers/ufs/host/ufs-spacemit.c | 688 ++++++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-spacemit.h |  79 +++++
+>  4 files changed, 780 insertions(+)
+> 
+> diff --git a/drivers/ufs/host/Kconfig b/drivers/ufs/host/Kconfig
+> index ff170c0b6da0..6146872fcecc 100644
+> --- a/drivers/ufs/host/Kconfig
+> +++ b/drivers/ufs/host/Kconfig
+> @@ -132,6 +132,18 @@ config SCSI_UFS_VARIABLE_SG_ENTRY_SIZE
+>  	bool
+>  	default y if SCSI_UFS_EXYNOS && SCSI_UFS_CRYPTO
+>  
+> +config SCSI_UFS_SPACEMIT
+> +	tristate "SpacemiT UFS controller driver"
+> +	depends on SCSI_UFSHCD_PLATFORM && (ARCH_SPACEMIT || COMPILE_TEST)
+> +	help
+> +	  This selects the SpacemiT specific additions to UFSHCD platform driver.
+> +	  UFS host on SpacemiT needs some vendor specific configuration before
+> +	  accessing the hardware which includes PHY configuration and vendor
+> +	  specific registers.
+> +
+> +	  Select this if you have UFS controller on SpacemiT chipset.
+> +	  If unsure, say N.
+> +
+>  config SCSI_UFS_SPRD
+>  	tristate "Unisoc specific hooks to UFS controller platform driver"
+>  	depends on SCSI_UFSHCD_PLATFORM && (ARCH_SPRD || COMPILE_TEST)
+> diff --git a/drivers/ufs/host/Makefile b/drivers/ufs/host/Makefile
+> index 7d8db67eb23c..a3c447b8fc21 100644
+> --- a/drivers/ufs/host/Makefile
+> +++ b/drivers/ufs/host/Makefile
+> @@ -13,6 +13,7 @@ obj-$(CONFIG_SCSI_UFS_HISI) += ufs-hisi.o
+>  obj-$(CONFIG_SCSI_UFS_MEDIATEK) += ufs-mediatek.o
+>  obj-$(CONFIG_SCSI_UFS_RENESAS) += ufs-renesas.o
+>  obj-$(CONFIG_SCSI_UFS_ROCKCHIP) += ufs-rockchip.o
+> +obj-$(CONFIG_SCSI_UFS_SPACEMIT) += ufs-spacemit.o
+>  obj-$(CONFIG_SCSI_UFS_SPRD) += ufs-sprd.o
+>  obj-$(CONFIG_SCSI_UFS_TI_J721E) += ti-j721e-ufs.o
+>  obj-$(CONFIG_SCSI_UFS_AMD_VERSAL2) += ufs-amd-versal2.o ufshcd-dwc.o
+> diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
+> new file mode 100644
+> index 000000000000..179e6edb2ac2
+> --- /dev/null
+> +++ b/drivers/ufs/host/ufs-spacemit.c
+> @@ -0,0 +1,688 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2026 SpacemiT (Hangzhou) Technology Co. Ltd
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/delay.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/reset.h>
+> +#include <linux/slab.h>
+> +
+> +#include <ufs/ufshcd.h>
+> +#include <ufs/ufshci.h>
+> +#include <ufs/ufs_quirks.h>
+> +#include <ufs/unipro.h>
+> +
+> +#include "ufshcd-pltfrm.h"
+> +#include "ufs-spacemit.h"
+> +
+> +/* PA Layer Gettable and settable M-PHY Specific Attributes */
+> +#define PA_TXHSG1SYNCLENGTH		0x1552
+> +#define PA_TXHSG1PREPARELENGTH		0x1553
+> +#define PA_TXHSG2SYNCLENGTH		0x1554
+> +#define PA_TXHSG2PREPARELENGTH		0x1555
+> +#define PA_TXHSG3SYNCLENGTH		0x1556
+> +#define PA_TXHSG3PREPARELENGTH		0x1557
+> +#define PA_TXMK2EXTENSION		0x155A
+> +#define PA_PEERSCRAMBLING		0x155B
+> +#define PA_TXSKIP			0x155C
+> +#define PA_TXSKIPPERIOD			0x155D
+> +#define PA_PEER_TX_LCC_ENABLE		0x155F
+> +
+> +#define PA_SCRAMBLING			0x1585
+> +#define PA_MK2EXTENSIONGUARDBAND	0x15AB
+> +
+> +/* Special TX/RX Configuration Attributes */
+> +#define RX_LS_PRE_LEN_CAP		0x008D
+> +#define RX_LANE_HB8_BKDOOR_ATTR		0x00F4
+> +#define RX_PWRM_CLOSURE_LEN_CAP		0x008E
+> +#define RX_MIN_STALL_CAP		0x0088
+> +#define RX_LANE_SOF_BKDOOR_ATT		0x00F2
+> +#define RX_GARBAGE_COUNT_OFFSET		0x00F2
+> +
+> +/* Special analog register */
+> +#define ANA_EQ_CTRL_REG_ATTR		0x00CD
+> +#define ANA_HSGEAR_CTRL_ATTR		0x00C1
+> +
+> +/*
+> + * Keep UFS ACLK at a lower parent rate (409.6MHz) for stable init.
+> + * This mirrors the "ufs-low-aclk-freq" change from the other environment.
+> + */
+> +#define UFS_ACLK_LOW_FREQ_HZ		409600000UL
 
-I checked with our hardware team. PMU AP and PCIECFG share a system clock
-derived from PLL1 /8 or /6.
+You probably want to rename that to AXI, although here it's not that 
+important.
 
-This clock is already available during early boot, before PCIe controller
-initialization. The register accesses in k3_pcie_parse_port() therefore
-do not need to wait for k3_pcie_init(). That resolves my concern about
-the ordering.
+> +
+> +/* PHY register magic values */
+> +#define MPHY_PU_ALL			0x87f
+> +#define MPHY_PU_WITH_HB8_RESET		0xb7f
+> +#define MPHY_DEVICE_REFCLK_OE		BIT(8)
+> +#define MPHY_DEVICE_HW_RESET		BIT(0)
+> +
+> +#define MPHY_PLL_LOCK_BIT		BIT(31)
+> +#define MPHY_PLL_LOCK_TIMEOUT_US	10000
+> +
+> +/* FSM states */
+> +#define FSM_STATE_HIBERN8		0x1
+> +#define FSM_STATE_ACTIVE		0x3
+> +#define FSM_STATE_LS_BURST		0x5
+> +
+> +#define VENDOR_DUMP_BUF_SIZE		2048
+> +#define VENDOR_MAX_OFFSET		0xE0
+> +
+> +/* M-PHY FSM states */
+> +#define MPHY_RX_FSM_STATE	0xC1
+> +#define MPHY_TX_FSM_STATE	0x41
+> +
+> +static int ufs_spacemit_dme_set(struct ufs_hba *hba,
+> +				const struct ufshcd_dme_attr_val *v, int n)
+> +{
+> +	int ret = 0;
+> +	int attr_node = 0;
+> +
+> +	for (attr_node = 0; attr_node < n; attr_node++) {
+> +		ret = ufshcd_dme_set(hba, v[attr_node].attr_sel,
+> +				     v[attr_node].mib_val);
+> +
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int ufs_spacemit_check_hibern8(struct ufs_hba *hba)
+> +{
+> +	u32 tx_fsm_val_0 = 0;
+> +	u32 tx_fsm_val_1 = 0;
+> +	int retries = DIV_ROUND_UP(HBRN8_POLL_TOUT_MS * 1000, 100);
+> +	int err = 0;
+> +
+> +	do {
+> +		err = ufshcd_dme_get(hba,
+> +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
+> +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),
+> +				     &tx_fsm_val_0);
+> +		if (err)
+> +			break;
+> +
+> +		err = ufshcd_dme_get(hba,
+> +				     UIC_ARG_MIB_SEL(MPHY_TX_FSM_STATE,
+> +						     UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1)),
+> +				     &tx_fsm_val_1);
+> +		if (err || (tx_fsm_val_0 == TX_FSM_HIBERN8 &&
+> +			    tx_fsm_val_1 == TX_FSM_HIBERN8))
+> +			break;
+> +
+> +		usleep_range(100, 200);
+> +	} while (--retries > 0);
+> +
+> +	if (err) {
+> +		dev_err(hba->dev, "%s: unable to get TX_FSM_STATE, err %d\n",
+> +			__func__, err);
+> +	} else if (tx_fsm_val_0 != TX_FSM_HIBERN8 ||
+> +		   tx_fsm_val_1 != TX_FSM_HIBERN8) {
+> +		err = -ETIMEDOUT;
+> +		dev_err(hba->dev,
+> +			"%s: invalid TX_FSM_STATE, lane0 = %u, lane1 = %u\n",
+> +			__func__, tx_fsm_val_0, tx_fsm_val_1);
+> +	}
+> +
+> +	return err;
+> +}
+> +
+> +static u32 ufs_spacemit_get_sys1clk_1us(struct ufs_hba *hba)
+> +{
+> +	struct ufs_clk_info *clki, *ufs_aclk = NULL;
+> +	struct list_head *head = &hba->clk_list_head;
+> +	unsigned long rate_hz = 0;
+> +
+> +	if (!list_empty(head)) {
+> +		list_for_each_entry(clki, head, list) {
+> +			if (clki->name && !strcmp(clki->name, "aclk") && clki->clk) {
 
-                                            - Troy
+On the other hand, you definitely want to rename this one to "axi" to 
+match the device tree change. Right now the whole patchset just doesn't 
+work.
 
---98c1991e3a84cabccc87599576fe5533e92c3b07b62de26e2101639d3652
-Content-Type: application/pgp-signature; name="signature.asc"
+> +				ufs_aclk = clki;
+> +				break;
+> +			}
+> +		}
+> +	}
+> +
+> +	if (ufs_aclk && ufs_aclk->clk)
+> +		rate_hz = clk_get_rate(ufs_aclk->clk);
+> +
+> +	if (!rate_hz)
+> +		return 0;
+> +
+> +	return DIV_ROUND_CLOSEST(rate_hz, 1000000);
+> +}
 
------BEGIN PGP SIGNATURE-----
+Regards
+Aurelien
 
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaqoNyA0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvlUkBANa2w+Z52VSTg6VPhIdnN5L53HC35mTROdqQpRPi
-nqx2AP4rMeIb5iWf85lMB8tpSZ2nnHapBGg95rVgzpbj5/TeBg==
-=gkSx
------END PGP SIGNATURE-----
-
---98c1991e3a84cabccc87599576fe5533e92c3b07b62de26e2101639d3652--
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
