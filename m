@@ -1,184 +1,189 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532463BE179
-	for <spacemit@lists.linux.dev>; Tue, 15 Sep 2026 21:14:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11BF327C09
+	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789506862; cv=none; b=u9CRpweUu8rUZRhVJ6tVi/HmpFzFRrj7k8Hoe1eSltvQZpT1FsvIOm702P0P5jU3O2w1GdLa6K4xfi/q6RJRCQ953kLntoznrl/torzsJOJswXXBbLKzpqL764qSG6hy5y2QqfdsHkWCKUYX2nijlqyzXgq96vLruQl1b2L2QQs=
+	t=1789520324; cv=none; b=QfgX3KG9pniIOVCbEgPMQaYJMiL6uwjgXcYY45MbEXZMGGBDKO8nq9KViLRz2H047Hvh5tnldQmRAedITwinwURrT1C+b3PR5lA3VzKK5KtOxI7rkNLAHSO2Gvk/dlg6tlDacp92wZuMcR7+zevFFh50RR3qbDk8CfNHGhFdMCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789506862; c=relaxed/simple;
-	bh=j+NHvawE0i/KJNx0YGrFeCLMOAoNAbuUg3YwRv5hmtw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PSLKWQvA/wyvPDLW3J9+AdmcNSnc0CmG4nu2D1MZMTHfVHB3dZVTyVyuHIkCkltvcSm+N0jIyvdkSvSkfkbq/NXKbzzmxDm2MxFeBCLwKs649Z0Vj2SSY4cBGS2fmTdd7Idopb4+XAbSUpqrKqVxOEjB4hGNBS5gJeFYkapxI2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=AbdbTVd/; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1789520324; c=relaxed/simple;
+	bh=nBW4bqcmn+v9zVwrmsWHsyT2rrpkZlP9IgDlt/1GBLE=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Yb1VvH1vhXdHcyiiYUoazluAiyLW+a0lLpm5nMVjeAy6Bn/UFlNBMEdyz9mvxYejtKUx7o4rn/SHSrwk8kK7P80C7aXewe7L+kTE2IJUBOgaUPY8bJqM0McZ1Cp2JW3a0inyp8y1f4/2BrsKb9zxy3gYvX8z4FxwerzbBj+ZJsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=at6MwSFe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DRKi8DPV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="AbdbTVd/"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=Ip+Cwgi5TYff8rWkT7U+yZ7I3GxFDhKXbdUOWRBh9sw=; b=AbdbTVd/t4g7VUKOe/btkYV3/l
-	jC6jDgpBI9uJMs2MMTzqczNZ8JMt/pqmMLhRpksxqGPlDOQ7ZwtgDImhU9E8HFu0UYFuDHMZGaWpT
-	3DsQDFstH3rc5mA4Sfqfm9ffClQZM23cOTeVyci9GVClr2fX5lRCJxIJdCONDJelTw9/i8Y6a6wlf
-	UkPYRvaTUg6QSDxxuIdwCaQHC0y1k6iFh5YQlbo+byqpFKLtZBf6bEcmTUIthgPdWLkOD+uvS5eT9
-	8dM5LEc+vYPbfn0F50SoDPS6xFHApQ6OYl1WurRxwTB7jgRNM3NEYZH2tEIZBwvB4Fnb0M30vlLSz
-	RjGzjUhA==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1x6aTj-0000000EYvq-0zIR;
-	Tue, 15 Sep 2026 23:14:11 +0200
-Date: Tue, 15 Sep 2026 23:14:10 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: spacemit@lists.linux.dev
-Cc: linux-riscv@lists.infradead.org, Andy Chiu <tchiu@tenstorrent.com>,
-	Karl Mehltretter <kmehltretter@gmail.com>
-Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
-Message-ID: <aqm1Ik5202PyscK3@aurel32.net>
-References: <apSYF5x1Tu7PlyL1@aurel32.net>
- <ap-SIQ9DLt-CfAx6@aurel32.net>
- <aqGNGp8PInSV4vty@aurel32.net>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="at6MwSFe";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DRKi8DPV"
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLYkYF840552
+	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=; b=at6MwSFeH2UU+Qbt
+	avXfJKaWEz3MTEGbhMin+yr+fjN7xJ7PuyP3Hb3VydpnW0zAtbF7e6YevQsqEw1P
+	NAj65PoZyRzBDx/sYHq9Os7fA04cm4KSnBfgztumBdzKcKxRbsyeNg7aIX9Waeu2
+	it4O/bXcLjNh37LnuIr05HJpwH/+nxPQ3hnoJqyA1hcZv2XBV79iIVqo0Nu1jZqF
+	4zFnk6hcdEycTb9RV9PYdXmgG+Nyij7pf7DA/mzWPFyJdePzVG5csnttftzPQQzg
+	HSyKR37Ta9zSwAUyxZE01GRJqsFmqGyQkCjevT9g/FuZ5cvpXl5PqNhIVGUieWZO
+	WF8BtQ==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqdyw8m7d-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:37 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-39deb05ef51so3683665a91.3
+        for <spacemit@lists.linux.dev>; Tue, 15 Sep 2026 17:58:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1789520317; x=1790125117; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=;
+        b=DRKi8DPV6HTpeeU3ZvIzr6lWOihECViYxecMmMe0ltnbV7CgW9/8hRBzOapjkdKrbP
+         qMC6LcBFK/fJiDuudxSZO7sjMDXLIgYvsM6NgRvuDsuEfjjjQgvvKkVmeck7YP+IETbf
+         czUV8lpkUnWBqQ7QdZ79VRBInCR4m5JHWlbSuXnj1mBY4x3b2jOJdbm1N2pbTDHSsxYw
+         GDHklWdS32LoGl+XLyOZ5TICeOdREXB1cQ9MbVBg89j6Fy2uzO9TswOWZ+yvpAZsUBKu
+         pI3oyh7ishYyWMBN5IFtfcRN0J85hCltgmwNCRqxScwMOAQB6p/VT8z9ZzVBFYPVX8RR
+         TtCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789520317; x=1790125117;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=;
+        b=biPsYD75Wa5bV8gHa8S/lIZDlYmdLwEXqwoCnI50Jxz+5NmNo7DlM2tf2w1lRXpCCm
+         y8lDrVxA+xk9EuHUOjncpXU6gC0m5rqJt0PsAemCH2bAKknbxnx163NQJnEw8r1R56Vh
+         /bkwkSQ0kO7G2h508BI/ykxdUxbkClL7oaZeKeLnmKlN40QXvOwozGtH5iavSt7Ztlil
+         qhPZUrs2FvJkmcH0goErxG6y3tWMk03pNUuABhTyPkis7dsyHnPoASX/Op9VqfIBdvG4
+         dgyqVP1HaBRPMW8Gku4deswqE/rHjW0lonnwx/+92WQku/ZUbElJlYH4EVgOsqEy8Bs9
+         zGJg==
+X-Forwarded-Encrypted: i=1; AKwUvBwKkSAUcVTKdX7S4iMaPqYZc64CmOQWQW7fcB3t1qBZIvHpPOsGelp9WY/W1aEod2cMwW+Ze+C80A==@lists.linux.dev
+X-Gm-Message-State: AFuF++nFCO04HMO/iLUH1HGNgpzkarss6n7DWyttObncAPclZX5tSf3i
+	0gq4w/1LhnWACQg+BBw+qjtI2tl121ZSB8yFsbb5IVz6xr9DbE2TnDcpotDBNiZdM97aYw3Jo3x
+	l74tv503sgb1tsCBX9kK+bQXFAA3OKLREpyMxAXFoMGRfrz1XzckESkllZiytjA==
+X-Gm-Gg: AYBFou0jyNbw3tQWhjw4Fuqlk7NUPwT9f8vr4gSBiqzDP6WOuWZXesCzibPoM5QhLxk
+	BvXv1Cc+U33UPXUz+2ToFMluQ1j+7XSkSMseEdLxk4an1Lf2giYCiJ42u05Gqo+AZpY02HvfJQr
+	s/pAQreO9ZKnp1UfL+Dx2cil190dX4XDzMIPXkzoP7ILLGmSmeliOJ2x6Ffvk6Ob9gEMzgacRo0
+	UobykBqkkAJAe30pcLVSfV+FIG8QRbaS2HqG7bEYYB6INrn0NtFbzC+Cnqg3XA54Hjmraw+8Z89
+	Pnmqb2ebGaNhtQ3oQzO6pYDSiyF20jWUcwugCuMh7N+cu7UURaI8bWuAeg==
+X-Received: by 2002:a17:90b:2803:b0:39d:ef3e:9035 with SMTP id 98e67ed59e1d1-39e1e324463mr1568491a91.10.1789520317182;
+        Tue, 15 Sep 2026 17:58:37 -0700 (PDT)
+X-Received: by 2002:a17:90b:2803:b0:39d:ef3e:9035 with SMTP id 98e67ed59e1d1-39e1e324463mr1568416a91.10.1789520316669;
+        Tue, 15 Sep 2026 17:58:36 -0700 (PDT)
+Received: from localhost ([2a12:a305:4::30fb])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e1bbe3e62sm1231229a91.10.2026.09.15.17.58.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Sep 2026 17:58:36 -0700 (PDT)
+Date: Tue, 15 Sep 2026 20:58:33 -0400
+Message-ID: <b677f038a23d6cd0572b12053acaf3ab.guodong.xu@oss.qualcomm.com>
+From: Guodong Xu <guodong.xu@oss.qualcomm.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+        Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+        Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>,
+        Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Paul Walmsley <paul.walmsley@sifive.com>, devicetree@vger.kernel.org,
+        spacemit@lists.linux.dev, sophgo@lists.linux.dev,
+        linux-kselftest@vger.kernel.org, Palmer Dabbelt <palmer@sifive.com>,
+        Andy Chiu <tchiu@tenstorrent.com>, Florian Weimer <fweimer@redhat.com>,
+        Peter Bergner <bergner@oss.tenstorrent.com>,
+        Zihong Yao <zihong.plct@isrc.iscas.ac.cn>,
+        Mark Harris <mark.hsj@gmail.com>,
+        Aurelien Jarno <aurelien@aurel32.net>,
+        Andrew Jones <andrew.jones@oss.qualcomm.com>
+Subject: Re: [PATCH v7 09/11] riscv: cpufeature: Introduce ISA bases bitmap
+ and rva23u64 detection
+In-Reply-To: <20260915-widget-defiling-e22497c228cc@spud>
+References: <20260915-rva23u64-hwprobe-v2-v7-0-aa35ebd9ae96@oss.qualcomm.com>
+ <20260915-rva23u64-hwprobe-v2-v7-9-aa35ebd9ae96@oss.qualcomm.com>
+ <20260915-widget-defiling-e22497c228cc@spud>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <aqGNGp8PInSV4vty@aurel32.net>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+X-Proofpoint-GUID: sr5SXj5rGLyKIf5lg4vxW0VtFUGWNcju
+X-Authority-Analysis: v=2.4 cv=aJ1lOr9m c=1 sm=1 tr=0 ts=6aa9e9bd cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=0WmU45QFm0n7b77IdSEA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDAxMCBTYWx0ZWRfXyQE7auEhqCf1
+ ys9BCmXam9LTCNiz1m89WDsL6zPeedYJCDt0+ehHGLvOqxMGXC55TH5dLJSfj+8vcoqkHmJpUGh
+ QsPd3YeTYvXKTMZX91rI711jIO4mjN7qBq2256W3vDxyAfPOypbW1AkOh3g7i1+eDgOTPulRfK/
+ h71wZHJaaT2gUmBSYgV+HVFW+3CnQPWjtMlk1lVHPNtV/TtQ5+i0PZDmCHr1Y6ukeKJiluXs0Ou
+ IyOZqCWj8DXZDPd0RRxZgI11Hwtmfboio148Qi+xBLSOtfD/KkKhRE8UvloF0DXjGiAuFF+jXho
+ VWM6NK1wNeahYOIVPsAOkbWLDLJtwGelBleqr6NcyjLMDxK5MMZmbKjmRFbCb15YKPqAqMzICHh
+ zAo46EvQQPlB545RdqZTbw9jz7GX5fTwbl/ztTvvPysSGKPktt5g7m3RJogFhExrR17bi5xxwmO
+ l/U/r3CDDYONCsBH1nA==
+X-Proofpoint-ORIG-GUID: sr5SXj5rGLyKIf5lg4vxW0VtFUGWNcju
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDAxMCBTYWx0ZWRfX7+CBimo0bmqQ
+ FqPisuS561DwQ971DnTb/D5Urq9ChSU54LOItYndik045/qWjV+4rx9wkz8cAk4fTfTE9R8pW89
+ im4588FGQ75edtes6FpshBkB4mgcC+4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609160010
 
-Hi,
+Hi Conor,
 
-Some more update, even if the progress is quite low.
+On Tue, 15 Sep 2026 17:52:23 +0100, Conor Dooley wrote:
+> On Tue, Sep 15, 2026 at 03:15:35AM -0400, Guodong Xu wrote:
+>> Introduce a per-hart and host-wide bitmap of conformant ISA "bases"
+>> (named profile-class sets such as IMA and RVA23U64), computed at init
+>> time by riscv_init_isa_bases().
+>>
+>> Register riscv_init_isa_bases() as an arch_initcall. That is late
+>> enough that core_initcall(tagged_addr_init) has probed senvcfg.PMM and
+>> populated have_user_pmlen_*; without that ordering,
+>> riscv_have_user_pmlen(7) would still return its default false and the
+>> RVA23U64 detection path would always bail. It is also early enough that
+>> arch_initcall_sync(init_hwprobe_vdso_data) finds the bases populated
+>> when it snapshots the hwprobe values into the vDSO data page.
+>>
+>> Consider this as the cache that subsequent consumers (hwprobe's
+>> RVA23U64 base behavior bit, /proc/cpuinfo's "isa bases" lines, etc.)
+>> can read without recomputing, which keeps them consistent with
+>> each other.
+>>
+>> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+>> Signed-off-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
+>
+> Something is wrong here with the signoffs here, Drew's probably missing
+> either authorship or a Co-developed-by tag?
 
-On 2026-09-09 18:45, Aurelien Jarno wrote:
-> [Added Andy and Karl in Cc: as they have been involved in the vectored=20
-> user copy code and fighting similar issues]
->=20
-> Hi,
->=20
-> Some more progress on that topic.
->=20
-> On 2026-09-08 06:42, Aurelien Jarno wrote:
-> > Dear all,
-> >=20
-> > I have done some small progress on that issue. Help is still wanted and=
-=20
-> > would be appreciated.
-> >=20
-> > On 2026-08-30 22:52, Aurelien Jarno wrote:
-> > > Dear all,
-> > >=20
-> > > For the last weeks, I have been tracking a random memory corruption a=
-nd
-> > > relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It=
-=20
-> > > started upgrading to glibc 2.43, which does memset() through vector=
-=20
-> > > instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1=20
-> > > kernel, but I have also been able to reproduce it with a vanilla 7.2.=
-2=20
-> > > kernel, using a similar configuration to the Debian kernel. The board=
-=20
-> > > uses OpenSBI 1.9 and the vendor U-Boot.
+Thanks for the review. Yes, will fix in v8.
 
-I have been able to also reproduce the issue with the vendor OpenSBI. It=20
-is also reproducible with linux 7.2.6.
+I didn't look closely enough at authorship (which I should) when I
+reworked Drew's RFC into v2. His Signed-off-by was carried over, but
+clearly it needed more careful handling than that.
 
-> > I have been able to rule out OpenSBI from the issue, I have checked=20
-> > there is not trap to OpenSBI when the problem happens.
-> >=20
-> > > Typically it manifests itself with the following kind of error, when=
-=20
-> > > running g++ from GCC 16 as part of building software (e.g. OpenJDK,=
-=20
-> > > Blender, Dolfin, Qt6):  =20
-> > >=20
-> > > Assembler messages:
-> > > {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
-> > > {standard input}:284588: Error: unrecognized opcode `=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=
-=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=
-=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BF=C3=BFvl874'
-> > >=20
-> > > The broken chars are 0xff and it seems there are always 240 (but with=
-=20
-> > > poor statistics). Sometimes it instead causes a GCC ICE instead.
-> >=20
-> > I have identified that the 0xff comes from the poisoning done for v0 in
-> > __riscv_v_vstate_discard(), which should only happen for a syscall.=20
-> > Indeed changing the value to different ones propagates to the above=20
-> > error message.
-> >=20
-> > Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE=20
-> > doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD=
-=20
-> > changes the number of broken bytes.
->=20
-> The values from __riscv_v_vstate_discard() end-up there because they are=
-=20
-> the last values written to the vector registers. I have added some=20
-> poisoning in __asm_vector_usercopy_sum_enabled before the loop, and=20
-> those values appear instead. Using different values per vector register,=
-=20
-> I have found that the corruption comes from a partial load of the vle8.v=
-=20
-> instruction, while the result of the poisoning and the partial load are
-> then both written by the vse8.v:
->=20
->  loop:
->         vsetvli iVL, iNum, e8, ELEM_LMUL_SETTING, ta, ma
->         fixup vle8.v vData, (pSrc), 10f
->         sub iNum, iNum, iVL
->         add pSrc, pSrc, iVL
->         fixup vse8.v vData, (pDst), 11f
->         add pDst, pDst, iVL
->         bnez iNum, loop
+Rechecking these three patches that came over from the RFC (09, 10, 11),
+here is what I plan to do:
 
-I have instrumented that code, basically adding a function to check the=20
-copy afterwards (only using scalar instructions), and report values in=20
-case of errors. So far I have been able to catch the issue 4 times that=20
-way (including one where I haven't seen any visible consequence on the=20
-userland).=20
+- Patch 10/11 (cpuinfo) is still mostly Drew's patch; I only switched it
+  to the cached bitmap. v8 makes him the author.
+- Patch 09/11 and 11/11 were rewritten in v2 (the detection moved out of
+  hwprobe into cpufeature), but part of Drew's implementation stayed.
+  I'll adds his Co-developed-by in v8.
 
-This is what I observed:
-- The issue always happens for the first bytes of the user copy, which=20
-  in all cases were supposed to be up to 4096 bytes long.
-- On the first iteration of the loop only the first 16 bytes are loaded=20
-  by the vle8.v instruction but the full 256 bytes are written to the=20
-  destination by the vse8.v instrution.
-- On the second iteration of the loop, the vle8.v causes a trap, which=20
-  ends up in the 10f fixup. At fixup level, vl=3D0x100, vlenb=3D0x20,=20
-  vstart=3D0x0 and vtype=3D0xc3.
-- Considering the 2 first iterations of the loop (i.e. 512 bytes),=20
-  neither the source nor destination addresses cross a page.
+Drew, please shout if you would like this split differently.
 
-All that said, it is what I can *observe*. I have no idea if the first=20
-iteration of the loop also goes through fixup or not. Also in addition=20
-to precise traps (which definitely happen for the second iteration), IRQ=20
-could happen at any moment. I use CONFIG_RISCV_ISA_V_PREEMPTIVE=3Dn for my=
-=20
-test, in order to limit the code paths to review, so during that copy=20
-preempt is disabled, but IRQ is not.
-
-Regards
-Aurelien
-
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Guodong
