@@ -1,189 +1,70 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11BF327C09
-	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C96D349CEE;
+	Wed, 16 Sep 2026 02:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789520324; cv=none; b=QfgX3KG9pniIOVCbEgPMQaYJMiL6uwjgXcYY45MbEXZMGGBDKO8nq9KViLRz2H047Hvh5tnldQmRAedITwinwURrT1C+b3PR5lA3VzKK5KtOxI7rkNLAHSO2Gvk/dlg6tlDacp92wZuMcR7+zevFFh50RR3qbDk8CfNHGhFdMCM=
+	t=1789525297; cv=none; b=fBMDnkuNcGU4DMKOnf7g8+wBgjt1fWy0LrU+sqvQWkaGBM8C88G+8MfeVafY/IZ4b6ST3S7ZNomob+uAE5tO1x1CMcfaPihJi6mdFysVfxIAyawUy6tu0Iqm9kaEbmOePjEP3DU8ffyPWbtyn/9MmArmqbhzxHiwMENxyHciek8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789520324; c=relaxed/simple;
-	bh=nBW4bqcmn+v9zVwrmsWHsyT2rrpkZlP9IgDlt/1GBLE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Yb1VvH1vhXdHcyiiYUoazluAiyLW+a0lLpm5nMVjeAy6Bn/UFlNBMEdyz9mvxYejtKUx7o4rn/SHSrwk8kK7P80C7aXewe7L+kTE2IJUBOgaUPY8bJqM0McZ1Cp2JW3a0inyp8y1f4/2BrsKb9zxy3gYvX8z4FxwerzbBj+ZJsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=at6MwSFe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DRKi8DPV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1789525297; c=relaxed/simple;
+	bh=Tra7t3gPfKpvqsHFw7X0zpdqy2tvoklAurggo6kBoGU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LGgdaMyv4ONITVkskN/qmWouLXZ+TUGmR5OH5Wo9pxYl3TXnbOjAALgZJn/CnsMau236Z9+ea92fHefJw4hK4PUkiYDZZ5NyeRa/kJKFhUnRsjPAeNT9BROBgWFO/iRkBtfoqhjX+DcZaykowpMkHjyH+2IS17QQf2La4SI/85Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fkXwgn5k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="at6MwSFe";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DRKi8DPV"
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLYkYF840552
-	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=; b=at6MwSFeH2UU+Qbt
-	avXfJKaWEz3MTEGbhMin+yr+fjN7xJ7PuyP3Hb3VydpnW0zAtbF7e6YevQsqEw1P
-	NAj65PoZyRzBDx/sYHq9Os7fA04cm4KSnBfgztumBdzKcKxRbsyeNg7aIX9Waeu2
-	it4O/bXcLjNh37LnuIr05HJpwH/+nxPQ3hnoJqyA1hcZv2XBV79iIVqo0Nu1jZqF
-	4zFnk6hcdEycTb9RV9PYdXmgG+Nyij7pf7DA/mzWPFyJdePzVG5csnttftzPQQzg
-	HSyKR37Ta9zSwAUyxZE01GRJqsFmqGyQkCjevT9g/FuZ5cvpXl5PqNhIVGUieWZO
-	WF8BtQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gqdyw8m7d-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <spacemit@lists.linux.dev>; Wed, 16 Sep 2026 00:58:37 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-39deb05ef51so3683665a91.3
-        for <spacemit@lists.linux.dev>; Tue, 15 Sep 2026 17:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1789520317; x=1790125117; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=;
-        b=DRKi8DPV6HTpeeU3ZvIzr6lWOihECViYxecMmMe0ltnbV7CgW9/8hRBzOapjkdKrbP
-         qMC6LcBFK/fJiDuudxSZO7sjMDXLIgYvsM6NgRvuDsuEfjjjQgvvKkVmeck7YP+IETbf
-         czUV8lpkUnWBqQ7QdZ79VRBInCR4m5JHWlbSuXnj1mBY4x3b2jOJdbm1N2pbTDHSsxYw
-         GDHklWdS32LoGl+XLyOZ5TICeOdREXB1cQ9MbVBg89j6Fy2uzO9TswOWZ+yvpAZsUBKu
-         pI3oyh7ishYyWMBN5IFtfcRN0J85hCltgmwNCRqxScwMOAQB6p/VT8z9ZzVBFYPVX8RR
-         TtCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789520317; x=1790125117;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LQ3DI7FftBvPAGhc+A7UsjCVB7Utq8qEnzmdR09+mfY=;
-        b=biPsYD75Wa5bV8gHa8S/lIZDlYmdLwEXqwoCnI50Jxz+5NmNo7DlM2tf2w1lRXpCCm
-         y8lDrVxA+xk9EuHUOjncpXU6gC0m5rqJt0PsAemCH2bAKknbxnx163NQJnEw8r1R56Vh
-         /bkwkSQ0kO7G2h508BI/ykxdUxbkClL7oaZeKeLnmKlN40QXvOwozGtH5iavSt7Ztlil
-         qhPZUrs2FvJkmcH0goErxG6y3tWMk03pNUuABhTyPkis7dsyHnPoASX/Op9VqfIBdvG4
-         dgyqVP1HaBRPMW8Gku4deswqE/rHjW0lonnwx/+92WQku/ZUbElJlYH4EVgOsqEy8Bs9
-         zGJg==
-X-Forwarded-Encrypted: i=1; AKwUvBwKkSAUcVTKdX7S4iMaPqYZc64CmOQWQW7fcB3t1qBZIvHpPOsGelp9WY/W1aEod2cMwW+Ze+C80A==@lists.linux.dev
-X-Gm-Message-State: AFuF++nFCO04HMO/iLUH1HGNgpzkarss6n7DWyttObncAPclZX5tSf3i
-	0gq4w/1LhnWACQg+BBw+qjtI2tl121ZSB8yFsbb5IVz6xr9DbE2TnDcpotDBNiZdM97aYw3Jo3x
-	l74tv503sgb1tsCBX9kK+bQXFAA3OKLREpyMxAXFoMGRfrz1XzckESkllZiytjA==
-X-Gm-Gg: AYBFou0jyNbw3tQWhjw4Fuqlk7NUPwT9f8vr4gSBiqzDP6WOuWZXesCzibPoM5QhLxk
-	BvXv1Cc+U33UPXUz+2ToFMluQ1j+7XSkSMseEdLxk4an1Lf2giYCiJ42u05Gqo+AZpY02HvfJQr
-	s/pAQreO9ZKnp1UfL+Dx2cil190dX4XDzMIPXkzoP7ILLGmSmeliOJ2x6Ffvk6Ob9gEMzgacRo0
-	UobykBqkkAJAe30pcLVSfV+FIG8QRbaS2HqG7bEYYB6INrn0NtFbzC+Cnqg3XA54Hjmraw+8Z89
-	Pnmqb2ebGaNhtQ3oQzO6pYDSiyF20jWUcwugCuMh7N+cu7UURaI8bWuAeg==
-X-Received: by 2002:a17:90b:2803:b0:39d:ef3e:9035 with SMTP id 98e67ed59e1d1-39e1e324463mr1568491a91.10.1789520317182;
-        Tue, 15 Sep 2026 17:58:37 -0700 (PDT)
-X-Received: by 2002:a17:90b:2803:b0:39d:ef3e:9035 with SMTP id 98e67ed59e1d1-39e1e324463mr1568416a91.10.1789520316669;
-        Tue, 15 Sep 2026 17:58:36 -0700 (PDT)
-Received: from localhost ([2a12:a305:4::30fb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e1bbe3e62sm1231229a91.10.2026.09.15.17.58.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Sep 2026 17:58:36 -0700 (PDT)
-Date: Tue, 15 Sep 2026 20:58:33 -0400
-Message-ID: <b677f038a23d6cd0572b12053acaf3ab.guodong.xu@oss.qualcomm.com>
-From: Guodong Xu <guodong.xu@oss.qualcomm.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
-        Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-        Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>,
-        Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org,
-        linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-        Paul Walmsley <paul.walmsley@sifive.com>, devicetree@vger.kernel.org,
-        spacemit@lists.linux.dev, sophgo@lists.linux.dev,
-        linux-kselftest@vger.kernel.org, Palmer Dabbelt <palmer@sifive.com>,
-        Andy Chiu <tchiu@tenstorrent.com>, Florian Weimer <fweimer@redhat.com>,
-        Peter Bergner <bergner@oss.tenstorrent.com>,
-        Zihong Yao <zihong.plct@isrc.iscas.ac.cn>,
-        Mark Harris <mark.hsj@gmail.com>,
-        Aurelien Jarno <aurelien@aurel32.net>,
-        Andrew Jones <andrew.jones@oss.qualcomm.com>
-Subject: Re: [PATCH v7 09/11] riscv: cpufeature: Introduce ISA bases bitmap
- and rva23u64 detection
-In-Reply-To: <20260915-widget-defiling-e22497c228cc@spud>
-References: <20260915-rva23u64-hwprobe-v2-v7-0-aa35ebd9ae96@oss.qualcomm.com>
- <20260915-rva23u64-hwprobe-v2-v7-9-aa35ebd9ae96@oss.qualcomm.com>
- <20260915-widget-defiling-e22497c228cc@spud>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fkXwgn5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEA71F00893;
+	Wed, 16 Sep 2026 02:21:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789525293;
+	bh=6iZpbiSb4G9jkRUzim4PlL0w2d6FuhKtW16yMIePUAQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=fkXwgn5kT/wpo4YAVu8dzupK9isF8sj7jvcAxaPFpC3c0r41RXGkAIYO4fiGIGQxi
+	 /zMlg5IIlq7sG6WvXcXTrSSoaZrriObn3gMUgjMKmDDGoMImcRZiLjBukExfFtsIS+
+	 dbeXvck5IWBDAO+nZYwjpAI8sY2Dp7Hz0RbiBI64Hj0WWSY06f5W+rLlftPw/b3lM5
+	 tT+gJIBw18r1hCRWHXzvgodBzjksvuJotopgNHjKpSg8puEcxpwgIF3zDUJXKQX5Se
+	 WC3NauaIUgMmSCSbhW3kIRw3QX1WQXOTzgkU2uuxNJDKw/bA1s1wQ0Z8KqlQrMI9p2
+	 TVVOdjv+twtPw==
+From: Yixun Lan <dlan@kernel.org>
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Guodong Xu <docular.xu@gmail.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Alex Elder <elder@riscstar.com>
+Subject: Re: [PATCH v2] MAINTAINERS: add entry for SpacemiT reset controller driver
+Date: Wed, 16 Sep 2026 02:21:27 +0000
+Message-ID: <178952516873.3915021.10661869021397268088.b4-ty@b4>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
+References: <20260603-b4-spacemit-reset-maintainers-v2-1-db0716d43a7f@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Proofpoint-GUID: sr5SXj5rGLyKIf5lg4vxW0VtFUGWNcju
-X-Authority-Analysis: v=2.4 cv=aJ1lOr9m c=1 sm=1 tr=0 ts=6aa9e9bd cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
- a=0WmU45QFm0n7b77IdSEA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDAxMCBTYWx0ZWRfXyQE7auEhqCf1
- ys9BCmXam9LTCNiz1m89WDsL6zPeedYJCDt0+ehHGLvOqxMGXC55TH5dLJSfj+8vcoqkHmJpUGh
- QsPd3YeTYvXKTMZX91rI711jIO4mjN7qBq2256W3vDxyAfPOypbW1AkOh3g7i1+eDgOTPulRfK/
- h71wZHJaaT2gUmBSYgV+HVFW+3CnQPWjtMlk1lVHPNtV/TtQ5+i0PZDmCHr1Y6ukeKJiluXs0Ou
- IyOZqCWj8DXZDPd0RRxZgI11Hwtmfboio148Qi+xBLSOtfD/KkKhRE8UvloF0DXjGiAuFF+jXho
- VWM6NK1wNeahYOIVPsAOkbWLDLJtwGelBleqr6NcyjLMDxK5MMZmbKjmRFbCb15YKPqAqMzICHh
- zAo46EvQQPlB545RdqZTbw9jz7GX5fTwbl/ztTvvPysSGKPktt5g7m3RJogFhExrR17bi5xxwmO
- l/U/r3CDDYONCsBH1nA==
-X-Proofpoint-ORIG-GUID: sr5SXj5rGLyKIf5lg4vxW0VtFUGWNcju
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDAxMCBTYWx0ZWRfX7+CBimo0bmqQ
- FqPisuS561DwQ971DnTb/D5Urq9ChSU54LOItYndik045/qWjV+4rx9wkz8cAk4fTfTE9R8pW89
- im4588FGQ75edtes6FpshBkB4mgcC+4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 clxscore=1015 priorityscore=1501 spamscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609160010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Conor,
 
-On Tue, 15 Sep 2026 17:52:23 +0100, Conor Dooley wrote:
-> On Tue, Sep 15, 2026 at 03:15:35AM -0400, Guodong Xu wrote:
->> Introduce a per-hart and host-wide bitmap of conformant ISA "bases"
->> (named profile-class sets such as IMA and RVA23U64), computed at init
->> time by riscv_init_isa_bases().
->>
->> Register riscv_init_isa_bases() as an arch_initcall. That is late
->> enough that core_initcall(tagged_addr_init) has probed senvcfg.PMM and
->> populated have_user_pmlen_*; without that ordering,
->> riscv_have_user_pmlen(7) would still return its default false and the
->> RVA23U64 detection path would always bail. It is also early enough that
->> arch_initcall_sync(init_hwprobe_vdso_data) finds the bases populated
->> when it snapshots the hwprobe values into the vDSO data page.
->>
->> Consider this as the cache that subsequent consumers (hwprobe's
->> RVA23U64 base behavior bit, /proc/cpuinfo's "isa bases" lines, etc.)
->> can read without recomputing, which keeps them consistent with
->> each other.
->>
->> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
->> Signed-off-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
->
-> Something is wrong here with the signoffs here, Drew's probably missing
-> either authorship or a Co-developed-by tag?
+On Wed, 03 Jun 2026 06:26:11 -0400, Guodong Xu wrote:
+> Add a MAINTAINERS entry for the SpacemiT reset controller driver
+> (drivers/reset/spacemit/) and its reset-ID header. I intend to
+> maintain it: the K1 and K3 instances now, and future SpacemiT SoCs
+> that reuse the common code.
 
-Thanks for the review. Yes, will fix in v8.
+Applied, thanks!
 
-I didn't look closely enough at authorship (which I should) when I
-reworked Drew's RFC into v2. His Signed-off-by was carried over, but
-clearly it needed more careful handling than that.
+[1/1] MAINTAINERS: add entry for SpacemiT reset controller driver
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=bd81fd41a70811d3423f2701e9ce85a003175d7b
 
-Rechecking these three patches that came over from the RFC (09, 10, 11),
-here is what I plan to do:
-
-- Patch 10/11 (cpuinfo) is still mostly Drew's patch; I only switched it
-  to the cached bitmap. v8 makes him the author.
-- Patch 09/11 and 11/11 were rewritten in v2 (the detection moved out of
-  hwprobe into cpufeature), but part of Drew's implementation stayed.
-  I'll adds his Co-developed-by in v8.
-
-Drew, please shout if you would like this split differently.
-
-Guodong
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
