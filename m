@@ -1,164 +1,199 @@
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A716375F82
-	for <spacemit@lists.linux.dev>; Thu, 17 Sep 2026 16:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789662698; cv=pass; b=FEHKvsRbS9m0gCBf6r/vJtHu+26Qh/atfiWfdB4BakMYJo2/Lc4YuokOGcM6WKQSRhZmXXuWDzzmVHc4Es/JO6o4qjqm7Y1UN+qOitaB2nfs009aO+GB9y/p9yXqCC2XE+77zeiOPUM5GJkAdImHivfvk7Xuxf87nJgCFNvVm0o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789662698; c=relaxed/simple;
-	bh=lv+0gzWeeU7rN8DL91wNG8xuNseGSCdetCC/tUM2Gp8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MBczsPUATF/8SEDiR+h5eeNKk4ddE4PJ8/rV+Me2GOlmrI439agJxpH2onhRQV8YDpJstj9lf2L3HLKj7r0qaYfK0oGKI+iijyui9xcaj50qSM6pM7hESGzatAEZquW8bopy6oNb6dSZLAdxIyG/R0M7fmZLRgMudhkye/m3XdA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=FwyKG36g; arc=pass smtp.client-ip=165.173.182.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5C83CCFD4
+	for <spacemit@lists.linux.dev>; Thu, 17 Sep 2026 19:19:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789672742; cv=none; b=faBKfjkq9RxwYqQN139eDzEy2DgyNcxipF6+0ud51YjtT2JpwLYqreFKHOEb0lnCryGvZRkwmH8Gf7wuGcW3wD8ABWIUd+6t0EART+uq1j5X13tnXYezJqIH9E4dfmIVZOCtUuXbxuWZ520L781/Bab0ksgl3rn9ziIJTlqlfOk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789672742; c=relaxed/simple;
+	bh=DYVL8oxPYnwX4Rj8LhVDhUxTdgiBy1ZxKVToj+a4v6A=;
+	h=Date:Subject:In-Reply-To:CC:From:To:Message-ID:Mime-Version:
+	 Content-Type; b=ZYPBjaq5d03QXpZZ97rWk0vnvlfBa2lSMy/gcVK9Dd+Yj/duDOpiCnElwxs0Gn6kBlI3XEYgWZPGuMOo6mVr0JR4sWeA/8w9J5p5+whqvf1GPCVYOH7UJq+afT0UaGTubWBz2cB5Aw6G42jzxInpVCdFp9WtJ6ZvnzKjeCjdvi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com; spf=pass smtp.mailfrom=dabbelt.com; dkim=pass (2048-bit key) header.d=dabbelt-com.20251104.gappssmtp.com header.i=@dabbelt-com.20251104.gappssmtp.com header.b=hxejQkMV; arc=none smtp.client-ip=74.125.228.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dabbelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dabbelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="FwyKG36g"
-ARC-Seal: i=1; a=rsa-sha256; t=1789662681; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=S5UeVzkete6+mf/pyYkS6UUQN02sqvper2o6VsmEBJq2Z1bQEb/un8d8wgsEmY+aiym+aZAj4Xyc6DWibtYvPlaKrVqnZo2Ncs52rcl0FREnAW93B2FV1mhqzE3XCperdyzIzVNrzepGx9SRKv/f9EVXUqo//bgi/ytvTUU0XZI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789662681; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=qMmT5efrU6GEbjbyFNwSWTd358YOBsZsuMTs5gYFVmQ=; 
-	b=TEJ5RVdqFL/g92cvS0HirTYRuwXHgTBzd85xp2aSdDTVDeUekoA9Ilx4mi7wasLrRchwtWJFbbcSwdTVqpuiPxhIe1sIzYbg13n0zGlz6A8IVaWleXKdIyknz7Lw4N5UwxQkCTHEEInED9q/35nb7Q2jqJaH1BouAf9etEuXEZY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789662681;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=qMmT5efrU6GEbjbyFNwSWTd358YOBsZsuMTs5gYFVmQ=;
-	b=FwyKG36gf9ed0oStLwhWnLK6rCbzYXkdjnGU7m2k/KEosMbTK2ZNXME0VFh3onsK
-	/j+JxYGFrVg6G4EuQePoxrN6QAlq9FFRcCUrVPm5egBWO6txfHKLPfqwuupHN+w9yMg
-	2iMRVLN6IfRGw8oNa2Er/plroKf71qM4j6wcUVSg=
-Received: by smtp.zohomail.com with SMTPS id 1789662680445265.30275018758016;
-	Thu, 17 Sep 2026 09:31:20 -0700 (PDT)
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Fri, 18 Sep 2026 00:29:38 +0800
-Subject: [PATCH v3 6/6] riscv: dts: spacemit: k3: Replace incorrect CLINT
- node with ACLINT nodes
+	dkim=pass (2048-bit key) header.d=dabbelt-com.20251104.gappssmtp.com header.i=@dabbelt-com.20251104.gappssmtp.com header.b="hxejQkMV"
+Received: by mail-pz2-f43.google.com with SMTP id d2e1a72fcca58-8692a8568e9so17607b3a.3
+        for <spacemit@lists.linux.dev>; Thu, 17 Sep 2026 12:19:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dabbelt-com.20251104.gappssmtp.com; s=20251104; t=1789672740; x=1790277540; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:to
+         :from:cc:in-reply-to:subject:date:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=JTpcF4933AuqjrXkic6TMoFwsxDS4r0Nwe4Mg2qA+JE=;
+        b=hxejQkMVkii8XvMHDPr/u9N3DSGX8jeHmZt9hXD30IDqaqyEU0Wd6E9HfPLwkaWMt/
+         zjPk3PtrARRtrof2ZQCpNaVgOnSePaPEESYbZTdQO6OQGD2R9YJo7xx6Xz+jsaIIW/BN
+         MJvgWN4j7iDbEKTvGdbT/6QstP/vIxyI+LgnQUCKwmnLA4sAuTI/44GowlKRLap/F9yz
+         LxU5SYyVwKDvEw2YvzSicdj771Mq+Qp/RJ83/wBTBDMrmW5/DF+NAJcPQB92+hwubEHC
+         it5Fm5pUz/ZSuFqogM9Zq3nnJJmCOc21cymKUj46UQaHW4fPAo0KrHKjTDvrePClhTcj
+         3utQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789672740; x=1790277540;
+        h=content-transfer-encoding:content-type:mime-version:message-id:to
+         :from:cc:in-reply-to:subject:date:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=JTpcF4933AuqjrXkic6TMoFwsxDS4r0Nwe4Mg2qA+JE=;
+        b=drxchS/uBAuU/P6VXuUQ8uK4tTlPproZWVNPo8Ei+9MFQfn35cpZfiKwlPbXCut+ht
+         tDD6cNNDJt5blD4jkiMHCARaJvbDdo9oXC1XXCelp3+twQu8UY+baSr/4XYxeDFFOw0M
+         DiIdk4YQk//mTjxykmlLgyGlRHBWMvcLxyezsGQ5ajZDfnU7M+mkzirr/STTsdpj3Ukg
+         jU01h3wDt8MPLe8ishP12CES+g5rmTlRytib9ynUCSn1+luTRzdz5HI9bnDoHuTcAeug
+         eFmQPjOXjXCKznxmM4hMmBHvKewo4LLz8MHHIKfImRiaYo8nbrKs58R/IgDHvb5quKSW
+         tSAw==
+X-Gm-Message-State: AFuF++mMa9/abybj8oMH0MHznFp0oi59Bi7DUPbk5rOZNY8JlGCDzbaq
+	vrCXFWGW1PRGRKQePPi+HkfelFfFFdC8QGIUnWlGF2fQPgL5g/RdlXDNUxKJVnFQ2l8V4TFA/ZV
+	RSzip
+X-Gm-Gg: AYBFou0atWHsGHBcRylOcvOljOB+5tpThHSQWqyxJ9XXyoButGne8MIVa31ESSbPYo7
+	TwGD6UV9BOsQaY6ph9bvj8Drw3uLtCTl39Vj5f/qBwp44B3ayjcIttmzNSk6tjn1yHPcuX+uSCC
+	VT/oVNRnv8M85CSH39Sxl5cMBwMZynZ6nUsG/nVtxMvXXiAt87XYU71WWqfQvD9mSOv+dOoo03Z
+	8qSa5VdT+UcxdCgNOdt9ZhW9jtMdy92/qu2XTGnzZuGrTvst9J7pAcPI+VWbB7OFdH8gY6/fMVQ
+	rn8smbixp6YhLp1jdymNMQLxA8sIUhltlSAZt6vCDh2IKb5qdO7pHVjvoYPUA7mSk1fThXXDK0L
+	8YEu8Y74kiHn+32i8NXpYVexJgMHvbYxpIDJeaC2FC56SaBcE6Vpifx0yp3QA/A68MvfzQ39wcl
+	r1hDnOltNm7Zbk8k9zypDsrmA3HppVKfx73pKdSqhuIeA7xEY/Xx5Um+mSqe7K6jkADvgdoVrue
+	NWgICIQ5aSAT/cwU3gxEYLrB6HZkQ==
+X-Received: by 2002:a05:6a20:4327:b0:3d3:ae40:51e6 with SMTP id adf61e73a8af0-3dd5f78606dmr17656746637.26.1789672739753;
+        Thu, 17 Sep 2026 12:18:59 -0700 (PDT)
+Received: from localhost ([2001:5a8:4687:d600:a432:5959:dbd9:36fd])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33bf5b0520asm17913779eec.27.2026.09.17.12.18.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Sep 2026 12:18:59 -0700 (PDT)
+Date: Thu, 17 Sep 2026 12:18:59 -0700 (PDT)
+X-Google-Original-Date: Thu, 17 Sep 2026 12:18:57 PDT (-0700)
+Subject:     Re: Random corruption on SpacemiT K1 (and K3) with RVV
+In-Reply-To: <aqm1Ik5202PyscK3@aurel32.net>
+CC: spacemit@lists.linux.dev, linux-riscv@lists.infradead.org, tchiu@tenstorrent.com,
+  kmehltretter@gmail.com
+From: Palmer Dabbelt <palmer@dabbelt.com>
+To: aurelien@aurel32.net
+Message-ID: <mhng-6CE84C42-173E-4FAB-B163-A2AF2DC3D084@Palmers-Mini.rwc.dabbelt.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-k3-aclint-v3-6-cf4fd4050e14@pigmoral.tech>
-References: <20260918-k3-aclint-v3-0-cf4fd4050e14@pigmoral.tech>
-In-Reply-To: <20260918-k3-aclint-v3-0-cf4fd4050e14@pigmoral.tech>
-To: Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Inochi Amaoto <inochiama@outlook.com>, Radu Rendec <radu@rendec.net>, 
- Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Anup Patel <anup@brainfault.org>, 
- Guodong Xu <docular.xu@gmail.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Conor Dooley <conor.dooley@microchip.com>, Bo Gan <ganboing@gmail.com>, 
- Junhui Liu <junhui.liu@pigmoral.tech>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3276;
- i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
- bh=lv+0gzWeeU7rN8DL91wNG8xuNseGSCdetCC/tUM2Gp8=;
- b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLLWiE5cXnzsyIcP1xNmh01hWnlD+uceLe3l/d9dLb7o5
- c2uMBS/01HKwiDGxSArpsjC5S/+z1qH59sRgdb7MHNYmUCGMHBxCsBEJBIYGTZsNf61k3PNEhs/
- q4XBunPc4x9X/2To5jf8kLKkYt3qdw8YGSawOF87wvphY+/lz96bNoRMfcLc/fHN1zt7Evx8rK8
- tPswIAA==
-X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
- fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
-X-ZohoMailClient: External
+Mime-Version: 1.0 (MHng)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-The K3 implements separate ACLINT MSWI, MTIMER and SSWI devices. The
-existing CLINT node at 0xe081c000 incorrectly describes the SSWI
-register space in the non-secure window as a legacy CLINT.
+On Tue, 15 Sep 2026 14:14:10 PDT (-0700), aurelien@aurel32.net wrote:
+> Hi,
+>
+> Some more update, even if the progress is quite low.
 
-The ACLINT register space is mapped at two base addresses: a secure
-window at 0xf1810000 and a non-secure window at 0xe0810000. The
-secure window exposes all three components, while the non-secure
-window only exposes SSWI; the MSWI and MTIMER offsets are reserved
-there. Moreover, depending on the eFuse configuration, the non-secure
-window may be entirely inaccessible, whereas the secure window is
-always available.
+Well, thanks for digging into this.
 
-Replace the CLINT node with the three ACLINT devices, all using
-secure-window addresses: MSWI and MTIMER for machine-level firmware
-such as OpenSBI, and SSWI for supervisor software interrupts.
+>
+> On 2026-09-09 18:45, Aurelien Jarno wrote:
+>> [Added Andy and Karl in Cc: as they have been involved in the vectored 
+>> user copy code and fighting similar issues]
+>> 
+>> Hi,
+>> 
+>> Some more progress on that topic.
+>> 
+>> On 2026-09-08 06:42, Aurelien Jarno wrote:
+>> > Dear all,
+>> > 
+>> > I have done some small progress on that issue. Help is still wanted and 
+>> > would be appreciated.
+>> > 
+>> > On 2026-08-30 22:52, Aurelien Jarno wrote:
+>> > > Dear all,
+>> > > 
+>> > > For the last weeks, I have been tracking a random memory corruption and
+>> > > relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It 
+>> > > started upgrading to glibc 2.43, which does memset() through vector 
+>> > > instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1 
+>> > > kernel, but I have also been able to reproduce it with a vanilla 7.2.2 
+>> > > kernel, using a similar configuration to the Debian kernel. The board 
+>> > > uses OpenSBI 1.9 and the vendor U-Boot.
+>
+> I have been able to also reproduce the issue with the vendor OpenSBI. It 
+> is also reproducible with linux 7.2.6.
+>
+>> > I have been able to rule out OpenSBI from the issue, I have checked 
+>> > there is not trap to OpenSBI when the problem happens.
+>> > 
+>> > > Typically it manifests itself with the following kind of error, when 
+>> > > running g++ from GCC 16 as part of building software (e.g. OpenJDK, 
+>> > > Blender, Dolfin, Qt6):   
+>> > > 
+>> > > Assembler messages:
+>> > > {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
+>> > > {standard input}:284588: Error: unrecognized opcode `ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿvl874'
+>> > > 
+>> > > The broken chars are 0xff and it seems there are always 240 (but with 
+>> > > poor statistics). Sometimes it instead causes a GCC ICE instead.
+>> > 
+>> > I have identified that the 0xff comes from the poisoning done for v0 in
+>> > __riscv_v_vstate_discard(), which should only happen for a syscall. 
+>> > Indeed changing the value to different ones propagates to the above 
+>> > error message.
+>> > 
+>> > Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE 
+>> > doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD 
+>> > changes the number of broken bytes.
+>> 
+>> The values from __riscv_v_vstate_discard() end-up there because they are 
+>> the last values written to the vector registers. I have added some 
+>> poisoning in __asm_vector_usercopy_sum_enabled before the loop, and 
+>> those values appear instead. Using different values per vector register, 
+>> I have found that the corruption comes from a partial load of the vle8.v 
+>> instruction, while the result of the poisoning and the partial load are
+>> then both written by the vse8.v:
+>> 
+>>  loop:
+>>         vsetvli iVL, iNum, e8, ELEM_LMUL_SETTING, ta, ma
+>>         fixup vle8.v vData, (pSrc), 10f
+>>         sub iNum, iNum, iVL
+>>         add pSrc, pSrc, iVL
+>>         fixup vse8.v vData, (pDst), 11f
+>>         add pDst, pDst, iVL
+>>         bnez iNum, loop
+>
+> I have instrumented that code, basically adding a function to check the 
+> copy afterwards (only using scalar instructions), and report values in 
+> case of errors. So far I have been able to catch the issue 4 times that 
+> way (including one where I haven't seen any visible consequence on the 
+> userland). 
+>
+> This is what I observed:
+> - The issue always happens for the first bytes of the user copy, which 
+>   in all cases were supposed to be up to 4096 bytes long.
+> - On the first iteration of the loop only the first 16 bytes are loaded 
+>   by the vle8.v instruction but the full 256 bytes are written to the 
+>   destination by the vse8.v instrution.
 
-Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
----
- arch/riscv/boot/dts/spacemit/k3.dtsi | 43 +++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 13 deletions(-)
+That sounds like some sort of trap handling issue: something's filling 
+out the first word of the vector, but then not the rest, but then not 
+triggering a restart of the instruction.  We talked some on IRC and it 
+sounds like that trap isn't getting into Linux, so it's possible 
+something in M-mode is mangling it -- this is where we start to get into 
+vstart/idempotent instruction territory and that's not well tested by 
+running on QEMU, so it wouldn't be super surprising we're just stumbling 
+into a bug there.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index c3f2dce0969c..74831974435e 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1261,19 +1261,6 @@ saplic: interrupt-controller@e0804000 {
- 			riscv,num-sources = <512>;
- 		};
- 
--		clint: timer@e081c000 {
--			compatible = "spacemit,k3-clint", "sifive,clint0";
--			reg = <0x0 0xe081c000 0x0 0x4000>;
--			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
--					      <&cpu1_intc 3>, <&cpu1_intc 7>,
--					      <&cpu2_intc 3>, <&cpu2_intc 7>,
--					      <&cpu3_intc 3>, <&cpu3_intc 7>,
--					      <&cpu4_intc 3>, <&cpu4_intc 7>,
--					      <&cpu5_intc 3>, <&cpu5_intc 7>,
--					      <&cpu6_intc 3>, <&cpu6_intc 7>,
--					      <&cpu7_intc 3>, <&cpu7_intc 7>;
--		};
--
- 		/* sec_i2c3: 0xf0614000, not available from Linux */
- 
- 		mimsic: interrupt-controller@f1000000 {
-@@ -1305,5 +1292,35 @@ maplic: interrupt-controller@f1800000 {
- 			riscv,num-sources = <512>;
- 			status = "reserved";
- 		};
-+
-+		aclint_mswi: interrupt-controller@f1810000 {
-+			compatible = "spacemit,k3-aclint-mswi";
-+			reg = <0x0 0xf1810000 0x0 0x4000>;
-+			interrupts-extended = <&cpu0_intc 3>, <&cpu1_intc 3>,
-+					      <&cpu2_intc 3>, <&cpu3_intc 3>,
-+					      <&cpu4_intc 3>, <&cpu5_intc 3>,
-+					      <&cpu6_intc 3>, <&cpu7_intc 3>;
-+		};
-+
-+		aclint_mtimer: timer@f1814000 {
-+			compatible = "spacemit,k3-aclint-mtimer";
-+			reg = <0x0 0xf1814000 0x0 0x8000>;
-+			reg-names = "mtimecmp";
-+			interrupts-extended = <&cpu0_intc 7>, <&cpu1_intc 7>,
-+					      <&cpu2_intc 7>, <&cpu3_intc 7>,
-+					      <&cpu4_intc 7>, <&cpu5_intc 7>,
-+					      <&cpu6_intc 7>, <&cpu7_intc 7>;
-+		};
-+
-+		aclint_sswi: interrupt-controller@f181c000 {
-+			compatible = "spacemit,k3-aclint-sswi";
-+			reg = <0x0 0xf181c000 0x0 0x4000>;
-+			#interrupt-cells = <0>;
-+			interrupt-controller;
-+			interrupts-extended = <&cpu0_intc 1>, <&cpu1_intc 1>,
-+					      <&cpu2_intc 1>, <&cpu3_intc 1>,
-+					      <&cpu4_intc 1>, <&cpu5_intc 1>,
-+					      <&cpu6_intc 1>, <&cpu7_intc 1>;
-+		};
- 	};
- };
+I have a K3 that I've been meaning to play around with, I'm going to go 
+try to see if I can get it running and reproduce this one.
 
--- 
-2.55.0
-
+> - On the second iteration of the loop, the vle8.v causes a trap, which 
+>   ends up in the 10f fixup. At fixup level, vl=0x100, vlenb=0x20, 
+>   vstart=0x0 and vtype=0xc3.
+> - Considering the 2 first iterations of the loop (i.e. 512 bytes), 
+>   neither the source nor destination addresses cross a page.
+>
+> All that said, it is what I can *observe*. I have no idea if the first 
+> iteration of the loop also goes through fixup or not. Also in addition 
+> to precise traps (which definitely happen for the second iteration), IRQ 
+> could happen at any moment. I use CONFIG_RISCV_ISA_V_PREEMPTIVE=n for my 
+> test, in order to limit the code paths to review, so during that copy 
+> preempt is disabled, but IRQ is not.
+>
+> Regards
+> Aurelien
+>
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
