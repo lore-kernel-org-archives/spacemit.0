@@ -1,45 +1,44 @@
 Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDD651EDEB
-	for <spacemit@lists.linux.dev>; Thu, 17 Sep 2026 16:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF4651EDE9
+	for <spacemit@lists.linux.dev>; Thu, 17 Sep 2026 16:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789662685; cv=pass; b=K0m6wxl1CYWuh/ogvTrmYujn1oMkc5oGsoC3s/x0Ykdm1cv69U3R4sCQB7jUjTnSJsVsv/o+nAg4uUpf1JHg/vrqngIPg6C/lD0rVwnWxW0DISk/0JL4ToqEH9t1OVwnsJK9z7jYjyDq0UV6LED6vu7JCal2b8Tu9qjv+g8vp6o=
+	t=1789662692; cv=pass; b=ZEzEUxAyhktpTZVHiDoC/le3yJG8EF3OOdJRolx1hY5GlaWyoRIK8FAcplQKh0ghNpDhHaQRUxdzSJEjD6ssc7VTrj5ve9T4B47YShiIG8cPCO0oOc4J+UokUNsM2vm5oIjcEivWbBRgh3kq6hnvYgx5WMeHegUW2ZZqkZuSc3M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789662685; c=relaxed/simple;
-	bh=3xCk7OGClnr/wXNaDol09PLEBK26cy2PA+QvNHwN47Q=;
+	s=arc-20240116; t=1789662692; c=relaxed/simple;
+	bh=h8aJIH7hyzSaiZSkDnw2JIZGmRG2/AZ362IquoczBB8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mlkodUTjBwlLME7CpiYqqU4MLO7Z9SDRmguGHAx2gHZHpHDJGdFuWywOS50kbKVP3hUwVpOj2lqs83gToR0d1VCrsbPqkpZAXqO7j1tY0MsWF/97MC+/iHBk0LZRjwwviPqCnRTTcKAB2kXu5gTZhwV8+56eWHd0d5R0sLLH1VI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=hwAD0j7N; arc=pass smtp.client-ip=165.173.180.15
+	 In-Reply-To:To:Cc; b=Z7sWMxZrPoUVOtDgnXnbbxESXHGbYC99bzVwDGSANwMSX2Yx1bpI3LpS5/fk2nvaDJrTmYFOjCqmSe/zvH+vqLPiNLO+k66BkIo7b860v/jncVmBVdidx15DaXA3d5c7HStLa9mVgkftcptNau9AwY6hkGAW8JSRPgzB9KgmYLk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=nEZHgWWs; arc=pass smtp.client-ip=165.173.180.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="hwAD0j7N"
-ARC-Seal: i=1; a=rsa-sha256; t=1789662662; cv=none; 
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="nEZHgWWs"
+ARC-Seal: i=1; a=rsa-sha256; t=1789662673; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=gnYBVvwbxguZPKcTueRFRVOdJ/Ik5PTmF6P9/oEPZkDLrLC1PhEhy3n09ZkJUhDXPuegv2asODvqMa8FrW6paKLnNvBclvyDfuS4ESU6bgy8pu44wZc6gkzbLfuLyCQlJxIgDOjKkGxKH5zURZD3Mi+syG1OUirNSim5dIFilIE=
+	b=lI7xMM7oeI5QArXfSL/hnCeQEbm5vEI5mLg9moxopL3ljz9jF9FOrqpg1LeqoKGR/b0UIbmx6GOO3otW2IjeA/k6mgKfNlxd8VoOymwmuxMdsfWZLSS0fE1VzevGKL79edfzLdry3ANMYKl5XTKIZil37E+lapr7en/v3duNj4Q=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1789662662; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=d/R38e+KIiy763V8ovXVlsoTRmA0dX2whnVD1VgfDpo=; 
-	b=XbOVqNYPwQm1wgO5X2OmGqO8jPzbGDqt0ngnWqfDVwhj12qVzlJhuPlmDxS0MlF7LIag6ZZ7flt7KofoqmkN4JWYqZwqd0/w70dw+4tSP5zb9FOinRD6z+//3hVgQO16p3xLk+k53BFuD3e4GKNb9CE3hYbykMMIkKumUjcv9xc=
+	t=1789662673; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=DbZb7rgl/7w1w4tb13GdbjXjUAAevHFVnXZh+5Ul2mc=; 
+	b=GgdX5EVGncL8+tdOuLvhUZtvPw7yT92xn/cAFjtz6H1SC6dQrZG1a/jPc0wUXKl0WV0sfk1twbHqh8oMt1gusAoyxWCl20Vjo0tQd1kOS8E95PtNSVAGISBwTgABNYuLGQsYqETXBuk7RMfvXsh8fUBi1vlQUictgVxWnKQ0OiM=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=pigmoral.tech;
 	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
 	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789662662;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789662673;
 	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
 	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=d/R38e+KIiy763V8ovXVlsoTRmA0dX2whnVD1VgfDpo=;
-	b=hwAD0j7NWo4L3/iZ1CCFo8mJTZp+pjydJ0dryhC8W77OB6PVC3VCj8bGj592D8zV
-	h6CtqKOqWmuacuiU/m8RtRX0Or5QFrjDlR7J4N7nKIobiWF7E0qGPu4Mpas2f7DB9Gh
-	a9J071Bdt0GRJ/rbH46oBcZVDBYegUEOqLDmsA74=
-Received: by smtp.zohomail.com with SMTPS id 1789662660763610.4312802809931;
-	Thu, 17 Sep 2026 09:31:00 -0700 (PDT)
+	bh=DbZb7rgl/7w1w4tb13GdbjXjUAAevHFVnXZh+5Ul2mc=;
+	b=nEZHgWWsaJtsyur+5fl+JWlP5hcMk7jVKqqFoMUTSuyiCmCdMhN01r0kT//vEcv8
+	SUxpvCENOElhx89NBVH3W2P0lbUDGIKvTxatnFpYzjzEucq53XUFUdEscBRCcH0lDZ0
+	cWDSOKeLXJwXmhGk8IV+f20R0u4pATmVZ4WqHEB8=
+Received: by smtp.zohomail.com with SMTPS id 1789662670954111.87388827889936;
+	Thu, 17 Sep 2026 09:31:10 -0700 (PDT)
 From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Fri, 18 Sep 2026 00:29:36 +0800
-Subject: [PATCH v3 4/6] dt-bindings: timer: sifive,clint: Remove
- spacemit,k3-clint
+Date: Fri, 18 Sep 2026 00:29:37 +0800
+Subject: [PATCH v3 5/6] irqchip/aclint-sswi: Add support for SpacemiT K3
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -48,7 +47,7 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260918-k3-aclint-v3-4-cf4fd4050e14@pigmoral.tech>
+Message-Id: <20260918-k3-aclint-v3-5-cf4fd4050e14@pigmoral.tech>
 References: <20260918-k3-aclint-v3-0-cf4fd4050e14@pigmoral.tech>
 In-Reply-To: <20260918-k3-aclint-v3-0-cf4fd4050e14@pigmoral.tech>
 To: Daniel Lezcano <daniel.lezcano@kernel.org>, 
@@ -65,42 +64,38 @@ Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  Conor Dooley <conor.dooley@microchip.com>, Bo Gan <ganboing@gmail.com>, 
  Junhui Liu <junhui.liu@pigmoral.tech>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1268;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1002;
  i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
- bh=3xCk7OGClnr/wXNaDol09PLEBK26cy2PA+QvNHwN47Q=;
- b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLLWiHazCkv8ci1LtL/QXJ/zZX2kdUz9og+FZqf851bIH
- eK3LQ7tKGVhEONikBVTZOHyF/9nrcPz7YhA632YOaxMIEMYuDgFYCJaHowMX5adOjSHlTXfoNal
- s7BdlPnLQn3pww4Rs2/amBeKP79+m+F/HN9JvttnChsVvPTXcv1ZY14TbGuneNrgu93Co5FfLq5
- hAwA=
+ bh=h8aJIH7hyzSaiZSkDnw2JIZGmRG2/AZ362IquoczBB8=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLLWiPb1TLomq2Zwa8+84j1zGaYd7jrL5my1lc3tSLm8p
+ 1sE58mtHaUsDGJcDLJiiixc/uL/rHV4vh0RaL0PM4eVCWQIAxenAEzE4CLDX7Fmb7+W7tNz1rF/
+ VJJoP+TcsCLy7qbzV8TUitcuO9K1Worhn4KlSfrTac3/qxRWScVpMjuuFOBetsBmuvvzDXsWpiT
+ u4QcA
 X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
  fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
 X-ZohoMailClient: External
 
-The SpacemiT K3 implements separate ACLINT MSWI, MTIMER and SSWI
-devices. The existing spacemit,k3-clint compatible incorrectly describes
-the SSWI register space as a legacy CLINT.
+Add a match entry for the spacemit,k3-aclint-sswi compatible. The K3
+SSWI device requires no special handling and can use the existing
+generic ACLINT SSWI initialization function.
 
-Remove this compatible, as it never matched the actual hardware and
-has no remaining users.
-
-Fixes: 6cdeb30db4d8 ("dt-bindings: timer: add SpacemiT K3 CLINT")
 Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
 ---
- Documentation/devicetree/bindings/timer/sifive,clint.yaml | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/irqchip/irq-aclint-sswi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/timer/sifive,clint.yaml b/Documentation/devicetree/bindings/timer/sifive,clint.yaml
-index 3673836e14de..d53f52e80d88 100644
---- a/Documentation/devicetree/bindings/timer/sifive,clint.yaml
-+++ b/Documentation/devicetree/bindings/timer/sifive,clint.yaml
-@@ -34,7 +34,6 @@ properties:
-               - microchip,pic64gx-clint # Microchip PIC64GX
-               - sifive,fu540-c000-clint # SiFive FU540
-               - spacemit,k1-clint       # SpacemiT K1
--              - spacemit,k3-clint       # SpacemiT K3
-               - starfive,jh7100-clint   # StarFive JH7100
-               - starfive,jh7110-clint   # StarFive JH7110
-               - starfive,jh8100-clint   # StarFive JH8100
+diff --git a/drivers/irqchip/irq-aclint-sswi.c b/drivers/irqchip/irq-aclint-sswi.c
+index ca06efd86fa1..d3ef2cd3b5c5 100644
+--- a/drivers/irqchip/irq-aclint-sswi.c
++++ b/drivers/irqchip/irq-aclint-sswi.c
+@@ -179,6 +179,7 @@ static int __init generic_aclint_sswi_early_probe(struct device_node *node,
+ }
+ IRQCHIP_DECLARE(mips_p8700_sswi, "mips,p8700-aclint-sswi", generic_aclint_sswi_early_probe);
+ IRQCHIP_DECLARE(nuclei_ux900_sswi, "nuclei,ux900-aclint-sswi", generic_aclint_sswi_early_probe);
++IRQCHIP_DECLARE(spacemit_k3_sswi, "spacemit,k3-aclint-sswi", generic_aclint_sswi_early_probe);
+ 
+ /* THEAD variant */
+ #define THEAD_C9XX_CSR_SXSTATUS			0x5c0
 
 -- 
 2.55.0
