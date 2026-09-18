@@ -1,46 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4533264FD;
-	Fri, 18 Sep 2026 23:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75310547067;
+	Fri, 18 Sep 2026 23:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789772471; cv=none; b=qA25HnyKEtpYu5XVKogAjr0+u+S2SAhR4dK1h00VWDFKl2N1KAXCEDnSqJPqh3Kl1mtguTVR89CKc/j+qpRTgKzq6h4h2r5FHAa9s5w+ETPhx3sbektxp4TJ5JIwozzE4dujvxdaclfpkTOpyQeqxDG33CNZ2eCkqxNGqKbgHmc=
+	t=1789772583; cv=none; b=BfKV6XHnOkpqjNnUDOKJA4CBHxFeSayDwdLYvDXCDsP0TBFtgtx4M3AuIE+Rmm/xjES0PG1hrKQz4CcBru0pExXC54Xr+X61J0onAasdQ2uaurW5gAPvGuBTcyShuNA7ST5YzsVqawLOAlHf+Tbe7UslTLpfJP5Tkxc87NEQHyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789772471; c=relaxed/simple;
-	bh=V7pBa/KMrAJDHm4lTEygfzTTl+/XTHvWYHKI7oYDBQc=;
+	s=arc-20240116; t=1789772583; c=relaxed/simple;
+	bh=fBqBc3Jy443rwJVSlTXTHQbto0sf3nymtAcrMra4A+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aF4kd/jb9483NtVLDuoRhFcwtx6q2YlpJq9Nhyf/ZYrvsUf4CHmuueRl0OLm7KcGSLE7WN3zvEfPTjnQeQmIvzfJivk8/wwmaKWyRhu+7C2cK7HY2vqgcCYdjjk3Z2CIvg44aWBrlVswkpf2bwzfknmriI+7vOUo0akWrhsBNPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=flOQ3ytx; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=G+zhm9WtTRsQFUuTajh2+suT1sbrTchKZjwUOUktjBvFyIrYOVNHZ+LT32M7P9beCu4NZHEb/hfLECcUMsDtqKJYG1NY+TP/SWvPW1HSX9SWikTuB+bN2HssSeky9g6Od8/FW9zJGCCVri1MNmzKYkq/rEHhxIUJ441DOwP7/a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rip47fgo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="flOQ3ytx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5DF1F000FF;
-	Fri, 18 Sep 2026 23:01:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rip47fgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F621F00898;
+	Fri, 18 Sep 2026 23:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789772469;
-	bh=SN+cGtUcaDOXnci0UtnpePkFtN0EYV845cfIYt8n+7E=;
+	s=k20260515; t=1789772582;
+	bh=jHNs6AiLAnXjxOSEL4ZlVQ0PBlGJFDV35U3GfJhTtpY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=flOQ3ytxsAwXtDjXhE3lWkmvTLpnoqeZnMIlinf02PTdQ/+E+iC2gVenIoyWSuxsE
-	 FTrW7YLcU0pbEkpirrU3rBgWvqjWKqK6xJDqrOyE2jm6AQ3wKwUcp8xMt4fdUcX4s9
-	 dFp2juVIjMsWyfL59WOGGaxe7ncOAAiyz9htdiLLJHq8zg14+sWu9xUJp/25J/crGC
-	 bEMi+7ix4GhbCw7iS/nhy0HDIrhIMZIyg9QDiK51Ith0JsQxRw5oIv3khqUKIaukB8
-	 VrDey+9KvV+4hsLEOPVB5etPhj/tGIarpF/D3Jz/i4tONxYP0GSOW6yy/UVZQ3DyL1
-	 /9r9IfDXxIWEQ==
-Date: Fri, 18 Sep 2026 23:01:07 +0000
+	b=Rip47fgogMqlbmNb1qqYNEe1XC8JTQFskqccQH4DQ3hrtax39/kAK5gQ8Q56UI6FL
+	 sQJH+YDyD8kMcis7lAibglrAjR4s/saQiI243scxL+bvbj+WRw3wGk+EGvnls25qfT
+	 isCEYLfiMsuyJvHExcULWwGwGWTYKzqYipnNxAkSCl/Po8ZROss4DXGL7H+WurwH5/
+	 5w7Sqx+Hxab9L/LEULxkYCwwzG+EQxvhd1ge7iWilmgb2kZ2AV/1g1mt9wEBQN5Xbn
+	 ZsP+unnf2M+BBSbgb8wVRqRpQmHEbPYXI4wK5fsNwzH9t97EVMM8PGINSOlWQuNZFm
+	 ramiBSZCkLo5A==
+Date: Fri, 18 Sep 2026 23:03:00 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Icenowy Zheng <uwu@icenowy.me>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org
-Subject: Re: [PATCH 2/3] pmdomain: spacemit: Add power domain driver
-Message-ID: <20260918230107-GKC297024@kernel.org>
-References: <20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org>
- <20260918-04-k3-pm-support-v1-2-0acd2b36b96f@kernel.org>
- <a4359efeee2220903a05a2383a651ec8ec7284b7.camel@icenowy.me>
+	"Martin K. Petersen" <mkp@kernel.org>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Jennifer Berringer <jberring@redhat.com>,
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] riscv: dts: spacemit: k3: Add UFS support
+Message-ID: <20260918230300-GKD297024@kernel.org>
+References: <20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org>
+ <20260916-08-k3-ufs-support-v5-3-1f5d71f1027d@kernel.org>
+ <20260918-belligerent-succinct-kraken-7fa592@quoll>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -49,45 +58,28 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a4359efeee2220903a05a2383a651ec8ec7284b7.camel@icenowy.me>
+In-Reply-To: <20260918-belligerent-succinct-kraken-7fa592@quoll>
 
-Hi Icenowy, 
+Hi Krzysztof,
 
-On 17:00 Fri 18 Sep     , Icenowy Zheng wrote:
-> 在 2026-09-18五的 02:40 +0000，Yixun Lan写道：
-> >   SpacemiT's PMU (Power Management Unit) consist of several power
-> > domains
-> > which can be managed independently, depending on different
-> > application
-> > scenario, each domain can be powered on/off for saving power.
+On 11:07 Fri 18 Sep     , Krzysztof Kozlowski wrote:
+> On Wed, Sep 16, 2026 at 02:59:55AM +0000, Yixun Lan wrote:
+> > Add UFS Host Controller support for SpacemiT K3 SoC, and enable
+> > it both on Pico-ITX and CoM260-IFX boards.
 > > 
-> >   The driver is implemented based on Linux Generic PM Domain
-> > framework.
-> > From a hardware perspective, either of two distinct power-on
-> > sequences
-> > are supported, in software mode (SW mode), the driver is responsible
-> > for
-> > controlling the states of bits such as sleep1, sleep2, isolation and
-> > pwr_state, while in hardware mode (HW mode), the PMU hardware will
-> > complete
-> > the sequence automatically without requiring software intervention.
+> > Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> > Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k3-com260.dtsi  |  4 ++++
+> >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  4 ++++
+> >  arch/riscv/boot/dts/spacemit/k3.dtsi         | 22 ++++++++++++++++++++++
+> >  3 files changed, 30 insertions(+)
 > 
-> I think there also exists solutions for K3 that uses RPMI power
-> domains, and let their ESOS firmware to access the hardware.
+> Please do not combine DTS in UFS patchset, because it might end up taken
+> by SCSI/UFS folks and it should go via soc tree instead.
 > 
-Yes, I'm aware of that
-
-> What's the relationship of this implementation with the ESOS
-> implementation? Should the ESOS part be disabled to use this
-> implementation?
-> 
-I should say, it's a mutually exclusive solution, so yes, the ESOS part
-should be disabled in order to use this version
-
-The motivation of this patch is trying to support drm/display driver's
-PM requirement, while avoid going with vendor's complicated RPMI solution
-which isn't mainline ready
+Ok, will do in next version and send DT in separate series
 
 -- 
 Yixun Lan (dlan)
