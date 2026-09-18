@@ -1,210 +1,119 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0705627B343
-	for <spacemit@lists.linux.dev>; Fri, 18 Sep 2026 13:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCF24F68DC
+	for <spacemit@lists.linux.dev>; Fri, 18 Sep 2026 17:40:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789736953; cv=none; b=UDxn1ZnOgeKNZtdew9yLmUUYo7AjmoF5gW3j5ymVSB6lB9z/WraDB9MrBaMoD+5StIyD7olt+oe6CZDHKPwCxPitKMe7wTrZq1jdOGfmEA9bigFzVqtZBIgXtKPy5y4AFVwBNCqtZ0KpbJ+vMqH5lq6pPcCYbFLruUYuNHjw0BE=
+	t=1789753247; cv=none; b=LmEFpopGi9L/fOjTUXwDwueIQtG8poRrHj5CLyKfMjelE0lbC3R3HxB4E9uuVr/w970APOiSMU7ttDJYG3m+hrv5qrTkrqCyvGhQ2D/oypLqsKeMhtq/pkdckiGCczAOnRK4tsV9dSxkHS6mQOuzhYcvRQRLrPS9GbzwTXmuUGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789736953; c=relaxed/simple;
-	bh=C/ixOUtI7uWYalxn7RDlGINC1VreSJk1dwuruTME8xI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nS+ZJcxgGodIS0AClYPo/lxfrbTF0mxx15Ny8dlGQMAsxHXPYzBr5hqS7Pq5A0otApcgs8kFp4ny6wgG35p/a53G9Gd5sjAc9x2ayg7qQoghROP/WdDOz8dH/0eTIKLBWRdmjLbkywcFqyAdEqcCQQCAoynUR4IBnPqRplo5Bj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=xX/3VMkX; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1789753247; c=relaxed/simple;
+	bh=tukjza51ngGmnD3n2gVCf+uBLCZRkX8un5dih4QbPlw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=KEyyUSLMwk/JjRdIZldGLSt9OA8jxLhUCrMT/wdPlXfgXG71kMfi0ZlyeUj0T/wLYGkNxIpeNFYwEY7nsSwh2lvzlm9Mgjvg6WqUx4xlkyO7VKk+Ar/0eFHtlsUAxggSIXipKo1jjhEA/5sIASytWLYP/096zyHv6IBHOLt1H3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=KuBMhv5U; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="xX/3VMkX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789736891;
-	bh=NQe6SZgHq4C4c6OQq2uMfbITwyQfNYkJdzaj8xFvJOc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To;
-	b=xX/3VMkXeLVct2CRmn7s3IC86SMJ52tDryTAqVBBTa1I4VteOqRzwsA4VpwbEuRFC
-	 J/ft3pmxbICWOpZ6SkTVbmsbA+V1WfzUuU4C6sAx8m/zv8NBn+pCFTLVGKXjHOxilv
-	 51yu+aurAp3ctXXl4brslJRsRIfCG4vaeBNhpCVw=
-X-QQ-mid: esmtpgz10t1789736884tec6452b8
-X-QQ-Originating-IP: /kb2l/F6wfwX8gp1SErJ3II9mxlSeQDT2AtxmCa3Ox0=
-Received: from [192.168.1.100] ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 18 Sep 2026 21:08:02 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4423648668496576874
-Message-ID: <768D38E96246550E+b63978f5-b8e9-4d3d-883c-f36d79c5da12@linux.spacemit.com>
-Date: Fri, 18 Sep 2026 21:08:02 +0800
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KuBMhv5U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1789753242;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UtUsYSimD6K1xLItLoYKB1WWd1TCjyyOy2jIzUuov2s=;
+	b=KuBMhv5UoWq/btEbzcpWvOCJ0J2G4jTk5YVFWjH2n0V41WAP2ce4T9FWmifKoi9BwpxQoe
+	c0SHrASpCHAAKG6ZHApVagd0myDQRQbW4FckxCjgfspZ/lxSIHOcvIfpIguNFCL+0qfc2o
+	HysTn9BF2OD3BCymu9XHliL4Fw6RCIY=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-N5fTwdRlMoO_As9l6r59oA-1; Fri, 18 Sep 2026 13:40:40 -0400
+X-MC-Unique: N5fTwdRlMoO_As9l6r59oA-1
+X-Mimecast-MFC-AGG-ID: N5fTwdRlMoO_As9l6r59oA_1789753240
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-52ffe24490bso28447471cf.1
+        for <spacemit@lists.linux.dev>; Fri, 18 Sep 2026 10:40:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789753240; x=1790358040;
+        h=user-agent:in-reply-to:content-disposition:content-type
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UtUsYSimD6K1xLItLoYKB1WWd1TCjyyOy2jIzUuov2s=;
+        b=d2eR+Cv7imkjMckY/sSncKufYLA4Zu0Doum6so0qQqxFxgYhIsYQiG5kUxtzNuDll5
+         fukzga8xPf1rUS1i6F1LTFmSf8BpyyKwTQxGgyXXZEROJQrIdTtvZcA3ly5q4J7J+Ih1
+         RiuECzCE8XOodL/4WIWowu86B4VEsxK7MZu3RzTMBunM3mgxdkEQYqsJox3ZNqvZj0+a
+         6tsUwl62B6f66eOTc5qMenglbpwnJk0E+P1nrgps423K/zkvsT86g0TxxyAXA47B5NOb
+         /v7uE598+eA9gMXtAcA4qrpOiGK5es+6L7+90GXH2+FKJptBLlRBNanzlfoCdTYHWyMu
+         U/KA==
+X-Forwarded-Encrypted: i=1; AKwUvBwtk+Zm7h1HwxnYMOlNLCiFfZNzkN33jV9KvlJH7dDFDu7dasFBraLdBIYH3J9WZTPZemGZs9kHpg==@lists.linux.dev
+X-Gm-Message-State: AFuF++mlfc/L9p/VnWswfxmU+cjjjOF3rxzsMubzF60buBtQyfR7//g8
+	1DBhSTXPJKT3ZgpGXBcbvNvmi+N+sShtJTYMM1B7sOX50dn1PIlS5u8xZlCTK+Wzfi9Gt/ho+Uz
+	X3l6JZGC8vJMDH8MZvcg+ODtLFrqE5jegIcD6CwgDDSYkbKseuValGJDU4x8ccjOhRRzL
+X-Gm-Gg: AYBFou0530a9C+MSYRM+gUvjAlUFzDhDJylZR0gdCrCMaIuBU35+66e+KyTffV8lJNQ
+	k5ffYkdNxKdu+B43VXUuvPOLXKVKK0qXJwAA5kFlHB8p5zp/iIg1arzd5E3mBLg6SSTliXLulho
+	NC6zIWcJOTdsNwEZFelDuoqgiGpx3Bl1yP5HJACKSPnAzezBIqPYDlXfZNSOjPGlV9oLeprsi+m
+	qKVWIb0aI4NXXkM2snOzOz8Pq+6g1QwMEr2PugyysaTrLb1qILyj/Viay3D3hIwgbQHU/5f9yp2
+	wjvxw6cKQp1KPrxwbtr/OXYkxt6b/pwwE6VR7hR7RLFQ7Lb74MI/z7iuiGXjTZPXCB1xGJ7ggkZ
+	JqqQaLZ4bhd88586zvQQ56+nv2EwwamndzPo=
+X-Received: by 2002:a05:622a:8cc:b0:532:9add:cdda with SMTP id d75a77b69052e-5329e3d11b0mr50950851cf.63.1789753239935;
+        Fri, 18 Sep 2026 10:40:39 -0700 (PDT)
+X-Received: by 2002:a05:622a:8cc:b0:532:9add:cdda with SMTP id d75a77b69052e-5329e3d11b0mr50950411cf.63.1789753239363;
+        Fri, 18 Sep 2026 10:40:39 -0700 (PDT)
+Received: from redhat.com (c-73-183-53-213.hsd1.pa.comcast.net. [73.183.53.213])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-532ae730a9fsm2075781cf.20.2026.09.18.10.40.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Sep 2026 10:40:38 -0700 (PDT)
+Date: Fri, 18 Sep 2026 13:40:36 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>,
+	Jerome Brunet <jbrunet+clk@baylibre.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	linux-clk@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [GIT PULL] clk: spacemit: Fixes for v7.3
+Message-ID: <aq13lDqmJjfDn4zI@redhat.com>
+References: <20260915004456-KYC0593228@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] usb: dwc3: core: resume xHCI child on runtime resume
- in host mode
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.dev>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-References: <20260908-resume-xhci-v1-1-aca107602e9c@linux.spacemit.com>
- <DL9ZZ8F7HTZT.1IUMD1ECSOZXL@linux.dev>
- <566DD22E9074C793+eaef8bb4-9602-4f76-8915-6e322387c7aa@linux.spacemit.com>
-Content-Language: en-US
-In-Reply-To: <566DD22E9074C793+eaef8bb4-9602-4f76-8915-6e322387c7aa@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: N3IC8um5pMyYrZwY7k9TsmuVrmQNfWebr+tcl7GFf2AAzA/WrkqSyTx3
-	ABl/IpOwNtjjsVFfRUolns4krHjF6EuY0zPEKD/gJnt5DEI1WI2PiUDNIE/B/fI5pV8AuUb
-	EaXnWLrmSBMmKGecGjrRjWQoTqFaIzZTLG5JK64CRLM9D9PJ9geUWL/9W05zGRm0lKwiXEj
-	FnfdjJrH6pN/UC/zhsPCHJwLr6mPkiqK7ZwD3RVu63A1R05ByNhG2PD+KKmMcy0hnmDbFqF
-	DH+lJw9vCQ8CwE5U9HnYd6cJbmSMNBUAjw3L0eDgBMOhRg3iaONoPuhk+HnbMphbX2gd8ts
-	gI+ev3w7y45Jm37rMNk4bQwFrZbVfgS1mx+EWCUYWFocucSXoyGyn24ssd4oDICkETq13up
-	X25JrYEUnGkgr2pOB1LwPEcO0LsOm0j8uDmGR12LuB3JFQCHa1fAeNIKBdIbdE3iSi6JORs
-	P0XI+U/H5QEbkuET/XZLO09m+98P45Ana3SpQiP+YMTo3f2J0idt+2oSzRsUgsN06wAjBla
-	QsnequfsZQy1GRm7iBhSPmt/0bI+fJmhf9IaRFHNjXn0kvrQomXb1DLkbpG5Jo2eXMJ88HV
-	rP/uA9FNmnLZg5Yip+iF4i7yonGizS0V7fhRotgN/WRmOdqg7+JA3D1Z4cG/r8Ves9kVbEh
-	DNHBtW3X/oFHqIee28qG9w9zMPc6ynHm5icJe15wM99otUYGMaXC9ah9ZRJtGcnshQN2PBU
-	fO2omI+1Z4LLy6jDsscS/xRuU6TfL4rw/6/HjuN2IzJt6s1DOFsamwtaY++tM7iReAdvh0f
-	hVGDUBoFV+4xjoPCQbxHzqEo9Neab9SBcC1MsXUnrFIqrykPn35KG6O3PipkNvLOT3gbLSP
-	r09XcLligjVDy4TyU2AMPmAm5//5Shpjb8H80HZJK1WGtvVXspcFu19+MGpk9vqCMFz1seA
-	qcKoj7an33CJnvQJJI2qo1TxE6dcQxk8M8cvBn6dpNHne6AnGZxeYVMHesH2dCheGcRR1O6
-	Jn9+DF+/yetdA5QQX4RQ8aZ4ECBWyJKOx9syN2Xyqod5qSuWfd
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <20260915004456-KYC0593228@kernel.org>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: UfbKR3ApG9NNN5M8FwN5JmO7JGA_GUOu_bt6M-obwMg_1789753240
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 9/9/2026 8:28 PM, Junzhong Pan wrote:
-> On 9/8/2026 10:16 PM, Troy Mitchell wrote:
->> On Tue Sep 8, 2026 at 10:01 PM +08, Junzhong Pan wrote:
->>> USB controller runtime suspend halts the controller on disconnection.
->>> It relies on platforms with custom connection notification to start
->>> the controller again.
->>>
->>> The host branch of dwc3_runtime_resume() does nothing currently. There
->>> are two paths that can trigger a runtime resume of the dwc3 core in
->>> host mode:
->>>
->>> (a) Wake lands on the xHCI child (DT platforms, e.g. Qualcomm, i.MX8MP)
->>>     A platform wakeup IRQ fires and the glue handler calls
->>>     pm_runtime_resume(&xhci->dev). Runtime PM walks upward, resumes
->>>     the dwc3 parent first, then resumes xHCI. Both wake correctly.
->>>
->>> (b) Wake lands on the dwc3 parent (ACPI platforms)
->>>     When an ACPI Notify(ACPI_NOTIFY_DEVICE_WAKE) targets the dwc3
->>>     parent device -- for example via a Generic Event Device on a
->>>     hardware-reduced platform where dwc3 is enumerated as an ACPI
->>>     device without a glue driver -- the ACPI core turns this into
->>>     pm_request_resume(dwc3_dev). Runtime PM does not propagate resume
->>>     downward, so the xHCI child stays suspended. Root hub polling is
->>>     never re-armed, and a device plugged in while suspended is silently
->>>     dropped.
->>>
->>> This patch fills in the host branch to cover case (b) by requesting an
->>> async resume of the xHCI child so xhci_resume() can restore the port
->>> state machine and re-arm root hub polling. Glue drivers in case (a)
->>> resume xHCI directly, an extra call introduced by this change, but
->>> runtime PM can serialize those requests and skip device already active,
->>> so the extra resume call is safe. Those calls can be replaced with
->>> resume calls to dwc3 device later.
->>>
->>> Tested on SpacemiT K3 Pico-ITX, covering both wakeup paths: an ACPI
->>> boot with a GED device notifying the dwc3 node (HID 808622B7), and a
->>> DT boot with a modified dwc3-generic-plat driver exposing a wakeup IRQ
->>> similar to dwc3-qcom.c and dwc3-imx8mp.c. This is not validation on
->>> actual Qualcomm or i.MX8MP hardware, changing those drivers would still
->>> need platform-specific testing.
->>>
->>> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
->>> Assisted-by: Opencode:claude-opus-5
->>> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
->>> ---
->>> Changes since RFC:
->>> - add Assisted-By tag and collect tag
->>> - refine the commit message and comments as suggested
->>>
->>> Link to RFC: https://lore.kernel.org/linux-usb/20260811090817.109350-1-panjunzhong@linux.spacemit.com/
->>> ---
->>>  drivers/usb/dwc3/core.c | 12 ++++++++++++
->>>  1 file changed, 12 insertions(+)
->>>
->>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>> index fd5c2cd36c59..76883dc6184c 100644
->>> --- a/drivers/usb/dwc3/core.c
->>> +++ b/drivers/usb/dwc3/core.c
->>> @@ -2739,6 +2739,18 @@ int dwc3_runtime_resume(struct dwc3 *dwc)
->>>  		}
->>>  		break;
->>>  	case DWC3_GCTL_PRTCAP_HOST:
->>> +		/*
->>> +		 * Only the xHCI child's resume re-arms root hub polling, which
->>> +		 * is what rediscovers a device plugged in while suspended.
->>> +		 * Runtime PM doesn't resume children, so request it here.
->>> +		 * Keep it asynchronous to avoid waiting for the parent's resume
->>> +		 * callback to finish from inside it. Glue drivers may also
->>> +		 * resume xHCI directly, but runtime PM will serialize those
->>> +		 * requests and skips an already-active device.
->>> +		 */
->>> +		if (dwc->xhci)
->>> +			pm_request_resume(&dwc->xhci->dev);
->>> +		break;
->> Could we also check a parent-only resume with no USB wake event? For
->> example, reading the DWC3 debugfs lsp_dump file calls
->> pm_runtime_resume_and_get(dwc->dev). With both devices suspended, this
->> change would wake xHCI too.
->>
+On Tue, Sep 15, 2026 at 12:54:54AM +0000, Yixun Lan wrote:
+> Hi Stephen,
 > 
-> Thanks for pointing out, I did missed those paths before, I will do some
-> investigation and testing on the two non-wakeup path:debugfs attr access
-> and the dwc3_set_mode() path then report back.
-> 
-
-I looked into this on real hardware. There are two paths where the
-resume is unnecessary:
-
-(1) debugfs read: it briefly resumes xhci, then both devices go back
-to autosuspend. Harmless, though unnecessary.
-
-(2) __dwc3_set_mode() while suspended in host mode: when a DRD
-controller is suspended in host mode and user or a role-switch consumer
-calls set_mode(), dwc3 is resumed first and the xhci removal follows.
-But pm_request_resume() only queues work, and the unregister path
-calls cancel_work_sync() before freeing the device, so the request
-is either cancelled or completes beforehand. In my testing, the PM
-core simply bails out with -EINVAL on pm_request_resume(&dwc->xhci->dev),
-and the removal completes fine.
-
-I think yes there will be more extra calls here but they don't break
-things, I didn't reproduce any failure. It seems difficult to get rid
-of them since there are no good conditions to judge.
-
-If we want to avoid these more extras, maybe those platform who need
-this feature can just let glue driver (dwc3-generic-plat.c or another)
-handle the ACPI probe and the wakeup (like qcom/imx8mp) together for
-the case(a) platform mentioned before instead of reusing the current
-8080:22B7 ACPI probe path in dwc3/core.c .
-
-Thinh, do you have any thought on that?  I'm fine with either approach.
-
->> Would both devices return to autosuspend after the read and still
->> detect a subsequent plug-in? This would help cover the non-wakeup
->> case.
->>>  	default:
->>>  		/* do nothing */
->>>  		break;
->>>
->>> ---
->>> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
->>> change-id: 20260908-resume-xhci-0fa34ff9b332
->>>
->>> Best regards,
->>
->>
+>    Please pull SpacemiT's clock Fixes for v7.3. This solve an issue
+> that will trigger PLL clock closed due to the frequency not available
+> in kernel side, a shutdown of PLL will cause the system hang.
 > 
 > 
+> Yixun Lan
 > 
+> The following changes since commit cee9395acd8043be0644b25c34bfa86623f2b935:
 > 
+>   Linux 7.3-rc1 (2026-08-30 13:34:40 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/ tags/spacemit-clk-fixes-for-7.3-1
+> 
+> for you to fetch changes up to d558af8ee0bb1b2e88e696be84adb93cf2b7be6f:
+> 
+>   clk: spacemit: k3: add CPU PLL rate tables (2026-09-15 00:09:55 +0000)
 
+Pulled into clk-fixes.
+
+Brian
 
