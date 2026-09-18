@@ -1,85 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75310547067;
-	Fri, 18 Sep 2026 23:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA103F4DE9;
+	Fri, 18 Sep 2026 23:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789772583; cv=none; b=BfKV6XHnOkpqjNnUDOKJA4CBHxFeSayDwdLYvDXCDsP0TBFtgtx4M3AuIE+Rmm/xjES0PG1hrKQz4CcBru0pExXC54Xr+X61J0onAasdQ2uaurW5gAPvGuBTcyShuNA7ST5YzsVqawLOAlHf+Tbe7UslTLpfJP5Tkxc87NEQHyY=
+	t=1789774660; cv=none; b=ojj+WgZb+56ufUEl2yJRYchqd8yAhh5eD8Bc2nl/mexPRbetqjS6nPm9PeChuSdu7hWc1qn3JFLMO+5SycV/D3CZQWBsrW12YScOOcaiJB64/OM83Q2zlUp2N+ZdfJ0b1aFojdfuS4Mj+QeGFRgeMoEGE9tOdr4IJTw0lKg4rZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789772583; c=relaxed/simple;
-	bh=fBqBc3Jy443rwJVSlTXTHQbto0sf3nymtAcrMra4A+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G+zhm9WtTRsQFUuTajh2+suT1sbrTchKZjwUOUktjBvFyIrYOVNHZ+LT32M7P9beCu4NZHEb/hfLECcUMsDtqKJYG1NY+TP/SWvPW1HSX9SWikTuB+bN2HssSeky9g6Od8/FW9zJGCCVri1MNmzKYkq/rEHhxIUJ441DOwP7/a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rip47fgo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789774660; c=relaxed/simple;
+	bh=rz+bG39Va7yv27zHT3uxR7LhwgCrRpi/EXPF/ocY0wA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fzKDsqoNtosS3MprWFXO7gEAAiCVpynxE35aVBXs/oSEGXQ4V7biD2vUYrzwmP9QhGSm0JQz3Pdydf60dvfh5TaE1zIZr38AaWzffw9VP2b37X0E++Fi2w82mjms29STquBWvydS4joLlbqbS599ffKLBgP5BZDf4h9zYxLD7J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LcBNvofM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rip47fgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F621F00898;
-	Fri, 18 Sep 2026 23:03:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LcBNvofM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BB41F000FF;
+	Fri, 18 Sep 2026 23:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789772582;
-	bh=jHNs6AiLAnXjxOSEL4ZlVQ0PBlGJFDV35U3GfJhTtpY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Rip47fgogMqlbmNb1qqYNEe1XC8JTQFskqccQH4DQ3hrtax39/kAK5gQ8Q56UI6FL
-	 sQJH+YDyD8kMcis7lAibglrAjR4s/saQiI243scxL+bvbj+WRw3wGk+EGvnls25qfT
-	 isCEYLfiMsuyJvHExcULWwGwGWTYKzqYipnNxAkSCl/Po8ZROss4DXGL7H+WurwH5/
-	 5w7Sqx+Hxab9L/LEULxkYCwwzG+EQxvhd1ge7iWilmgb2kZ2AV/1g1mt9wEBQN5Xbn
-	 ZsP+unnf2M+BBSbgb8wVRqRpQmHEbPYXI4wK5fsNwzH9t97EVMM8PGINSOlWQuNZFm
-	 ramiBSZCkLo5A==
-Date: Fri, 18 Sep 2026 23:03:00 +0000
+	s=k20260515; t=1789774649;
+	bh=5XuFo9Hku9AH+B9//W0dXYAF+SnmgYlyyyq0dIrSUxY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=LcBNvofM9VVzSc1HZsyvbKKWDImSzsKjs1JoIFMhkVKhOurf+nocUiTUxYqHqPH0v
+	 ksBYpb+4DQZuz5SejlfcCX075n3TEtdysB5WyUFebSZwGLfT4CHBRGjHm9Kdzit9+d
+	 sm/jZ4kvNyfB9D4OINqYSmA/N8Rj5mndSGLYBoLdo2O5hFGIXAhSFlapCLNfr55FO8
+	 NRgWHoUGLyrP+WvaN5kq6yMQ9JpfEXuCKzsrvPJr6Mjb+GkZRgZFWQNwnmpeslH+7K
+	 VfLao/VxMG23wBsuEQHr2y9yZp4y0x2HuIabylG0LoraDsKysqG+osfCv6ReVmtTxr
+	 j6Q9ViDirWiEA==
 From: Yixun Lan <dlan@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@sandisk.com>,
-	Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"Martin K. Petersen" <mkp@kernel.org>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Jennifer Berringer <jberring@redhat.com>,
-	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 3/3] riscv: dts: spacemit: k3: Add UFS support
-Message-ID: <20260918230300-GKD297024@kernel.org>
-References: <20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org>
- <20260916-08-k3-ufs-support-v5-3-1f5d71f1027d@kernel.org>
- <20260918-belligerent-succinct-kraken-7fa592@quoll>
+	Guenter Roeck <linux@roeck-us.net>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Troy Mitchell <troy.mitchell@linux.dev>
+Cc: Yixun Lan <dlan@kernel.org>,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jean Delvare <jdelvare@suse.de>
+Subject: Re: (subset) [PATCH v5 0/6] hwmon: (lm63) Add Sensylink CTF2301 support
+Date: Fri, 18 Sep 2026 23:37:22 +0000
+Message-ID: <178977450889.1115058.13731797621841664029.b4-ty@b4>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260914-ctl2301-v5-0-b44b81cd2c3c@linux.dev>
+References: <20260914-ctl2301-v5-0-b44b81cd2c3c@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260918-belligerent-succinct-kraken-7fa592@quoll>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Krzysztof,
 
-On 11:07 Fri 18 Sep     , Krzysztof Kozlowski wrote:
-> On Wed, Sep 16, 2026 at 02:59:55AM +0000, Yixun Lan wrote:
-> > Add UFS Host Controller support for SpacemiT K3 SoC, and enable
-> > it both on Pico-ITX and CoM260-IFX boards.
-> > 
-> > Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> > Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-> > Signed-off-by: Yixun Lan <dlan@kernel.org>
-> > ---
-> >  arch/riscv/boot/dts/spacemit/k3-com260.dtsi  |  4 ++++
-> >  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  4 ++++
-> >  arch/riscv/boot/dts/spacemit/k3.dtsi         | 22 ++++++++++++++++++++++
-> >  3 files changed, 30 insertions(+)
+On Mon, 14 Sep 2026 16:03:52 +0800, Troy Mitchell wrote:
+> Sensylink CTF2301 is a system-level thermal management solution chip.
 > 
-> Please do not combine DTS in UFS patchset, because it might end up taken
-> by SCSI/UFS folks and it should go via soc tree instead.
+> The CTF2301 is an I2C/SMBus compatible device featuring:
+>   - One local temperature sensor with +/-0.5 degree C accuracy and
+>     0.0625 degree C resolution.
+>   - One remote temperature sensor for external diode-connected
+>     transistors, offering +/-1 degree C accuracy and 0.125 degree C
+>     resolution (temperature range: -40 degree C to +125 degree C).
+>   - An integrated PWM fan controller capable of operating in two modes:
+>       1. Direct-DCY: Open-loop direct duty cycle control.
+>       2. Auto-Temp: Closed-loop automatic fan speed control based on
+>          measured temperature.
+>   - A 1-channel fan speed monitor (TACH input) for RPM measurement.
 > 
-Ok, will do in next version and send DT in separate series
+> [...]
 
+Applied, thanks!
+
+[5/6] riscv: dts: spacemit: Add K3 I2C6 pinctrl state
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=97bd8165a3f734fe97664e186406686bfa34f42f
+[6/6] riscv: dts: spacemit: Add CTF2301 on K3 CoM260
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=ad17d98848df3907d6732673a139e9ed832b547d
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
