@@ -1,130 +1,159 @@
-Received: from mail-oi2-f43.google.com (mail-oi2-f43.google.com [74.125.231.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender5-op-o12.zoho.com (sender5-op-o12.zoho.com [165.173.182.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBCB406805
-	for <spacemit@lists.linux.dev>; Sat, 19 Sep 2026 11:58:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B972C78F2B
+	for <spacemit@lists.linux.dev>; Sat, 19 Sep 2026 13:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789819099; cv=pass; b=FhuTeBk+LZS0seAnAv21RdagobLUhZq6NxkW5dN/IKMIAnLUedyYP3Th+f7afDQdvzGXqmO8pDs9lr0WViNd5acaEAXgRbt7mw2fD1HgR/YrXd1RtRmpsWS6Ii83EnwQ5cj+U05lEXJS6K75tlk9MFRNKp/r8Qy+hLmyoYEifFs=
+	t=1789826188; cv=pass; b=Ku0mXHYUGRgCtR1fuFun0pxT47VFKzKmMf5ewzQ93VJ3GRx/02A2/IOw35sbtNcyk6bCZXk+5TxQEA//E3Mn4ZcyvEsBhFHfwkrCqZXkYzDJLEQPc4QodFOICl7LRvHOo7ciNshTmXyy8olNj7rezkr3mz0TMNiJscGGS1xnotg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789819099; c=relaxed/simple;
-	bh=XbtXTzRAYW02KXholcw2ASApYBFb0BJqI8KGXi9eFzE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z+HBYFno19slXiQH6RdZrPbC442jXSI9LS/E/F6bwxVvx3CP6CdUH0D4jQ1QsO6ciT1uf56uAG0ATMYCO092U7RQrj3gEPdG755Y3nksjFNg28jDNDDuZ6GlMqHmmN/lQevMK0pDiOPOcvyFFoQLorQeV3VSEzpez4OEAML6py4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RiuP1NQf; arc=pass smtp.client-ip=74.125.231.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789826188; c=relaxed/simple;
+	bh=yhX14Zjrs1T1LKc/UQ3XM5yVsTmDWG/q39PuOw4fZkw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GRtJRA7KHCdJIKmWwTqSg6+HqnZ6McYrxpJ8KHg8ruSXyCZtC6gOCChi/VxUXSXon4/wZ+g1580V77z/NxCbJcf+DCEBNRIOAwx0gGYZAfrQZ020jVbed3auke+9m4oBEC/wqtp7ydFxIsal8o2eRtS7U8rZt7lDHOVc5911WQI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me; spf=pass smtp.mailfrom=icenowy.me; dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b=e8k+DUqK; arc=pass smtp.client-ip=165.173.182.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RiuP1NQf"
-Received: by mail-oi2-f43.google.com with SMTP id 46e09a7af769-7fccd4c3f36so1210796a34.3
-        for <spacemit@lists.linux.dev>; Sat, 19 Sep 2026 04:58:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789819097; cv=none;
-        d=google.com; s=arc-20260327;
-        b=a4tlbiZj/bOUeCj1N/NdDz1c35BDm344gPS8TYrogQhXBR/p4Pid8lEHgWQS2XVHmw
-         dwbU5rOlXfAddSMnS2TszMjCj2shkoja+XoXUaqliHMqXBkaY49Sbtrjd8VJwXD0r3uZ
-         t6i52l4DX4VLlNYRqjWAYooWZHKFeiVduDenFqQE+UU+855ZT5Rbwp2VmZ6uJpQsG6g/
-         iDWnZz8L5hv4F24FGzBs02HqcaGNpmcQxLnnis6/eryCMl4sn9dG2Lv1j19PJHsdxaMx
-         SbVLycEQdvqdEx4e0GTzTLveIIf7S9MXlxd34v5U3x0e9ZnuysJHemMTdLB162s7lxb4
-         gJhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ud3FeOiOvyS8WWg6t16DeAqz++YfSh94BtVybhYysAU=;
-        fh=+kxEznutqsNqNTY4gE3a6DqagqG5D0k9r/GXe++/cPs=;
-        b=H4Av0PhSgaOsf551312Q4naU1iMxsI45ehiOl9rqh/ytr+A3AN2yrHcBydf/5Qqmpk
-         3JjxeRY3t8H8G9v6YnQag8P4Td5bviKlbvqxt938e4WkYk+Ng2P5wC9oHjPL1gC+L+sE
-         OPAZ1NrATC/5NdTglcurWLnJj8nS56aMCxVOSlB3GUrqReV1D3SY+h7lrUsow3dFZvwo
-         9aEzrCrCU8aAG355d1HiROr2s34m1UKQ/pxxxi0X13KOyY8HJp2HxKPgHNmoeePflH+B
-         hM6ydX5UgFwz2jPmShCW39/EGgw+mu8y4ptJ9P27ZArnEYMx+6Wx3PQpbNvI103O0fQt
-         lhLg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789819097; x=1790423897; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ud3FeOiOvyS8WWg6t16DeAqz++YfSh94BtVybhYysAU=;
-        b=RiuP1NQfYa7/lDoJI08zSPxCmk0ecuU/eF2pGy5yIGmzxPuiDiJEIoZ26hcQH/T5Y5
-         MdgpGG7MNPVws+RNYuz2YkK7xSOXknIUIiVt3927KWWsFjIJkBiBUYqxAekrDfmdU1B7
-         9spFmjCw6R17DxWT6fAghuYY1e3XSwaqPiBEj7ofk4b9zvaDlMpedrqsd/3XuVy59fPO
-         ElnxIYqTvQYNJYtpknstqZVnJuG25fbTYC0PE3X7EJ8m0oezRE1lcid0CAEVTqzmsiRB
-         m1Co4GVB8utoiRz+l6pryhS6QX+NuqZhi8VsBK4sWH67r3V3/E6rL8QOPxoC0jEjfSAJ
-         kH7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789819097; x=1790423897;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=ud3FeOiOvyS8WWg6t16DeAqz++YfSh94BtVybhYysAU=;
-        b=MqAnkurLyExAeyj+6owlQYo81/JhUwjrfzWgl0Nh/SekeoTKiOiYDB2WwXcTa3kkKO
-         RGERR+zu7ZjwCNjL4FfaXYY1lk/kpgMe76uhXxmr1i4xYa8jUA21CXyBcRns+QR8wC4n
-         muAVLPLliheUslbyo4c95YpBLsANcC9qhpMMT6CG78CnnGQYKHvVEwMvapipcKXnTIjZ
-         nEdJ4gJkdpSFqdyYTVmSXaGTHRDcrdfi5f4zxDV/kY9kgA8oGiisskpI8mWw8nXJffdH
-         8VZYmpGV2d1oo794Sc179s9437pBMGriFLU6WmDkkuu3QL3+USCsOFl8lsVekPDro3OQ
-         k9pw==
-X-Forwarded-Encrypted: i=1; AKwUvBxaMaMmR7Wl6Ktjy2BushvVWHNv+WigHR3/MtNeoLNvc+LEfR8/hSaQglIXOv2mMYP+Iv8w19ih5g==@lists.linux.dev
-X-Gm-Message-State: AFuF++l66TQhtJEIX6DyNJy5eUY/c1CBlXDmXpOEg/hpx+RmrPQrCrky
-	KplFTO+D/9D0h4h43vtGxpaI27WTZOwpWtLuZ2XlsAs+CsrF3VmmrdpfXA4lKGqnVKM5fapk2sG
-	6FEtJBIS1HQdvcXzgNlgOq1u4FhTJRqo=
-X-Gm-Gg: AYBFou2rdzs2h3VTsiusgkESRRLjG6+RPWnqZZPjrY64+gHP82Dkm20nZb5yT+IY5On
-	aP0DZI/+wVRYZT2lzKqT+uCP57T0OOM9Oe0ZlFQWQANMrG+TsfVUTmLQHvBwV/3WeEGhqeeyAyn
-	fpnU9UzkczLUQl9lka/2zfBZQW9HDmRNpSY1CeV3RWCOtXRq2kc0WFQ/NZgkfkeg+GSxprJBsSo
-	vePCOJYdpT7UwAIkxXtMpzjzdwyoeGl/f2D/2+IrrRBNnGS3YG7/wECfQQ/byV2P8TyVEF430an
-	fZBNpnvLq2Qk9h/EyaDAzgYeYzGza+QMTqhrcFh/X2+z3mJcBxDqrlaJXYd3C1cPzzv+yRBdLpd
-	qTWz65EAfYxkXXFDmhhLv7LcL7Hxo+SmcbN0aCA==
-X-Received: by 2002:a05:6830:442b:b0:806:1728:aed9 with SMTP id
- 46e09a7af769-80ddff5b5e3mr6811507a34.5.1789819097212; Sat, 19 Sep 2026
- 04:58:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=icenowy.me header.i=uwu@icenowy.me header.b="e8k+DUqK"
+ARC-Seal: i=1; a=rsa-sha256; t=1789826181; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=lxJtI0f5J52eBI0jkXF+fCjjktZihnJal+2wxXAFeJeMr7hA4MNnFTo6o7kTkRNxQ9sqToreVpEPJMb6lDHMXWiWt/Sn5mBpdBc1J3gk9PEdZSjUnBDNXPKWHqFzKw9omeR5d/bUaRiFN5/hABtXZ21lbuaepN05CPHYQk65/9E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1789826181; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=yhX14Zjrs1T1LKc/UQ3XM5yVsTmDWG/q39PuOw4fZkw=; 
+	b=Ni5XsT26yJfRAbsYM5mTkdiCmtEN0MPSyQgGGYkdqtjQGGnc21MbM+O/BVfJ3jYagernbGAQeD5YURO+kitKwVeKiAdJOWWxpUWNo0BSW+8gwsx6A+7EjkikN+lXDdsHV+sOMpr3r5h6Bo0wRXt5s3mFiZ8tvVdKSL1M8n5IrQA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1789826181;
+	s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
+	h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
+	bh=yhX14Zjrs1T1LKc/UQ3XM5yVsTmDWG/q39PuOw4fZkw=;
+	b=e8k+DUqK8L0f/XjRqQOdi0HQ/UI5S1Gu7O3c6Lg1eNJdymP25Cp1kkckNIXJ4pr1
+	qQueD0jICa932JYSArNLhRFepAzNl6pGdZTXd3w6qJMMSm78hNB94PTGtRILf0Ca2WW
+	6Vs7//Uin5WcuhlDsPpYPyp4iteilNXakZ5/Tq/wyJL1wjJl0K9NoM0w2PRem4k8kYg
+	Jd04Owgb8RpA96d6og4yDllg9edyQhblplh/pBgVE0Q9/B1Qvio9RdwKVhrUGVSpZGY
+	AfLA55XW4Ak/PiTIhfoHKjyxKa5zdkMrzrYRe4/laVg/IN4ov9FipAwjd6YPLxBdP45
+	ZL2yKzRZRA==
+Received: by smtp.zohomail.com with SMTPS id 1789826179625358.0297920384029;
+	Sat, 19 Sep 2026 06:56:19 -0700 (PDT)
+Message-ID: <8301abce221e33d827053c54a64aed05f3227f7f.camel@icenowy.me>
+Subject: Re: [PATCH 2/3] pmdomain: spacemit: Add power domain driver
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+  Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>, Paul
+ Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
+ <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org
+Date: Sat, 19 Sep 2026 21:56:12 +0800
+In-Reply-To: <20260919095936-GKA322102@kernel.org>
+References: <20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org>
+	 <20260918-04-k3-pm-support-v1-2-0acd2b36b96f@kernel.org>
+	 <a4359efeee2220903a05a2383a651ec8ec7284b7.camel@icenowy.me>
+	 <20260918230107-GKC297024@kernel.org>
+	 <33b33b2b79763d410bc2e5b4ef46c305aaf6f7c8.camel@icenowy.me>
+	 <20260919095936-GKA322102@kernel.org>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260902-07-k3-sdhci-fix-v1-6-b15c5d0f64fd@kernel.org>
- <20260907155300.1411173-1-alan.tseng.cs@gmail.com> <CABdCQ=Mi3M8vGCYjURicNWy-Bh22qN199jOdHA5rEfTzui2b_A@mail.gmail.com>
-In-Reply-To: <CABdCQ=Mi3M8vGCYjURicNWy-Bh22qN199jOdHA5rEfTzui2b_A@mail.gmail.com>
-From: alan <alan.tseng.cs@gmail.com>
-Date: Sat, 19 Sep 2026 19:58:05 +0800
-X-Gm-Features: AcwNN1UZXEwsL9Pov5f9xi5w8glGlreCvMt_9qTwCiXunjbXeU4yHhZxeZNHtl4
-Message-ID: <CACwt7EYh9+MZHC7Qn910iOxvnjd42u_NoSX3+YpjQCxCxtY=6Q@mail.gmail.com>
-Subject: Re: [PATCH 6/7] mmc: sdhci-of-k1: Improve RX tuning window
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: dlan@kernel.org, adrian.hunter@intel.com, ulfh@kernel.org, 
-	long.wan@linux.spacemit.com, linux-mmc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+X-ZohoMailClient: External
 
-On Tue, Sep 15, 2026, Iker Pedrosa wrote:
-> A jump from a minimum window size of 3 to 50 delay codes is quite dramatic.
-> Could you clarify how 50 was chosen? Is there a specific hardware specification,
-> phy datasheet recommendation, or test dataset across multiple boards that
-> justifies this exact number?
+=E5=9C=A8 2026-09-19=E5=85=AD=E7=9A=84 09:59 +0000=EF=BC=8CYixun Lan=E5=86=
+=99=E9=81=93=EF=BC=9A
+> Hi Icenowy,
+>=20
+> On 14:57 Sat 19 Sep=C2=A0=C2=A0=C2=A0=C2=A0 , Icenowy Zheng wrote:
+> > =E5=9C=A8 2026-09-18=E4=BA=94=E7=9A=84 23:01 +0000=EF=BC=8CYixun Lan=E5=
+=86=99=E9=81=93=EF=BC=9A
+> > > Hi Icenowy,=20
+> > >=20
+> > > On 17:00 Fri 18 Sep=C2=A0=C2=A0=C2=A0=C2=A0 , Icenowy Zheng wrote:
+> > > > =E5=9C=A8 2026-09-18=E4=BA=94=E7=9A=84 02:40 +0000=EF=BC=8CYixun La=
+n=E5=86=99=E9=81=93=EF=BC=9A
+> > > > > =C2=A0 SpacemiT's PMU (Power Management Unit) consist of several
+> > > > > power
+> > > > > domains
+> > > > > which can be managed independently, depending on different
+> > > > > application
+> > > > > scenario, each domain can be powered on/off for saving power.
+> > > > >=20
+> > > > > =C2=A0 The driver is implemented based on Linux Generic PM Domain
+> > > > > framework.
+> > > > > From a hardware perspective, either of two distinct power-on
+> > > > > sequences
+> > > > > are supported, in software mode (SW mode), the driver is
+> > > > > responsible
+> > > > > for
+> > > > > controlling the states of bits such as sleep1, sleep2,
+> > > > > isolation
+> > > > > and
+> > > > > pwr_state, while in hardware mode (HW mode), the PMU hardware
+> > > > > will
+> > > > > complete
+> > > > > the sequence automatically without requiring software
+> > > > > intervention.
+> > > >=20
+> > > > I think there also exists solutions for K3 that uses RPMI power
+> > > > domains, and let their ESOS firmware to access the hardware.
+> > > >=20
+> > > Yes, I'm aware of that
+> > >=20
+> > > > What's the relationship of this implementation with the ESOS
+> > > > implementation? Should the ESOS part be disabled to use this
+> > > > implementation?
+> > > >=20
+> > > I should say, it's a mutually exclusive solution, so yes, the
+> > > ESOS
+> > > part
+> > > should be disabled in order to use this version
+> > >=20
+> > > The motivation of this patch is trying to support drm/display
+> > > driver's
+> > > PM requirement, while avoid going with vendor's complicated RPMI
+> > > solution
+> > > which isn't mainline ready
+> >=20
+> > Is this a long-term solution, or a temporary one?
+> >=20
+> For upstream, I'd say we probably will stick to this solution for
+> long time, won't say it 'forever', see comment below..
+>=20
+> > If it's a temporary conflicting one, I don't think it's worth
+> > picking
+> > at all.
+> >=20
+> Well, checked current Linux kernel status, there is no RPMI PM
+> solution=20
+> implemented although there is documentation in riscv-rpmi spec[1]
 
-50 is not my number; Yixun would need to answer where it comes from. What
-I can add is what the vendor driver does. In SpacemiT's sdhci-of-k1x.c
-(bianbu linux-6.6), the defaults when DT says nothing are:
-
-  #define RX_TUNING_WINDOW_THRESHOLD 80
-  #define RX_TUNING_DLINE_REG 0x09
-
-The Jupiter DT overrides both together: spacemit,rx_dline_reg = <0> and
-spacemit,rx_tuning_limit = <50>. So 50 is what the vendor pairs with the
-finer delay-line step, not a standalone default. That makes the 5/7 ->
-6/7 dependency concrete rather than theoretical.
-
-I also need to correct what I said earlier. The current driver already
-centres on the widest passing window; the "< 3" check only decides when
-to give up with -EIO. Raising it to 50 does not change which window is
-selected, only whether tuning fails. The 1- and 5-code windows I reported
-were never the widest in their boot (the widest was 74 or more each
-time), so they do not show the old threshold picking a bad window.
-
-On the form: spacemit,sdhci.yaml has no such property, so a DT knob
-would need a binding change. A compile-time default, with DT override
-if the binding maintainers accept it, still seems the lower-risk option.
+I have seen pending patch for it with multiple revisions [1], the dt
+binding is even already ACKed by Conor, so I think it's not a big
+problem here.
 
 Thanks,
-Hung-Chun
+Icenowy
+
+[1] 20260903092347.620060-1-joshua.yeong@starfivetech.com
+
+>=20
+> On the other hand, I see no problem to switch to RPMI solution once
+> it
+> became mature, it's very similar to two solution of clock CLK_CCU vs
+> CLK_RPMI..=20
+>=20
+> Link:
+> https://github.com/riscv-non-isa/riscv-rpmi/blob/main/src/srvgrp-device-p=
+ower.adoc
+> =C2=A0[1]
