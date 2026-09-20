@@ -1,131 +1,143 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9861DA57
-	for <spacemit@lists.linux.dev>; Sun, 20 Sep 2026 08:00:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8284C3F104E
+	for <spacemit@lists.linux.dev>; Sun, 20 Sep 2026 10:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789891254; cv=none; b=k8seOq1Fq5eTzSJgTRbY2AYVOX3NFgFHtCi70l1dber23EOQz54jn9metfoQmk5O/bvLes6EW7X0TYGf6fJq0eae2aqpvs0b224QhJSX30W7CHp5CixECyH7Dd+5/2NpJItVvR5cJmmAf3+FDjOtDGlMzXz3r9XINAKaUbOYcfQ=
+	t=1789898441; cv=none; b=KHjEXtOeNFkRmTbJu77qigBIMq0ab81klsLyenPdkRjOlEcsPppiQrVCmtNfM8+rCPxDJRtsW7NoWiUOz1DYt3AXTG52C3LYUkIHZldIo1J5yqPj/q9FqtItxI6XRk7+CdoD14nQ/MXm5LcyhcbyGsEd5JRCtMUNko44MXpIRG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789891254; c=relaxed/simple;
-	bh=Y5tPHoLczDWNnwZ5iXFWT2WFskib+hCciE0xxvvh5Bg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 In-Reply-To:References; b=sm21kUWxwODk/QEDkhmdr8wzpzDTP7VQOp1u8JVYDcMHU7OIYO3NQ5+OMpMtgU53+mtav4FcW1lYokxBx5wxd655Cg16PlQCX+8SsPWy+FeYEsKAYYtvX3lBuSgQbgdYqcU5pIRDb6gBMzzyi3u8bGER1fPYGx3T+5j+NIg06rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=dC5IRRtI; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="dC5IRRtI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1789891218;
-	bh=etqlwVVIRZowk3f8uquWoSpq/cd+t/r2MmegfPcTx4c=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=dC5IRRtIJ/5sHCSunLfzHAt7GvE5WmEKw6BLIpj/sfoXQkaKorUs9N7QxmsyBGF3v
-	 dH3qy6S7TmxtqJGcUvi773CWB7Ki8gzhkJBQcgo8OATZLzc4SFqGBvfemuLS3DDKDT
-	 fTLC6CNxNyAxnYaxPbowWBJ9ZmqHBJ0uFMed8ej4=
-X-QQ-mid: zesmtpsz6t1789891212tfd2b0654
-X-QQ-Originating-IP: ++rQGpFiadxZGjlXFjk0ZmTswmyw1WBX7/+cHBxjjtM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 20 Sep 2026 16:00:10 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12539381814827415666
-EX-QQ-RecipientCnt: 16
+	s=arc-20240116; t=1789898441; c=relaxed/simple;
+	bh=Pa/kThhCijMFi8BDye7+rFM1nK7NtTDPDRSHSp6ffQs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hEJTMp6U1KZfTSZjtxQjeIAkDNaPi/ci/SaHbfYI1PWrfnmk32KGBmBNwoHC+txujnuiy1sKI0XRl/kYCGKzP64NPrxKMf2LWTdWx+i60Xjajm3Pxe/6o5NMofFTXYCA901ruJA1yIxvrUuMNGRWYxo7Nbip9cTgEtgQK9YBayo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [14.220.232.127])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4e715e30a;
+	Sun, 20 Sep 2026 18:00:28 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Yixun Lan <dlan@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] riscv: dts: spacemit: set ETH MAC from eeprom for OrangePi
+Date: Sun, 20 Sep 2026 18:00:00 +0800
+Message-Id: <20260920100000.3888256-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=e109c0058aed249261fbb125f7ffb89a9c6eec3c2886db4215a836200e53;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Sun, 20 Sep 2026 16:00:07 +0800
-Message-Id: <DLJZH96MO7V1.11IN77H2734TN@linux.spacemit.com>
-Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Ulf Hansson"
- <ulfh@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt"
- <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
- Ghiti" <alex@ghiti.fr>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH 2/3] pmdomain: spacemit: Add power domain driver
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Icenowy Zheng" <uwu@icenowy.me>, "Yixun Lan" <dlan@kernel.org>
-In-Reply-To: <8301abce221e33d827053c54a64aed05f3227f7f.camel@icenowy.me>
-References: <20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org>
-	<20260918-04-k3-pm-support-v1-2-0acd2b36b96f@kernel.org>
-	<a4359efeee2220903a05a2383a651ec8ec7284b7.camel@icenowy.me>
-	<20260918230107-GKC297024@kernel.org>
-	<33b33b2b79763d410bc2e5b4ef46c305aaf6f7c8.camel@icenowy.me>
-	<20260919095936-GKA322102@kernel.org>
-	<8301abce221e33d827053c54a64aed05f3227f7f.camel@icenowy.me>
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NbgegmlEc3JuESYaEd5BhmnZaMOyQ3XiW1zRP3ssJWGEMRyC1cyRmF7M
-	IFxYhhZZehcgH4QJh/37E6fEaPt3KrEOsgPWDoO+hCXKGEtsjJ8B1Oq1SKwz+CA8K2iI5dE
-	Oy2sR/YgCJ4ViEK6Gw8J1RaHXzX0rf3PIia0Fn9fTlsqcK3TCkRmSzdkXkBmwkKGE5h632c
-	fw1ZLosNSQL9w0XWifdAmQN0lL4LLNLo+GNRX1VhlN+/IY7i6/2rl80S9woWmeBW101B6Xr
-	+BHr2HJKdX278Ep8ZN8y7Di9AkSkIAnAuEssrRwakXyvjcM6OyfGRff9z9JoHo0nYzDfA0N
-	DRflOYjtXSZ2zqPoUXc+QidYNX++hkO9Mn/dnoMaGokEUgx6XlPtkUHQHoUAhuwW7Py8ege
-	FVx+thQ1mh4Rg5K02HtHKk0/ktxlbtLMOc4+VVBAaYpRCreP32kiN8m5ehDMtu658A1lMP9
-	8O+dXKdqVw7MQUc3HU/YvAx3d5f4Z+0l7WWiwn9Ns94pIGRfY7mxgNclOH6knrBdzfsa+uj
-	+2lN8DUSznh6Eej+rpWN5eYaLdY3nD8SM9HVAaFQ/7tnetmMdj0DZBQEf8e+B04dc8Q/P9/
-	2DN7HJuU92uSQ0zK/UGBrdB+k9oqbSS3wHzEzl0BCszxY8oj/ad/BSRzPlY5gGQa4EVYctc
-	7A+3vggV1hd4XLTsu8/iWivCzTJ+NONOiogDNgZxARFfZiX4UW/fEhvLHPzgpIZoHY7PrcL
-	GJdo5GF9Mjwa79u8Bmm17CsoZp8nzrnaYeo++SgJNGt+e00I+rGZewriFL9IXTFKqsDKmIC
-	1AikP1WTI0iV/fvVtJ8rSsSuJ1Ypq6R7/AAg92VgU5/5Ee0/BHaWxmfL+7R8XqUciTFKL+5
-	BZvRjU/HOhPxsWvN7Xter8lYgpOOx7IJF1Duk6aaK+pswTAtM23F/lQGEko/hUb4bfS+3Tz
-	nEKNtSkmvxcZ6oj+SRuAdxucCQyiV3Tt7DjndMRMUf7GJLd9BbD8ogENnVgr/wNK6gpXL0w
-	TmyxaCJbv7yN2XDv5p46KM943WXr2Q3WZW56TYaXqi3aYmDLzJ12BeVcnnX09NAYyQcGjPY
-	7zzUmALEMnIVgyjBzs/SkY7rBcjpcHJA5naLmyArTz3RFOd8XIS7ek=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa0be42903c03a2kunm0b30d86444d90c
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZThhCVkMeSkJPSh4ZTEpLTFYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKT1VJSUtVSUhJVUpJTFlXWRYaDxIVHRRZQVlPS0hVSktISk
+	5MTlVKS0tVSkJLS1kG
 
---e109c0058aed249261fbb125f7ffb89a9c6eec3c2886db4215a836200e53
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+The EEPROM on the OrangePi R2S and OrangePi RV2 stores the MAC address.
+Assign it to Ethernet, with eth1 having a MAC offset of 1. Remove the
+Ethernet alias to avoid U-Boot patching incorrect MAC addresses.
 
-On Sat, Sep 19, 2026 at 09:56:12PM +0800, Icenowy Zheng wrote:
-> I have seen pending patch for it with multiple revisions [1], the dt
-> binding is even already ACKed by Conor, so I think it's not a big
-> problem here.
->
-> [1] 20260903092347.620060-1-joshua.yeong@starfivetech.com
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 8 +++++---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 8 +++++---
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-ESOS is based on RT-Thread, and we currently have no plans to upstream
-our ESOS changes to RT-Thread. Our team's scope here is upstream
-open-source support; upstreaming ESOS itself is outside that scope.
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index 7125f2882ce8..073cc975135f 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -16,8 +16,6 @@ aliases {
+ 		i2c2 = &i2c2;
+ 		i2c8 = &i2c8;
+ 		serial0 = &uart0;
+-		ethernet0 = &eth0;
+-		ethernet1 = &eth1;
+ 	};
+ 
+ 	chosen {
+@@ -66,6 +64,8 @@ &emmc {
+ };
+ 
+ &eth0 {
++	nvmem-cells = <&mac_address 0>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -90,6 +90,8 @@ rgmii0: phy@1 {
+ };
+ 
+ &eth1 {
++	nvmem-cells = <&mac_address 1>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -129,7 +131,7 @@ eeprom@50 {
+ 		nvmem-layout {
+ 			compatible = "onie,tlv-layout";
+ 
+-			mac-address {
++			mac_address: mac-address {
+ 				#nvmem-cell-cells = <1>;
+ 			};
+ 
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 837616255464..609c4755775d 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -15,8 +15,6 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart0;
+-		ethernet0 = &eth0;
+-		ethernet1 = &eth1;
+ 		i2c2 = &i2c2;
+ 		i2c8 = &i2c8;
+ 		mmc0 = &emmc;
+@@ -93,6 +91,8 @@ &emmc {
+ };
+ 
+ &eth0 {
++	nvmem-cells = <&mac_address 0>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -117,6 +117,8 @@ rgmii0: phy@1 {
+ };
+ 
+ &eth1 {
++	nvmem-cells = <&mac_address 1>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -156,7 +158,7 @@ eeprom@50 {
+ 		nvmem-layout {
+ 			compatible = "onie,tlv-layout";
+ 
+-			mac-address {
++			mac_address: mac-address {
+ 				#nvmem-cell-cells = <1>;
+ 			};
+ 
+-- 
+2.34.1
 
-The pending Linux RPMI patches are useful progress, but making the
-complete solution work on K3 still requires substantial integration,
-validation and maintenance work across Linux, OpenSBI and ESOS. We
-cannot assume that someone in the community will take on that work.
-
-I am not opposed to RPMI, nor does this require ESOS to be merged into
-RT-Thread first. My concern is who will bring up and maintain the
-complete solution. If our team is not pursuing that work and nobody
-else takes it on, should power-domain support remain blocked
-indefinitely?
-
-Could we move forward with the direct-control driver, with its
-mutual exclusion with ESOS power-domain management clearly documented,
-and revisit RPMI when someone is ready to support that path?
-
-                                            - Troy
-
---e109c0058aed249261fbb125f7ffb89a9c6eec3c2886db4215a836200e53
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaq+Shw0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvKbEBAM3JGT8zMz/qwCLlFLbDvQLCE51eHJZ+3Dft2z67
-kBvuAQDFfQQClaI2mk0/LoEmsI9nsFXig4tdzJ/NoEsP9pSPAg==
-=PdYA
------END PGP SIGNATURE-----
-
---e109c0058aed249261fbb125f7ffb89a9c6eec3c2886db4215a836200e53--
