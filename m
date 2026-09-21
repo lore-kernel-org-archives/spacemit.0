@@ -1,263 +1,174 @@
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B3E49F122
-	for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 14:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790000710; cv=none; b=mp/UIgp5jlBZjK29G/J22mdeAPf+qpWnECcZ20dFfYBciZ9KnzJcvajQ7zKx193S38/D/RHrev19bLocA69iPY8AAqjgLZzfFIOsJ6oGTv2rTGw6Sse2D3O2i6mUSnQfjttGYcAYIENcWN07FQ+Ei/FEKY86+A9qC4Oo/Mi+s74=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790000710; c=relaxed/simple;
-	bh=s3SG6zYetHP+gsiYG6Z8nnzdp21ZZzns/HVc+qfBNpY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EeKzMTwd0JIIhTBVuQwInqWz0NojRUt/9KkqaUun4tOZr9MxtgtISpIcWBcS8U26zARVklBt/5CRa9i5ND/F+yu0OOfFtiU6/doLGbgrJ771+AEYPul09MujCgrh5uAHUm7h7mW60SSPwkzwXFvONHxn9sryXs9IfneizdfOrgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=oDEajCjk; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE214AB1C7
+	for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 14:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790002533; cv=pass; b=D0qPf8L40zEgIcGNYavx93FvpMcvchjs1/L6SizYCx48dk0FW2bcrQ4Y/xZW0m/gXaS1LmXCsiyBm8bfGiFDZ890VgIuTY9Qz3rlbjwHRfZPWVfKqlsjZlkQCFTTNQlnfAh+QMGsL6bnwzij3VxD+ExY30T2G5DxbrQMhhDV8KE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790002533; c=relaxed/simple;
+	bh=5srazcCwskpX5gAdXOFQHyj95JcNVsf++4+t7CBF8dE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ktPUxZ+pNLNYtJWftBCIT/7qWceCLUGZXrkYZBVDafvbQIN9XyzHEFhFQmyA8Hr0CFy7msFHra1PU/IiwQgo2M8Cf6tv0GsYNZVDdh1hzNEESRug2J51jMdtoOlnZKxOFSbVSmy5U+K/KDDXZjhd494suq7QXycAtemKF/W5hZU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=cbHi7OtD; arc=pass smtp.client-ip=165.173.180.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="oDEajCjk"
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 1DF043FCD8
-	for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 14:24:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1790000698;
-	bh=QLEno9IoSGABXfyc+gs3/INLUq4rl6TSX3NFv/q902U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type;
-	b=oDEajCjkGYY4fCbMSvuLTjRrdp7FRGryYCfUwAluu3fpjdsKtmfRlo5zhVFmG6gsV
-	 0zCSpYt9AwrDnW6TRTYaQmo7LLz/J92dYSPkY6+HkLoAsf4GoNGzuZz8cBkt8tNcJf
-	 R692RG8iBMFgR+/4lpY9gUKdwnzptrGw3+p4yeGYDnLIbzzuNX1YCZJdU6h6wFlFvg
-	 va9wapeJY/PJuv+EgZ/V4SzRBqLzRTpmyaFDtPUBpD/V5OOqkQLHrNtpmZJtn3k/xU
-	 5ypPlyWx+BZ06dl1xijiNd3BFtfQBefOm+o26ZXTtYi0yeZlDnFuZMJ24QLthhFJ2n
-	 f2CJ0o9hI/YZn1P4UR1Lwe5R3tgNv4wnNg4ibDjuUG5yhZoYiBxRhuJB9/cztnDyFS
-	 39iDfcr17ui1qUQGfuQWAPTEXH2fenlDnkW331fU0hlgOMIOTmTC1ayJsMUyzpv/EI
-	 SaUkaGdkUJ4ZVWi933ARRop9562/Z3uXRJlcBN7TmcyInhj2zHaPk6iKkibLqfavop
-	 w0P1p7zaB2dg4YWsGBoTYFbVUW9HMCAtXFHRo7O+77hNBeXlYOE/ac4dTqL2fnojYD
-	 NGZyVHqfg+EsDmPBwHlorz3HsKfz9U9SsKAhHAKISQeFZzYLVWrMfEFAucT/XoZJmG
-	 rSXyWbChOjqFYnauwr9O1vf4=
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49b0e6638e3so25719505e9.2
-        for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 07:24:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790000697; x=1790605497;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=QLEno9IoSGABXfyc+gs3/INLUq4rl6TSX3NFv/q902U=;
-        b=hDRlaX+3DLLfCag4+/uocoA0tgVeEoJ6USuMdEt9euIoyfSQVD90+zj9sBQNYXszVY
-         d7U6ZCva9L9JJSJMlCIr4cmVM8IbghVXcJtMreGX1kKyjoC8Q1u41vqlvONvb+Fvzo2X
-         I+7Th8n8lsEloBWkzr77nNAy6H1kF6wJdZm2p5TmCt1bws5MLZRtnL19wgwB9MDUAaPV
-         3qJSkw1AF0ijIzSZLRjWMzRn4zjNqRtEhLXGR7re/ms/Sp96VYse9ftUl6OkebXVThtk
-         7OwyZrYXRcc+MHtcX9+fhVyvCMRpvx+Zu3wriOAhtgDV6JBZVxBa53Npnk36ZTSwK3HB
-         hU5A==
-X-Forwarded-Encrypted: i=1; AKwUvBzD+wq71wdiXVyi0LXvKWMDjcp0zWx87i1avyooG4IQ0xqnYbVgoCzvNv16AtJbQsIT7emsuiYpTw==@lists.linux.dev
-X-Gm-Message-State: AFuF++lcVE7nkLkE1MnZPckeDkJ1/0OqqOhF5SzGbKF4Or9ywyqQpJxc
-	y4jEOXKVlEs0JM84jD+cEFOOHqAz/08WRZCRM4t5xQFEeA41dsBgGWTjWYgM/ERk7T9mhEHrEIU
-	GRD1FcItdiWOxtJ4vTy/20RQ8eYS1exXhq2EXuyv4rfr+ZCVPXe3728AA0vrtnRhxuOXnIMW6py
-	NH
-X-Gm-Gg: AYBFou03Q+FeDihli6IjAAH+Ox8L//0zhOmWTt7hbSa51YcwQwhFyQJhwzGWbJlQtKl
-	SqjbCn1uf3qdBAPyn/fCQrUSRRK9D/uT8fi/8ULlTBVAkq+PrjQStgPahUfn2r4UFfWQLohJSF7
-	nUz9z0Gg6OVyTIT8PAXzU94AYF2OwHtXP8cv6bupxU36FSvLKYevqQKKXSleFB4NTlblqrZe4/a
-	TOvXaZF1Gg54BoHKnEKlchmAobt6kfD/kfnUt2AeDVlQPqUUogLR++2BBwkLDjEKcjXTB9f4eMD
-	5OttdY/TRQrA1wcaP/fFzImrLq7vEQQwR+fMQtFIGNzGak+RtpmZuZyMI4p77DPbm0Dgix2bz+5
-	jOhb9lLrhcIF18H3H9lq1shjKhoirel7DZ3La1Q8T8ujYXncUD/kaBThY9PYdXZAah5GxZk9y/3
-	v5pW7Qup9sGY5AXEIrrLD3X/M=
-X-Received: by 2002:a05:600c:4f09:b0:49e:8418:3858 with SMTP id 5b1f17b1804b1-49fc56b84c3mr149186465e9.9.1790000697387;
-        Mon, 21 Sep 2026 07:24:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f09:b0:49e:8418:3858 with SMTP id 5b1f17b1804b1-49fc56b84c3mr149185895e9.9.1790000696811;
-        Mon, 21 Sep 2026 07:24:56 -0700 (PDT)
-Received: from ?IPV6:2a02:908:1242:30e0:aec3:c221:8373:654c? ([2a02:908:1242:30e0:aec3:c221:8373:654c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fc585920fsm622434405e9.4.2026.09.21.07.24.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Sep 2026 07:24:56 -0700 (PDT)
-Message-ID: <9d058591-466e-4c06-a820-b8ecc7d319a6@canonical.com>
-Date: Mon, 21 Sep 2026 16:24:53 +0200
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="cbHi7OtD"
+ARC-Seal: i=1; a=rsa-sha256; t=1790002512; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=StCHcE57Or1z638D1lkpKYxLc1iIjO9aGmncItBQu7WAFS765RXYcmngmnC8JXmZDewvFkZbyeFm11gsS46W+i9vmWOKXuvJMI8ONadlCXKww7JnBVCoYSoZhqaFbVuDQMC4rDHOn0t0fuu+P0/r0B5S3vzkfX9ChkHNdn4Fan8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1790002512; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=6dUCksfe35U2AM8kOrwiaY5uc1/51X6bL0JK+OitqVQ=; 
+	b=E7Po0MvZihydJKyv7EdPZ6F2nsYY1NLAfEQfj6kBBs4tDyi0vjeafyB6PbFgEY3AnVKy2gI0e0KfyDCcCwUSG4x+fZVeBWMmUOfhU1dCitiAqWb2y3Fl9FbjU6Z/64dn+YP7E4g78tI8CxEEnM2C37wSuQGj5RyZ0Q4BW7sDlaI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1790002512;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=6dUCksfe35U2AM8kOrwiaY5uc1/51X6bL0JK+OitqVQ=;
+	b=cbHi7OtDDIzsrMGrbYUlk9o+JCdWXspLP5bNUscea24TD9AlU/K/PepnYFDP7os/
+	9GNyR4Nv5mKbVJrUtEC0qkor6fHLsSx+F3nk8k6hL7ie+Y9QkhymtjbpVxEwJOIiq1c
+	lrVLr9TKr/FvUEk2rh1IPyrMfrSbCYDP/+B6Yc5E=
+Received: by smtp.zohomail.com with SMTPS id 1790002511667864.0374775995165;
+	Mon, 21 Sep 2026 07:55:11 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v3 0/2] tools: mkimage: add SpacemiT K3 boot image support
+Date: Mon, 21 Sep 2026 22:54:37 +0800
+Message-Id: <20260921-spacemit-aihd-v3-0-f660fc85d2a5@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
-To: Guodong Xu <guodong.xu@oss.qualcomm.com>
-Cc: linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org, Paul Walmsley <paul.walmsley@sifive.com>,
- Conor Dooley <conor@kernel.org>, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, sophgo@lists.linux.dev,
- linux-kselftest@vger.kernel.org, Andy Chiu <tchiu@tenstorrent.com>,
- Florian Weimer <fweimer@redhat.com>,
- Peter Bergner <bergner@oss.tenstorrent.com>,
- Zihong Yao <zihong.plct@isrc.iscas.ac.cn>, Mark Harris <mark.hsj@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Conor Dooley <conor.dooley@microchip.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>,
- Randy Dunlap <rdunlap@infradead.org>
-References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
- <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/13N0Q6CIBTG8VdxXEcDNIOueo/WBeJRTit1QKzmf
+ PfA1tq8/G/f+Z2ZeHAInpyKmTiI6HEcUpS7ghirhx4otqmJYKJmUjDqJ23ggYFqtC1lB1PVWoO
+ UNZB0Mzno8LV6l+u3/bO5gQkZyQuLPozuvT6MPO9+ttjYkVNGm64yFVeqlIqfJ+wfo9P3fQBjS
+ faj+AuKqa0gknCUDJQ0nejAbIVlWT4544EBAgEAAA==
+X-Change-ID: 20260820-spacemit-aihd-05c46aae886e
+To: u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Glass <sjg@chromium.org>, 
+ Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Kory Maincent <kory.maincent@bootlin.com>, E Shattow <e@freeshell.de>, 
+ Yixun Lan <dlan@kernel.org>, Yao Zi <me@ziyao.cc>, spacemit@lists.linux.dev
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3053;
+ i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
+ bh=5srazcCwskpX5gAdXOFQHyj95JcNVsf++4+t7CBF8dE=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLI2utpFiiavYq+cxFV6QeCmj6fO0XrvWEUu70Wa55XrM
+ j9u2lnYUcrCIMbFICumyMLlL/7PWofn2xGB1vswc1iZQIYwcHEKwES2tzAynJ0/5cmH/O/Oj9aK
+ bg25XeHeY/XeI/3Xg/r9lbqbYxn+OjIy/KwwPSq8/4BSyYt5C+X6t344aO31tkznxOkXrzb+Nax
+ 7xgcA
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
+ fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
+X-ZohoMailClient: External
 
-On 9/20/26 09:18, Guodong Xu wrote:
-> From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> 
-> Add B to hwcap and ensure when B is present that Zba, Zbb, and Zbs
-> are all set. Also expose B via hwprobe (RISCV_HWPROBE_EXT_B in
-> RISCV_HWPROBE_KEY_IMA_EXT_1) so that userspace can probe B directly,
-> mirroring the F/D/C/V pattern where each is reported via both hwcap
-> and hwprobe.
-> 
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> [Add B to hwprobe]
-> Signed-off-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
-> ---
-> v8: No change.
-> v7: No change.
-> v6: Rebase onto riscv/for-next: define RISCV_HWPROBE_EXT_B in the
->      _BITULL() style of commit 8da45c93dfa9.
-> v5: Collected Reviewed-by from Conor Dooley.
-> v4: No change.
-> v3:
-> - Indent the added hwprobe.rst entry to match the normalized style.
-> - Rebased onto v7.1-rc6: index isa2hwcap[] via RISCV_ISA_EXT_B to match the
->    macro-ization in commit 41337097f2823.
-> v2:
-> - Rebased to v7.1-rc2
-> - Add B to hwprobe (RISCV_HWPROBE_EXT_B at IMA_EXT_1 bit 6) and
->    document it in hwprobe.rst, so userspace can probe B directly.
-> ---
->   Documentation/arch/riscv/hwprobe.rst  | 4 ++++
->   arch/riscv/include/asm/hwcap.h        | 1 +
->   arch/riscv/include/uapi/asm/hwcap.h   | 1 +
->   arch/riscv/include/uapi/asm/hwprobe.h | 1 +
->   arch/riscv/kernel/cpufeature.c        | 8 ++++++++
->   arch/riscv/kernel/sys_hwprobe.c       | 1 +
->   6 files changed, 16 insertions(+)
-> 
-> diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
-> index bb1e0cbab36f0..69a3fc0a29b71 100644
-> --- a/Documentation/arch/riscv/hwprobe.rst
-> +++ b/Documentation/arch/riscv/hwprobe.rst
-> @@ -423,3 +423,7 @@ * :c:macro:`RISCV_HWPROBE_KEY_IMA_EXT_1`: A bitmask containing additional
->     * :c:macro:`RISCV_HWPROBE_EXT_ZA64RS`: The Za64rs extension is supported,
->       as defined in the RISC-V Profiles specification starting from commit
->       b1d80660 ("Updated to ratified state.")
-> +
-> +  * :c:macro:`RISCV_HWPROBE_EXT_B`: The B extension is supported, as defined
-> +    in version 1.0 of the Bit-Manipulation ISA extensions, and implies the
-> +    presence of the Zba, Zbb, and Zbs sub-extensions.
-> diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
-> index f8db798b2654b..6a693210b2519 100644
-> --- a/arch/riscv/include/asm/hwcap.h
-> +++ b/arch/riscv/include/asm/hwcap.h
-> @@ -11,6 +11,7 @@
->   #include <uapi/asm/hwcap.h>
->   
->   #define RISCV_ISA_EXT_A		('a' - 'a')
-> +#define RISCV_ISA_EXT_B		('b' - 'a')
->   #define RISCV_ISA_EXT_C		('c' - 'a')
->   #define RISCV_ISA_EXT_D		('d' - 'a')
->   #define RISCV_ISA_EXT_F		('f' - 'a')
-> diff --git a/arch/riscv/include/uapi/asm/hwcap.h b/arch/riscv/include/uapi/asm/hwcap.h
-> index c52bb7bbbabe9..96b7cf854e090 100644
-> --- a/arch/riscv/include/uapi/asm/hwcap.h
-> +++ b/arch/riscv/include/uapi/asm/hwcap.h
-> @@ -21,6 +21,7 @@
->   #define COMPAT_HWCAP_ISA_F	(1 << ('F' - 'A'))
->   #define COMPAT_HWCAP_ISA_D	(1 << ('D' - 'A'))
->   #define COMPAT_HWCAP_ISA_C	(1 << ('C' - 'A'))
-> +#define COMPAT_HWCAP_ISA_B	(1 << ('B' - 'A'))
->   #define COMPAT_HWCAP_ISA_V	(1 << ('V' - 'A'))
->   
->   #endif /* _UAPI_ASM_RISCV_HWCAP_H */
-> diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
-> index e6a394fbe7fce..9323feb7c3c81 100644
-> --- a/arch/riscv/include/uapi/asm/hwprobe.h
-> +++ b/arch/riscv/include/uapi/asm/hwprobe.h
-> @@ -122,6 +122,7 @@ struct riscv_hwprobe {
->   #define		RISCV_HWPROBE_EXT_ZICCIF	_BITULL(3)
->   #define		RISCV_HWPROBE_EXT_ZICCRSE	_BITULL(4)
->   #define		RISCV_HWPROBE_EXT_ZA64RS	_BITULL(5)
-> +#define		RISCV_HWPROBE_EXT_B		_BITULL(6)
->   
->   /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
->   
-> diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
-> index 61d21f7148305..beb766420b5bc 100644
-> --- a/arch/riscv/kernel/cpufeature.c
-> +++ b/arch/riscv/kernel/cpufeature.c
-> @@ -484,6 +484,12 @@ static const unsigned int riscv_c_exts[] = {
->   	RISCV_ISA_EXT_ZCD,
->   };
->   
-> +static const unsigned int riscv_b_exts[] = {
-> +	RISCV_ISA_EXT_ZBA,
-> +	RISCV_ISA_EXT_ZBB,
-> +	RISCV_ISA_EXT_ZBS,
-> +};
-> +
->   /*
->    * The canonical order of ISA extension names in the ISA string is defined in
->    * Chapter 27 of the RISC-V Instruction Set Manual Volume I Unprivileged ISA
-> @@ -532,6 +538,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
->   	__RISCV_ISA_EXT_DATA_VALIDATE(d, RISCV_ISA_EXT_D, riscv_ext_d_validate),
->   	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_Q),
->   	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_C, riscv_c_exts),
-> +	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
+The SpacemiT BootROM loads a first-stage bootloader from storage or over
+USB in MaskROM mode. Vendor firmware packages this bootloader as FSBL.bin.
 
-Hello Guodong,
+This series documents the SpacemiT boot image format and adds the
+"smtimage" mkimage type for the CRC32-protected K3 variant used in
+non-secure boot mode. It provides the FSBL packaging needed for future
+K3 SPL support. Select K3 with "-n k3" when creating an image.
 
-The RISC-V Unpriviledged ISA specification has this description of 
-extension B:
+K1 and K3 secure boot use RSA authentication and are not supported yet.
 
-"The B standard extension comprises instructions provided by the Zba, 
-Zbb, and Zbs extensions."
+How to test
+-----------
 
-__RISCV_ISA_EXT_SUPERSET would imply that something else but 
-riscv_b_exts is in B. But such an extra seems not to exist.
+Rebuild mkimage, wrap a small UART test payload, and load it through K3
+MaskROM fastboot. The payload is linked at 0xc0801000 because the BootROM
+places the complete image at 0xc0800000 and enters the payload after the
+4 KiB prefix. UART0 should print "Hello SpacemiT K3!" and then loop
+indefinitely.
 
-So shouldn't __RISCV_ISA_EXT_BUNDLE be used here? Some code further 
-change may be needed to set extension B if riscv_b_exts is fulfilled.
+  $ make tools-only_defconfig
+  $ make tools-only
 
-Best regads
+  $ cat > k3-uart.S << 'EOF'
+  	.equ	UART0_THR, 0xd4017000
+	.equ	UART0_LSR, 0xd4017014
 
-Heinrich
+	.section	.text
+	.global	_start
+_start:
+	la	s0, str
+1:
+	lbu	a0, (s0)
+	beqz	a0, exit
+	call	uart_send
+	addi	s0, s0, 1
+	j	1b
 
->   	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_V, riscv_v_exts,
->   					  riscv_ext_vector_float_validate),
->   	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_H),
-> @@ -1161,6 +1168,7 @@ void __init riscv_fill_hwcap(void)
->   	isa2hwcap[RISCV_ISA_EXT_F] = COMPAT_HWCAP_ISA_F;
->   	isa2hwcap[RISCV_ISA_EXT_D] = COMPAT_HWCAP_ISA_D;
->   	isa2hwcap[RISCV_ISA_EXT_C] = COMPAT_HWCAP_ISA_C;
-> +	isa2hwcap[RISCV_ISA_EXT_B] = COMPAT_HWCAP_ISA_B;
->   	isa2hwcap[RISCV_ISA_EXT_V] = COMPAT_HWCAP_ISA_V;
->   
->   	if (!acpi_disabled) {
-> diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
-> index 7818e1d32622d..c03c6e08dd4d0 100644
-> --- a/arch/riscv/kernel/sys_hwprobe.c
-> +++ b/arch/riscv/kernel/sys_hwprobe.c
-> @@ -207,6 +207,7 @@ static void hwprobe_isa_ext1(struct riscv_hwprobe *pair,
->   		EXT_KEY(isainfo->isa, ZICCIF, pair->value, missing);
->   		EXT_KEY(isainfo->isa, ZICCRSE, pair->value, missing);
->   		EXT_KEY(isainfo->isa, ZA64RS, pair->value, missing);
-> +		EXT_KEY(isainfo->isa, B, pair->value, missing);
->   	}
->   
->   	/* Now turn off reporting features if any CPU is missing it. */
-> 
+exit:
+	j	exit
+
+uart_send:
+	li	t0, UART0_LSR
+	lw	t1, (t0)
+	andi	t1, t1, 0x20
+	beqz	t1, uart_send
+	li	t0, UART0_THR
+	sw	a0, (t0)
+	ret
+
+	.section	.rodata
+str:
+	.asciz	"Hello SpacemiT K3!\n"
+EOF
+
+  $ riscv64-linux-gnu-gcc -nostdlib -fno-builtin -fno-pie -no-pie -static \
+    -march=rv64gc -mabi=lp64 -g -Wall -Wl,--build-id=none \
+    -Ttext=0xc0801000 -o k3-uart.elf k3-uart.S
+  $ riscv64-linux-gnu-objcopy -O binary k3-uart.elf k3-uart.bin
+  $ ./tools/mkimage -T smtimage -n k3 -d k3-uart.bin k3-uart-smt.bin
+
+Hold the FDL button, power on the board to enter MaskROM, then run
+fastboot on host:
+
+  $ fastboot stage k3-uart-smt.bin
+  $ fastboot continue
+
+---
+Changes in v3:
+- Align the uimage_type table entry with surrounding columns
+- Explicitly include the needed headers
+- Drop SMT_PAYLOAD_ALIGN macro
+- Simplify the NULL check in smtimage_get_variant()
+- Fix the title underline length in smtimage.rst
+- Link to v2: https://patch.msgid.link/20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech
+
+Changes in v2:
+- Use "smtimage" for the image type
+- Update the documentation and command examples to match
+- Link to v1: https://patch.msgid.link/20260822-spacemit-aihd-v1-0-bf4c41993891@pigmoral.tech
+
+---
+Junhui Liu (2):
+      tools: mkimage: add SpacemiT K3 boot image support
+      doc: board: spacemit: document the SpacemiT boot image format
+
+ boot/image.c                    |   1 +
+ doc/board/spacemit/index.rst    |   2 +-
+ doc/board/spacemit/smtimage.rst | 143 +++++++++++++++++++++++++++
+ include/image.h                 |   1 +
+ tools/Makefile                  |   1 +
+ tools/smtimage.c                | 208 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 355 insertions(+), 1 deletion(-)
+---
+base-commit: 211de43d0f954a00a490220c1aac9db298287c40
+change-id: 20260820-spacemit-aihd-05c46aae886e
+
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
 
