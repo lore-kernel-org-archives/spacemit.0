@@ -1,102 +1,168 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00DE48FF95
-	for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 11:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8201449AA4B;
+	Mon, 21 Sep 2026 12:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789989466; cv=none; b=t1iIhtRPa9EiZB7AWzdm+iJi3f/28jUve4BJsezKBhadbTqUQznMQ+LQ8TBjseYtC3RCaQzAygFPVOT/sgBdzAmr30E3jSLEAJgQN8WsQdQVaaX3oiAgDQ8C+Cp5EsveuiU+OeJnyn33twdzQTbebDX5TOZ9wr7UcgcXwx3cazM=
+	t=1789994227; cv=none; b=VKtSMR9Fse6cn0kJK+wWIyVwDGHF/jyiuC3P6MAU+B1XG1LngDwwxR5kWBraXKwv+xeXvVAmZSQY65aeX9IpAFAPFZuwOEB86zYc0UNUHT9vW4zo81WC7e1PvX8RKK6eBRPu9i1LWdIC+qWu9+A0MA5QCYR/YHeOxMy9521Gy2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789989466; c=relaxed/simple;
-	bh=EZ21ncQrjQNm7o8Cw+zlBh2DjaJdXZNMq93zx34x0jU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ESkHqFJbSyNTb2SQfHEb5rCYPykjGb+e49XYamJrCV1TdEh2KcqGmRRX8TFw22SgeEM9MCUE+mglr2FUIQtC49mTLKJP1iyczHPBfnA/+zkh/OkwASPc7izOcP3fbOfpGgqXyMXRkyku0O4AG11aC4S6tbNH9NNfTM7j5z5dGss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.107] (unknown [123.116.51.226])
-	by APP-03 (Coremail) with SMTP id rQCowACnrTtGErFq+tZHCA--.11992S2;
-	Mon, 21 Sep 2026 19:17:27 +0800 (CST)
-Message-ID: <7d96c999-20db-427e-be57-3a79b0ec5119@iscas.ac.cn>
-Date: Mon, 21 Sep 2026 19:17:26 +0800
+	s=arc-20240116; t=1789994227; c=relaxed/simple;
+	bh=lQ7+ODtYODGQ2WtkpanJMBFN8HKPdBl6D6z2gi762NQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sw9QqsxCHWrmP8mJ8i7YXhbC0nVPVt3JSycOkfedmu/Ag9sCOzfoHF14aWjQR6LLgjABXy9HkCBE8pegf+Zhx5WAW+oJ1F2YWJdpqYhOjb2hkezlA0ftpxx6GKFm/nAbRMUj1GFSHwK1+/Ni6hK82sNRQLofwiPR9MRyW6Rhcgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb3PSJDo; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb3PSJDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC6B1F0089C;
+	Mon, 21 Sep 2026 12:36:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789994224;
+	bh=mVyAaJeaChtzQ6OF0Z5CWn+l4xCID2ZJZHbDAUH1Op4=;
+	h=From:Subject:Date:To:Cc;
+	b=Cb3PSJDoFupnIoWd1GQH18R2JGcVBY1qlSvdhg0SUlsd91j6uKpsDGa9RYJSNTof+
+	 Rr4q0bQyAdKu5gB4++6Fnqdj6479DwoYyc00MFD96zfCWVFbrR9qYQ4TG1NMEJIEtn
+	 THOlLph1EH+UVECUYaqAerPkQs/bG0s7cYvKH5vDZ9mt1/oNJQkHQB/26gVuHVxP7g
+	 2y0oDaENCPQtXfwLKLuAFsYY0AYGJYf51lPnJCFWb1Gyw3WRTEp3nDhgmomE4Jf6Z4
+	 PlvElUPTAa4EQLNSbzf6IwPbFV5f6v4bwrNlKBSTxfrVyI3jsl8ijAP3zTlrc1gaFn
+	 dtebure/CcxeA==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v6 0/2] Add UFS Host driver support for SpacemiT K3 SoC
+Date: Mon, 21 Sep 2026 12:36:19 +0000
+Message-Id: <20260921-08-k3-ufs-support-v6-0-3479768a2299@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net: spacemit: clear TX descriptor on fragment mapping
- failure
-To: Muhammad Bilal <meatuni001@gmail.com>, andrew+netdev@lunn.ch
-Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, dlan@kernel.org, vadim.fedorenko@linux.dev,
- maxime.chevallier@bootlin.com, troy.mitchell@linux.spacemit.com,
- netdev@vger.kernel.org, linux-riscv@infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20260919191937.271202-1-meatuni001@gmail.com>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <20260919191937.271202-1-meatuni001@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowACnrTtGErFq+tZHCA--.11992S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Cry7ur18Gw4fWrW7urWfKrg_yoW8AFWfpF
-	ZYvFsIkr1DJr43Kw4xCF1xGry0vayxC34UZ3yYvrZY9Fs8AF4SkFW2y3W5JryUAr1kAw1F
-	yr4DZa48GFyDA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07betCcUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23QTW7DIBAF4KtErEs1DL/pqveougADCU1lW2Bbr
+ SLfvThZJJVZPmneN6O5khJyCoW8Ha4khyWVNPQ1qJcD6c62PwWafM0EARUokBQMvXA6x0LLPI5
+ DnmhnHAcTBJMBSe2NOcT0czM/Pu+5zO4rdNMGbRPnVKYh/96WLmybu/sasOEvjAJlVgnLrWNo4
+ vsl5D58vw75RLYFCz4R2DpxqS4VEriyaFEwsyP4gzCgWgSvBHAdHUe0nXc7QjyIY+03CFGJWrb
+ o/FF7vifkE8GaV8jtF1F6zSID1P4fsa7rH92GlxTRAQAA
+X-Change-ID: 20260605-08-k3-ufs-support-c8b308e415e2
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@sandisk.com>, Bart Van Assche <bvanassche@acm.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, "Martin K. Petersen" <mkp@kernel.org>
+Cc: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jennifer Berringer <jberring@redhat.com>, linux-scsi@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Yixun Lan <dlan@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3817; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=lQ7+ODtYODGQ2WtkpanJMBFN8HKPdBl6D6z2gi762NQ=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqsSTQ7e8a31139KrE6Adk1R3CN0MdH8LwlkJ+K
+ Jedq922pfWJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarEk0BsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0RjA/+MyuPt3j9QGkFqyVuGBTCm563VmObHNLZ+Gp4wQqw7qhirpiTQtdUr
+ sOk74KSvNGTjl8lIWPxj9o1k9+MczqPH3HV1+UFzo5QIgzvRT+ww44xZj/Q1uUR+0/QREAfe+WQ
+ CrK6/AkCnRFXoj+sb30JPxu9v4Nvgox3g1DkEUU0pkVIoWUzp8wy8b7AQo3x1wC0KE+HCHDAeJS
+ twFcHOu+TVaRM2aWIGpyzSEmApg9CQHGYWgk2jyS+teXcPTSo1/GFDsrYsw3wbaQ/qeex4FzusJ
+ nEFG8bhMClsYPsViE8IwIa9yB+Z5odVQkQMyKDQG6XKsS2X7RdnQY0v/aUqUYgrC2bh2xwwdRnf
+ G22at6LJM4FRpIYfBkBsaRtRIUKIF6W4f6eMrpS3P9aEOg8ymV3s9grN+W4pH5KAPn+B6L5o02M
+ qZ4A2IhFtu7pQ2Y/s7oKyZi3d0frB6YGzzXtsPR0KMBWxi1u9NMapRl+RbYe6zftRYJeXXS0N9J
+ J9U5sKCLY3TVFBY41q33D3M+OghPczc43H0u/AoUUxbLA/K71ltoBeo0NWZdo9LECpU3ObL9SPg
+ 7KDhQQsJ3As4yKvfmhfOWr1ABQzix4kNcFThMVNx+n/61d/lm2mQMuItv0WGc/NrEYn97SkAhLJ
+ 37lcO4WDZUJVkFZec18GJJJf1LLNG0=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-On 9/20/26 03:19, Muhammad Bilal wrote:
+This series try to add UFS support for SpacemiT K3 SoC, the controller
+components consists of System Bus Interface Unit, UFS Host Controller
+Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+Management Entity (DME), Transport Layer, Network Layer, Data Link
+Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
 
-> emac_tx_mem_map() writes TX_DESC_0_OWN into the ring descriptor for
-> every slot beyond old_head as soon as that slot's memset()'d local
-> copy is committed with "*tx_desc_addr = tx_desc", i.e. before the
-> buffers for that slot have necessarily all been mapped successfully.
-> If emac_tx_map_frag() then fails on a later fragment, the err_free_skb
-> path calls emac_free_tx_buf() to unmap and drop the skb, but leaves
-> the already-written descriptor memory untouched, and tx_ring->head is
-> never advanced past old_head (the "tx_ring->head = head" store is
-> skipped by the goto).
->
-> So a slot between old_head and the rolled-back head can be left with
-> TX_DESC_0_OWN set and buffer_addr_{1,2} pointing at DMA mappings that
-> emac_free_tx_buf() just tore down, while software considers that slot
-> free again. The next successful emac_tx_mem_map() call only rebuilds
-> old_head itself; if the DMA engine auto-advances into the following
-> descriptor once it finishes old_head's packet, it will fetch that
-> stale, already-unmapped address.
->
-> emac_tx_clean_desc() already treats emac_free_tx_buf() and clearing
-> the descriptor as a pair when reclaiming completed descriptors; do
-> the same in the mapping failure path.
->
-> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-> ---
->  drivers/net/ethernet/spacemit/k1_emac.c | 3 +++
->  1 file changed, 3 insertions(+)
+The DTS patch has been dropped in this series [2], and will send
+in separate series once this patch accepted. For people who want to
+test UFS driver, please grab the DT patch from version v5 [3].
 
-Reviewed-by: Vivian Wang <wangruikang@iscas.ac.cn>
+One known issue is that the device will occasionally raise BKOPS interrupt
+when doing some high load test, log from dmesg shows
 
-Much appreciated. I indeed did not consider this.
+[  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
 
-Also, a minor nit, but it should probably be:
+Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
+Link: https://lore.kernel.org/all/20260918-belligerent-succinct-kraken-7fa592@quoll/ [2]
+Link: https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-3-1f5d71f1027d@kernel.org/ [3]
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v6:
+- drop unused macro and dev_req_params
+- use global PX_xx macros
+- fix axi clock name
+- drop dts patch
+- collect tags
+- Link to v5: https://patch.msgid.link/20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org
 
-Fixes: 86292155bea5 ("net: spacemit: Fix error handling in emac_tx_mem_map()")
+Changes in v5:
+- adjust clock names
+- add runtime power support
+- collect tags
+- Link to v4: https://patch.msgid.link/20260908-08-k3-ufs-support-v4-0-22aa2bd97d3b@kernel.org
 
-Thanks,
-Vivian "dramforeve" Wang
+Changes in v4:
+- fix clock and reset settings
+- drop function which retrieve value of tx_lanes
+- propagate return error of ufs_spacemit_dme_set()
+- check return value ufs_spacemit_check_hibern8()
+- drop call to ufshcd_vops_phy_initialization()
+- handle compiling warning if CONFIG_OF not enabled
+ add __maybe_unused to ufs_spacemit_of_match
+- Link to v3: https://patch.msgid.link/20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org
+
+Changes in v3:
+- collect tags
+- fix dt-binding warning reported-by sashiko
+- fix low freq in opp-2 table
+- fix err checking in check_hibern8()
+- propagate err code in link_startup_notify()
+- update documents for event_notify()
+- ufs clock driver is merged into v7.3-rc1, update cover letter
+- Link to v2: https://patch.msgid.link/20260725-08-k3-ufs-support-v2-0-45036a2a2418@kernel.org
+
+Changes in v2:
+- fix missing interrupts property
+- move ufs node to k3-com260.dtsi
+- convert freq-table-hz to operating-points-v2
+- rework reset_control, fix header and drop global variable
+- drop dump_host_regs() debug interface
+- converge and refactor dme_set() operations
+- massive reduce of busy delay() loops
+- drop vendor specific hce_enable_notify(), fallback to default
+- drop unused member from struct ufs_spacemit_host
+- add COMPILE_TEST support to Kconfig
+- comment style fix
+- Link to v1: https://patch.msgid.link/20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org
+
+---
+Yixun Lan (2):
+      scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+      scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+
+ .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  56 ++
+ drivers/ufs/host/Kconfig                           |  12 +
+ drivers/ufs/host/Makefile                          |   1 +
+ drivers/ufs/host/ufs-spacemit.c                    | 649 +++++++++++++++++++++
+ drivers/ufs/host/ufs-spacemit.h                    |  77 +++
+ 5 files changed, 795 insertions(+)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260605-08-k3-ufs-support-c8b308e415e2
+
+Best regards,
+--  
+Yixun Lan <dlan@kernel.org>
 
