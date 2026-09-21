@@ -1,83 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A544B44A725;
-	Mon, 21 Sep 2026 08:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00DE48FF95
+	for <spacemit@lists.linux.dev>; Mon, 21 Sep 2026 11:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789977836; cv=none; b=LVhf0bWFefP1Mi71fBRr2LdlMznZkFUq5KpCgM3IVJWns1gQpJ+wEdVL4m5+ULaJ6VYXZ/sHm88oubvWTORrisfp1ErkzG1i7bQtU0xd3Ru2nx2EcbLHeLsw21sDG31OcwShK46t3HhkqItwxEtyH6rGe1c4ElkZPv4EI6/3hn4=
+	t=1789989466; cv=none; b=t1iIhtRPa9EiZB7AWzdm+iJi3f/28jUve4BJsezKBhadbTqUQznMQ+LQ8TBjseYtC3RCaQzAygFPVOT/sgBdzAmr30E3jSLEAJgQN8WsQdQVaaX3oiAgDQ8C+Cp5EsveuiU+OeJnyn33twdzQTbebDX5TOZ9wr7UcgcXwx3cazM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789977836; c=relaxed/simple;
-	bh=EW74lXzDEC4ksALgbe1BO7LXRzfjlQY1fOBlGDazMQw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G5TxROVponagOTIU3mU1oIS61Dg37rd5VmQLVutDeKHBKhEdOGJWJFpUPKfSrZ1wy+Ta+jhdz9D8EwRehhzgmRK2ZMCgwbA9A99U8lR6yvIVj0TEc+3JmcJGFTS6H0HLEIXS6uJBcvadh8HCQtSqE6AEm9x6R8HLMFPZfzh8zvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iyvcyeVt; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iyvcyeVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828281F000FF;
-	Mon, 21 Sep 2026 08:03:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789977835;
-	bh=KsQ90edjAsrAFhgm0/rE7PgtI+eNbFXo/5sMFQhaex8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iyvcyeVtgEssGNPqi5AqV9YcLohVP5PW4hfA+04vJnkWBxNwXDtjUJuJzu8N5gZtG
-	 onJzbXPynz2tvKP4yxiUjnAax/oTMIIEYHAYckQc94cCQ/Pj91ZbDnQR86AmYKBwcy
-	 m7jrqwIbDIo6FuCVYmsgJJPpPSiTibcDPAy/Io7lL3PovVQ832ShqgYRG5/4UNc1lK
-	 NWXYRHjSsQZLnZoQBeI7+LncGpxLQx7P4RaOZORt68k6IDd9QSlIgP99CL97QF1+jr
-	 Z2Pbl7GS4U5NdJ9ux9VO8pz0kpGxcA7tPE25y+v0o8Aso4rXjMDGW7FO1dCozHbNya
-	 uhMthxWfECFzQ==
-Date: Mon, 21 Sep 2026 10:03:46 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Encrow Thorne <encrow.thorne@linux.spacemit.com>
-Cc: Bruno Banelli <bbanelli@gmail.com>, linux-pci@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Alex Elder <elder@riscstar.com>, 
-	Yixun Lan <dlan@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof Wilczynski <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Danilo Krummrich <dakr@kernel.org>, 
-	Uwe Kleine-Koenig <u.kleine-koenig@baylibre.com>, Javier Martinez Canillas <javierm@redhat.com>, 
-	linux-kernel@vger.kernel.org, linux-riscv <linux-riscv-bounces@lists.infradead.org>
-Subject: Re: [BUG] PCI: spacemit-k1: port C probe hard-hangs a CPU with one
- endpoint on Milk-V Jupiter
-Message-ID: <xuafb5qshj6rowe3v6sxyfvtemy4wg2ttqs7lcwu3txu2mpyzm@fr72njh6zgvi>
-References: <20260825052249.66921-1-bbanelli@gmail.com>
- <DLKRGJBNFVQO.15WZ2SXQLOY0T@linux.spacemit.com>
+	s=arc-20240116; t=1789989466; c=relaxed/simple;
+	bh=EZ21ncQrjQNm7o8Cw+zlBh2DjaJdXZNMq93zx34x0jU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ESkHqFJbSyNTb2SQfHEb5rCYPykjGb+e49XYamJrCV1TdEh2KcqGmRRX8TFw22SgeEM9MCUE+mglr2FUIQtC49mTLKJP1iyczHPBfnA/+zkh/OkwASPc7izOcP3fbOfpGgqXyMXRkyku0O4AG11aC4S6tbNH9NNfTM7j5z5dGss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.107] (unknown [123.116.51.226])
+	by APP-03 (Coremail) with SMTP id rQCowACnrTtGErFq+tZHCA--.11992S2;
+	Mon, 21 Sep 2026 19:17:27 +0800 (CST)
+Message-ID: <7d96c999-20db-427e-be57-3a79b0ec5119@iscas.ac.cn>
+Date: Mon, 21 Sep 2026 19:17:26 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DLKRGJBNFVQO.15WZ2SXQLOY0T@linux.spacemit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] net: spacemit: clear TX descriptor on fragment mapping
+ failure
+To: Muhammad Bilal <meatuni001@gmail.com>, andrew+netdev@lunn.ch
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, dlan@kernel.org, vadim.fedorenko@linux.dev,
+ maxime.chevallier@bootlin.com, troy.mitchell@linux.spacemit.com,
+ netdev@vger.kernel.org, linux-riscv@infradead.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+References: <20260919191937.271202-1-meatuni001@gmail.com>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <20260919191937.271202-1-meatuni001@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:rQCowACnrTtGErFq+tZHCA--.11992S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Cry7ur18Gw4fWrW7urWfKrg_yoW8AFWfpF
+	ZYvFsIkr1DJr43Kw4xCF1xGry0vayxC34UZ3yYvrZY9Fs8AF4SkFW2y3W5JryUAr1kAw1F
+	yr4DZa48GFyDA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07betCcUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Mon, Sep 21, 2026 at 01:55:42PM +0800, Encrow Thorne wrote:
+On 9/20/26 03:19, Muhammad Bilal wrote:
 
-[...]
+> emac_tx_mem_map() writes TX_DESC_0_OWN into the ring descriptor for
+> every slot beyond old_head as soon as that slot's memset()'d local
+> copy is committed with "*tx_desc_addr = tx_desc", i.e. before the
+> buffers for that slot have necessarily all been mapped successfully.
+> If emac_tx_map_frag() then fails on a later fragment, the err_free_skb
+> path calls emac_free_tx_buf() to unmap and drop the skb, but leaves
+> the already-written descriptor memory untouched, and tx_ring->head is
+> never advanced past old_head (the "tx_ring->head = head" store is
+> skipped by the goto).
+>
+> So a slot between old_head and the rolled-back head can be left with
+> TX_DESC_0_OWN set and buffer_addr_{1,2} pointing at DMA mappings that
+> emac_free_tx_buf() just tore down, while software considers that slot
+> free again. The next successful emac_tx_mem_map() call only rebuilds
+> old_head itself; if the DMA engine auto-advances into the following
+> descriptor once it finishes old_head's packet, it will fetch that
+> stale, already-unmapped address.
+>
+> emac_tx_clean_desc() already treats emac_free_tx_buf() and clearing
+> the descriptor as a pair when reclaiming completed descriptors; do
+> the same in the mapping failure path.
+>
+> Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+> Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+> ---
+>  drivers/net/ethernet/spacemit/k1_emac.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-> Hi Bruno,
-> 
-> The issue was caused by a missing hardware configuration in the K1 PCIe
-> initialization.
-> 
-> The PMU PCIE_CONTROL_LOGIC register contains an IGNORE_PERSTN bit (BIT(2)).
-> The hardware manual describes it as follows:
-> 
-> “When set to 1, the PCIe controller and PHY ignore the PERSTN signal from
-> the link partner in both RC and EP modes.”
-> 
-> This bit was not configured during RC initialization. As a result, the
-> controller and PHY could still be affected by the PERSTN input during the
-> early DBI accesses. With the Intel I225-V installed, the first DBI access
-> could remain pending and hang the CPU.
-> 
+Reviewed-by: Vivian Wang <wangruikang@iscas.ac.cn>
 
-What does this 'PERSTN' bit controls? PERST# or something else? PERST# is
-controlled only by the Root Complex btw. Also, why does this missing register
-configuration only affecting Intel I225-V endpoint and not others?
+Much appreciated. I indeed did not consider this.
 
-- Mani
+Also, a minor nit, but it should probably be:
 
--- 
-மணிவண்ணன் சதாசிவம்
+Fixes: 86292155bea5 ("net: spacemit: Fix error handling in emac_tx_mem_map()")
+
+Thanks,
+Vivian "dramforeve" Wang
+
