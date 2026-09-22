@@ -1,164 +1,75 @@
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-2-28.ptr.blmpb.com (va-2-28.ptr.blmpb.com [209.127.231.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4E840928B
-	for <spacemit@lists.linux.dev>; Tue, 22 Sep 2026 09:26:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5325539765
+	for <spacemit@lists.linux.dev>; Tue, 22 Sep 2026 11:02:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790069180; cv=none; b=n93H10y7Zxti4j2YJlhEIjfT3X13J5oXnb5kRZ0gb0DudEjjCNAZ1nHPyWIS8qVTfxc0JLwOsYJHxrnn/Bx9pd2ahFkc2Bo4UadbGF6KKTlOx2OLQhnRTOG795Fecxk3RzBjLsLF2gRLoHJw8k6YVemRsjvjDhW1srNx6q8Y9fs=
+	t=1790074975; cv=none; b=JQ1egjdjbJJtVNsSYTEjjxSsaqsuJbhYeq3JWDzJMjkJMUQlaHigQKMrQqA9Cf0JOa+nFWXV1/uGrRSwE6xmJ/KveN2QkZciE6ful82ikhIo4s6AmvAeZM9jP/895Y8X2z/EPav+EznqPOBr/25YviEbQHlN2MP9GmR9K9YSR7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790069180; c=relaxed/simple;
-	bh=Q9gZjzEG8eqqtIXa1GCIg+oajKTGvuL2w+lld+u2M7w=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=suDXT3j21hnoxA3YOzDzsTyNbsbI/msvOEUCxWELvs+eprqhQ+60Z/neRKOcNA5cklZTKZj2WmENsWqUt2XgDs7yGuIK/nptGVtuJ5+RX4Mtem3djPKO0eHg/ia/RuY1N5uMUgQqx9w/xViHp6iniVr2Xl/Na1hyng52zfSIpgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=yF1dkCxc; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1790074975; c=relaxed/simple;
+	bh=1899KeD85uKRGfXlEpmON98ChfRq+XnW3qXz5M6N/+4=;
+	h=To:Message-Id:Subject:Date:Mime-Version:Cc:From:Content-Type; b=EvRQLlHTZdFvNGGQ+b5b5nJQ2vfz38z/nuNmaU6slKj0vMIJ1OHVU/iTio7wZwji6FRNrtxycO5E0fFKuFHnVDXXQs7FQFbpa5B6pqs4Lzhh8aHw8Xq3YMph0E9kjiz4RT89TLsZOUsfAg+i/lIRzZabvr9pyZH4rVTsPgUp6go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=0NCiP/zK; arc=none smtp.client-ip=209.127.231.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="yF1dkCxc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1790069116;
-	bh=MqF3JT5Ag+/84VYxDV0JRl7knayiQkoPpeM2DvkLl/0=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=yF1dkCxcmEM+uf2mx/nkBm1nIE85t0VniLdhcXqvPs9NDNv6IUVQQfbvRMjhfwNUN
-	 F77q4rNEuK/ApEUW8mUa75Vb9A7XSL2JW5tstv4gt4LFHlKsFBsEWESt/8nMgdnXCj
-	 foRNl0ValeXXn1fnSYAwlAYsK+eexLPeRIc/XNuw=
-X-QQ-mid: esmtpgz10t1790069108teb6a8f46
-X-QQ-Originating-IP: X3aDg93GYWSWkmWKw2TeisR1sv3OIpjcWXfaT9hhycM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 22 Sep 2026 17:25:05 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 18293615287119513376
-EX-QQ-RecipientCnt: 23
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="0NCiP/zK"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1790074961;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=iFgJigE7aPx9rcthpS190in8b+smB38KzrjCrY8jyZE=;
+ b=0NCiP/zKr/rJgj1+Zx+mOuh2xXMNG82cVBLX/lHIs3PjGSvbamCqznwvmbTuZV0ibJs8vt
+ gMDyAd/xyuNw+zDfVJiS74ke+GMi/8RuzvVF6/v6kncxkaimuSqb0iWFIe/4DnYYxG0Ihm
+ onYnfRnX0Z7+pRCsTOijy1qRbnVvmEaR+jGs07mMu8ZZtUFeM2xJhNlRZv37qPNrMpvmN/
+ wU9YYEnmSxhblcNnuOaY2qS/apR0cBHULle4ZyXLED+Te1nTQ1CzcuTFh/tw7jvvIQLJOB
+ aM1EqeTHvWRtkZfHtwTgC/GldqYqnZK6ITghHQK2i7nNtCTtxl6ZQ3dsAd3cIQ==
+To: "Yixun Lan" <dlan@kernel.org>, 
+	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
+	"Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>
+Message-Id: <20260922110231.3426011-1-sandie.cao@deepcomputing.io>
+Content-Transfer-Encoding: 7bit
+Subject: [PATCH 0/3] Enable USB and SD for Deepcomputing FML13V05 board
+Date: Tue, 22 Sep 2026 19:02:31 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=c50080b08dfc874b0cb25ecf11d489b0d1e616c2128732cb9c89443b278c;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 22 Sep 2026 17:25:03 +0800
-Message-Id: <DLLQJDEA91FU.18Q1TSX09AUR3@linux.spacemit.com>
-Cc: "Anirudh Srinivasan" <asrinivasan@oss.tenstorrent.com>, "Aurelien Jarno"
- <aurelien@aurel32.net>, "Jennifer Berringer" <jberring@redhat.com>,
- <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v6 2/2] scsi: ufs: spacemit: k3: Add UFS Host Controller
- driver
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Yixun Lan" <dlan@kernel.org>, "Alim Akhtar" <alim.akhtar@samsung.com>,
- "Avri Altman" <avri.altman@sandisk.com>, "Bart Van Assche"
- <bvanassche@acm.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Philipp
- Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, "Martin K. Petersen" <mkp@kernel.org>
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0-reader-ipc2
-References: <20260921-08-k3-ufs-support-v6-0-3479768a2299@kernel.org>
- <20260921-08-k3-ufs-support-v6-2-3479768a2299@kernel.org>
-In-Reply-To: <20260921-08-k3-ufs-support-v6-2-3479768a2299@kernel.org>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NuVTqMOgygVl/uH81H+rVPO7vXO6xh+Apb8/ViQcPw/mkBtiIQd1SNCZ
-	gV3uU/ypbb3edu1s3/5peU+5QsbkRZSYtwyiDwn2QiVchGqQAlTRHehuD7yYQXIVYp/Kl3z
-	Mrx8SWZZrAi+qQcuPbtg05BeprJtJWKt7HDcS930sdhtvcd674pkWpJxZ5jS89kdQPT/gSt
-	KGZX4yP6hXPSR+nxCUegByxf07SZkBQECclubyM4JEYJmecQ20LrAVqcLPU+FkQ1P7HAU4d
-	/IKT2vLybwwSPswWamH7eSdFVve9cquIiH27jD/Cq8Y3e2+gAwnsnYw9Ru3BT+gYh62fYwt
-	XDXGx/C+FsD1smTdKKY+wYV8VJunhxLlvV5nzoAQp9zcUSrj1Q/oPbU9iNo4lmkJ0s9CzGC
-	C9NBCy3EBdwMjumbKLCTYsyEJKFTQf4T9/23IvVz2yTksf9pTTNr+WLiZ698kdtzCTDibde
-	+Q4jhX5vmvq2KsEk85aclslrCw2Kack4j1PJt55AKGOkwlMvD9P5KusBkLmQ5u35zIZxaRr
-	R286ODEl3voJxA8nLZww4i5klTy8YumkZzdyQCpvwaKBxaEepBWqB4Bag6QjYfCQn4lrNgi
-	luB3MeeMu9WMYRWePBOTBHgBO7WbzImIzqwE1/OQF7NmDQah/vLan1AyKx6i//2zCICyW25
-	DoSNhzFkn3L//u+Bo26s/+DnKRkJcqzftSgpVVw2MfskUEJEWA1F1Nr9edfUzUZrZppJR5Z
-	X6d01RPjVFrXcmGjNcoF2EwUtqDsSKo4qxE2bWSLRqJIgtKyDQnn6xN7KsyU6sAgkyObfuC
-	9bLgdxJiI+nWdVV/aPbmQefURgBW/RPFEVI8TkCwRTHrwnNDH92oG2Vq97JKpF0mGs56aHu
-	sVjiAUetKomJ7zf4EE9p80UxPu+zaDfT7W5qgdu1NhhlHFBQJ95udvvj9hZvQQYqJpJ9cRP
-	V6TqR4CyJ0kYq7+242PxoSeCcoMZxMykjlyhG/QYTpLhvlr88vinCoCp6F94HVFHep4fZ7H
-	uDkTJycLl+t0hYRIGjg8RHO70iBiNIcmiij0H+JDAMQFdMYQxPthEzgDzju3ddZuwr4VAq4
-	5hhOSoqTN0HXJVdzpAF9tCeMd+08jwwuQ==
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
-
---c50080b08dfc874b0cb25ecf11d489b0d1e616c2128732cb9c89443b278c
-Content-Transfer-Encoding: quoted-printable
+X-Original-From: Sandie Cao <sandie.cao@deepcomputing.io>
+X-Mailer: git-send-email 2.43.0
+Cc: "Alexandre Ghiti" <alex@ghiti.fr>, <devicetree@vger.kernel.org>, 
+	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>, 
+	"Sandie Cao" <sandie.cao@deepcomputing.io>
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+X-Lms-Return-Path: <lba+26ab2604f+bbf25e+lists.linux.dev+sandie.cao@deepcomputing.io>
+Received: from roma-Laptop-12th-Gen-Intel-Core.lan ([183.23.111.1]) by smtp.feishu.cn with ESMTPS; Tue, 22 Sep 2026 19:02:38 +0800
 Content-Type: text/plain; charset=UTF-8
 
-On Mon Sep 21, 2026 at 8:36 PM +08, Yixun Lan wrote:
-> [...]
->
-> +static int ufs_spacemit_link_startup_pre_change(struct ufs_hba *hba)
-> +{
-> +	u32 value, sys1clk_1us;
-> +	int err;
-> +
-> +	err =3D ufs_spacemit_mphy_init(hba);
-> +	if (err < 0)
-> +		return err;
-> +
-> +	err =3D ufs_spacemit_uniprov1p6_init(hba);
-> +	if (err < 0)
-> +		return err;
-> +
+This series updates Deepcomputing FML13V05 Device Tree: Add P1 PMIC regulator
+tree, add USB controller and USB phy, Enable SD card.
 
-Should this be `if (err)`? The call chain is:
+This series is based on next-20260918.
 
-  ufs_spacemit_uniprov1p6_init()
-    -> ufs_spacemit_dme_set()
-      -> ufshcd_dme_set()
-        -> ufshcd_dme_set_attr()
+Sandie Cao (3):
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add P1 PMIC regulator
+    tree
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add USB controller
+    and USB phy support
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card
+    support
 
-ufshcd_dme_set_attr() returns 0 on success and non-zero on failure,
-including positive UIC error codes. The current check misses those.
+ .../spacemit/k3-deepcomputing-fml13v05.dts    | 218 ++++++++++++++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi          |  66 ++++++
+ 2 files changed, 284 insertions(+)
 
-Also, ufshcd_link_startup() ignores the PRE_CHANGE return value in this
-series' base, so returning an error here alone will not abort startup.
 
-> [...]
->
-> +static int ufs_spacemit_apply_dev_quirks(struct ufs_hba *hba)
-> +{
-> [...]
-> +	err =3D ufs_spacemit_dme_set(hba, setup_attrs, ARRAY_SIZE(setup_attrs))=
-;
-> +	if (err < 0)
-> +		return err;
-The same `if (err)` check is needed here for positive DME errors.
-
-> +
-> +	return ufs_spacemit_wait_mphy_pll_lock(hba);
-> +}
-> +
-> [...]
->
-> +static int ufs_spacemit_init(struct ufs_hba *hba)
-> +{
-> [...]
-> +	hba->caps |=3D UFSHCD_CAP_RPM_AUTOSUSPEND;
-> +
-> +	return 0;
-> +}
-> +
-
---=20
-Troy Mitchell
-
---c50080b08dfc874b0cb25ecf11d489b0d1e616c2128732cb9c89443b278c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCarJJbw0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQvJ1gA/22uBA65WxxSQ+7npmcBkm5HKq8LkzpjDIOXS2jr
-brfJAQCOnLcMv4qGA1z+Oh4psRDSDEz61/5c2j+bZNBXkVZIDw==
-=l/Ay
------END PGP SIGNATURE-----
-
---c50080b08dfc874b0cb25ecf11d489b0d1e616c2128732cb9c89443b278c--
+base-commit: 3f2425f5b5bbbdd991ca9cdfd5502e68d8895998
+-- 
+2.43.0
