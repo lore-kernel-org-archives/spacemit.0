@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB51A409279
-	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21C0331ED6
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790156100; cv=none; b=CqMIIaBNet/29tQqloW5GrJbfyxBMyEQ7gf0x540a0cMCRFBo8EAgMmWKx3bCr0Cel0K+Bm8W9DNSntteL9xSi0oiklvyRbwAVsdByv80VrqEgOKe6ro4G0NSKmmPRoThy8VYh0n9kpYdOUy3pVYQ/4yOdIWVzIQ4rlBED0bf94=
+	t=1790156103; cv=none; b=N4cVVRtPkii/VZe8BU3tvWTyRIbOaNCJTFsCROOrx6z9ufv8u6xnV9kv8qXNMp49a1XI46+H+4eY6HEVZ/NskV53/55u+x6EI+PnnRQLRibot/VPkV6bm7Mr5EJ1pSTA1x8zXVgqaS7L1uKDmKN0IcXvADiJpS3bjUkWaLc2zeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790156100; c=relaxed/simple;
-	bh=Va6F/EJUW/nLR1SPH0riVx2N6r3IuxepULm9EXr00Tw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KXh6veRia1Rk/6+ZvREeTUo9EBFVqVRWQstr6Kxyc6Wtp1kA3yxqRv6dztKdJOfuKm44lpJ8ZI+xbGKI6Fb1mpyzd3Qaj6BEWH9rkWbIKmkkRIcJUxD+WhVFWV0jMEbotngarMpBdbkN5KQE5yre1s59//wZf6i5rGWt5QdTdqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJ8G+Ujl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790156103; c=relaxed/simple;
+	bh=6b0z52n/W0GMXn6vksZC3wPCqgn1ZBxSy4MBhqdVo28=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=NJGDFd1rb8AMIaj9eMvysBRHwnnpkBulhzI1lyiebJkLqxApswEnxJrNuD+8dhBWsMfuj+iZ8U8AXB/HCPcZkDzVgmxim2wfYIbnWRGZ7EkN8E7kj8mpAoj6fN3QI4+H1ZjUktW7K6oJEl7mC4LpA+89xNs3iKlXeAKwy/EYa+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bFqeoeQJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJ8G+Ujl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E311F000FF;
-	Wed, 23 Sep 2026 09:34:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bFqeoeQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A541F00893;
+	Wed, 23 Sep 2026 09:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790156099;
-	bh=OKToilGEvfMJ5um1ld9uiM7K3OSYLtn9JVb1KQUdz/Q=;
-	h=From:Subject:Date:To:Cc;
-	b=SJ8G+UjllFmrqSOYcZtm38HQB+Ilx6I9BmVPzF0Nf1TdIT8kMV5rKe6CgkE+DeLyO
-	 PxSsf6DnragabiFld3BgfHHLt6NowOEF1dZiUn89wZE0hX+la1jW3gx/Nca0tZAnMp
-	 m6QcMhpxW+EWdTxqK7gFRgsIykzXMtgPWmOJsMx6YSDiRcWcNix4YVxYNVExYWxDJN
-	 rwO9IvQLAbtLET00SCH2/TPsD2htmQCuG5iWwl+6RugfegAC8Vh+tqvy/aIZFy38ph
-	 PWJqaOeFulPnpvk31DhUc6z6UCOI+/RNiydD05nBMDIKSRzAHnRlCeD3I6/Kwm4/wD
-	 lqdYnes4/zeUg==
+	s=k20260515; t=1790156102;
+	bh=9WgpHdJRdQK3IRrTzd/Q+VQ6N8VI4jkfl5z/Mlgz2EA=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=bFqeoeQJ5gf5tSEN2GjLR77sbUEUo1GjzPAAfTyMvSj76EyrparHJoF7Q7OXHpMSo
+	 lmmzFD6NLGrfpu1xsmtUld1T9GeO4FnOSyfYX69zE5jkk3UvZiiQkl0shJVe15TpIT
+	 HbKsCMXbM6zk59AukUgJN9iKQ8aAJM6JsR8UziyF+AGYxcCSaknyRgOr3bb3pREtLP
+	 jby9s+KEcFSxTwRbF338lJE2KI5usSwHwAnUcYNuaAnTlr8+DqY0nCx3qsDCaa/r0F
+	 g4RDDJpKPzJdC3davHMWXtFWZNO0b9Yy4xT+b9O/Fxlre5h+3dBBse3iZ1OJifZSi8
+	 QNyUPDs/1lTCw==
 From: Yixun Lan <dlan@kernel.org>
-Subject: [PATCH v2 0/8] spacemit: k3: add clock and reset support
-Date: Wed, 23 Sep 2026 09:34:23 +0000
-Message-Id: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
+Date: Wed, 23 Sep 2026 09:34:24 +0000
+Subject: [PATCH v2 1/8] clk: spacemit: ccu_mix: fix inverted condition in
+ ccu_mix_trigger_fc()
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,11 +38,9 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NQQ6CMBBFr0Jm7Zi2UEVX3sOwwDpChVAyU4iGc
- HcB49blS/5/bwIh9iRwTiZgGr340C1gdgm4uuwqQn9fGIwyB5WbDJXGJkXXBtcgk1BEGfo+cMR
- c21KpzFpzKGH590wP/9rc1+LLMtye5OIqXBe1lxj4vcVHve5+HfunM2pU6LJUGZvS0Z7cpSHuq
- N0HrqCY5/kDbBrVKNUAAAA=
-X-Change-ID: 20260824-01-k3-clock-reset-support-815a0045526a
+Message-Id: <20260923-01-k3-clock-reset-support-v2-1-6ec0abb1c7b5@kernel.org>
+References: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
+In-Reply-To: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
 To: u-boot@lists.u-boot-project.org
 Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io, 
  Lukasz Majewski <lukma@denx.de>, Tom Rini <trini@konsulko.com>, 
@@ -52,74 +51,50 @@ Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io,
  Jonas Karlman <jonas@kwiboo.se>, Alexey Charkov <alchark@flipper.net>, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2297; i=dlan@kernel.org;
- h=from:subject:message-id; bh=Va6F/EJUW/nLR1SPH0riVx2N6r3IuxepULm9EXr00Tw=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs50jMpVf2WX/iExLxhDhts8SDAig6mKVGQjj+
- XEmGQ0/uYKJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdIxsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=847; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=6b0z52n/W0GMXn6vksZC3wPCqgn1ZBxSy4MBhqdVo28=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs50my/IKWcGbIb61ywH7j363CgTEw8c3JW66j
+ G7iXP4/QseJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdJhsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+1SEg//feYO3HHjSfnEgiAl6nNDWOiqMSuqzDnLIFB0RaSLNgyZl1oBAb2lE
- l9AuHQzQjRnoXSBdQkESlEP6H6xE5Ju8YJ+eCvR6DRpZxKiohJ0WWrF+n3d2o1nn/6VRmiS0CHA
- oOuhfzfwg9rdOWYHSatFtWsw+mTXbMImfdlXBxRqJEpvEMgJhDdfjq8I9MOPs9SgT3ea7hT7+TP
- J5v6DLV+J4Q0ClAsWfEK7XoJ2PplkJJoFmkwACyirRfY3yHgzeGu8OH+jgq8HjjmxB43gOX9Q8r
- MGzZXjjBZrGBiGx0cSk4JxkeILJJoCMhSfuwNnUSOO6RUMusqCdwL512WR74Y85VxyZjoljys6D
- 10IeE8PyEBXua5LFtuZGFZ0D9knlWT9l0AYpePTKx3vWV2ZsETnAqubY2Dv7qR7Pflwg680jMPK
- CHbuUorj3IHw8of9n/yNrlKi0mX661ZNVNVOawW5g8MmxH9OyBTARoYukwrGqy/FwSUUeup+Nj+
- H5D3DH9oCJsblhDNhfBbM4z33K0acF1w+CRU2ZUCIr0yPfB5/f5qk57UdR8FKvd93xn9E+gW6zp
- LIxiLXJUc1309ONp/KSkylWe8fJJ+IU0NSE4SCOFjDcVf+EcQ2il72dl66B7Ls4cfJQGNmKtg4m
- X72NaFieGwO78DmSowxCXkbUCLu+pY=
+ QACgkQMarqR1lNu+1brw//buhRBuis6WZ0Fk93zqkUCzsXQdb40fkoBal1tMjqURug8785UlbFP
+ l28Edebi2rLztVH3KD9yN56W5I0PFdIp32B7VRCkMePI4OYNO5iw8Nk48x8cCl/+puoIqLfnd30
+ pCdQwD2E1xA1nH3NIFIdZavKIFEZ/zchmB1pRT1OZ1zhVDNX3PUMHZrhu+ZSwSNakXVsTTsi1Cg
+ aNnF6t0FIR5nGn/pb3CObmnoDpW6qNUw2mVv0gitQkyWYYkI95q8BoytUQnKfhJVEvuPSPRF2+9
+ +6P+m7v7xG6ILwTmHtq9oNZMlr1ICninwTX6n2uzB1E4MnQt2P2IQen+Lp15Mj7RFeJX6z3oUsn
+ oi6RvuzEb/qU3NnXkF+ggnmUx+7EfX+g7zlZsQrRVhWglcUJZjJu2hE171UK3h575N4aWKo9+Gx
+ SSDJLUNsyT9zAvAtx87kkfmtP+kEp+RZSvkjA+7TDu6B+idMPXq0ZYFR+seoBi93pHEPJsIc02z
+ KjZl+J17HdRvcYVjkPL3b8JV6qCD8dUxXfokvazTHARaCUAvPes6xfdjs5oRIKGd/WbYIPg5CCb
+ 4cAOcBGGE+XtaXeFwzdTjojiqyukhCUFOoKStR4h2iaQFEuKyLo4ZUBmPanQdwvpHTSXvJRgBMD
+ tf2gKV6C4vg2kyL4VuU/ESSoha7dCU=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-This series try to add clock and reset driver support for SpacemiT K3 SoC,
-the patches are largely based on upstream linux framework.
+Based on upstream commit:
+  54e97360b44b ("clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()")
 
-The reset BITs definition lives in the same register with clock
-controller which make them tight coupled, so I'm also putting reset
-patches in this series.
+Fix inverted condition that skips frequency change trigger,
+causing kernel panics during cpufreq scaling.
 
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
-Changes in v2:
-- add complete PLL clock tables
-- drop patch for SPL
-- Link to v1: https://patch.msgid.link/20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org
+ drivers/clk/spacemit/clk_mix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
----
-Yixun Lan (8):
-      clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
-      clk: spacemit: ccu_mix: add inverted enable gate clock
-      clk: spacemit: ccu_pll: add plla type clock
-      clk: spacemit: k3: extract common header
-      clk: spacemit: k3: add the clock tree
-      clk: spacemit: k3: add CPU PLL rate tables
-      reset: spacemit: Extract common K1 reset code
-      reset: spacemit: Add SpacemiT K3 reset driver
+diff --git a/drivers/clk/spacemit/clk_mix.c b/drivers/clk/spacemit/clk_mix.c
+index a1158512a92..45bf2c72375 100644
+--- a/drivers/clk/spacemit/clk_mix.c
++++ b/drivers/clk/spacemit/clk_mix.c
+@@ -78,7 +78,7 @@ static int ccu_mix_trigger_fc(struct clk *clk)
+ 	struct ccu_common *common = clk_to_ccu_common(clk);
+ 	unsigned int val;
+ 
+-	if (common->reg_fc)
++	if (!common->reg_fc)
+ 		return 0;
+ 
+ 	ccu_update(common, fc, common->mask_fc, common->mask_fc);
 
- drivers/clk/spacemit/Kconfig                   |    9 +
- drivers/clk/spacemit/Makefile                  |    1 +
- drivers/clk/spacemit/clk-k3.c                  | 2049 ++++++++++++++++++++++++
- drivers/clk/spacemit/clk_common.h              |    1 +
- drivers/clk/spacemit/clk_mix.c                 |    9 +-
- drivers/clk/spacemit/clk_mix.h                 |   27 +-
- drivers/clk/spacemit/clk_pll.c                 |  124 +-
- drivers/clk/spacemit/clk_pll.h                 |   43 +-
- drivers/reset/Kconfig                          |    1 +
- drivers/reset/Makefile                         |    2 +-
- drivers/reset/spacemit/Kconfig                 |   22 +
- drivers/reset/spacemit/Makefile                |    4 +-
- drivers/reset/spacemit/reset-spacemit-common.c |   93 ++
- drivers/reset/spacemit/reset-spacemit-common.h |   40 +
- drivers/reset/spacemit/reset-spacemit-k1.c     |  128 +-
- drivers/reset/spacemit/reset-spacemit-k3.c     |  242 +++
- include/soc/spacemit/k3-reset.h                |   21 +
- include/soc/spacemit/k3-syscon.h               |  271 ++++
- 18 files changed, 2955 insertions(+), 132 deletions(-)
----
-base-commit: a06e89ab05eaa2b8344d521319399333cd760ae5
-change-id: 20260824-01-k3-clock-reset-support-815a0045526a
-
-Best regards,
---  
-Yixun Lan <dlan@kernel.org>
+-- 
+2.55.0
 
