@@ -1,46 +1,35 @@
-Received: from va-2-28.ptr.blmpb.com (va-2-28.ptr.blmpb.com [209.127.231.28])
+Received: from va-2-26.ptr.blmpb.com (va-2-26.ptr.blmpb.com [209.127.231.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0A9223DFF
-	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 04:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB560443C11
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 06:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790136450; cv=none; b=VcIeratlfXcUvdg1UK3TvZZBC9XbPbvnC0V2e0s3QbIpV1Eq+d2nuPQzbyWIv7F/3TABlemivhYnFt0ZwOGUiBIJqOsg7N04tudOc5Sy6UxvI6QN9faoOSo7RJ0rGpPUY+HGa3yYD+Olguf9U0ieCl5elCTuIGnVmZ9N3z/wX9U=
+	t=1790145346; cv=none; b=gL3N7EhpWfQG/iwvjJ7U2HcOMs+ICvXHkawafDbw9wFg+OqQ5l7YL6kV3omXmrUwi1Q+D1pjw0wSp9Z8Q4WSpxx+kQ5+RHqEEb3O5R5XUHwhWsFU1ZKwN8uCkiyMoFsLNL1p+KlQPZVPWwCMWdW1oBHj1iH/kDxM22nocbFjlvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790136450; c=relaxed/simple;
-	bh=UfslGxYouv/baTrSNVrAz/2uz9nr9RQGE5GC8j5a1Dk=;
-	h=References:Date:Message-Id:From:Mime-Version:Content-Type:To:Cc:
-	 Subject:In-Reply-To; b=YKlgLADmFa6qJ7T9B/cRyPO/ptXmItN68ab1jfSlRFO8j2Obf7idi0AZM8x0FnE91xr1d981rOf9Cncwb+gg00sZWGnVf82ou99uXOcnF0ApJHPVhihfrfaGhrDal+3Uf/xWtpIb+AIqncJ3SxPsGBbDchbvIxs9KTSuiXywMgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=emaUYLWT; arc=none smtp.client-ip=209.127.231.28
+	s=arc-20240116; t=1790145346; c=relaxed/simple;
+	bh=ztHEw/1Esw+HMkU5DeZIN4w0wpwjtVn/TgDeHPNre28=;
+	h=Subject:In-Reply-To:Content-Type:Message-Id:Cc:From:Mime-Version:
+	 References:Date:To; b=XmmVF4yw3e2KwQ+Lgh4GGPz9FX9zOWxxE6eYh9W+UnARrW05t7rza3RA4oRHRCT5y2+f26fcHrCf2BIK9345yK+m4zhRi3fHs9RSaWclJVAzR43PKn3UuNCYu5pzDGcCfg6PHGGutVFjYJppGKnVwqucFrohH/zApsPVJhos0hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=oEth2X2g; arc=none smtp.client-ip=209.127.231.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="emaUYLWT"
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="oEth2X2g"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1790136443;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1790145323;
   h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=UfslGxYouv/baTrSNVrAz/2uz9nr9RQGE5GC8j5a1Dk=;
- b=emaUYLWT16pLphuKBCImwM2OpWlTOIgsAhb5UDQwUdlJKzLSt7a2YRZwEkaAoFcuQYLp06
- oMVI2iVFK8Ja1STJLvazorXKnzZv+MQ4glS5ekT3EDsIRgu/mRfG30iIMpYTUJvumSimGE
- gJrY2ko8y7r0IKAlhuivjXNYqw03efGKeqzcHSFPPkv3fTTMWTDztPgEVELFx1PC6qfwyM
- H6gZGAARzhwi8V8rgVQp19TpOw6QRbl2VZaylWrky34uPOMFmabOtOfHbfaEQl6f9+kWTP
- 6ThwmfWWaKIvrn2brFWDnW5Zaa+EPCjDYKkyyk+D/L2vhii7fIslaaxqJO4kHA==
-References: <20260922110231.3426011-1-sandie.cao@deepcomputing.io> <20260922110434.3426051-1-sandie.cao@deepcomputing.io>
-	<DLMC322TOCGJ.2GTJG14AFBACW@linux.spacemit.com>
-Date: Wed, 23 Sep 2026 12:07:20 +0800
-Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.b414918c.4333.4215.b208.49d99e9be044@feishu.cn>
-From: "Sandie Cao" <sandie.cao@deepcomputing.io>
-Precedence: bulk
-X-Mailing-List: spacemit@lists.linux.dev
-List-Id: <spacemit.lists.linux.dev>
-List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+16ab35079+013b47+lists.linux.dev+sandie.cao@deepcomputing.io>
+ bh=ztHEw/1Esw+HMkU5DeZIN4w0wpwjtVn/TgDeHPNre28=;
+ b=oEth2X2gsToIXLxZmPhc3+7xCC1hHHyNXzU5Sp/Zc2HsvlSl8I1ncrwhgcr2yAnSZFd8Fq
+ Pe87rUXTN2xrN0LaO2jS01CoHgo0xBNm1FsTecMEf1Ck1c6pdUXb+V0Adk1aXYzbtNQQOZ
+ Wq+xC14y5C0aXX5cNY80ePgxTtmNr1RQRMdDSNg8LhRWuvlN9mniOQngSe/EEOduUJvRof
+ Lu05Fn3J5hWhi+AyJnyqiqt2lcP+n8VCSNxrpvBqXq9c7Z73FSBeGylBo3ilT6zMImGkgu
+ DDdZWyKcv1H1wzEY2NwxK8O6MJXobjU4V8ZANvhdppyhImZwWP3gdrvlqwSDGA==
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card support
+In-Reply-To: <DLMC741RLFU5.3FF1DL7YEIFK9@linux.spacemit.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.2bcc8e57.b8bf.421b.9230.3eea00252952@feishu.cn>
 Cc: "Yixun Lan" <dlan@kernel.org>, 
 	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
 	"Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>, 
@@ -49,41 +38,73 @@ Cc: "Yixun Lan" <dlan@kernel.org>,
 	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
 	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
 	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: add USB controller and USB phy support
-In-Reply-To: <DLMC322TOCGJ.2GTJG14AFBACW@linux.spacemit.com>
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+Precedence: bulk
+X-Mailing-List: spacemit@lists.linux.dev
+List-Id: <spacemit.lists.linux.dev>
+List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+16ab37329+cb9d75+lists.linux.dev+sandie.cao@deepcomputing.io>
+References: <20260922110231.3426011-1-sandie.cao@deepcomputing.io> <20260922110450.3426070-1-sandie.cao@deepcomputing.io>
+	<DLMC741RLFU5.3FF1DL7YEIFK9@linux.spacemit.com>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Sep 2026 14:35:20 +0800
+To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
 
-SGksIFRyb3k6Cgo+IEZyb206ICJUcm95IE1pdGNoZWxsIjx0cm95Lm1pdGNoZWxsQGxpbnV4LnNw
-YWNlbWl0LmNvbT4KPiBEYXRlOsKgIFdlZCwgU2VwIDIzLCAyMDI2LCAxMDoxOAo+IE9uIFR1ZSwg
-U2VwIDIyLCAyMDI2IGF0IDA3OjA0OjM0UE0gKzA4MDAsIFNhbmRpZSBDYW8gd3JvdGU6Cj4gPiBk
-aWZmIC0tZ2l0IGEvYXJjaC9yaXNjdi9ib290L2R0cy9zcGFjZW1pdC9rMy5kdHNpIGIvYXJjaC9y
-aXNjdi9ib290L2R0cy9zcGFjZW1pdC9rMy5kdHNpCj4gPiBbLi4uXQo+ID4gQEAgLTQ0MSw2ICs0
-NDEsNzIgQEAgc29jOiBzb2Mgewo+ID4gWy4uLl0KPiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqB1c2IzYl91MnBoeTogcGh5QDgxNTAwMDAwIHsKPiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBjb21wYXRpYmxlID0gInNwYWNlbWl0LGszLXVzYjItcGh5IjsKPiA+ICsg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZWcgPSA8MHgwIDB4ODE1MDAwMDAg
-MHgwIDB4MjAwPjsKPiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBjbG9j
-a3MgPSA8JnN5c2Nvbl9hcG11IENMS19BUE1VX1VTQjJfQlVTPjsKPiA+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAjcGh5LWNlbGxzID0gPDA+Owo+ID4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHN0YXR1cyA9ICJkaXNhYmxlZCI7Cj4gPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgfTsKPiA+IFsuLi5dCj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgdXNiM2NfdTJwaHk6IHBoeUA4MTgwMDAwMCB7Cj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgY29tcGF0aWJsZSA9ICJzcGFjZW1pdCxrMy11c2IyLXBoeSI7Cj4gPiAr
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcmVnID0gPDB4MCAweDgxODAwMDAw
-IDB4MCAweDIwMD47Cj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2xv
-Y2tzID0gPCZzeXNjb25fYXBtdSBDTEtfQVBNVV9VU0IyX0JVUz47Cj4gPiArIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgI3BoeS1jZWxscyA9IDwwPjsKPiA+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzdGF0dXMgPSAiZGlzYWJsZWQiOwo+ID4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoH07Cj4gU2hvdWxkIHRoZXNlIHVzZSBDTEtfQVBNVV9VU0IzX1BP
-UlRCX0JVUyBhbmQgQ0xLX0FQTVVfVVNCM19QT1JUQ19CVVMsCj4gcmVzcGVjdGl2ZWx5PwoKSGVy
-ZSBpcyBjbG9jayBmb3IgdXNiMnBoeS7CoCBDTEtfQVBNVV9VU0IzX1BPUlRCX0JVUyBpcyBjbG9j
-ayBmb3IgVVNCMyBQT1JUQi4gQ0xLX0FQTVVfVVNCM19QT1JUQ19CVVMgaXMgY2xvY2sgZm9yIFVT
-QjMgUE9SVEMuCgpQbGVhc2Ugbm90ZTogdXNiM2RfdTJwaHkgYWxzbyB1c2UgQ0xLX0FQTVVfVVNC
-Ml9CVVMuCgrCoMKgIMKgIMKgIMKgIMKgIMKgIMKgwqAgdXNiM2RfdTJwaHk6IHBoeUA4MWIwMDAw
-MCB7CsKgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoCBjb21wYXRpYmxlID0gInNw
-YWNlbWl0LGszLXVzYjItcGh5IjsKwqDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKg
-IHJlZyA9IDwweDAgMHg4MWIwMDAwMCAweDAgMHgyMDA+OwrCoMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgwqAgY2xvY2tzID0gPCZzeXNjb25fYXBtdSBDTEtfQVBNVV9VU0IyX0JVUz47
-CsKgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoCAjcGh5LWNlbGxzID0gPDA+OwrC
-oMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqAgc3RhdHVzID0gImRpc2FibGVkIjsK
-wqDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgIH07CgpCZXN0IHJlZ2FyZHMKU2FuZGllCgo+wqAKPiAt
-LcKgCj4gVHJveSBNaXRjaGVsbAo+wqAK
+Hi, Troy:
+
+> From: "Troy Mitchell"<troy.mitchell@linux.spacemit.com>
+> Date:=C2=A0 Wed, Sep 23, 2026, 10:23
+> On Tue, Sep 22, 2026 at 07:04:50PM +0800, Sandie Cao wrote:
+> > @@ -184,6 +185,24 @@ &combophy {
+> > [...]
+> > +&sdhci0 {
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-names =3D "default","uhs";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-0 =3D <&mmc1_cfg>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-1 =3D <&mmc1_uhs_cfg>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0bus-width =3D <4>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0cd-gpios =3D <&gpio K3_GPIO(88) GPIO_ACTIV=
+E_LOW>;
+>=C2=A0
+> Does GPIO88 have an external pull-up? The SDK DTS [1] also includes
+> mmc1_cd_cfg in both pinctrl states, with a pull-up and 3.3 V configuratio=
+n.
+> Neither mmc1_cfg nor mmc1_uhs_cfg covers this pin. Is that configuration
+> unnecessary on this board?
+>=C2=A0
+
+FML13V05 SD card slot is inside the board, it doesn't need cd-gpio, FML13V0=
+5 Keeps GPIO88 to low, Then SD card is always on for SD Card driver.
+
+We check the vmmc-supply is p3v3.=C2=A0We have the same SDK DTS config with=
+ k3_com260[1] , so, this patch follows the SD card patch of k3_com260 dts[2=
+].
+=C2=A0
+If this is not correct, we will change it.
+
+Link: https://github.com/spacemit-com/linux-6.18/blob/k3-br-v1.0.y/arch/ris=
+cv/boot/dts/spacemit/k3_com260.dtsi [1]
+https://lore.kernel.org/all/20260610-07-k3-enable-sd-v1-1-196ae29bd091@kern=
+el.org/ [2]
+
+Best regards
+Sandie
+
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0no-mmc;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0no-sdio;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0disable-wp;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0cap-sd-highspeed;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0vmmc-supply =3D <&aldo4>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0vqmmc-supply =3D <&aldo1>;
+>=C2=A0
+> Could you confirm which rail supplies the card's VDD? The SDK DTS [1]
+> uses p3v3 for vmmc rather than aldo4. Does that RPMI regulator map to
+> ALDO4, or is the card powered by a different rail?
+>=C2=A0
+> Link: https://github.com/spacemit-com/linux-6.18/blob/k3-br-v1.0.y/arch/r=
+iscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts [1]
+>=C2=A0
+> --=C2=A0
+> Troy Mitchell
+>=C2=A0
