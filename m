@@ -1,479 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from va-2-30.ptr.blmpb.com (va-2-30.ptr.blmpb.com [209.127.231.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D0341A4E8
-	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD653B0AEA
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.127.231.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790156126; cv=none; b=WshHlv3uCLhJfsKqVL1jjTXHqaC6LEvA1MWm5svdfGFWayZcSwehxhRGp904sr8cOa41UEE8CzzifEky2RSAI4bsm06Cbv4QXr1EcWA17qDcWp1RxBVTto+b8XZ+pnWB1DZ4AOYE3jm5Y/j6gyruxhJhdbyYLSKaNM7A7AN/6vA=
+	t=1790157087; cv=none; b=isiB+YNgyPnJzuMK1jHGAFbDzT1rYEB0/DsGBal8oPR40mKMaWgxUeGG5+LZ8OAVQwgbCDMJYR1G5Kt3e48vwQb2LRYi0w7lgI5ehHX8cHrf4YroetZN65cT8o4oVo4h3AFyzC6LWu0MB/xBTkJ61A82+1S4JrP3bcg80HlHvt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790156126; c=relaxed/simple;
-	bh=T4PQI5q3JsW4IXc+SsVW/BS8l523vDjhK2/bl2oWteE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ilc7uKEGl5NXwmChQ0IQzCFP1R9aXZSqCRJ7tWQwJuft1JMJnfoGyOkyr4NrcrdlB+bEEtHxPHfxH7FTrzvJcbmb0qQdRrDMrlxNZA3PTQw4mwFWtRcV0qwd4HIeC/objEizqHzpbjtjOB5zCFfrIWXr6R5MRjDcwnrVFXkmYzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCCARouM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790157087; c=relaxed/simple;
+	bh=UuWqsWA9strdMyWMxsoB9b/nhWJSlI8PVXRAHFyk1to=;
+	h=From:In-Reply-To:References:Content-Type:Date:To:Cc:Subject:
+	 Mime-Version:Message-Id; b=JRgyH+4RI0sWrnp7+TES1u/ayj6uhFpSCrAeE05EprqfQhxci4sa0d5gmtdcTimP6wv3YsUDZY5VO7PeQTWCjdTnIfoEN8wBd2mEU3c5OyqB4El2hVnV1o/yiO7x/Row/RsLlmnszo5BsVrqvfRSWbWpdwwHsXIPywvwKmGcR2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io; spf=pass smtp.mailfrom=deepcomputing.io; dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b=Irfzd4iX; arc=none smtp.client-ip=209.127.231.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCCARouM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A981F00893;
-	Wed, 23 Sep 2026 09:35:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790156124;
-	bh=fKNxdGVp/JtARvET/viUItl85kjHRJLumpt1ENUBwdM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=cCCARouM+tzC1U/ROJiKMa/dfnc7Qs4SzksL0+I8sVF4aMnUXw+VdWB/1KH4PkJvl
-	 i1dJGDXCJC4IGAoqVGy7kn4HmikWgCxRftlfTMmC5DgHYWXaowbB4CuUsvNZOqNd3h
-	 bVHy70O/5j1Ch//roqgrZW/zLDeHtsfUz8syb9x0nCfTWOH2auWgET/VXseQrZBAwF
-	 ZMUtDPZIBQCjX7VFJXYLXGiZOnEMBnmziQdU5dsfrnGBp4kZgxRk+d1sk65ihKMgrI
-	 71MxxIRaNeBps+uJI1Zi8Q0IJkPa2KnufMc5uC3YCNyity0Ndko8b8d0o1Z5zdWcjM
-	 o73zX4QupcBZA==
-From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 23 Sep 2026 09:34:31 +0000
-Subject: [PATCH v2 8/8] reset: spacemit: Add SpacemiT K3 reset driver
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.b="Irfzd4iX"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1790157073;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=UuWqsWA9strdMyWMxsoB9b/nhWJSlI8PVXRAHFyk1to=;
+ b=Irfzd4iXUjAJDo3ea3x0bV91jZdDekzV31QXuKKbJvz4WQJjH+jrWtzWgjy8k9wdIDjDsc
+ ln6iJda0A8bfRuUx/iQa9UdpBuaWYUY+XVyjZccqGrNpEIHN9CTBnEpyK+pxwU3FKH04xX
+ lGDbJ8xEqH2D4MJxhrN5uqN2Ok0y97SZF5W6vplWf9lFWr6QijDSs9KuCgHwHer8x0y/m5
+ XMN0EW79ZUKHnyDLVuDgFcJjINh0FIvN1VGp8DPXO9HNgRWvAgdTkusy0vco3Tq7mAJLML
+ 5JmosMXDpQB9WOxf0ZhnD6UIMSxIQbwN0sAnfLFjPfFFm2ssPJvjKXxxBhq27w==
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+In-Reply-To: <DLMKXCP8EDNL.JW6NFGCTMJVN@linux.spacemit.com>
+References: <20260922110231.3426011-1-sandie.cao@deepcomputing.io> <20260922110450.3426070-1-sandie.cao@deepcomputing.io> <DLMC741RLFU5.3FF1DL7YEIFK9@linux.spacemit.com> <407ce3d77416bb2522b7906b0df3d5adf02c27ee.2bcc8e57.b8bf.421b.9230.3eea00252952@feishu.cn> <DLMI4JHT5Q8L.2MHI30VCCP3W9@linux.spacemit.com> <407ce3d77416bb2522b7906b0df3d5adf02c27ee.64156e26.f1af.46d5.a18c.19bc541257f8@feishu.cn>
+	<DLMKXCP8EDNL.JW6NFGCTMJVN@linux.spacemit.com>
+X-Lms-Return-Path: <lba+16ab3a10e+2acc86+lists.linux.dev+sandie.cao@deepcomputing.io>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Sep 2026 17:51:09 +0800
+To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
+	"Yixun Lan" <dlan@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, 
+	"Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
+	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
+	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-01-k3-clock-reset-support-v2-8-6ec0abb1c7b5@kernel.org>
-References: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
-In-Reply-To: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
-To: u-boot@lists.u-boot-project.org
-Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io, 
- Lukasz Majewski <lukma@denx.de>, Tom Rini <trini@konsulko.com>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, 
- Raymond Mao <raymond.mao@riscstar.com>, 
- Guodong Xu <guodong.xu@oss.qualcomm.com>, Peng Fan <peng.fan@nxp.com>, 
- Torsten Duwe <duwe@suse.de>, Ryan Chen <ryan_chen@aspeedtech.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Alexey Charkov <alchark@flipper.net>, 
- Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=21565; i=dlan@kernel.org;
- h=from:subject:message-id; bh=T4PQI5q3JsW4IXc+SsVW/BS8l523vDjhK2/bl2oWteE=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs509btljFEEKDuBUfGDHdc+c1n7yKTn4DCKKU
- AomQ1rUpFqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdPRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+2sAg//cEuMu1VyvSgHxExs1yNuHbd6MneuhkB26e6SOx1jUapdWgDPTinLv
- 2y/tLdfDsPr1zIIosw1559BtKSrbwka8fp2Hc+gqFs4SPVHATAuFJI2qz+wbCbLZkKTUTrTlzyw
- 6jNJsEcYFqyki++ISIhI/VaFP5xzW6Q0ZVs2znLAO/KFp4NO7JJnPgFkM/LsjtNV2VmaAPG8hEH
- v7wqXgLFiGgMjFT3kuvahfHrB1+UiwF3au4uBkD9D8lRwboxVC1jdKOSq7jWTI0aqsUnKJFSaqB
- h48hk7inhzyEoAN+RMnNRUAlBGCCwtA5T7jznSVKTksrau3CBSFdNrkVj44GjMQ7tsvSyx9pStG
- t2FYMMOsNvu0Aa3+e/R82HhCQL/ncG9MH3q+9Pw8GCr2sNv5tjR8hq3bTOsOsANOxajS5/hbCBd
- f62SWeXySYu2eX80Lb/+0Oeqs/oJtWJTkNIotKdmuhCAzOfGIPT4rYfZGcKS9rmOXUOzGDEz9Fn
- kY6Zoyl1E29BAyoOZlFcayLoOOFDsLjh9mL8U+sT7MBS3w86c1MUObyVWnzhmdIS/wjx6u/iI/w
- uksEx3t0LLmLIfBx4KZNRunQ6eJICLrd1IiGIcyghXCUBA2P2ILsGm90TTOaNdJFUL9DkMx13sI
- nBkxnkzad3o6BoT2f6SkIs4wL9BCwk=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Mime-Version: 1.0
+Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.a37d568d.f88e.4fdb.8c5f.8da4b148415f@feishu.cn>
 
-Based on upstream Linux:
-  938ce3b16582 ("reset: spacemit: Add SpacemiT K3 reset driver")
+Hi, Troy:
 
-Add support for the SpacemiT K3 SoC reset controller. The K3 reset
-driver reuses the common reset controller code and provides K3-specific
-reset data for devices managed by the following units:
+> From: "Troy Mitchell"<troy.mitchell@linux.spacemit.com>
+> Date:=C2=A0 Wed, Sep 23, 2026, 17:14
+> On Wed Sep 23, 2026 at 4:01 PM +08, Sandie Cao wrote:
+> > Hi, Troy:
+> >
+> >> From: "Troy Mitchell"<troy.mitchell@linux.spacemit.com>
+> >> Date:=C2=A0 Wed, Sep 23, 2026, 15:02
+> >> On Wed, Sep 23, 2026 at 02:35:20PM +0800, Sandie Cao wrote:
+> >> > FML13V05 SD card slot is inside the board, it doesn't need cd-gpio,
+> >> > FML13V05 Keeps GPIO88 to low, Then SD card is always on for SD Card
+> >> > driver.
+> >>=C2=A0
+> >> An internal slot does not necessarily mean the card is non-removable.
+> >> I don't think its location alone justifies keeping card detect asserte=
+d:
+> >> GPIO88 would report a card present even when the slot is empty.
+> >
+> > Yes. The FML13V05 hardware is designed for this. We can't change it.=C2=
+=A0
+>=C2=A0
+> I may not have been clear: an internal card slot does not necessarily
+> mean the card is non-removable. If GPIO88 is connected to the
+> card-detect switch, it still needs a pull-up. Is GPIO88 tied low on
+> the board, or does it reflect the state of that switch?
 
-- MPMU (Main Power Management Unit)
-- APBC (APB clock unit)
-- APMU (Application Subsystem Power Management Unit)
-- DCIU (DMA Control and Interface Unit)
+The FML13V05 SD card slot doesn't have cd-gpio. But the K3 SD card driver n=
+eed it, so the GPIO88 is tied low on board.=C2=A0
+=C2=A0
+>=C2=A0
+> >
+> >>=C2=A0
+> >> > We check the vmmc-supply is p3v3. We have the same SDK DTS config wi=
+th
+> >> > k3_com260[1] , so, this patch follows the SD card patch of k3_com260
+> >> > dts[2].
+> >> >
+> >> > If this is not correct, we will change it.
+> >>=C2=A0
+> >> Could you confirm from the schematics that the SD power wiring matches
+> >> CoM260 and that the card's VDD is actually connected to ALDO4? If so,
+> >> this supply reference is fine. The same SDK configuration alone does
+> >> not establish the wiring.
+> >>=C2=A0
+> >> If the card instead uses a fixed, always-on supply with no software po=
+wer
+> >> control, vmmc-supply is optional for the MMC core; it should not point=
+ to
+> >> an unrelated ALDO4 rail.
+> >
+> > We check the schematics both of COM260 and FML13V05, both use p3v3 (a f=
+ixed, always-on supply with no software power control), not ALDO4. ALD04 is=
+ only for USB.
+> > We will correct it in next patch.
+> I'll send a separate patch to fix the CoM260 vmmc-supply reference.
+> You can focus on FML13V05 in this series.
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- drivers/clk/spacemit/Kconfig               |   1 +
- drivers/clk/spacemit/clk-k3.c              |  25 +++
- drivers/reset/spacemit/Kconfig             |   7 +
- drivers/reset/spacemit/Makefile            |   1 +
- drivers/reset/spacemit/reset-spacemit-k3.c | 242 +++++++++++++++++++++++++++++
- include/soc/spacemit/k3-reset.h            |  21 +++
- 6 files changed, 297 insertions(+)
+Got it. Thanks
 
-diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
-index c305f433871..a782426fe0f 100644
---- a/drivers/clk/spacemit/Kconfig
-+++ b/drivers/clk/spacemit/Kconfig
-@@ -24,6 +24,7 @@ config CLK_SPACEMIT_K1
- config CLK_SPACEMIT_K3
- 	bool "SpacemiT K3 clock support"
- 	select CLK_CCF
-+	select RESET_SPACEMIT_K3
- 	help
- 	  This enables support clock driver for Spacemit K3 SoC.
- 	  It's based on Common Clock Framework.
-diff --git a/drivers/clk/spacemit/clk-k3.c b/drivers/clk/spacemit/clk-k3.c
-index 3191654ea72..f4f1bb7bf04 100644
---- a/drivers/clk/spacemit/clk-k3.c
-+++ b/drivers/clk/spacemit/clk-k3.c
-@@ -9,6 +9,7 @@
- #include <dm/device_compat.h>
- #include <regmap.h>
- #include <linux/clk-provider.h>
-+#include <soc/spacemit/k3-reset.h>
- #include <soc/spacemit/k3-syscon.h>
- 
- #include "clk_common.h"
-@@ -1955,6 +1956,26 @@ U_BOOT_DRIVER(k3_pll_clk) = {
- 	.flags		= DM_FLAG_PRE_RELOC,
- };
- 
-+static int k3_mpmu_clk_bind(struct udevice *dev)
-+{
-+	return spacemit_k3_reset_bind(dev, SPACEMIT_K3_RESET_MPMU);
-+}
-+
-+static int k3_apbc_clk_bind(struct udevice *dev)
-+{
-+	return spacemit_k3_reset_bind(dev, SPACEMIT_K3_RESET_APBC);
-+}
-+
-+static int k3_apmu_clk_bind(struct udevice *dev)
-+{
-+	return spacemit_k3_reset_bind(dev, SPACEMIT_K3_RESET_APMU);
-+}
-+
-+static int k3_dciu_clk_bind(struct udevice *dev)
-+{
-+	return spacemit_k3_reset_bind(dev, SPACEMIT_K3_RESET_DCIU);
-+}
-+
- static const struct udevice_id k3_mpmu_clk_match[] = {
- 	{ .compatible = "spacemit,k3-syscon-mpmu",
- 	  .data = (ulong)&k3_ccu_mpmu_data },
-@@ -1967,6 +1988,7 @@ U_BOOT_DRIVER(k3_mpmu_clk) = {
- 	.name		= "k3_mpmu_clk",
- 	.id		= UCLASS_CLK,
- 	.of_match	= k3_mpmu_clk_match,
-+	.bind		= k3_mpmu_clk_bind,
- 	.probe		= k3_mpmu_clk_probe,
- 	.ops		= &k3_mpmu_clk_ops,
- 	.flags		= DM_FLAG_PRE_RELOC,
-@@ -1984,6 +2006,7 @@ U_BOOT_DRIVER(k3_apbc_clk) = {
- 	.name		= "k3_apbc_clk",
- 	.id		= UCLASS_CLK,
- 	.of_match	= k3_apbc_clk_match,
-+	.bind		= k3_apbc_clk_bind,
- 	.probe		= k3_apbc_clk_probe,
- 	.ops		= &k3_apbc_clk_ops,
- 	.flags		= DM_FLAG_PRE_RELOC,
-@@ -2001,6 +2024,7 @@ U_BOOT_DRIVER(k3_apmu_clk) = {
- 	.name		= "k3_apmu_clk",
- 	.id		= UCLASS_CLK,
- 	.of_match	= k3_apmu_clk_match,
-+	.bind		= k3_apmu_clk_bind,
- 	.probe		= k3_apmu_clk_probe,
- 	.ops		= &k3_apmu_clk_ops,
- 	.flags		= DM_FLAG_PRE_RELOC,
-@@ -2018,6 +2042,7 @@ U_BOOT_DRIVER(k3_dciu_clk) = {
- 	.name		= "k3_dciu_clk",
- 	.id		= UCLASS_CLK,
- 	.of_match	= k3_dciu_clk_match,
-+	.bind		= k3_dciu_clk_bind,
- 	.probe		= k3_dciu_clk_probe,
- 	.ops		= &k3_dciu_clk_ops,
- 	.flags		= DM_FLAG_PRE_RELOC,
-diff --git a/drivers/reset/spacemit/Kconfig b/drivers/reset/spacemit/Kconfig
-index 20e4cc6e4d8..66ab5f85333 100644
---- a/drivers/reset/spacemit/Kconfig
-+++ b/drivers/reset/spacemit/Kconfig
-@@ -13,3 +13,10 @@ config RESET_SPACEMIT_K1
- 	help
- 	  Reset controller for SpacemiT K1 (MPMU/APBC/APMU/APBC2).
- 	  Bound from the K1 CCU/syscon devices.
-+
-+config RESET_SPACEMIT_K3
-+	bool "SpacemiT K3 reset support"
-+	select RESET_SPACEMIT_COMMON
-+	help
-+	  Reset controller for SpacemiT K3 (MPMU/APBC/APMU/DCIU).
-+	  Bound from the K3 CCU/syscon devices.
-diff --git a/drivers/reset/spacemit/Makefile b/drivers/reset/spacemit/Makefile
-index 56f9fd1ab20..f89d068e1ca 100644
---- a/drivers/reset/spacemit/Makefile
-+++ b/drivers/reset/spacemit/Makefile
-@@ -4,3 +4,4 @@
- 
- obj-$(CONFIG_RESET_SPACEMIT_COMMON)	+= reset-spacemit-common.o
- obj-$(CONFIG_RESET_SPACEMIT_K1)		+= reset-spacemit-k1.o
-+obj-$(CONFIG_RESET_SPACEMIT_K3)		+= reset-spacemit-k3.o
-diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
-new file mode 100644
-index 00000000000..358211a2f88
---- /dev/null
-+++ b/drivers/reset/spacemit/reset-spacemit-k3.c
-@@ -0,0 +1,242 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * SpacemiT K3 reset driver (syscon-bound).
-+ *
-+ * Copyright (C) 2025-2026 SpacemiT Technology Co. Ltd
-+ */
-+
-+#include <dm.h>
-+#include <dt-bindings/reset/spacemit,k3-resets.h>
-+#include <linux/bitops.h>
-+#include <soc/spacemit/k3-reset.h>
-+#include <soc/spacemit/k3-syscon.h>
-+
-+#include "reset-spacemit-common.h"
-+
-+static const struct spacemit_reset_data k3_mpmu_resets[] = {
-+	[RESET_MPMU_WDT]	= RESET_DATA(MPMU_WDTPCR,	BIT(2), 0),
-+	[RESET_MPMU_RIPC]	= RESET_DATA(MPMU_RIPCCR,	BIT(2), 0),
-+};
-+
-+static const struct spacemit_reset_data k3_apbc_resets[] = {
-+	[RESET_APBC_UART0]	= RESET_DATA(APBC_UART0_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART2]	= RESET_DATA(APBC_UART2_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART3]	= RESET_DATA(APBC_UART3_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART4]	= RESET_DATA(APBC_UART4_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART5]	= RESET_DATA(APBC_UART5_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART6]	= RESET_DATA(APBC_UART6_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART7]	= RESET_DATA(APBC_UART7_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART8]	= RESET_DATA(APBC_UART8_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART9]	= RESET_DATA(APBC_UART9_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_UART10]	= RESET_DATA(APBC_UART10_CLK_RST,	BIT(2),	0),
-+	[RESET_APBC_GPIO]	= RESET_DATA(APBC_GPIO_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM0]	= RESET_DATA(APBC_PWM0_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM1]	= RESET_DATA(APBC_PWM1_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM2]	= RESET_DATA(APBC_PWM2_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM3]	= RESET_DATA(APBC_PWM3_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM4]	= RESET_DATA(APBC_PWM4_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM5]	= RESET_DATA(APBC_PWM5_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM6]	= RESET_DATA(APBC_PWM6_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM7]	= RESET_DATA(APBC_PWM7_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM8]	= RESET_DATA(APBC_PWM8_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM9]	= RESET_DATA(APBC_PWM9_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_PWM10]	= RESET_DATA(APBC_PWM10_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM11]	= RESET_DATA(APBC_PWM11_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM12]	= RESET_DATA(APBC_PWM12_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM13]	= RESET_DATA(APBC_PWM13_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM14]	= RESET_DATA(APBC_PWM14_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM15]	= RESET_DATA(APBC_PWM15_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM16]	= RESET_DATA(APBC_PWM16_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM17]	= RESET_DATA(APBC_PWM17_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM18]	= RESET_DATA(APBC_PWM18_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_PWM19]	= RESET_DATA(APBC_PWM19_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_SPI0]	= RESET_DATA(APBC_SSP0_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_SPI1]	= RESET_DATA(APBC_SSP1_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_SPI3]	= RESET_DATA(APBC_SSP3_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_RTC]	= RESET_DATA(APBC_RTC_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_TWSI0]	= RESET_DATA(APBC_TWSI0_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI1]	= RESET_DATA(APBC_TWSI1_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI2]	= RESET_DATA(APBC_TWSI2_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI4]	= RESET_DATA(APBC_TWSI4_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI5]	= RESET_DATA(APBC_TWSI5_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI6]	= RESET_DATA(APBC_TWSI6_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TWSI8]	= RESET_DATA(APBC_TWSI8_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS0]	= RESET_DATA(APBC_TIMERS0_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS1]	= RESET_DATA(APBC_TIMERS1_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS2]	= RESET_DATA(APBC_TIMERS2_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS3]	= RESET_DATA(APBC_TIMERS3_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS4]	= RESET_DATA(APBC_TIMERS4_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS5]	= RESET_DATA(APBC_TIMERS5_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS6]	= RESET_DATA(APBC_TIMERS6_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_TIMERS7]	= RESET_DATA(APBC_TIMERS7_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_AIB]	= RESET_DATA(APBC_AIB_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_ONEWIRE]	= RESET_DATA(APBC_ONEWIRE_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S0]	= RESET_DATA(APBC_SSPA0_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S1]	= RESET_DATA(APBC_SSPA1_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S2]	= RESET_DATA(APBC_SSPA2_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S3]	= RESET_DATA(APBC_SSPA3_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S4]	= RESET_DATA(APBC_SSPA4_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_I2S5]	= RESET_DATA(APBC_SSPA5_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_DRO]	= RESET_DATA(APBC_DRO_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_IR0]	= RESET_DATA(APBC_IR0_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_IR1]	= RESET_DATA(APBC_IR1_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_TSEN]	= RESET_DATA(APBC_TSEN_CLK_RST,		BIT(2), 0),
-+	[RESET_IPC_AP2AUD]	= RESET_DATA(APBC_IPC_AP2AUD_CLK_RST,	BIT(2), 0),
-+	[RESET_APBC_CAN0]	= RESET_DATA(APBC_CAN0_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_CAN1]	= RESET_DATA(APBC_CAN1_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_CAN2]	= RESET_DATA(APBC_CAN2_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_CAN3]	= RESET_DATA(APBC_CAN3_CLK_RST,		BIT(2), 0),
-+	[RESET_APBC_CAN4]	= RESET_DATA(APBC_CAN4_CLK_RST,		BIT(2), 0),
-+};
-+
-+static const struct spacemit_reset_data k3_apmu_resets[] = {
-+	[RESET_APMU_CSI]                = RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0,       BIT(1)),
-+	[RESET_APMU_CCIC2PHY]           = RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0,       BIT(2)),
-+	[RESET_APMU_CCIC3PHY]           = RESET_DATA(APMU_CSI_CCIC2_CLK_RES_CTRL, 0,       BIT(29)),
-+	[RESET_APMU_ISP_CIBUS]          = RESET_DATA(APMU_ISP_CLK_RES_CTRL,       0,       BIT(16)),
-+	[RESET_APMU_DSI_ESC]            = RESET_DATA(APMU_LCD_CLK_RES_CTRL1,      0,       BIT(3)),
-+	[RESET_APMU_LCD]                = RESET_DATA(APMU_LCD_CLK_RES_CTRL1,      0,       BIT(4)),
-+	[RESET_APMU_V2D]                = RESET_DATA(APMU_LCD_CLK_RES_CTRL1,      0,       BIT(27)),
-+	[RESET_APMU_LCD_MCLK]           = RESET_DATA(APMU_LCD_CLK_RES_CTRL2,      0,       BIT(9)),
-+	[RESET_APMU_LCD_DSCCLK]         = RESET_DATA(APMU_LCD_CLK_RES_CTRL2,      0,       BIT(15)),
-+	[RESET_APMU_SC2_HCLK]           = RESET_DATA(APMU_CCIC_CLK_RES_CTRL,      0,       BIT(0)),
-+	[RESET_APMU_CCIC_4X]            = RESET_DATA(APMU_CCIC_CLK_RES_CTRL,      0,       BIT(1)),
-+	[RESET_APMU_CCIC1_PHY]          = RESET_DATA(APMU_CCIC_CLK_RES_CTRL,      0,       BIT(2)),
-+	[RESET_APMU_SDH_AXI]            = RESET_DATA(APMU_SDH0_CLK_RES_CTRL,      0,       BIT(0)),
-+	[RESET_APMU_SDH0]               = RESET_DATA(APMU_SDH0_CLK_RES_CTRL,      0,       BIT(1)),
-+	[RESET_APMU_SDH1]               = RESET_DATA(APMU_SDH1_CLK_RES_CTRL,      0,       BIT(1)),
-+	[RESET_APMU_SDH2]               = RESET_DATA(APMU_SDH2_CLK_RES_CTRL,      0,       BIT(1)),
-+	[RESET_APMU_USB2_AHB]           = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_USB2_VCC]           = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(2)),
-+	[RESET_APMU_USB2_PHY]           = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(3)),
-+	[RESET_APMU_USB3_A_AHB]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(5)),
-+	[RESET_APMU_USB3_A_VCC]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(6)),
-+	[RESET_APMU_USB3_A_PHY]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(7)),
-+	[RESET_APMU_USB3_B_AHB]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(9)),
-+	[RESET_APMU_USB3_B_VCC]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(10)),
-+	[RESET_APMU_USB3_B_PHY]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(11)),
-+	[RESET_APMU_USB3_C_AHB]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(13)),
-+	[RESET_APMU_USB3_C_VCC]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(14)),
-+	[RESET_APMU_USB3_C_PHY]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(15)),
-+	[RESET_APMU_USB3_D_AHB]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(17)),
-+	[RESET_APMU_USB3_D_VCC]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(18)),
-+	[RESET_APMU_USB3_D_PHY]         = RESET_DATA(APMU_USB_CLK_RES_CTRL,       0,       BIT(19)),
-+	[RESET_APMU_QSPI]               = RESET_DATA(APMU_QSPI_CLK_RES_CTRL,      0,       BIT(1)),
-+	[RESET_APMU_QSPI_BUS]           = RESET_DATA(APMU_QSPI_CLK_RES_CTRL,      0,       BIT(0)),
-+	[RESET_APMU_DMA]                = RESET_DATA(APMU_DMA_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_AES_WTM]            = RESET_DATA(APMU_AES_CLK_RES_CTRL,       0,       BIT(4)),
-+	[RESET_APMU_MCB_DCLK]           = RESET_DATA(APMU_MCB_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_MCB_ACLK]           = RESET_DATA(APMU_MCB_CLK_RES_CTRL,       0,       BIT(1)),
-+	[RESET_APMU_VPU]                = RESET_DATA(APMU_VPU_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_DTC]                = RESET_DATA(APMU_DTC_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_GPU]                = RESET_DATA(APMU_GPU_CLK_RES_CTRL,       0,       BIT(1)),
-+	[RESET_APMU_MC]                 = RESET_DATA(APMU_PMUA_MC_CTRL,           0,       BIT(0)),
-+	[RESET_APMU_CPU0_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(0),  0),
-+	[RESET_APMU_CPU0_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(1),  0),
-+	[RESET_APMU_CPU1_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(3),  0),
-+	[RESET_APMU_CPU1_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(4),  0),
-+	[RESET_APMU_CPU2_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(6),  0),
-+	[RESET_APMU_CPU2_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(7),  0),
-+	[RESET_APMU_CPU3_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(9),  0),
-+	[RESET_APMU_CPU3_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(10), 0),
-+	[RESET_APMU_C0_MPSUB_SW]        = RESET_DATA(APMU_PMU_CC2_AP,             BIT(12), 0),
-+	[RESET_APMU_CPU4_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(16), 0),
-+	[RESET_APMU_CPU4_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(17), 0),
-+	[RESET_APMU_CPU5_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(19), 0),
-+	[RESET_APMU_CPU5_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(20), 0),
-+	[RESET_APMU_CPU6_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(22), 0),
-+	[RESET_APMU_CPU6_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(23), 0),
-+	[RESET_APMU_CPU7_POP]           = RESET_DATA(APMU_PMU_CC2_AP,             BIT(25), 0),
-+	[RESET_APMU_CPU7_SW]            = RESET_DATA(APMU_PMU_CC2_AP,             BIT(26), 0),
-+	[RESET_APMU_C1_MPSUB_SW]        = RESET_DATA(APMU_PMU_CC2_AP,             BIT(28), 0),
-+	[RESET_APMU_MPSUB_DBG]          = RESET_DATA(APMU_PMU_CC2_AP,             BIT(29), 0),
-+	[RESET_APMU_UCIE_IP]            = RESET_DATA(APMU_UCIE_CTRL,              BIT(1),  0),
-+	[RESET_APMU_UCIE_HOT]           = RESET_DATA(APMU_UCIE_CTRL,              BIT(2),  0),
-+	[RESET_APMU_UCIE_MON]           = RESET_DATA(APMU_UCIE_CTRL,              BIT(3),  0),
-+	[RESET_APMU_RCPU_AUDIO_SYS]     = RESET_DATA(APMU_RCPU_CLK_RES_CTRL,      0,       BIT(0)),
-+	[RESET_APMU_RCPU_MCU_CORE]      = RESET_DATA(APMU_RCPU_CLK_RES_CTRL,      0,       BIT(2)),
-+	[RESET_APMU_RCPU_AUDIO_APMU]    = RESET_DATA(APMU_RCPU_CLK_RES_CTRL,      0,       BIT(3)),
-+	[RESET_APMU_DSI4LN2_ESCCLK]     = RESET_DATA(APMU_LCD_CLK_RES_CTRL3,      0,       BIT(3)),
-+	[RESET_APMU_DSI4LN2_LCD_SW]     = RESET_DATA(APMU_LCD_CLK_RES_CTRL3,      0,       BIT(4)),
-+	[RESET_APMU_DSI4LN2_LCD_MCLK]   = RESET_DATA(APMU_LCD_CLK_RES_CTRL4,      0,       BIT(9)),
-+	[RESET_APMU_DSI4LN2_LCD_DSCCLK] = RESET_DATA(APMU_LCD_CLK_RES_CTRL4,      0,       BIT(15)),
-+	[RESET_APMU_DSI4LN2_DPU_ACLK]   = RESET_DATA(APMU_LCD_CLK_RES_CTRL5,      0,       BIT(0)),
-+	[RESET_APMU_DPU_ACLK]           = RESET_DATA(APMU_LCD_CLK_RES_CTRL5,      0,       BIT(15)),
-+	[RESET_APMU_UFS_ACLK]           = RESET_DATA(APMU_UFS_CLK_RES_CTRL,       0,       BIT(0)),
-+	[RESET_APMU_EDP0]               = RESET_DATA(APMU_LCD_EDP_CTRL,           0,       BIT(0)),
-+	[RESET_APMU_EDP1]               = RESET_DATA(APMU_LCD_EDP_CTRL,           0,       BIT(16)),
-+	[RESET_APMU_PCIE_A_DBI]         = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,    0,       BIT(3)),
-+	[RESET_APMU_PCIE_A_SLAVE]       = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,    0,       BIT(4)),
-+	[RESET_APMU_PCIE_A_MASTER]      = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_A,    0,       BIT(5)),
-+	[RESET_APMU_PCIE_B_DBI]         = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,    0,       BIT(3)),
-+	[RESET_APMU_PCIE_B_SLAVE]       = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,    0,       BIT(4)),
-+	[RESET_APMU_PCIE_B_MASTER]      = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_B,    0,       BIT(5)),
-+	[RESET_APMU_PCIE_C_DBI]         = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,    0,       BIT(3)),
-+	[RESET_APMU_PCIE_C_SLAVE]       = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,    0,       BIT(4)),
-+	[RESET_APMU_PCIE_C_MASTER]      = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_C,    0,       BIT(5)),
-+	[RESET_APMU_PCIE_D_DBI]         = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,    0,       BIT(3)),
-+	[RESET_APMU_PCIE_D_SLAVE]       = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,    0,       BIT(4)),
-+	[RESET_APMU_PCIE_D_MASTER]      = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_D,    0,       BIT(5)),
-+	[RESET_APMU_PCIE_E_DBI]         = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,    0,       BIT(3)),
-+	[RESET_APMU_PCIE_E_SLAVE]       = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,    0,       BIT(4)),
-+	[RESET_APMU_PCIE_E_MASTER]      = RESET_DATA(APMU_PCIE_CLK_RES_CTRL_E,    0,       BIT(5)),
-+	[RESET_APMU_EMAC0]              = RESET_DATA(APMU_EMAC0_CLK_RES_CTRL,     0,       BIT(1)),
-+	[RESET_APMU_EMAC1]              = RESET_DATA(APMU_EMAC1_CLK_RES_CTRL,     0,       BIT(1)),
-+	[RESET_APMU_EMAC2]              = RESET_DATA(APMU_EMAC2_CLK_RES_CTRL,     0,       BIT(1)),
-+	[RESET_APMU_ESPI_MCLK]          = RESET_DATA(APMU_ESPI_CLK_RES_CTRL,      0,       BIT(0)),
-+	[RESET_APMU_ESPI_SCLK]          = RESET_DATA(APMU_ESPI_CLK_RES_CTRL,      0,       BIT(2)),
-+};
-+
-+static const struct spacemit_reset_data k3_dciu_resets[] = {
-+	[RESET_DCIU_HDMA]	= RESET_DATA(DCIU_DMASYS_RSTN,		0, BIT(0)),
-+	[RESET_DCIU_DMA350]	= RESET_DATA(DCIU_DMASYS_SDMA_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_DMA350_0]	= RESET_DATA(DCIU_DMASYS_S0_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_DMA350_1]	= RESET_DATA(DCIU_DMASYS_S1_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA0]	= RESET_DATA(DCIU_DMASYS_A0_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA1]	= RESET_DATA(DCIU_DMASYS_A1_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA2]	= RESET_DATA(DCIU_DMASYS_A2_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA3]	= RESET_DATA(DCIU_DMASYS_A3_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA4]	= RESET_DATA(DCIU_DMASYS_A4_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA5]	= RESET_DATA(DCIU_DMASYS_A5_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA6]	= RESET_DATA(DCIU_DMASYS_A6_RSTN,	0, BIT(0)),
-+	[RESET_DCIU_AXIDMA7]	= RESET_DATA(DCIU_DMASYS_A7_RSTN,	0, BIT(0)),
-+};
-+
-+U_BOOT_DRIVER(spacemit_k3_reset) = {
-+	.name		= "spacemit_k3_reset",
-+	.id		= UCLASS_RESET,
-+	.ops		= &spacemit_reset_ops,
-+	.probe		= spacemit_reset_probe,
-+	.priv_auto	= sizeof(struct spacemit_reset_priv),
-+	.flags		= DM_FLAG_PRE_RELOC,
-+};
-+
-+int spacemit_k3_reset_bind(struct udevice *parent,
-+			   enum spacemit_k3_reset_syscon syscon)
-+{
-+	const struct spacemit_reset_data *table;
-+	size_t table_size;
-+
-+	switch (syscon) {
-+	case SPACEMIT_K3_RESET_MPMU:
-+		table = k3_mpmu_resets;
-+		table_size = ARRAY_SIZE(k3_mpmu_resets);
-+		break;
-+	case SPACEMIT_K3_RESET_APBC:
-+		table = k3_apbc_resets;
-+		table_size = ARRAY_SIZE(k3_apbc_resets);
-+		break;
-+	case SPACEMIT_K3_RESET_APMU:
-+		table = k3_apmu_resets;
-+		table_size = ARRAY_SIZE(k3_apmu_resets);
-+		break;
-+	case SPACEMIT_K3_RESET_DCIU:
-+		table = k3_dciu_resets;
-+		table_size = ARRAY_SIZE(k3_dciu_resets);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return spacemit_reset_bind(parent, "spacemit_k3_reset", table, table_size);
-+}
-diff --git a/include/soc/spacemit/k3-reset.h b/include/soc/spacemit/k3-reset.h
-new file mode 100644
-index 00000000000..e2ae12e2edc
---- /dev/null
-+++ b/include/soc/spacemit/k3-reset.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+/*
-+ * SpacemiT K3 reset driver — header interface.
-+ */
-+
-+#ifndef _SOC_SPACEMIT_K3_RESET_H
-+#define _SOC_SPACEMIT_K3_RESET_H
-+
-+struct udevice;
-+
-+enum spacemit_k3_reset_syscon {
-+	SPACEMIT_K3_RESET_MPMU,
-+	SPACEMIT_K3_RESET_APBC,
-+	SPACEMIT_K3_RESET_APMU,
-+	SPACEMIT_K3_RESET_DCIU,
-+};
-+
-+int spacemit_k3_reset_bind(struct udevice *parent,
-+			   enum spacemit_k3_reset_syscon syscon);
-+
-+#endif /* _SOC_SPACEMIT_K3_RESET_H */
-
--- 
-2.55.0
+Best regards
+Sandie
 
