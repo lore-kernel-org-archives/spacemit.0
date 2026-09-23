@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250B743FD18
-	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B467A331ED6
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790156121; cv=none; b=UjTd4G0rFBPH88KdxpkLi8XItS8JHkzjajmWOfRPrSf/EsFFH8Fb3zeC+bY4qjKsEkZ16e378G5XjSHaRtFkEkBzOcelYXU+oEK7m2F9fKZ31M2dwX7Gz8xDptJ08+iv453L1BabMkrig/4XCzfdRyjLwQp2hqYyxnIzQfFYn80=
+	t=1790156123; cv=none; b=hz0ziS7VejuyWPkRV1ce0Mn/w5YtCHeY3MCRpR8OhE20fB/1rS03ylGI0S0WDFW/5gID/sQfVmKrJxmo4spHuORQxSKsgbK13xw+UWIojyHJ7q5YnDS/3/jA7XDsRTXy4oSNwC5+qkH4ZojQLTuAJd12e74kZb6ixn0E7bxQVVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790156121; c=relaxed/simple;
-	bh=Tp6ghLSZW6DxaDVewRYtNBOtIgfIO3pF2UzP0xX8XtQ=;
+	s=arc-20240116; t=1790156123; c=relaxed/simple;
+	bh=HRgS40R875GNJ9FSro4CkQuBnRXJL+2KJ8meNXOdHek=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LoPSEvlQi/vdILdPqGD8PS2nN01H8K0kn9hDcrZDpTLEDntF4HI9ySGBdsZWwe62YnyKNVL85mzQpgjipAKCBOKH3mpYnyasprmz2LTh+pZX+KhjiscIvlaOm9A2uSQCeEDgSIyXnYYnifxL6Psnhi6mwCOMZn5L5F6J3BnkKEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z4DJFAJq; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=FzG5cI3NxJSIsKpQEYZjXJ4agUyh98in0+ipriDnDDbDt1spfslS9sJoWcAEaYZ0mZheCRT8rp8OJtqsST13NkmYqYB3vRTtdKKtnc6qnxyj/BJyzPNZA2jEJa+DDfKt/SLl/P/+JaXqUjU6JnIYVz7BeXuYwsVKnoGKmVtjfn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCX9KmPI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z4DJFAJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A951F00899;
-	Wed, 23 Sep 2026 09:35:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCX9KmPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670281F00898;
+	Wed, 23 Sep 2026 09:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790156118;
-	bh=tvDdxkQqQFu9ikiIVUPhKlhxINLnODiVwSWiJxP0CtU=;
+	s=k20260515; t=1790156121;
+	bh=Gz25oVKMZ8NjwsKL0KwR4/IhLbSzV16dZkwCidVdjw0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Z4DJFAJqpTBTQunxgqnZWEf/nKzc3R02W6gdSiXv6tTASpLbH6ekc1aNPau/UDR+i
-	 9O5+7LCSlmZkthoXW92qcBxYdRsYEYDzs5VY4VAZBvY7/yhRdx99Ys32WG5XFct65z
-	 ZHf6P4uc59La5Y1VRcxgosdDNqng+z8I6X2EyXaUGVIa3Z1wFVUH8MmN7ZYtklVZYs
-	 iLmQgirGgthpP+QAk6FbvyYusy/2AFKGDb0GiQNW7uBot2CIAElgk5imnaxGUsvkaJ
-	 gIbZNkcqz88nY+BVF/TfjqlDOZaRI7BQS3jLz/HqC7LizHh+hRzlDuR7yc9a+L4FNN
-	 fseh/k9KOUFug==
+	b=GCX9KmPIcZLE1b22TLRYf+pVACRi1tPCrKPMaCRM7ZPpKiPw4a7OLF4DJvEwNkpYE
+	 QfsvvLvdpqYJLyeSeeiBxywVFcIaZNdTSkGqryxWKSMJ+qBI8HXTIEYlGSxR9X3+aC
+	 dD/FnKkcCKt94JwZWXYJwXo7NmECdNin/INqp1PXCNaIN/CZ3sq9p6qBtCngXIjiAq
+	 slPEDFBduJ9IQRjxY51QMi07BVrnR0diO5oP86arFp7IvlZafJUd/r5XBXuiXvytND
+	 qMLXYc/uSjO70JuLZNaYCP7628PZLp3fmuM2p6AYysEZzIPdmKt4zo0TsN+bC/JC/8
+	 +W0rlF+qvgxdQ==
 From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 23 Sep 2026 09:34:29 +0000
-Subject: [PATCH v2 6/8] clk: spacemit: k3: add CPU PLL rate tables
+Date: Wed, 23 Sep 2026 09:34:30 +0000
+Subject: [PATCH v2 7/8] reset: spacemit: Extract common K1 reset code
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -36,8 +36,8 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260923-01-k3-clock-reset-support-v2-6-6ec0abb1c7b5@kernel.org>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260923-01-k3-clock-reset-support-v2-7-6ec0abb1c7b5@kernel.org>
 References: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
 In-Reply-To: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
 To: u-boot@lists.u-boot-project.org
@@ -50,169 +50,443 @@ Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io,
  Jonas Karlman <jonas@kwiboo.se>, Alexey Charkov <alchark@flipper.net>, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8345; i=dlan@kernel.org;
- h=from:subject:message-id; bh=Tp6ghLSZW6DxaDVewRYtNBOtIgfIO3pF2UzP0xX8XtQ=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs502/YYr8Wnp6MuyD3r9LFiETPLYtsrwe/tCH
- IaMqYMRVwiJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdNhsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13174; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=HRgS40R875GNJ9FSro4CkQuBnRXJL+2KJ8meNXOdHek=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs505IJ3XP2UZn8A8H5ph+ysFpNuzufx2zpY9T
+ wOhrqdrgByJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdORsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+3Hmw//fB0FPgLNJ4b+oBrm2y81PYXXysQD+OO8LXuiW40l3bqOeydYanrOO
- 7Hn1fAL9TPeKs7ZlyMfSOdgBAJ6R+eL7vS5LBJkgHxdGKEg+63KdS0CIePUXHCjKYGNsCxw5PHk
- +RDgNfqVAw2QstHb3649Awsd9NjacNEwIIWXtGlFH2kqxB2J266WzOhIx1UMx5JxJN0SaAymxbE
- r28Xq2JmLtufMTOGPN1OKH5IL8f1SjVkQDTTfjxk78r5BLXDY2W32RTIla66QTUgG3o4Akbf+eY
- EgaSsB0YqzWEcCQY1AtC0SEKD7iIwub4kDqA+8x8TqNLter2RO+YLgfvCz1kdnyhxKKwC6Jf9il
- JhRmPa/wojyB8LAmB0AM+7KSgVQw4f24Bv2Cquyr43Yq8uPedMaKzxO1X5wk+GCL6OnBtEKT+bT
- a1Ku/aPAG22I4a6HCyImccZ+tSCk83Aakkmu+NWwv98RUmaJJroPVv/obIu0expc0Bgsf1N9QoT
- 7ZAzRGcE0Zdml169So04jVbccw35iaxU3DYFJovKmv/i5Kngwdg4WnxXvpHJmd2KjEbQFK6Ek/K
- Z55eXeaBEEZPJPcC1vIkeUrLmQI51tapUCGKujtKXeeanwF/ozlxdb/jGGdqh45DhZwI8tdz/W7
- 4QMKEZK0kC0ptRqXtGxFjzVyee0OGI=
+ QACgkQMarqR1lNu+1v1A//fguEjfHb0MO+FJ3l860p+g2so1vkFOwdKEmx92LpQf5HCkH2VCuk7
+ AUhSRn2cD2YxKUPm0YIuXZ3nSNoedRphvU64nij7pAoeg8GAIHJGaKXyX+46SB8/qGA7tNlNqdx
+ aUYp8MPNnQkH6DI1qKt5/TxJNT+cbNDNNc7cTMD9AfjrDUZxkk3PlObbD+lu3I7qBjcYw0MSR+d
+ X5mK6KId629DKVEa08d77EfAHilEcS97Abyin/PynMZZTt3VyLUe4nK7dJkvkGh4SYoSY//EieN
+ TfxaWkJWup/FOu7oDgA+JozADJHuOU+JKkNSppRQsWbmrClYBmNiXzilpZAhWbHYtsv3UqLnVh8
+ 9abOSyEwVWWIFCFQQ+hr4+m6CP8SACJyTsA6+he8LLZCmbV9h4xwcVwFeSE/pi47eH+1vkztySE
+ sUY1mN1dBT36g1TeI26hasAMahLl2n9HO9pDgOlEK9Duh5rASg91DAMUHdE60Mrqk5gGQMRQIfZ
+ UfaTWEra8pLQhWOmT4GYnMn+7AS7bHVMaj3BMvbF4rOXVZbhPdbq1ROECs9FNjs6Xc9N5LTMT5M
+ UPxM6O1yhOg4SPgg6zlG3B3xwzli6dwLNFuHueI15fYLfsBc0YqMLc5y0LCcsoMheGw85Gr+/Jy
+ HUjTTHeK/Igk/Vvv1txoFjtJVUpgmY=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
 Based on upstream Linux:
-  d558af8ee0bb ("clk: spacemit: k3: add CPU PLL rate tables")
+  aba86f7bff0b ("reset: spacemit: Extract common K1 reset code")
 
-The K3 CPU PLL rate tables currently describe only one rate per PLL,
-although the hardware supports a wider range.
+Extract the common reset controller code from the K1 driver into
+separate reset-spacemit-common.{c,h} files to prepare for additional
+SpacemiT SoCs that share the same reset controller architecture.
 
-PLL3 and PLL4 support rates from 1.05 to 2.4 GHz, while PLL5 and PLL8
-support rates from 1.05 to 2 GHz. Populate the tables with every
-supported rate in 50 MHz steps.
-
-Recent newer vendor FSBL release switch PLL3 and PLL4 to 2 GHz from
-2.2 GHz. Since the clock driver does not recognize this setting,
-during the probe stage, the PLL clock will treat it as an unknown
-configuration and attempts to disable and reconfigure. PLL3 is critical
-clock that drives the boot CPU at this point, so disabling it causes
-U-Boot to hang while probing the serial console clock.
-
-Add the complete clock tables so that the clock driver recognizes and
-preserves the settings established by the FSBL.
-
-Link: https://patch.msgid.link/20260907-k3-pll5-pll8-1800mhz-v5-1-5cc96d716b0a@linux.spacemit.com
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
- drivers/clk/spacemit/clk-k3.c | 92 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ drivers/clk/spacemit/Kconfig                   |   1 +
+ drivers/reset/Kconfig                          |   1 +
+ drivers/reset/Makefile                         |   2 +-
+ drivers/reset/spacemit/Kconfig                 |  15 +++
+ drivers/reset/spacemit/Makefile                |   3 +-
+ drivers/reset/spacemit/reset-spacemit-common.c |  93 ++++++++++++++++++
+ drivers/reset/spacemit/reset-spacemit-common.h |  40 ++++++++
+ drivers/reset/spacemit/reset-spacemit-k1.c     | 128 ++-----------------------
+ 8 files changed, 163 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/clk/spacemit/clk-k3.c b/drivers/clk/spacemit/clk-k3.c
-index 1ac64aec6ba..3191654ea72 100644
---- a/drivers/clk/spacemit/clk-k3.c
-+++ b/drivers/clk/spacemit/clk-k3.c
-@@ -46,14 +46,87 @@ static const struct ccu_pll_rate_tbl pll2_rate_tbl[] = {
+diff --git a/drivers/clk/spacemit/Kconfig b/drivers/clk/spacemit/Kconfig
+index b22f65f2547..c305f433871 100644
+--- a/drivers/clk/spacemit/Kconfig
++++ b/drivers/clk/spacemit/Kconfig
+@@ -16,6 +16,7 @@ if CLK_SPACEMIT
+ config CLK_SPACEMIT_K1
+ 	bool "SpacemiT K1 clock support"
+ 	select CLK_CCF
++	select RESET_SPACEMIT_K1
+ 	help
+ 	  This enables support clock driver for Spacemit K1 SoC.
+ 	  It's based on Common Clock Framework.
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index db764ed5ace..ad61ebf344a 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -280,4 +280,5 @@ config RESET_RZG2L_USBPHY_CTRL
+ 	  SoC.
+ 
+ source "drivers/reset/stm32/Kconfig"
++source "drivers/reset/spacemit/Kconfig"
+ endmenu
+diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile
+index 384f4336331..959aafe4d70 100644
+--- a/drivers/reset/Makefile
++++ b/drivers/reset/Makefile
+@@ -37,7 +37,7 @@ obj-$(CONFIG_RESET_DRA7) += reset-dra7.o
+ obj-$(CONFIG_RESET_AT91) += reset-at91.o
+ obj-$(CONFIG_$(PHASE_)RESET_JH7110) += reset-jh7110.o
+ obj-$(CONFIG_RESET_RZG2L_USBPHY_CTRL) += reset-rzg2l-usbphy-ctrl.o
+-obj-$(CONFIG_CLK_SPACEMIT_K1) += spacemit/
++obj-$(CONFIG_RESET_SPACEMIT_COMMON) += spacemit/
+ 
+ obj-$(CONFIG_ARCH_STM32) += stm32/
+ obj-$(CONFIG_ARCH_STM32MP) += stm32/
+diff --git a/drivers/reset/spacemit/Kconfig b/drivers/reset/spacemit/Kconfig
+new file mode 100644
+index 00000000000..20e4cc6e4d8
+--- /dev/null
++++ b/drivers/reset/spacemit/Kconfig
+@@ -0,0 +1,15 @@
++# SPDX-License-Identifier: GPL-2.0-only
++
++config RESET_SPACEMIT_COMMON
++	bool
++	select DM_RESET
++	help
++	  Common reset controller infrastructure for SpacemiT SoCs.
++	  Shared by the K1 and K3 reset drivers.
++
++config RESET_SPACEMIT_K1
++	bool "SpacemiT K1 reset support"
++	select RESET_SPACEMIT_COMMON
++	help
++	  Reset controller for SpacemiT K1 (MPMU/APBC/APMU/APBC2).
++	  Bound from the K1 CCU/syscon devices.
+diff --git a/drivers/reset/spacemit/Makefile b/drivers/reset/spacemit/Makefile
+index 16722c68954..56f9fd1ab20 100644
+--- a/drivers/reset/spacemit/Makefile
++++ b/drivers/reset/spacemit/Makefile
+@@ -2,4 +2,5 @@
+ #
+ # SpacemiT reset drivers
+ 
+-obj-y += reset-spacemit-k1.o
++obj-$(CONFIG_RESET_SPACEMIT_COMMON)	+= reset-spacemit-common.o
++obj-$(CONFIG_RESET_SPACEMIT_K1)		+= reset-spacemit-k1.o
+diff --git a/drivers/reset/spacemit/reset-spacemit-common.c b/drivers/reset/spacemit/reset-spacemit-common.c
+new file mode 100644
+index 00000000000..34ed0862b9c
+--- /dev/null
++++ b/drivers/reset/spacemit/reset-spacemit-common.c
+@@ -0,0 +1,93 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * SpacemiT reset controller — common implementation (U-Boot)
++ */
++
++#include <asm/io.h>
++#include <dm.h>
++#include <dm/device-internal.h>
++#include <dm/lists.h>
++#include <malloc.h>
++#include <reset-uclass.h>
++
++#include "reset-spacemit-common.h"
++
++static int spacemit_reset_xfer(struct reset_ctl *rst, bool assert)
++{
++	struct spacemit_reset_priv *priv = dev_get_priv(rst->dev);
++	const struct spacemit_reset_data *e;
++	u32 v;
++
++	if (rst->id >= priv->table_size)
++		return -EINVAL;
++
++	e = &priv->table[rst->id];
++	if (e->assert_mask == 0 && e->deassert_mask == 0)
++		return -EINVAL;
++
++	v = readl(priv->base + e->offset);
++	v &= ~(e->assert_mask | e->deassert_mask);
++	v |= assert ? e->assert_mask : e->deassert_mask;
++	writel(v, priv->base + e->offset);
++
++	return 0;
++}
++
++static int spacemit_reset_assert(struct reset_ctl *rst)
++{
++	return spacemit_reset_xfer(rst, true);
++}
++
++static int spacemit_reset_deassert(struct reset_ctl *rst)
++{
++	return spacemit_reset_xfer(rst, false);
++}
++
++static int spacemit_reset_request(struct reset_ctl *rst)
++{
++	struct spacemit_reset_priv *priv = dev_get_priv(rst->dev);
++
++	return rst->id < priv->table_size ? 0 : -EINVAL;
++}
++
++const struct reset_ops spacemit_reset_ops = {
++	.request	= spacemit_reset_request,
++	.rst_assert	= spacemit_reset_assert,
++	.rst_deassert	= spacemit_reset_deassert,
++};
++
++int spacemit_reset_probe(struct udevice *dev)
++{
++	struct spacemit_reset_priv *priv = dev_get_priv(dev);
++
++	priv->base = (void __iomem *)dev_remap_addr(dev);
++	if (!priv->base)
++		return -ENODEV;
++
++	return 0;
++}
++
++int spacemit_reset_bind(struct udevice *parent, const char *drv_name,
++			const struct spacemit_reset_data *table,
++			size_t table_size)
++{
++	struct spacemit_reset_priv *priv;
++	struct udevice *rst_dev;
++	int ret;
++
++	ret = device_bind_driver_to_node(parent, drv_name, "reset",
++					 dev_ofnode(parent), &rst_dev);
++	if (ret)
++		return ret;
++
++	priv = malloc(sizeof(*priv));
++	if (!priv) {
++		device_unbind(rst_dev);
++		return -ENOMEM;
++	}
++	priv->table = table;
++	priv->table_size = table_size;
++	dev_set_priv(rst_dev, priv);
++
++	return 0;
++}
+diff --git a/drivers/reset/spacemit/reset-spacemit-common.h b/drivers/reset/spacemit/reset-spacemit-common.h
+new file mode 100644
+index 00000000000..cde52b3fc1d
+--- /dev/null
++++ b/drivers/reset/spacemit/reset-spacemit-common.h
+@@ -0,0 +1,40 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * SpacemiT reset controller — common definitions (U-Boot)
++ */
++
++#ifndef _RESET_SPACEMIT_COMMON_H_
++#define _RESET_SPACEMIT_COMMON_H_
++
++#include <linux/types.h>
++
++struct udevice;
++struct reset_ops;
++
++struct spacemit_reset_data {
++	u32 offset;
++	u32 assert_mask;
++	u32 deassert_mask;
++};
++
++struct spacemit_reset_priv {
++	void *base;
++	const struct spacemit_reset_data *table;
++	size_t table_size;
++};
++
++#define RESET_DATA(_offset, _assert_mask, _deassert_mask)	\
++	{							\
++		.offset		= (_offset),			\
++		.assert_mask	= (_assert_mask),		\
++		.deassert_mask	= (_deassert_mask),		\
++	}
++
++extern const struct reset_ops spacemit_reset_ops;
++
++int spacemit_reset_probe(struct udevice *dev);
++int spacemit_reset_bind(struct udevice *parent, const char *drv_name,
++			const struct spacemit_reset_data *table,
++			size_t table_size);
++
++#endif /* _RESET_SPACEMIT_COMMON_H_ */
+diff --git a/drivers/reset/spacemit/reset-spacemit-k1.c b/drivers/reset/spacemit/reset-spacemit-k1.c
+index 129e1cc96f1..75000ff64e0 100644
+--- a/drivers/reset/spacemit/reset-spacemit-k1.c
++++ b/drivers/reset/spacemit/reset-spacemit-k1.c
+@@ -7,46 +7,19 @@
+  * Copyright (C) 2026 RISCstar Ltd.
+  */
+ 
+-#include <asm/io.h>
+ #include <dm.h>
+-#include <dm/device-internal.h>
+-#include <dm/lists.h>
+ #include <dt-bindings/clock/spacemit,k1-syscon.h>
+ #include <linux/bitops.h>
+-#include <malloc.h>
+-#include <reset-uclass.h>
+ #include <soc/spacemit/k1-reset.h>
+ #include <soc/spacemit/k1-syscon.h>
+ 
+-/* ===================================================================
+- * Per-syscon reset signal tables.
+- *
+- * Indexed by the kernel-side per-syscon-local IDs from
+- * <dt-bindings/clock/spacemit,k1-syscon.h>. Each entry is
+- * (offset, assert_mask, deassert_mask): bits in assert_mask are set
+- * when the reset line is asserted; bits in deassert_mask are set when
+- * deasserted; the union (assert_mask | deassert_mask) is the set of
+- * bits the controller will overwrite on each transition.
+- *
+- * Layout mirrors the kernel-side K1 reset driver.
+- * ===================================================================
+- */
+-
+-struct spacemit_k1_reset_data {
+-	u32 offset;
+-	u32 assert_mask;
+-	u32 deassert_mask;
+-};
++#include "reset-spacemit-common.h"
+ 
+-#define RESET_DATA(o, a, d) {					\
+-	.offset = (o), .assert_mask = (a), .deassert_mask = (d)	\
+-}
+-
+-static const struct spacemit_k1_reset_data k1_mpmu_resets[] = {
++static const struct spacemit_reset_data k1_mpmu_resets[] = {
+ 	[RESET_WDT]	= RESET_DATA(MPMU_WDTPCR,		BIT(2), 0),
  };
  
- static const struct ccu_pll_rate_tbl pll3_rate_tbl[] = {
-+	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
-+	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
-+	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
-+	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
-+	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
-+	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
-+	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
-+	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
-+	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
-+	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
-+	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
-+	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
-+	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
-+	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
-+	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
-+	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
-+	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
-+	CCU_PLLA_RATE(2050000000UL, 0x0b2a2d55, 0x00005500, 0xa0558686),
-+	CCU_PLLA_RATE(2100000000UL, 0x0b2b3000, 0x00000000, 0xa0558787),
-+	CCU_PLLA_RATE(2150000000UL, 0x0b2c32aa, 0x0000ab00, 0xa0558787),
- 	CCU_PLLA_RATE(2200000000UL, 0x0b2d3555, 0x00005500, 0xa0558787),
-+	CCU_PLLA_RATE(2250000000UL, 0x0b2e3800, 0x00000000, 0xa0558888),
-+	CCU_PLLA_RATE(2300000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0558888),
-+	CCU_PLLA_RATE(2350000000UL, 0x0b303d55, 0x00005500, 0xa0558888),
-+	CCU_PLLA_RATE(2400000000UL, 0x0b320000, 0x00000000, 0xa0558989),
+-static const struct spacemit_k1_reset_data k1_apbc_resets[] = {
++static const struct spacemit_reset_data k1_apbc_resets[] = {
+ 	[RESET_UART0]	= RESET_DATA(APBC_UART1_CLK_RST,	BIT(2), 0),
+ 	[RESET_UART2]	= RESET_DATA(APBC_UART2_CLK_RST,	BIT(2), 0),
+ 	[RESET_UART3]	= RESET_DATA(APBC_UART3_CLK_RST,	BIT(2), 0),
+@@ -100,7 +73,7 @@ static const struct spacemit_k1_reset_data k1_apbc_resets[] = {
+ 	[RESET_CAN0]	= RESET_DATA(APBC_CAN0_CLK_RST,		BIT(2), 0),
  };
  
- static const struct ccu_pll_rate_tbl pll4_rate_tbl[] = {
-+	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
-+	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
-+	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
-+	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
-+	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
-+	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
-+	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
-+	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
-+	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
-+	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
-+	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
-+	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
-+	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
-+	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
-+	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
-+	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
-+	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
-+	CCU_PLLA_RATE(2050000000UL, 0x0b2a2d55, 0x00005500, 0xa0558686),
-+	CCU_PLLA_RATE(2100000000UL, 0x0b2b3000, 0x00000000, 0xa0558787),
-+	CCU_PLLA_RATE(2150000000UL, 0x0b2c32aa, 0x0000ab00, 0xa0558787),
- 	CCU_PLLA_RATE(2200000000UL, 0x0b2d3555, 0x00005500, 0xa0558787),
-+	CCU_PLLA_RATE(2250000000UL, 0x0b2e3800, 0x00000000, 0xa0558888),
-+	CCU_PLLA_RATE(2300000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0558888),
-+	CCU_PLLA_RATE(2350000000UL, 0x0b303d55, 0x00005500, 0xa0558888),
-+	CCU_PLLA_RATE(2400000000UL, 0x0b320000, 0x00000000, 0xa0558989),
+-static const struct spacemit_k1_reset_data k1_apmu_resets[] = {
++static const struct spacemit_reset_data k1_apmu_resets[] = {
+ 	[RESET_CCIC_4X]		= RESET_DATA(APMU_CCIC_CLK_RES_CTRL,	0, BIT(1)),
+ 	[RESET_CCIC1_PHY]	= RESET_DATA(APMU_CCIC_CLK_RES_CTRL,	0, BIT(2)),
+ 	[RESET_SDH_AXI]		= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(0)),
+@@ -156,7 +129,7 @@ static const struct spacemit_k1_reset_data k1_apmu_resets[] = {
+ 	[RESET_MC]		= RESET_DATA(APMU_PMUA_MC_CTRL,		0, BIT(0)),
  };
  
- static const struct ccu_pll_rate_tbl pll5_rate_tbl[] = {
-+	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
-+	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
-+	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
-+	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
-+	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
-+	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
-+	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
-+	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
-+	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
-+	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
-+	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
-+	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
-+	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
-+	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
-+	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
-+	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
- 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
+-static const struct spacemit_k1_reset_data k1_apbc2_resets[] = {
++static const struct spacemit_reset_data k1_apbc2_resets[] = {
+ 	[RESET_APBC2_UART1]	= RESET_DATA(APBC2_UART1_CLK_RST,	BIT(2), 0),
+ 	[RESET_APBC2_SSP2]	= RESET_DATA(APBC2_SSP2_CLK_RST,	BIT(2), 0),
+ 	[RESET_APBC2_TWSI3]	= RESET_DATA(APBC2_TWSI3_CLK_RST,	BIT(2), 0),
+@@ -166,89 +139,22 @@ static const struct spacemit_k1_reset_data k1_apbc2_resets[] = {
+ 	[RESET_APBC2_GPIO]	= RESET_DATA(APBC2_GPIO_CLK_RST,	BIT(2), 0),
  };
  
-@@ -66,6 +139,25 @@ static const struct ccu_pll_rate_tbl pll7_rate_tbl[] = {
+-/* ===================================================================
+- * Driver
+- * ===================================================================
+- */
+-
+-struct spacemit_k1_reset_priv {
+-	void __iomem *base;
+-	const struct spacemit_k1_reset_data *table;
+-	size_t table_size;
+-};
+-
+-static int spacemit_k1_reset_xfer(struct reset_ctl *rst, bool assert)
+-{
+-	struct spacemit_k1_reset_priv *priv = dev_get_priv(rst->dev);
+-	const struct spacemit_k1_reset_data *e;
+-	u32 v;
+-
+-	if (rst->id >= priv->table_size)
+-		return -EINVAL;
+-
+-	e = &priv->table[rst->id];
+-	if (e->assert_mask == 0 && e->deassert_mask == 0)
+-		return -EINVAL;	/* not owned by this syscon */
+-
+-	v = readl(priv->base + e->offset);
+-	v &= ~(e->assert_mask | e->deassert_mask);
+-	v |= assert ? e->assert_mask : e->deassert_mask;
+-	writel(v, priv->base + e->offset);
+-
+-	return 0;
+-}
+-
+-static int spacemit_k1_reset_assert(struct reset_ctl *rst)
+-{
+-	return spacemit_k1_reset_xfer(rst, true);
+-}
+-
+-static int spacemit_k1_reset_deassert(struct reset_ctl *rst)
+-{
+-	return spacemit_k1_reset_xfer(rst, false);
+-}
+-
+-static int spacemit_k1_reset_request(struct reset_ctl *rst)
+-{
+-	struct spacemit_k1_reset_priv *priv = dev_get_priv(rst->dev);
+-
+-	return rst->id < priv->table_size ? 0 : -EINVAL;
+-}
+-
+-static const struct reset_ops spacemit_k1_reset_ops = {
+-	.request	= spacemit_k1_reset_request,
+-	.rst_assert	= spacemit_k1_reset_assert,
+-	.rst_deassert	= spacemit_k1_reset_deassert,
+-};
+-
+-static int spacemit_k1_reset_probe(struct udevice *dev)
+-{
+-	struct spacemit_k1_reset_priv *priv = dev_get_priv(dev);
+ 
+-	priv->base = (void __iomem *)dev_remap_addr(dev);
+-	if (!priv->base)
+-		return -ENODEV;
+-
+-	return 0;
+-}
+ 
+ U_BOOT_DRIVER(spacemit_k1_reset) = {
+ 	.name		= "spacemit_k1_reset",
+ 	.id		= UCLASS_RESET,
+-	.ops		= &spacemit_k1_reset_ops,
+-	.probe		= spacemit_k1_reset_probe,
+-	.priv_auto	= sizeof(struct spacemit_k1_reset_priv),
++	.ops		= &spacemit_reset_ops,
++	.probe		= spacemit_reset_probe,
++	.priv_auto	= sizeof(struct spacemit_reset_priv),
+ 	.flags		= DM_FLAG_PRE_RELOC,
  };
  
- static const struct ccu_pll_rate_tbl pll8_rate_tbl[] = {
-+	CCU_PLLA_RATE(1050000000UL, 0x0b2b3000, 0x00000000, 0xa0458080),
-+	CCU_PLLA_RATE(1100000000UL, 0x0b2d3555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1150000000UL, 0x0b2f3aaa, 0x0000ab00, 0xa0458181),
-+	CCU_PLLA_RATE(1200000000UL, 0x0b320000, 0x00000000, 0xa0458181),
-+	CCU_PLLA_RATE(1250000000UL, 0x0b340555, 0x00005500, 0xa0458181),
-+	CCU_PLLA_RATE(1300000000UL, 0x0b360aaa, 0x0000ab00, 0xa0458282),
-+	CCU_PLLA_RATE(1350000000UL, 0x0b381000, 0x00000000, 0xa0458282),
-+	CCU_PLLA_RATE(1400000000UL, 0x0b3a1555, 0x00005500, 0xa0458282),
-+	CCU_PLLA_RATE(1450000000UL, 0x0b3c1aaa, 0x0000ab00, 0xa0458383),
-+	CCU_PLLA_RATE(1500000000UL, 0x0b3e2000, 0x00000000, 0xa0458383),
-+	CCU_PLLA_RATE(1550000000UL, 0x0b402555, 0x00005500, 0xa0458383),
-+	CCU_PLLA_RATE(1600000000UL, 0x0b422aaa, 0x0000ab00, 0xa0458484),
-+	CCU_PLLA_RATE(1650000000UL, 0x0b443000, 0x00000000, 0xa0458484),
-+	CCU_PLLA_RATE(1700000000UL, 0x0b463555, 0x00005500, 0xa0458484),
-+	CCU_PLLA_RATE(1750000000UL, 0x0b483aaa, 0x0000ab00, 0xa0458585),
-+	CCU_PLLA_RATE(1800000000UL, 0x0b4b0000, 0x00000000, 0xa0458585),
-+	CCU_PLLA_RATE(1850000000UL, 0x0b4d0555, 0x00005500, 0xa0458585),
-+	CCU_PLLA_RATE(1900000000UL, 0x0b4f0aaa, 0x0000ab00, 0xa0458686),
-+	CCU_PLLA_RATE(1950000000UL, 0x0b511000, 0x00000000, 0xa0458686),
- 	CCU_PLLA_RATE(2000000000UL, 0x0b292aaa, 0x0000ab00, 0xa0558686),
- };
+ int spacemit_k1_reset_bind(struct udevice *parent,
+ 			   enum spacemit_k1_reset_syscon syscon)
+ {
+-	struct spacemit_k1_reset_priv *priv;
+-	struct udevice *rst_dev;
+-	const struct spacemit_k1_reset_data *table;
++	const struct spacemit_reset_data *table;
+ 	size_t table_size;
+-	int ret;
  
+ 	switch (syscon) {
+ 	case SPACEMIT_K1_RESET_MPMU:
+@@ -271,19 +177,5 @@ int spacemit_k1_reset_bind(struct udevice *parent,
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = device_bind_driver_to_node(parent, "spacemit_k1_reset", "reset",
+-					 dev_ofnode(parent), &rst_dev);
+-	if (ret)
+-		return ret;
+-
+-	priv = malloc(sizeof(*priv));
+-	if (!priv) {
+-		device_unbind(rst_dev);
+-		return -ENOMEM;
+-	}
+-	priv->table = table;
+-	priv->table_size = table_size;
+-	dev_set_priv(rst_dev, priv);
+-
+-	return 0;
++	return spacemit_reset_bind(parent, "spacemit_k1_reset", table, table_size);
+ }
 
 -- 
 2.55.0
