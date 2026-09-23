@@ -1,225 +1,136 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D54C43DEA3
-	for <spacemit@lists.linux.dev>; Tue, 22 Sep 2026 21:33:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78944363C53
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 01:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790112846; cv=none; b=UlFjqDZ/pSxlYMFF5EspG2Vvqh+rY8/RGxy8R2TI69HmCZ7fOyJnS72a/wbXm4DKpRWJhFMQoIvqN6LxkNc847tArWg5xtaf1hyBw+OOq90RiV8FwnSg3LUo8fL5UcYShOJfrbv5bQ36LO2SA19mvNmWRukFTL5p+6mczccUAwI=
+	t=1790128196; cv=none; b=Iav05Jq8Yl9BBS0yfmC9R0d2OlAdh6d6jJg1MdrkcQQ/DCu+7IM4CyubPKbdtFilh5pKGW9erC6am1B0UNi2hp6ebePbVlWNxz+tmT3QPeLLMB1j6FtFLKolWA/AwqKFVwAfOz6u0qiBxzMO1wu+jAK8moUsdVagp7mJJfJMLyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790112846; c=relaxed/simple;
-	bh=PWHE2LRMydwcWhxScs51lUyq4LhTFBNVBhpTIrCPtCA=;
+	s=arc-20240116; t=1790128196; c=relaxed/simple;
+	bh=sctJ8pRpBUC39phZYvLZAiXxKt0bFvx0/SjCeTNKZ9k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CRHhrJF8CGp08bJQ4i6Qe3OHnglCqqpqONrdfilmb/cgF50GzbFefJMs6zLtWlCcm7z3Rysnh5J4dtgSJZvHHt1dpgTeHJq8/Er9QPcAWWBCUryP8UBc7nHYpI9WGYD3X5hU9iEeln8SiKqNmQOoFWIZg3IXPTfAoqCpRcYSyaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tenstorrent.com; spf=pass smtp.mailfrom=tenstorrent.com; dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b=JBlwk0sd; arc=none smtp.client-ip=74.125.224.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tenstorrent.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=U97yG1eUlJ8ZK1VB/Rp0/aFn+xQzLBPESqv9kBQ+oajVraFCw5Al7XhSI7AmjubuyzPte4NXGtgdbOG1y/rcZVZXBEKSKvGIn4UiqM9CHixBX2tiKZTHo7StmJgF434U7rehBZIJuJTkSCizpgEpfQrDtMmipOAdrXw8YUAQZOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aT9Isakl; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.b="JBlwk0sd"
-Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66e4ab201ecso302498d50.2
-        for <spacemit@lists.linux.dev>; Tue, 22 Sep 2026 14:33:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aT9Isakl"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398beb616f5so176857a91.1
+        for <spacemit@lists.linux.dev>; Tue, 22 Sep 2026 18:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tenstorrent.com; s=google; t=1790112835; x=1790717635; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WeGUBMLWdKwi5Qro48n5wzE6cYnrkvQSg7+ilGkmexE=;
-        b=JBlwk0sds0oMIdUYuoYu4aP7xKSCbMnKDn2jHhJMZcpq1GXwFoJWhOpBL0/o65mY5U
-         9kgAc8rDrgMiNSTF6rlOB7tedCKMyZ12zPuNV8ZxaFylWncgJKpg69tSK97OpSA0+HwC
-         nBHxvn3IoWTN6bGs7cTseqVCrfL3qbC+wqfKNDppuCb3NYY1+4TwnWccVnfgjb3GAnRC
-         I4jM7ZBYNdZkEiBkrJ7+giDP3WJXw/y3sVsDIc/brIhNiRqCi811OcO/7vJ2gxGMFXaY
-         tfwzd7FKX51Z6kxz6kXjefE+bKrbzKK94/cfxKFO6mC1k2QO2HEjOtBWlOWMqZT1c5p+
-         1SJA==
+        d=gmail.com; s=20251104; t=1790128195; x=1790732995; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YnnWTyMk5d70Hpz57ZOyyh2guKXo+Z5k9pvOlpmwiYo=;
+        b=aT9IsaklFlIAaol+iVjW1HEtsm0DunMeXh/ijayN908UewMiuqEqQi0p7YHHyslpMp
+         RUngZIJX11A7YwD8I0/nVonmKcWulE0DV1q5bgdbOHNe7p+GSv6ML1Uqh+RwzsaKxDtO
+         W4uVvmklmvm9nhFNDYw4CD3igpZPDbGmAl1irH2LwXuu5fx+2ylqeKJWXPS9kaVrMVnO
+         h9dkx7P0J9jmpH0OYjigeOA3DAl9ZSFONupdplTAFi7RubjSh0YfJtQqEBnrt7Fo+6mC
+         JYlIB5XiMYqhygyItWTxodFIDHB6JIi0nN06a79YgmgSNpXHs50Ok5eRxXUcVdYqWVvK
+         KKvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790112835; x=1790717635;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=WeGUBMLWdKwi5Qro48n5wzE6cYnrkvQSg7+ilGkmexE=;
-        b=Rkxj+auOxZ2imhv4Z4ZOWBQwWMCIkHmdT4+QNSAVwNWHjq5c/XxMFf5c2vVq2GTSI2
-         atFFSOCYlhM2a4wITS5Axxgb6iKrsZRqnSHzhWMyXUwlF0f/Maek+mXuEn369D0JhaWg
-         JlA19g2LhHQIU9DVF6DrBSDhDM0hV32uSc5Yg4qb5LZfP0+sO9UmYSXCf9HjH8cBO1Hm
-         6fMGMXees1P0fyICwUqf0ssd9E3K0m2wE0U/BSh9raDkrgdfPxsmA/xmom2XRYmMN+2A
-         3IsOl04VhZxQKNWsqfApE+sGN28Qktz1/Z3kGIsFgYa3h2US6RT10Tz2wVBjHdUgLeOD
-         fU9Q==
-X-Gm-Message-State: AFuF++mkbjAVtiPw6o46F/UnTZXvKLrHu3QkF3nmH20M9pHZHoJw1Xo1
-	RqVi5slURBcSsG8rYq7l4HoismqwYNVh6kJEvtNkSa+GisWHYC/Y08QKwa39EaofBOpPpADJIc+
-	Tbj+X+4w=
-X-Gm-Gg: AYBFou07eqG4ogu21KA6xfRUQwbXDhoCuhhDMNAr+KiRsHdG4OiASkCr1QvciFYlFsV
-	XMyii74x7kkp6qnQq3Kc6q2fQbq/ho5lP0ceP7k4Ma72OjLURTSxLSjyk/EHq9AaUlQu7o0ekOm
-	HGeEAjoOCTxgNHwIwipBZ0ZIsFqEzGcpI4YiaAEulyKtVnEHKGQuLKhMgHgVvl4AujRAOXVN5rK
-	fllzEgn4gflYa2RYalYMXzCKV/tOVTeiUE5KRKX9odAzJaaQ4jgnboUaZqDGLQhGfLJcsqnR3kw
-	buEAkA7Y9tZGQ5+6buvDyx96T6lP8SfLooHxQ0/YanfAJGoaIUkMFDxMl5BTLxNVq8gf0XJDmbQ
-	O0yzGrTXCRLtCfRG5sO9BngyzWS4wleGXe3Sxsg7S89b0h0V7SVdf9nt0xvS5wPxHEMoYK8NyIR
-	EOYOl6bpnCyLF5E8WAfTvA6jXhVL4JwQRzdxKW2WKVrvMCAc76xu3dxRIAkXNRQNSD9jOfkh/EG
-	pBjgTnKIA==
-X-Received: by 2002:a05:690e:1383:b0:672:d326:d31e with SMTP id 956f58d0204a3-672d578465fmr383171d50.44.1790112834519;
-        Tue, 22 Sep 2026 14:33:54 -0700 (PDT)
-Received: from localhost ([12.55.13.134])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a466bc81a6sm2551187b3.46.2026.09.22.14.33.53
+        d=1e100.net; s=20260707; t=1790128195; x=1790732995;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=YnnWTyMk5d70Hpz57ZOyyh2guKXo+Z5k9pvOlpmwiYo=;
+        b=ApWDFfq7DPPA8IWdprnNK+oOcq778IxDwJLUaM5kuTJ2b3OuefkJhGwRMyY9ojt/q4
+         ohY4NkNG5tM2K88E+N7xs1+PmvxqdqMM/dSKGGCWw+LdtherbGdfQl8yTimH5ncOUXlc
+         Rt0d9nrA5OEia15Y++q49i0mkb+Hfp4nWNIrmxFzHEinnQW3kt8jCAfNdrPHu+DzUDwV
+         u/biN+VifWtHjSU0Qqa2XjqraonhU2uuhlifSnlkhX/JMqbs5UMcPsG5G+L54h3PPbKE
+         Om4kPjJpYKSXhJ0ZAd+rtKa5s03+FwvH/2SPLrjbgpoiFp/0z+xvdapcjjLpAsltse7r
+         yL4Q==
+X-Forwarded-Encrypted: i=1; AKwUvBwKjv4Tr4OzYz8YycBTnQ0A+J1BngB5IIwjErCgFtpT/6uWclq76d3DvYoo7d5V8takXHf4eIFATw==@lists.linux.dev
+X-Gm-Message-State: AFuF++nkxjdHIy2akhhjHzDbNd0OU31U1lVABKWjBQ4wWJG1d3rHHLUG
+	JiYL0aKOfVFxWVg3hOtGkj9bMCO3Zz0rmVLTQMZdmQclygI6fGz5hxMK
+X-Gm-Gg: AYBFou0ynE+nkRXXozUEwaJouF7SpdJrkZdLK/ZXhM+8FtCODrjlfoqX0xlAPMtO3VP
+	EfQo2xkiDZQv0AeuTdtkKo7TptuUuxSkQKQFWfbvtNrNlK9+VteTToo8zqZ2zyo/jM9nHP5FWb2
+	cq6lE9uPeFD+r5pI2Cg+XOI9S6n4odjH04SaJ/rdCTxIznqF9d7UPNBX2SOwDcWY5SePQsTGqBg
+	bbh86TrjrslVmQvWRfSaJ6RqB7ZagTfyU/j/3JDmwws7Frp61d6k/UtkaF+STCzvmdrb2NmIrYF
+	Bwc7fKYAwyVwTDeCqkbqGyZXzuB/f7f2yT8mBKEseRklgqtnHdyIdOu1Sht5b4gZqxqgHKA5gNu
+	xu9VCgVPipqwvJlS1l6DQS8kMoe+mN9BYWUGgVObIopsAj1syqX+fU5OyyRx0PBohdzoOETe9F5
+	po9tMe88eSDgseElhjj3g7BaC1eOIgMuALKW8u7HTx0ZBub/x3vBeYIoyTRameyp88+g+S
+X-Received: by 2002:a17:90b:4cc3:b0:39e:6c68:fd91 with SMTP id 98e67ed59e1d1-3a07e61658fmr750266a91.38.1790128194871;
+        Tue, 22 Sep 2026 18:49:54 -0700 (PDT)
+Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a07ddaf4f5sm1915180a91.4.2026.09.22.18.49.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2026 14:33:54 -0700 (PDT)
-Date: Tue, 22 Sep 2026 16:33:52 -0500
-From: Andy Chiu <tchiu@tenstorrent.com>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: spacemit@lists.linux.dev, linux-riscv@lists.infradead.org,
-	Karl Mehltretter <kmehltretter@gmail.com>
-Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
-Message-ID: <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
-References: <apSYF5x1Tu7PlyL1@aurel32.net>
- <ap-SIQ9DLt-CfAx6@aurel32.net>
- <aqGNGp8PInSV4vty@aurel32.net>
+        Tue, 22 Sep 2026 18:49:54 -0700 (PDT)
+Date: Wed, 23 Sep 2026 09:49:00 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Frank Li <Frank.Li@nxp.com>, Niklas Cassel <cassel@kernel.org>, 
+	Sherry Sun <sherry.sun@nxp.com>, Arnd Bergmann <arnd@arndb.de>, 
+	Christian Bruel <christian.bruel@foss.st.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>, Alex Elder <elder@riscstar.com>, 
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>, Randolph Lin <randolph@andestech.com>, 
+	Siddharth Vadapalli <s-vadapalli@ti.com>, Vidya Sagar <vidyas@nvidia.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Danilo Krummrich <dakr@kernel.org>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>, Pengpeng Hou <pengpeng@iscas.ac.cn>, 
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v5 2/6] PCI: spacemit-k1: Add multiple PHY handles support
+Message-ID: <arMvZNEUhAQYa--o@inochi.infowork>
+References: <20260907112606.465778-1-inochiama@gmail.com>
+ <20260907112606.465778-3-inochiama@gmail.com>
+ <ap_jh_NAqHnIlZeu@ashevche-desk.local>
+ <aqEQnkrPSKB-3fam@inochi.infowork>
+ <aqFst9QH9YTFlY3X@ashevche-desk.local>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aqGNGp8PInSV4vty@aurel32.net>
+In-Reply-To: <aqFst9QH9YTFlY3X@ashevche-desk.local>
 
-Hi Aurelien,
-
-Sorry for replying late. I did run a compilation test with vectorized
-glibc in qemu after seeing this thread shortly, but then focus on
-something else as it didn't catch any corruption we've seen here.
-
-On Wed, Sep 09, 2026 at 06:45:14PM +0200, Aurelien Jarno wrote:
-> [Added Andy and Karl in Cc: as they have been involved in the vectored 
-> user copy code and fighting similar issues]
+On Wed, Sep 09, 2026 at 05:27:03PM +0300, Andy Shevchenko wrote:
+> On Wed, Sep 09, 2026 at 04:00:15PM +0800, Inochi Amaoto wrote:
+> > On Tue, Sep 08, 2026 at 01:29:27PM +0300, Andy Shevchenko wrote:
+> > > On Mon, Sep 07, 2026 at 07:26:01PM +0800, Inochi Amaoto wrote:
 > 
-> Hi,
+> ...
 > 
-> Some more progress on that topic.
 > 
-> On 2026-09-08 06:42, Aurelien Jarno wrote:
-> > Dear all,
-> > 
-> > I have done some small progress on that issue. Help is still wanted and 
-> > would be appreciated.
-> > 
-> > On 2026-08-30 22:52, Aurelien Jarno wrote:
-> > > Dear all,
+> > > > +	count = devm_of_phy_bulk_get_all(dev, node, &k1->phys);
+> > > > +	if (count < 0)
+> > > > +		return count;
+> > > > +	if (count == 0 || count > data->max_phy_count)
+> > > > +		return -EINVAL;
 > > > 
-> > > For the last weeks, I have been tracking a random memory corruption and
-> > > relatively rare on SpacemiT K1 (Banana Pi F3 and Milk-V Jupiter). It 
-> > > started upgrading to glibc 2.43, which does memset() through vector 
-> > > instructions.  It is reproducible using the Debian 7.1.7-1~bpo13+1 
-> > > kernel, but I have also been able to reproduce it with a vanilla 7.2.2 
-> > > kernel, using a similar configuration to the Debian kernel. The board 
-> > > uses OpenSBI 1.9 and the vendor U-Boot.
-
-The KVM fix, which is in 7.3 now, is irrelavant to this bug (see below),
-because the fix targets preemptible kernel-mode vector, but we can
-trigger this bug with CONFIG_RISCV_ISA_V_PREEMPTIVE unset. Nontheless,
-if we want to test on the latest code, feel free to grab the series at
-[3] and boot with riscv_novstateopt to preseve the context poisoning
-behavior.
-
+> > > Elsewhere we distinguish count == 0 with -ENOENT.
 > > 
-> > I have been able to rule out OpenSBI from the issue, I have checked 
-> > there is not trap top OpenSBI when the problem happens.
-> > 
-> > > Typically it manifests itself with the following kind of error, when 
-> > > running g++ from GCC 16 as part of building software (e.g. OpenJDK, 
-> > > Blender, Dolfin, Qt6):   
-> > > 
-> > > Assembler messages:
-> > > {standard input}:284588: Error: unknown pseudo-op: `.uleb1'
-> > > {standard input}:284588: Error: unrecognized opcode `ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿvl874'
-> > > 
-> > > The broken chars are 0xff and it seems there are always 240 (but with 
-> > > poor statistics). Sometimes it instead causes a GCC ICE instead.
-> > 
-> > I have identified that the 0xff comes from the poisoning done for v0 in
-> > __riscv_v_vstate_discard(), which should only happen for a syscall. 
-> > Indeed changing the value to different ones propagates to the above 
-> > error message.
-> > 
-> > Furthermore I have found that changing CONFIG_RISCV_ISA_V_PREEMPTIVE 
-> > doesn't change anything, and that changing RISCV_ISA_V_UCOPY_THRESHOLD 
-> > changes the number of broken bytes.
-
-Turnning off CONFIG_RISCV_ISA_V_PREEMPTIVE makes the ucopy fall back to
-the scalar copy on a page fault, because faulthandler_disabled() would
-return true after kernel_vector_begin(). So if we are suspecting a
-corruption at vector restart, then it is not, there is no restarting of
-such instruction.
-
-The only possible way to have a restarted vector ld/st here under
-!CONFIG_RISCV_ISA_V_PREEMPTIVE is then an irq restart. I don't know if
-you test this code with !CONFIG_RISCV_ISA_V_PREEMPTIVE **and** with
-irqs_disabled() == true in the user copy code. If we still observed
-a corruption under this case, then it suggests that the corruption
-happens even eariler. It is then either the faulting instruction itself,
-or the corruption happens even eariler.
-
+> > Is there is an example? I think it is suitable for its internal check 
+> > to translate -ENOENT to count 0, because no phys property means no
+> > phy. For a get helper with optional semantics. I think it is fine
+> > to return 0.
 > 
-> The values from __riscv_v_vstate_discard() end-up there because they are 
-> the last values written to the vector registers. I have added some 
-> poisoning in __asm_vector_usercopy_sum_enabled before the loop, and 
-> those values appear instead. Using different values per vector register, 
-
-Do you know what is the address of corrupted data? If it always starts at
-a page boundary (e.g offset 0x00000 for THP) then it suggests a strong
-correlation with fault handling.
-
-> I have found that the corruption comes from a partial load of the vle8.v 
-> instruction, while the result of the poisoning and the partial load are
-> then both written by the vse8.v:
+> This the brief list of what I roughly grepped with word "count" in the name.
 > 
->  loop:
->         vsetvli iVL, iNum, e8, ELEM_LMUL_SETTING, ta, ma
->         fixup vle8.v vData, (pSrc), 10f
->         sub iNum, iNum, iVL
->         add pSrc, pSrc, iVL
->         fixup vse8.v vData, (pDst), 11f
->         add pDst, pDst, iVL
->         bnez iNum, loop
-> 
-> One hypothesis could be that for some reason, an exception (page table 
-> fault, irq, ...), the vle8.v instruction is interrupted, and only 
-> partially loads the vector register from memory. This stops at a 16-byte 
-> boundary (at least on the K1), and the remaining part of the v0-v7 
-> register is left with the previous value (with the original kernel that 
-> is the poisoning done in __riscv_v_vstate_discard). In theory when the 
-> instruction is interrupted, vstart is set to a non-zero value (for 
-> instance 16), and it should get re-executed after the exception. In 
-> practice, in some very rare cases, it doesn't happen and the next 
-> executed instruction is the following sub.
-> 
-> That said with exceptions and vector context switches, the explanation 
-> is likely way more complex. [1] gives a possible different scenario, 
-> involving an interrupt or a fault between the vsetvli and vle8.v/vse8.v 
-> instructions. However it doesn't fix the issue, neither patch [2]
-> (in that case tested with CONFIG_RISCV_ISA_V_PREEMPTIVE=y).
-> 
-> 
-> > Disabling the vectored user code entirely with the following patch seems
-> > to prevent the issue (or make it sufficiently rare that I have not 
-> > encountered it):
-> 
-> A much better way to do that is setting RISCV_ISA_V_UCOPY_THRESHOLD=-1.  
-> 
-> I also tried the same kernel on a K3, and it appears to improve 
-> stability, getting rid of issues that I attributed to thermal issues.  
-> (due to the absence of fan driver, I run the fan as a fixed speed 
-> ~4000rpm). The symptoms are however quite different, it's GCC crashes 
-> with "The bug is not reproducible, so it is likely a hardware or OS 
-> problem.".
-> 
-> Regards
-> Aurelien
-> 
-> [1] https://lore.kernel.org/20260806193241.10552-1-kmehltretter@gmail.com/
-> [2] https://lore.kernel.org/all/20260810172255.1532787-2-tchiu@tenstorrent.com/
+> gpiod_count()
+> of_hte_req_count()
+> i2c_acpi_resource_count()
+> ice_sriov_set_msix_vec_count()
+> reset_control_get_count()
 > 
 
-[3] https://lore.kernel.org/all/20260918215154.2481482-1-tchiu@tenstorrent.com/
+As the respond in the phy bulk data patchset, devm_of_phy_bulk_get_all()
+should follow the optional semantics. So I think return 0 is a good
+choice. Anyway, I have added the zero value check in the driver.
 
-> -- 
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
+Regards,
+Inochi
