@@ -1,164 +1,125 @@
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EC242E42B
-	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB51A409279
+	for <spacemit@lists.linux.dev>; Wed, 23 Sep 2026 09:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790154915; cv=none; b=luhf8HDKMMqtYQLwmNgaRd9gslYGr5PkV+mrQC0m6xkbEtTqravyHBDOSQf8+44VNlaRLP3thVfDGRrUIC4OFRlChYeBLgvr0A40nAZiWq1YP0VcD2iWLXE9GxevmicWhgMp9CNUd6mVWTLGXSHjfnrWWV0/BX4XoD7rtVYVjxE=
+	t=1790156100; cv=none; b=CqMIIaBNet/29tQqloW5GrJbfyxBMyEQ7gf0x540a0cMCRFBo8EAgMmWKx3bCr0Cel0K+Bm8W9DNSntteL9xSi0oiklvyRbwAVsdByv80VrqEgOKe6ro4G0NSKmmPRoThy8VYh0n9kpYdOUy3pVYQ/4yOdIWVzIQ4rlBED0bf94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790154915; c=relaxed/simple;
-	bh=RzHBofAf7YJyZ07FII2LvnkIIRSoJB9/EG93JfpCjsk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=BYJ3jod8nfvNb+Y9WbobequNm6XS6ucYtAV6Q7+UfHZlxxQ8Tk3G7FE8nghNwNeuVE3DG3IGaIw6Wvdm/g4OyyXwdHlREvZ56/fgBSKY6fdEzeCX7Or6u+tVA17RkvTBBR5D6D11U/YmHitAWEbbumVskeTpHUoSeyOx83+t7xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=qTh6+gCj; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1790156100; c=relaxed/simple;
+	bh=Va6F/EJUW/nLR1SPH0riVx2N6r3IuxepULm9EXr00Tw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KXh6veRia1Rk/6+ZvREeTUo9EBFVqVRWQstr6Kxyc6Wtp1kA3yxqRv6dztKdJOfuKm44lpJ8ZI+xbGKI6Fb1mpyzd3Qaj6BEWH9rkWbIKmkkRIcJUxD+WhVFWV0jMEbotngarMpBdbkN5KQE5yre1s59//wZf6i5rGWt5QdTdqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SJ8G+Ujl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="qTh6+gCj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1790154838;
-	bh=RzHBofAf7YJyZ07FII2LvnkIIRSoJB9/EG93JfpCjsk=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=qTh6+gCj0Ox5+uY2pC252CptCozdENNnG6UbLAhSnyaSp1/Ur/vLefT8hd3luWNns
-	 Jmi18Fc6/euvzgirXw/iUEEryfUJJ7ZPxD23DDTtuCPC4OwE7acfFimaerFfkelKZ6
-	 kYtW0mUVxKujSKpUQOvEdG/caIWMALQzBzYZ6IKU=
-X-QQ-mid: zesmtpsz3t1790154837t580f4562
-X-QQ-Originating-IP: eFC3jACj3kP1sOn8Oha0w0ojCyaVTWCqfCWFgoeOviM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 23 Sep 2026 17:13:54 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 17194645670919471532
-EX-QQ-RecipientCnt: 14
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SJ8G+Ujl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E311F000FF;
+	Wed, 23 Sep 2026 09:34:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790156099;
+	bh=OKToilGEvfMJ5um1ld9uiM7K3OSYLtn9JVb1KQUdz/Q=;
+	h=From:Subject:Date:To:Cc;
+	b=SJ8G+UjllFmrqSOYcZtm38HQB+Ilx6I9BmVPzF0Nf1TdIT8kMV5rKe6CgkE+DeLyO
+	 PxSsf6DnragabiFld3BgfHHLt6NowOEF1dZiUn89wZE0hX+la1jW3gx/Nca0tZAnMp
+	 m6QcMhpxW+EWdTxqK7gFRgsIykzXMtgPWmOJsMx6YSDiRcWcNix4YVxYNVExYWxDJN
+	 rwO9IvQLAbtLET00SCH2/TPsD2htmQCuG5iWwl+6RugfegAC8Vh+tqvy/aIZFy38ph
+	 PWJqaOeFulPnpvk31DhUc6z6UCOI+/RNiydD05nBMDIKSRzAHnRlCeD3I6/Kwm4/wD
+	 lqdYnes4/zeUg==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v2 0/8] spacemit: k3: add clock and reset support
+Date: Wed, 23 Sep 2026 09:34:23 +0000
+Message-Id: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=c948a7739b974566b3c93185804f926850ac0e094318f6082a3657734682;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 23 Sep 2026 17:13:52 +0800
-Message-Id: <DLMKXCP8EDNL.JW6NFGCTMJVN@linux.spacemit.com>
-Cc: "Yixun Lan" <dlan@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt"
- <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
- Ghiti" <alex@ghiti.fr>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 3/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05:
- Enable SD card support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Sandie Cao" <sandie.cao@deepcomputing.io>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20260922110231.3426011-1-sandie.cao@deepcomputing.io>
- <20260922110450.3426070-1-sandie.cao@deepcomputing.io>
- <DLMC741RLFU5.3FF1DL7YEIFK9@linux.spacemit.com>
- <407ce3d77416bb2522b7906b0df3d5adf02c27ee.2bcc8e57.b8bf.421b.9230.3eea00252952@feishu.cn> <DLMI4JHT5Q8L.2MHI30VCCP3W9@linux.spacemit.com> <407ce3d77416bb2522b7906b0df3d5adf02c27ee.64156e26.f1af.46d5.a18c.19bc541257f8@feishu.cn>
-In-Reply-To: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.64156e26.f1af.46d5.a18c.19bc541257f8@feishu.cn>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NnSC/w0LuVTXPThQKTEfRuA8vrufLoTnHxkeUq57ce6fJS4Yx3Ilmd3W
-	jEaQv93SsNhPdDehy6+Rl8d1I23nST2T3GnS8ljPbP9ER5Xatv+ie3i56NxLfu26b1eptza
-	HmpemmAgzg0ODHNTVOaCHgFOT42TDT3uPtUh78C8a/XV89HRfq8rKHze60LDU6MOJBIgv+9
-	6caFIABG7hGszVoXKbl+yfHIBS1jxMaX8RB4ytP7JERq/Rl3ljAygYwX/irVf4MRM0tXCoE
-	25QzVD9w1x4ziGSz/Xez4E+T09acz0B6Jm+DCjEpQ+Izs8QQcay30KC+T9AV5ErYKEVu3AW
-	gHe0O5dtMxrGggw5pC0ZyZhbJ1iHOoP3HYCm8qPAKY8FlAzgbvEobt55RMWhVM//ZjA9TWy
-	4TsfuYk06WT+JAoXsGHh7vpiuJbbF4s5tib1r6ay/SNfEPs5IDwcghiwqXirYD4k33e3yKg
-	r5LJsIY+qOPxRo19OLoPpw7Z2UAfSKve+qH3HjlPSW2Oy5OHiLbOCT8idctwxQnH4sQpU69
-	g6JRQ18WQvyLbePVGwwfglSU/5ACqNX2mp84hc47nJ93SyopuAo1lNFcufSt7c+3OCDk0R4
-	o9/Z+kG5PA4zgUXNNxfjWWxIjH78KL4NK4672soYbK5+Qnc8z8lRL4haswYTPXGPZyjwtES
-	66NAembmYMTpkFujC9JS8Kn6mQSQoFSqCkobnpjfZ4HPON5EndbXcNBbaUtZX3D4S3/+3KP
-	KFoBuSXQVhdP0i+uMcru4W9SJpsWSKIl0SObSUadRXvouvbDedddglA43miendS8VFaRZNl
-	p7nCu+DxSYLh5BdcEYekLzKvf36e7d6FFq+2jTcDmJmgOQ89i6kCW/H5GViIMfpcQ+svCJu
-	4derOLm/ZmREgeRKFCQRDYpEVThjvosIcoz9GXMCwX/X7+y8wMQMixHR7oHXzm9x/Ndd/2m
-	EKSa0hKlnfVHw461v1kHR0XkIbwFTVEkhe3FNhnNXLeQ9kNfEazqWnOj8/7Qoxf11oeLghy
-	+KxW13FWLBGTfPuUF5ZlIKxhqGk63fVUnwPmezprWQstflpz5VN1WzCYPA3FHgG37ZADhrJ
-	gfaobPEe/P2XfmH6zOVv1eyffCO0KNydYcqCoPFNULPWKSDIg8nOh6ksaK2ibOccDvTQTGB
-	sCIr
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NQQ6CMBBFr0Jm7Zi2UEVX3sOwwDpChVAyU4iGc
+ HcB49blS/5/bwIh9iRwTiZgGr340C1gdgm4uuwqQn9fGIwyB5WbDJXGJkXXBtcgk1BEGfo+cMR
+ c21KpzFpzKGH590wP/9rc1+LLMtye5OIqXBe1lxj4vcVHve5+HfunM2pU6LJUGZvS0Z7cpSHuq
+ N0HrqCY5/kDbBrVKNUAAAA=
+X-Change-ID: 20260824-01-k3-clock-reset-support-815a0045526a
+To: u-boot@lists.u-boot-project.org
+Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io, 
+ Lukasz Majewski <lukma@denx.de>, Tom Rini <trini@konsulko.com>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, 
+ Raymond Mao <raymond.mao@riscstar.com>, 
+ Guodong Xu <guodong.xu@oss.qualcomm.com>, Peng Fan <peng.fan@nxp.com>, 
+ Torsten Duwe <duwe@suse.de>, Ryan Chen <ryan_chen@aspeedtech.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Alexey Charkov <alchark@flipper.net>, 
+ Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2297; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=Va6F/EJUW/nLR1SPH0riVx2N6r3IuxepULm9EXr00Tw=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqs50jMpVf2WX/iExLxhDhts8SDAig6mKVGQjj+
+ XEmGQ0/uYKJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarOdIxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+1SEg//feYO3HHjSfnEgiAl6nNDWOiqMSuqzDnLIFB0RaSLNgyZl1oBAb2lE
+ l9AuHQzQjRnoXSBdQkESlEP6H6xE5Ju8YJ+eCvR6DRpZxKiohJ0WWrF+n3d2o1nn/6VRmiS0CHA
+ oOuhfzfwg9rdOWYHSatFtWsw+mTXbMImfdlXBxRqJEpvEMgJhDdfjq8I9MOPs9SgT3ea7hT7+TP
+ J5v6DLV+J4Q0ClAsWfEK7XoJ2PplkJJoFmkwACyirRfY3yHgzeGu8OH+jgq8HjjmxB43gOX9Q8r
+ MGzZXjjBZrGBiGx0cSk4JxkeILJJoCMhSfuwNnUSOO6RUMusqCdwL512WR74Y85VxyZjoljys6D
+ 10IeE8PyEBXua5LFtuZGFZ0D9knlWT9l0AYpePTKx3vWV2ZsETnAqubY2Dv7qR7Pflwg680jMPK
+ CHbuUorj3IHw8of9n/yNrlKi0mX661ZNVNVOawW5g8MmxH9OyBTARoYukwrGqy/FwSUUeup+Nj+
+ H5D3DH9oCJsblhDNhfBbM4z33K0acF1w+CRU2ZUCIr0yPfB5/f5qk57UdR8FKvd93xn9E+gW6zp
+ LIxiLXJUc1309ONp/KSkylWe8fJJ+IU0NSE4SCOFjDcVf+EcQ2il72dl66B7Ls4cfJQGNmKtg4m
+ X72NaFieGwO78DmSowxCXkbUCLu+pY=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
---c948a7739b974566b3c93185804f926850ac0e094318f6082a3657734682
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+This series try to add clock and reset driver support for SpacemiT K3 SoC,
+the patches are largely based on upstream linux framework.
 
-On Wed Sep 23, 2026 at 4:01 PM +08, Sandie Cao wrote:
-> Hi, Troy:
->
->> From: "Troy Mitchell"<troy.mitchell@linux.spacemit.com>
->> Date:=C2=A0 Wed, Sep 23, 2026, 15:02
->> On Wed, Sep 23, 2026 at 02:35:20PM +0800, Sandie Cao wrote:
->> > FML13V05 SD card slot is inside the board, it doesn't need cd-gpio,
->> > FML13V05 Keeps GPIO88 to low, Then SD card is always on for SD Card
->> > driver.
->>=C2=A0
->> An internal slot does not necessarily mean the card is non-removable.
->> I don't think its location alone justifies keeping card detect asserted:
->> GPIO88 would report a card present even when the slot is empty.
->
-> Yes. The FML13V05 hardware is designed for this. We can't change it.=C2=
-=A0
+The reset BITs definition lives in the same register with clock
+controller which make them tight coupled, so I'm also putting reset
+patches in this series.
 
-I may not have been clear: an internal card slot does not necessarily
-mean the card is non-removable. If GPIO88 is connected to the
-card-detect switch, it still needs a pull-up. Is GPIO88 tied low on
-the board, or does it reflect the state of that switch?
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v2:
+- add complete PLL clock tables
+- drop patch for SPL
+- Link to v1: https://patch.msgid.link/20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org
 
->
->>=C2=A0
->> > We check the vmmc-supply is p3v3. We have the same SDK DTS config with
->> > k3_com260[1] , so, this patch follows the SD card patch of k3_com260
->> > dts[2].
->> >
->> > If this is not correct, we will change it.
->>=C2=A0
->> Could you confirm from the schematics that the SD power wiring matches
->> CoM260 and that the card's VDD is actually connected to ALDO4? If so,
->> this supply reference is fine. The same SDK configuration alone does
->> not establish the wiring.
->>=C2=A0
->> If the card instead uses a fixed, always-on supply with no software powe=
-r
->> control, vmmc-supply is optional for the MMC core; it should not point t=
-o
->> an unrelated ALDO4 rail.
->
-> We check the schematics both of COM260 and FML13V05, both use p3v3 (a fix=
-ed, always-on supply with no software power control), not ALDO4. ALD04 is o=
-nly for USB.
-> We will correct it in next patch.
-I'll send a separate patch to fix the CoM260 vmmc-supply reference.
-You can focus on FML13V05 in this series.
+---
+Yixun Lan (8):
+      clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
+      clk: spacemit: ccu_mix: add inverted enable gate clock
+      clk: spacemit: ccu_pll: add plla type clock
+      clk: spacemit: k3: extract common header
+      clk: spacemit: k3: add the clock tree
+      clk: spacemit: k3: add CPU PLL rate tables
+      reset: spacemit: Extract common K1 reset code
+      reset: spacemit: Add SpacemiT K3 reset driver
 
->
-> Best regards
-> Sandie
->
->>=C2=A0
->> --=C2=A0
->> Troy Mitchell
->>=C2=A0
+ drivers/clk/spacemit/Kconfig                   |    9 +
+ drivers/clk/spacemit/Makefile                  |    1 +
+ drivers/clk/spacemit/clk-k3.c                  | 2049 ++++++++++++++++++++++++
+ drivers/clk/spacemit/clk_common.h              |    1 +
+ drivers/clk/spacemit/clk_mix.c                 |    9 +-
+ drivers/clk/spacemit/clk_mix.h                 |   27 +-
+ drivers/clk/spacemit/clk_pll.c                 |  124 +-
+ drivers/clk/spacemit/clk_pll.h                 |   43 +-
+ drivers/reset/Kconfig                          |    1 +
+ drivers/reset/Makefile                         |    2 +-
+ drivers/reset/spacemit/Kconfig                 |   22 +
+ drivers/reset/spacemit/Makefile                |    4 +-
+ drivers/reset/spacemit/reset-spacemit-common.c |   93 ++
+ drivers/reset/spacemit/reset-spacemit-common.h |   40 +
+ drivers/reset/spacemit/reset-spacemit-k1.c     |  128 +-
+ drivers/reset/spacemit/reset-spacemit-k3.c     |  242 +++
+ include/soc/spacemit/k3-reset.h                |   21 +
+ include/soc/spacemit/k3-syscon.h               |  271 ++++
+ 18 files changed, 2955 insertions(+), 132 deletions(-)
+---
+base-commit: a06e89ab05eaa2b8344d521319399333cd760ae5
+change-id: 20260824-01-k3-clock-reset-support-815a0045526a
 
+Best regards,
+--  
+Yixun Lan <dlan@kernel.org>
 
---=20
-Troy Mitchell
-
---c948a7739b974566b3c93185804f926850ac0e094318f6082a3657734682
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCarOYUA0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQv/VcBANrKAZZo7hF1396yvrURKeblfk6N29sDuw3EfLqH
-tZYVAQDII+/ULNRkpNFcStI32cx2tF70GmPyD9BkywqSZiBdDw==
-=hVAn
------END PGP SIGNATURE-----
-
---c948a7739b974566b3c93185804f926850ac0e094318f6082a3657734682--
