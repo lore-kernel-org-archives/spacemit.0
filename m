@@ -1,119 +1,132 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8E728851F
-	for <spacemit@lists.linux.dev>; Thu, 24 Sep 2026 02:24:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387DD374E7A
+	for <spacemit@lists.linux.dev>; Thu, 24 Sep 2026 03:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790216687; cv=none; b=tBx2hurGP5fDYaa04UDf1BknPsb78paPG21RK8SVUfXNK9qJCgHztIDPmQShWO7WeR5mMxgDUyi3V21pzTyDj+XK85VOzErdEaVuLpD2IexKpcuIVV0Ytko2DbhlG7OGpoY/7LE+E7ARLV37smNUdb5EvaO4W49ZHMHzyR5Gr7k=
+	t=1790220279; cv=none; b=Qzu37mxMFCD2mHzvXK9MVdBL35x/NjdKYf85ycxG74jfvaJV+qVwU8ggfs9cw1xxv/TZyUc87W8ZyLHfM4cxHPUVLOHGtoGum5RDj74od7SxOkAdNbv2+cVHd7U2NEDYTI1DUaAqzw9Q/7DfTJb7WI1uNDSSQWo8U9oxmgy+F+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790216687; c=relaxed/simple;
-	bh=m1/plKS76wHa8P1yN4wrEUPS7ccVDolVN5V3LZrJIP0=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=GOCnKiNwetenaLvZh4RHDgSuTfl3QJ8XeAqegQU3QcVU2Dx56DZCnk9paV3XY1kS94mEf7u+JiPEyRKZT/5/jI9RfLRVJu17Yo8EkyVo5tmlANDrAMS5bIj30RWYaOztugU9WJOLVSB/3iA0Jnx4FSA0wNrmgfVWX5Bkz+PHIX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=XK/bUJSD; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1790220279; c=relaxed/simple;
+	bh=TSJwIZEQBiiKCclqiO4vGgUkeHfQ6b9u06l1H9mPHa4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vh8s5X84tc7q3BG8gTiUKI05h4mHT/0Cd2CIJrmFeii0p0Wbot84p9BL46XBPMrs7bSsVkk1pz30G9HPJB7lzELkpRrIqPrlJza/e039Qfst0prI47vsi4sxfaARuVc9/30Dhmm+qACxm8DUWtcMHPoF8+n+Y5zRnL29/nAw984=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=FQBy5sn6; arc=none smtp.client-ip=116.202.128.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="XK/bUJSD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1790216634;
-	bh=m1/plKS76wHa8P1yN4wrEUPS7ccVDolVN5V3LZrJIP0=;
-	h=Mime-Version:Date:Message-Id:To:Subject:From;
-	b=XK/bUJSDNnA37io2rYQqr+WQ+f00Hgp10CDdB/RQmECtCAq7SOwn3TP8koqC0Ef9z
-	 mdgRle6siCLiu+QsKq32KAFqxGFmkbVaEmgpNCo/cDIx2XlNl9oUKduwQ+ZjRdeKH4
-	 tyMp9b5zaqB9jxGIWzom0/SecjudOagRxoO8jGB4=
-X-QQ-mid: esmtpsz16t1790216627tb4707d8f
-X-QQ-Originating-IP: gSZvk6BWSQYXl8jnfSQaWrx+BEE40A51kr/HVCALHkM=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 24 Sep 2026 10:23:45 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 15881123494600933762
-EX-QQ-RecipientCnt: 12
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="FQBy5sn6"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1790219650;
+	bh=/vu8mh58GGAlm+LcHARrm4cBM+Y1krDOfecjJSJfelE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FQBy5sn61XEVOv0yK36Kwfr9MlEwK2vpRYfMfUwhSL50LEsWY2P2LhrBTXMxkYptt
+	 bRFPJ/P1CC8G/WIxafsoOuSQSnkPsFwBlW80O47uLUskSNw85jB1kXDEiMq7eUW7yP
+	 FIDGx/p4dEu0rV7AUIZdD5Dd8N/8ioRfyggpAMlllC979HCIl42fDsHmircZPAL62N
+	 A04NWZ+j3Wbbi/eEdY3p5px2+d0bi2MiDVhVmseYezWhXCjYZKy5ab8YluK4eHu/K4
+	 C94mNgADUTqT8++DCjCylDQ3nSOZAG9nBgu8/iH4ailUbDU4WwwEIjetjZcK18M3YQ
+	 SdjiLFi/MthWw==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id 434D8B22044B;
+	Thu, 24 Sep 2026 05:14:08 +0200 (CEST)
+Message-ID: <e4c84eac-01e6-4955-865c-56d8fb733498@freeshell.de>
+Date: Wed, 23 Sep 2026 20:13:50 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=e16cacdaf47fb589a7d08498647ea7242f3bdecc260bc848fe7b9de12411;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 24 Sep 2026 10:23:43 +0800
-Message-Id: <DLN6TV32A766.2BWYLKQW9ZYG5@linux.spacemit.com>
-To: "Encrow Thorne" <encrow.thorne@linux.spacemit.com>, "Lorenzo Pieralisi"
- <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, "Manivannan Sadhasivam" <mani@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Bjorn Helgaas" <bhelgaas@google.com>, "Yixun
- Lan" <dlan@kernel.org>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-Cc: <linux-pci@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] PCI: spacemit: Ignore link partner PERST on K1
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com>
-In-Reply-To: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MK2msS8Oy7OGPOIcZfmTKoEmcz4DDDj3fPmJ5vzepI528Bqp9BvDFnPo
-	mNlOw/L8neB+NhxPgMmTD34K/8RCnGJB+qbhnPeYRCkXbVjYwWkueycpUzlv3pnjgo0eklH
-	AVydfJszJQTU+haljcVX9KHJJRYHDckgFFxxQIkDQv4Qp+JUD4TCfttx6xAbifb9xZ+R2rO
-	7vHJwJH8PUwgZFc97oRMkjQ0ySgKzDqRHqClqAlEs9VZiHSIk6HlMJx8bokyBiZTdXgqGvw
-	0Orjwo2aJuk/T3gp1FOW4nD8VOdvtu9Qi398fftN1cxEfhftQPJ/YGXQsIxj90ahSkHTPal
-	3alCDULUG9Lm4/KrTJv0dQs1mznztHa7HmeQTO7jR0AdkTpyggef1WU7rMm1uJtg40uzdZi
-	fJSubaGdDjbTb/uVPwgNEKyy7/+W38KO9y5hoMjpAH9HnTkp7vZLfON33NQ6QYd8iSM9gU7
-	4ZuyyX+Iku17wMzNrS9zRdOb3R/dGBpqEU9n0PR8O/QnIboqLCJ+17ZcyB77+g0aWKMMKuH
-	5fXj2ufj25dvaiFsXLih8NcR4sfEACV76N23m72WyrOEq86mIXWVsaTaMtzshdAmFFF2d2v
-	61Kv8r5EiYd5dvMJ9TStBK5hOpVLnBsXKZNimBdMw5yljxoVF++LuT0D/itXAcaIag22P5O
-	WvmkBLunK2E7NgwPbsOgSsn/JMyVQUJpMEemrp+ol53sM2DIubFFeRj3eOX2X083fYDc3FW
-	kPaY1gDYwyzHgRQSlQLTF2YJhW1EidUgm9vIKVWYTtbVDwV6qEHSGix1pFGMn2gzhV3HUCe
-	k4nPljh5FuAD75OasppHjaa+ZxKSb+rpf4gMb2N+/LTDOD1gHILMeKEvSJLIH3faPJgWE3G
-	/CJRrOCFe36RvcHEah6yLvfh+jcYHu2iZUTwswa9pakNdMZTAF8n+Jg1R3yIgCisM0tYdI2
-	ggyOIzt2pkB5ippTk5onMfwOAG3h/8mdVsWaAxI2dp1E0v1rRBiDdyHmF1eN0qrbTLulq/g
-	oMGqgbX+LASELK7JlVRrUYyvT6+QFnUjKlWG3IF8kzCrg8qyi6XrmNnAoR8gk/tbTnZv8et
-	KniHPSvWeZEzEGhwe1DtJftO9zztSw6uHyVXZnmv3kyPdAQTFcbNIiIXw0W/6G1ZurE9dJU
-	Ee+/u9rirfE5Yfc=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
-
---e16cacdaf47fb589a7d08498647ea7242f3bdecc260bc848fe7b9de12411
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] configs: spacemit: k3: Enable Ethernet support
+To: Yixun Lan <dlan@kernel.org>, u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, Jerome Forissier
+ <jerome.forissier@arm.com>, Quentin Schulz <quentin.schulz@cherry.de>,
+ Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>,
+ Julien Stephan <jstephan@baylibre.com>, David Lechner
+ <dlechner@baylibre.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
+ fanyi zhang <fanyi.zhang@mediatek.com>, spacemit@lists.linux.dev
+References: <20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org>
+ <20260924-02-k3-ethernet-support-v1-2-b8e1fafc9249@kernel.org>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <20260924-02-k3-ethernet-support-v1-2-b8e1fafc9249@kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu Sep 24, 2026 at 10:04 AM +08, Encrow Thorne wrote:
-> The K1 PCIe controller and PHY are affected by the PERST signal from
-> the link partner during initialization. With some devices connected,
-> this can prevent host initialization from progressing and cause the
-> system to hang while probing the PCIe controller.
->
-> Set PCIE_IGNORE_PERSTN before accessing the DBI registers. When set,
-> this bit makes both the PCIe controller and PHY ignore the PERST
-> signal from the link partner.
->
-> This allows host initialization to complete without being affected by
-> the link partner's PERST state.
->
-> Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
-Fix tag and reported-by tag [1]?
+Hi Yixun,
 
-Link: https://lore.kernel.org/all/20260825052249.66921-1-bbanelli@gmail.com=
-/ [1]
+On 9/23/26 18:53, Yixun Lan wrote:
+> Enable the SpacemiT platform glue for the DesignWare Ethernet QoS
+> controller together with the generic PHY framework, Gigabit Ethernet
+> PHY support and the Realtek PHY driver.
+> 
+> Enable DHCP, MII, ping and PXE commands for network configuration,
+> diagnostics and network boot. Allow U-Boot to generate a random
+> Ethernet address when no valid address is provided by the board.
+> 
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  configs/spacemit_k3_defconfig | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/configs/spacemit_k3_defconfig b/configs/spacemit_k3_defconfig
+> index 6ca41aecc41..3a70a0a4858 100644
+> --- a/configs/spacemit_k3_defconfig
+> +++ b/configs/spacemit_k3_defconfig
+> @@ -24,10 +24,15 @@ CONFIG_SYS_PBSIZE=276
+>  CONFIG_HUSH_PARSER=y
+>  CONFIG_CMD_GPIO=y
+>  CONFIG_CMD_I2C=y
+> +CONFIG_CMD_DHCP=y
+> +CONFIG_CMD_MII=y
+> +CONFIG_CMD_PING=y
+> +CONFIG_CMD_PXE=y
+>  CONFIG_CMD_PMIC=y
+>  CONFIG_CMD_REGULATOR=y
+>  CONFIG_CMD_FAT=y
+>  CONFIG_CMD_FS_GENERIC=y
+> +CONFIG_NET_RANDOM_ETHADDR=y
+>  CONFIG_SYSCON=y
+>  CONFIG_CLK_SPACEMIT=y
+>  CONFIG_CLK_SPACEMIT_K3=y
+> @@ -35,6 +40,11 @@ CONFIG_SPACEMIT_GPIO=y
+>  CONFIG_DM_I2C=y
+>  CONFIG_SYS_I2C_SPACEMIT_K1=y
+>  CONFIG_MISC=y
+> +CONFIG_PHY_GIGE=y
+> +CONFIG_DWC_ETH_QOS=y
+> +CONFIG_DWC_ETH_QOS_SPACEMIT=y
+> +CONFIG_PHY_REALTEK=y
+> +CONFIG_PHY=y
+>  CONFIG_PINCTRL=y
+>  CONFIG_PINCTRL_SPACEMIT_K1=y
+>  CONFIG_DM_PMIC=y
+> 
 
---=20
-Troy Mitchell
+Please also enable for this series: CMD_WGET DNS NET_LWIP
 
+We can intentionally leave WGET_HTTPS behind when there is no
+hardware-specific DM RNG driver implemented yet. I do not see a reason
+for the legacy network stack instead of LwIP; LwIP appears to be working
+well.
 
---e16cacdaf47fb589a7d08498647ea7242f3bdecc260bc848fe7b9de12411
-Content-Type: application/pgp-signature; name="signature.asc"
+In my test I start a simple HTTP server on the local network host:
 
------BEGIN PGP SIGNATURE-----
+$ python3 -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 
-iIMEABYKACsWIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCarSJrw0caUB0cm95LXku
-b3JnAAoJEJgJ74D5MzQv9l4A/jDq4Lfxvd/vk+CYfDPCZ6wh4sIWYoSApbpwTzsH
-T9olAP448MnJVizefhN0woHdp/2Vuq3AEAYcA8zv9Vo4gnM2BA==
-=RgJC
------END PGP SIGNATURE-----
+Next from a Sipeed K3 Pico-ITX 32GB board and your mainline u-boot series:
 
---e16cacdaf47fb589a7d08498647ea7242f3bdecc260bc848fe7b9de12411--
+=> dhcp
+ethernet@cac80000 Waiting for PHY auto negotiation to complete........ done
+DHCP client bound to address <10.20.30.40> (38 ms)
+=> wget http://host:8000/mini.efi
+##################################################
+87962624 bytes transferred in 7414 ms (11.3 MiB/s)
+Bytes transferred = 87962624 (53e3400 hex)
+
+With that,
+
+Tested-by: E Shattow <e@freeshell.de>
