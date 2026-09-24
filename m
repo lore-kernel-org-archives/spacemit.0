@@ -1,34 +1,39 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573002DF6E9
-	for <spacemit@lists.linux.dev>; Thu, 24 Sep 2026 01:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193553B8959
+	for <spacemit@lists.linux.dev>; Thu, 24 Sep 2026 02:04:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790214833; cv=none; b=bSHxu8JxWbW3waysfS0tx/Cw5n09ssvoAJrMO7ADbowJyP0QZNL0ADxex7FmQwDzIlp6iA5nP2AuVT1u75VTROVVCZS+5j9504ZdOUZsjC/p/ZNUqVAwNICbfjvp10u3UdVXPkR13uGmuSjVFk8SpD69Bv+G/kl5BrUIQZd7zCE=
+	t=1790215451; cv=none; b=cBih+c7SHlI2kwA3sel6w0npRNv5qzHJ0ojaZEgjyC0FRoKyKHFJlZc5FWAmujEC6E14MtM59Fbsn2A3BFxhEheE7GBeMWf6/GW+pw0dYlFoXTd9H2O89QncGCa5fOdgw640ylaGRPKSEnM6Zr1VTxxNj06C8lnIpsAjpo+xpDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790214833; c=relaxed/simple;
-	bh=ZGYsc5FFTMc0cXDw8M1XksRbve//31AZNpv00afVkko=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=X0U54LC2tnUKW81F2MBGMsDgIz71jC+4/XnkgprCV8jCSXErvtdHrhxz8v0hOv2ikNC6bYog+6GFw701bdB7cMdMpbYWgB03Wy21KYHQBCSeBPMKEF5+wxxKcg7mqu1Avd+TFld1KAHfFuQX0Kkbu9KJDFhQFTDoZN4VcggSnAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ceYiUCgr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790215451; c=relaxed/simple;
+	bh=Sq/Bmk4yORgByR9DGnLLTWgLehmQZuZU/1N+/ooi0u0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nxX3ECeURsOFjg+xrrjFL6/m5rhJmiUPX8h1VH2MDsMzi+B9qVeSdV5TgSJRxM4OOu85mpgF2a0QBMtQBwyYBJXuL/NvT3HmPyPyVT6ZLbSv6xyrm/PQtZDY/1hDRxysSlefIHuJ34NghHDPzNZ29lEATy7rLy8/oLFpfMBWQaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=vnoHjDAG; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ceYiUCgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC251F00898;
-	Thu, 24 Sep 2026 01:53:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790214831;
-	bh=KxUZgygbD6pzvkbZMV6HMcwciRjDi37XPGhTsTHCYgA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ceYiUCgrJITmNNrEVXD3qYj0kwbR8w0usHRmmukZPbplH1hnJ+m1cRLQW9R7k3xjU
-	 tSaRX38x2bGIfcQW31uoyxGvxEUz1k9zAbYUht2fkkTz3Gdd24Q3JtzAbuzzvviUXX
-	 z1BfbPJlz9sf+Rx1Fv142OyK75qcQGbNwD9Df4/OXmml2zGyHjL/p7z1GWeUNIt/AF
-	 E2QDdh4UluHQ4GfDJHzXnX4bb5LNxZNxvUW6F0qrJwm320tZ65BOLgg80DST8BEmBR
-	 jmtqKYVSuc9rijbN/xedRNki8Et/jCr+FSKmUCW9rwjSHVqJTw8rw2ot3l1ZjOIl7T
-	 fEHwQGVzdlGXg==
-From: Yixun Lan <dlan@kernel.org>
-Date: Thu, 24 Sep 2026 01:53:30 +0000
-Subject: [PATCH 2/2] configs: spacemit: k3: Enable Ethernet support
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="vnoHjDAG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1790215414;
+	bh=s3CNAx4BQMr4l63eYxA4KnmxnUvSjG39QNEvmt1VyIo=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=vnoHjDAGxgfkFD6r5IQQmytgxMGem+RVl/ys3MXcczSrFlJV2P1Fa6TK32OI+t+Hj
+	 1163pLE1jLGvly9iBtDEezqtA8bRfnI0QomRwmKS/0awcl9mKl6sqTbnj4jzg87MSc
+	 GF4qRRFzQJun2DIWjD70ihe+weU1oHaLvF2BRzLs=
+X-QQ-mid: zesmtpgz3t1790215407tb9e7a6b9
+X-QQ-Originating-IP: BYfzCy6nTypQWy08C5EApOMYUoFWUOLwIQk4cKlrwzY=
+Received: from snode1.dc.com ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 24 Sep 2026 10:03:25 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7833649255534898788
+EX-QQ-RecipientCnt: 12
+From: Encrow Thorne <encrow.thorne@linux.spacemit.com>
+Date: Thu, 24 Sep 2026 10:04:48 +0800
+Subject: [PATCH] PCI: spacemit: Ignore link partner PERST on K1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -37,85 +42,99 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260924-02-k3-ethernet-support-v1-2-b8e1fafc9249@kernel.org>
-References: <20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org>
-In-Reply-To: <20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org>
-To: u-boot@lists.u-boot-project.org
-Cc: Tom Rini <trini@konsulko.com>, 
- Jerome Forissier <jerome.forissier@arm.com>, 
- Quentin Schulz <quentin.schulz@cherry.de>, 
- Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>, 
- Julien Stephan <jstephan@baylibre.com>, 
- David Lechner <dlechner@baylibre.com>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, 
- fanyi zhang <fanyi.zhang@mediatek.com>, spacemit@lists.linux.dev, 
- Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1381; i=dlan@kernel.org;
- h=from:subject:message-id; bh=ZGYsc5FFTMc0cXDw8M1XksRbve//31AZNpv00afVkko=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqtIKlrTaG4KKAcsHFqZoFWcKak7yTQh80DLd87
- Zj9X37qE66JAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCarSCpRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+2ZZw//RGsAHTpetOHqIreh5EztgoniqzleooqR2xWsGGoUfHHbVeYzYXDm4
- YUuJKQnTTWg3K6A9ADZecxpQv/RG68MVt/k6jmmHcUB5E5806znhuPGGZD7a7GRtQccztH1XD7p
- DRFfrStASytv/UE/OCddDBDj4lXZGYWEREY2iixoO3SfDlqfP6XWYCxfIl2ADIHOLb84wteYL+K
- ce01fXvPDXrPSIkXNwiu8fQyG7afpd/MWQNrGy1jojStXbwMcwnfjvBjWHVkhFyrC7xyK8qKYkE
- 3litZeBcN5+QaWPrxAPgYgInDUAJZFc1JWlx6h1X1cX/tYawUh2zzlh6yttHoi4EBin1R1l+ajz
- htfgHMnZ9mqPRDma8NLziuUDd0JxlsUcJi2UQbHDEv7ny+BCaw7mXFzCPW6EpGbNyt34ax+BuzW
- 224IUedtAtuM0Q4kC23eBDhe1h1z7f/NPN4DCz5XoCF5eg8DxiKWt7rutmgJzX6w9Sm7feNm2md
- AF4rAHmoq30TMYpb0YlI4KVSUi21juuZlBcSLLPZpl7AjRwGH6oUPt9IcRMA9nQUvtX62TpJ2BV
- RSpxlQlv5T1ve5yvbIms8Vxd83abgYjS1erKyA1ODFzPiLiM0ibYvVEH+2ks91aW9agMOvqjM8i
- jS/QDj+aHd7yIGSEKatZDjaVj5IV/4=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Message-Id: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAD+FtGoC/x2MQQqAIBAAvxJ7bkE3Cusr0UF0rSUq0Ygg+nvSc
+ QZmHsichDMM1QOJL8ly7AV0XYFb7D4zii8MpKhTPWnM0Tre5MRVY3TCGORGarsQrPGNIQ8ljYm
+ L/rfj9L4fooo5lWYAAAA=
+X-Change-ID: 20260921-spacemit-k1-pcie-fix-256ffa8d382d
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Encrow Thorne <encrow.thorne@linux.spacemit.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1790215510; l=1795;
+ i=encrow.thorne@linux.spacemit.com; s=20260922; h=from:subject:message-id;
+ bh=Sq/Bmk4yORgByR9DGnLLTWgLehmQZuZU/1N+/ooi0u0=;
+ b=z6eP620CfxXQFP6H0sQF3XjlLbwrhD3S+Yj68RfV5mBp3vFjolWOnArwjsMW3/k9Q7sLWpVEX
+ mppB6MoCTSMBQbrhKewQknqWhxrVafjqqaXtP3G3GEDKaum/+OzPyzI
+X-Developer-Key: i=encrow.thorne@linux.spacemit.com; a=ed25519;
+ pk=2pmSCQKuWBw48bo9mVmWM77uEWdezu/geF0k1YMFzN4=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MLnLowx4CbXMyRItrYTYw0ia9VMa1QZ78XK1oqMQXmDL0Gebm+FjxCz5
+	0QmkuQYHM3IuZo9Ip66Af/lo/8hzvQMtKOhAWRrjltH9LSEE0cgazxk7dSGwWljrYzLS8fd
+	sGfki5bIVBVQSybiPqVZjaetblWM/Q4chnpAMkD+hG4EqT66AHHa94NOElOTAJrhrvg6Vl3
+	gYL0BtHFhqMtBmUsjMXiyXbui2CoY/vpuIR9W7fX49IrvGBlGblobnolnxOWphTAp0HPj7Y
+	PGMcqyJxGxUHzz3swAICUcaewCAiRHIFu+2j3ur9oxPgO8+zITZECsjsHZVhbQOOaECGcWJ
+	DFQWFV9QILM68AQLxoioQeNPPTaxNey0gwDb2/94c85upqnXa0R9C94+mCdoDbdoES5SY40
+	2IHEPzkF0/jbU71pxCufKDYxODG24WXZTHvOLrLn3eXEVoWyB+eEUfbwC1hqKWksQAZ1DY1
+	MKwT5HGTQZbibqMN5fYU933bYX6fXd+4E8VwMf7nY9hvoIqm9gsEH9CJwL/sFgXNUFRnoPI
+	ExkphLArWhEq9mW/UY1nnMrADeRTfboTMvflCyloncx/1v1H/A7F3qK3l4XrJBOnxf9Ulfw
+	IwOYvciAqLkabpJG5US7Nl5lQThrnocqdP2JuZMSmAGKjGuK9VETG0y6l3d16lxxV6K0dSl
+	/klzBqKTzOgkhAAOGbi1jcwesPlkw07a0dPdCWyIPwHNrT3kU6CQP5SmcfDBs1pA2F5c3Lb
+	aZ8aDVauPzPiKXcts1O7rjLnXg/bW87THHJ/qWSBnwgTR20aa1LSblJqmh3TvbIc+XqE28y
+	fe/rWF/ITt3zAc6TdXZyr7uvspj3zaTGPf5vLG0NavdDitMeN2E4zEta+JTBqj061JHtCQN
+	a1Cpf/8BLNeqpw0+UyH1eu5yoyTQd8ZsmYU6zzQkQHitHTJKs3btr/LMsX6kIwbUeSzQnfp
+	EZ7TaIZLlB6ixn7rPV67sUm4UElK8KFIqtE6clCBnmYfiqS2VnonJU7XoyB0cCkgfkkwx4u
+	xKaBDTDkXNxZ0qD9j4AizNLKZQl2HXVwKjXWHfltpDCWTM1IKOm4NuLGSTQjSRNpllLK62n
+	E7COiYvj03Jz1AmDunNdjWQxS0gA/EACQyunEPudrWiK1ZddkJ9JMtbMDE42v7BJhpfGKjR
+	4PUk
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-Enable the SpacemiT platform glue for the DesignWare Ethernet QoS
-controller together with the generic PHY framework, Gigabit Ethernet
-PHY support and the Realtek PHY driver.
+The K1 PCIe controller and PHY are affected by the PERST signal from
+the link partner during initialization. With some devices connected,
+this can prevent host initialization from progressing and cause the
+system to hang while probing the PCIe controller.
 
-Enable DHCP, MII, ping and PXE commands for network configuration,
-diagnostics and network boot. Allow U-Boot to generate a random
-Ethernet address when no valid address is provided by the board.
+Set PCIE_IGNORE_PERSTN before accessing the DBI registers. When set,
+this bit makes both the PCIe controller and PHY ignore the PERST
+signal from the link partner.
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+This allows host initialization to complete without being affected by
+the link partner's PERST state.
+
+Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
 ---
- configs/spacemit_k3_defconfig | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/configs/spacemit_k3_defconfig b/configs/spacemit_k3_defconfig
-index 6ca41aecc41..3a70a0a4858 100644
---- a/configs/spacemit_k3_defconfig
-+++ b/configs/spacemit_k3_defconfig
-@@ -24,10 +24,15 @@ CONFIG_SYS_PBSIZE=276
- CONFIG_HUSH_PARSER=y
- CONFIG_CMD_GPIO=y
- CONFIG_CMD_I2C=y
-+CONFIG_CMD_DHCP=y
-+CONFIG_CMD_MII=y
-+CONFIG_CMD_PING=y
-+CONFIG_CMD_PXE=y
- CONFIG_CMD_PMIC=y
- CONFIG_CMD_REGULATOR=y
- CONFIG_CMD_FAT=y
- CONFIG_CMD_FS_GENERIC=y
-+CONFIG_NET_RANDOM_ETHADDR=y
- CONFIG_SYSCON=y
- CONFIG_CLK_SPACEMIT=y
- CONFIG_CLK_SPACEMIT_K3=y
-@@ -35,6 +40,11 @@ CONFIG_SPACEMIT_GPIO=y
- CONFIG_DM_I2C=y
- CONFIG_SYS_I2C_SPACEMIT_K1=y
- CONFIG_MISC=y
-+CONFIG_PHY_GIGE=y
-+CONFIG_DWC_ETH_QOS=y
-+CONFIG_DWC_ETH_QOS_SPACEMIT=y
-+CONFIG_PHY_REALTEK=y
-+CONFIG_PHY=y
- CONFIG_PINCTRL=y
- CONFIG_PINCTRL_SPACEMIT_K1=y
- CONFIG_DM_PMIC=y
+diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+index 0564c46e2f48..98f067e1ba81 100644
+--- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
++++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+@@ -44,6 +44,7 @@
+ 
+ #define PCIE_CONTROL_LOGIC			0x0004
+ #define PCIE_SOFT_RESET			BIT(0)
++#define PCIE_IGNORE_PERSTN			BIT(2)
+ 
+ struct k1_pcie {
+ 	struct dw_pcie pci;
+@@ -137,6 +138,13 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * When set to 1, the PCIe controller and PHY ignore the PERST signal
++	 * from the link partner in both RC and EP modes.
++	 */
++	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
++			PCIE_IGNORE_PERSTN);
++
+ 	/* Set the PCI vendor and device ID */
+ 	dw_pcie_dbi_ro_wr_en(pci);
+ 	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
 
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260921-spacemit-k1-pcie-fix-256ffa8d382d
+
+Best regards,
 -- 
-2.55.0
+Encrow Thorne <encrow.thorne@linux.spacemit.com>
 
