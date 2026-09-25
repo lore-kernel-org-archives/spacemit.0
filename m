@@ -1,144 +1,160 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFD02D7DD4
-	for <spacemit@lists.linux.dev>; Fri, 25 Sep 2026 04:40:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016DA4B1491
+	for <spacemit@lists.linux.dev>; Fri, 25 Sep 2026 14:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790311235; cv=none; b=AEtilvU+/8XHDoZHtwr2nspsZ7N8Ef3BOa3IZkiblcyaisEEDCHnelmtjnzvOWrNN9zJiR4X2iTmPXAQuzkYCQXbDd/JEK3wUtlKphNQEGbhX5GYkBEiBk78ggSZElkaeywtKAVTawRxHA/yRTuFb3OBoUKc0Ld8nB8h5Hg4S44=
+	t=1790347438; cv=none; b=QEK7XsS6W1LiVgLj3Y/Qlr29ubs82kgk3WbX3ZjDBsjazpPaMPGc+9XivLGIn/L0jehJzEtuDu9aHVGr7xnfwwYxoJ5VMmox1zNbJ3r3lQWiTZJfiudjjoq00SYCuSBui3I5Q1i1WSW+cqfetuT5ihEMnrBCC8Gzsg/FRzCbltE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790311235; c=relaxed/simple;
-	bh=cYlN68nBuDSOc7nnWWqy4zdtkCfMVujoFFjmMEE8izQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OB3Kru+/MHRBXUvQHeRjQG6015HF/tW2FLTt8MbecxITllF7KLHlOS9SGlEvaK928HEWoREP2f4ZCD/LxCTlkOl9uBgEpuQA2XU4S1vB2/6Jub/EYBR9trTohihBXgcjrQda2g0hTqgvjCTCDZKwi0hvYkRQu+0HPc7xpFeGjS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=EqpfudDo; arc=none smtp.client-ip=195.154.119.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1790347438; c=relaxed/simple;
+	bh=s2tP4LuXG6DitbJlb4NU+9ieo9q10zgjsECRa7Nn+zo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IBDKJEkf7pWEzxaQJ/8KjtnXt5fT943tVRYIcgKPF/BJTJ4M20MkAhOg1SW0UdXvKeoHSatGHIKGhUqapsDO11RU/MCS/d76NAvyr6mVMGr08JubOebofJDQd+uUrueyUgeMNFlitCWxxOLm8j8wiVpz2djfKzJAlJUx5JMSOEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=NbANSO73; arc=none smtp.client-ip=74.125.225.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="EqpfudDo"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=sXcHkvmEDQb95xO+WnTUyB8W57ObEH1tkNyscCOypJ8=; b=EqpfudDoW1OLUsayAgWvqZ6jWn
-	6ljNv83y6UzA+pq00Rr4pa3abKgbvo+liICioNJ2K4MIv+kl1H5Zhl+y/0sfQygrhG9vgpOefCSlL
-	9lGpliSVS/hzOHswfOVii1vQ7QsnVo/5ggbvFuqQyNbRnxcHjQAU2bCxy1OuoTCqJmEljvx+1s9jD
-	f/Tu50JZ6N2JzBkhGiYgdjRqbkJx3JS8SX36Mpm4SeIrDCh+VpEi4xE3tOJB+dzqM8Jj1dRZupJpb
-	J+Mw3cbF2VlrY7OqsPul4XC+9X+prTgY7534/+DMtFc6Fe7HeDLN0OqYsrtg/87lrQw9X4guZhxn0
-	87k9nWHA==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1x9xjb-00000009gz9-348u;
-	Fri, 25 Sep 2026 06:40:31 +0200
-Date: Fri, 25 Sep 2026 06:40:31 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Andy Chiu <tchiu@tenstorrent.com>, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
-Message-ID: <arX7PwOnlz0N9rUc@aurel32.net>
-References: <apSYF5x1Tu7PlyL1@aurel32.net>
- <ap-SIQ9DLt-CfAx6@aurel32.net>
- <aqGNGp8PInSV4vty@aurel32.net>
- <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
- <arSshYwcyHjC2dh3@aurel32.net>
- <arS-yYLK8Df5knSE@gmail.com>
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="NbANSO73"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49b912e4b11so5027555e9.3
+        for <spacemit@lists.linux.dev>; Fri, 25 Sep 2026 07:43:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1790347430; x=1790952230; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DtEfZGf6pOZoZKp7BZybV8NV7US5hG1rb4KkghHs3uw=;
+        b=NbANSO73jfQj1MURwWdi+IhjPfkgZNAgkAyyRRIRMvjMjKBogWuj0ttOJoTMSFbpne
+         dwzsd/b6bcvnyui3KsUwnlktjZFzK9rOOc0GPyWl/Z7w/7dijNIllnB9dl/DMmvdITwL
+         sLl07Hx00AxmpXX4pJsdMRgCJ4esXbuUzuREX+NFwFbyHefJ7YZjIP1UIFfmd2KT1kFa
+         f5/x7tNTlwzsKQdZe4iIQcdaen5pHfiI9H5GRLKjr6PIMdRtwGVSL5ZCEFQDt3cRaxHa
+         hjU2TNjEVHMBnAkhOMWNQQVuQx+6kTPM5EZo1L8gOaCFiLlQ8PDcdpt9P4NnNCpjow3B
+         W0OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790347430; x=1790952230;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DtEfZGf6pOZoZKp7BZybV8NV7US5hG1rb4KkghHs3uw=;
+        b=CHurDaJ00Or4AhhU8+aeOVS/lF5ZKIa7ZV70mtRMtcJzs3Rv8mX1WU52yUtk0qUM7C
+         QXlZcceP1c92EZ5M+BF5fjsnGo69YW+fS0Yb9nRTh3hZgQz7f6JEIlPZBQaHTsGJQQVr
+         R89C9IkbqAb7Tvt13wa8+0LMGbok2jgo+F5SgJx5vkW75Q0tQIwHzDUYJzO6lGWYu6OQ
+         Cx+Oj9lyGAHQ/2Vm4uMyY7iSH0wFaOYJ6mCjR8cWqvpHvPDbB6TBT1QgV3fE64T+3ddA
+         aJt7eGw0+3FpBfLhvHcCO+QAFb6a9vkcz0VZDx2/4T3HGcMGdumijLpVaGWUIlsIADsb
+         /07w==
+X-Forwarded-Encrypted: i=1; AKwUvBy3jlyCGTH8+ry1ihM0K12mUHjxvxVFXKb4kT+Ycumivik7jiIv2D2EiOZyRETpvXj15oEzCXp+zA==@lists.linux.dev
+X-Gm-Message-State: AFuF++kwL9Uj3SBwjHm518eHlYn0vFTvFML5tdxSI06amye10z+nqX68
+	Io+EaniGu4YIm93+/PNhhVMob0d2MUrYYQdbEcLYzKR3pDdXicDzSOdEKz1nqSbEB3g=
+X-Gm-Gg: AYBFou0vj3cQPBPV8myKf2YmbVpRlU1yQUjA96/Hg89Ql6ZPPzll7Q8EdfI0G7N5/oJ
+	A4kw0y2Cc4DWuSOxBNJveG7Gab5CXf4QRr72kilI7JSy3PkBhTTOQpfsVuQHwLEd2R/s2FvyWrt
+	6CI92MMNfFuTORcifdgG01rFbWRUTFkGZrOLtykfqavcTcvS2jiOEG6+uKONA31p8Ts/nLI1CTn
+	vhICQwezALWOVwOeSRYzNs+rUNumeXeL8kBLEmXTSnMbfQ56gODb2I9b57TyPf0Rjve9WT198W+
+	4bXD4IbiGH1dyLvkvR+ZCj3qIEhDY6zEYzRGIbxRWHS5Eeb0POEL3RfLMtM0gC7UBXjTkvKt5pl
+	chMIbG97RxQ3UgAlF+cSuL21deq4GQIVM0+gCY5LbtIx1aCp0lYlMXBK3AjRF4bDs5TX46bC54R
+	6RaUtJoV1aBcF/8IfAs72g0MWyn0+L8Ev3ZJ8deMWftkbV3fS9m63z2FtTWROYoa7DVXHwYiRxB
+	t7VlnW0ft394/BrGg==
+X-Received: by 2002:a05:600c:c8f:b0:49c:dc14:d681 with SMTP id 5b1f17b1804b1-49fe66bdf3bmr105928135e9.3.1790347430286;
+        Fri, 25 Sep 2026 07:43:50 -0700 (PDT)
+Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4887a35607bsm7104435f8f.16.2026.09.25.07.43.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Sep 2026 07:43:47 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Cody Kang <codykang.hk@gmail.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Vinod Koul
+ <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Haylen Chu
+ <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>, Stephen
+ Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti
+ <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
+ <u.kleine-koenig@baylibre.com>, Guodong Xu <docular.xu@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
+ devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org, Cody Kang <codykang.hk@gmail.com>
+Subject: Re: [PATCH v2 06/17] clk: spacemit: k3: parent eDP/DP pixel clock
+ to the PHY PLL
+In-Reply-To: <20260809-k3-display-v2-6-327d7910bf71@gmail.com>
+References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
+ <20260809-k3-display-v2-6-327d7910bf71@gmail.com>
+Date: Fri, 25 Sep 2026 16:43:46 +0200
+Message-ID: <1jwls975nh.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <arS-yYLK8Df5knSE@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Karl,
+On dim. 09 ao=C3=BBt 2026 at 21:14, Cody Kang <codykang.hk@gmail.com> wrote:
 
-On 2026-09-24 08:15, Karl Mehltretter wrote:
-> On Thu, Sep 24, 2026 at 06:52:21AM +0100, Aurelien Jarno wrote:
-> > Thanks for your feedback. Note that at this stage I have not been able 
-> > to reproduce the issue with QEMU. I guess it's very timing dependent, 
-> > also I am not sure if QEMU simulates partially executed instructions 
-> > (outside of page faults).
-> > 
-> 
-> Hello Aurelien, Andy,
-> 
-> I tested this with a local TCG diagnostic change. It did not reproduce
-> the K1 failure, but it answers the partial-instruction question.
-> 
-> My LLM agent helped me running these tests.
-> 
-> In stock TCG at 7074591d7954, vle8.v can leave partial state on a memory
-> fault, but the vector helper runs atomically with respect to guest
-> interrupts [1,2]. Stock QEMU therefore cannot take an asynchronous
-> interrupt partway through this load.
-> 
-> In a bare-metal test at VLEN=256 and LMUL=8, a page fault after element
-> 16 left vstart=16 and a snapshot containing 16 source bytes followed by
-> 240 poison bytes. After the missing page was mapped, QEMU resumed the
-> load and completed the copy correctly.
-> 
-> I then added a hook to QEMU vector-load which performs 16 elements, sets
-> vstart=16, raises a timer interrupt, and resumes at the same vle8.v. The
-> bare-metal test completed 262,145 such restarts and 67,108,864 copied
-> bytes without a mismatch.
-> 
-> I also booted Linux 388b607d107c with:
-> 
->   CONFIG_RISCV_ISA_V=y
->   CONFIG_RISCV_ISA_V_UCOPY_THRESHOLD=1
->   CONFIG_RISCV_ISA_V_PREEMPTIVE=n
-> 
-> With the hook restricted to S-mode loads with SUM and SIE set, a checked
-> pipe test completed 90,308,608 bytes across copy_from_user() and
-> copy_to_user(), including demand-faulting source and destination pages.
-> The hook logged at least 327,680 forced interruptions at vstart=16,
-> without a byte mismatch.
-> 
-> As a negative control, I made one load read 16 elements and then retire
-> as if all 256 had completed. That produced the 16-source/240-poison
-> signature in bare metal, and the Linux checker reported exactly 240
-> differing bytes. This is an injected symptom, but confirms that the test
-> detects the reported failure shape.
-> 
-> Correct QEMU fault recovery and forced interrupt restart therefore did
-> not produce the corruption. Reaching the 16/240 result required
-> deliberately modelling a load that completed early without a trap. That
-> fits the observed first load/store pair, but does not establish its
-> cause. Your IRQ-disabled result also makes a normal asynchronous restart
-> a poor fit.
+> The APMU eDP/DP pixel-clock muxes were parented to a placeholder, because
+> their real parents (the DP PHY PLLs) did not exist as clocks yet. They do
+> now, so point each mux at its PLL and let the pixel clock reach the
+> controller through the clock framework.
+>
+> Signed-off-by: Cody Kang <codykang.hk@gmail.com>
+>
+> ---
+> v2:
+> - no change
+> ---
+>  drivers/clk/spacemit/ccu-k3.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/clk/spacemit/ccu-k3.c b/drivers/clk/spacemit/ccu-k3.c
+> index cb0c4277f72a8..afbbbd797826d 100644
+> --- a/drivers/clk/spacemit/ccu-k3.c
+> +++ b/drivers/clk/spacemit/ccu-k3.c
+> @@ -937,13 +937,13 @@ CCU_MUX_DIV_GATE_FC_DEFINE(ufs_aclk, ufs_aclk_paren=
+ts, APMU_UFS_CLK_RES_CTRL, 5,
+>=20=20
+>  static const struct clk_parent_data edp0_pclk_parents[] =3D {
+>  	CCU_PARENT_HW(lcd_pxclk),
+> -	CCU_PARENT_NAME(external_clk),
+> +	CCU_PARENT_NAME(edp0_pll_pxclk),
 
-Thanks for all those extensive tests.
+hidden behind this macro is a .fw_name. Basically these are your DT
+input names. You can't change them at will like that because your
+bindings are supposed to be stable.
 
-> The normal Linux load-fault path exits before vse8.v and falls back to
-> the scalar copy [3,4]. Do you have the original trap PC, cause and fault
-> address for the second-iteration fault? Those values could show whether
-> an unexpected synchronous trap is involved.
+You should not use placeholder name, ever. No need to make the
+name too specific either, from the beginning it should have been
+something like "pixel_pll" or whatever your doc refer it with.
 
-Unfortunately the issue is quite rare, so I have not found a way to 
-trace all that information when the issue happens.
+"external_clk" is not declared in your bindings AFAICT, so at least it
+should be fine to remove it.
 
-That said Han Gao pointed me to this patch:
-https://lore.kernel.org/linux-riscv/20260807-vector_fpu_regs_status_rmw_fix-v1-1-0c16848b60db@intel.com/
+There need to be a dt-binding patch documenting the new name you need
+and then you can start using it in the driver.
 
-I have been testing it, and so far it seems to fix my issue with both 
-CONFIG_RISCV_ISA_V_PREEMPTIVE enable and disabled. Or maybe it just 
-hides the issue by changing the timing, as at this point, I haven't 
-fully understood how the bug fixed by this patch can completely explain 
-my observations.
+In the future, please try to document all the inputs of your controller
+in the bindings. Even if you do not use them yet, they exist.
 
-I still observe a few GCC crashes, on both the K3, but more rarely, but 
-without this corruption pattern, just as non reproducible ICE in GCC. It 
-is likely a different issue.
+>  };
+>  CCU_MUX_GATE_DEFINE(edp0_pxclk, edp0_pclk_parents, APMU_LCD_EDP_CTRL, 2,=
+ 1, BIT(1), 0);
+>=20=20
+>  static const struct clk_parent_data edp1_pclk_parents[] =3D {
+>  	CCU_PARENT_HW(dsi4ln2_lcd_pxclk),
+> -	CCU_PARENT_NAME(external_clk),
+> +	CCU_PARENT_NAME(edp1_pll_pxclk),
+>  };
+>  CCU_MUX_GATE_DEFINE(edp1_pxclk, edp1_pclk_parents, APMU_LCD_EDP_CTRL, 18=
+, 1, BIT(17), 0);
+>=20=20
+>
+> --=20
+> 2.43.0
+>
 
-Regards
-Aurelien
-
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+--=20
+Jerome
