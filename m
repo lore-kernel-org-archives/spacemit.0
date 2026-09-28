@@ -1,145 +1,147 @@
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26893009CB;
-	Sun, 27 Sep 2026 21:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843B2E555
+	for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 04:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790543905; cv=none; b=cfsAwfvSwKj+72L2PQcqZOZ0IuaBeYvjDM8T3t76slIO0h5uAmaz/rOYVgRvl7UQUKQH1HSxd/GdcPVjBN6ut6jh9mhJugHqrAwiRPZqpqty9c3AcJcANBh0cJx9hvANd3KK0b6YF0sJ+BE/WeYVGlH+yXby4emGUn5KSXJCbcQ=
+	t=1790569967; cv=none; b=MJnJia7rg0vHS3OThtGDmAjDaYOHxW1iJU1SlLDJB5DGJqC9ai9Ej0hMrvoJqBlF14uNjNXUlENPUeD7LIddYgsKvV3kzszjhBWtLE0MA0dXF8fR2bqLO7dVmvZAs707FVF08ZiGc1D4oABBsH2iu+zWj4v9kjJTO9EZPZpc07w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790543905; c=relaxed/simple;
-	bh=xCFj/xxiXd1WNuyxbAfLfrlA9x5UoRqcQp528m1GniM=;
+	s=arc-20240116; t=1790569967; c=relaxed/simple;
+	bh=iR0R/gzfdhxfjs8O1zZf9bZKWvmDaIgGMDwfBi2ZB9M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dG+n6m1msE/gS7AUsHwUpUl9fQX9eORaCXtnCR6Pcd4IK4KvHS19lS/6/7cmHaN6J6TUAgpPvz4zw/574zTghD3+7WuntVscNRexeU8MPikZ4sQKk30gwknefnsU5vV+KX/XKXf+bAjPhEZggJ8L0m8F2hFZt+jEybOHzo1W+w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=Si+XEBRs; arc=none smtp.client-ip=195.154.119.183
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fv7ajNfX9RWBTMxdN64zAGopKPMNqt0vsjilf6pcPVJd5CL4Qh7sbLyh3mAeCkxa+qUbaJbEzXP/CSR1l0jAnEcg2SxCrVj6Vdr0uNpn07HSgz3Pzi2cALF8E2idlrwXT6Kufuo8tAroKAWrIbHZtH3Dt9U9GlKtsljxtIoJEhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=qLyctAVp; arc=none smtp.client-ip=195.154.119.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="Si+XEBRs"
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="qLyctAVp"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
 	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=33MsHDwPKKkx+NSkez8Et2HM/X24ivhJAbyLs8SiZQw=; b=Si+XEBRscLmCml1/lRIrfwcH5M
-	MI5OhSA8PoN9qtCZVS0OgnoqsdinGm8UdpAQNxfzwsjI4EfN9YT0h+y17f0At4B/LNVR9LKnEBSA6
-	LcQeQHdxqns41n5OIv3N6Trf3N746CDPoRex/acXy7we9vM5BT4z6g8+PZzlVsnI+TXNT1JpgOtM2
-	dA7pJbAweyePTZAp3mffCHHkpcItFPZo+Lc76jVbO0giudX8S8Oc/0KKeuphZ56sv9zyyFZOXLHTo
-	3g8x9N22+VhD2ICCCFy20VaJMi4mO0Kdm4w8SYMvHuOpdPR6bbkB+fu2qAWuKd8X+cSn4InqCbxr6
-	GviGGnfg==;
+	bh=xmk5euR5PRSTE9/TBR12w66CsbiVK597hUhgaveMVSI=; b=qLyctAVp1Ua5wXeJGUXKJ3Gjmz
+	HrVDu7pCr/x3SvuT9+XlwcYr+z67OYbjLv2TjlJStsEK+ry0yY+0Q4UUakGUf5qam31CSR9S28PJX
+	Ql5XPnLiwKIfcb7itfyi2e5pZsZ4GqJXYIUSmV1d4yabKUYDlB9mY+40u85urWVSodj3BS9Zf9GdR
+	1btAfOS16NAuCEt5xQHIO96qMxIpLZEIt8q4LdyHnWSg5Zv/tVBpO97ZUSUCWAF3AUgD78M88PjF2
+	21oXle8SIFYmh5x436tn6eRajI1PJJIkxiMr/nt84t3WKbypyOog0+jru82kFoRCzNMbz6wBixSks
+	nx7Q4ckg==;
 Received: from authenticated user
 	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1xAwGC-0000000DQ9b-0cFC;
-	Sun, 27 Sep 2026 23:18:12 +0200
-Date: Sun, 27 Sep 2026 23:18:11 +0200
+	id 1xB32e-0000000E2Dv-3397;
+	Mon, 28 Sep 2026 06:32:40 +0200
+Date: Mon, 28 Sep 2026 06:32:40 +0200
 From: Aurelien Jarno <aurelien@aurel32.net>
-To: linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v3 1/5] riscv: dts: spacemit: k3: move USB3 phy to board
- level
-Message-ID: <armIExWjR43ar50t@aurel32.net>
-Mail-Followup-To: linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20260831044540.3304350-1-aurelien@aurel32.net>
- <20260831044540.3304350-2-aurelien@aurel32.net>
- <20260831045448.58B591F000E9@smtp.kernel.org>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Andy Chiu <tchiu@tenstorrent.com>, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org
+Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
+Message-ID: <arnt6EEacEm3YRIC@aurel32.net>
+References: <apSYF5x1Tu7PlyL1@aurel32.net>
+ <ap-SIQ9DLt-CfAx6@aurel32.net>
+ <aqGNGp8PInSV4vty@aurel32.net>
+ <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
+ <arSshYwcyHjC2dh3@aurel32.net>
+ <arS-yYLK8Df5knSE@gmail.com>
+ <arX7PwOnlz0N9rUc@aurel32.net>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260831045448.58B591F000E9@smtp.kernel.org>
+In-Reply-To: <arX7PwOnlz0N9rUc@aurel32.net>
 User-Agent: Mutt/2.4.1 (2026-07-04)
 
 Hi,
 
-On 2026-08-31 04:54, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] Removing 'phys' and 'phy-names' from the base k3.dtsi breaks DT s=
-chema validation (dtbs_check) for disabled nodes and improperly delegates f=
-ixed SoC routing to board files.
-> --
->=20
-> commit e9dc7ad92d5f4a805cf362fdd51c6ae160da1934
-> Author: Aurelien Jarno <aurelien@aurel32.net>
->=20
-> riscv: dts: spacemit: k3: move USB3 phy to board level
->=20
-> This commit moves the USB3 phy definitions from the SoC dtsi to the board
-> level dts files for the SpacemiT K3 SoC. It aims to prevent PHY mode
-> configuration errors when the combo PHY lines are used for PCIe rather th=
-an
-> USB3.
->=20
-> [ ... ]
-> > diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts=
-/spacemit/k3.dtsi
-> > index c3f2dce0969c0..6f8d55eae6f6b 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> > @@ -452,9 +452,6 @@ usb3d: usb@81a00000 {
-> >  				 <&syscon_apmu RESET_APMU_USB3_D_VCC>,
-> >  				 <&syscon_apmu RESET_APMU_USB3_D_PHY>;
-> >  			reset-names =3D "ahb", "vcc", "phy";
-> > -			phys =3D <&usb3d_u2phy>,
-> > -			       <&combophy 4 PHY_TYPE_USB3>;
-> > -			phy-names =3D "usb2-phy", "usb3-phy";
->=20
-> [Severity: Low]
-> Does removing phys and phy-names from the base k3.dtsi break DT schema
-> validation (dtbs_check) for disabled nodes?
+On 2026-09-25 06:40, Aurelien Jarno wrote:
+> Hi Karl,
+> 
+> On 2026-09-24 08:15, Karl Mehltretter wrote:
+> > On Thu, Sep 24, 2026 at 06:52:21AM +0100, Aurelien Jarno wrote:
+> > > Thanks for your feedback. Note that at this stage I have not been able 
+> > > to reproduce the issue with QEMU. I guess it's very timing dependent, 
+> > > also I am not sure if QEMU simulates partially executed instructions 
+> > > (outside of page faults).
+> > > 
+> > 
+> > Hello Aurelien, Andy,
+> > 
+> > I tested this with a local TCG diagnostic change. It did not reproduce
+> > the K1 failure, but it answers the partial-instruction question.
+> > 
+> > My LLM agent helped me running these tests.
+> > 
+> > In stock TCG at 7074591d7954, vle8.v can leave partial state on a memory
+> > fault, but the vector helper runs atomically with respect to guest
+> > interrupts [1,2]. Stock QEMU therefore cannot take an asynchronous
+> > interrupt partway through this load.
+> > 
+> > In a bare-metal test at VLEN=256 and LMUL=8, a page fault after element
+> > 16 left vstart=16 and a snapshot containing 16 source bytes followed by
+> > 240 poison bytes. After the missing page was mapped, QEMU resumed the
+> > load and completed the copy correctly.
+> > 
+> > I then added a hook to QEMU vector-load which performs 16 elements, sets
+> > vstart=16, raises a timer interrupt, and resumes at the same vle8.v. The
+> > bare-metal test completed 262,145 such restarts and 67,108,864 copied
+> > bytes without a mismatch.
+> > 
+> > I also booted Linux 388b607d107c with:
+> > 
+> >   CONFIG_RISCV_ISA_V=y
+> >   CONFIG_RISCV_ISA_V_UCOPY_THRESHOLD=1
+> >   CONFIG_RISCV_ISA_V_PREEMPTIVE=n
+> > 
+> > With the hook restricted to S-mode loads with SUM and SIE set, a checked
+> > pipe test completed 90,308,608 bytes across copy_from_user() and
+> > copy_to_user(), including demand-faulting source and destination pages.
+> > The hook logged at least 327,680 forced interruptions at vstart=16,
+> > without a byte mismatch.
+> > 
+> > As a negative control, I made one load read 16 elements and then retire
+> > as if all 256 had completed. That produced the 16-source/240-poison
+> > signature in bare metal, and the Linux checker reported exactly 240
+> > differing bytes. This is an injected symptom, but confirms that the test
+> > detects the reported failure shape.
+> > 
+> > Correct QEMU fault recovery and forced interrupt restart therefore did
+> > not produce the corruption. Reaching the 16/240 result required
+> > deliberately modelling a load that completed early without a trap. That
+> > fits the observed first load/store pair, but does not establish its
+> > cause. Your IRQ-disabled result also makes a normal asynchronous restart
+> > a poor fit.
+> 
+> Thanks for all those extensive tests.
+> 
+> > The normal Linux load-fault path exits before vse8.v and falls back to
+> > the scalar copy [3,4]. Do you have the original trap PC, cause and fault
+> > address for the second-iteration fault? Those values could show whether
+> > an unexpected synchronous trap is involved.
+> 
+> Unfortunately the issue is quite rare, so I have not found a way to 
+> trace all that information when the issue happens.
+> 
+> That said Han Gao pointed me to this patch:
+> https://lore.kernel.org/linux-riscv/20260807-vector_fpu_regs_status_rmw_fix-v1-1-0c16848b60db@intel.com/
+> 
+> I have been testing it, and so far it seems to fix my issue with both 
+> CONFIG_RISCV_ISA_V_PREEMPTIVE enable and disabled. Or maybe it just 
+> hides the issue by changing the timing, as at this point, I haven't 
+> fully understood how the bug fixed by this patch can completely explain 
+> my observations.
 
-No it doesn't. dtbs_check seems to ignore disabled nodes.
+Unfortunately, I have been able to reproduce the issue, even with this 
+patch applied. It just significantly reduces the frequency of the issue.
 
-> To satisfy the schema's minItems: 1 requirement while supporting board-le=
-vel
-> combo PHY configuration, should the dedicated internal SoC PHY (usb3d_u2p=
-hy)
-> have been retained in the base file?
->=20
-> The dtbs_check validation will fail for any board DT that includes k3.dtsi
-> but does not override the usb3d node to provide the phys and phy-names
-> properties (e.g., k3-com260-ifx.dts and k3-deepcomputing-fml13v05.dts).
+Regards
+Aurelien
 
-I have just tried, in practice it doesn't. I'll send a new version=20
-mentioning that.
-
-> This happens because the schema spacemit,k1-dwc3.yaml unconditionally
-> requires these properties, and dt-schema evaluates all nodes, even disabl=
-ed
-> ones.
->=20
-> >  			phy_type =3D "utmi";
-> >  			snps,dis_enblslpm_quirk;
-> >  			snps,dis_u2_susphy_quirk;
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831044540.33=
-04350-1-aurelien@aurel32.net?part=3D1
->=20
-
---=20
+-- 
 Aurelien Jarno                          GPG: 4096R/1DDD8C9B
 aurelien@aurel32.net                     http://aurel32.net
