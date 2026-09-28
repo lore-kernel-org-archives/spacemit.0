@@ -1,66 +1,68 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830A1499F3A
-	for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 23:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADCA49B449
+	for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 23:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790637567; cv=none; b=W9sLiEkgjUuyjgeT3cvXYVz0NQ/pwCG41UbfPr5+OHfLHHDPoEVmrBW2tWnjxYU5b6BDcrWoKxv16nNWmI4p8BGqprfvNwSuV2Nx9lyJabILK7uLH8MueOqxVPy2kA5TmPl/2ejyr7J/UUYsCT6VBbEwaf738sJrxFKcbydjs18=
+	t=1790637579; cv=none; b=KMECuJRyYqYzvSBYvKGHg21yi7F85EX6Vy2J0EONMEECopDpts23QgIMOEboItjLwI3Nr985daZOgx6LcH1AghOgmYXhBSf+M1mhOqoHQdd+TYE20rCdENSiKUT0sabMABAvFeiPF/4pcFyFGU+2W/5wKNgc0hBko6Yvm8OkmqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790637567; c=relaxed/simple;
-	bh=FCGF26dCddhrQg7vYYo0pTLzkYH3qozJaaCKhDXyBpQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:content-type; b=TzfpATQ/q4cP7IBl9ioWw5j73qmU8GVvluHiYNnxT1psnDKBtGpLqsuZrV23sqRIk4G8jJFdkvSuPdrmUaJZxMA2RsfbW5ZOc6DxEohdPblasWx/4qmVOOJZGb+Y+rvl5fRVYPqnbeTB469GrQ/OsbRMIZQmJSsCZeHgDNfHy0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GVZi/PVG; arc=none smtp.client-ip=170.10.129.124
+	s=arc-20240116; t=1790637579; c=relaxed/simple;
+	bh=8Hpl/jJQXgMDIx/9aRjnDimcwY9u+PRuHlp14LtJI1M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:content-type; b=chafKkp1HS33TRw0WdqdtDkC47MwQ+HRJZ4n8c+chZ/6uzUL6B3OzYmUamAIkbmEjbp5vYQsVSA/N99ppz+GVjuGZTX29XVPvRVxb3T80eA+31AoUCBJ2QwMSycVWwpPi4IcmZWuQeM/wusabKqLJtuC09HytactfPvtcO6T9bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GaB3jPL+; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GVZi/PVG"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GaB3jPL+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790637565;
+	s=mimecast20190719; t=1790637577;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=1L37AvZaZESgc3kaNIXv7EdbpEkOBgUu914+Tx8mGHA=;
-	b=GVZi/PVGuRFDZxyDFR62z0gaxDN/6EOIebe9LIYCDaFL1f8u9oggfT8ncnih+fGC9HNFSP
-	MnuKyRZqsPc736wgWJGXMU0Db/MbTtas3rC9rgLIcTy9xFFwB/X2uYNi6mQzozQnS3BvzR
-	3KaLd7TJXJ2skiI+t9Xq7X2eCOZMFdM=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4bDunkmKzxTEgKxBi/DaPG7+roKleuHpKwgE8PS3EY8=;
+	b=GaB3jPL+Dd6SZ/XPk3D40SWCgSbtUQwK8RA94cBlGT8kH6cVBq6f37JWQOhmgg7ynjHnu9
+	fybb9T8n7IdWwKsU3K2PZ62czHtnRaDq+6KvN7MOvcK0vVv6ZKbF8fCFOwkiRkdwlHreMN
+	88x+yaab4WfakWBB22ycbIGWNngKFIM=
 Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
  [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-Q-Vratd3M3GuPBN9kApj5Q-1; Mon, 28 Sep 2026 19:19:13 -0400
-X-MC-Unique: Q-Vratd3M3GuPBN9kApj5Q-1
-X-Mimecast-MFC-AGG-ID: Q-Vratd3M3GuPBN9kApj5Q_1790637553
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-88322409239so52402517b3.1
-        for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 16:19:13 -0700 (PDT)
+ us-mta-659-L8N6VgRRPdSrY8U-WHKDRg-1; Mon, 28 Sep 2026 19:19:35 -0400
+X-MC-Unique: L8N6VgRRPdSrY8U-WHKDRg-1
+X-Mimecast-MFC-AGG-ID: L8N6VgRRPdSrY8U-WHKDRg_1790637575
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-8546e211940so50629417b3.0
+        for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 16:19:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790637553; x=1791242353;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=1L37AvZaZESgc3kaNIXv7EdbpEkOBgUu914+Tx8mGHA=;
-        b=1YR8xoNx4fAl4i4B9k9bD0jZOlh/XStzu53KFj37ZmoWCp42FQYX7WB3kz0k38yg9s
-         h4KlicM1Qy9Kb/MAyiIMi3OBCnpsxPxUusnqpm8k4cS8fItH/JRpm5oFr+LJZw/VCFRO
-         KUAQWKE3FOBMamgPYjnEdGtjF/WCryNvGdMSSj/xeC+7jle4YVqVa87qbgtAPQ1TD3i+
-         oTi5omA7Ed2E69xlb7ytxZNmTv9gTlcHiiuMRhnmuJJ1M2Cvv0I7DIghO3euyLOvojpL
-         pVtqhMgiwQhSEjnMBXsznUXvc3I9EGfjMwJEpCoZw+kv6qNZx/hulUCvihdnORDjyZ9w
-         5W6A==
-X-Forwarded-Encrypted: i=1; AKwUvBwuA8ME1O1/go5kJPZevI0YgBhRYUQA5H0/9CAc+BOhB+olQuaE8rBl+hW3mPVfJbaBfkMv1F5Sag==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJ6yYfKIcGgc4AqIso5nbxwAywAKOPgwCSLa5csysSxl4c0Le8N
-	p//uMull+TkpLre2Wfaxf8QyVAq+Q6RJtnVsB1gqr6/lSPIURrxsxA5PaajN1KucOCPmjee2b/h
-	RGj755gKA/ODx0utmPgmoiYIDYW6YNGpTHHYSnDEOxwDf2TC1hEkn6WVyWKwu
-X-Gm-Gg: AYBFou1YjEDsqDf64ubSFjJjJkCCn+j/rzDhQzPCVILoVAbquhpZYXBqReuOx5hflO8
-	HhhrKAWzGTcBTL6GEr/IxqKmIzolU9oXbMdl0nnb7Qi67/j31WXs2fjJpCRO/QmjcDqobGRZZ0h
-	vUDNFWxfKjuXldaBx0eCiRzZ0EBkcrT7I5OrHZe2dzOqELWmldNdIBvUl+tXzY+1YD1wUOxgqvt
-	jjEgEk0wI8TL9IOQjxF5Su54/rbTXEz46NmwTo0tnxvzeMoJ+PuWbyfk8+IzCwnmmipVRsp5fB0
-	dh5lJX5sWXY/Gq0+hY+DZWITSZz1eWyMTxFwLqEu95UTEV7oB+JsXA==
-X-Received: by 2002:a05:690c:e3c9:b0:8a9:9a2e:e34f with SMTP id 00721157ae682-8a99a2eeef4mr35038827b3.13.1790637552699;
-        Mon, 28 Sep 2026 16:19:12 -0700 (PDT)
-X-Received: by 2002:a05:690c:e3c9:b0:8a9:9a2e:e34f with SMTP id 00721157ae682-8a99a2eeef4mr35038647b3.13.1790637552245;
-        Mon, 28 Sep 2026 16:19:12 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1790637575; x=1791242375;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4bDunkmKzxTEgKxBi/DaPG7+roKleuHpKwgE8PS3EY8=;
+        b=TOP6u2NIyKCbDDRcjkz8VDxONBDXmIZJdNhWYuu2J8q5HFPhTlMYs6QMS/WinJWkRe
+         BT9zDF+cU6R5MOaAkGStjlXAHbZrfoV3470oLSTB28494iXjxbprGAJNm3MX0f62m0J1
+         C65szdJ68apIrN8bNHHgGX6vpZxslTWn7M+8ZhtaFue/koLRzDXfgbXdRcSLZ781BzeL
+         O3x2SZUE/0vZz9SpvV88Z8SJCARqscge+Ol6b0Z5w5fXxZBhz2pWp43l5ddKno/O/kgN
+         Ac/hQiU7LqcJtJ24dIgmAgFUXFNVDpRIH4xkGNqkMKGarg9bTqYYryIoQc0At5w8dIF6
+         qk4g==
+X-Forwarded-Encrypted: i=1; AKwUvBzYid2cJ+2t16plSGe0Y1DCbS41LOt0jMl+ohurMmSbWAsKd9Df+oOHCO392s0p6nP+Y+XfBQ94tQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYIe9NrlEQOCpRsLNVnd8fwY5IWDtY8dXXo63hBi6gDOBcV38+Em
+	aDAiZdgTxVujOsc690AnwahtMi0Ch6hwk4TxwUdiBz7Xxu9iNYkb/kgKkCUqb+wJesbIbkhkj+G
+	XYcIRwQ2XM1uaS7WkllcP9TvXI3UhmHn6IBB8veXAvQHhNV8KrIUAvQWI03zO
+X-Gm-Gg: AYBFou3s7PXP9GGDj1eHKCHQYj4utJALHP0IyZu21wzSFRg6jMR2c2rEYlfdgszMz89
+	2K6QrJWHBJnLirMsEAb1Xc+tQG88nIPeKlrd3qt9uISL50CPLjIBVpHP8W06fcYQ2yt8eZXyDhf
+	CCKt6eHwKbfN115wELNfQpkm1EWQu1o+Mm8VGUTp+tXKmd011Ddwb6fiJZwIqB4tYwB0X1Jvk83
+	ATyee6JEagK0Nhv2HhSybcEOFFTU8AkEO7Vr/HEqXaktF/PQaAwGeGU9yGgOMeI3Nq19oIY2G0Y
+	rPKEGNm6ThMJOSPglqUkIBtTetaegSym0J54rjXdqdaz/tzAjm3G9Q==
+X-Received: by 2002:a05:690c:3181:b0:8a8:889d:2ea with SMTP id 00721157ae682-8ab3b5249c4mr5722557b3.48.1790637575140;
+        Mon, 28 Sep 2026 16:19:35 -0700 (PDT)
+X-Received: by 2002:a05:690c:3181:b0:8a8:889d:2ea with SMTP id 00721157ae682-8ab3b5249c4mr5722437b3.48.1790637574673;
+        Mon, 28 Sep 2026 16:19:34 -0700 (PDT)
 Received: from rhdev ([2600:1700:f361:20bf::14c1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a860f9cdb0sm51374117b3.24.2026.09.28.16.19.10
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a860f9cdb0sm51374117b3.24.2026.09.28.16.19.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 16:19:10 -0700 (PDT)
+        Mon, 28 Sep 2026 16:19:34 -0700 (PDT)
 From: Jennifer Berringer <jberring@redhat.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -76,10 +78,12 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	James Morris <jmorris@namei.org>,
 	Jennifer Berringer <jberring@redhat.com>
-Subject: [PATCH 0/4] riscv: dts: spacemit: Enable USB and PCIe for K3 CoM260
-Date: Mon, 28 Sep 2026 19:18:03 -0400
-Message-ID: <20260928231807.1757995-1-jberring@redhat.com>
+Subject: [PATCH 1/4] riscv: dts: spacemit: k3-com260: keep dldo4 enabled
+Date: Mon, 28 Sep 2026 19:18:04 -0400
+Message-ID: <20260928231807.1757995-2-jberring@redhat.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260928231807.1757995-1-jberring@redhat.com>
+References: <20260928231807.1757995-1-jberring@redhat.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -87,42 +91,51 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Wo_MG4bR46vBYp5dZe7reGHiqN3IBat1489NC090BGs_1790637553
+X-Mimecast-MFC-PROC-ID: jp55OowIekg-VwaUGUmq5FRFWU9SZV112mKQRXzI9WQ_1790637575
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
 
-This patchset enables USB 2.0, USB 3.0, PCIe, and rfkill for the K3
-CoM260 Dev Kit board. This board has 4x USB 3.0 Type-A ports and three
-M.2 slots which may be used for two NVMe drives, Wi-Fi, and Bluetooth.
+From: James Morris <jmorris@namei.org>
 
-The USB Type-C DRD port is not enabled here because the necessary
-drivers have not yet been posted.
+dldo4 on the P1 PMIC is marked regulator-boot-on, but has no consumer
+described in the device tree. The regulator core can therefore disable
+the firmware-enabled rail during unused-regulator cleanup.
 
-This is based on spacemit/dt-for-next. The USB patch depends on [1] and
-the PCIe patch depends on [2], which in turn depends on [3] and [4].
+Enabling pcie4_rc on a K3 CoM260 Dev Kit without this change while the
+board's included RTL8852BE module is connected to the M.2 E-key slot
+results in CPU hard-lock, as seen in kernel log:
 
-[1] https://lore.kernel.org/spacemit/20260928205012.3689405-1-aurelien@aurel32.net/
-[2] https://lore.kernel.org/spacemit/20260727094726.890179-1-inochiama@gmail.com/
-[3] https://lore.kernel.org/linux-phy/20260923023304.78428-1-inochiama@gmail.com/
-[4] https://lore.kernel.org/spacemit/20260923015016.64069-1-inochiama@gmail.com/
+[   32.521536] dldo4: disabling
+[   48.125823] watchdog: CPU3: Watchdog detected hard LOCKUP on cpu 4
+[   64.125829] watchdog: BUG: soft lockup - CPU#1 stuck for 26s!
+[   64.125926] Hardware name: SpacemiT K3 CoM260 IFX (DT)
+[   64.125928] epc : smp_call_function_many_cond+0x158/0x740
+[   64.125938]  ra : smp_call_function_many_cond+0x11a/0x740
 
-James Morris (1):
-  riscv: dts: spacemit: k3-com260: keep dldo4 enabled
+GitHub Copilot assisted with diagnosis and build and test automation, and
+changelog drafting.
 
-Jennifer Berringer (3):
-  riscv: dts: spacemit: k3-com260-ifx: Add USB nodes
-  riscv: dts: spacemit: k3-com260-ifx: Add PCIe nodes
-  riscv: dts: spacemit: k3-com260-ifx: Add rfkill nodes
+Fixes: cfe5c91cb73c ("riscv: dts: spacemit: k3: Initial support for CoM260-IFX board")
+Assisted-by: GitHub-Copilot:gpt-sol-5.6
+Signed-off-by: James Morris <jmorris@namei.org> (Microsoft)
+Signed-off-by: Jennifer Berringer <jberring@redhat.com>
+---
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
- .../riscv/boot/dts/spacemit/k3-com260-ifx.dts | 122 ++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi   |   1 +
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi  |  33 +++++
- 3 files changed, 156 insertions(+)
-
-
-base-commit: 4947ee60bf48caddf5caefc08dbbc84d09fbbc6b
-prerequisite-message-id: <20260727094726.890179-1-inochiama@gmail.com>
+diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+index 92dea86397798..054bfff7413a3 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+@@ -187,6 +187,7 @@ dldo3: dldo3 {
+ 			dldo4: dldo4 {
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
+ 				regulator-boot-on;
+ 			};
+ 
 -- 
 2.55.0
 
