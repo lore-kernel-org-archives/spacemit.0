@@ -1,239 +1,244 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714F65038F8
-	for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 23:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2254D2EC0B0
+	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 04:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790637586; cv=none; b=KXMxwcqX66wdXBQ5Uv6qRgH39wNE1iGKi3tmm6QH5HdslUFiD3oCGnKe0GIlgWJ78PXstRyuKiqkFbTA42ywIAWMH9yklnVzcvmVmnaOTP0uIeTJpI3gaYGZGjTIY7i/klDGT+fYKoBYMfY2pGFysA7qomp48lcx7/DwRGSm97I=
+	t=1790654872; cv=none; b=bMb1DwJmsIAxmqbnq9V0dEqSdm5lxFEW4fyT7b1xTRXr0KGADxh3+jdsuL+IX0rFYQk8XvnvTuLZWgmDR1W1ZW5kKz0B7Vgztc37VP+aWzOgoyBQSgwMLvNQYOmraL5wetul93ldBMAYK/mUgHRZv5sl/cEF9Nwtqx3iim38T2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790637586; c=relaxed/simple;
-	bh=2xYNsERr512t8YcP5rQXVu/seYpQuw0f4hBvDUPrnZo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=UI+0yiBUHWTivA7zcRN0jbNTr6vu/qQWBdwhjqvPCGvDu8vJRM82LormdIEKAGXI02U9EWEd3mF3DTyAsmX+I1WsGbHuOaI8aC1yHAKzvO0NN8mzLsU92kHn8x6qRvxiwUHZi67YlvHUVvd9XY0MHbo4+CEU7sYzSwOx53LOzas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ajuka/sS; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ajuka/sS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790637583;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=45/Cb1sUktpiMdyfE/exim2HZWKPpOnrWEl0XH8E2LY=;
-	b=Ajuka/sSb09giDVHFllI2evwHf9CdmK7cZC2/2ldhQo6ssnbR3eEX9FpGRNkG7ueKm5x07
-	NwRn1Zx/WQxXd/+r1JR27Df1p0CMZmVM223u0xAEcWWlIN8dNAKjj+i2kgnfrS1ArrZPoR
-	W/kmvz+gHg2gmVLLnjC9tlh/KBi5cqY=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-PTcw1-2ZNB2CDi16frlGRw-1; Mon, 28 Sep 2026 19:19:40 -0400
-X-MC-Unique: PTcw1-2ZNB2CDi16frlGRw-1
-X-Mimecast-MFC-AGG-ID: PTcw1-2ZNB2CDi16frlGRw_1790637579
-Received: by mail-yx1-f69.google.com with SMTP id 956f58d0204a3-671321441d1so5057230d50.1
-        for <spacemit@lists.linux.dev>; Mon, 28 Sep 2026 16:19:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790637579; x=1791242379;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=45/Cb1sUktpiMdyfE/exim2HZWKPpOnrWEl0XH8E2LY=;
-        b=zRpgJFauTjZtMRDayyqEFORumRoxZTTbwg7N/ezz8tgFxbNfBni/vq72OAjSsfPW9a
-         4SeNFRSdnPGupOleKWwb2kVyS5W21CLLeKj4VRJRnfhnfv2Wgs2OVS+pI87w0VRhK5Le
-         4yL8GrocRysVOLFrsVPL/MwnzYsepQ+PEhZQTXN3ScNIuoDJ3/dCBocYWuI3/u+VocxA
-         5JMUFq7rUrPuvnFj95WMrcmk12fcFGSo9Fk4/nY1G9vuSdV3uKqw9voyQEdulk7Gtfoa
-         DqViC7APdlqWF0Szaj0rptYND9/azj1iZWaaBLmDIueKr+jSgLWVBklI8whnJFY4TFKC
-         67bQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzPbYDqGyELKDSq9LpbeW+bnu4QdorLUfBjTcVc77NuVEjnCO3c1TVMsCk5pIvXhMe9foaglw6PiQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYKkq0qOYXLfTTtbwYLofTMON7SxCOfwvAm0o0mofVAZpg7CH9WC
-	2rlf1NnwbE7n7DW6PTnZaS8i4e2SwACbWZKDSImLDmfZasuoJM98eivjAmkWC7ET0v1Nxt5v+hm
-	6bUmGOwvZvMoNEi0KbB4sWKmLuVTA9+Qnx3KzI7VAAwLcCik1r2uAex7cbNbj
-X-Gm-Gg: AYBFou3n+i/WjZHJdzLqkIHtHH1sM1k4JQStCSfGrhoMkiPDXPbISBkav0DTeJwomte
-	T+E4ihuLvbQmzuTyCxepdOwqiDbnQVJ2eHtWAt/CVXNbubkHwuUVzAB/iWHvDNuPK/YfTskgJ40
-	H6jzReOMmoUJAmTwlz4taYqrAxtjSCRbeqrVpRPnf+mulyaFbzRmnspZThUrf7ax/sLGnBwVEyZ
-	C1uj1Gzir3bPeBDLy7uRzAxeItcH0HiZRT9Z4wwfGRyXy+/xA5B43WwnqVK5U1bsTm4vn17zZwT
-	X8VQg913e7GNO3iyDMIad0H5jV1SWQ0Tm18eLTy8HtBbNA+xagbn7A==
-X-Received: by 2002:a05:690e:1c0e:b0:675:3431:d51c with SMTP id 956f58d0204a3-6753431da19mr2783193d50.50.1790637579502;
-        Mon, 28 Sep 2026 16:19:39 -0700 (PDT)
-X-Received: by 2002:a05:690e:1c0e:b0:675:3431:d51c with SMTP id 956f58d0204a3-6753431da19mr2783181d50.50.1790637579018;
-        Mon, 28 Sep 2026 16:19:39 -0700 (PDT)
-Received: from rhdev ([2600:1700:f361:20bf::14c1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8a860f9cdb0sm51374117b3.24.2026.09.28.16.19.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 16:19:37 -0700 (PDT)
-From: Jennifer Berringer <jberring@redhat.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	James Morris <jmorris@namei.org>,
-	Jennifer Berringer <jberring@redhat.com>
-Subject: [PATCH 3/4] riscv: dts: spacemit: k3-com260-ifx: Add PCIe nodes
-Date: Mon, 28 Sep 2026 19:18:06 -0400
-Message-ID: <20260928231807.1757995-4-jberring@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260928231807.1757995-1-jberring@redhat.com>
-References: <20260928231807.1757995-1-jberring@redhat.com>
+	s=arc-20240116; t=1790654872; c=relaxed/simple;
+	bh=7SM2EAHGjgqjWU1VxeEbGe7dDDU/BMYHHcP2YMSEPDg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jzjZvX1gbTlQkHtTvh3kfPwBOe9WzjagNudG9I1WyWUICv59KpkLXToM0LV1bpTziNyvCOo0KxK2OOAtG9QoaRl2/JcKBw1frrD0rr1KB9gi7JgclFH/0s94gV6O8IdKaV/LnT7ej6PvtIbJfX3J+K091z+eHyKxOVm0l0BOz0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [10.213.8.175] (unknown [36.110.52.2])
+	by APP-03 (Coremail) with SMTP id rQCowAAHEkCQObtqt2QaCQ--.2375S2;
+	Tue, 29 Sep 2026 12:07:44 +0800 (CST)
+Message-ID: <db540b00-a017-4c82-9a6c-93e862dcde67@iscas.ac.cn>
+Date: Tue, 29 Sep 2026 12:07:44 +0800
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: -5ynglWPuoyN0YnRQzrvcaVZXSaRtr8UIHBSdcQCtPs_1790637579
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+User-Agent: Mozilla Thunderbird
+Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
+To: Aurelien Jarno <aurelien@aurel32.net>,
+ Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Andy Chiu <tchiu@tenstorrent.com>, spacemit@lists.linux.dev,
+ linux-riscv@lists.infradead.org
+References: <apSYF5x1Tu7PlyL1@aurel32.net> <ap-SIQ9DLt-CfAx6@aurel32.net>
+ <aqGNGp8PInSV4vty@aurel32.net> <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
+ <arSshYwcyHjC2dh3@aurel32.net> <arS-yYLK8Df5knSE@gmail.com>
+ <arX7PwOnlz0N9rUc@aurel32.net> <arnt6EEacEm3YRIC@aurel32.net>
+Content-Language: en-US
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <arnt6EEacEm3YRIC@aurel32.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:rQCowAAHEkCQObtqt2QaCQ--.2375S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxtF43KrWDAF17KrWxXrW5Jrb_yoWxCF1xpa
+	98CF4kGrWUGa1xWF9Fqw48Zrn5Jws5W345CrykGa4rWF13KrWfArn5Z34DCF4UXFyv9FyU
+	CasYgrs5Aw43Jr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUkFb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK
+	82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGw
+	C20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48J
+	MIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMI
+	IF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
+	87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jFhFcUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-K3 CoM260 Dev Kit uses PCIe for three M.2 slots:
+On 9/28/26 12:32, Aurelien Jarno wrote:
+> Hi,
+>
+> On 2026-09-25 06:40, Aurelien Jarno wrote:
+>
+> [...]
+>
+> That said Han Gao pointed me to this patch:
+> https://lore.kernel.org/linux-riscv/20260807-vector_fpu_regs_status_rmw_fix-v1-1-0c16848b60db@intel.com/
+>
+> I have been testing it, and so far it seems to fix my issue with both 
+> CONFIG_RISCV_ISA_V_PREEMPTIVE enable and disabled. Or maybe it just 
+> hides the issue by changing the timing, as at this point, I haven't 
+> fully understood how the bug fixed by this patch can completely explain 
+> my observations.
 
-- M.2 M-key 2280: PCIe 3.0 x4 (pcie0_rc)
-- M.2 M-key 2230: PCIe 3.0 x1+1 (pcie3_rc)
-- M.2 E-key 2230: PCIe 3.0 x1 (pcie4_rc)
+I don't know how that would cause what you have observed either, but it
+does superficially appears to fix a real bug.
 
-The M.2 M-key 2230 slot is connected to two PCIe lanes, with lane 0
-on combo phy 4 and lane 1 on combo phy 3. The K3 combo phy cannot be
-configured to use these as one PCIe 3.0 x2 device; treat this slot as x1
-only instead.
+> Unfortunately, I have been able to reproduce the issue, even with this 
+> patch applied. It just significantly reduces the frequency of the issue.
+>
+But this, I suppose, is still useful information that we just *might* be
+on the right track.
 
-The E-key slot has an RTL8852BE WiFi+BT NIC installed from factory.
+Can you perhaps try this hacked together patch below and see if it does
+anything? I just put guard(preempt)() or something around a bunch of
+places I could find that access regs->status. It should apply to 7.1 and
+7.2 as is. (The coding style is deliberately horrible to minimize diff
+lines and discourage others from shipping it)
 
-Signed-off-by: Jennifer Berringer <jberring@redhat.com>
----
- .../riscv/boot/dts/spacemit/k3-com260-ifx.dts | 45 +++++++++++++++++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi  | 33 ++++++++++++++
- 2 files changed, 78 insertions(+)
+(This adds some more widely-scoped guards, and AFAICT /replaces/ the
+above linked patch from Guobin Zhang.)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-index a4dfa25c837fe..01e286cb05797 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-@@ -39,6 +39,14 @@ reg_vbus_5v: regulator-usb3-vbus-5v {
- 		gpio = <&gpio K3_GPIO(67) GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 	};
-+
-+	reg_aux_vcc3v3: regulator-aux-vcc3v3 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "AUX_VCC3V3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
-+	};
- };
+vvv DO NOT USE EXCEPT FOR TESTING vvv
+
+diff --git a/arch/riscv/include/asm/switch_to.h b/arch/riscv/include/asm/switch_to.h
+index 04f10a949066..6486f9fe0ac5 100644
+--- a/arch/riscv/include/asm/switch_to.h
++++ b/arch/riscv/include/asm/switch_to.h
+@@ -6,6 +6,7 @@
+ #ifndef _ASM_RISCV_SWITCH_TO_H
+ #define _ASM_RISCV_SWITCH_TO_H
  
- &combophy {
-@@ -61,6 +69,43 @@ eeprom@50 {
- 	};
- };
++#include <linux/cleanup.h>
+ #include <linux/jump_label.h>
+ #include <linux/sched/task_stack.h>
+ #include <linux/mm_types.h>
+@@ -28,12 +29,14 @@ static inline void __fstate_clean(struct pt_regs *regs)
+ static inline void fstate_off(struct task_struct *task,
+ 			      struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	regs->status = (regs->status & ~SR_FS) | SR_FS_OFF;
+ }
  
-+&pcie0_rc {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie0_1_cfg>;
-+	num-lanes = <4>;
-+	status = "okay";
-+
-+	pcie@0 {
-+		vpcie3v3-supply = <&reg_aux_vcc3v3>;
-+		phys = <&combophy 0 PHY_TYPE_PCIE>,
-+		       <&combophy 1 PHY_TYPE_PCIE>;
-+	};
-+};
-+
-+&pcie3_rc {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie3_0_cfg>;
-+	num-lanes = <1>;
-+	status = "okay";
-+
-+	pcie@0 {
-+		vpcie3v3-supply = <&reg_aux_vcc3v3>;
-+		phys = <&combophy 4 PHY_TYPE_PCIE>;
-+	};
-+};
-+
-+&pcie4_rc {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie4_1_cfg>;
-+	num-lanes = <1>;
-+	status = "okay";
-+
-+	pcie@0 {
-+		vpcie3v3-supply = <&reg_aux_vcc3v3>;
-+		phys = <&combophy 5 PHY_TYPE_PCIE>;
-+	};
-+};
-+
- &usb2_host {
- 	status = "okay";
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-index 1b19979f150ce..36f7780860f50 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi
-@@ -800,6 +800,17 @@ pcie0-0-pins {
- 		};
- 	};
+ static inline void fstate_save(struct task_struct *task,
+ 			       struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if ((regs->status & SR_FS) == SR_FS_DIRTY) {
+ 		__fstate_save(task);
+ 		__fstate_clean(regs);
+@@ -43,6 +46,7 @@ static inline void fstate_save(struct task_struct *task,
+ static inline void fstate_restore(struct task_struct *task,
+ 				  struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if ((regs->status & SR_FS) != SR_FS_OFF) {
+ 		__fstate_restore(task);
+ 		__fstate_clean(regs);
+diff --git a/arch/riscv/include/asm/vector.h b/arch/riscv/include/asm/vector.h
+index fffe72a77208..30fc51713542 100644
+--- a/arch/riscv/include/asm/vector.h
++++ b/arch/riscv/include/asm/vector.h
+@@ -97,11 +97,13 @@ static inline void __riscv_v_vstate_dirty(struct pt_regs *regs)
  
-+	pcie0_1_cfg: pcie0-1-cfg {
-+		pcie0-0-pins {
-+			pinmux = <K3_PADCONF(79, 5)>,   /* pcie0 perst */
-+				 <K3_PADCONF(81, 5)>;	/* pcie0 clkreq */
-+
-+			bias-pull-up = <1>;
-+			drive-strength = <38>;
-+			power-source = <3300>;
-+		};
-+	};
-+
- 	pcie2_0_cfg: pcie2-0-cfg {
- 		pcie2-0-pins {
- 			pinmux = <K3_PADCONF(25, 4)>,	/* pcie2 perst */
-@@ -810,6 +821,17 @@ pcie2-0-pins {
- 		};
- 	};
+ static inline void riscv_v_vstate_off(struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	regs->status = __riscv_v_vstate_or(regs->status, OFF);
+ }
  
-+	pcie3_0_cfg: pcie3-0-cfg {
-+		pcie3-0-pins {
-+			pinmux = <K3_PADCONF(3, 4)>,	/* pcie3 perst */
-+				 <K3_PADCONF(5, 4)>;	/* pcie3 clkreq */
-+
-+			bias-pull-up = <1>;
-+			drive-strength = <38>;
-+			power-source = <3300>;
-+		};
-+	};
-+
- 	pcie4_0_cfg: pcie4-0-cfg {
- 		pcie4-0-pins {
- 			pinmux = <K3_PADCONF(76, 5)>,	/* pcie4 perst */
-@@ -821,4 +843,15 @@ pcie4-0-pins {
- 			power-source = <1800>;
- 		};
- 	};
-+
-+	pcie4_1_cfg: pcie4-1-cfg {
-+		pcie4-0-pins {
-+			pinmux = <K3_PADCONF(76, 5)>,	/* pcie4 perst */
-+				 <K3_PADCONF(78, 5)>;	/* pcie4 clkreq */
-+
-+			bias-pull-up = <1>;
-+			drive-strength = <38>;
-+			power-source = <3300>;
-+		};
-+	};
- };
--- 
-2.55.0
+ static inline void riscv_v_vstate_on(struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	regs->status = __riscv_v_vstate_or(regs->status, INITIAL);
+ }
+ 
+@@ -302,6 +304,7 @@ static inline void __riscv_v_vstate_discard(void)
+ 
+ static inline void riscv_v_vstate_discard(struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if (riscv_v_vstate_query(regs)) {
+ 		__riscv_v_vstate_discard();
+ 		__riscv_v_vstate_dirty(regs);
+@@ -311,6 +314,7 @@ static inline void riscv_v_vstate_discard(struct pt_regs *regs)
+ static inline void riscv_v_vstate_save(struct __riscv_v_ext_state *vstate,
+ 				       struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if (__riscv_v_vstate_check(regs->status, DIRTY)) {
+ 		__riscv_v_vstate_save(vstate, vstate->datap);
+ 		__riscv_v_vstate_clean(regs);
+@@ -320,6 +324,7 @@ static inline void riscv_v_vstate_save(struct __riscv_v_ext_state *vstate,
+ static inline void riscv_v_vstate_restore(struct __riscv_v_ext_state *vstate,
+ 					  struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if (riscv_v_vstate_query(regs)) {
+ 		__riscv_v_vstate_restore(vstate, vstate->datap);
+ 		__riscv_v_vstate_clean(regs);
+@@ -329,6 +334,7 @@ static inline void riscv_v_vstate_restore(struct __riscv_v_ext_state *vstate,
+ static inline void riscv_v_vstate_set_restore(struct task_struct *task,
+ 					      struct pt_regs *regs)
+ {
++	guard(preempt)();
+ 	if (riscv_v_vstate_query(regs)) {
+ 		set_tsk_thread_flag(task, TIF_RISCV_V_DEFER_RESTORE);
+ 		riscv_v_vstate_on(regs);
+diff --git a/arch/riscv/kernel/process.c b/arch/riscv/kernel/process.c
+index b2df7f72241a..45963c7baebe 100644
+--- a/arch/riscv/kernel/process.c
++++ b/arch/riscv/kernel/process.c
+@@ -144,6 +144,7 @@ early_initcall(compat_mode_detect);
+ void start_thread(struct pt_regs *regs, unsigned long pc,
+ 	unsigned long sp)
+ {
++	guard(preempt)();
+ 	regs->status = SR_PIE;
+ 	if (has_fpu()) {
+ 		regs->status |= SR_FS_INITIAL;
+diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
+index 59784dc117e4..623cc35d567c 100644
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -6,6 +6,7 @@
+  * Copyright (C) 2012 Regents of the University of California
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/compat.h>
+ #include <linux/signal.h>
+ #include <linux/uaccess.h>
+@@ -76,6 +77,7 @@ static long save_v_state(struct pt_regs *regs, void __user *sc_vec)
+ 	void __user *datap;
+ 	long err;
+ 
++	scoped_guard(preempt)
+ 	if (!IS_ENABLED(CONFIG_RISCV_ISA_V) ||
+ 	    !((has_vector() || has_xtheadvector()) &&
+ 	    riscv_v_vstate_query(regs)))
+@@ -287,6 +289,7 @@ static size_t get_rt_frame_size(bool cal_all)
+ 	frame_size = sizeof(*frame);
+ 
+ 	if (has_vector() || has_xtheadvector()) {
++		scoped_guard(preempt)
+ 		if (cal_all || riscv_v_vstate_query(task_pt_regs(current)))
+ 			total_context_size += riscv_v_sc_size;
+ 	}
+diff --git a/arch/riscv/kernel/vector.c b/arch/riscv/kernel/vector.c
+index b112166d51e9..27078b70b65b 100644
+--- a/arch/riscv/kernel/vector.c
++++ b/arch/riscv/kernel/vector.c
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2023 SiFive
+  * Author: Andy Chiu <andy.chiu@sifive.com>
+  */
++#include <linux/cleanup.h>
+ #include <linux/export.h>
+ #include <linux/sched/signal.h>
+ #include <linux/types.h>
+@@ -194,6 +195,7 @@ bool riscv_v_first_use_handler(struct pt_regs *regs)
+ 	if (!riscv_v_vstate_ctrl_user_allowed())
+ 		return false;
+ 
++	scoped_guard(preempt)
+ 	/* If V has been enabled then it is not the first-use trap */
+ 	if (riscv_v_vstate_query(regs))
+ 		return false;
+
+^^^ DO NOT USE EXCEPT FOR TESTING ^^^
 
