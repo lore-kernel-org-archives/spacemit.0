@@ -1,63 +1,63 @@
-Received: from mail-pz2-f39.google.com (mail-pz2-f39.google.com [74.125.228.39])
+Received: from mail-pj2-f39.google.com (mail-pj2-f39.google.com [74.125.227.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238D8475349
-	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 08:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2CF47D95D
+	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 08:38:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790671095; cv=none; b=KDQ/sgnVG1zH6kAurqpJR7lUB2uHs/lae7HevP82JUquAf8wOvcX/MDferwcr3OJ+QRWYhBvBbq7jGqCY4ig4CUcO97Xkka0FUpAt0L5NknZX5/GFZjMRoIkcRvQB2J9fJ7t5XSKjRfW+EQu5IEyN1LHlM/N3qUSVGQZLiy+VP0=
+	t=1790671098; cv=none; b=LfIJAQFDT9TR0Hk9fws5RjhY3rEBGJEMoP2tnq2ojjNUEyRu5g3Dks7gQjiB8GYmVf3H0fII6HsM9c+Sbav790VIlybGiOjJoLBuk+2OMilkEKdpXhu6CqS+uS3zYwlOPAsAHcT5wygK1fwDsHDJ8L9EqT4LhIEvOKrpHZqMim8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790671095; c=relaxed/simple;
-	bh=DwZ2kccFnk2nP9CPd+wLNtgKXGDoIz2uRStav+nEg2k=;
+	s=arc-20240116; t=1790671098; c=relaxed/simple;
+	bh=y8V2hkGzlhdb/0KFjTahh6x/FG8XQrgc9cx9Thrw2Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+Xpt5iHh4872QUBkmt0fYBi83jA79sBq3zxSOC1t1rrauvWxS6mxF8FB+ri8F/q07b6WyrOswh5nAHy8qYoerpC4TJMMww/qiwn2VY4s86eKgAEX2aUxfTZxJiiAGr5k2sOto/kWEVy5PXx5sTZyLySgE+Bi2y0BZi4dJmK8mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o3o0WJwL; arc=none smtp.client-ip=74.125.228.39
+	 MIME-Version; b=ViAak694I/52bKuPMVpM/hF/urlhh2zAlWztQW1O7p2cqttad3GKMz0HPelz137NhIc04W37TTb6rmrBzaeD918T9LyWsX8SFkrdLMitUEFXOCnslm9NR/VjRsKi7J1Jn8dl4XYvjeG7pcsmbKi8pNHpVzYVMG58meIePJkCusM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyYbyumM; arc=none smtp.client-ip=74.125.227.167
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o3o0WJwL"
-Received: by mail-pz2-f39.google.com with SMTP id 41be03b00d2f7-cc7979d1deaso992939a12.1
-        for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 01:38:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyYbyumM"
+Received: by mail-pj2-f39.google.com with SMTP id 98e67ed59e1d1-3a49b6bb21eso405171a91.3
+        for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 01:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790671093; x=1791275893; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790671096; x=1791275896; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=cWIERes12OVbNPYRqquvHTMVDdUpX3EZuxH/wCFzrNQ=;
-        b=o3o0WJwLmILPLIgZ3hbBy/LFa5LSLBtsgGgi8YyMja/w552DwCu9jnDTv0jtUA/E2E
-         /NmYE2u8L5zEeO792BhAehO3e//IDgkHFkrJFYVbpui2C70icBI1dJkLlzo3miQbIhef
-         29cAt4zGBfuyA5vGIR42bXrwsvXJdvuXkntPo096ZqfpNQQ+YxVAEjTVV4SN37yNRVx9
-         sWZdrTScSoTDf0lEq1Nj74F+ulOV0YZGqo46C9ELkjvckXCl7xX96fs3qrFhKNjguzjx
-         wWTTqj2EYI8nXfTi4IqaXHjDzfOvnC/d647l1eCTErPYuH98/CwetH/zrK60sYcLUWf6
-         JDAw==
+        bh=HjSZP90MeKeabAnBLqvA1Hzeszd2ueVzqTRJsmZUKHU=;
+        b=DyYbyumMTukxzZ6M5Tnu8I9GGx+Xo+oGvWNUfJUPFrlA2wQkYcJJ52Y6uJRzPFtq30
+         +8YsTec2ovIzR2J/ZPZJ+y3yjeATTtXonZc/AR72k6cLl+CJpFz3vYIgwBxua+YradMO
+         FBArY5WGOd+nfRwVz7xwrZbePSLu6N5MRRBs/jNwppClXtcwDL0RxsTi1h2GEctIXSqf
+         FuiEluc+SqrigdWfCbdnUC3AhU5WBHkSdGxGj7U9+N9k8J6Wx8eTI8376xe4xNUG4UeB
+         bpqV+6YfEKZhYst+yx7PHERW7zTx4RteuiGfNkX+0/IvUj7JAGDxUXb6Bh++HF9ciJc4
+         lMNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790671093; x=1791275893;
+        d=1e100.net; s=20260707; t=1790671096; x=1791275896;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=cWIERes12OVbNPYRqquvHTMVDdUpX3EZuxH/wCFzrNQ=;
-        b=u2B7FZWbOIWvwGr3YQMlBX44GGAiklVRvSKsYtqDvMdxTF4yFfPdEouWFKZUy31YE5
-         Ilw6dnjrs8GRRjHhoM8pT5TKduZ0w0X1k4xJ6zOzAmQexV+wtbGpHKtAVF/gIU+xIyQz
-         wScnpOEOqvGezIhKCpmBiIrWrhy5SByMFfgVdjN6ZzEXN9QQEaRuwITIbsvCiAnHlLKU
-         cRPocwwFAE9rwnk8pIH99a80Pw4UfucKrCUVC8La5P4B+bjweBaCbzDSoEX0R9GQXIyt
-         gk651XPqUZYNhB8+EX6eniktZu+CWTkZ+KHcOlxokbtJyOn56ml9KJ+aN/6OK1I1mlQA
-         SGFw==
-X-Forwarded-Encrypted: i=1; AKwUvBwdz95Sky+YseFpBipfVd4JMyyu/nRVI2iqkhjNOLXXN/JaohHwc5Ba1NoiQXuCMwZpH5KXwUi+zQ==@lists.linux.dev
-X-Gm-Message-State: AFuF++ndcGopfW6hYfuWvAmnf61EdU7nzJct2EdVTut3J4lZtXjqdmqr
-	+tSjrHnl2wz6u/k4AsYSHJl+uydn+q+xKcH7D66bOZIWrxDw6mDnoHxj
-X-Gm-Gg: AYBFou3fFub1hyKarmmJO05bkH72PE5bAj4cElJ3JI1xBlXUTOHn5EKqsOA35wcZtG9
-	fTqObmI/Xh8ytdXWTgkL7c6M1rMdRMYFubFOaISX4UqvLSl15+twYhhMC1Ptb62sUYBI6qXiFtH
-	lUsHJ1O4CLmz6o/AjA4jECaJ4WKAHrowpgWS5xsPbSJpIux/T0aOD8Dgb26hlRClJmvcjaJsGNp
-	g3ql5EOYljKfU1n2cBoEM8Zu99W/Vhx5SDt67HAaxHITtcoKOAD+ap1VJo/k6rUCpym1Tqz2t9m
-	/KCxBBNGqkh8t1VRjB1WDR1kXbmx4fYjrl5sgXxKLGyvyH8AcB9qXLd2JhmlMeB/niLYGMHpje/
-	GjGmkpgfkGZaGAWb5izN+6NUFq1ABZSwt7yT/p2igJQz1BBwxS4eBSXz1FZIU4ueEXKYYVbKoma
-	jHn3oNteOn+Heestw1jVaYfENYyIznboZdnuYcfAHxeWpc2Ox5Ucq0oxzi+7u1oQ/CMgr5
-X-Received: by 2002:a05:6a21:9082:b0:3de:4ff3:6b10 with SMTP id adf61e73a8af0-3de4ff36c9amr7089255637.70.1790671093419;
-        Tue, 29 Sep 2026 01:38:13 -0700 (PDT)
+        bh=HjSZP90MeKeabAnBLqvA1Hzeszd2ueVzqTRJsmZUKHU=;
+        b=M3/sQ62VmnevWkGVWXRIH0c6J0B6KSm2wEU7viGOYkU1/ysaeKsyQUI0aJ5dO4KoXx
+         4TMrVCU/kPRJZjzB3lyexOyOSvTSuCMayBNR9WLiqPyQj8gO4Zq8PcP5gW5ypzWVsVdE
+         tneQKrLhfHic1S9HFc+FzUKCVvhLFKbYbNaqDXlu3qDGbOoQOJpm2IjDs2IdYAodySvs
+         jU75b1bxoZlJ1ai9PQt4t3r+b8rD/zemDknLyf56VHMXccZ7KR8IuG7cjM4EBNOOa8oM
+         k6BTmqqMAeBmq7DzEfebYPnOr4R+dFxJj4jIykxzOVNhMiTGgTKZDuLHp8+lHW2wngkX
+         0wCQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxXaJ4qAunzaoifnnlNrW7LNNzqUiEfmq6mH13662M84/iapAhEku2h0SbYAOgzHOO6nICkIvcyAA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYI0M1aL0YEXEXwRJCSp18qxcTUa8yUGT335DLtVJOguXANHxgic
+	tmBLr17z13bWu9VzYDy84L8le5wZsfbduLCR/e6Fjp4T5Nzgsw3H2/1V
+X-Gm-Gg: AYBFou2lSWXRhExhlgMVMRbuVkmmZiSuJMu8xSw1iECZQzp2UkNeVxC2YAH0Yg0xE9w
+	oiOI3rPZb76N0uAbD82zVpdjQKfFriLylsMcnDEjsv1uoeyp7hkP2VMfQ5UORLbO+Qf+8FFXZWa
+	2xCBBG5bjh2tEaizZ62mEKx0vUMiPVn4Naj5t0z9wloxLX0CXnQlXkURP5p7oK5psbjH33rkf6A
+	Wk4iuQPD4JtQlu9M802Px+hTIGupqM3Da/mr8pdqhVkMtHk+md6bNgKvVZWBBXIBa4yc7p5vizL
+	xjPY0lLvsD7HO4lNmN3s2zn7F4B6gYuloWOTlDlScqV+X+KCoX14/C98hvIZuMVAIvwAWuzrm3I
+	i7an+swVrYkUstzBkbmW2xAJkgTRsvXWjk2ufHVYnjKVwEQlS9sRZO89av/gChif9TUNcptXEMa
+	kRssCkcrGXRBjWtcUtJjBgH6BmDgJc9SptLtSzJtrHseyV5pQA3Sx3ox5+HMqknEbJSc2d
+X-Received: by 2002:a17:90b:17c6:b0:3a0:516d:9f88 with SMTP id 98e67ed59e1d1-3a098761df2mr11251455a91.26.1790671095882;
+        Tue, 29 Sep 2026 01:38:15 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-885defd9e9dsm432299b3a.6.2026.09.29.01.38.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e2c9d06766sm5127845ad.54.2026.09.29.01.38.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 01:38:12 -0700 (PDT)
+        Tue, 29 Sep 2026 01:38:15 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jingoo Han <jingoohan1@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
@@ -97,9 +97,9 @@ Cc: linux-pci@vger.kernel.org,
 	spacemit@lists.linux.dev,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v7 2/6] PCI: spacemit-k1: Add multiple PHY handles support
-Date: Tue, 29 Sep 2026 16:37:48 +0800
-Message-ID: <20260929083755.458238-3-inochiama@gmail.com>
+Subject: [PATCH v7 3/6] PCI: spacemit-k1: Add device id update helper
+Date: Tue, 29 Sep 2026 16:37:49 +0800
+Message-ID: <20260929083755.458238-4-inochiama@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260929083755.458238-1-inochiama@gmail.com>
 References: <20260929083755.458238-1-inochiama@gmail.com>
@@ -111,137 +111,60 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The PCIe controller on Spacemit K3 may use multiple PHYs at the
-same time. The feature is not supported by the current driver.
-So extend the PHY definition to support multiple PHY handles.
+Both K1 and K3 need to set vendor id and device id, add a helper function
+to simplify this.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- drivers/pci/controller/dwc/pcie-spacemit-k1.c | 57 ++++++++++++++-----
- 1 file changed, 42 insertions(+), 15 deletions(-)
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-index ab2953ad8f56..8c4f0b09fe24 100644
+index 8c4f0b09fe24..ec59ccb710ec 100644
 --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
 +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-@@ -51,12 +51,14 @@ struct k1_pcie_device_data {
- 	const struct dw_pcie_host_ops *host_ops;
+@@ -52,6 +52,7 @@ struct k1_pcie_device_data {
  	const struct dw_pcie_ops *ops;
  	int (*parse_port)(struct k1_pcie *k1);
-+	unsigned int max_phy_count;
+ 	unsigned int max_phy_count;
++	unsigned int device_id;
  };
  
  struct k1_pcie {
- 	struct dw_pcie pci;
- 	const struct k1_pcie_device_data *data;
--	struct phy *phy;
-+	struct phy_bulk_data *phys;
-+	unsigned int phy_count;
- 	void __iomem *link;
- 	struct regmap *pmu;	/* Errors ignored; MMIO-backed regmap */
- 	u32 pmu_off;
-@@ -115,6 +117,25 @@ static void k1_pcie_disable_resources(struct k1_pcie *k1)
- 	clk_bulk_disable_unprepare(ARRAY_SIZE(pci->app_clks), pci->app_clks);
+@@ -153,6 +154,16 @@ static void k1_pcie_disable_aspm_l1(struct k1_pcie *k1)
+ 	dw_pcie_dbi_ro_wr_dis(pci);
  }
  
-+static int k1_pcie_get_phy_handle(struct k1_pcie *k1, struct device_node *node)
++static void k1_pcie_set_device_id(struct k1_pcie *k1)
 +{
-+	const struct k1_pcie_device_data *data = k1->data;
-+	struct device *dev = k1->pci.dev;
-+	int count;
++	struct dw_pcie *pci = &k1->pci;
 +
-+	count = devm_of_phy_bulk_get_all(dev, node, &k1->phys);
-+	if (count < 0)
-+		return count;
-+	if (!count)
-+		return -ENOENT;
-+	if (count > data->max_phy_count)
-+		return -EINVAL;
-+
-+	k1->phy_count = count;
-+
-+	return 0;
++	dw_pcie_dbi_ro_wr_en(pci);
++	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
++	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, k1->data->device_id);
++	dw_pcie_dbi_ro_wr_dis(pci);
 +}
 +
- /* FIXME: Disable ASPM L1 to avoid errors reported on some NVMe drives */
- static void k1_pcie_disable_aspm_l1(struct k1_pcie *k1)
+ static int k1_pcie_init(struct dw_pcie_rp *pp)
  {
-@@ -170,12 +191,13 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
- 	 */
- 	regmap_set_bits(k1->pmu, reset_ctrl, DEVICE_TYPE_RC | PCIE_AUX_PWR_DET);
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+@@ -168,10 +179,7 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+ 		return ret;
  
--	ret = phy_init(k1->phy);
--	if (ret) {
--		k1_pcie_disable_resources(k1);
-+	ret = phy_bulk_init(k1->phy_count, k1->phys);
-+	if (ret)
-+		goto failed_phy_init;
+ 	/* Set the PCI vendor and device ID */
+-	dw_pcie_dbi_ro_wr_en(pci);
+-	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
+-	dw_pcie_writew_dbi(pci, PCI_DEVICE_ID, PCI_DEVICE_ID_SPACEMIT_K1);
+-	dw_pcie_dbi_ro_wr_dis(pci);
++	k1_pcie_set_device_id(k1);
  
--		return ret;
--	}
-+	ret = phy_bulk_power_on(k1->phy_count, k1->phys);
-+	if (ret)
-+		goto failed_phy_power_on;
- 
- 	/* Deassert fundamental reset (drive PERST# high) */
- 	regmap_clear_bits(k1->pmu, reset_ctrl, PCIE_RC_PERST);
-@@ -184,6 +206,14 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
- 	k1_pcie_disable_aspm_l1(k1);
- 
- 	return 0;
-+
-+failed_phy_power_on:
-+	phy_bulk_exit(k1->phy_count, k1->phys);
-+failed_phy_init:
-+	k1_pcie_disable_resources(k1);
-+
-+	return ret;
-+
- }
- 
- static void k1_pcie_deinit(struct dw_pcie_rp *pp)
-@@ -195,7 +225,8 @@ static void k1_pcie_deinit(struct dw_pcie_rp *pp)
- 	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
- 			PCIE_RC_PERST);
- 
--	phy_exit(k1->phy);
-+	phy_bulk_power_off(k1->phy_count, k1->phys);
-+	phy_bulk_exit(k1->phy_count, k1->phys);
- 
- 	k1_pcie_disable_resources(k1);
- }
-@@ -262,23 +293,18 @@ static int k1_pcie_parse_port(struct k1_pcie *k1)
- {
- 	struct device *dev = k1->pci.dev;
- 	struct device_node *root_port;
--	struct phy *phy;
-+	int ret;
- 
- 	/* We assume only one root port */
- 	root_port = of_get_next_available_child(dev_of_node(dev), NULL);
- 	if (!root_port)
- 		return -EINVAL;
- 
--	phy = devm_of_phy_get(dev, root_port, NULL);
-+	ret = k1_pcie_get_phy_handle(k1, root_port);
- 
- 	of_node_put(root_port);
- 
--	if (IS_ERR(phy))
--		return PTR_ERR(phy);
--
--	k1->phy = phy;
--
--	return 0;
-+	return ret;
- }
- 
- static int k1_pcie_probe(struct platform_device *pdev)
-@@ -354,6 +380,7 @@ static const struct k1_pcie_device_data k1_pcie_device_data = {
- 	.host_ops	= &k1_pcie_host_ops,
+ 	/*
+ 	 * Start by asserting fundamental reset (drive PERST# low).  The
+@@ -381,6 +389,7 @@ static const struct k1_pcie_device_data k1_pcie_device_data = {
  	.ops		= &k1_pcie_ops,
  	.parse_port	= k1_pcie_parse_port,
-+	.max_phy_count	= 1,
+ 	.max_phy_count	= 1,
++	.device_id	= PCI_DEVICE_ID_SPACEMIT_K1,
  };
  
  static const struct of_device_id k1_pcie_of_match_table[] = {
