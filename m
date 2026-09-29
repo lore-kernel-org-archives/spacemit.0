@@ -1,203 +1,216 @@
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDBF5218A1
-	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 16:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC53468C13;
+	Tue, 29 Sep 2026 17:01:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.119.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790699961; cv=none; b=SMAYrD58ihdVwyvdeD967SkIsjaCimJSBG9G9XYkHzNnddQ7HYDmlkS4mSh1a7mlNL5ifQUvmyU2SBtj0QS0BRPPDCrWstABuwED+GFIUXomaPL1wZsr5ILKPKzveruNfBGIPmEFHuA85iO6YL4cImQJdNZHWpiWieCJiViiwxg=
+	t=1790701305; cv=none; b=qlnpAV/AdKe0R+k/gLeHJYpwgkG80CrtYE2ynjSGkpXRpWO1MX5jbDL7cY5wr1HH8XZwUNhUfE8Zam7fb2p5cNMROREh4MirZdhQCQ8kIW7Jw57WAJWmu8D6x5DOdw4sTKptmBIxD6s4TLeuJjveXakMMd2quHcW8HGhzbOFYqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790699961; c=relaxed/simple;
-	bh=pVTGW5dlSw+FAj2NlT/PbOJGDXOB4L2ia6EM3qRYftY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pn2o2duy9uf/xbhOTq/13GTkI3JsahmMPewMkwBueV5ADXZHxCpd0rwSX4+PQ9rJ8A1+iQgg5R6T6BokvONpJVu+K0f9NCUYM3QwY0ceJ2UBWN6FHIThmLgeEHdg0k/TJkoq2rDGQaPXWj/VOXanK1mZPgAD2UEi3OiLbuK+4oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=F93ajY+1; arc=none smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	s=arc-20240116; t=1790701305; c=relaxed/simple;
+	bh=AfBEMVmyTpRdR2g6jgEzF3TCI4T6leeIkDBrd28vK2s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JwpuryUZa4j3ohyIHK+Hk41Ib6rsCOQUFXhovYLAJRZM05anA1wf0e0I95M+qTbDtEd/U5goV2rFVxTXuajfsg2V4DfTS4mMZONo9kgUFp+8+2u19wN9pCn1REFazROzadJpr82m3k9ISaMVPULX87ngC+k3NHBHjRLIJ6Bh57k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=0BpbijLy; arc=none smtp.client-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="F93ajY+1"
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 2BC033F91E
-	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 16:30:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1790699453;
-	bh=Vn3/Z2DdvynqvHJ/P+ee00azyAyRLA5sp7pyzKMdaqg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type;
-	b=F93ajY+17xMPVWY0RKWQEtIOTnd/V8JSALoUkpyO6X5gwggAEmXev7MUzo0Zp10gN
-	 6/QwQSKfjzrbk3+YwWiUQY8ZW7P63ktVo032pBKe72V1ybUR1HNq4WRcJHcesQmqFi
-	 sPoVcuoKjn3XKw9kOdzuX11BWy+hOManHW0k0Io0nfIq+s/7YEzuzKLWJtdbKiyEWo
-	 BZql7t5qdeXXmPsANUJ71+dV6HON0SrG4XpBxHblyNQ1aFlwWi++BGQHoFIFyCTftl
-	 0eGJ4qpMo8u+BIFp+/U9hKkiE1bN51oxOFq9TkGZWVTeQ7TnaYpIlwEfhfdav5ct/N
-	 ll64Ff2vtF5YlAUbLpYEjEhg86YubTHuDEQwLJterMdkRKDyNY8kQs5sShXFHW3u+0
-	 f2U4/fbK0Lr7B5ZX00Szic/5DuV5h08/FQZnJQYgZimZklfJfTMhFZGDCa2Cqja7/A
-	 Wu4ANlpa/XA2piv6q3L6juOE/s6pTH/VzraMzjcrVUML4pDq9wSPw6+u8n7s1799YD
-	 NrXY5dpZHAfONxh07VqvpGE6WfUHgL3CtaB1u/jV2U2naYSNF/1bY5BUlortP9PxqL
-	 imLovw0bgRnUe1AZQZNGkX4+VqavKU2Y/B3DlLGTUSmswaMCBIfjEOnGSEIVOVfLuu
-	 gVlws5dW/MhQnXSsi+u2/SNQ=
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-49e65bee41aso8542895e9.0
-        for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 09:30:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790699453; x=1791304253;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Vn3/Z2DdvynqvHJ/P+ee00azyAyRLA5sp7pyzKMdaqg=;
-        b=g8lAm4B/S1NrGbZsUgMwAb08cuQlxs3Afww4XINvG9IoABUISd20YKCVOWgMPPnzp3
-         ibGqEi2TPPGPvKNnJ3+nGgpMpL2zlSyIl7T/s1Uyg9PR/qE1w3hCy4cFWiDBjYB/9Tkn
-         7MWgUHT1akXEqqhYCFJPjDReO4h/8ND2Hj/8RhjDlV4+zABU4Q0j8eBGeWJnxBk6gYim
-         neNwLjzxW35FnmsK+tYblkzqoHidd4jqsTrgHvgQexV7BGKzjhJsd+gyqzK+4sQ2fUL5
-         0rCKZLkVXOqxL9lDHONDtDy4VKhqnev/7z6TBlgWwtH9QALqLai8zzUaL6yjyYVKyk/t
-         PYXA==
-X-Forwarded-Encrypted: i=1; AKwUvBzHrx2RiJ8V+CWMIJyA/21mhF0uWwY7PLh6Yv4x4SFyokRgjn01OhVCPSnV+hiQ7NU0Bo4C2KdB5A==@lists.linux.dev
-X-Gm-Message-State: AFuF++lUmnI+JUmX58OWCP6+FNa6GwyBDFZP4biqMgT6cUZhhiyI2HP0
-	5HG+hlASS0qcANktAx19QW5h+yxDQMW0+v6v1lJpk6uoIc635mWA0u0Ht9iGpZTBV7b+LzNNWz0
-	A1uBeyeBQY2xS43dpSO6bRhEorB1SWQKZ4TFTszJbTNnsZKiNgTCYU7PPnp+GtCCAQTN1QiOGga
-	t9
-X-Gm-Gg: AYBFou2WmaRWE20d4wIGPFsX+up9/6PSSq1R9O/M1MTE19aj5J2S0KXFCsRYPhFYZyY
-	ykfuHJAFsVID8/cGfM7NeOGRmimXCE0nmELBDAj/URdJeo6FDj5RUux8pKF1D/Lauc6UKrnH4jf
-	gZcI8nYx7PNFCA7uxCL6G12i214Gx5p49hnfjgPyuzPRofsviHOqrZrG2hIKRNcU+5MeVlWMPmf
-	9Y36dFRqOsLogsAZ4+VrAdpWXf0K+38QSJhLkyldsGSSbdfaYjPUvQKmWt1kFl6U3cAEjZogYQT
-	0hPiObpfVC1kNBkfOgJ0utjmJFgKFwM1m/ZgPaZyPkUvE1y65Tn2ymWbpxR/sz7J3KyH6G10otf
-	qGBBhESfsTOH9xSbwxVQ6/JUdtWo/AWbRuqTICMJ8Cz4hXt6l6h+ECkz+QiEYeKAM6p0CEJTqA8
-	fPWJt5d+NfhPwPnIyJ/ey/oA==
-X-Received: by 2002:a05:600c:8b10:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a00d780b78mr58589555e9.17.1790699452740;
-        Tue, 29 Sep 2026 09:30:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b10:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a00d780b78mr58589205e9.17.1790699452395;
-        Tue, 29 Sep 2026 09:30:52 -0700 (PDT)
-Received: from ?IPV6:2a02:908:1242:30e0:769:5000:73ee:deb3? ([2a02:908:1242:30e0:769:5000:73ee:deb3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00cf9dfdbsm130957335e9.1.2026.09.29.09.30.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2026 09:30:51 -0700 (PDT)
-Message-ID: <70a3451c-db31-41d0-af9d-8c9e123557f6@canonical.com>
-Date: Tue, 29 Sep 2026 18:30:49 +0200
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="0BpbijLy"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=7xE0E0ndrr7YByn7ye5GJZRRPPDTwp49LLUupyjojAA=; b=0BpbijLyKgTmLntAjV2uQmlz8L
+	a9bB0e4fcKHLtpWduH8mvw27UgdGm5QLZauBk566fYJE7b/VxtRcwcXdp2IgAtG5jqjGTuWY+SRat
+	QCbKnRujVA/B4YmxmfIite19nSY/u7x6rrlFPgQpIrrYi93kH57IblEpRDHD17q2aMFtS5QC3Jds3
+	SwxSTHqnEa8gXsLpX8LE2Pyruf/cUp8G5FsOwnVcYLLv5tiWW17BKgm1GH4HQcjkimWBMBJpFY9K/
+	XTU1bMMAl16tOHcS5BNGgBWUdn0yXVQD1mUH3hNkEY/khxNosAlp8BV2Q+Fx8uFIYViOD1oggNaXA
+	iclzn5nQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xBbCN-0000000GLbs-2LrY;
+	Tue, 29 Sep 2026 19:00:59 +0200
+Date: Tue, 29 Sep 2026 19:00:58 +0200
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczyyyski <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Frank Li <Frank.Li@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christian Bruel <christian.bruel@foss.st.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Randolph Lin <randolph@andestech.com>,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
+	Alex Elder <elder@riscstar.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Uwe Kleine-KKKnig (The Capable Hub)" <u.kleine-koenig@baylibre.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v7 0/6] riscv: spacemit: Add PCIe RC controller support
+ for K3
+Message-ID: <arvuyt6eD0bwTb9c@aurel32.net>
+Mail-Followup-To: Inochi Amaoto <inochiama@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczyyyski <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Frank Li <Frank.Li@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christian Bruel <christian.bruel@foss.st.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Randolph Lin <randolph@andestech.com>,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
+	Alex Elder <elder@riscstar.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	"Uwe Kleine-KKKnig (The Capable Hub)" <u.kleine-koenig@baylibre.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+References: <20260929083755.458238-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
-To: Radim Krcmar <rkrcmar@qti.qualcomm.com>
-Cc: "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
- "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
- "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
- Andy Chiu <tchiu@tenstorrent.com>, Florian Weimer <fweimer@redhat.com>,
- Peter Bergner <bergner@oss.tenstorrent.com>,
- Zihong Yao <zihong.plct@isrc.iscas.ac.cn>, Mark Harris <mark.hsj@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Conor Dooley <conor.dooley@microchip.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>,
- Randy Dunlap <rdunlap@infradead.org>,
- linux-riscv <linux-riscv-bounces@lists.infradead.org>,
- Guodong Xu <guodong.xu@oss.qualcomm.com>
-References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
- <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
- <9d058591-466e-4c06-a820-b8ecc7d319a6@canonical.com>
- <15151b8ab012ca7444d4117e393cf999.guodong.xu@oss.qualcomm.com>
- <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260929083755.458238-1-inochiama@gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-On 9/29/26 17:12, Radim Krcmar wrote:
-> 2026-09-24T06:38:17-04:00, Guodong Xu <guodong.xu@oss.qualcomm.com>:
->> On Mon, 21 Sep 2026 16:24:53 +0200, Heinrich Schuchardt wrote:
->>> On 9/20/26 09:18, Guodong Xu wrote:
->>>> [ ... ]
->>>>    	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_Q),
->>>>    	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_C, riscv_c_exts),
->>>> +	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
->>>
->>> Hello Guodong,
->>>
->>> The RISC-V Unpriviledged ISA specification has this description of
->>> extension B:
->>>
->>> "The B standard extension comprises instructions provided by the Zba,
->>> Zbb, and Zbs extensions."
->>>
->>> __RISCV_ISA_EXT_SUPERSET would imply that something else but
->>> riscv_b_exts is in B. But such an extra seems not to exist.
->>>
->>> So shouldn't __RISCV_ISA_EXT_BUNDLE be used here? Some code further
->>> change may be needed to set extension B if riscv_b_exts is fulfilled.
->>
->> Thanks for the review. Intentional, and the difference between the two
->> macros is whether the extension gets a bit of its own.
->>
->> __RISCV_ISA_EXT_BUNDLE carries RISCV_ISA_EXT_INVALID as its id: parsing
->> the name only sets the bits of its parts. That fits zk, zkn names, which
->> are shorthands with no identity of their own beyond the ISA string.
->>
->> B is different: it is a single-letter standard extension with its own
->> misa bit (in the same way as A), and AT_HWCAP on RISC-V is the bitmask
->> of exactly those single letters, so the kernel needs a bit for B itself.
->>
->> A is declared the same way; with the spec defines A in the same words as
->> B. If I can take that as a precedence.
->>
->> IMHO, "superset" in this table means "also sets these subset bits", not
->> "contains something extra".
+Hi,
+
+On 2026-09-29 16:37, Inochi Amaoto wrote:
+> The PCIe controller on Spacemit K3 is almost a standard Synopsys
+> Designware PCIe IP with extra control and external MSI controller
+> (IMSIC).
 > 
-> Zba, Zbb, and Zbs are equivalent to B for our purposes.
+> Add binding and driver support for PCIe RC controller support on K3.
 > 
-> Are we sure that B will always be listed in the ISA string when Zba,
-> Zbb, and Zbs are present?
+> Since v5, multiple vendor fix are included in this series, you can find
+> in [1]. And this version required [2] for phy bulk data support.
 > 
-> We could incorrectly lose RVA23U64 bit otherwise, and I think this was
-> Heinrich's concern as well...
+> [1] https://github.com/spacemit-com/linux-6.18/commits/k3-br-v1.0.y/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> [2] https://lore.kernel.org/linux-phy/20260904083709.425893-1-inochiama@gmail.com/
 > 
-> (The "A" extension has the same issue...)
+> Changed from v6:
+> - https://lore.kernel.org/linux-pci/20260923015016.64069-1-inochiama@gmail.com/
+> patch 6:
+> 1. Keep PERST# when init failed like the deinit.
 > 
-> Thanks.
+> Changed from v5:
+> - https://lore.kernel.org/linux-pci/20260907112606.465778-1-inochiama@gmail.com/
+> patch 1:
+> 1. Return ENODATA for no device data found.
+> patch 2:
+> 1. Add power_on/power_off suggested in [2].
+> 2. Add zero phy check in the driver.
+> patch 5:
+> 1. Add K3 device description.
+> patch 6:
+> 1. Update comments.
+> 
+> Changed from v4:
+> - https://lore.kernel.org/linux-pci/20260709040027.958400-1-inochiama@gmail.com/
+> patch 1:
+> 1. fix comments
+> patch 2:
+> 1. Use phy bulk data to simplify the code
+> patch 3:
+> 1. Rebased to latest master
+> patch 6:
+> 1. Apply several fix from the vendor code
+> 2. Use separated init/deinit function for K3.
+> 3. Add some error handle for K3 init function
+> 
+> Changed from v3:
+> - https://lore.kernel.org/linux-pci/20260703020003.485436-1-inochiama@gmail.com/
+> patch 5:
+> 1. Add missing interrupt/interrupt-names check for K1
+> 
+> Changed from v2:
+> - https://lore.kernel.org/linux-pci/20260517014841.254085-1-inochiama@gmail.com/
+> patch 2:
+> 1. Use unify PCIe phy get/enable/exit function for both K1 and K3.
+> patch 3:
+> 1. New patch for updating device id for both K1/K3
+> patch 5:
+> 1. Reuse binding for spacemit,k1-pcie-host
+> patch 6:
+> 1. Multiple cleanup for the logic already generalized in the previous
+>    patches.
+> 2. Use generic description for the Kconfig entry.
+> 
+> Changed from v1:
+> patch 1:
+> 1. Remove post_init callback.
+> patch 2:
+> 1. Fix devm_kmalloc_array arguments order and error check.
+> patch 3:
+> 1. Apply Rob's tag.
+> 2. Change check from oneOf to anyOf.
+> 3. Fix spelling mistakes in commit message.
+> patch 4:
+> 1. Add comment about PHY handle.
+> 2. Remove interrupt "app".
+> 3. Fix spelling mistakes in commit message.
+> patch 5:
+> 1. Remove all logic related to link up interrupt.
+> 2. Clean up all unused macros.
+> 3. Fix devm_kmalloc_array arguments order and error check.
+> 4. Remove unnecessary start_link logic.
+> 5. Make all magic number as a macro.
+> 6. Fix spelling mistakes in code and commit message.
+> 
+> Inochi Amaoto (6):
+>   PCI: spacemit-k1: Add device data support
+>   PCI: spacemit-k1: Add multiple PHY handles support
+>   PCI: spacemit-k1: Add device id update helper
+>   dt-bindings: PCI: snps,dw-pcie: Add msi-parent for MSI handle check
+>   dt-bindings: PCI: spacemit: Introduce Spacemit K3 PCIe host controller
+>   PCI: spacemit-k1: Add Spacemit K3 PCIe host controller support
+> 
+>  .../devicetree/bindings/pci/snps,dw-pcie.yaml |   7 +-
+>  .../bindings/pci/spacemit,k1-pcie-host.yaml   |  55 +++-
+>  drivers/pci/controller/dwc/Kconfig            |   4 +-
+>  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 237 ++++++++++++++++--
+>  4 files changed, 270 insertions(+), 33 deletions(-)
 
-If Zba, Zbb, and Zbs are present the kernel should set the B flag in 
-hwprobe. This is why RISCV_ISA_EXT_SUPERSET() cannot be used to describe 
-the B extension. RISCV_ISA_EXT_BUNDLE looks more appropriate but may 
-lack functionality.
+Thanks for this new version. Patches 1, 2, 3, 6 are:
 
-RVA23U64 looks like an RISCV_ISA_EXT_BUNDLE() to me, too.
+Tested-by: Aurelien Jarno <aurelien@aurel32.net
 
-Unfortunately these macros are not properly documented.
-
-It would be helpful to first align on the meaning and usage of the 
-macros and document them properly.
-
----
-
-The benefit of an additional hwprobe flags for B is limited. When I want 
-to check for B I can already use:
-
-RISCV_HWPROBE_EXT_B =
-RISCV_HWPROBE_EXT_ZBA | RISCV_HWPROBE_EXT_ZBB | RISCV_HWPROBE_EXT_ZBS;
-
-if ((value & RISCV_HWPROBE_EXT_B) == RISCV_HWPROBE_EXT_B) {
-	// Hurray, I have the B extension.
-}
-
-There is more utility in the RVA23U64 flag because it combines values 
-from RISCV_HWPROBE_KEY_BASE_BEHAVIOR, RISCV_HWPROBE_KEY_IMA_EXT_0, and 
-RISCV_HWPROBE_KEY_IMA_EXT_1.
-
-Best regards
-
-Heinrich
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
