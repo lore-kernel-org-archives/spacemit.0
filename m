@@ -1,244 +1,207 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2254D2EC0B0
-	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 04:07:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30106472072
+	for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 08:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790654872; cv=none; b=bMb1DwJmsIAxmqbnq9V0dEqSdm5lxFEW4fyT7b1xTRXr0KGADxh3+jdsuL+IX0rFYQk8XvnvTuLZWgmDR1W1ZW5kKz0B7Vgztc37VP+aWzOgoyBQSgwMLvNQYOmraL5wetul93ldBMAYK/mUgHRZv5sl/cEF9Nwtqx3iim38T2o=
+	t=1790671090; cv=none; b=HOPRzfOXhTgp6ebKFBQwgKp6ZB4GghnpAOkcjgjyYmYaKzHW1qG8ZITyH0btlgf02I6966XhHfUnrT07l4LkBF9jHXzwdN6aCoYealpQKH3lePxqkwlchNQBr95AoQiYtR/04yz5CTtUeyJ5hAZvTEMIFuyx5VDfpKE1KysB+Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790654872; c=relaxed/simple;
-	bh=7SM2EAHGjgqjWU1VxeEbGe7dDDU/BMYHHcP2YMSEPDg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jzjZvX1gbTlQkHtTvh3kfPwBOe9WzjagNudG9I1WyWUICv59KpkLXToM0LV1bpTziNyvCOo0KxK2OOAtG9QoaRl2/JcKBw1frrD0rr1KB9gi7JgclFH/0s94gV6O8IdKaV/LnT7ej6PvtIbJfX3J+K091z+eHyKxOVm0l0BOz0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [10.213.8.175] (unknown [36.110.52.2])
-	by APP-03 (Coremail) with SMTP id rQCowAAHEkCQObtqt2QaCQ--.2375S2;
-	Tue, 29 Sep 2026 12:07:44 +0800 (CST)
-Message-ID: <db540b00-a017-4c82-9a6c-93e862dcde67@iscas.ac.cn>
-Date: Tue, 29 Sep 2026 12:07:44 +0800
+	s=arc-20240116; t=1790671090; c=relaxed/simple;
+	bh=jbkQDh1WXQk+4/agGxITBZs89OQ7prZRbG+zWy3w8z0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=t02CSxtsIgZifdlnJo09TN7DQ5Raaei8CnQwTs6fyJ9NV8N6YcknZ8CUXc5gzjZQqxNSjG+dsWoIcPweCyly3UAho1/FwmO86ICojzp5zG+/InfPoKzzZsSBsctDVAopJ+5jy/OThCx96ebCQKNGoWffcSF0U6YjACcE2lzNTV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z0mkQBEN; arc=none smtp.client-ip=74.125.227.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z0mkQBEN"
+Received: by mail-pj2-f43.google.com with SMTP id d9443c01a7336-2d90ba1d807so30457155ad.3
+        for <spacemit@lists.linux.dev>; Tue, 29 Sep 2026 01:38:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790671087; x=1791275887; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=bVr9gxAZxb8ElKLswGJsmoMufAJERtFn02OY/z6PAKM=;
+        b=Z0mkQBENttA7nNJp4Nol6HRlDHXq76QEoU9yQgVyxAs5TO+Y0Qupcee3XdXAcZjnmx
+         EFPZsk7sMdkBSUDA83Che/S+MYHBvjlm9ukbbbUbo+5ikrCfXajcoQBahCJJk347n5Q+
+         uUN/YjLEhpaT/+dPISZTWyMFU7Jsr/LmuXPKQZHXCTB3pX5AP4dMl/KZLL3uxLg5k01J
+         AaEt+os6D2gH8G6lSqqkezqRyY3/2lAhhZ5oKQJPZEBM4CgZgowd7d3JtZlgrq7TpG4c
+         KlzQUMTHWOuVWY50sJBVsuQW6uvDc8mp1FCVbmfK01BKzXK7iqLUdGjob619tOC8ky+I
+         ARmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790671087; x=1791275887;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=bVr9gxAZxb8ElKLswGJsmoMufAJERtFn02OY/z6PAKM=;
+        b=qdqeWcPgwBNV43PgLTmz6WSI6QTNOHiRX4TNGTdbefS3EDVPpkKMErgwV0vxE7d1GZ
+         f++MwEddAzJIL8Gsg7AdUjq8atSlPVcLFssgecl4d30k72gKCG9R0Q0G6SgQnLKWxYAz
+         EGh1TGqQcAIJeK3jrVUQ6avXAfid6+GnnwexxdHek0eXcvPjHB7ZvHekk1pgCVJtSEvr
+         Sgy/zPTejHEyZ6T1uvpQhCoIa/jnpaKvAzaKkp7O6YGtDSIi1PbrgMWDbm0gGKDI3BPH
+         NLHS8apWrONrR/XTg9vWO7Lk67MyO4oCKo61MoqgHcfiG+4ZcP/EdllGJqTDv0fPdDuM
+         nqGw==
+X-Forwarded-Encrypted: i=1; AKwUvBx7remUPPvfIa6EjhXcozZuD1QdgohfjPtkDYthb4FPAk4PNQxmu5OXMcqyb/WQPXYqp3LpF0U7Mw==@lists.linux.dev
+X-Gm-Message-State: AFq9FYL0XMRVPa/l7hG2VNCOcbmUpz2RXViyT+unt+xWRg6Duxs/qREo
+	fSd91UZAQL7T69xir8wIzydX6cQV9/lygOMXCyTLnl81ljNfU4tuX17W
+X-Gm-Gg: AYBFou04QMHue+EnjtviL5Mm4JdoHUb7dhVUqGWxO9uoKQX3IEeKjP0FdWQuh40dvhd
+	HcA/wsoPYMRtfF+p1HqKBEy4B+v+HCn6PUHmynM4M0tnRMcgct9luCExuH7ephWFfxO5akk5Wr+
+	xHtUAnTvqxCUmhY3LKKrNvwa6HWB89ftrWRKaMxJSUC9wCn9g9lT7Nqzuqix3jhkRZcKL2NvAtj
+	BYUe7AOb88eKvlOVkVZL+w5p/ycmGrZDq1WFtWxlHKiR7cZx36mAvpUshojloB/7YqaqVwczSAR
+	/wvYCvwng3hYyGXZnt0ixQ7eP8MYmocca2Wf+XuePBTYZph8lGKmX3/E6+gfQyTiytI1iUaeK7o
+	bAE0ZnBFJHsLoATSlZLTXztbq0rmNX6P+X4mSQRo6AjJK+jJ4FxRpXn0G3jDDDHToGJ1fkcyzy2
+	Mx09e5yMx0oLGP6x48u8LXG7TPrgBP1gL6bchAQ2+ZlP2Sm2RYcnyqrjzo53ZOp3Venmy1
+X-Received: by 2002:a17:902:d550:b0:2df:9a4d:650a with SMTP id d9443c01a7336-2e2c0b3b7f9mr20035895ad.29.1790671087430;
+        Tue, 29 Sep 2026 01:38:07 -0700 (PDT)
+Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df90fbcaa1sm53065915ad.4.2026.09.29.01.38.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2026 01:38:06 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Frank Li <Frank.Li@nxp.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Niklas Cassel <cassel@kernel.org>,
+	Christian Bruel <christian.bruel@foss.st.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Randolph Lin <randolph@andestech.com>,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
+	Alex Elder <elder@riscstar.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>,
+	Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+Cc: linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH v7 0/6] riscv: spacemit: Add PCIe RC controller support for K3
+Date: Tue, 29 Sep 2026 16:37:46 +0800
+Message-ID: <20260929083755.458238-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
-To: Aurelien Jarno <aurelien@aurel32.net>,
- Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Andy Chiu <tchiu@tenstorrent.com>, spacemit@lists.linux.dev,
- linux-riscv@lists.infradead.org
-References: <apSYF5x1Tu7PlyL1@aurel32.net> <ap-SIQ9DLt-CfAx6@aurel32.net>
- <aqGNGp8PInSV4vty@aurel32.net> <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
- <arSshYwcyHjC2dh3@aurel32.net> <arS-yYLK8Df5knSE@gmail.com>
- <arX7PwOnlz0N9rUc@aurel32.net> <arnt6EEacEm3YRIC@aurel32.net>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <arnt6EEacEm3YRIC@aurel32.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:rQCowAAHEkCQObtqt2QaCQ--.2375S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxtF43KrWDAF17KrWxXrW5Jrb_yoWxCF1xpa
-	98CF4kGrWUGa1xWF9Fqw48Zrn5Jws5W345CrykGa4rWF13KrWfArn5Z34DCF4UXFyv9FyU
-	CasYgrs5Aw43Jr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkFb7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
-	8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
-	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJw
-	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI0_JF0_Jw1l42xK
-	82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGw
-	C20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48J
-	MIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMI
-	IF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
-	87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jFhFcUUUUU=
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+Content-Transfer-Encoding: 8bit
 
-On 9/28/26 12:32, Aurelien Jarno wrote:
-> Hi,
->
-> On 2026-09-25 06:40, Aurelien Jarno wrote:
->
-> [...]
->
-> That said Han Gao pointed me to this patch:
-> https://lore.kernel.org/linux-riscv/20260807-vector_fpu_regs_status_rmw_fix-v1-1-0c16848b60db@intel.com/
->
-> I have been testing it, and so far it seems to fix my issue with both 
-> CONFIG_RISCV_ISA_V_PREEMPTIVE enable and disabled. Or maybe it just 
-> hides the issue by changing the timing, as at this point, I haven't 
-> fully understood how the bug fixed by this patch can completely explain 
-> my observations.
+The PCIe controller on Spacemit K3 is almost a standard Synopsys
+Designware PCIe IP with extra control and external MSI controller
+(IMSIC).
 
-I don't know how that would cause what you have observed either, but it
-does superficially appears to fix a real bug.
+Add binding and driver support for PCIe RC controller support on K3.
 
-> Unfortunately, I have been able to reproduce the issue, even with this 
-> patch applied. It just significantly reduces the frequency of the issue.
->
-But this, I suppose, is still useful information that we just *might* be
-on the right track.
+Since v5, multiple vendor fix are included in this series, you can find
+in [1]. And this version required [2] for phy bulk data support.
 
-Can you perhaps try this hacked together patch below and see if it does
-anything? I just put guard(preempt)() or something around a bunch of
-places I could find that access regs->status. It should apply to 7.1 and
-7.2 as is. (The coding style is deliberately horrible to minimize diff
-lines and discourage others from shipping it)
+[1] https://github.com/spacemit-com/linux-6.18/commits/k3-br-v1.0.y/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+[2] https://lore.kernel.org/linux-phy/20260904083709.425893-1-inochiama@gmail.com/
 
-(This adds some more widely-scoped guards, and AFAICT /replaces/ the
-above linked patch from Guobin Zhang.)
+Changed from v6:
+- https://lore.kernel.org/linux-pci/20260923015016.64069-1-inochiama@gmail.com/
+patch 6:
+1. Keep PERST# when init failed like the deinit.
 
-vvv DO NOT USE EXCEPT FOR TESTING vvv
+Changed from v5:
+- https://lore.kernel.org/linux-pci/20260907112606.465778-1-inochiama@gmail.com/
+patch 1:
+1. Return ENODATA for no device data found.
+patch 2:
+1. Add power_on/power_off suggested in [2].
+2. Add zero phy check in the driver.
+patch 5:
+1. Add K3 device description.
+patch 6:
+1. Update comments.
 
-diff --git a/arch/riscv/include/asm/switch_to.h b/arch/riscv/include/asm/switch_to.h
-index 04f10a949066..6486f9fe0ac5 100644
---- a/arch/riscv/include/asm/switch_to.h
-+++ b/arch/riscv/include/asm/switch_to.h
-@@ -6,6 +6,7 @@
- #ifndef _ASM_RISCV_SWITCH_TO_H
- #define _ASM_RISCV_SWITCH_TO_H
- 
-+#include <linux/cleanup.h>
- #include <linux/jump_label.h>
- #include <linux/sched/task_stack.h>
- #include <linux/mm_types.h>
-@@ -28,12 +29,14 @@ static inline void __fstate_clean(struct pt_regs *regs)
- static inline void fstate_off(struct task_struct *task,
- 			      struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	regs->status = (regs->status & ~SR_FS) | SR_FS_OFF;
- }
- 
- static inline void fstate_save(struct task_struct *task,
- 			       struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if ((regs->status & SR_FS) == SR_FS_DIRTY) {
- 		__fstate_save(task);
- 		__fstate_clean(regs);
-@@ -43,6 +46,7 @@ static inline void fstate_save(struct task_struct *task,
- static inline void fstate_restore(struct task_struct *task,
- 				  struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if ((regs->status & SR_FS) != SR_FS_OFF) {
- 		__fstate_restore(task);
- 		__fstate_clean(regs);
-diff --git a/arch/riscv/include/asm/vector.h b/arch/riscv/include/asm/vector.h
-index fffe72a77208..30fc51713542 100644
---- a/arch/riscv/include/asm/vector.h
-+++ b/arch/riscv/include/asm/vector.h
-@@ -97,11 +97,13 @@ static inline void __riscv_v_vstate_dirty(struct pt_regs *regs)
- 
- static inline void riscv_v_vstate_off(struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	regs->status = __riscv_v_vstate_or(regs->status, OFF);
- }
- 
- static inline void riscv_v_vstate_on(struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	regs->status = __riscv_v_vstate_or(regs->status, INITIAL);
- }
- 
-@@ -302,6 +304,7 @@ static inline void __riscv_v_vstate_discard(void)
- 
- static inline void riscv_v_vstate_discard(struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if (riscv_v_vstate_query(regs)) {
- 		__riscv_v_vstate_discard();
- 		__riscv_v_vstate_dirty(regs);
-@@ -311,6 +314,7 @@ static inline void riscv_v_vstate_discard(struct pt_regs *regs)
- static inline void riscv_v_vstate_save(struct __riscv_v_ext_state *vstate,
- 				       struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if (__riscv_v_vstate_check(regs->status, DIRTY)) {
- 		__riscv_v_vstate_save(vstate, vstate->datap);
- 		__riscv_v_vstate_clean(regs);
-@@ -320,6 +324,7 @@ static inline void riscv_v_vstate_save(struct __riscv_v_ext_state *vstate,
- static inline void riscv_v_vstate_restore(struct __riscv_v_ext_state *vstate,
- 					  struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if (riscv_v_vstate_query(regs)) {
- 		__riscv_v_vstate_restore(vstate, vstate->datap);
- 		__riscv_v_vstate_clean(regs);
-@@ -329,6 +334,7 @@ static inline void riscv_v_vstate_restore(struct __riscv_v_ext_state *vstate,
- static inline void riscv_v_vstate_set_restore(struct task_struct *task,
- 					      struct pt_regs *regs)
- {
-+	guard(preempt)();
- 	if (riscv_v_vstate_query(regs)) {
- 		set_tsk_thread_flag(task, TIF_RISCV_V_DEFER_RESTORE);
- 		riscv_v_vstate_on(regs);
-diff --git a/arch/riscv/kernel/process.c b/arch/riscv/kernel/process.c
-index b2df7f72241a..45963c7baebe 100644
---- a/arch/riscv/kernel/process.c
-+++ b/arch/riscv/kernel/process.c
-@@ -144,6 +144,7 @@ early_initcall(compat_mode_detect);
- void start_thread(struct pt_regs *regs, unsigned long pc,
- 	unsigned long sp)
- {
-+	guard(preempt)();
- 	regs->status = SR_PIE;
- 	if (has_fpu()) {
- 		regs->status |= SR_FS_INITIAL;
-diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
-index 59784dc117e4..623cc35d567c 100644
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -6,6 +6,7 @@
-  * Copyright (C) 2012 Regents of the University of California
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/compat.h>
- #include <linux/signal.h>
- #include <linux/uaccess.h>
-@@ -76,6 +77,7 @@ static long save_v_state(struct pt_regs *regs, void __user *sc_vec)
- 	void __user *datap;
- 	long err;
- 
-+	scoped_guard(preempt)
- 	if (!IS_ENABLED(CONFIG_RISCV_ISA_V) ||
- 	    !((has_vector() || has_xtheadvector()) &&
- 	    riscv_v_vstate_query(regs)))
-@@ -287,6 +289,7 @@ static size_t get_rt_frame_size(bool cal_all)
- 	frame_size = sizeof(*frame);
- 
- 	if (has_vector() || has_xtheadvector()) {
-+		scoped_guard(preempt)
- 		if (cal_all || riscv_v_vstate_query(task_pt_regs(current)))
- 			total_context_size += riscv_v_sc_size;
- 	}
-diff --git a/arch/riscv/kernel/vector.c b/arch/riscv/kernel/vector.c
-index b112166d51e9..27078b70b65b 100644
---- a/arch/riscv/kernel/vector.c
-+++ b/arch/riscv/kernel/vector.c
-@@ -3,6 +3,7 @@
-  * Copyright (C) 2023 SiFive
-  * Author: Andy Chiu <andy.chiu@sifive.com>
-  */
-+#include <linux/cleanup.h>
- #include <linux/export.h>
- #include <linux/sched/signal.h>
- #include <linux/types.h>
-@@ -194,6 +195,7 @@ bool riscv_v_first_use_handler(struct pt_regs *regs)
- 	if (!riscv_v_vstate_ctrl_user_allowed())
- 		return false;
- 
-+	scoped_guard(preempt)
- 	/* If V has been enabled then it is not the first-use trap */
- 	if (riscv_v_vstate_query(regs))
- 		return false;
+Changed from v4:
+- https://lore.kernel.org/linux-pci/20260709040027.958400-1-inochiama@gmail.com/
+patch 1:
+1. fix comments
+patch 2:
+1. Use phy bulk data to simplify the code
+patch 3:
+1. Rebased to latest master
+patch 6:
+1. Apply several fix from the vendor code
+2. Use separated init/deinit function for K3.
+3. Add some error handle for K3 init function
 
-^^^ DO NOT USE EXCEPT FOR TESTING ^^^
+Changed from v3:
+- https://lore.kernel.org/linux-pci/20260703020003.485436-1-inochiama@gmail.com/
+patch 5:
+1. Add missing interrupt/interrupt-names check for K1
+
+Changed from v2:
+- https://lore.kernel.org/linux-pci/20260517014841.254085-1-inochiama@gmail.com/
+patch 2:
+1. Use unify PCIe phy get/enable/exit function for both K1 and K3.
+patch 3:
+1. New patch for updating device id for both K1/K3
+patch 5:
+1. Reuse binding for spacemit,k1-pcie-host
+patch 6:
+1. Multiple cleanup for the logic already generalized in the previous
+   patches.
+2. Use generic description for the Kconfig entry.
+
+Changed from v1:
+patch 1:
+1. Remove post_init callback.
+patch 2:
+1. Fix devm_kmalloc_array arguments order and error check.
+patch 3:
+1. Apply Rob's tag.
+2. Change check from oneOf to anyOf.
+3. Fix spelling mistakes in commit message.
+patch 4:
+1. Add comment about PHY handle.
+2. Remove interrupt "app".
+3. Fix spelling mistakes in commit message.
+patch 5:
+1. Remove all logic related to link up interrupt.
+2. Clean up all unused macros.
+3. Fix devm_kmalloc_array arguments order and error check.
+4. Remove unnecessary start_link logic.
+5. Make all magic number as a macro.
+6. Fix spelling mistakes in code and commit message.
+
+Inochi Amaoto (6):
+  PCI: spacemit-k1: Add device data support
+  PCI: spacemit-k1: Add multiple PHY handles support
+  PCI: spacemit-k1: Add device id update helper
+  dt-bindings: PCI: snps,dw-pcie: Add msi-parent for MSI handle check
+  dt-bindings: PCI: spacemit: Introduce Spacemit K3 PCIe host controller
+  PCI: spacemit-k1: Add Spacemit K3 PCIe host controller support
+
+ .../devicetree/bindings/pci/snps,dw-pcie.yaml |   7 +-
+ .../bindings/pci/spacemit,k1-pcie-host.yaml   |  55 +++-
+ drivers/pci/controller/dwc/Kconfig            |   4 +-
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 237 ++++++++++++++++--
+ 4 files changed, 270 insertions(+), 33 deletions(-)
+
+--
+2.55.0
 
