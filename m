@@ -1,209 +1,97 @@
-Received: from mail-pj2-f42.google.com (mail-pj2-f42.google.com [74.125.227.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C45C3976B8
-	for <spacemit@lists.linux.dev>; Wed, 30 Sep 2026 09:44:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA95275AEB
+	for <spacemit@lists.linux.dev>; Thu,  1 Oct 2026 19:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790761477; cv=none; b=pVY+Pbqot4xUTyjUD0eDzsN0QahLJ8Z7B+BnaaM9YYKhIDEL7gwlj5gMXreve3aRRvH0b5eSxM/VR5MvRzIBc1u/0FYJmbO9A3uNHEBXzh56QZLA2NethhoXmY4jO5CfADHYIxbLJ8/hoG0PTwmOc+d6C6kPms6TMD9zghIdRqc=
+	t=1790884236; cv=none; b=YwqrFq4mUvuoVkajIgDcQloZx16BXdHw5kW8nVlaK5udpZKvwPG0NBJ34auoDmMEusZ555NfAdi2uVTrAqU59I84jh+VMea17XLjivxdeUkOUEI3R2s+fWbZYUX4Ia8BYKd+3XOTn0fbAa2jJo/PUrOgSv8DmuRagcPSPl6V24c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790761477; c=relaxed/simple;
-	bh=LGpeqoKrvd8KQjxxdaWkOE5kB0xUNiCVAhOEfxcWWEU=;
+	s=arc-20240116; t=1790884236; c=relaxed/simple;
+	bh=6jRMKYHfAAX1M9y9r4TRcDkmQYMke6Ra8F2tIGJPUBI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MJgz0n/QNtgeQk3jTBFUPpCKTxyDpd26cljVkuLiYow23rEZ2NfbVdFcGQv6+qvCVHmL6QJof9YbnCa6lqespTFMs7MwTixiG7xFwFAGXSSh/JciJiRUdFMhYbsa2hwN23rxJ45tvlhla9G7JVHa7//cicTi1lze+JSy76i758U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E2IMKfuN; arc=none smtp.client-ip=74.125.227.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type:Content-Disposition; b=ESEWER347w+oBrZ3wpClTwVTzlmHqOj8rXdULSpWPaitYvs7agBfjAdM6PTNoeH8HhmwROZ33Pd/SJK5KbLsDp/PbXix4jwD6YnCKNpM6pN/mksY2eK0JfgF1capMSpVQfK61nfRdRK1PsrowH5l6hyHzja3+Qi9D7+Ees80OmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JzU/jr/8; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E2IMKfuN"
-Received: by mail-pj2-f42.google.com with SMTP id 98e67ed59e1d1-396ccd5cf02so2653618a91.3
-        for <spacemit@lists.linux.dev>; Wed, 30 Sep 2026 02:44:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790761475; x=1791366275; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LJ7pv3JvMpjktv8pMXQeW+L1mKgAG5YebBgrxPcoffs=;
-        b=E2IMKfuNKkDVJ/O0sj3ygQjynpc/jTsYT/kEIJrN4i4COVAJWBiM9SFtacKfBh1iRt
-         aXQH+LtSF/OCqlAb+zSXGQ1r1OiW1zwB2/5F1vJ6bIqQsjGbyr+DkxLwJR5U/r20HEcc
-         asaZaihK2jekJ2Ei24nm+BvwGJkePxNUHzJtclfvaKyjeXWg2aH9PlKSDHXn+NVIuPr0
-         HukEOaICZwe20Nouiq4IUKOSECfjHEptMb6e7NN8Mnw02uErob/GR2gIpbCGroiyhd8r
-         aMKJRcI+Svkv9EfkkHLDlQj+MzUV7FI9bYwHqdf87iZWxInOqdvdb/E+1N6QG9k5w8HO
-         Ahdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790761475; x=1791366275;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LJ7pv3JvMpjktv8pMXQeW+L1mKgAG5YebBgrxPcoffs=;
-        b=RmQL/0NtSFeSRkoD0EwngKT//TeqUFERveZrvYUKbYjZSce2epQczyV/KEcAl8HfrB
-         oh0yRxCCKIcSiZUhpxCaOcRYerZ2ZGzW2zFLJOM0Ti5AYwSv1c0ZyX+Nf6zF+lszLUsI
-         3qt1n45dIyLDftDkz2pTHmoQbTFwU8o4e/deksMaQjY5dLfEoZfhj0D6T5sgBG7SuqPJ
-         aR2JPxNgFmtMHLm3PR1r6CUFOuIJrx1kz5NhOWliZ/1rflqqUhf8T+nBGoE5xoyN85D9
-         MUdQB5+IJUFNES4heaFXPFqqRA1FQBhgwY2pzXhi2s5BJrKmxWjfSAVt4g+YDtGZR0nM
-         orfA==
-X-Forwarded-Encrypted: i=1; AKwUvBxBoepEcGeIz+262rGMHYltGR5LhOWsIIpdrDoFBRdK5DMS0d79WwJ0mu3+HbVp7CUM+1/02B6n1Q==@lists.linux.dev
-X-Gm-Message-State: AFq9FYKAN3jF6slqTtEF7o9zhhsRnLMRD9wQ3HFhbP3OAJS43JOB34ZC
-	3fUMr/e07oZEhzVKBSm4ZWQ0TFiV01OgKA7dAfbs2k12agbCKzlqvmNq
-X-Gm-Gg: AYBFou10gWmlLdVvYTP8gKkkFhdJyu5WBNugIR0upYagxAqZG2/a0tuLci+ZiKSNo28
-	aOJwa0eC0VI3ZDJiho8JXcKZhK+ijxhjE77fECOYIiZmnpr2JU9YdJJnbC62/M9uE3C4lzYobv2
-	jSHG4oqgyD+lmo1B4x2cBgvum3RSbs5MCPR0RITPgmgnP/r4Y3ET60S1e4vmn17ES9RNTqHBnhK
-	iasA8u3Gw02m1AUYpk3L1AdD8qQQyzGrtdScSAmGexGiwFTRxbxuls9eBtOuJkJ0BkLZJDrnZxg
-	QFYwoJgIvLNkOCAySggn9hUC7zW33jORoEjlcL/2/P+jtheFz3FwdegbsIhpyM1H5z5dAy+IERa
-	Xj9y6x1z7cSuhfl4GIm2fw+fU+AOxMYAIKb8ke6kfhN34ktEbhBZ3rPHYG4bv6u6KPE9NNHN9pz
-	JCQfXkdior2e1crZGEhY880aqSp4EfxtZvXC160YjvTBa/oCAybpKC7QqkkJ2k1b29+My/
-X-Received: by 2002:a17:90a:ec8f:b0:3a0:97ba:cc05 with SMTP id 98e67ed59e1d1-3a4d1509b4bmr792148a91.22.1790761474707;
-        Wed, 30 Sep 2026 02:44:34 -0700 (PDT)
-Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4c75bd93fsm1219229a91.3.2026.09.30.02.44.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 02:44:34 -0700 (PDT)
-Date: Wed, 30 Sep 2026 17:44:25 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Frank Li <Frank.Li@nxp.com>, Arnd Bergmann <arnd@arndb.de>, 
-	Niklas Cassel <cassel@kernel.org>, Christian Bruel <christian.bruel@foss.st.com>, 
-	Senchuan Zhang <zhangsenchuan@eswincomputing.com>, Vincent Guittot <vincent.guittot@linaro.org>, 
-	Randolph Lin <randolph@andestech.com>, Xincheng Zhang <zhangxincheng@ultrarisc.com>, 
-	Alex Elder <elder@riscstar.com>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Marek Vasut <marek.vasut+renesas@mailbox.org>, Vidya Sagar <vidyas@nvidia.com>, 
-	Pengpeng Hou <pengpeng@iscas.ac.cn>, Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>, Gustavo Pimentel <gustavo.pimentel@synopsys.com>, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, 
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v7 6/6] PCI: spacemit-k1: Add Spacemit K3 PCIe host
- controller support
-Message-ID: <arzYt1svE0HtZPSB@inochi.infowork>
-References: <20260929083755.458238-1-inochiama@gmail.com>
- <20260929083755.458238-7-inochiama@gmail.com>
- <arzAGOKLOustEW7F@ashevche-desk.local>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JzU/jr/8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1790884233;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZAjwzoaRE8Y0fVtRj9ggGUm+tsvlfR3rs7Rqyg10Y00=;
+	b=JzU/jr/8s7IhqQaS6IvnZNCmudarSNPiZpedJp10ApyBis5Fb0o937b/Fa9VJIwV0OAih9
+	OhRwL8jXDSs5F1nYtABbwPf+pbfk/kvT5WGa49HuOBX7nAgXCv4Xb+QyHoR6x+jiiLYbka
+	daHnNkDXdwt1xgFZzVkW6jmNoaCMLY4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-NmxrzEmPOeiHp6eRNC39Vw-1; Thu,
+ 01 Oct 2026 15:50:28 -0400
+X-MC-Unique: NmxrzEmPOeiHp6eRNC39Vw-1
+X-Mimecast-MFC-AGG-ID: NmxrzEmPOeiHp6eRNC39Vw_1790884227
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9063B18E7558;
+	Thu,  1 Oct 2026 19:50:25 +0000 (UTC)
+Received: from kchamart.csb (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 564E91956044;
+	Thu,  1 Oct 2026 19:50:24 +0000 (UTC)
+Date: Thu, 1 Oct 2026 21:50:21 +0200
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: Development discussions related to Fedora <devel@lists.fedoraproject.org>
+Cc: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Subject: Re: Wiki resource for Fedora RISC-V + KVM on the Spacemit K3 Com260
+ board
+Message-ID: <ar65faZP8T-4FOJ4@kchamart.csb>
+References: <b143791b-7bba-a6a4-64ac-9c6dc0735ff3@namei.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <b143791b-7bba-a6a4-64ac-9c6dc0735ff3@namei.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: r7UG-Fkw7ezFkC5BmKp9Ub42TAQqjhPA1J00_-BSioY_1790884227
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <arzAGOKLOustEW7F@ashevche-desk.local>
 
-On Wed, Sep 30, 2026 at 10:54:00AM +0300, Andy Shevchenko wrote:
-> On Tue, Sep 29, 2026 at 04:37:52PM +0800, Inochi Amaoto wrote:
-> > The PCIe controller on Spacemit K3 is almost a standard Synopsys
-> > DesignWare PCIe IP with extra link and reset control. Unlike
-> > the PCIe controller on K1, this controller supports external MSI
-> > interrupt controller and can use multiple PHYs at the same time.
-> > 
-> > Add driver to support PCIe controller on Spacemit K3 PCIe.
-> 
-> ...
-> 
-> > +static int k3_pcie_init(struct dw_pcie_rp *pp)
-> > +{
-> > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > +	struct k1_pcie *k1 = to_k1_pcie(pci);
-> > +	u32 reset_ctrl = k1->pmu_off + PCIE_CLK_RESET_CONTROL;
-> > +	u32 val;
-> > +	int ret;
-> > +
-> > +	regmap_clear_bits(k1->pmu, reset_ctrl, LTSSM_EN);
-> > +
-> > +	k1_pcie_toggle_soft_reset(k1);
-> > +
-> > +	/* K3: Set IGNORE_PERSTN and drive PERSTN_OE high (assert reset) */
-> > +	regmap_update_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
-> > +			   PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE | PCIE_PERSTN_OUT,
-> > +			   PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE);
-> 
-> Would it make sense to define permutations
-> 
->   PCIE_IGNORE_PERSTN | PCIE_PERSTN_OE
-> 
-> for here...
-> 
+On Tue, Sep 29, 2026 at 04:52:18PM -0700, James Morris wrote:
+> Hi Folks,
 
-I think it does not make sense, they are two separate fields.
-A combine does not make the thing easier.
+Hi,
 
-> > +	ret = k1_pcie_enable_resources(k1);
-> > +	if (ret)
-> > +		goto failed_resources;
-> > +
-> > +	regmap_set_bits(k1->pmu, reset_ctrl, PCIE_AUX_PWR_DET);
-> > +	regmap_clear_bits(k1->pmu, reset_ctrl, APP_HOLD_PHY_RST);
-> > +
-> > +	ret = phy_bulk_init(k1->phy_count, k1->phys);
-> > +	if (ret)
-> > +		goto failed_phy_init;
-> > +
-> > +	ret = phy_bulk_power_on(k1->phy_count, k1->phys);
-> > +	if (ret)
-> > +		goto failed_phy_power_on;
-> > +
-> > +	msleep(PCIE_T_PVPERL_MS);
-> > +
-> > +	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
-> > +			PCIE_PERSTN_OUT | PCIE_PERSTN_OE);
+> I've been playing with Fedora RISC-V on the Spacemit K3 Com260 board 
+> (which implements full virtualization per the RVA23 spec).
+>
+> I've captured the bringup process as a wiki with the help of an LLM. This 
+> supports a native KVM host running an F44 guest image. It's current for 
+> F44, with F45-beta a WIP.
 > 
-> ...and
-> 
->   PCIE_PERSTN_OUT | PCIE_PERSTN_OE
-> 
-> for here and elsewhere?
-> 
-> > +	val = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> 
-> > +	val = u32_replace_bits(val, BIT(7),
-> > +			       GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
-> 
-> It's perfectly a single line. Check your editor settings (I believe I have
-> commented on a such in one of the previous rounds).
-> 
+> Wiki: https://github.com/xjamesmorris/k3-com260-info/wiki
 
-Yes, but it is too hard for me as the intellisense plugin will show
-the argument name so I am toot hard to keep that for a line that near
-80 chars....
+Thanks for sharing.  I don't have a K3 CoM260 myself, but some folks on
+the Fedora RISC-V Matrix have it.
 
-> > +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, val);
-> > +
-> > +	k1_pcie_set_device_id(k1);
-> > +
-> > +	/* Finally, as a workaround, disable ASPM L1 */
-> > +	k1_pcie_disable_aspm_l1(k1);
-> > +
-> > +	return 0;
-> > +
-> > +failed_phy_power_on:
-> > +	phy_bulk_exit(k1->phy_count, k1->phys);
-> > +failed_phy_init:
-> > +	k1_pcie_disable_resources(k1);
-> > +failed_resources:
-> > +	regmap_update_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
-> > +			   PCIE_PERSTN_OUT | PCIE_PERSTN_OE,
-> > +			   PCIE_PERSTN_OE);
-> > +
-> > +	return ret;
-> > +}
-> 
-> ...
-> 
-> You checked everything but regmap IO. Why? Do you except it won't ever fail?
-> Perhaps to add a note about this (if not yet) to the cover letter?
-> 
+Looking through your wiki, I see you have an elaborate script for the
+KVM part.  At first, the name of the script tricked me
+('k3-run-fedora-guest.sh').  From quick skimming, I see it is handling a
+lot more than just "running" the guest. It handles the entire guest
+lifecycle management with plain QEMU, w/o libvirtd, QMP socket
+validation, `flock` syscall handling, qcow2 backing file format
+validation (a good security instinct :)) and more.
 
-It should not fail. IIRC the regmap will not fail for an
-exclusive usage. The regmap here is just as handle for
-the common device, but the device driver only use its
-exclusive area so it should be safe.
 
-Regards,
-Inochi
+[1] https://github.com/xjamesmorris/k3-com260-info/blob/57400da095e944c75e63154b1c187e18a3ac3359/k3-com260-fedora-howto/scripts/k3-run-fedora-guest.sh
+
+
+-- 
+Kashyap Chamarthy / Red Hat / RISC-V and Fedora
+
