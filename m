@@ -1,65 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4851732B112;
-	Fri,  2 Oct 2026 10:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8084548AE36;
+	Fri,  2 Oct 2026 11:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790938663; cv=none; b=bsxkH3/xWUVIsAVCJLo3uWErxB/3nuU2iAFULjPCk+S14Je0DbkvEE92vdhj5Ek3CeUlsSc7wOk2nAdb3/JABCpmg0hZRfk8C08UxT7+Zhfh4Sjeq7aZxfZqHigvfT6+/gqzSxv7JJmhjLN77IXqxIvHJOKYY5mMtsAKGFJCwQE=
+	t=1790939782; cv=none; b=NbvC5l/JwtbIaoi1BNilYjJDFRl9K+xynCcEL2hcOjMdFKw0Un3v9ejo/NDriYi4w1R3H5rB4WX5/2djHwegint4A1/mL4k7Wdk4AKtY/yGg/cI0voeprbiU+nkhSQK278Gj6sRjN7AvZxgOv+zvuzYRb9z1/hTRilIi2eBQvwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790938663; c=relaxed/simple;
-	bh=+skM5yR5HF6KLsxPmRb/+Y7o5CPDCAqbX49Q1i3pFm0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BAcX98Oq4UYqvAmCr3C81nwbvkYz+7wkiNX8qWn0Gyo76Ej+C3y93Yy0/5Edfib5WM+RWntQNY8M7+uFFEKrlpkbq3xhkSJg29yUc6ywSMdM3jGl6ZbfMujh6+EM39DJwirthxDElYCWFVYmO8K+IcT3e64vqgwx0uDVEX0QdsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TpAe+mkU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790939782; c=relaxed/simple;
+	bh=/Ii96rEFAHsGptP6buoHkN/GhKXzIJhG4MPWS5eECIk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PUYjbsdaQNB1F6owBYa7kDNCwLEbUBBID3zZoR/bBGcesnJ1GjHDtNKBh198EHPQ6jZQniCsvs6yJc6qnps4OKLRowYxFhtbjXj2VMGdosX+0JwvlhHb76h0iJ31HZaTabusTfJh9jpr4AZhD6GdFqurQfLmu/+GkcV8CYtA90g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXlrr7Qq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TpAe+mkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A651F00893;
-	Fri,  2 Oct 2026 10:57:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXlrr7Qq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADEB01F000FF;
+	Fri,  2 Oct 2026 11:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790938658;
-	bh=SHg91Ksqvf3Cvh/KCCXM4k6wGGlpfxIC6AG7VPfG8g0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=TpAe+mkUIGkt8kLdcOzTU1emWa8UkRZC+zN4io2XOMLrBgeXrNNObzCGWxRuR08lY
-	 JpFs0X0Vcrb+8XCcPbBHxVB5u59Mk9TF2EYKOFvQRSMEgf7cbl1qsPpipw5OnUJCiP
-	 nZsu5/4zByRyx+XyG7jhgdOME26GynOHiDoGyM2NqTkBBWqpHmPgpEJA94JOWF3CrN
-	 PsaseARK/tM70lfG3Ph80rwWnodetTLVi4WgZ26AQO3y9YmfD08Ldq6YrP4CUpGKnC
-	 u/Z9HwIHiuPWpcHAbcp2BnSAYoJa483gk7TY+4hHI9Oe3jlMS5zH6Ra3+18C8/bTvZ
-	 ZFzh9F7TvFXow==
-Date: Fri, 2 Oct 2026 10:57:34 +0000
+	s=k20260515; t=1790939781;
+	bh=o+qDQz6MDbJgHtGmVbS+vsSr5mB3oq9KHjE3DmnGWHc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=cXlrr7QqrjDb82E1XQgj0WUDa/HVphwP+xT92QAHp9/1u9QZ8wQzyR2mLXWjE9J2A
+	 P7zKmcx360P4zlk1oFXcJDp+7BgHhcRXUseeXsgP7lODfzvF0PXR0OFXKQKjiIwWYw
+	 I2Bf5PwpHQdKEOapCdY2ImNSLKbvik3zDtCmU9RfxGnc5Yg7wrNO7xUWu7Ty4sY9Ye
+	 b5QqQVrCmnLnSTUCSxaBaIw6DwneUyaabU7XP8HcuUdzBJR4N9L0ruQ2a48nRYu2an
+	 oud9KEeUrI/WV4GSZr4sBVKrYlNA9egeesAiKQIMI6mXVuKm8LjW3UWAjJ0Y8pQgCc
+	 eflkUPJGiVnAw==
 From: Yixun Lan <dlan@kernel.org>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-kernel@vger.kernel.org, Paul Walmsley <pjw@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	"open list:RISC-V ARCHITECTURE:Keyword:riscv" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support:Keyword:spacemit" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v5 0/5] Enable Bluetooth and WiFi on K3 Pico ITX
-Message-ID: <20261002105734-GKE51329@kernel.org>
-References: <20260928205012.3689405-1-aurelien@aurel32.net>
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Hendrik Hamerlinck <hendrik.hamerlinck@hammernet.be>,
+	Jennifer Berringer <jberring@redhat.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Vincent Legoll <legoll@online.fr>
+Subject: Re: [PATCH v2] riscv: dts: spacemit: set console baud rate on OrangePi RV2
+Date: Fri,  2 Oct 2026 11:16:14 +0000
+Message-ID: <179093968156.1235108.5825486456769564907.b4-ty@b4>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20260929120227.1791356-1-jberring@redhat.com>
+References: <20260929120227.1791356-1-jberring@redhat.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260928205012.3689405-1-aurelien@aurel32.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Aurelien, 
 
-On 22:49 Mon 28 Sep     , Aurelien Jarno wrote:
-> This patchset enables Bluetooth through USB on the K3 Pico ITX board and
-> adds the rfkill nodes for Bluetooth and WLAN so that the devices can be
-> activated.
-> 
-> Note that WLAN support (patch 4) is only useful with the following
-> patchset, but they can be applied independently:
-I will just take this patch, as it doesn't cause any trouble
+On Tue, 29 Sep 2026 08:02:27 -0400, Jennifer Berringer wrote:
+> Set the baud rate to 115200, matching what is used by U-Boot on this
+> platform so that the console is usable even when console options are not
+> specified in cmdline.
 
-For the series
-Reviewed-by: Yixun Lan <dlan@kernel.org>
+Applied, thanks!
 
+[1/1] riscv: dts: spacemit: set console baud rate on OrangePi RV2
+      https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/commit/?id=789eed2d8bfa83d79e24d185f736b038a121b3ce
+
+Best regards,
 -- 
-Yixun Lan (dlan)
+Yixun Lan <dlan@kernel.org>
