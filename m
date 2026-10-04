@@ -1,74 +1,155 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E3343F0AD;
-	Sat,  3 Oct 2026 15:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE447243956;
+	Sun,  4 Oct 2026 04:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791041131; cv=none; b=PNg4m728BTOgyP3In8iNjXKkU/6JXhA590doMngsbBKu1qjbbDNQFswPjnaCQEu4ZhzVG+QjpKU3DkmO17Pn3DQNA74l5KZrCnQJobGiKO57Y4DXMSHkeVX2lgE0mLLQLFnZCC2JndF1v4s0Kh/RqAvWeB1oDopYq+DA+yJ59PQ=
+	t=1791086803; cv=none; b=mOBOJi+rerDEnRUSZahkQbYKVUzIe8yQDdQeD5Os+OVv7kkP0NehqMbaqoT7K4tnwm6+sgfIC/CfW7XcGXsgEFeQ7xFJMqyPEgowJcCjm9Z7cdT533OwBoikNWxckYWnNqef8YvAwnaxu45LqZZvtALvGv3LBvL/m+F1kZ5Gjl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791041131; c=relaxed/simple;
-	bh=NNgaJ7vsbHvoERnixzfbTX3u9cJ5tCZySHe//qdTQUI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=aYuy/wQGVnFoaTfAMKulVg7Q5JSW8VBT4c8EJz5PcKDkvM4fBjsQmt4mlTs7LcSRXslhy/5T02VaHVMDdFu659Y7a2GnSSv2OzCZNvnw6m8lYJApONzLbnxzm1SDRj2Wxa1vR2eaAnZ9ior/oGOtvr52X/RNtEBXWB/zaatC1yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cDCh1URW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791086803; c=relaxed/simple;
+	bh=qEWX5foLONyTr/CRHePAam0TjxmK7K3nfdvKcBOddzI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LhPo2QRQyRgBgbEFZ/ATHJPiVXSkmqFvxO6ulGxOb+BkoEY/PBanbo1ctzca8wOljwfykD2CEmFDDO8F/OSwjw1GOeQg/TQfS62GAb6STOwuZepP+mBdK20s+zVRgK4PGG+7mjEBw2AwCGQFK/0+M3zRVkGOK9EUmw3om7W1kZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHecPX0E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cDCh1URW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8F71F0089C;
-	Sat,  3 Oct 2026 15:25:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHecPX0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751971F0089B;
+	Sun,  4 Oct 2026 04:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791041130;
-	bh=q643Wt6fe0ntTTDTKOYlrl8Wj5XitvlnnZ6YOFvEOnc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=cDCh1URWwts0elrdZ20jLCn18/umO4ONLw1oxNhmmHlvCzhYp0Pm/trdDFICN1PPD
-	 UcefMWA7kmVyHMwYWG+lFZdswmpHbkDmSdw4dXNEXosj7Lpbzf9Za1ajBgcLCRw/8v
-	 WSD5BoLsDVWB+qGTEXu2Bg44C1J4YQUfoVPVitITBx9VWCVVfPNHfbnzzCxex1rV+u
-	 MyzBF2kRhy9OgYo75V/sQyrKrG5DJmCNwCV17dPSbhYAHZGf63dbU0oC8rAiqMXtYa
-	 KW7eugMboXNw4X7gLeqK9pKigM1Tf+oEIqODYsLK4++kHMy/0x09+whxbqIzRXQYYk
-	 bR0+NNfswjUIw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Bruno Banelli <bbanelli@gmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Yixun Lan <dlan@kernel.org>, 
- Ze Huang <huang.ze@linux.dev>, Alex Elder <elder@riscstar.com>, 
- linux-phy@lists.infradead.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-In-Reply-To: <20260825065007.69353-1-bbanelli@gmail.com>
-References: <20260825065007.69353-1-bbanelli@gmail.com>
-Subject: Re: [PATCH v2 0/2] phy: spacemit: fix and enable the K1 USB 2.0
- PHY
-Message-Id: <179104112791.223537.13672084423793291489.b4-ty@kernel.org>
-Date: Sat, 03 Oct 2026 17:25:27 +0200
+	s=k20260515; t=1791086801;
+	bh=kTfqoUPkpF0Jsz7kz1OsV9jjmOlrDadquE/qG7YQXMI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=iHecPX0EXhWkfAX48ITNY+2H07phkFbZ6oddvuyy/3nzSDGqdf0fo4l09jCpc//Ds
+	 DO7rJw4F1iFnVQLwMRahxRKMIFXe3im4TuXj6Mg3K2B6QHP80Ts2OfNYA1wjrHYEM9
+	 03hkAUI7G7is9TkcI6gIMqe7HSRY5N6Zb9CX47uWGQ/TiaoLw1O9Hc3s+XT/2dHrcy
+	 ie9Diayqg49kplNTxhxWLhZZJIlzkgwOBXezBhSVMwLmjR6VoRVItBOz/dSVdNnt8j
+	 zB8MaDUqCHZs/eya/rz6HfyQkKDsVYp/3l5qIp8YjfBL+vW7lGYte+Y6GyqcXEYv4k
+	 Auyb/2f6UBS/g==
+Date: Sun, 4 Oct 2026 11:46:44 +0800
+From: Jisheng Zhang <jszhang@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.dev>
+Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH v4] riscv: disable local interrupts and stop other CPUs
+ before reboot/shutdown
+Message-ID: <asHMJEELrCjSY-yC@xhacker>
+References: <20260907-v7-0-rc1-rv-dis-int-before-restart-v4-1-42bb460c4afe@linux.dev>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260907-v7-0-rc1-rv-dis-int-before-restart-v4-1-42bb460c4afe@linux.dev>
 
-
-On Tue, 25 Aug 2026 08:50:05 +0200, Bruno Banelli wrote:
-> v1 was a single patch adding "default ARCH_SPACEMIT" to
-> PHY_SPACEMIT_K1_USB2.  Automated review pointed out two pre-existing
-> Kconfig problems in the same entry, and that change makes them easier
-> to hit: enabling the symbol by default means configurations that would
-> previously have left it off will now build the driver.
+On Mon, Sep 07, 2026 at 10:30:24AM +0800, Troy Mitchell wrote:
+> Currently, the RISC-V implementation of machine_restart(), machine_halt(),
+> and machine_power_off() invokes the kernel teardown chains (e.g.,
+> do_kernel_restart()) with local interrupts enabled and other CPUs still
+> running.
 > 
-> So fix the dependencies first, then enable it by default.
+> This implementation fails to provide a deterministic execution environment
+> for registered handlers in the restart or power-off notifier chains. These
+> chains are intended to be executed in a strict atomic and single-threaded
+> context.
 > 
-> [...]
+> Specifically, under CONFIG_PREEMPT_RCU, rcu_read_lock() does not increment
+> the preempt_count. If local interrupts remain enabled, the environment
+> is not guaranteed to be atomic. This can lead to a context misidentification
+> within generic kernel teardown code, causing it to incorrectly enter
+> non-atomic paths (such as attempting to acquire sleeping locks), which
+> results in fatal "scheduling while atomic" splats or system hangs.
+> 
+> Additionally, stopping other CPUs ensures the primary CPU has exclusive
+> access to the hardware state during the final teardown phase, preventing
+> unpredictable interference from other active cores.
+> 
+> Align RISC-V with other major architectures by disabling local interrupts
+> and stopping other CPUs at the beginning of the shutdown sequences. This
+> guarantees the architectural expectations of the kernel's restart and
+> power-off handlers are met.
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Tested-by: Anand Moon <linux.amoon@gmail.com>
 
-Applied, thanks!
+Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
 
-[1/2] phy: spacemit: fix K1 USB 2.0 PHY Kconfig dependencies
-      commit: 882af55e42a4cd5bd61db0244c0b78941884518a
-[2/2] phy: spacemit: enable K1 USB 2.0 PHY by default on ARCH_SPACEMIT
-      commit: 392101240b22256105da3b5af6348d1889c63112
-
-Best regards,
--- 
-~Vinod
-
-
+> ---
+> Changes in v4:
+> - Rebase onto v7.3-rc1.
+> - Link to v3: https://lore.kernel.org/r/20260330-v7-0-rc1-rv-dis-int-before-restart-v3-1-5a0577fcd136@linux.spacemit.com
+> 
+> Changes in v3:
+> - add Aurelien's tag
+> - Link to v2: https://lore.kernel.org/all/20260317-v7-0-rc1-rv-dis-int-before-restart-v2-1-0ecc85fbb7ff@linux.dev/
+> 
+> Changes in v2:
+> - expand the fix to cover machine_halt() and machine_power_off() for
+>   architectural consistency.
+> - update commit message
+> - Link to v1: https://lore.kernel.org/r/20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev
+> ---
+>  arch/riscv/kernel/reset.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/riscv/kernel/reset.c b/arch/riscv/kernel/reset.c
+> index 14eb08a6db85..ec84e3c94a3a 100644
+> --- a/arch/riscv/kernel/reset.c
+> +++ b/arch/riscv/kernel/reset.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/efi.h>
+>  #include <linux/reboot.h>
+>  #include <linux/pm.h>
+> +#include <linux/smp.h>
+>  
+>  static void __noreturn default_power_off(void)
+>  {
+> @@ -18,6 +19,9 @@ EXPORT_SYMBOL(pm_power_off);
+>  
+>  void machine_restart(char *cmd)
+>  {
+> +	local_irq_disable();
+> +	smp_send_stop();
+> +
+>  	/*
+>  	 * UpdateCapsule() depends on the system being reset via ResetSystem().
+>  	 */
+> @@ -30,12 +34,18 @@ void machine_restart(char *cmd)
+>  
+>  void machine_halt(void)
+>  {
+> +	local_irq_disable();
+> +	smp_send_stop();
+> +
+>  	do_kernel_power_off();
+>  	default_power_off();
+>  }
+>  
+>  void machine_power_off(void)
+>  {
+> +	local_irq_disable();
+> +	smp_send_stop();
+> +
+>  	do_kernel_power_off();
+>  	default_power_off();
+>  }
+> 
+> ---
+> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+> change-id: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
+> 
+> Best regards,
+> --  
+> Troy Mitchell <troy.mitchell@linux.dev>
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
