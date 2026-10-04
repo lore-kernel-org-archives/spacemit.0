@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE447243956;
-	Sun,  4 Oct 2026 04:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1BA3921CD;
+	Sun,  4 Oct 2026 13:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791086803; cv=none; b=mOBOJi+rerDEnRUSZahkQbYKVUzIe8yQDdQeD5Os+OVv7kkP0NehqMbaqoT7K4tnwm6+sgfIC/CfW7XcGXsgEFeQ7xFJMqyPEgowJcCjm9Z7cdT533OwBoikNWxckYWnNqef8YvAwnaxu45LqZZvtALvGv3LBvL/m+F1kZ5Gjl0=
+	t=1791121623; cv=none; b=HSFTG8nWQ9PquwwsBqORVVZB7py4vADBIYRi/hItpGoyQC/JUwtyMB3o+hzEBldbdZRv++5dN1nxKcFsP9xhN94Vrk2n1/teg2SNsyXpQ6wXok+8+BsjJp7OSMbEToPcmLGoRbDqlUL390U27nfMPnxrNyhW0aeOchh9985U1O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791086803; c=relaxed/simple;
-	bh=qEWX5foLONyTr/CRHePAam0TjxmK7K3nfdvKcBOddzI=;
+	s=arc-20240116; t=1791121623; c=relaxed/simple;
+	bh=goAz44AdPNm4n6S6aHSSoTQPQGJYpi0Gy8CR9FEka08=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LhPo2QRQyRgBgbEFZ/ATHJPiVXSkmqFvxO6ulGxOb+BkoEY/PBanbo1ctzca8wOljwfykD2CEmFDDO8F/OSwjw1GOeQg/TQfS62GAb6STOwuZepP+mBdK20s+zVRgK4PGG+7mjEBw2AwCGQFK/0+M3zRVkGOK9EUmw3om7W1kZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iHecPX0E; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=NDXZ9rybZNIqH+LYAJCUcpea07qF/kkoOuhlZAGPAr2bDPPBGIUcwBRA2qS0IVYq/ZZKQNg3AAUtx3oCNao2EXjDe30a3Z/Nk1o9CS5CsXljb9t6Tx+mNxoB3vlHP5Hv4PayecgGyOXJyXjQ8+RL7XDqwbbXtgrIMEamRqMt0uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ga1cjuC4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iHecPX0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751971F0089B;
-	Sun,  4 Oct 2026 04:06:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ga1cjuC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5861F000FF;
+	Sun,  4 Oct 2026 13:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791086801;
-	bh=kTfqoUPkpF0Jsz7kz1OsV9jjmOlrDadquE/qG7YQXMI=;
+	s=k20260515; t=1791121622;
+	bh=wjQUJehNv7x6Ld+SZmB+IotKGd3LDi+sKb1y5LRwM1s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=iHecPX0EXhWkfAX48ITNY+2H07phkFbZ6oddvuyy/3nzSDGqdf0fo4l09jCpc//Ds
-	 DO7rJw4F1iFnVQLwMRahxRKMIFXe3im4TuXj6Mg3K2B6QHP80Ts2OfNYA1wjrHYEM9
-	 03hkAUI7G7is9TkcI6gIMqe7HSRY5N6Zb9CX47uWGQ/TiaoLw1O9Hc3s+XT/2dHrcy
-	 ie9Diayqg49kplNTxhxWLhZZJIlzkgwOBXezBhSVMwLmjR6VoRVItBOz/dSVdNnt8j
-	 zB8MaDUqCHZs/eya/rz6HfyQkKDsVYp/3l5qIp8YjfBL+vW7lGYte+Y6GyqcXEYv4k
-	 Auyb/2f6UBS/g==
-Date: Sun, 4 Oct 2026 11:46:44 +0800
-From: Jisheng Zhang <jszhang@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.dev>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	b=ga1cjuC4+1ZZi/OrlQCwWxWKpt+32ez03wp++NxitjZ9yXOJcEnE8ZPnXPzI5eQLv
+	 2b8xtO6ihMDSElUJjnZ76hjZMXKqs1qUQPGX7bvGfJBPIeQnYqYJ0W58/Y8TOvhkSU
+	 CsnYHhi6NTJ65XZnM7cyJt5g6dmPWGeJZpnn/+ZOi9PklExuwd2lGCLBRjsKLyJcLp
+	 f8wlyN/fkbfRPC5DrIdvmkLNGG/3IkUvrfvqm7hxSMkD/I5qZMqCmK8x69bVNfEJp/
+	 1IWl9Q/BQJ1K6ZyX/JAmb382vCCqqvI6tjdh5CtTyiXg91JjHOnQ/APZK2RLxh4EEA
+	 W0Ho3gfGjmbsQ==
+Date: Sun, 4 Oct 2026 13:47:00 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Aurelien Jarno <aurelien@aurel32.net>
-Subject: Re: [PATCH v4] riscv: disable local interrupts and stop other CPUs
- before reboot/shutdown
-Message-ID: <asHMJEELrCjSY-yC@xhacker>
-References: <20260907-v7-0-rc1-rv-dis-int-before-restart-v4-1-42bb460c4afe@linux.dev>
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH 2/3] pmdomain: spacemit: Add power domain driver
+Message-ID: <20261004134700-GKA83703@kernel.org>
+References: <20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org>
+ <20260918-04-k3-pm-support-v1-2-0acd2b36b96f@kernel.org>
+ <CABdCQ=OUTASG8JDBqnJAPJ5aTDUC-BQzCVcw0r=cxrb8CPUO2A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -45,111 +49,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260907-v7-0-rc1-rv-dis-int-before-restart-v4-1-42bb460c4afe@linux.dev>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABdCQ=OUTASG8JDBqnJAPJ5aTDUC-BQzCVcw0r=cxrb8CPUO2A@mail.gmail.com>
 
-On Mon, Sep 07, 2026 at 10:30:24AM +0800, Troy Mitchell wrote:
-> Currently, the RISC-V implementation of machine_restart(), machine_halt(),
-> and machine_power_off() invokes the kernel teardown chains (e.g.,
-> do_kernel_restart()) with local interrupts enabled and other CPUs still
-> running.
-> 
-> This implementation fails to provide a deterministic execution environment
-> for registered handlers in the restart or power-off notifier chains. These
-> chains are intended to be executed in a strict atomic and single-threaded
-> context.
-> 
-> Specifically, under CONFIG_PREEMPT_RCU, rcu_read_lock() does not increment
-> the preempt_count. If local interrupts remain enabled, the environment
-> is not guaranteed to be atomic. This can lead to a context misidentification
-> within generic kernel teardown code, causing it to incorrectly enter
-> non-atomic paths (such as attempting to acquire sleeping locks), which
-> results in fatal "scheduling while atomic" splats or system hangs.
-> 
-> Additionally, stopping other CPUs ensures the primary CPU has exclusive
-> access to the hardware state during the final teardown phase, preventing
-> unpredictable interference from other active cores.
-> 
-> Align RISC-V with other major architectures by disabling local interrupts
-> and stopping other CPUs at the beginning of the shutdown sequences. This
-> guarantees the architectural expectations of the kernel's restart and
-> power-off handlers are met.
-> 
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-> Tested-by: Anand Moon <linux.amoon@gmail.com>
+Hi Iker Pedrosa,
 
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
+On 20:54 Fri 02 Oct     , Iker Pedrosa wrote:
+> El vie, 18 sept 2026 a las 7:49, Yixun Lan (<dlan@kernel.org>) escribió:
+> > [...]
+> > diff --git a/drivers/pmdomain/spacemit/pm_domains.c b/drivers/pmdomain/spacemit/pm_domains.c
+> > new file mode 100644
+> > index 000000000000..d563e4e4e232
+> > --- /dev/null
+> > +++ b/drivers/pmdomain/spacemit/pm_domains.c
+> > [...]
+> > +static struct spacemit_pmu *gpmu;
+> 
+> Would it make sense to embed the 'struct spacemit_pmu' pointer directly into
+> 'struct spacemit_pm_domain'? Other generic Power Domain drivers (Rockchip,
+> QCOM, Renesas) use this pattern to keep domain callbacks self-contained and
+> ready for multi-instance SoCs
+> 
+> > [...]
+> > +static int spacemit_pd_power_on(struct generic_pm_domain *domain)
+> > +{
+> > [...]
+> > + regmap_read(gpmu->regmap, APMU_POWER_STATUS_REG, &val);
+> 
+> Please check the return value of regmap_read()
+> 
+It's not necessary, or it's not really useful to check return value here,
+regmap_read() shouldn't fail here, it generally access the io memory
 
-> ---
-> Changes in v4:
-> - Rebase onto v7.3-rc1.
-> - Link to v3: https://lore.kernel.org/r/20260330-v7-0-rc1-rv-dis-int-before-restart-v3-1-5a0577fcd136@linux.spacemit.com
+> > [...]
+> > + if (ret < 0) {
+> > + dev_err(&domain->dev, "power-off domain: %d, error\n", spd->pm_index);
 > 
-> Changes in v3:
-> - add Aurelien's tag
-> - Link to v2: https://lore.kernel.org/all/20260317-v7-0-rc1-rv-dis-int-before-restart-v2-1-0ecc85fbb7ff@linux.dev/
+> Typo: should this say "power-on domain" since this is inside
+> spacemit_pd_power_on()?
 > 
-> Changes in v2:
-> - expand the fix to cover machine_halt() and machine_power_off() for
->   architectural consistency.
-> - update commit message
-> - Link to v1: https://lore.kernel.org/r/20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev
-> ---
->  arch/riscv/kernel/reset.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+will drop this logic, I just followed vendor driver which try to force power
+off donmain before doing the power on operation if it's already in 'on' state..
+
+while found it's not really necessary to do this during actual testing
+
+> > [...]
+> > +static bool spacemit_pm_get_state(struct spacemit_pmu *pmu,
+> > +  struct spacemit_pm_domain *pd)
+> > +{
+> > + const struct spacemit_pm_domain_param *p = pd->param;
+> > + u32 reg, bit;
+> > +
+> > + regmap_read(pmu->regmap, APMU_POWER_STATUS_REG, &reg);
 > 
-> diff --git a/arch/riscv/kernel/reset.c b/arch/riscv/kernel/reset.c
-> index 14eb08a6db85..ec84e3c94a3a 100644
-> --- a/arch/riscv/kernel/reset.c
-> +++ b/arch/riscv/kernel/reset.c
-> @@ -6,6 +6,7 @@
->  #include <linux/efi.h>
->  #include <linux/reboot.h>
->  #include <linux/pm.h>
-> +#include <linux/smp.h>
->  
->  static void __noreturn default_power_off(void)
->  {
-> @@ -18,6 +19,9 @@ EXPORT_SYMBOL(pm_power_off);
->  
->  void machine_restart(char *cmd)
->  {
-> +	local_irq_disable();
-> +	smp_send_stop();
-> +
->  	/*
->  	 * UpdateCapsule() depends on the system being reset via ResetSystem().
->  	 */
-> @@ -30,12 +34,18 @@ void machine_restart(char *cmd)
->  
->  void machine_halt(void)
->  {
-> +	local_irq_disable();
-> +	smp_send_stop();
-> +
->  	do_kernel_power_off();
->  	default_power_off();
->  }
->  
->  void machine_power_off(void)
->  {
-> +	local_irq_disable();
-> +	smp_send_stop();
-> +
->  	do_kernel_power_off();
->  	default_power_off();
->  }
+> Please check the return value here as well
 > 
-> ---
-> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
-> change-id: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
+I don't think the check is useful, in rare case it should fail
+
+> > + bit = p->use_hw ? BIT(pd->param->bit_hw_pwr_stat) :
+> > +  BIT(pd->param->bit_pwr_stat);
 > 
-> Best regards,
-> --  
-> Troy Mitchell <troy.mitchell@linux.dev>
-> 
-> 
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+> Since 'p' is initialized to 'pd->param' above, you can use 'p->bit_hw_pwr_stat'
+> and 'p->bit_pwr_stat' directly here
+Yes, will do
+
+-- 
+Yixun Lan (dlan)
