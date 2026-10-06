@@ -1,62 +1,127 @@
-Received: from mail-43101.protonmail.ch (mail-43101.protonmail.ch [185.70.43.101])
+Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6F04D598E
-	for <spacemit@lists.linux.dev>; Mon,  5 Oct 2026 19:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD713CA4A3
+	for <spacemit@lists.linux.dev>; Tue,  6 Oct 2026 10:00:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791227868; cv=none; b=qR6caaxl5J6Es89lPTfzViP8hs9cyEpIa2OCGuCSoL4ARMu2cCl96NJJ7QHr4O6rodUdDxdzmBCoUvf6dBG3oM+WX8QLq1YH3da1ghRIioq1UIL8AFHYfjaYBTRFKsxIZaQuopRX+0ftHZRCYOSN/znXfGZqKstVIyLLMg9IIS8=
+	t=1791280813; cv=none; b=g0bGQbyffcDwMe4EzIRevVZXeXNuzocjS6/OybvVXqFon2hhlsjvYO2J9YwrYjt8v4I0V8KeHhtntl59iXMHPRVVMvtAzBIdnwJVwBFNhvGdsarnsGf4ydtQIqo0VB87vb6asebdpD0wyLl0cvDTYIMW1tBD+4X5r1VlvBku8vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791227868; c=relaxed/simple;
-	bh=4Ylbigh25Bijwv0+byEkwmrmawWZR/8frJ50sLV/Ckw=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=fuspcNXXdb7ByWRWjTB7TjGWzhQME89BRiAx5H+Ob4hSexTajDlfUcag5nwqvXawlQ8T5jPrltPsKywB0ZuxXhLq4no+Ve5kjADbnNYcT1adU7hi07ZBQMMrgrnoFm1kYBWGlZFct0hGJBAv3CbkJm4NkzS9PVIXaXQBb7PnrGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=QE62kwqx; arc=none smtp.client-ip=185.70.43.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="QE62kwqx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1791227862; x=1791487062;
-	bh=wOz4DnzfmU/HYeLrl7a2IRmweJrrBl1OmC1LGZrrjZs=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=QE62kwqxNngB2nu75/HOXZHsbCBxgdabif4Wml3MVLg7YmLONQMHZgFtMQoa8pFF0
-	 PZXP3KzvdbpzCUiqDFHfDt0K5t4L6A0wtSAfYMH/UtmVMc0Gc7oKKyFjnA8RE8YACm
-	 yym9P0PeBCkeyqeuERCUR2eS3wJVanv3JREL3/eKly5f3XQbsc8fCaOb+3oMdck28r
-	 dIT74zv8RosqCFQn9VmwukuXwcA6UuBjFTCS2wjhzsROEikLlXc8DDIk22EklVG8Ey
-	 wZUjFnO4fveu+SSJA9JBx1rkPV8jupztucamX4e9AVcZ76iscybSC/Avl2Q79bIAz+
-	 vBXQD8jUGubag==
-Date: Mon, 05 Oct 2026 19:17:37 +0000
+	s=arc-20240116; t=1791280813; c=relaxed/simple;
+	bh=EvMamSDRxzu7OuMvdizxprj6S5S2WL34AU5Oxj3sGE4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=J8EPt9nYSyUPt0ojASbo7XfOsBmCbZp7RHu08LiLOAHPIQg9wU2eZtiOA0xSkyHm0y4ZorBCqpgx+ZhK/gztWQDo9STDt3rk/9ElSk2XqeUNIzRD/vOm2PpO5nCbBlNejzt7P4LabMktSmyIpaf7DZbdoUnzERzBTMVR0NBvXJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
+Received: from Vostro-3710.. (unknown [14.220.232.127])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 50126dbdd;
+	Tue, 6 Oct 2026 18:00:05 +0800 (GMT+08:00)
+From: Chukun Pan <amadeus@jmu.edu.cn>
 To: Yixun Lan <dlan@kernel.org>
-From: Dave Klotz <DaveWK225@protonmail.com>
-Cc: u-boot@lists.u-boot-project.org, spacemit@lists.linux.dev, u-boot-spacemit@groups.io, Lukasz Majewski <lukma@denx.de>, Tom Rini <trini@konsulko.com>, Junhui Liu <junhui.liu@pigmoral.tech>
-Subject: Re: [PATCH v2 7/8] reset: spacemit: Extract common K1 reset code
-Message-ID: <20261005T151511-0400.common-reset-tested-by.DaveWK225@protonmail.com>
-Feedback-ID: 100562830:user:proton
-X-Pm-Message-ID: a6be6694cf38154c84d8e0d46eeb1eb921c83e42
+Cc: Rob Herring <robh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	spacemit@lists.linux.dev,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH v2 1/1] riscv: dts: spacemit: set ETH MAC from eeprom for OrangePi
+Date: Tue,  6 Oct 2026 18:00:00 +0800
+Message-Id: <20261006100000.548264-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa110a7f59703a2kunm67906f2632db24
+X-HM-MType: 10
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCT0pNVkkdTh8eGk8dQ08dSlYeHw
+	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKT1VJSUtVSUhJVUpJTFlXWRYaDxIVHRRZQVlPS0hVSktISk
+	5MTlVKS0tVSkJLS1kG
 
-Hi Yixun,
+The EEPROM on the OrangePi R2S and RV2 stores the MAC address.
+Assign it to Ethernet, with ethernet1 having a MAC offset of 1.
 
-On October 2 I tested the K1 reset consumers on OrangePi RV2 and R2S
-using a combined build that included v2 7/8 from k3/for-next at
-f4d1c8807a, together with my unposted OrangePi board support:
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+Changes in v2:
+  Remove Ethernet alias changes.
+---
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 6 +++++-
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-- OrangePi RV2: SDHCI microSD boot, PCIe NVMe link and scan, USB 3
-  stick enumeration, EMAC DHCP/ping, and FreeBSD boot.
-- OrangePi R2S: SDHCI eMMC boot in HS200, USB host start, EMAC
-  DHCP/ping, and FreeBSD boot. PCIe was not exercised by U-Boot on
-  this board.
-
-These are historical K1 regression results from that combined build,
-not a new isolated test of 7/8. K3 hardware paths were not exercised.
-
-Tested-by: Dave Klotz <DaveWK225@protonmail.com>
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+index 7125f2882ce8..78cdef0c7287 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+@@ -66,6 +66,8 @@ &emmc {
+ };
+ 
+ &eth0 {
++	nvmem-cells = <&mac_address 0>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -90,6 +92,8 @@ rgmii0: phy@1 {
+ };
+ 
+ &eth1 {
++	nvmem-cells = <&mac_address 1>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -129,7 +133,7 @@ eeprom@50 {
+ 		nvmem-layout {
+ 			compatible = "onie,tlv-layout";
+ 
+-			mac-address {
++			mac_address: mac-address {
+ 				#nvmem-cell-cells = <1>;
+ 			};
+ 
+diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+index 837616255464..44b81268c802 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+@@ -93,6 +93,8 @@ &emmc {
+ };
+ 
+ &eth0 {
++	nvmem-cells = <&mac_address 0>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii0>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -117,6 +119,8 @@ rgmii0: phy@1 {
+ };
+ 
+ &eth1 {
++	nvmem-cells = <&mac_address 1>;
++	nvmem-cell-names = "mac-address";
+ 	phy-handle = <&rgmii1>;
+ 	phy-mode = "rgmii-id";
+ 	pinctrl-names = "default";
+@@ -156,7 +160,7 @@ eeprom@50 {
+ 		nvmem-layout {
+ 			compatible = "onie,tlv-layout";
+ 
+-			mac-address {
++			mac_address: mac-address {
+ 				#nvmem-cell-cells = <1>;
+ 			};
+ 
+-- 
+2.34.1
 
