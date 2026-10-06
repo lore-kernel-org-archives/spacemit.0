@@ -1,127 +1,72 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD713CA4A3
-	for <spacemit@lists.linux.dev>; Tue,  6 Oct 2026 10:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CC42F84F;
+	Tue,  6 Oct 2026 11:45:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791280813; cv=none; b=g0bGQbyffcDwMe4EzIRevVZXeXNuzocjS6/OybvVXqFon2hhlsjvYO2J9YwrYjt8v4I0V8KeHhtntl59iXMHPRVVMvtAzBIdnwJVwBFNhvGdsarnsGf4ydtQIqo0VB87vb6asebdpD0wyLl0cvDTYIMW1tBD+4X5r1VlvBku8vk=
+	t=1791287151; cv=none; b=G4tEjmlPaGvbeOjZHY8mt7LIoJF/+nWNVMXtSkCMjlDuovobHs023GMNYeWnOTUOOegpiZnsJjCkDnXO6MpJ5+ggpU3jYaUmieRVycU1li89+j7N4gRE9vybAqn9me8lNfEHhScV3xjxDVNHhjEhLKpQGTE/UCcuwdoTQQwlEeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791280813; c=relaxed/simple;
-	bh=EvMamSDRxzu7OuMvdizxprj6S5S2WL34AU5Oxj3sGE4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=J8EPt9nYSyUPt0ojASbo7XfOsBmCbZp7RHu08LiLOAHPIQg9wU2eZtiOA0xSkyHm0y4ZorBCqpgx+ZhK/gztWQDo9STDt3rk/9ElSk2XqeUNIzRD/vOm2PpO5nCbBlNejzt7P4LabMktSmyIpaf7DZbdoUnzERzBTMVR0NBvXJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn; spf=pass smtp.mailfrom=jmu.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jmu.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jmu.edu.cn
-Received: from Vostro-3710.. (unknown [14.220.232.127])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 50126dbdd;
-	Tue, 6 Oct 2026 18:00:05 +0800 (GMT+08:00)
-From: Chukun Pan <amadeus@jmu.edu.cn>
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	s=arc-20240116; t=1791287151; c=relaxed/simple;
+	bh=7XY1Vu2jNjoaRkJvi1niK2qRVCbEy6UUgTYddR9QZgU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mqaq13ItJmaMAboN513T2/WlCRG4EqokWL7qd8PltVrmVMa2IZLJi2AyOzbdLsvflCTyjVuLa6gaWEE2sK4R6XUYxLO14mW0Mr3xE84gobRBxRGwb0SBTwvcyP+bTc3LL9ynSqMSEDprsmMNmCPMpgSOl5M+cI/iGoEGa7Dd/3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h7kDSKvA; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h7kDSKvA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D0F1F000FF;
+	Tue,  6 Oct 2026 11:45:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791287149;
+	bh=AHb+aEEMDegJdLzwVyM5oFwWM9z38LtHJ12r7De4yxQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=h7kDSKvALCG2R70YxmgV1qFZe78g22cHn9sQQEur/eiWJmqB47/9RuoQ2iEmQNssL
+	 DkFOmEGC3zazj0rtHo9cvEGty0ZaXaU7VtmTDT13JKtqyBS//XYMcQMcNePuR/2j/j
+	 R/WPqE9g+zduWIWrsfAqFawskuYwXIJwkSKKInihix7UlbXE7O/lRDUNC6EZuo7FjR
+	 6U0sA2ed20WJFXBQJcrcU1v2jGh8G5FE40QZkUEQvMCsFCytOWKql62jqNcUjuCTUj
+	 ZdF5lAapzfUvssZqTzsKj/whaPo7AZVCDdzhgrfsDeyAFrq/PIRlcjbFBfdsGiyH4f
+	 ZSDSZ1D47fenA==
+Date: Tue, 6 Oct 2026 11:45:47 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Chukun Pan <amadeus@jmu.edu.cn>
+Cc: Rob Herring <robh@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>
-Subject: [PATCH v2 1/1] riscv: dts: spacemit: set ETH MAC from eeprom for OrangePi
-Date: Tue,  6 Oct 2026 18:00:00 +0800
-Message-Id: <20261006100000.548264-1-amadeus@jmu.edu.cn>
-X-Mailer: git-send-email 2.34.1
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, spacemit@lists.linux.dev
+Subject: Re: [PATCH v2 1/1] riscv: dts: spacemit: set ETH MAC from eeprom for
+ OrangePi
+Message-ID: <20261006114547-GKC2079@kernel.org>
+References: <20261006100000.548264-1-amadeus@jmu.edu.cn>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa110a7f59703a2kunm67906f2632db24
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCT0pNVkkdTh8eGk8dQ08dSlYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlKT1VJSUtVSUhJVUpJTFlXWRYaDxIVHRRZQVlPS0hVSktISk
-	5MTlVKS0tVSkJLS1kG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261006100000.548264-1-amadeus@jmu.edu.cn>
 
-The EEPROM on the OrangePi R2S and RV2 stores the MAC address.
-Assign it to Ethernet, with ethernet1 having a MAC offset of 1.
+Hi Chukun,
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
----
-Changes in v2:
-  Remove Ethernet alias changes.
----
- arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 6 +++++-
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 6 +++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+On 18:00 Tue 06 Oct     , Chukun Pan wrote:
+> The EEPROM on the OrangePi R2S and RV2 stores the MAC address.
+> Assign it to Ethernet, with ethernet1 having a MAC offset of 1.
+> 
+> Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> ---
+> Changes in v2:
+>   Remove Ethernet alias changes.
+> ---
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts | 6 +++++-
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts | 6 +++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+> 
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-index 7125f2882ce8..78cdef0c7287 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -66,6 +66,8 @@ &emmc {
- };
- 
- &eth0 {
-+	nvmem-cells = <&mac_address 0>;
-+	nvmem-cell-names = "mac-address";
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
-@@ -90,6 +92,8 @@ rgmii0: phy@1 {
- };
- 
- &eth1 {
-+	nvmem-cells = <&mac_address 1>;
-+	nvmem-cell-names = "mac-address";
- 	phy-handle = <&rgmii1>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
-@@ -129,7 +133,7 @@ eeprom@50 {
- 		nvmem-layout {
- 			compatible = "onie,tlv-layout";
- 
--			mac-address {
-+			mac_address: mac-address {
- 				#nvmem-cell-cells = <1>;
- 			};
- 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index 837616255464..44b81268c802 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -93,6 +93,8 @@ &emmc {
- };
- 
- &eth0 {
-+	nvmem-cells = <&mac_address 0>;
-+	nvmem-cell-names = "mac-address";
- 	phy-handle = <&rgmii0>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
-@@ -117,6 +119,8 @@ rgmii0: phy@1 {
- };
- 
- &eth1 {
-+	nvmem-cells = <&mac_address 1>;
-+	nvmem-cell-names = "mac-address";
- 	phy-handle = <&rgmii1>;
- 	phy-mode = "rgmii-id";
- 	pinctrl-names = "default";
-@@ -156,7 +160,7 @@ eeprom@50 {
- 		nvmem-layout {
- 			compatible = "onie,tlv-layout";
- 
--			mac-address {
-+			mac_address: mac-address {
- 				#nvmem-cell-cells = <1>;
- 			};
- 
+Reviewed-by: Yixun Lan <dlan@kernel.org>
+
 -- 
-2.34.1
-
+Yixun Lan (dlan)
