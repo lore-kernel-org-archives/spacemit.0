@@ -1,90 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8FF4A0EF5;
-	Tue,  6 Oct 2026 15:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1371F46EF98
+	for <spacemit@lists.linux.dev>; Wed,  7 Oct 2026 09:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791301823; cv=none; b=UdXLjv+DBk7R+212ydBCvDOcXKQEa1b8zySLRwF2kFMY16Zn5EysM3dlQLsqKTtSQoPyKIJexHnOFnnipjWmVHz9wLDF3317b8nxEBjZWCrpB8N6rS6vlSRqZ8waHzReaA1LuRSYJBYJh9VMGxZ98EsNuvGfqt1KE+OwNvt3aqM=
+	t=1791365714; cv=none; b=Co7a4n7ykVl7O0paCkhkYV2gY+KEe7fQDjTW79ZiIjmeXTdyRoqgxUhDDuhB1vpyJuYGrrG+haFRu+eQ3RqDvffLlMMtrdhhwFSCPM5bDA97hvcELyQThP2E1CZQjRyL3tzz6d+vijRKbI4k/4kHQ5Q7JlPjE7zA1m4sI2jtLY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791301823; c=relaxed/simple;
-	bh=oJ07hBlzOEWCDMH3PxBzK7Q7WNjpV2k4xBGgOl+sTFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S/UEOwSQEeknJ20tE7Udz5SXUUozdXHzG12/5Fjj5MtSDmllbE5DoTQ9bJIbYGT67ccMO2cpt5CItNhRhQ+sjs9FG6rNBH1kye+UJpfvyrtJQ1IUkW3H6qX9aKKPLVnDuau0MPBoRqb/x1oxEKdl9TukE/Ac615Ilh6Xdqq38xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wn6W2CEm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791365714; c=relaxed/simple;
+	bh=zqA5PvJY1fJQyXB9bHamhsTkPJAzH/6Qx+yMMP48LyI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pykEQnAONFgEXKEhxqXrjAbxaTG+1JUAW9kxFGM10n0gmwxcbsFui9qtEOno9/6S03svSa67gyZx0Bs5JKKH65vjU9e2+GWu16WbgznPVDaZvJRR3hwrmyEIdEqbApkpiFKZO4OkNvW/1EUEzpYdGRDgN983oT9PQXiWFJporO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=g8549FOz; arc=none smtp.client-ip=116.202.128.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wn6W2CEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39061F0089B;
-	Tue,  6 Oct 2026 15:50:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791301808;
-	bh=MlmHww92f1vJW/S4QWSB1ZbKlcGagch0hBEyJ9FR60o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Wn6W2CEmZCc1wmFlg+Vnsz5z3biQCNIJb9RVhkJBf4RvFhE+uWjpdf5k0lorTthIQ
-	 invFXp/KL8IDg+OnlSlRFjV5eyhrb8e+r2lOg17d52DbQRWvfQhZfBV7lqXZmRXKf5
-	 o6w+Hk4T/V78X2waoJ+VyxIBS7VnQkCuJ2iv0mkmnOV7JHUj3vup+cg/ECNdsOS8zT
-	 FGUT0cvciRM2yj5bWY8C+Tz7ICdz0KMlxzy57kwy5vAkzdBMkzHlDBEpjHgk6w7Dqi
-	 au0bqnftLOeUjqX3EOZIQRipBwqWnairTN3neiFfHgzQP1rAbR/ij4K7ZmrmzxdENu
-	 HZpPC88ailUuQ==
-Date: Tue, 6 Oct 2026 10:50:07 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, Paul Walmsley <pjw@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Albert Ou <aou@eecs.berkeley.edu>, Arnd Bergmann <arnd@arndb.de>,
-	Frank Li <Frank.Li@nxp.com>, linux-pci@vger.kernel.org,
-	linux-riscv@lists.infradead.org, Yixun Lan <dlan@kernel.org>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	devicetree@vger.kernel.org,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
-	Yixun Lan <dlan@gentoo.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Longbin Li <looong.bin@gmail.com>,
-	Randolph Lin <randolph@andestech.com>, spacemit@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alex Elder <elder@riscstar.com>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	linux-kernel@vger.kernel.org,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: Re: [PATCH v7 5/6] dt-bindings: PCI: spacemit: Introduce Spacemit K3
- PCIe host controller
-Message-ID: <179130180665.2390774.18094483716506116545.robh@kernel.org>
-References: <20260929083755.458238-1-inochiama@gmail.com>
- <20260929083755.458238-6-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="g8549FOz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1791365656;
+	bh=nx4BSnQh05oo5ZGU1CkIRTp4bDe4NnZqsSUeNy1DZ+Y=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=g8549FOz4DwFj/G9ThXOz3Eoh4c+2V+gx4U6tHZUKUX/yDZxXl+lwSfut3bEeX2iO
+	 HiL1WEHqGcHS5V3gsytQwCjeJS3tE3sqoFWR23S7zePazsbs33dN+ZC6+mYIb6srAC
+	 y5x3TfHkqhBPRonSAi1mK6Od3nfZnntfGtmMwLG8/C2QdkuZdL2NDjde9jSveRhTxT
+	 1E4LI0xeYGrdXyMQUUvbDrgKyM7jiw0XZTWF8rnEageY+8aTfcQLFWbOjNmx2/uNBa
+	 FHlRUYWWly+k3idq+xoZVId3eLx5rMsRPJG2FV3xAwTa2AgVmxdgl3jkbqnt0mE4e8
+	 CYkN+uESqWNew==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id D0176B220CC4;
+	Wed,  7 Oct 2026 11:34:13 +0200 (CEST)
+Message-ID: <0ca9ef8b-67d1-40f2-b4ad-c9b53bce7019@freeshell.de>
+Date: Wed, 7 Oct 2026 02:34:11 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260929083755.458238-6-inochiama@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] spacemit: k3: add clock and reset support
+To: Yixun Lan <dlan@kernel.org>, u-boot@lists.u-boot-project.org
+Cc: spacemit@lists.linux.dev, u-boot-spacemit@groups.io,
+ Lukasz Majewski <lukma@denx.de>, Tom Rini <trini@konsulko.com>,
+ Junhui Liu <junhui.liu@pigmoral.tech>, Raymond Mao
+ <raymond.mao@riscstar.com>, Guodong Xu <guodong.xu@oss.qualcomm.com>,
+ Peng Fan <peng.fan@nxp.com>, Torsten Duwe <duwe@suse.de>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Alexey Charkov <alchark@flipper.net>
+References: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On Tue, 29 Sep 2026 16:37:51 +0800, Inochi Amaoto wrote:
-> Add binding support for the PCIe controller on the SpacemiT K3 SoC.
-> This controller is almost a standard Synopsys DesignWare PCIe IP,
-> with some extra link and reset state control.
+On 9/23/26 02:34, Yixun Lan wrote:
+> This series try to add clock and reset driver support for SpacemiT K3 SoC,
+> the patches are largely based on upstream linux framework.
 > 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> The reset BITs definition lives in the same register with clock
+> controller which make them tight coupled, so I'm also putting reset
+> patches in this series.
+> 
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
 > ---
->  .../bindings/pci/spacemit,k1-pcie-host.yaml   | 55 ++++++++++++++++---
->  1 file changed, 46 insertions(+), 9 deletions(-)
+> Changes in v2:
+> - add complete PLL clock tables
+> - drop patch for SPL
+> - Link to v1: https://patch.msgid.link/20260825-01-k3-clock-reset-support-v1-0-c430253e759c@kernel.org
+> 
+> ---
+> Yixun Lan (8):
+>       clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
+>       clk: spacemit: ccu_mix: add inverted enable gate clock
+>       clk: spacemit: ccu_pll: add plla type clock
+>       clk: spacemit: k3: extract common header
+>       clk: spacemit: k3: add the clock tree
+>       clk: spacemit: k3: add CPU PLL rate tables
+>       reset: spacemit: Extract common K1 reset code
+>       reset: spacemit: Add SpacemiT K3 reset driver
+> 
+>  drivers/clk/spacemit/Kconfig                   |    9 +
+>  drivers/clk/spacemit/Makefile                  |    1 +
+>  drivers/clk/spacemit/clk-k3.c                  | 2049 ++++++++++++++++++++++++
+>  drivers/clk/spacemit/clk_common.h              |    1 +
+>  drivers/clk/spacemit/clk_mix.c                 |    9 +-
+>  drivers/clk/spacemit/clk_mix.h                 |   27 +-
+>  drivers/clk/spacemit/clk_pll.c                 |  124 +-
+>  drivers/clk/spacemit/clk_pll.h                 |   43 +-
+>  drivers/reset/Kconfig                          |    1 +
+>  drivers/reset/Makefile                         |    2 +-
+>  drivers/reset/spacemit/Kconfig                 |   22 +
+>  drivers/reset/spacemit/Makefile                |    4 +-
+>  drivers/reset/spacemit/reset-spacemit-common.c |   93 ++
+>  drivers/reset/spacemit/reset-spacemit-common.h |   40 +
+>  drivers/reset/spacemit/reset-spacemit-k1.c     |  128 +-
+>  drivers/reset/spacemit/reset-spacemit-k3.c     |  242 +++
+>  include/soc/spacemit/k3-reset.h                |   21 +
+>  include/soc/spacemit/k3-syscon.h               |  271 ++++
+>  18 files changed, 2955 insertions(+), 132 deletions(-)
+> ---
+> base-commit: a06e89ab05eaa2b8344d521319399333cd760ae5
+> change-id: 20260824-01-k3-clock-reset-support-815a0045526a
+> 
+> Best regards,
+> --  
+> Yixun Lan <dlan@kernel.org>
 > 
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+For the series,
 
+Acked-by: E Shattow <e@freeshell.de>
