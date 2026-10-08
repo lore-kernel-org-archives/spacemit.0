@@ -1,154 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8AF1A76BB;
-	Thu,  8 Oct 2026 01:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBA4503B;
+	Thu,  8 Oct 2026 02:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791422449; cv=none; b=ZHsWppnvVXKs3OA4C6rjAi3cl8jz1ukbRh8Yx5TAljt21O1OBUmrw8NZ+WP/uCKY/g8nZRZceMmfY+FqCTgZS//kNANGd2Ee7WItvul3YTBcwDuQgtuoYSgf9UoU4oTyJovgORp0gnrtwCfBacvbpBzFbvo3hpyRCbxxAbqzjgs=
+	t=1791427366; cv=none; b=XGeGnaCdjKylTcgjn64nU8sN1ryyBNLO1KyGDR4P1Iv9zUZFpTOZKcq4WezOIdHFcxPgb9X+jag+TBq7v0WdEvRBp49cluWN1WOKDveECMb5kLvvyPO5FzwcG9arYxeT4EiQl6/a/eKTP1YFWTAHIOkTJk+CgpRh17xhZIgy4aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791422449; c=relaxed/simple;
-	bh=CLPOfl3bbRiD5l6fcc46ga7VhcI0uwZ5ljr5joJHmSQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AQvO5soTY/s44Jw4KF0EU9hhonjKErnSjDuZu4XndurgvlSBVl6peG7GNgvPcLMcvmUcsC33zbPq2VEdQ8sOFdNgXLWd75qKTCeqfrq675VnWTUKV4xDIeG0j/I3t1xQ4PdxY1xGSaUett3WUtRW3knHJvrbH96ELl1q0DefNHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0doytP4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791427366; c=relaxed/simple;
+	bh=LYbbeUXjlG54Zr2iWGJR0e9+LV4cubRN6eefRFpkk6Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nUY9YmsJaa4+G4rTfWJkAUfiU/tE5UqQStyayh5mkEH9PulztZvaECAFnnyDS+7zbxHpSYAzpLzqpL+FASncSm2FYHI0Kv2Lu0TWJJd7xBbVX1Qho7ckg3udiUiw9TWjtmXdpZFh60OK/9xSzfDHaBi2kW+CE1jNR/zrBurWGiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnAr6IIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0doytP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6961F000FF;
-	Thu,  8 Oct 2026 01:20:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnAr6IIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A031F000FF;
+	Thu,  8 Oct 2026 02:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791422446;
-	bh=SRa88cNDS8cS4jU92wvDH+YDXSST8V7u1mZXBFhdDVk=;
-	h=From:To:Cc:Subject:Date;
-	b=m0doytP40LLZ4FriMFqm1HtdO0LZMo+7+bougZMLabiZyfioaLVMGzcDBgKp/wsHi
-	 nJya4to7vF6IUI+ZEuKyDK2VUfdp7oGG1e81PtCEoFNATLGdhtHzrYiGuVSH9dfndy
-	 Ptf0S1OtFQr5zrgVjf0rECIFzLXHoqXE/As4gJXXnKe8ZQUE26rQWivNNjEJoFgx+g
-	 Hjf1JCC0dP9m+3SMvCm2XUoqmjY/dzT9q9ySWxyR2xCu1VvOUVi6+/K8y6OgVoRLpN
-	 sRmONQUjn7Q8ex+38j7fb4RyKW3FJrmwgGwCbDTZYYNaDmzsPVET4Z9WXitb0zgaXh
-	 X+8NUW8ExfY2g==
+	s=k20260515; t=1791427365;
+	bh=kqosaf+Q/VJaHyGe9K/rhBnyBgCjwDrSRQ9qYscTxqw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=bnAr6IIChMXbyHpyYVtiHSNmfoTW9Fb89YGeS0tqMybD45ygPPD7jCKU1NBNmC06A
+	 dqYylv8brG0CBaHNWXJeRm0hAPIM6t5wAgkWI+wmlGFp1w1iAM6up22ptvM1SKmOC+
+	 KbXAGEQEhoz6x62LMstG2EwrLR57M1yRwDFQTpMBj0K0jbj/Z8+l9DyAxlnVi4liez
+	 7uC5ESyl7tpp/0K+UktmKATbXammTy3Cqpq9S3YzCqaaJi35R7EsKT0VvMQ7RLo7Zz
+	 1Lh4zKj6rCbbNkevwBdYsg796pLsRg38Az1xRZyqpINIoE3olzVW8Y2/7TFGupLYo2
+	 hFSCSnU6CGO/w==
+Date: Thu, 8 Oct 2026 02:42:42 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: soc@kernel.org
-Cc: Yixun Lan <dlan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [GIT PULL] RISC-V SpacemiT Devicetrees for v7.4
-Date: Thu,  8 Oct 2026 01:20:40 +0000
-Message-ID: <20261008011902-KYC9093695@kernel.org>
-X-Mailer: git-send-email 2.56.0
+To: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: power: spacemit: Add power domain
+ controller
+Message-ID: <20261008024242-GKA2005@kernel.org>
+References: <20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org>
+ <20260918-04-k3-pm-support-v1-1-0acd2b36b96f@kernel.org>
+ <20260928183026.GA211865-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260928183026.GA211865-robh@kernel.org>
 
-Hi SoC Maintainers,
+Hi Rob,
 
-   Please pull SpacemiT's DeviceTree changes for v7.4
+On 13:30 Mon 28 Sep     , Rob Herring wrote:
+> On Fri, Sep 18, 2026 at 02:40:13AM +0000, Yixun Lan wrote:
+> > Add initial power domain driver support for SpacemiT K1/K3 SoC, The Power
+> > Domain Controller is SoC internal module which is part of APMU (Advanced
+> > Power Management Unit), it is responsible for managing power across multi
+> > power domains, which includes power on/off, isolation, power-on sequence.
+> > 
+> > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> > ---
+> >  .../bindings/power/spacemit,power-controller.yaml  | 43 ++++++++++++++++++++++
+> >  include/dt-bindings/power/spacemit,k1-power.h      | 14 +++++++
+> >  include/dt-bindings/power/spacemit,k3-power.h      | 12 ++++++
+> >  3 files changed, 69 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/power/spacemit,power-controller.yaml b/Documentation/devicetree/bindings/power/spacemit,power-controller.yaml
+> > new file mode 100644
+> > index 000000000000..f869285f84da
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/power/spacemit,power-controller.yaml
+> > @@ -0,0 +1,43 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/power/spacemit,power-controller.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: SpacemiT Power Domains Controller
+> > +
+> > +maintainers:
+> > +  - Yixun Lan <dlan@kernel.org>
+> > +
+> > +description: |
+> > +  SpacemiT processors include support for multiple power domains which can be
+> > +  powered on/off by software based on different application scenes to save power.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - spacemit,k1-power-controller
+> > +      - spacemit,k3-power-controller
+> > +
+> > +  '#power-domain-cells':
+> > +    const: 1
+> > +
+> > +  spacemit,apmu:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description:
+> > +      A phandle to APMU syscon to control registers for power domain
+> 
+> Sounds like the APMU should be the power-domain provider directly. You 
+> don't seem to have any other registers for this node.
+> 
+em, you right, I will convert this patch to auxiliary driver which will
+make this dt-binding doc obsolete
 
-Yixun Lan
-
-The following changes since commit cee9395acd8043be0644b25c34bfa86623f2b935:
-
-  Linux 7.3-rc1 (2026-08-30 13:34:40 -0700)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/spacemit/linux.git/ tags/spacemit-dt-for-7.4-1
-
-for you to fetch changes up to d5eefaf546eb83f98206137a5784b6b8510e4fe5:
-
-  Merge branch 'spacemit-misc-for-next' into spacemit-for-next (2026-10-06 11:51:34 +0000)
-
-----------------------------------------------------------------
-RISC-V SpacemiT DT changes for 7.4
-
-For K3 SoC
-- Correct CLINT and ACLINT
-- Add USB nodes info
-- Add cpu scaling
-- Add rfkill node
-- Add i2s info
-- Fix IMSIC
-- Enable thermal and fan control (CTF230)
-
-For K1 SoC
-- Set mac address from eeprom
-- Enable onboard eeprom
-
-MISC Changes:
-- MAINTAINERS updates
-
-----------------------------------------------------------------
-Andre Heider (1):
-      riscv: dts: spacemit: k1-musepi-pro: add cpu scaling
-
-Aurelien Jarno (4):
-      riscv: dts: spacemit: k3: move USB3 phy to board level
-      riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX board
-      riscv: dts: spacemit: k3: add rfkill node for Bluetooth on Pico-ITX board
-      riscv: dts: spacemit: k3: add rfkill node for WLAN on the K3 Pico-ITX board
-
-Chukun Pan (3):
-      riscv: dts: spacemit: sort nodes on OrangePi RV2
-      riscv: dts: spacemit: enable onboard eeprom for OrangePi
-      riscv: dts: spacemit: set ETH MAC from eeprom for OrangePi
-
-GUO Ren (XuanTie) (1):
-      riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
-
-Guodong Xu (1):
-      MAINTAINERS: add entry for SpacemiT reset controller driver
-
-James Morris (1):
-      riscv: dts: spacemit: k3-com260: keep dldo4 enabled
-
-Jennifer Berringer (3):
-      riscv: dts: spacemit: set console baud rate on OrangePi RV2
-      riscv: dts: spacemit: k3-com260-ifx: Add USB nodes
-      riscv: dts: spacemit: k3-com260-ifx: Add rfkill nodes
-
-Jonatan Hazell (1):
-      riscv: dts: spacemit: orangepi-r2s: Add cpu scaling for K1 SoC
-
-Junhui Liu (7):
-      riscv: dts: spacemit: k3: Drop guest properties from M-level IMSIC
-      dt-bindings: timer: thead,c900-aclint-mtimer: Add SpacemiT K3
-      dt-bindings: interrupt-controller: thead,c900-aclint-mswi: Add SpacemiT K3
-      dt-bindings: interrupt-controller: thead,c900-aclint-sswi: Add SpacemiT K3
-      dt-bindings: timer: sifive,clint: Remove spacemit,k3-clint
-      irqchip/aclint-sswi: Add support for SpacemiT K3
-      riscv: dts: spacemit: k3: Replace incorrect CLINT node with ACLINT nodes
-
-Troy Mitchell (4):
-      MAINTAINERS: Add Troy Mitchell as a SpacemiT SoC reviewer
-      riscv: dts: spacemit: Add K3 I2C6 pinctrl state
-      riscv: dts: spacemit: Add CTF2301 on K3 CoM260
-      riscv: dts: spacemit: k3: add i2s0-i2s5 nodes
-
-Vincent Legoll (1):
-      riscv: dts: spacemit: orangepi-rv2: Add cpu scaling for K1 SoC
-
-Yixun Lan (1):
-      Merge branch 'spacemit-misc-for-next' into spacemit-for-next
-
- .../thead,c900-aclint-mswi.yaml                    |   1 +
- .../thead,c900-aclint-sswi.yaml                    |   5 +-
- .../devicetree/bindings/timer/sifive,clint.yaml    |   1 -
- .../bindings/timer/thead,c900-aclint-mtimer.yaml   |   1 +
- MAINTAINERS                                        |   9 +
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts     |  35 +++-
- arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts   |  69 ++++++-
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   | 132 +++++++++---
- arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts     |  77 +++++++
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi        |  18 ++
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |  38 ++++
- arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       |  11 +
- arch/riscv/boot/dts/spacemit/k3.dtsi               | 229 +++++++++++++++++++--
- drivers/irqchip/irq-aclint-sswi.c                  |   1 +
- 14 files changed, 571 insertions(+), 56 deletions(-)
+-- 
+Yixun Lan (dlan)
