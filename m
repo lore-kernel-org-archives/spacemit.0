@@ -1,185 +1,179 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013062.outbound.protection.outlook.com [52.101.72.62])
+Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499F237E5EC
-	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 08:47:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.62
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791535625; cv=fail; b=t2i6LFlFGcPdbF/vGm4Oh6zWfqUdnbwaC52vc+gVu9vsCNknR0c54PuM134EtXEyiFPTicBeV12FxEJmskLjasqo2cB4tIN2IKAZq+l5WA+kaNq5yTEh5QJMFVzCaKG94ojvl1Gx/BfFi8P9pdCG2ojvCklYACcv3GYWaV/1Yzs=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791535625; c=relaxed/simple;
-	bh=iLNNY4aWQL/WAfQkqLppw5Ix8k81+zcdnIlFBVF36Yg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=vAVG4NM4O6FNeCcXLYOZk1usrcL4OTpfYpWvuDHKfFwk+UKz3xDPxNmqsXc42ufzCKXeCXvIO9OHwhdqcjvioL1P/sUNwVYiKAV42ErZUhNl5neIWLCNBQgr5JUnTBe1KVbUqzCKUMP5y9t1pTYDGSw/5FMFRX5IMr7kqjNDV4Q=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Q3P7Ae97; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Q3P7Ae97; arc=fail smtp.client-ip=52.101.72.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EF83128DF
+	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 16:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791563503; cv=pass; b=EhQ/c1UXkzIVaN7yhI67yTO7Ad6mXeKYCYZUoqiJKlSuaCUnaM3/wYC79sWGe73KSazg+oO7uAyYoxGdmz+WimVOc2XZxKtAWGK9eJbs8aNbIxcIXWu3OHrCQ4HuBItUO150R2NAepc8wGBM2+kWdcU2FQmDZ6c3aOU0FqDH4bo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791563503; c=relaxed/simple;
+	bh=Dc3kh8O3/9scyoefyDoS8KF70UKjjjEbXxGRkDUU99g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gdMUNwDHpseRPHNQDsOAEEhTekVaXdvHmSFpIAe4s4FMYjdx6MzbPB1SDsdz6osLR4Md1/3K/mq6X+Rgn8SKlCpvtfZwHaZTU5pjhT1sFdQfe6znHfBQ4M2R8lO1IpGNTlcG2Zzqe1HIqkVbWf5/oPPftdCVR+1yc+op8FlgGQs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=kzTDvnFS; arc=pass smtp.client-ip=165.173.182.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Q3P7Ae97";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Q3P7Ae97"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=sTqZLBmmTpnHxdEUI79rKwXI2hWkg3uP4j3++vseUKa3wm/B1KQOTxekU6/TmfQDaINBqNMxOpyT7Q5MoJNzv+LphwexVQyrjVSyo4G5bPavzpswW82JxIS4CkA4/vGajp62GQfo8S/Ws7UCweuxh+xPhFZpaRSAZNZ4Ov+Ykl52FRCQwkyD0yvx2TrMsdKGjcaNcS3qpvrN9RhyeSgkZlQhhHZ9MnF95L37fxCZWhmDZ6/StyLk6o8oWZiDTpS4npvebhypAE2yqJ85UGnBQBFGekHUP2b13C0NYCirNgQCn+hjX05e42h6F6w2F5fo4EnMf1dFONh0zLHysp8NqQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
- b=UgQR5lGlD+qrIuwm0nCLp5e/PhY3MewiubF7UXzc/xd/ImesPpvQ5YqGYGNU3Ewf/M5YiBYBMFpKpg+gFjiwQIsRgQX1GIEQCnaKYc8b+7tv4oAiqBEcFvhK/lxYbF7Gb1KKP3ATJd3uMFQMFh1OxZhqVCbqmVTCOY6gS+VHQGp6jZQ6QAHbweJSCXBoeq9XjaXYJKNIrVlbGESvu+2jYH9zYFhrnL+KF1xsnE7pokOSt6qIeLk7kketa6+JzDHVTOwK+QJ4xN8B1G9BuxtwFHvKsGYXh5VMfJjhteACvVSpnlauuZ3R7WihZb99MvRSuIgY2FVNwyzsEvg1yLshnQ==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=kernel.org smtp.mailfrom=arm.com; dmarc=pass
- (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
- (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
- b=Q3P7Ae97gdzCbkVvUHiIdbF86tJh7g2Gb6pGaUqmG0cf629ZyWgS3RZ9DEAanaR+mViJaN5qPyk02qPGID7WVcSsdD4pcMZt+mEyTso3Tj+KrfD7wZ+RaRePUOJv8fJm4hm521AzYCQ5NXcwIUbtgOokIzR5r8fdNFDxm9uJt5o=
-Received: from FR0P281CA0156.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:b3::10)
- by DU5PR08MB10399.eurprd08.prod.outlook.com (2603:10a6:10:520::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Fri, 9 Oct
- 2026 08:46:53 +0000
-Received: from ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
- (2603:10a6:d10:b3:cafe::87) by FR0P281CA0156.outlook.office365.com
- (2603:10a6:d10:b3::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Fri, 9
- Oct 2026 08:46:53 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 4.158.2.129) smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- ZR1PEPF0000E6B6.mail.protection.outlook.com (10.167.241.69) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.6
- via Frontend Transport; Fri, 9 Oct 2026 08:46:52 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oej35kHGs8eybLNU1v/AnCiG9Va10/U40qxUSD/6En7BcDLs3GcM4pHv+LvAhwtgwpSTtxk0S6p5Ak1jid4Cap4ExGOkk5QpbY3508BR1qqr5o6OzkVv7F2Zao5Qvf737NO9dEY9+9U8WfjK+YEGkndi9vdfehtv0HesmwJl5ogQcZ2pkndS3bz/nbJoxVzwBFcwegj5sTJy6pMce07mbtlSa6z2cldIBQtKpAE2f62f88qzRxHFwtdN7jbNq/v351nRx9Az89scUdqpRisqKcn2Of42Ka2mC99806nJxJZsluJBWgU424BpkL2rddv903H5eoLm/Swo5nCoD777JA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
- b=lZFlyUP+gpCCDyg5LL2TOXZBcLWxJlvwc3lkkBLL03ayK0lRAJyeQSKdOUFZ4i35FwDNNzp0ZY8yZHGUZ73JSAmC/4iXnF7Zrx3y41DlsM8egun2oj4imAK6WSTktnhcFOoM4K5Lem1k+PztbWof9AFzd3FyBfROyEiyJyW34bbkckayeuNmlvGutl0+LB962sFudRBRqQnmVA+aGhuGm1DlUnTFgn1rKUbgYGXBG8Re2F9+PXGW1LYtP+t7Jxxh9PiFukY/razxlgGvDHzC2FT8uqudS4E3HYttEOM4L/Td5qgblNYUY6EWmQXqgk1f+Tn/PYy2Eb1YQFVsoun+Pw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
- b=Q3P7Ae97gdzCbkVvUHiIdbF86tJh7g2Gb6pGaUqmG0cf629ZyWgS3RZ9DEAanaR+mViJaN5qPyk02qPGID7WVcSsdD4pcMZt+mEyTso3Tj+KrfD7wZ+RaRePUOJv8fJm4hm521AzYCQ5NXcwIUbtgOokIzR5r8fdNFDxm9uJt5o=
-Authentication-Results-Original: mx.microsoft.com 1; dkim=none (message not
- signed) header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
- (2603:10a6:20b:740::16) by VI1PR08MB10104.eurprd08.prod.outlook.com
- (2603:10a6:800:1bc::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.5; Fri, 9 Oct 2026
- 08:46:16 +0000
-Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
- ([fe80::29d7:e9ba:ff69:a0c3]) by AM0PR08MB11733.eurprd08.prod.outlook.com
- ([fe80::29d7:e9ba:ff69:a0c3%6]) with mapi id 15.21.0496.010; Fri, 9 Oct 2026
- 08:46:16 +0000
-Message-ID: <6f065a4f-d71b-445c-b0ab-4061cdeb9c0a@arm.com>
-Date: Fri, 9 Oct 2026 10:46:14 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] net: dwc_eth_qos: spacemit: add support for K3 SoC
-To: Yixun Lan <dlan@kernel.org>
-Cc: Tom Rini <trini@konsulko.com>, Quentin Schulz <quentin.schulz@cherry.de>,
- Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>,
- Julien Stephan <jstephan@baylibre.com>, David Lechner
- <dlechner@baylibre.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
- fanyi zhang <fanyi.zhang@mediatek.com>, spacemit@lists.linux.dev,
- u-boot@lists.u-boot-project.org, nd <nd@arm.com>, E Shattow <e@freeshell.de>
-References: <20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org>
- <20260924-02-k3-ethernet-support-v1-1-b8e1fafc9249@kernel.org>
- <20261009070324-GKF2005@kernel.org>
-Content-Language: en-US
-From: Jerome Forissier <jerome.forissier@arm.com>
-In-Reply-To: <20261009070324-GKF2005@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO6P123CA0020.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:313::8) To AM0PR08MB11733.eurprd08.prod.outlook.com
- (2603:10a6:20b:740::16)
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="kzTDvnFS"
+ARC-Seal: i=1; a=rsa-sha256; t=1791563494; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=blI/M9VYn3hwXWzrIgp47dy6DSjtajhbLZouj5evtVPxd3y9l3vdZMSolt9vAyc56fUS8ZKWFpubYPK8/GawVUpcPb20/EA7JICdEIUyaqy5b+np0fODPas7H94rHNPltVNlYLNMbs6cAfcHbMtYK2Dg8duZb/pwNDJXKri+0o8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1791563494; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=jPg2AhsUuXGeAL2wAk56bcng0ZFl4sCfdPT41d9ques=; 
+	b=co2hkMGCSmAOk2TJ4f8h3y/OLiOJJIj0LcQOeTOksZ8f5LEDyX9itAMsslL+9youuahOAvHpGUAQ2i4YmHVrTheN5EheR/NGXWZATauUiYrqWMSf3OXZRIJxuyyYNUOyybYE4LPwb86YbXt+qupFPJgnHBK9b2hsWNciydQVtqQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791563494;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=jPg2AhsUuXGeAL2wAk56bcng0ZFl4sCfdPT41d9ques=;
+	b=kzTDvnFSGYbQZrcTksNugMK04rP69oIJ3GjGwMkMg4hwblpst9rz8qBgGL8Dm2Vn
+	kwz7q+jj/xc7pqwUEuGYpLt58HrnWM6mld4SvDUio9bahi3zezh4fluOSCebacISxiM
+	Dm1KldhCUoxg4/jpD4WhIBCajS/Ejb7/fEY6ur1c=
+Received: by smtp.zohomail.com with SMTPS id 1791563491939418.3864654210653;
+	Fri, 9 Oct 2026 09:31:31 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v4 0/2] tools: mkimage: add SpacemiT K3 boot image support
+Date: Sat, 10 Oct 2026 00:31:06 +0800
+Message-Id: <20261010-spacemit-aihd-v4-0-e7152ae4d71a@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	AM0PR08MB11733:EE_|VI1PR08MB10104:EE_|ZR1PEPF0000E6B6:EE_|DU5PR08MB10399:EE_
-X-MS-Office365-Filtering-Correlation-Id: a2a44847-8a04-47f4-429c-08df25e1dda9
-x-checkrecipientrouted: true
-NoDisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|23010399003|1800799024|376014|7416014|366016|56012099006|11063799006|4143699003|22082099003|10067099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info-Original:
- 5GFVq4QCkto7zPPhNmcF3roNalrQRfe3A0uBGL/3Rf2icK1zRqAA0+AeiQ4lGPnQ5KwzmamkoFMdoCnVnrjxzSjv9re87cKxrW4YGn4pto4lNb5MF9aA5BRWQ/UKZjj7JsOgjgZlPdH+o6uSp7dPNCiAX9rmOVX/iUn0lQYV0MzJOOwES7k9v04rK45tW1WJFg7OsPjyMvu/0eVbrt91RxmugcbkGkacMn+3hEWpp4cJ6c+F1GShXMvjgIfyltVkY4dyQxbFtYwilrubdtoTo0W9jFkw//qMjaS2IqD0K3ofrFf3b9CtHQ/kiE6lNTFOOqPqOWy17uvK84GiqT/Olu8VRY3aDx4GhnrLNUkDQaIq/26JjmTC9+Yj7zFSctYL0FJWyNLuwWhO6Ihfs99888QTnPhB/6d+hAs6hyaVLgDhlMUW1lq84jL/MRyAcS4G2odPioOGFbO0Ilowz4HbGWhjdc3rKGXCYPiN19VMbpjjEw+QnH6NoN2dpcsgYD5bHDQbRDb/ZoauI1rCWR/5Ov462aZZDGojvNn/sxgPosoFfpXnwxDXSYzWSIV5mXuGeTyJPjxTX7cQMaKrCjZ7rQ1IEaj9qP9yBhJZ6ohPaonjD7JJNmuAZiwSg4oAxhk9csMP/ZhJw8lltgNCRpbTTgsKBkuER6JUYxUS8DCZX7g=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR08MB11733.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(7416014)(366016)(56012099006)(11063799006)(4143699003)(22082099003)(10067099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-X-Exchange-RoutingPolicyChecked:
- qkCQZ86Ta7x1A06vsrfTfwKOO32DKa+6c7s1dYBfXtv45XoS2cXp0AcERqlKPNmk9wraatbzhgTu2sf9Hq3LUZoGzDDTUxVBqIamYKML0cZ/Y4WFY6riEhGQbGa4H5LRpkgj4ssoXh3uMSrIJF1Y9aAxZrQJN8P2bR5SuiH+3kkT+tYXh8pEPpg6rLFNLez6V6rXY/ys18cK0tYHxd3e5NXyY32UrWxVd7x8adTVPh/oyDjrqmTNuCWF9CljmdRgi1Wo6OLe67SevFEup8BoOs01cIeFIFvGwl9l3x18WVFMlYa/xyQtk75g8uuA+odYCMhFJVz3X2/y3bCcC0bcLw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB10104
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	4c9e8817-b2df-4566-9845-08df25e1c7f2
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|14060799003|1800799024|82310400026|376014|7416014|35042699022|36860700016|10067099003|56012099006|4143699003|6133799003|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	ksTOnEQ2YoZCVvmBpNez+H7U3LUMiEtN0s1lbQxzgvsX5iUSIjJFcLSAfd0wUNWo0wmq8zYn1uzbRmi87L5yUiIqbI4/XUBqsCb5i0/x9TAj4Hy4OOHxr4wYkI9NyfLCWIHoephlEojsUANZHmxDcTPsPjq+GmFR37YRwG4A+9od7/+lhSfWv969hVP345gRNCy55tqxjMBHELnxHMFy4VVaWenHBIyehuNfSbU+lz8f9LspaUsmUPWwEz8rTwnkbg7CRRSjMnUjooLzqdyX8osWCK0prDa4W+q6Gf2Hs9peHSI6uOIdf2ILKiB9hYo5J1RHxuK0gKG5RhZMZsO7sTmKwYqUN1yLbVygdbhYv/22rD2fbk+mbNGw6AgflP3Jv3GVxSyW0wyjEc1NN6xI5iyylki3cJSABCbK4MJeajwN3zccx+nUA+/G8mnypI006Iw1eh8k+C9u5O5VDzhyt2jyBy/urVsTtJo4+zDSJnYkUuZbpdfglFoOaj01bCTH7ChU2+Z3K8F0S23qAu14xYCgh3O4mG89+5762zoGYifjp5wwaC7uMP3uHN9yeLmd4zQgqTqmvY0V2pKMacwmMPYR6DZH42ficT0DI/nRdTvYL0WEi/lu6JRb0lHWTy1iTvxmkGZeoenk+Ar3dfvqmtCYp8/A32qx5SzKuMYQGm9b5jgHjMNhUiN9UA1sXRGH3NWT3TXhw1eHI49IFIbWnw==
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(14060799003)(1800799024)(82310400026)(376014)(7416014)(35042699022)(36860700016)(10067099003)(56012099006)(4143699003)(6133799003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	erq1iijy5fPzh197c333rq9+Wv7do1cijbYotzct8q+0hjJTejC6vz4Pp8IL0nH66HQ9fgbzhZGTV84LPJKQF1874hz5MYnofFVkMoWQ24ieQ9yaHvsvbfSRw/h/YGoCL3abW5vQEnqBAKozc0O7Y17ypAK5zdDnVlqPq37ZZymBvx9kB8GvVzR4wkYB+Nld0jE36s9Ett6nMeS5PTpJ7H0NGoBI4z/h0da0Xaf/eJj4fUiyQRkXjoBnA0J2D+9z0PJYgVr6GexQYockp7Ml7R0el8QMaLSv7OGJCSxXJow9Tmnd3xyKKStT5KC3CFXvFoJMFzcPLMyQ78WgJYCM0/AlmuXTH5Vgb4kluZ/VrpSE9LJQF5zjv5/4SUoRXtzEx1tZgm3SXFFSplpeFHjguKvhsAGBw7H23A24TWXAkB/VWnbSnXtMMaSCTkqvMsDq
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 08:46:52.5089
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a2a44847-8a04-47f4-429c-08df25e1dda9
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU5PR08MB10399
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23NwYrCMBDG8VeRnDeSTNuYePI9xEOcTuzI2pakF
+ kX67qbKslI8/uGb3zxEosiUxHb1EJFGTty1OcqflcDGtyeSXOcWoMAoC0qm3iNdeJCem1qqCkv
+ jPVlrSOSbPlLg28vbH96drscz4TAj86LhNHTx/no46nn3Z8PCHrVU8hhKLLVzhXV61/Pp0kX/u
+ x4IGzH7I/wLTrmlAFnYWEXOYoBA+E0oPgTQS6HIQjBGBbRVDb5aCtM0PQECn9gXRAEAAA==
+X-Change-ID: 20260820-spacemit-aihd-05c46aae886e
+To: u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, Simon Glass <sjg@chromium.org>, 
+ Daniel Golle <daniel@makrotopia.org>, Randolph Sapp <rs@ti.com>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Kory Maincent <kory.maincent@bootlin.com>, E Shattow <e@freeshell.de>, 
+ Yixun Lan <dlan@kernel.org>, Yao Zi <me@ziyao.cc>, spacemit@lists.linux.dev
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3230;
+ i=junhui.liu@pigmoral.tech; h=from:subject:message-id;
+ bh=Dc3kh8O3/9scyoefyDoS8KF70UKjjjEbXxGRkDUU99g=;
+ b=owGbwMvMwCWWvDb1VEXc8j+Mp9WSGLJOil2UffecM+3Q8wWdu/o83EMV391au+6X1xm7O7KdS
+ +w8JdKnd5SyMIhxMciKKbJw+Yv/s9bh+XZEoPU+zBxWJpAhDFycAjCRaUqMDJ8sAjjksyemGn/w
+ 9TseOceXRVe6wfD4pAwrgczw0B3yixkZlmxk67wSvKHTTi/m17vz8iFtO1UZZrUVVHDs0N02y2s
+ 7KwA=
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=openpgp;
+ fpr=15B30CC69C4BF0CC3C08F85A2A90CDC122DF37BF
+X-ZohoMailClient: External
 
-Hi Yixun,
+The SpacemiT BootROM loads a first-stage bootloader from storage or over
+USB in MaskROM mode. Vendor firmware packages this bootloader as FSBL.bin.
 
-On 09/10/2026 09:03, Yixun Lan wrote:
-> Hi Jerome Forissier,
-> 
-> On 01:53 Thu 24 Sep     , Yixun Lan wrote:
->> The SpacemiT K3 integrates a Synopsys DWMAC 5.40a Ethernet controller.
->> Add the platform glue for selecting the MII, RMII or RGMII interface,
->> configuring the internal RGMII delay lines through the APMU, and
->> managing the controller clocks and reset.
->>
->> Signed-off-by: Yixun Lan <dlan@kernel.org>
->> ---
->>  drivers/net/Kconfig                |   8 +
->>  drivers/net/Makefile               |   1 +
->>  drivers/net/dwc_eth_qos.c          |   6 +
->>  drivers/net/dwc_eth_qos.h          |   1 +
->>  drivers/net/dwc_eth_qos_spacemit.c | 313 +++++++++++++++++++++++++++++++++++++
->>  5 files changed, 329 insertions(+)
->>
-> 
-> Ping for this..
-> 
-> Would you have some time to take a look at this patch?
-> and let me know if you want to take it via net tree?
-> 
+This series documents the SpacemiT boot image format and adds the
+"smtimage" mkimage type for the CRC32-protected K3 variant used in
+non-secure boot mode. It provides the FSBL packaging needed for future
+K3 SPL support. Select K3 with "-n k3" when creating an image.
 
-I'll take this one via my tree. Please rework the Kconfig changes ([2/2]) as
-requested by E.
+K1 and K3 secure boot use RSA authentication and are not supported yet.
 
-Thanks,
--- 
-Jerome
+How to test
+-----------
+
+Rebuild mkimage, wrap a small UART test payload, and load it through K3
+MaskROM fastboot. The payload is linked at 0xc0801000 because the BootROM
+places the complete image at 0xc0800000 and enters the payload after the
+4 KiB prefix. UART0 should print "Hello SpacemiT K3!" and then loop
+indefinitely.
+
+  $ make tools-only_defconfig
+  $ make tools-only
+
+  $ cat > k3-uart.S << 'EOF'
+  	.equ	UART0_THR, 0xd4017000
+	.equ	UART0_LSR, 0xd4017014
+
+	.section	.text
+	.global	_start
+_start:
+	la	s0, str
+1:
+	lbu	a0, (s0)
+	beqz	a0, exit
+	call	uart_send
+	addi	s0, s0, 1
+	j	1b
+
+exit:
+	j	exit
+
+uart_send:
+	li	t0, UART0_LSR
+	lw	t1, (t0)
+	andi	t1, t1, 0x20
+	beqz	t1, uart_send
+	li	t0, UART0_THR
+	sw	a0, (t0)
+	ret
+
+	.section	.rodata
+str:
+	.asciz	"Hello SpacemiT K3!\n"
+EOF
+
+  $ riscv64-linux-gnu-gcc -nostdlib -fno-builtin -fno-pie -no-pie -static \
+    -march=rv64gc -mabi=lp64 -g -Wall -Wl,--build-id=none \
+    -Ttext=0xc0801000 -o k3-uart.elf k3-uart.S
+  $ riscv64-linux-gnu-objcopy -O binary k3-uart.elf k3-uart.bin
+  $ ./tools/mkimage -T smtimage -n k3 -d k3-uart.bin k3-uart-smt.bin
+
+Hold the FDL button, power on the board to enter MaskROM, then run
+fastboot on host:
+
+  $ fastboot stage k3-uart-smt.bin
+  $ fastboot continue
+
+---
+Changes in v4:
+- Revise the documentation wording and layout
+- Collect tags
+- Link to v3: https://patch.msgid.link/20260921-spacemit-aihd-v3-0-f660fc85d2a5@pigmoral.tech
+
+Changes in v3:
+- Align the uimage_type table entry with surrounding columns
+- Explicitly include the needed headers
+- Drop SMT_PAYLOAD_ALIGN macro
+- Simplify the NULL check in smtimage_get_variant()
+- Fix the title underline length in smtimage.rst
+- Link to v2: https://patch.msgid.link/20260909-spacemit-aihd-v2-0-780e98cf2fec@pigmoral.tech
+
+Changes in v2:
+- Use "smtimage" for the image type
+- Update the documentation and command examples to match
+- Link to v1: https://patch.msgid.link/20260822-spacemit-aihd-v1-0-bf4c41993891@pigmoral.tech
+
+---
+Junhui Liu (2):
+      tools: mkimage: add SpacemiT K3 boot image support
+      doc: board: spacemit: document the SpacemiT boot image format
+
+ boot/image.c                    |   1 +
+ doc/board/spacemit/index.rst    |   2 +-
+ doc/board/spacemit/smtimage.rst | 144 ++++++++++++++++++++++++++++
+ include/image.h                 |   1 +
+ tools/Makefile                  |   1 +
+ tools/smtimage.c                | 208 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 356 insertions(+), 1 deletion(-)
+---
+base-commit: 0a55b098d6f5f6bafa84fc2f18b433dd167bf729
+change-id: 20260820-spacemit-aihd-05c46aae886e
+
+Best regards,
+--  
+Junhui Liu <junhui.liu@pigmoral.tech>
+
