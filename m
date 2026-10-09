@@ -1,117 +1,91 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F5B2DA76C
-	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 07:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF12A36B910
+	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 07:26:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791530227; cv=none; b=LelplJBWgoIxE1aBRMJbgWaT078Vo1x/J2+R9pJwwMcIW0JCCIFe5hqfQkhLn/Rtptw9Zw/K72dckw4yCiotjx8W+DkTjt2DQ/6Txtf5ZdXsFzKGe63EjKtm3DbGQs4ufM8W1iUvFeYQerbP5kK98lU/hzzcr3pSGFsAHUTT0uc=
+	t=1791530775; cv=none; b=dy+EyA3V8QijWtQYa8p7HlKeP3bFE8iwUJx4Gb8yprTyfRw8DJ7h0ncSwBnbRiUEuEMU7BJphgUbv0lhtbNMt+7csSlNKHLXy0/kjXhfsOicHFe0Pi0xAouZv0BAhuhUcBrzXTjgnU3gdNwFRJxV9oop+K1PLO+WqiZYbOaPyjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791530227; c=relaxed/simple;
-	bh=fPAvCvMkvS82SGNBTuLFU7mtu1DS+RQRnEno1GUhy7c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RhudgrKxCrVP83hOmjX40ctWOjBMBYOhRpg7u0IkLLojmuTlN0ib07QnfHa35pytJFHS0EFVoZcz0htz6hMQi3kJT3XCePnGtyLr6JpREQx0Jgjvirju4sA0tMp6prq0ZDiDa9ce+0+aYWJNR5msSJJv6UfEhGrAVcuRMVfu4Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=RmRSh7ek; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	s=arc-20240116; t=1791530775; c=relaxed/simple;
+	bh=7OSwb1gcSKSVm0zaNwldMNDH5wgRhjWZkE7DteE169Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uGyvPW+Ev3OV1hkAI45GfDkyrdcnE31/OOOeSdVx0+qJEdUCir5wV3m0Te/purCJdCHo3y/ooXpZMcEBHViWK3YiraZ9Fu1CiM/5WZXD3/v8zjQ0xoPD4SNQBZAdA1fJCDs7rJsfdkixT9v3fWVP2zAN8wThZoaiwcFeDlIxWEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QC67uTlH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="RmRSh7ek"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1791530177;
-	bh=5Sbve23T2nM2tzDYXLYF+bZA1hmEj/GkRMM29V+yUkw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=RmRSh7ekPOFjWlX2RINgtOeSmKPPwK9OAZHKDZFB4MbrvVH4YltgdrSHbnrh/OAqO
-	 aeyaallJqYEfEfnz95LyVrHUQE1VMTG8dKTj2jSrG56vPLzxvUPSDLkdZtFGefg1zw
-	 FJKlm4Do6gl1pgwmscVgiAAa5itJcPqIseJH8V98=
-X-QQ-mid: esmtpgz13t1791530168t2d291361
-X-QQ-Originating-IP: khSeAFlHEEgU33IJubM1BqqYTdCyduUbyBl99wc8zk4=
-Received: from [192.168.1.100] ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 09 Oct 2026 15:16:06 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10654036301431491844
-Message-ID: <FDA9F931EC8B8D5F+e3ce2a41-637e-45a6-b46e-6bfdeab5076e@linux.spacemit.com>
-Date: Fri, 9 Oct 2026 15:16:05 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QC67uTlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688151F00893;
+	Fri,  9 Oct 2026 07:26:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791530774;
+	bh=R9j20iS9o6/AyqFTX7nD8h4FKx4tYreSSVLg54LPoTs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QC67uTlHtEfKqXkj6H+r3cMJCS/dAhUBhd2q5ahQJtUUJ0KwtaaKLT16Wmpm8vBOG
+	 9ymJ5NxkDG1g9sNH6E7WHHbiIlyLTLPV4tTZ2tK9tEaSbpD2AfEriy5+zP8odNZaCK
+	 0Oa7uyr54kqmWV70yGH9wmkbYQgYk+66cOvZoQtOUpbv1Dszn5/nBwWyGYeQAZwTgW
+	 ZQyHtXnFJnT36OqbV7Eki9Hav5/zUCZR4+iCw6Ictx3EZ6PpSrLYGnHO1hyw5O1O2O
+	 enoT94lC/FoHHSh33iZgMFSXIpi8i5SR1+BA8/mEWagZEP0q4geaXTAgREIrjciNOx
+	 3GXguIaxcq3qA==
+From: Yixun Lan <dlan@kernel.org>
+To: u-boot@lists.u-boot-project.org,
+	Yixun Lan <dlan@kernel.org>
+Cc: spacemit@lists.linux.dev,
+	u-boot-spacemit@groups.io,
+	Tom Rini <trini@konsulko.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	Raymond Mao <raymond.mao@riscstar.com>,
+	Guodong Xu <guodong.xu@oss.qualcomm.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Torsten Duwe <duwe@suse.de>,
+	Ryan Chen <ryan_chen@aspeedtech.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Alexey Charkov <alchark@flipper.net>,
+	Lukasz Majewski <lukma@nabladev.com>
+Subject: Re: [PATCH v2 0/8] spacemit: k3: add clock and reset support
+Date: Fri,  9 Oct 2026 07:26:08 +0000
+Message-ID: <179153072641.119292.15754263087303903316.b4-ty@b4>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
+References: <20260923-01-k3-clock-reset-support-v2-0-6ec0abb1c7b5@kernel.org>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] dt-bindings: usb: ci-hdrc-usb2: add
- spacemit,k1-usb2 compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
- Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, Conor Dooley <conor.dooley@microchip.com>,
- Ze Huang <huang.ze@linux.dev>
-References: <20260927-b4-spacemit-k1-usb2-v3-0-ce7095896039@linux.spacemit.com>
- <20260927-b4-spacemit-k1-usb2-v3-1-ce7095896039@linux.spacemit.com>
- <bcd2df4f-9ff6-4d30-8735-573d661bf367@kernel.org>
-Content-Language: en-US
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-In-Reply-To: <bcd2df4f-9ff6-4d30-8735-573d661bf367@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: OYpbVsTx4C81x+0HRdbi89wx4qhoAHOO6w97HrJHdmkcROTTICuY/N1O
-	wnhDoZ6+v17TZDsWNxB2pEDDzCDrjRw5N3LOXYTT3suUUs/iqOKrUYx5pglp31vEuWXYvd1
-	Qhg/WesjiwUClvMGcA87CXmXQDNmLlCivz+jE1C1JCzeudZMBMJLXkvDbKZR6Ang0IfTxPk
-	G2VGI63Cc7lcM893men3ifDrpEDjBolpMMnM00v02WGLZeTuJtgWWTEczTwQ8Y5Drx3Z22L
-	wYM/tl6rSz4PeyVgRJ6mKq3TP7gluMYL+AxcNcbqwiEYC8gPvjOsnh69hyxyiTxDT3gE5hG
-	gVLaRPhZMbByotyk+ZIH2tbAUsvO00lQnXNMWDf2OTCu/9qxuUazpcVimLIu0PK0bGM/quX
-	IdiRaHQ6NkAqUn3A8vYWxxZfA+HP0qjwrzCm4zz2aQXkv3xZCcfSi6+bXX6Ti/NZX3k0p6j
-	NVZl99EWuwTX7/0f0sz4UrJWPw5g9l/JM44Qa8Qj3Tibl3/ZrKPaMvV7swp59u/fGJEVQpr
-	zRW2j3dJzxX1/z0+zu/mkE0JblTy/ggJhNYj4bga4xv75ALyxk4hwAL9CSKYYrcKZss6VaW
-	jzjxAzpiHUBT5j02ER0iExyJughcW5clbtfeF8lsfYJZI0YjzROs8NaygK6KJPK2iiqWpoM
-	1H6OTMNdM1OlABfrowAdxeZdIctMNHelbR/CeIf88rMnzF094S6wDMaNY7oJWhL9JBzW/Jo
-	dKqRIgJg3pnF6edn8GFSQDlSaasoI06Qfnzs9xc35nMh4vRvo/aMzmCsYlVFeC0Gve+xCFm
-	42YU+umniKPV8myBKKtIu2QFgUOaq38PeKHD8XKpxfJMeN+ef5EFAhZD4AGEW3XHmlkYHvd
-	cSp+w8gRhF6ld9kRJKs/VW8cGLXZsI2Eu7rU2/3k7XCZym3B7vIv8uBX0gh8UCsyYajoDFv
-	G2h+DGtTxttnxujWj3wcR+IeK0wJM/BdB8EkkAIP9/MdL1S6bYBcVFZzsjugHnkN+e+P6YF
-	CTFL8BfrB1YBVekhZD/3uA8F0DJvci8TeDi/rmMYzsk7lhaQ1F
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
 
-
-On 10/6/2026 11:09 PM, Krzysztof Kozlowski wrote:
-> On 27/09/2026 13:40, Junzhong Pan wrote:
->> The USB2.0 controller on the SpacemiT K1 SoC is dual-role capable but
->> has no internal OTG registers, this requires flags which disable
->> related features set in platform data. Add a compatible string to match
->> the platform data.
->>
->> Chipidea USB2 Controller on SpacemiT K1 requires 1 clock and 1 reset to
->> work, add constraints for it.
->>
->> Acked-by: Conor Dooley <conor.dooley@microchip.com>
->> Tested-by: Ze Huang <huang.ze@linux.dev>
+On Wed, 23 Sep 2026 09:34:23 +0000, Yixun Lan wrote:
+> This series try to add clock and reset driver support for SpacemiT K3 SoC,
+> the patches are largely based on upstream linux framework.
 > 
-> This is a fake test, you cannot test bindings how we understand Linux
-> kernel testing. Please drop such blanket-fake test tags from all patches
-> where this is not relevant.
+> The reset BITs definition lives in the same register with clock
+> controller which make them tight coupled, so I'm also putting reset
+> patches in this series.
 > 
+> [...]
 
-Okay, I used b4 before and I thought it should be collected in whole series.
+Applied, thanks!
 
-I will drop irrelevant ones, only keep those in patches truely tested by Ze's
-setup and send v4.
+[1/8] clk: spacemit: ccu_mix: fix inverted condition in ccu_mix_trigger_fc()
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/d1a7fb596ec6717e26e1760c5a3e1adc1294e6fe
+[2/8] clk: spacemit: ccu_mix: add inverted enable gate clock
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/d2cc0aa2ba32d231a73a10cce7ba332bb565d21d
+[3/8] clk: spacemit: ccu_pll: add plla type clock
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/57ecf2e5448fb0e6ecc9f3266463f1cc82ee74b9
+[4/8] clk: spacemit: k3: extract common header
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/c80731fa324700db2c1a5b7725bfbe7ed93d50ef
+[5/8] clk: spacemit: k3: add the clock tree
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/efe62df16050cd68130e07f209379c38657819d3
+[6/8] clk: spacemit: k3: add CPU PLL rate tables
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/20c4c8b4099592ce172f6cb78b31cb8d9d68f193
+[7/8] reset: spacemit: Extract common K1 reset code
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/c2dcfbe319b0e5e77cf4f350531f04c9fa9a7a46
+[8/8] reset: spacemit: Add SpacemiT K3 reset driver
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/89269413d4f53b77a86946a78a291aab03f7aebd
 
-Thanks!
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
-
+Best regards,
+-- 
+Yixun Lan <dlan@kernel.org>
