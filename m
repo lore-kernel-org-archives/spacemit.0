@@ -1,145 +1,185 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013062.outbound.protection.outlook.com [52.101.72.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EB8478869
-	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 07:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791531508; cv=none; b=fVC4JcjKfjEdFr/qu2ojgLNaprD7Fs7Z8xGwzGbbLwI7xZNO0nbVaqhYOJW5Y71s/X6/6Qkd0jDktXBpQSG8qVGcxiX8hllEiZtSczVXsup0gamBNhj9UltgrHNrl1nfKUQ2pXCwPV72l7ADltCIKFgpRHLigUQWjYD/zHDb8jc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791531508; c=relaxed/simple;
-	bh=ziGFpD7LUqmPJNWWXcK8dAUtkI36pQhKh0sWvS6KNYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=goGUJha5n1I9/li+eh9ON8/4nn39812sc8czcx1+nyEeMqWA411c2IwJGAwdrofrqkRJS+RSD/nOLFi67dRK+Fc/tPfkjiZv/to08QqH5Jna2TKFeMDmHGEV8p9JPZCXN9FnoyCJKZttbje0GjhTlHcHY18IqXvZV6vd2fMotcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com; spf=none smtp.mailfrom=linux.spacemit.com; dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b=CNxHG6Iy; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499F237E5EC
+	for <spacemit@lists.linux.dev>; Fri,  9 Oct 2026 08:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.62
+ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791535625; cv=fail; b=t2i6LFlFGcPdbF/vGm4Oh6zWfqUdnbwaC52vc+gVu9vsCNknR0c54PuM134EtXEyiFPTicBeV12FxEJmskLjasqo2cB4tIN2IKAZq+l5WA+kaNq5yTEh5QJMFVzCaKG94ojvl1Gx/BfFi8P9pdCG2ojvCklYACcv3GYWaV/1Yzs=
+ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791535625; c=relaxed/simple;
+	bh=iLNNY4aWQL/WAfQkqLppw5Ix8k81+zcdnIlFBVF36Yg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=vAVG4NM4O6FNeCcXLYOZk1usrcL4OTpfYpWvuDHKfFwk+UKz3xDPxNmqsXc42ufzCKXeCXvIO9OHwhdqcjvioL1P/sUNwVYiKAV42ErZUhNl5neIWLCNBQgr5JUnTBe1KVbUqzCKUMP5y9t1pTYDGSw/5FMFRX5IMr7kqjNDV4Q=
+ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Q3P7Ae97; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Q3P7Ae97; arc=fail smtp.client-ip=52.101.72.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.b="CNxHG6Iy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1791531462;
-	bh=8w94qaIyqvoZXJSMhlUqDunjyb69j/+6YnXQ3qEKAAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=CNxHG6Iy/ztfqEnjUP0Py6XVrNaqo41r2bLCWzNkV7Agv8cphAODL0RcHqdEtuGgH
-	 8aqArXhAo9eh153JrQGfK3SI7nEqGBC4X3AvqLuU9EW9jikc96puqlucEWyQXanztN
-	 yfiIXm+YUql6ZVkZv3dRWt28RqwZjF8EovW3/a4g=
-X-QQ-mid: esmtpgz15t1791531454t309d85ef
-X-QQ-Originating-IP: 9dFMJrss78zrC/tVy1Ltv1Qmy7e70zHXK1/kjK97Xt0=
-Received: from [192.168.1.100] ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 09 Oct 2026 15:37:31 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4560660349085074679
-EX-QQ-RecipientCnt: 22
-Message-ID: <7686F065FEA15D6A+f2c02b39-f7e8-4456-b41e-7fe14df4ab92@linux.spacemit.com>
-Date: Fri, 9 Oct 2026 15:37:30 +0800
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Q3P7Ae97";
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Q3P7Ae97"
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=sTqZLBmmTpnHxdEUI79rKwXI2hWkg3uP4j3++vseUKa3wm/B1KQOTxekU6/TmfQDaINBqNMxOpyT7Q5MoJNzv+LphwexVQyrjVSyo4G5bPavzpswW82JxIS4CkA4/vGajp62GQfo8S/Ws7UCweuxh+xPhFZpaRSAZNZ4Ov+Ykl52FRCQwkyD0yvx2TrMsdKGjcaNcS3qpvrN9RhyeSgkZlQhhHZ9MnF95L37fxCZWhmDZ6/StyLk6o8oWZiDTpS4npvebhypAE2yqJ85UGnBQBFGekHUP2b13C0NYCirNgQCn+hjX05e42h6F6w2F5fo4EnMf1dFONh0zLHysp8NqQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
+ b=UgQR5lGlD+qrIuwm0nCLp5e/PhY3MewiubF7UXzc/xd/ImesPpvQ5YqGYGNU3Ewf/M5YiBYBMFpKpg+gFjiwQIsRgQX1GIEQCnaKYc8b+7tv4oAiqBEcFvhK/lxYbF7Gb1KKP3ATJd3uMFQMFh1OxZhqVCbqmVTCOY6gS+VHQGp6jZQ6QAHbweJSCXBoeq9XjaXYJKNIrVlbGESvu+2jYH9zYFhrnL+KF1xsnE7pokOSt6qIeLk7kketa6+JzDHVTOwK+QJ4xN8B1G9BuxtwFHvKsGYXh5VMfJjhteACvVSpnlauuZ3R7WihZb99MvRSuIgY2FVNwyzsEvg1yLshnQ==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 4.158.2.129) smtp.rcpttodomain=kernel.org smtp.mailfrom=arm.com; dmarc=pass
+ (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
+ (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
+ spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
+ dmarc=[1,1,header.from=arm.com])
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
+ b=Q3P7Ae97gdzCbkVvUHiIdbF86tJh7g2Gb6pGaUqmG0cf629ZyWgS3RZ9DEAanaR+mViJaN5qPyk02qPGID7WVcSsdD4pcMZt+mEyTso3Tj+KrfD7wZ+RaRePUOJv8fJm4hm521AzYCQ5NXcwIUbtgOokIzR5r8fdNFDxm9uJt5o=
+Received: from FR0P281CA0156.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:b3::10)
+ by DU5PR08MB10399.eurprd08.prod.outlook.com (2603:10a6:10:520::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Fri, 9 Oct
+ 2026 08:46:53 +0000
+Received: from ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
+ (2603:10a6:d10:b3:cafe::87) by FR0P281CA0156.outlook.office365.com
+ (2603:10a6:d10:b3::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Fri, 9
+ Oct 2026 08:46:53 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 4.158.2.129) smtp.mailfrom=arm.com; dkim=pass (signature was verified)
+ header.d=arm.com;dmarc=pass action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
+ client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
+Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
+ ZR1PEPF0000E6B6.mail.protection.outlook.com (10.167.241.69) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.6
+ via Frontend Transport; Fri, 9 Oct 2026 08:46:52 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oej35kHGs8eybLNU1v/AnCiG9Va10/U40qxUSD/6En7BcDLs3GcM4pHv+LvAhwtgwpSTtxk0S6p5Ak1jid4Cap4ExGOkk5QpbY3508BR1qqr5o6OzkVv7F2Zao5Qvf737NO9dEY9+9U8WfjK+YEGkndi9vdfehtv0HesmwJl5ogQcZ2pkndS3bz/nbJoxVzwBFcwegj5sTJy6pMce07mbtlSa6z2cldIBQtKpAE2f62f88qzRxHFwtdN7jbNq/v351nRx9Az89scUdqpRisqKcn2Of42Ka2mC99806nJxJZsluJBWgU424BpkL2rddv903H5eoLm/Swo5nCoD777JA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
+ b=lZFlyUP+gpCCDyg5LL2TOXZBcLWxJlvwc3lkkBLL03ayK0lRAJyeQSKdOUFZ4i35FwDNNzp0ZY8yZHGUZ73JSAmC/4iXnF7Zrx3y41DlsM8egun2oj4imAK6WSTktnhcFOoM4K5Lem1k+PztbWof9AFzd3FyBfROyEiyJyW34bbkckayeuNmlvGutl0+LB962sFudRBRqQnmVA+aGhuGm1DlUnTFgn1rKUbgYGXBG8Re2F9+PXGW1LYtP+t7Jxxh9PiFukY/razxlgGvDHzC2FT8uqudS4E3HYttEOM4L/Td5qgblNYUY6EWmQXqgk1f+Tn/PYy2Eb1YQFVsoun+Pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
+ header.d=arm.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZwUoppLoqySGQeSEQiG5yB+PbQOpHYnTKT7aF3wMv54=;
+ b=Q3P7Ae97gdzCbkVvUHiIdbF86tJh7g2Gb6pGaUqmG0cf629ZyWgS3RZ9DEAanaR+mViJaN5qPyk02qPGID7WVcSsdD4pcMZt+mEyTso3Tj+KrfD7wZ+RaRePUOJv8fJm4hm521AzYCQ5NXcwIUbtgOokIzR5r8fdNFDxm9uJt5o=
+Authentication-Results-Original: mx.microsoft.com 1; dkim=none (message not
+ signed) header.d=none;dmarc=none action=none header.from=arm.com;
+Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
+ (2603:10a6:20b:740::16) by VI1PR08MB10104.eurprd08.prod.outlook.com
+ (2603:10a6:800:1bc::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.5; Fri, 9 Oct 2026
+ 08:46:16 +0000
+Received: from AM0PR08MB11733.eurprd08.prod.outlook.com
+ ([fe80::29d7:e9ba:ff69:a0c3]) by AM0PR08MB11733.eurprd08.prod.outlook.com
+ ([fe80::29d7:e9ba:ff69:a0c3%6]) with mapi id 15.21.0496.010; Fri, 9 Oct 2026
+ 08:46:16 +0000
+Message-ID: <6f065a4f-d71b-445c-b0ab-4061cdeb9c0a@arm.com>
+Date: Fri, 9 Oct 2026 10:46:14 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] net: dwc_eth_qos: spacemit: add support for K3 SoC
+To: Yixun Lan <dlan@kernel.org>
+Cc: Tom Rini <trini@konsulko.com>, Quentin Schulz <quentin.schulz@cherry.de>,
+ Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>,
+ Julien Stephan <jstephan@baylibre.com>, David Lechner
+ <dlechner@baylibre.com>, Junhui Liu <junhui.liu@pigmoral.tech>,
+ fanyi zhang <fanyi.zhang@mediatek.com>, spacemit@lists.linux.dev,
+ u-boot@lists.u-boot-project.org, nd <nd@arm.com>, E Shattow <e@freeshell.de>
+References: <20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org>
+ <20260924-02-k3-ethernet-support-v1-1-b8e1fafc9249@kernel.org>
+ <20261009070324-GKF2005@kernel.org>
+Content-Language: en-US
+From: Jerome Forissier <jerome.forissier@arm.com>
+In-Reply-To: <20261009070324-GKF2005@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO6P123CA0020.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:313::8) To AM0PR08MB11733.eurprd08.prod.outlook.com
+ (2603:10a6:20b:740::16)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/8] Add SpacemiT K1 USB2.0 controllers support
-To: Krzysztof Kozlowski <krzk@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Xu Yang <xu.yang_2@nxp.com>,
- Peng Fan <peng.fan@nxp.com>, Peter Chen <peter.chen@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- Conor Dooley <conor.dooley@microchip.com>, Ze Huang <huang.ze@linux.dev>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-References: <20260927-b4-spacemit-k1-usb2-v3-0-ce7095896039@linux.spacemit.com>
- <20260928230310-GKB2079@kernel.org>
- <b6a552a8-7710-4472-aeaa-96d50856f896@kernel.org>
-Content-Language: en-US
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-In-Reply-To: <b6a552a8-7710-4472-aeaa-96d50856f896@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: NKzbPdp5ylDyzol8P0ZIcB4liY4MlHSGJbAyJBuZiOuGiNltgNGG9PSE
-	Oa4PiLgIia+Kpdu+T/7VxAoWaTbtSmAnAPgJZTRlWMa5qKmK9fxUPge+fGqCEV5CZakvFla
-	qvXLRWDS+XIeKQ1I1kVylJRQDEThGUuF91rxbPF8hWEeJwkdKnZtxBtAvDBPHjObMKz+NlQ
-	RFO9qfijB6Jt98p1qBtiV7CUnBQDs+bQNNHdfvnaMzIxObgzkGC50xgCiFVynlQM/ePXh9J
-	w+l7Cfdbwkkgo4klxvIN8lyGsDwbw7mMddOtZqaR0/i4IfsWFjL1S2V2n1crZoPe6HXd8pQ
-	BX9Tu1yltjQiIkqrlA/YptFtlg5j2VatNrn92NwhjTJCOKbpYIDreGSL5dY4JM5VOf4ofFw
-	Hpy1UJHR1Vpms81GGZOiV0oUCFZqXBa07BjkjwZmxAjkAXsOuEkH6oIGuJNYW2vhCC9VaoN
-	698Hd8rOxzDSBYRJpZfRl2Zi5dNSs7xaoCEmJZmJeZSzk+DMdUNPCMdsStMvX1H30KMel41
-	s6ITmcLg+a08mSdn27spsfviRdcje430li0Jf9qhsltTxIqydJCF3kUQ03PLVzgXXYrhupq
-	wiY9Xqknk1pnw0eUBwqn01cj+KH8+MXRorxx5gepHKtI01OyJYuIlGrVX6ZuqZoX/dajsIh
-	2tlyJ2PP2fhrquRlxzpquL7o8k3cdatRi99wGf+LnbMVOZYfiX6l/qTTtH87R/vxPYyN0ni
-	95FgvmW4OaJHdz/5ONaUVGlqnZa42GMS7DFnNB/ArhOrdhnuPKHxrzYxLmGQ0MQ29SeIGD3
-	TtJvO+Nu6UjNbFnDIW+QRtNxAhKeh+aZ9hXJoEmT4WaZp+z7knCU3xm+SuAoqb0l4gMwKcq
-	yI/vLncBkUI+PpBfQn9Jv8l/Y+QybC+7BX1cHe1CpQvnSLPC02rSkmBAK/Q7qRvKeQAYvIO
-	giov2O/qpLes0Zl+AzEW3stC8vjiADmonzZ6Jg3Z4+IoEw8pjj2xoQkfzKfvovp2gfPQc6x
-	UaGotuxifMeRhNMV1kpestT5UX3ghnpdhk8O8jhji6JodshgxpTJQAytXKh1/OATH5N/H0Z
-	gpPq9uHsuHNZ6Sdong9GX6QJjCiMYN97+qBm/gc4JVlpB6fJfb7q7/QsxYXrvQ2m1tpdvXp
-	Ef5P9e5e+LCgo88cbz2cVAVqLazk3QYHe7DSbd6l0mzdDjF3AT0Lntnshg==
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
+X-MS-TrafficTypeDiagnostic:
+	AM0PR08MB11733:EE_|VI1PR08MB10104:EE_|ZR1PEPF0000E6B6:EE_|DU5PR08MB10399:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2a44847-8a04-47f4-429c-08df25e1dda9
+x-checkrecipientrouted: true
+NoDisclaimer: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|23010399003|1800799024|376014|7416014|366016|56012099006|11063799006|4143699003|22082099003|10067099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info-Original:
+ 5GFVq4QCkto7zPPhNmcF3roNalrQRfe3A0uBGL/3Rf2icK1zRqAA0+AeiQ4lGPnQ5KwzmamkoFMdoCnVnrjxzSjv9re87cKxrW4YGn4pto4lNb5MF9aA5BRWQ/UKZjj7JsOgjgZlPdH+o6uSp7dPNCiAX9rmOVX/iUn0lQYV0MzJOOwES7k9v04rK45tW1WJFg7OsPjyMvu/0eVbrt91RxmugcbkGkacMn+3hEWpp4cJ6c+F1GShXMvjgIfyltVkY4dyQxbFtYwilrubdtoTo0W9jFkw//qMjaS2IqD0K3ofrFf3b9CtHQ/kiE6lNTFOOqPqOWy17uvK84GiqT/Olu8VRY3aDx4GhnrLNUkDQaIq/26JjmTC9+Yj7zFSctYL0FJWyNLuwWhO6Ihfs99888QTnPhB/6d+hAs6hyaVLgDhlMUW1lq84jL/MRyAcS4G2odPioOGFbO0Ilowz4HbGWhjdc3rKGXCYPiN19VMbpjjEw+QnH6NoN2dpcsgYD5bHDQbRDb/ZoauI1rCWR/5Ov462aZZDGojvNn/sxgPosoFfpXnwxDXSYzWSIV5mXuGeTyJPjxTX7cQMaKrCjZ7rQ1IEaj9qP9yBhJZ6ohPaonjD7JJNmuAZiwSg4oAxhk9csMP/ZhJw8lltgNCRpbTTgsKBkuER6JUYxUS8DCZX7g=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM0PR08MB11733.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(7416014)(366016)(56012099006)(11063799006)(4143699003)(22082099003)(10067099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-Exchange-RoutingPolicyChecked:
+ qkCQZ86Ta7x1A06vsrfTfwKOO32DKa+6c7s1dYBfXtv45XoS2cXp0AcERqlKPNmk9wraatbzhgTu2sf9Hq3LUZoGzDDTUxVBqIamYKML0cZ/Y4WFY6riEhGQbGa4H5LRpkgj4ssoXh3uMSrIJF1Y9aAxZrQJN8P2bR5SuiH+3kkT+tYXh8pEPpg6rLFNLez6V6rXY/ys18cK0tYHxd3e5NXyY32UrWxVd7x8adTVPh/oyDjrqmTNuCWF9CljmdRgi1Wo6OLe67SevFEup8BoOs01cIeFIFvGwl9l3x18WVFMlYa/xyQtk75g8uuA+odYCMhFJVz3X2/y3bCcC0bcLw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR08MB10104
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	4c9e8817-b2df-4566-9845-08df25e1c7f2
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|14060799003|1800799024|82310400026|376014|7416014|35042699022|36860700016|10067099003|56012099006|4143699003|6133799003|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	ksTOnEQ2YoZCVvmBpNez+H7U3LUMiEtN0s1lbQxzgvsX5iUSIjJFcLSAfd0wUNWo0wmq8zYn1uzbRmi87L5yUiIqbI4/XUBqsCb5i0/x9TAj4Hy4OOHxr4wYkI9NyfLCWIHoephlEojsUANZHmxDcTPsPjq+GmFR37YRwG4A+9od7/+lhSfWv969hVP345gRNCy55tqxjMBHELnxHMFy4VVaWenHBIyehuNfSbU+lz8f9LspaUsmUPWwEz8rTwnkbg7CRRSjMnUjooLzqdyX8osWCK0prDa4W+q6Gf2Hs9peHSI6uOIdf2ILKiB9hYo5J1RHxuK0gKG5RhZMZsO7sTmKwYqUN1yLbVygdbhYv/22rD2fbk+mbNGw6AgflP3Jv3GVxSyW0wyjEc1NN6xI5iyylki3cJSABCbK4MJeajwN3zccx+nUA+/G8mnypI006Iw1eh8k+C9u5O5VDzhyt2jyBy/urVsTtJo4+zDSJnYkUuZbpdfglFoOaj01bCTH7ChU2+Z3K8F0S23qAu14xYCgh3O4mG89+5762zoGYifjp5wwaC7uMP3uHN9yeLmd4zQgqTqmvY0V2pKMacwmMPYR6DZH42ficT0DI/nRdTvYL0WEi/lu6JRb0lHWTy1iTvxmkGZeoenk+Ar3dfvqmtCYp8/A32qx5SzKuMYQGm9b5jgHjMNhUiN9UA1sXRGH3NWT3TXhw1eHI49IFIbWnw==
+X-Forefront-Antispam-Report:
+	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(14060799003)(1800799024)(82310400026)(376014)(7416014)(35042699022)(36860700016)(10067099003)(56012099006)(4143699003)(6133799003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	erq1iijy5fPzh197c333rq9+Wv7do1cijbYotzct8q+0hjJTejC6vz4Pp8IL0nH66HQ9fgbzhZGTV84LPJKQF1874hz5MYnofFVkMoWQ24ieQ9yaHvsvbfSRw/h/YGoCL3abW5vQEnqBAKozc0O7Y17ypAK5zdDnVlqPq37ZZymBvx9kB8GvVzR4wkYB+Nld0jE36s9Ett6nMeS5PTpJ7H0NGoBI4z/h0da0Xaf/eJj4fUiyQRkXjoBnA0J2D+9z0PJYgVr6GexQYockp7Ml7R0el8QMaLSv7OGJCSxXJow9Tmnd3xyKKStT5KC3CFXvFoJMFzcPLMyQ78WgJYCM0/AlmuXTH5Vgb4kluZ/VrpSE9LJQF5zjv5/4SUoRXtzEx1tZgm3SXFFSplpeFHjguKvhsAGBw7H23A24TWXAkB/VWnbSnXtMMaSCTkqvMsDq
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 08:46:52.5089
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2a44847-8a04-47f4-429c-08df25e1dda9
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	ZR1PEPF0000E6B6.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU5PR08MB10399
 
+Hi Yixun,
 
-
-On 10/6/2026 11:10 PM, Krzysztof Kozlowski wrote:
-> On 29/09/2026 01:03, Yixun Lan wrote:
->> Hi Greg,
+On 09/10/2026 09:03, Yixun Lan wrote:
+> Hi Jerome Forissier,
+> 
+> On 01:53 Thu 24 Sep     , Yixun Lan wrote:
+>> The SpacemiT K3 integrates a Synopsys DWMAC 5.40a Ethernet controller.
+>> Add the platform glue for selecting the MII, RMII or RGMII interface,
+>> configuring the internal RGMII delay lines through the APMU, and
+>> managing the controller clocks and reset.
 >>
->> On 19:40 Sun 27 Sep     , Junzhong Pan wrote:
->>> The SpacemiT K1 SoC has two USB2.0 controllers, one has Dual-Role
->>> support, but the hardware has no internal OTG registers, the other is
->>> Host only. These controllers are compatible with Chipidea USB2 driver
->>> with some flags set and reset control support.
->>>
->>> This series is based on 7.3-rc1 and has been tested on Banana Pi F3
->>> development board.
->>>
->>> A self-powered USB device/hub is needed to test the host function of the
->>> dual-role controller on Banana Pi F3, a MINI-PCIe USB2.0 module (a
->>> cellular module e.g.) is needed to test the host only controller.
->>>
->>> ---
->>> Changes in v3:
->>> - collect tags
->>> - merge the two dt-binding commits
->>> - use local variables when acquiring devm managed clock/reset
->>> - drop manual clk_disable_unprepare() from the remove path
->>> - enable related drivers as modules in defconfig
->>> - Link to v2: https://lore.kernel.org/r/20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com
->>>
->>> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
->>>
+>> Signed-off-by: Yixun Lan <dlan@kernel.org>
+>> ---
+>>  drivers/net/Kconfig                |   8 +
+>>  drivers/net/Makefile               |   1 +
+>>  drivers/net/dwc_eth_qos.c          |   6 +
+>>  drivers/net/dwc_eth_qos.h          |   1 +
+>>  drivers/net/dwc_eth_qos_spacemit.c | 313 +++++++++++++++++++++++++++++++++++++
+>>  5 files changed, 329 insertions(+)
 >>
->>> ---
->>> Junzhong Pan (8):
->>>       dt-bindings: usb: ci-hdrc-usb2: add spacemit,k1-usb2 compatible
->>>       usb: chipidea: usb2: use devm_clk_get_optional_enabled()
->>>       usb: chipidea: usb2: add optional reset support
->>>       usb: chipidea: usb2: add SpacemiT K1 support
->>>       riscv: dts: spacemit: add USB2.0 controller nodes for K1
->>>       riscv: dts: spacemit: enable USB2.0 controllers on BananaPi F3
->>>       riscv: dts: spacemit: enable USB2.0 controllers on OrangePi RV2
->>>       riscv: defconfig: enable ChipIdea USB controller support
->>>
->> Any chance to queue these patches (1-4) for v7.4 cycle? Hope it not too late,
->> and then I will handle the rest part, thanks
 > 
-> Can you drop the fake test tags while at it?
+> Ping for this..
+> 
+> Would you have some time to take a look at this patch?
+> and let me know if you want to take it via net tree?
 > 
 
-I have dropped those and sent v4.
-Thanks!
+I'll take this one via my tree. Please rework the Kconfig changes ([2/2]) as
+requested by E.
 
-Link to v4: https://lore.kernel.org/linux-usb/20261009-b4-spacemit-k1-usb2-v4-0-2d98e5324d9a@linux.spacemit.com/
-
-> Best regards,
-> Krzysztof
-> 
-> 
-
+Thanks,
+-- 
+Jerome
