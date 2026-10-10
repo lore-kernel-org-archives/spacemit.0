@@ -1,147 +1,189 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDE367B70
-	for <spacemit@lists.linux.dev>; Sat, 10 Oct 2026 01:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0803B2EEE65
+	for <spacemit@lists.linux.dev>; Sat, 10 Oct 2026 02:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791597170; cv=none; b=fICZ9o1vlcAnGgtAznQjikM1/N2rd09yvTih2TlqirRbUR28CyKmQtXDs7k7Xpk5vclCmCcS3mvbMtXgrAXzzko0VIUp+M9HN3Dv/AalJDZvoWnPGJ5iYUwpQ3Kr1wOyzAXf6ARfS4IysJRop/9ThJrbbpzssShDOnwNfoeoTdA=
+	t=1791597924; cv=none; b=BssaEzkWSiu6qMlXORC1F+bpxqMq5HaEEmwTLINllxEnIZ7Aql+UN0iuoPzqXDBZf5lD1Wt6w7IxyPF8BK0WIktTWo//6AKcAfOeOtAMMLSrUqNSh/h6Al5J/EnQ/4sbqCano8mutEmvMl3c46Wov1IukxEeHG54wBoi9Z7f1go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791597170; c=relaxed/simple;
-	bh=HNgfI0ITaHqMMC0XEGh9fE+g6mzvtdX4E4O2kC6paLE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=f9HNxuNvV4Cdwe/K/e+/9bjNvTocJ2qJWV9ziDvrY+Fs0z8zRrtUatRFScf3MnXmli7VvYsw8oqBksdAMHeSQE5JNLkE96wwPRUHFShO/brZOGs4Id1cjBmb4PfGB1kA5vObTXZ6JdHHuthJ3RvaswhgNkRL5z4YPepEZn8z4wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Krmww4GG; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791597924; c=relaxed/simple;
+	bh=RtNJ+XWJK6eSr1fba8eizstY+FWi1d6ftiywfKe/zuM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qXljC7tGrqKn41umznJzAIQbrxaqS2xbjuW+RHc/606Qx/1k77JEHa4ucQs4d0PXOQ1lZIh5Ft0jwKIJv5wL/e1RPwlfUlNu+7ARwitFFQhuauI2UM1xXAVmO4s1znQu7MGp/yRyvSYVCadRlDoXFycKf8fFnwPgoeZhZD+nsG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hOtEhzmC; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Krmww4GG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF131F000FF;
-	Sat, 10 Oct 2026 01:52:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791597169;
-	bh=b8VyvwGUWZgnuGhH2kpoemzvnQb+nix4qYjZeGdiHK0=;
-	h=From:Date:Subject:To:Cc;
-	b=Krmww4GGxyxl8HPhS8SKwZv+wz6XAQB34mBE6HzEe7f20muhZ6aEmLcqjmvByqj1M
-	 GTJIV5xUYZosM95XqWZYqfU6pxyoFGroUCi7HXEkUynEmIFM6KChHPKN4fKWCmt/T6
-	 bkcSYIfRUU5cjMu4QzhX/v779LAgCnWK2zTqy1GxfBLSJkXcSFYy4qt8K4xQKh9wI/
-	 OzClAJyR6mridBjvyiOPUWvj5VHkXq4PJfj9m7yslE9Lc+yPHErLZjJaoQNMSWkM3b
-	 QNXU3GLKZhQxRUtkmv42GzxIfCeJPr6cH8CBO66yiJG9WaZd6+rY0FmWOCR0WR8Kvo
-	 /0RrmqEHstkfg==
-From: Yixun Lan <dlan@kernel.org>
-Date: Sat, 10 Oct 2026 01:52:39 +0000
-Subject: [PATCH v2] configs: spacemit: k3: Enable Ethernet support
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hOtEhzmC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1791597922;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=w+tGYwl2znmnp8WIdQYcLZIZyvGyAsTyeavLHMYpyQU=;
+	b=hOtEhzmCY/ZKnh+rUNiNg7rcdzRwmnyoFiXw74tGLLedC9F6PwQ05K5XCB1sCaxifTtlvQ
+	ti8+EbpIMz0ElFvSQ4mDAtfL4OJVtFsOO0sjTX/3Y8TWJKp4haMRG/O/JIWV/yn3uSIs2S
+	83KvWvL69WAtJ/8b2NJDN0twwtag3Go=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-MvnWXc8xOtmJ6EktMncK3A-1; Sat, 10 Oct 2026 02:05:20 +0000
+X-MC-Unique: MvnWXc8xOtmJ6EktMncK3A-1
+X-Mimecast-MFC-AGG-ID: MvnWXc8xOtmJ6EktMncK3A_1791597920
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-8adfca4de94so3558147b3.1
+        for <spacemit@lists.linux.dev>; Fri, 09 Oct 2026 19:05:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791597920; x=1792202720;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=w+tGYwl2znmnp8WIdQYcLZIZyvGyAsTyeavLHMYpyQU=;
+        b=cITVTbVUJAWn6JZKWaPXiVamCAe9OqY6qM23waVIrhkCVRNWBL6KmTijwnxmuwhVq6
+         oGMHPdDsQ2Dx0NryvPsL7wdKDnKH6RajwmGzQ7bZojdeWasmIAB6ApNNu2qnoQ3fr8K7
+         Bau5+R9TehwtJOv3tPT9R9wB36OBdBJhzEJwFsvKagy0pTtG1L8/NUpLc9/rNpGfyamu
+         58xSheEz7ZG2GUwiiAEIugguiFcM+VvjqZpMFiObsCx4oCjgawE8vx+r/i+pXKIWgWd3
+         sMyZOF4g/OHKYCpbINFwl/QSjZ3JXx7z3wG6eQA3VtFNjoroeO5Nqw+42GbuTkX1aZK8
+         Nlxg==
+X-Forwarded-Encrypted: i=1; AKwUvBzrmVyOlm1c/fvmxsV/+CHxni3jQgQcwDUcUH8MpkPypen9WVTR1/59qggaByBlRqxuHV9jJUcIUA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJUDq+4D10kKjSwdXiPCo1OGXjUFkPZCoCwEJmlwBi0lNyH/kSS
+	y+edZn5pcd05ZV5RXG7o/IBic/hd064+KSRetJTlqRtLqsJHLDFB2UcHNCyXs4y6kBrDtNJlB8F
+	zhTcHmM1QQKlq5vhPRuzfuNDzp9L2iWbSf0u6Cly15Jcz4gysXikvzE3gfJSc
+X-Gm-Gg: AYBFou19D4q55qLgRepU1xL8ln0v91aiGFj3pZQjhBOPERkIjLudsCoEWigkXIZwsle
+	RR0ccg1Ge9kSUAyp1jXB1zafalihzYZ4ea+jB8iPlGMCpsM25tlBq9wjCQ8zoUaAKmV977E7GjA
+	fuovgX2p+b/KkIY6Ruak7sZuRf85I6ldFlakkl0P+3rvh9NcS7yLAJlO4cftNbxkNIMCPHmkGc6
+	r+/eJp9uAmssxDP/4bhh/KQeaVq/QUe2m01JyXiQy+gm2g4CYNJ7Y9imoRa6bDDvAn1PrmKaoty
+	Ot7vNLOQp4QHu1X9gr704yPfffX4OTkDrgau/w1fIXQ4RtacZhL4
+X-Received: by 2002:a05:690c:4d81:b0:8ae:6740:999 with SMTP id 00721157ae682-8b07ed90a18mr10609317b3.20.1791597919979;
+        Fri, 09 Oct 2026 19:05:19 -0700 (PDT)
+X-Received: by 2002:a05:690c:4d81:b0:8ae:6740:999 with SMTP id 00721157ae682-8b07ed90a18mr10609237b3.20.1791597919575;
+        Fri, 09 Oct 2026 19:05:19 -0700 (PDT)
+Received: from rhdev ([2600:1700:f361:20bf::14c1])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07ee8c257sm14463027b3.3.2026.10.09.19.05.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2026 19:05:18 -0700 (PDT)
+From: Jennifer Berringer <jberring@redhat.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Jennifer Berringer <jberring@redhat.com>
+Subject: [PATCH] riscv: dts: spacemit: enable USB2.0 controllers on Milk-V Jupiter
+Date: Fri,  9 Oct 2026 22:03:17 -0400
+Message-ID: <20261009-jupiter-usb2-v1-1-ab84a00d3b64@redhat.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Change-ID: 20261009-jupiter-usb2-b888e544520a
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: OVXQg20bkToSHX5pamq8kkTBAmtkMeu5J0NndDlT_bQ_1791597920
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261010-02-k3-ethernet-support-v2-1-af7f55dcf207@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNwQ6DIBAFf8Vw7jawmio99T8aD4qrUhshgKaN8
- d8Leu5xknlvNubJafLsnm3M0aq9NnMEvGRMjc08EOguMkOON15hDhxhyoHCSG6mAH6x1rgAuex
- KlKLsClQsjq2jXn+O42d9sl/aF6mQ3pIxah+M+x7lVSTvjEgs/kVWARzaikTf9Cp68jEl4X01b
- mD1vu8/LpgCVc8AAAA=
-X-Change-ID: 20260823-02-k3-ethernet-support-39d72917d42c
-To: u-boot@lists.u-boot-project.org
-Cc: Tom Rini <trini@konsulko.com>, 
- Jerome Forissier <jerome.forissier@arm.com>, 
- Quentin Schulz <quentin.schulz@cherry.de>, 
- Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>, 
- Julien Stephan <jstephan@baylibre.com>, 
- David Lechner <dlechner@baylibre.com>, 
- Junhui Liu <junhui.liu@pigmoral.tech>, 
- fanyi zhang <fanyi.zhang@mediatek.com>, E Shattow <e@freeshell.de>, 
- spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2251; i=dlan@kernel.org;
- h=from:subject:message-id; bh=HNgfI0ITaHqMMC0XEGh9fE+g6mzvtdX4E4O2kC6paLE=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqyZpraR32GKyXlEzw+n0Goipv8H+GUPlzMHIpH
- BcMVkWxebqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCasmaaxsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+0fow/+Pn7UW2XJ1fX47sdh/BMCQQlnZCJPFIe29RG1yl3gKQ3YH/90rKWru
- aDkuG03mViMjsJiT6PqZsLWybaZtYv8bW2R2xlg1uimWjCEqoDZfGXWFfoOaqejybIeShmkmD/n
- nwESKW2RKY6lRRuqGtG4dMO03M3XPMBbgiR6ob6HslbM3WwMU29O224p/eQAf7uaffLbOH5MdC+
- bGDXWKSLe6m0qx0k2po8ybYXThM70540dfPVKI13VY/yrL6JCoZ9fRbcfVUAdRa0OhUwl1yqT/B
- uOsoIRRKu5MVW5P+mYb/GtmXe8YmjUwmoDdWHmT3XHUzMxRSq/9zxkCRTjL2oTcIDNm1IOKGf9G
- 9iYTrROI+WYFyZKNT9Zk5t469clUgDphKw370X9mzvzm7AwaUVhBUzZGq2CHk8DBSg6Cv2qP82W
- Fy5J/ZYBzvo1B0D51zZS2E27S1rMvolriCH/dE0cuNyuI5Vcjm8JMEJlzPoyr1JbxzfL50i3A6+
- dCxx27344udjq2IHdMaQRo77kLjelpT5j14VLFqvCx3axipGHFA9Sk4b/GQFxescT+Oh9U/XTVN
- rYiHzpI9A1XTEdoddFp1WR/4xQ732abl3LeedfvbGWb7pVJYbGcXukUU6CFLT9yxfWAAYEMMCcS
- SVH30hrreZ7SqUNJUWAHImI+tiWgZo=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+Content-Transfer-Encoding: 8bit
 
-Enable the SpacemiT platform glue for the DesignWare Ethernet QoS
-controller together with the generic PHY framework, Gigabit Ethernet
-PHY support and the Realtek PHY driver.
+On Milk-V Jupiter boards, usb2_0 is connected to a Type-C connector
+which cannot act as a power source. That port can act as USB host if
+connected to a self-powered hub.
 
-Enable DHCP, MII, ping and PXE commands for network configuration,
-diagnostics and network boot. Allow U-Boot to generate a random
-Ethernet address when no valid address is provided by the board.
+usb2_1 has vbus output controlled by gpio 127 and is connected to a
+FE1.1s hub, which drives four ports: two rear Type-A receptacles and a
+9-pin header for two chassis ports.
 
-Verified and tested on Pico-ITX board with commands of dhcp, ping,
-tftpboot download using md5sum check.
-
-Tested-by: E Shattow <e@freeshell.de>
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Signed-off-by: Jennifer Berringer <jberring@redhat.com>
 ---
-This series try to add a Synopsys DWMAC glue driver for SpacemiT
-K3 SoC, and also enable ethernet support in the defconfig file.
+This patch depends on
+https://lore.kernel.org/spacemit/20261009-b4-spacemit-k1-usb2-v4-0-2d98e5324d9a@linux.spacemit.com/
 
-Tested on K3 Pico-ITX board with command of dhcp, ping, tftpboot.
+This conflicts with the Jupiter M1 patch set but can be applied on top
+of it if all instances of "k1-milkv-jupiter.dts" in this diff are
+replaced with "k1-milkv-jupiter-common.dtsi"
 ---
-Changes in v2:
-- drop dwc_eth_qos patch which applied via net tree
-- update config to enable DNS WGET NET_LWIP
-- apply Tested-by tag
-- Link to v1: https://patch.msgid.link/20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org
----
- configs/spacemit_k3_defconfig | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 35 +++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/configs/spacemit_k3_defconfig b/configs/spacemit_k3_defconfig
-index a6d1f35a93e..586305c6232 100644
---- a/configs/spacemit_k3_defconfig
-+++ b/configs/spacemit_k3_defconfig
-@@ -24,11 +24,19 @@ CONFIG_SYS_PBSIZE=276
- CONFIG_HUSH_PARSER=y
- CONFIG_CMD_GPIO=y
- CONFIG_CMD_I2C=y
-+CONFIG_CMD_DHCP=y
-+CONFIG_CMD_DNS=y
-+CONFIG_CMD_MII=y
-+CONFIG_CMD_PING=y
-+CONFIG_CMD_WGET=y
-+CONFIG_CMD_PXE=y
- CONFIG_CMD_PMIC=y
- CONFIG_CMD_REGULATOR=y
- CONFIG_CMD_FAT=y
- CONFIG_CMD_FS_GENERIC=y
- CONFIG_DEVICE_TREE_INCLUDES="spacemit-k3-u-boot.dtsi"
-+CONFIG_NET_LWIP=y
-+CONFIG_NET_RANDOM_ETHADDR=y
- CONFIG_SYSCON=y
- CONFIG_CLK_SPACEMIT=y
- CONFIG_CLK_SPACEMIT_K3=y
-@@ -36,6 +44,11 @@ CONFIG_SPACEMIT_GPIO=y
- CONFIG_DM_I2C=y
- CONFIG_SYS_I2C_SPACEMIT_K1=y
- CONFIG_MISC=y
-+CONFIG_PHY_GIGE=y
-+CONFIG_DWC_ETH_QOS=y
-+CONFIG_DWC_ETH_QOS_SPACEMIT=y
-+CONFIG_PHY_REALTEK=y
-+CONFIG_PHY=y
- CONFIG_PINCTRL=y
- CONFIG_PINCTRL_SPACEMIT_K1=y
- CONFIG_DM_PMIC=y
+diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+index 635e95aad14a5..913c2170bf6a2 100644
+--- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
++++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+@@ -82,6 +82,16 @@ reg_vcc_5v: regulator-vcc-5v {
+ 		vin-supply = <&reg_dc_in>;
+ 	};
+ 
++	reg_usb2_vbus: regulator-usb2-vbus-5v {
++		compatible = "regulator-fixed";
++		regulator-name = "USB20_VBUS";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&reg_vcc_5v>;
++		gpio = <&gpio K1_GPIO(127) GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
+ 	regulator-usb3-vbus-5v {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "USB30_VBUS";
+@@ -443,10 +453,35 @@ &uart0 {
+ 	status = "okay";
+ };
+ 
++&usbphy0 {
++	status = "okay";
++};
++
++&usbphy1 {
++	status = "okay";
++};
++
+ &usbphy2 {
+ 	status = "okay";
+ };
+ 
++&usb2_0 {
++	status = "okay";
++};
++
++&usb2_1 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++	vbus-supply = <&reg_usb2_vbus>;
++	status = "okay";
++
++	hub_2_1: hub@1 {
++		compatible = "usb1a40,0101";
++		reg = <1>;
++		vdd-supply = <&pcie_vcc_3v3>;
++	};
++};
++
+ &usb_dwc3 {
+ 	dr_mode = "host";
+ 	#address-cells = <1>;
 
 ---
-base-commit: 9de53bfd71f893b25e44a747ac0b0612e1b27c21
-change-id: 20260823-02-k3-ethernet-support-39d72917d42c
+base-commit: e5e04726cdd043e309677071ab1b65a4b18f422b
+change-id: 20261009-jupiter-usb2-b888e544520a
+prerequisite-change-id: 20260812-b4-spacemit-k1-usb2-97adfc283d58:v4
+prerequisite-patch-id: ccc56cd7363a39566f74b3628fbe2ccf01c76774
+prerequisite-patch-id: ee646b8712bc41793579b8abc30d8d3f616d36e7
+prerequisite-patch-id: 793abd51f18ae96cc2cbcb447721ca9ae1e6fa49
+prerequisite-patch-id: 67bf74a44fd81390c82c07921d808a58a5211fb7
+prerequisite-patch-id: 801c65013a1e55dfdbf3d3b061752ddb972afb18
+prerequisite-patch-id: 2321f949dcfb2609932da94cabc969812f11669f
+prerequisite-patch-id: 0843cac1ae192e99f2562f5ac882dfc4f9a10637
+prerequisite-patch-id: 7ce394f4284c628b7d6187d8ee555726c94675ad
 
 Best regards,
---  
-Yixun Lan <dlan@kernel.org>
+-- 
+Jennifer Berringer <jberring@redhat.com>
 
