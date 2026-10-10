@@ -1,107 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CC213A258;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDE367B70
+	for <spacemit@lists.linux.dev>; Sat, 10 Oct 2026 01:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791576611; cv=none; b=jVftPSZPBioCrVbIcXfknHFrsbi/dIaJi03IlyJFv9XZNzM8my2dS6B8WAhU3lOFsaO0Ma2rAPwsiIbHdJKfDkY8RYQfdFBNvIF0Ln1gjaoxUWMR0cU31X8TZLWQZ92mcryIfFKBSslaxZ9c5HndaU068RA+JLM93obrY5YyyDU=
+	t=1791597170; cv=none; b=fICZ9o1vlcAnGgtAznQjikM1/N2rd09yvTih2TlqirRbUR28CyKmQtXDs7k7Xpk5vclCmCcS3mvbMtXgrAXzzko0VIUp+M9HN3Dv/AalJDZvoWnPGJ5iYUwpQ3Kr1wOyzAXf6ARfS4IysJRop/9ThJrbbpzssShDOnwNfoeoTdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791576611; c=relaxed/simple;
-	bh=fdXBHBKBGOWZYHxGmnNehDYrYDgodaAYcpW8x1x9m4M=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=f2u/9bMESyAM/oy8wygSOPHO4Yhwkc0pGXpL1+lBfeG/4zNjHfcC1+MgOolNtiNPO0AhVGA0o17RGPFBOyz6ax9v4xxinM0TfxkIASnDr6GuVktbPzmVdKhFlutqrlcUtREPtcSskxHR89UouMKydsMnhOFOf8vczgO60a+lcLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KuW/M6N/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791597170; c=relaxed/simple;
+	bh=HNgfI0ITaHqMMC0XEGh9fE+g6mzvtdX4E4O2kC6paLE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=f9HNxuNvV4Cdwe/K/e+/9bjNvTocJ2qJWV9ziDvrY+Fs0z8zRrtUatRFScf3MnXmli7VvYsw8oqBksdAMHeSQE5JNLkE96wwPRUHFShO/brZOGs4Id1cjBmb4PfGB1kA5vObTXZ6JdHHuthJ3RvaswhgNkRL5z4YPepEZn8z4wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Krmww4GG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KuW/M6N/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823791F000FF;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Krmww4GG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF131F000FF;
+	Sat, 10 Oct 2026 01:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791576609;
-	bh=yAtT7Kz/cfBbECexhY2+7vMzFYjycFt1jV6uHWCe2qk=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=KuW/M6N/Jv+w8fSTI5MzC+c9uyJsMxvbGXsObHMBwAHcv9THa/zJNw6bKJbAShw+b
-	 vo4r+Bin+QhP33tm/lxugoPH+tlrxXLdYq2PXG7LEpA8Rm9PbrObKEo3J/22umLOmX
-	 J6pW9AV0n+1Rxc3sdTw6eUmSMMhezq88f+/bVbtCbHU/q8rg1HMrSuZtly5bTfvCrJ
-	 pzuTkS+Nrg7nULbEPCcKpx2psI1+uWR2olv7EEwBAOUR5dHGgbiJfCwi+Dye3uNTnl
-	 3VNLX/ZtnUsgaetwYGolyY055wcRD0nTv6z49gmPJl4Lm2lABU1cDz45QS71EshN6x
-	 G/tZjYSKsz6Tg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7742D392627A;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20260515; t=1791597169;
+	bh=b8VyvwGUWZgnuGhH2kpoemzvnQb+nix4qYjZeGdiHK0=;
+	h=From:Date:Subject:To:Cc;
+	b=Krmww4GGxyxl8HPhS8SKwZv+wz6XAQB34mBE6HzEe7f20muhZ6aEmLcqjmvByqj1M
+	 GTJIV5xUYZosM95XqWZYqfU6pxyoFGroUCi7HXEkUynEmIFM6KChHPKN4fKWCmt/T6
+	 bkcSYIfRUU5cjMu4QzhX/v779LAgCnWK2zTqy1GxfBLSJkXcSFYy4qt8K4xQKh9wI/
+	 OzClAJyR6mridBjvyiOPUWvj5VHkXq4PJfj9m7yslE9Lc+yPHErLZjJaoQNMSWkM3b
+	 QNXU3GLKZhQxRUtkmv42GzxIfCeJPr6cH8CBO66yiJG9WaZd6+rY0FmWOCR0WR8Kvo
+	 /0RrmqEHstkfg==
+From: Yixun Lan <dlan@kernel.org>
+Date: Sat, 10 Oct 2026 01:52:39 +0000
+Subject: [PATCH v2] configs: spacemit: k3: Enable Ethernet support
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v8 00/11] riscv: hwprobe: Expose RVA23U64 base behavior
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <179157660809.984023.2184718764665109991.git-patchwork-notify@kernel.org>
-Date: Fri, 09 Oct 2026 20:10:08 +0000
-References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
-In-Reply-To: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
-To: Guodong Xu <guodong.xu@oss.qualcomm.com>
-Cc: linux-riscv@lists.infradead.org, corbet@lwn.net,
- skhan@linuxfoundation.org, pjw@kernel.org, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, dlan@kernel.org, chen.wang@linux.dev,
- inochiama@gmail.com, rdunlap@infradead.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, paul.walmsley@sifive.com, conor@kernel.org,
- devicetree@vger.kernel.org, spacemit@lists.linux.dev, sophgo@lists.linux.dev,
- linux-kselftest@vger.kernel.org, tchiu@tenstorrent.com, fweimer@redhat.com,
- bergner@oss.tenstorrent.com, zihong.plct@isrc.iscas.ac.cn,
- mark.hsj@gmail.com, aurelien@aurel32.net, andrew.jones@oss.qualcomm.com,
- conor.dooley@microchip.com, qingwei.hu@bytedance.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261010-02-k3-ethernet-support-v2-1-af7f55dcf207@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WNwQ6DIBAFf8Vw7jawmio99T8aD4qrUhshgKaN8
+ d8Leu5xknlvNubJafLsnm3M0aq9NnMEvGRMjc08EOguMkOON15hDhxhyoHCSG6mAH6x1rgAuex
+ KlKLsClQsjq2jXn+O42d9sl/aF6mQ3pIxah+M+x7lVSTvjEgs/kVWARzaikTf9Cp68jEl4X01b
+ mD1vu8/LpgCVc8AAAA=
+X-Change-ID: 20260823-02-k3-ethernet-support-39d72917d42c
+To: u-boot@lists.u-boot-project.org
+Cc: Tom Rini <trini@konsulko.com>, 
+ Jerome Forissier <jerome.forissier@arm.com>, 
+ Quentin Schulz <quentin.schulz@cherry.de>, 
+ Peter Robinson <pbrobinson@gmail.com>, Johan Jonker <jbx6244@gmail.com>, 
+ Julien Stephan <jstephan@baylibre.com>, 
+ David Lechner <dlechner@baylibre.com>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, 
+ fanyi zhang <fanyi.zhang@mediatek.com>, E Shattow <e@freeshell.de>, 
+ spacemit@lists.linux.dev, Yixun Lan <dlan@kernel.org>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2251; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=HNgfI0ITaHqMMC0XEGh9fE+g6mzvtdX4E4O2kC6paLE=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBqyZpraR32GKyXlEzw+n0Goipv8H+GUPlzMHIpH
+ BcMVkWxebqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCasmaaxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0fow/+Pn7UW2XJ1fX47sdh/BMCQQlnZCJPFIe29RG1yl3gKQ3YH/90rKWru
+ aDkuG03mViMjsJiT6PqZsLWybaZtYv8bW2R2xlg1uimWjCEqoDZfGXWFfoOaqejybIeShmkmD/n
+ nwESKW2RKY6lRRuqGtG4dMO03M3XPMBbgiR6ob6HslbM3WwMU29O224p/eQAf7uaffLbOH5MdC+
+ bGDXWKSLe6m0qx0k2po8ybYXThM70540dfPVKI13VY/yrL6JCoZ9fRbcfVUAdRa0OhUwl1yqT/B
+ uOsoIRRKu5MVW5P+mYb/GtmXe8YmjUwmoDdWHmT3XHUzMxRSq/9zxkCRTjL2oTcIDNm1IOKGf9G
+ 9iYTrROI+WYFyZKNT9Zk5t469clUgDphKw370X9mzvzm7AwaUVhBUzZGq2CHk8DBSg6Cv2qP82W
+ Fy5J/ZYBzvo1B0D51zZS2E27S1rMvolriCH/dE0cuNyuI5Vcjm8JMEJlzPoyr1JbxzfL50i3A6+
+ dCxx27344udjq2IHdMaQRo77kLjelpT5j14VLFqvCx3axipGHFA9Sk4b/GQFxescT+Oh9U/XTVN
+ rYiHzpI9A1XTEdoddFp1WR/4xQ732abl3LeedfvbGWb7pVJYbGcXukUU6CFLT9yxfWAAYEMMCcS
+ SVH30hrreZ7SqUNJUWAHImI+tiWgZo=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Hello:
+Enable the SpacemiT platform glue for the DesignWare Ethernet QoS
+controller together with the generic PHY framework, Gigabit Ethernet
+PHY support and the Realtek PHY driver.
 
-This series was applied to riscv/linux.git (for-next)
-by Paul Walmsley <pjw@kernel.org>:
+Enable DHCP, MII, ping and PXE commands for network configuration,
+diagnostics and network boot. Allow U-Boot to generate a random
+Ethernet address when no valid address is provided by the board.
 
-On Sun, 20 Sep 2026 03:18:20 -0400 you wrote:
-> This series builds on Andrew Jones's earlier RFC [1]. It lets userspace
-> check for RVA23U64 conformance in one call, instead of walking hwprobe +
-> prctl across every mandatory extension.
-> 
-> The series adds a small framework that resolves profile-class bases (IMA
-> and RVA23U64) from the kernel's ISA extension bitmap at init time, and
-> surfaces the result through both /proc/cpuinfo and hwprobe. Later patches
-> can add RVA23S64, and backward RVA22 / RVA20 detection, to
-> riscv_set_isa_bases() without changes to the surrounding code.
-> 
-> [...]
+Verified and tested on Pico-ITX board with commands of dhcp, ping,
+tftpboot download using md5sum check.
 
-Here is the summary with links:
-  - [v8,01/11] riscv: Add B to hwcap and hwprobe
-    https://git.kernel.org/riscv/c/fbab8abaac8f
-  - [v8,02/11] dt-bindings: riscv: Require block-size for Zicbom, Zicbop, and Zicboz
-    https://git.kernel.org/riscv/c/40623184c6f0
-  - [v8,03/11] dt-bindings: riscv: Add Zic64b extension description
-    https://git.kernel.org/riscv/c/3776fb1a1b6c
-  - [v8,04/11] riscv: Add Zic64b to cpufeature and hwprobe
-    https://git.kernel.org/riscv/c/7493567982b0
-  - [v8,05/11] riscv: dts: spacemit: k3: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/7c4752c60f99
-  - [v8,06/11] riscv: dts: spacemit: k1: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/1fc72ff0d3fc
-  - [v8,07/11] riscv: dts: sophgo: sg2044: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/ca0c312bdf6a
-  - [v8,08/11] riscv: Add a getter for user PMLEN support
-    https://git.kernel.org/riscv/c/55458c7347a3
-  - [v8,09/11] riscv: cpufeature: Introduce ISA bases bitmap and rva23u64 detection
-    (no matching commit)
-  - [v8,10/11] riscv: cpu: Output isa bases lines in cpuinfo
-    (no matching commit)
-  - [v8,11/11] riscv: hwprobe: Introduce rva23u64 base behavior
-    (no matching commit)
+Tested-by: E Shattow <e@freeshell.de>
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+This series try to add a Synopsys DWMAC glue driver for SpacemiT
+K3 SoC, and also enable ethernet support in the defconfig file.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Tested on K3 Pico-ITX board with command of dhcp, ping, tftpboot.
+---
+Changes in v2:
+- drop dwc_eth_qos patch which applied via net tree
+- update config to enable DNS WGET NET_LWIP
+- apply Tested-by tag
+- Link to v1: https://patch.msgid.link/20260924-02-k3-ethernet-support-v1-0-b8e1fafc9249@kernel.org
+---
+ configs/spacemit_k3_defconfig | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
+diff --git a/configs/spacemit_k3_defconfig b/configs/spacemit_k3_defconfig
+index a6d1f35a93e..586305c6232 100644
+--- a/configs/spacemit_k3_defconfig
++++ b/configs/spacemit_k3_defconfig
+@@ -24,11 +24,19 @@ CONFIG_SYS_PBSIZE=276
+ CONFIG_HUSH_PARSER=y
+ CONFIG_CMD_GPIO=y
+ CONFIG_CMD_I2C=y
++CONFIG_CMD_DHCP=y
++CONFIG_CMD_DNS=y
++CONFIG_CMD_MII=y
++CONFIG_CMD_PING=y
++CONFIG_CMD_WGET=y
++CONFIG_CMD_PXE=y
+ CONFIG_CMD_PMIC=y
+ CONFIG_CMD_REGULATOR=y
+ CONFIG_CMD_FAT=y
+ CONFIG_CMD_FS_GENERIC=y
+ CONFIG_DEVICE_TREE_INCLUDES="spacemit-k3-u-boot.dtsi"
++CONFIG_NET_LWIP=y
++CONFIG_NET_RANDOM_ETHADDR=y
+ CONFIG_SYSCON=y
+ CONFIG_CLK_SPACEMIT=y
+ CONFIG_CLK_SPACEMIT_K3=y
+@@ -36,6 +44,11 @@ CONFIG_SPACEMIT_GPIO=y
+ CONFIG_DM_I2C=y
+ CONFIG_SYS_I2C_SPACEMIT_K1=y
+ CONFIG_MISC=y
++CONFIG_PHY_GIGE=y
++CONFIG_DWC_ETH_QOS=y
++CONFIG_DWC_ETH_QOS_SPACEMIT=y
++CONFIG_PHY_REALTEK=y
++CONFIG_PHY=y
+ CONFIG_PINCTRL=y
+ CONFIG_PINCTRL_SPACEMIT_K1=y
+ CONFIG_DM_PMIC=y
+
+---
+base-commit: 9de53bfd71f893b25e44a747ac0b0612e1b27c21
+change-id: 20260823-02-k3-ethernet-support-39d72917d42c
+
+Best regards,
+--  
+Yixun Lan <dlan@kernel.org>
 
