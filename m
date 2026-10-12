@@ -1,177 +1,126 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7FB4D2EE0
-	for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 18:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9951239446D
+	for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 23:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791829931; cv=none; b=UcReW1Fg6cyV1x26cgnmRPpRS6eDq48RPTcflpzEgh/CtljCXEUlDtOG31R1c4los/OA8lFB3hDJWfCcntl5MKRybdbPWpUrapE4S3d/SjefZX8PAyxmoqmrEDZzlyHNIv8bGTacyG5vCgbCrRK4g0A6wwNhbrM0ihqfeFf4FlM=
+	t=1791849391; cv=none; b=NS1HKMfEEleXnqR3VPFQKUBP/PJ6iCpMJvzjZnVaJgoqTFpAulXaCiZtS47GT6XB+GCrfveuhV6EIQ/7Uph2hXZICmEGStidanRuy9AuKi9RrnLfxk0eROiAisuOpUvENVrLwPk5gAFjapQ8bPUC/VfR2+9BSBziEbHb4O6TtRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791829931; c=relaxed/simple;
-	bh=H3ajQd7wm1bFogX14K0eYfOdNs6MQ8yHjBdXJ/cawUA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=fx+oIF2zip8STQm4oVsoMIujvKntd6lXxQjlcizrVixD5RJOU2JnQRTILB3ZIo673X+pzfVw9PNiv82KzwhA/QOlxOrN6MkMn1viBeQ777+AejOfEd83zYjZmdq/Ubj2VjALa+JCDW8oG0cP0wq0FPReyy77onIqp3HzEK2UJjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Zb9CfTSs; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1791849391; c=relaxed/simple;
+	bh=07zRKt+iURfkbu1QFEt/0Wl2s591iOQMk67RKiSaS2s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XKRZB6xOj8jY8BoKoT5RaNL4VDe4X/iI4dcc7lwwhN7CLr8TLhf0GVctnXSRFmMV71qGnguBJtvd4FCSdwP/aOmwC/3DVMKYahCeYnWnyTidRNmOQstLp3owxfcFwDblCsTxwA2mM3hbYivqHIOlXN2k8JtI6Wv0KiYK054rqhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBsWybpM; arc=none smtp.client-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Zb9CfTSs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791829928;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Mp4Az4pn5hEgJeWah5nozn6weJjpUXzUrROIxr1Rl0E=;
-	b=Zb9CfTSs0i3e6oihYEcyFZF3C+/aQQQKmrZz2FT4ho35XwTvVg4RDlQcZJ2EDebcM0aZWb
-	w6uaGxuB15x8lf0K/9ktfQLwJWuv739TbAACa7dyhTIzp1P0jNPiJh5PO4AkDvctOlwvjK
-	NekjD7PmpN/MOlvQjlCMaiyan5vJ5mU=
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-jCqffShDMZyGx73S2BQP5A-1; Mon, 12 Oct 2026 18:32:07 +0000
-X-MC-Unique: jCqffShDMZyGx73S2BQP5A-1
-X-Mimecast-MFC-AGG-ID: jCqffShDMZyGx73S2BQP5A_1791829927
-Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-5d6d5ea0757so2814752e0c.1
-        for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 11:32:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBsWybpM"
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-3535bf8b3e0so3727005eec.0
+        for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 16:56:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791849390; x=1792454190; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1VeLk5FpKsQq/qjV/WEYAWBiUl9W5UJD8Aw3U9SBRbA=;
+        b=fBsWybpMHwGJRkgD95Kfqcz9eKajqFPR0CF8KvvH6okk2pkT9JgzXGo+14YmlSh85W
+         98LyjM2ozYiAaKjuGpFOT1rU3j4R/Pp2mM/r1eSGgkedFM1RTRxJKcdXAPiruELZYbeq
+         7mXkDFUfcmh709ubia1pArbVcPvNbHSuAAr23WVgJmg0HkLMMGreWAW9rnxCbl5loCbK
+         OaJ8N9ahZc+SKaprZopzytBZdjVeSAw+d5IAi+7tSdZ6pcLoE4vPWNlirLxZKvBKoNq4
+         BZUT5Vpi0ug/KKKI2zKCcrXYfb7MUPwA3XSGf4Xcy0DWIqF1icXTWZlMi3464UUFAiHh
+         lv9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791829927; x=1792434727;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=Mp4Az4pn5hEgJeWah5nozn6weJjpUXzUrROIxr1Rl0E=;
-        b=hXJxidGLK9TM4XOqeaOpL00hH6tFgYMmHO7L95EEefSSea7ZRgnk1tVeVnP8PnnOK1
-         AiYmSWgIngCshMx4ilY40IIXsLBhYw4ZMy6zyM00CrqwiQSeoosSFF5JEZDLyEuaLSzr
-         rBivfS9t+DKtLFHtsLzF7prLDfc5rtYIhZp5/HQl5XjXmP4bBxgT2n2NVDgY4vLIokZD
-         nH97OrKW1zhcNAUv4TWk4ejiiOhf1chSZiYz5U09oEl9A4n24ZSAmEiP0hOY0P1UYlIo
-         QXagDRPrQWSpW3JoWJVNmNJh66MQtBmBsjZGhfhjJM1OVXWjHamiyuG6vC4pmroxec8I
-         gt1g==
-X-Forwarded-Encrypted: i=1; AKwUvBzgyrQ5UyQwfTUp/h8O27AGnIScndfYodVQV1t60oqUgeov/GdnYVv6YdKXsynA1irl2EtU32XnJQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYLHA8W/Jfa38oF5q+EwzHXHXohPxdsPeD/sER08PsuWy86qmBzI
-	lCCWeyl890WFC4zaBDr/O6kZkQO/VgXcUN945l1ylfJuFNzSn0TFz0VRylb5PKBpt2Qbj/ACnCQ
-	TnDGUJ5ZMlcuofoPsUQ9ufMyMFmSeaQozAsZS3iv4MAMwBRlIjeEeGFJEumMD0GZSferGDGU=
-X-Gm-Gg: AYBFou1kM4u7RO9tPMabkg+UJW+MzN/0/p6RnlmkSpDEKdvsS9+nw6hz7BXLY8ej6tL
-	XzuWTytI9zy+prDbTIkj4Xi2SVOjFOJMJdtbGzBuzGOAlzmmsnahS5KP81+o/1IaSoKGvtB4bnM
-	eeWaIdxEgUpgKS/NF8w1M+wnn5fgPwCQGOiZZ1J0se3SPSeg9PqKzD+KKz7q40TGd2EWJq21ZOm
-	DCa2Etz2/16LTcNtU47xOSVw9btmz6aR6Ww+16GdmHNb0qvrKDOvCMaBqYUZZbaV22FkmVpi48J
-	Xy6ODkazjOe7Ag1pMiFco1ZdVfk/HBad9seim09uLW6BhK+OGD1sOw==
-X-Received: by 2002:a05:6123:550:20b0:5c9:a60c:273d with SMTP id 71dfb90a1353d-5e91f4fc783mr2548294e0c.21.1791829927036;
-        Mon, 12 Oct 2026 11:32:07 -0700 (PDT)
-X-Received: by 2002:a05:6123:550:20b0:5c9:a60c:273d with SMTP id 71dfb90a1353d-5e91f4fc783mr2548281e0c.21.1791829926536;
-        Mon, 12 Oct 2026 11:32:06 -0700 (PDT)
-Received: from rhdev ([2600:1700:f361:20bf::14c1])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5e92f300f42sm5764908e0c.0.2026.10.12.11.32.05
+        d=1e100.net; s=20260707; t=1791849390; x=1792454190;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=1VeLk5FpKsQq/qjV/WEYAWBiUl9W5UJD8Aw3U9SBRbA=;
+        b=cx+1Uwz6F4GG4xtK/Ysgvel9MzEebMAWX/yT+4dPGqKSHe1U8VJiiWrJrPZUmqAJpq
+         /N0RtA/He6VRN0L5NGYCpg+d7r+Pcqk7GnwHZMS5Byz03M2uhI14uaBQ/927M4oUCVCf
+         3WcogJI3JM2SrydeZOHsa6x7D2rLJ2s0fAeH+YmLdehr/36L/rMYxEOff7i1eN5BTt1K
+         dcrdODPI++TmBWC/naT78uHQxlMNo6NSBJOaU/yUPlU02UEGGmq1bRohkJMsN5cgw7MP
+         /EONG41M+v7ixrLVDsRDywRCcCYfUH6dJwVhANZEM9eE0FrphH/DWgBTj8WSOB2Sx6EG
+         dMJg==
+X-Forwarded-Encrypted: i=1; AKwUvBxnfhtKU2iqjI9PTwaJUu5wxYtX+RnZgQilv+jhC3ajljEcsCfTzIRuFHX/Qu6fXoA6+ynOWk0Xjg==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJn0zrCP+NSvUe4CF20qVOYk2Co3lFpz0C8ylc769Ff3OQAUSjm
+	wgid5luGXvGa0a+jEYY45wCzyVs4h4wVTPpgkpt5Li/Zw1aod6A5u8GT
+X-Gm-Gg: AYBFou1GtD0fosJyNbp9Szl+EWNf3kNtWvxGu/GQzhu5bcmEMTUvI1LKSiaCMpVM5Pb
+	DXUeQeC4/hwGultC0rNMOQ0JKZH23xac91MIwDWdnWM7rjmLn0QVcfmtTtD3j33CmQKb9PRHKBp
+	LQyPG3ACYXRHs8kExg9OKu901b8hx37+GiDZZg8st9pgVKSS8GdtP0n1ewHgrl4GnVZcoY/7Hcl
+	XQPxVMgWrWAfHOF6mNXFveBqMKHQ80G3fnNpQzm9VftnHXOG1fRIO/WCpwswyizFfOD8OVmEZJV
+	jbWfZyuqJJIbFCQsIZvgtiZmkLLeZHslmxLMzJMUZsN3D4bxXbBuoDmrIHefix4hRjXGNvblT4Q
+	+4ivpJgpLkrI/ujVAlfXer1ftZCkToWW4WYRUsO9rPOLMEJehNVXHZtJrgmljqSFMYxZjnkN4fc
+	huFMuNsNbQNLuKH0ZPcVzQ7xjtXNzRQRJjtsO+G+6iA+cgBewoYj9B7Fmdio5KZoSmeJSd2nm/7
+	BOYpuhm31TZBFZ1uRMQIEJMJGQSxMJrLVX4mRg/fzSojf1YoJfLSsvhilp0cg2r0AZqeqXcvSuA
+	WnIF6qL4oIPFT/qAaA3d0HnEnydw2uaHezmF+lAjeEcyLmBN/aW/i5AfvTN00F0S
+X-Received: by 2002:a05:7301:4e88:b0:35a:efce:6190 with SMTP id 5a478bee46e88-35aefce65c3mr6631069eec.28.1791849389564;
+        Mon, 12 Oct 2026 16:56:29 -0700 (PDT)
+Received: from alanhc-14700.tailb22ec2.ts.net (180-177-138-120.dynamic.kbronet.com.tw. [180.177.138.120])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35b690af3easm8686145eec.1.2026.10.12.16.56.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 11:32:06 -0700 (PDT)
-Date: Mon, 12 Oct 2026 14:32:04 -0400
-From: Jennifer Berringer <jberring@redhat.com>
-To: Shengyu Qu <wiagn233@outlook.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
-	James Morris <jmorris@namei.org>
-Subject: Re: [PATCH 4/4] riscv: dts: spacemit: k3-com260-ifx: Add rfkill nodes
-Message-ID: <20261012183204.c845fc69@redhat.com>
-References: <20260928231807.1757995-1-jberring@redhat.com>
- <20260928231807.1757995-5-jberring@redhat.com>
- <TYWPR01MB10887E1A3744FD44000F89E8F98922@TYWPR01MB10887.jpnprd01.prod.outlook.com>
+        Mon, 12 Oct 2026 16:56:29 -0700 (PDT)
+From: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+To: Yixun Lan <dlan@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	E Shattow <e@freeshell.de>,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] riscv: dts: spacemit: mark K1 boot nodes bootph-pre-ram
+Date: Tue, 13 Oct 2026 07:56:22 +0800
+Message-ID: <20261012235624.77993-1-alan.tseng.cs@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <TYWPR01MB10887E1A3744FD44000F89E8F98922@TYWPR01MB10887.jpnprd01.prod.outlook.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: jh618c7azznbt1i9HkBoHNRiwY1MFb_kaaBuAbb6qs0_1791829927
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-Hi,
+A bootloader SPL on the SpacemiT K1 runs from SRAM and needs a handful
+of nodes before DRAM is up: the root clocks and clock controllers, the
+console UART, the boot media (SD, eMMC, QSPI NOR), the board EEPROM
+used to identify the board, and the PMIC rails it programs before DRAM
+training. Today mainline U-Boot carries the bootph-pre-ram tags for
+these in per-board -u-boot.dtsi files.
 
-On Sat, Oct 10, 2026 at 03:08:35AM +0800, Shengyu Qu wrote:
-> Hi,
-> 
-> I don't think doing like this is correct.. We have a dedicated M.2 Ekey
-> binding and should use that:
-> 
-> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/connector/pcie-m2-e-connector.yaml
-> 
-> Best regards,
-> Shengyu
+When I sent a U-Boot patch adding another such file for the Milk-V
+Jupiter, E Shattow asked for the tags to go upstream first, so every
+K1 board gets them and the U-Boot overlays can shrink [1]. Earlier
+there was no working mainline SPL for K1 to justify them; there is now.
 
-To my understanding, the pwrseq-pcie-m2 driver that uses this binding
-currently only supports systems that use UART for Bluetooth, and is
-needed for them because UART is a non-discoverable bus. Quoting the
-cover letter of the series that introduced this binding:
+Patch 1 tags the SoC nodes in k1.dtsi. Patch 2 tags the board-specific
+EEPROM, PMIC rails and SPI NOR on the boards that have them. The set of
+nodes matches what the mainline U-Boot SPL tags for the BPI-F3 and
+MusePi Pro.
 
-"This series adds support for connectors that expose PCIe interface for
-WiFi and UART interface for BT. Other interfaces are left for future
-improvements." [1]
+Testing: all K1 DTBs build, and dtbs_check is clean for them with and
+without this series. I have not run an SPL built from these trees on
+hardware. On a Milk-V Jupiter running Linux I checked that the EEPROM,
+PMIC and SPI NOR answer at the addresses described.
 
-K3 CoM260 Dev Kit ships with its E-key slot populated with an RTL8852BE
-module, which uses PCIe for WiFi and USB2 for BT. I verified that my
-patch series does make the rfkill command be able to disconnect and
-reconnect the WiFi and BT devices with this module. I also tested this
-patch set with an Intel AX210.
+[1] https://lore.kernel.org/u-boot/5d323a11-da4e-4071-bdeb-ab5c03e8f85e@freeshell.de/
 
-In addition to PCIe and USB2, this board also has its M.2 E-key slot
-connected to sdio, uart6, and i2s3, but none of those are currently
-enabled in this dts and the RTL8852BE module does not use them.
+Hung-Chun Tseng (2):
+  riscv: dts: spacemit: k1: mark boot-critical SoC nodes bootph-pre-ram
+  riscv: dts: spacemit: mark K1 board boot devices bootph-pre-ram
 
-Several other existing device trees seem to use rfkill-gpio nodes to
-control W_DISABLE pins on M.2 E-key slots. Looking at rk3588 boards for
-example: OrangePi 5 Plus, ArmSoM W3, and Rock 5B all do so in the
-current tree.
+ arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi |  7 +++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   |  7 +++++++
+ arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts |  8 ++++++++
+ arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    |  8 ++++++++
+ arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  |  5 +++++
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  |  6 ++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi              | 12 ++++++++++++
+ 7 files changed, 53 insertions(+)
 
-Unlike those, the rfkill nodes in my patch aren't actually necessary for
-usable WiFi and BT on this board. The shutdown-gpios here are
-GPIO_ACTIVE_LOW and this merely allows using rfkill to block both radios
-via the W_DISABLE pins, so I'm not opposed to dropping this patch if
-anyone believes it should be dropped.
-
-[1] https://lore.kernel.org/lkml/20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com/
-
-> 
-> 在 2026/9/29 07:18, Jennifer Berringer 写道:
-> > K3 CoM260 IFX has an M.2 E-key slot for wireless. Add rfkill nodes for
-> > the GPIOs that control the slot's W_DISABLE1# and W_DISABLE2# pins for
-> > WLAN and Bluetooth.
-> > 
-> > Signed-off-by: Jennifer Berringer <jberring@redhat.com>
-> > ---
-> >   arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 14 ++++++++++++++
-> >   1 file changed, 14 insertions(+)
-> > 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-> > index 01e286cb05797..cd878340e5add 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-> > +++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-> > @@ -47,6 +47,20 @@ reg_aux_vcc3v3: regulator-aux-vcc3v3 {
-> >   		regulator-max-microvolt = <3300000>;
-> >   		regulator-always-on;
-> >   	};
-> > +
-> > +	rfkill-pcie-wlan {
-> > +		compatible = "rfkill-gpio";
-> > +		label = "rfkill-pcie-wlan";
-> > +		radio-type = "wlan";
-> > +		shutdown-gpios = <&gpio K3_GPIO(73) GPIO_ACTIVE_LOW>;
-> > +	};
-> > +
-> > +	rfkill-usb-bt {
-> > +		compatible = "rfkill-gpio";
-> > +		label = "rfkill-usb-bt";
-> > +		radio-type = "bluetooth";
-> > +		shutdown-gpios = <&gpio K3_GPIO(57) GPIO_ACTIVE_LOW>;
-> > +	};
-> >   };
-> >   &combophy {
-> 
+-- 
+2.43.0
 
