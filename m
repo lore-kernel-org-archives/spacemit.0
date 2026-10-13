@@ -1,464 +1,411 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazolkn19010020.outbound.protection.outlook.com [52.103.43.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A4F3E5A32
-	for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 23:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791849398; cv=none; b=GE3D49j+PGkGvpjT1OgkoA4fUU4GtXs7XXyhAXESnF601t1aVTBhxkJn7FQjFkBG3aCYCLrUo8S6jdcLxYhSVuwdyX0jOr33X+JX8IuCY20L3m+En5cb/FyEMTNEDT/gayjXOxzcpNLsCSUCuOgq67gPwGu5JZ/4erMFPDCArlo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791849398; c=relaxed/simple;
-	bh=lGsGKkyy9d4NARIdZRFLBjgm8D1dG3invfof4OQu4rs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzrMZsHP+0Brr06dLM4OjpCS9AXhsrYGLBKTSLNjBajvPQNSDblporM16pCzn9wckGjNQFNB2AxDcRhzLeR3kHvkVje88ghQtY3lsM+XX1BzRWcR4WQCvDObVfWwn3WzBgfS+/FCQirnbP0aPYl3qbpP4XDshUP8zOtQ2YJ7pjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qj6zL6F4; arc=none smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF571A9F84
+	for <spacemit@lists.linux.dev>; Tue, 13 Oct 2026 06:31:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791873074; cv=fail; b=o99BAC0c2j/OOvOSLexgnnb5Sh3RfvBNvc/eWo3YR7qgMEwIvVVMuBpH5lUT4LtTU4MjGGO+6ialcIqdGtV94vi40HUIkFpfT68/fWgWVPiqlvY3XmSfeSVFbHbnHPGZxVF3JHGLNfOKEOJBwNHoPScH9zjLmBQKGvW4RgrmcIA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791873074; c=relaxed/simple;
+	bh=yufYWdwkVgqmEYzIIiFdx/xt/5ugPgzHYtIHFYczM7c=;
+	h=Message-ID:Date:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Nqmdf59tWOpciGs6X/hsfcHAjDlchUnr4y3mvml7Si9aYD+XsBu0Lc4H8Gc1KJWU3L/pn6K5LjeCub2MMixTIsPHEfmLP51Ch58KZ9KOSbSihOIrrJVPHGvPkOwmg268SFReegBM3muzLuQ2SufgAoAVc+MyKj/FNsU2dAiZINw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=BqliCFBG; arc=fail smtp.client-ip=52.103.43.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qj6zL6F4"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-3514e7cbbbaso6007222eec.1
-        for <spacemit@lists.linux.dev>; Mon, 12 Oct 2026 16:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791849396; x=1792454196; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=GIe3e2jypmCgxdV2fa+T8K7iVPWqEf6EkwCnIkIhFj0=;
-        b=qj6zL6F4rBrY0vsjSxGhx+d4rlbf7RCjfOvBivE3C4niGZi7BVfsZARJf/R+xTxAlt
-         sbGOAZW9/r6L/gE0PjsoKYH8LJsjSN+3V6bmBYiG/nUAsqkXqsiQ+VwRvuqjF9ekhJvy
-         9i8VqK71lpbG6iWBTp9C9mmXVsg/Te6uIgYpledpDEjjw5h8kFxeN8Rx/X9FddvPjggS
-         28ZO+oV2g6bsYovejrbTQMPCmxruh/aHN8K8QtTxVH+hznilmuQiiVy9a0rSdon9SnYh
-         XAHZOE7frCm24meyFjeFhWgdGHE5SAItH6AfTcFUKz62LqDvmiGh/7m9nMWJe4TDyPVs
-         i89Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791849396; x=1792454196;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=GIe3e2jypmCgxdV2fa+T8K7iVPWqEf6EkwCnIkIhFj0=;
-        b=uoVwmwr2Axc/PEZYIPfYWZI3WPUd93T6Bks9bUAhCWklxILKEu1OlqAWCI/hTV2thM
-         CCw40XQ2NzGEHOp3O8uH7HWLxVx6xLq0vSfsD+nVr+b1lM7c6uIhFFzJJS4roV7Qe1MX
-         y5DvZmCerIGI6XlgcT8O3xanPTLVX6+GpajMHcyUCUs20UCbfwH2xt1nvZ1zt4oYkEQj
-         f7BCL0EXTkK2fPAkUCeBDgyIQ/KTMY/JL0wPjxzlD1vnDwcFg7zngEnC+o22CwGS2Xj8
-         dJio7PdIet8Kky2EhwhE+JTmMd0mjoVQDBaNDfTUvHTlAC855Byr7a8fBf9lfDiYJjIu
-         S61w==
-X-Forwarded-Encrypted: i=1; AKwUvBxWP6UILEwlHwC0TEoa5C4C7iAm6KZDwB/L4NUMNU234WavDQP8ZQvNGbiw6iz+xP3c6OHF3y2i7Q==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJ9lJdOt16fyqW9b6LBGfUcT/uvzod3kCulfS8xJ1SONEBtkKXB
-	vdbQNB31IhnKKBMzvlhXgcbOB9wJ0obMVJ+MCbwSY/0Dc+dWY64K8w8v
-X-Gm-Gg: AYBFou1URCFsXS12zNjDd9TGeCx0SuvpJfAyQvt1AJyEKmvBwKL4zzOnIPRkWmuaVNw
-	vUmBC0HDoUhOynvi+Cgl9TFh7YT/t6TBbBtalmAGFGHckQiRqZlT6E7rjKrY+P9eKoE7TcuacaJ
-	KeEbk3ScwiIL6ZCmU1cUOVsF7YJbHBodhw0vUQjNe+bigP+z8KWNQJuvvENgF/F6hx2TyTJD28z
-	9JHiFAiZxbgurd0czZ3vZSGwINVEQaoDs5lpuPqfbT+AF+RoYFBo8Ml7H/Bj3fmtNn8chtwsbEa
-	7RYlPieKDXpDvXI0cABwxkVrZvgPODze9dsyo2ITqi8oBbM2Gx7KDdekn2WQU/YnNacD8ALfixS
-	weMmfl/MtITx/sYb+Nd05qOcBxxXRbban7u8ltxcZH9+9hWr7KpYyWntm4Sb0amYSJ5cpFtnRrn
-	ngBFPiz55J1zNYnCN8JkmKts9sGblu9/QaNca5SdhMAQlhdsIP4tWj20s2cTObhVxY8vK1+ZVKY
-	ClFVFKlsjd95Urn3pHO5K/dtspwwvCbTi3VyJ5biqtMNpX0NXGuKb6gY4dlRukwb2Hs8RZRxDKc
-	p9m1hPgGFGToswlYgjKZhjmEWID0KQOUBDhcD2CnResGAJsS7nWlCw==
-X-Received: by 2002:a05:693c:26c1:b0:351:7e5d:2de9 with SMTP id 5a478bee46e88-3537ddd6142mr13773283eec.1.1791849395693;
-        Mon, 12 Oct 2026 16:56:35 -0700 (PDT)
-Received: from alanhc-14700.tailb22ec2.ts.net (180-177-138-120.dynamic.kbronet.com.tw. [180.177.138.120])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-35b690af3easm8686145eec.1.2026.10.12.16.56.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 16:56:35 -0700 (PDT)
-From: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
-To: Yixun Lan <dlan@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	E Shattow <e@freeshell.de>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] riscv: dts: spacemit: mark K1 board boot devices bootph-pre-ram
-Date: Tue, 13 Oct 2026 07:56:24 +0800
-Message-ID: <20261012235624.77993-3-alan.tseng.cs@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261012235624.77993-1-alan.tseng.cs@gmail.com>
-References: <20261012235624.77993-1-alan.tseng.cs@gmail.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="BqliCFBG"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TpE3v4uPkBFSI2ioEK2NB/U9QO2NIAIoOoUKkqlJFx2ssFO0rgA6XGxJCXZCnEscRMPjAxgfl7QmNP+s4/xatKiRqDf2dL6+1uPWyxMW2cUc8ezyZDo8rQ580yUpUDcDJheANQ9bOO93k+2xBSzyG3PCW0QSqruJX4cqxExDRv7q7jVbxyzk7ulFTDpgydzOY2waaYhNyYhkLIdqoyUXw1VZK1RMmiWUGNYlTVBPsTkkigkfZkefe8mXJYkZTrtSumcUOH48UO3GOD2vfhKWtGi4RWAOjCIoxxcMLETdoCSSzkSzoKD1cBx688pNSYugiPiXuzCJx3gEbbZTf1DFqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yufYWdwkVgqmEYzIIiFdx/xt/5ugPgzHYtIHFYczM7c=;
+ b=RPhXjN+OIpEu9+6+PQIesVKv+17xbQSu2ewEMHwBeTL+VzDIwoYBnRku9NONuNURZtxK0Bl8yyJyFrLWP4Dp65bptWJXcMJ76XkauoUrS2sb5C+Ek2H66/EJP4yNXk84tmB72gY13tH3WC/nOKPfdBp+Ath5RM6WrBCqDUqb+tfDOtKdFR3ujjHvJu5dNyLmmX/gDE6/eUs9bBLYXL1Ms/x+K7lwWXEDucGp5IApV+bM7klHcxAbEWEjl7w6cZYLVk9YF6J34gWLAEGhHHijNt8kmkXU9OOgbUDdCO2EgZBKZc4gvJbk/eS8loEg1WnlHEdt5P/3AFvTG2s6lrEsfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yufYWdwkVgqmEYzIIiFdx/xt/5ugPgzHYtIHFYczM7c=;
+ b=BqliCFBGnnDtvlCXFpcjWgpwt6s2cr+fNRn0XhJPQofmoqcBm+RIvWkG148btfgsqpot/ucZvKtAuNgtYz8EJocIybWjy1aBOtBJGFi+N2YUPGhPCtoX+eVSoteT5I/0glKMkrQCJbz7y/UFzuKq8fGdaedkdccJgq7gFvK80vSn2NGDfRl5up5+ZZNKL57rBQTP1GyKnt6oEF3Hw+1p8T4/sld+Sp277MTENdYwH5Py/RK8B65WJQL40aIqf118feKuUqkGD1h0gssFliI/ApkiOFUjpny7b3nBZJ2W2LyUeV1xbRMjk/UEGt9Ni+BhOo/6CfeDRJz2kq51db6hoA==
+Received: from TYVPR01MB10892.jpnprd01.prod.outlook.com
+ (2603:1096:400:29a::13) by TYWPR01MB7404.jpnprd01.prod.outlook.com
+ (2603:1096:400:eb::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 06:31:05 +0000
+Received: from TYVPR01MB10892.jpnprd01.prod.outlook.com
+ ([fe80::911f:7aa6:717e:cac3]) by TYVPR01MB10892.jpnprd01.prod.outlook.com
+ ([fe80::911f:7aa6:717e:cac3%5]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
+ 06:31:05 +0000
+Message-ID:
+ <TYVPR01MB10892166F8E1073891D64AD98989E2@TYVPR01MB10892.jpnprd01.prod.outlook.com>
+Date: Tue, 13 Oct 2026 14:30:54 +0800
+User-Agent: Mozilla Thunderbird
+Cc: wiagn233@outlook.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ James Morris <jmorris@namei.org>
+Subject: Re: [PATCH 4/4] riscv: dts: spacemit: k3-com260-ifx: Add rfkill nodes
+To: Jennifer Berringer <jberring@redhat.com>
+References: <20260928231807.1757995-1-jberring@redhat.com>
+ <20260928231807.1757995-5-jberring@redhat.com>
+ <TYWPR01MB10887E1A3744FD44000F89E8F98922@TYWPR01MB10887.jpnprd01.prod.outlook.com>
+ <20261012183204.c845fc69@redhat.com>
+From: Shengyu Qu <wiagn233@outlook.com>
+Content-Language: en-US
+Autocrypt: addr=wiagn233@outlook.com; keydata=
+ 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
+In-Reply-To: <20261012183204.c845fc69@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------m9mEhZVNtdS2mxS23Ml6w5cF"
+X-ClientProxiedBy: SE2P216CA0031.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:116::10) To TYVPR01MB10892.jpnprd01.prod.outlook.com
+ (2603:1096:400:29a::13)
+X-Microsoft-Original-Message-ID:
+ <fbdabbf5-98ee-4e08-87f3-77861f9d8a84@outlook.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYVPR01MB10892:EE_|TYWPR01MB7404:EE_
+X-MS-Office365-Filtering-Correlation-Id: dc47647d-828c-4d1d-4ae9-08df28f38e9b
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|23021999003|6092099016|51005399006|8060799015|19110799012|15080799012|12121999013|24021099003|4140399003|25010399006|440099028|4302099013|3412199025|26104999009|20055399003|1602099012|12091999003|40105399003|2607281247196008|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VDZXZU51dnNzQ2dQcUdSaEwwVDdnaGpvWisyQ2FBZVM1R0pXNWp2cEl5V1RD?=
+ =?utf-8?B?OVRSU3gxZ3RhbnVhVFY1UG5vWEtMVmlRNG9EMEcvaitRVS9rWWdxMDlWYndR?=
+ =?utf-8?B?TzBBeGtHaHdtUFVxc3ZGLy9hc0lzRlBMSGNhcWhUamJDSDhMRWJWcXhkRmR0?=
+ =?utf-8?B?OGNBd1E0S3dvNUdKNDEzdXgxemtYTVA0b2hwcm1aSG4rem02OUROUVpjR2NW?=
+ =?utf-8?B?cnpQWGNpdjhqcm9HNjdZVldscnJOR2xlb2hoL0FORkRNUjdwcDFZSHA4YWJC?=
+ =?utf-8?B?VlBzSWdRS0Z4eEFFN1dKQXY2a043QnYxZjhTZzB3TFhHUE5DR2c4MldVbTJi?=
+ =?utf-8?B?VHg1Rzlua0o5c2RIRytYZzRSNDlwN0N2OXRVRUFVMFBJRXdGdi9Pb1RzNkwx?=
+ =?utf-8?B?dnk0YlZWcy8ydjBnM2dOanBQRFdhTDNlS0pTVFJYVVBQVWd2Uk1yS0JQalJw?=
+ =?utf-8?B?WDFKcmV3aHlhMW40WExiU0FCam41VkRhRHNqSVMyaHh5V01BcWhXei8zMHlB?=
+ =?utf-8?B?WWVTcld1Zk9TZ0Q5Tk9vK0poTCtqMGhya09jdW9YWTZUeFljTWNjaXhOYnhw?=
+ =?utf-8?B?Yy9UZis0RkFCSlZVZmFNRy9nQVp1Vm8reEhNQXF0ejMxWDlYK3kxTSt0RFEx?=
+ =?utf-8?B?aEQwWVRKanY3Njhnd0pHbU16Znd6bFVHM2t3Mk5zcW4xeXpKL1BOOExIYUZo?=
+ =?utf-8?B?NjNOZkJKVjAvTWNoenF3c2xYT2NTRTBieEVHZUNSN0VNUTdmbUZaekdFS0FZ?=
+ =?utf-8?B?WUYrNXNXckJaOHVsczMrVS8zNDR3M0RreXl3ekhkbnQwTzlwWk4zVTRqYys5?=
+ =?utf-8?B?WE1Nc0JjdnM0ajlpT2hNK2d1NGQ4cDNXMzMvL2VoSkxSU2xzQVlaOWtQL3Bj?=
+ =?utf-8?B?Qk9HZlo5Unc3MjNPWE9kMllNeXJwdEJ1RCtkOGs5K2d2RVU3ckd6ZDhRbExj?=
+ =?utf-8?B?cFJSUmRaRGsxVkp3a2RWWi9rTDZ4KzIzRjZWelVjcXNFWEFoWDBPUUdpQWVh?=
+ =?utf-8?B?Sm9TYnRUM1oyUWQzemU2VHk2NUtNb3ZIQ1ZCUVV4alU0S2sxSkNkTXEwdXFU?=
+ =?utf-8?B?TlBvSVMrVVM4bHc2dHBUR3ppVGFiOTdTbHJrOVZHVHNCTC9ERmgxM3ZoclFD?=
+ =?utf-8?B?N3BvUWlhSzZqbTU5Tlg0R3ViZE9abFVWZ0M0YXBodHlwTm13ZktncnBtSGVs?=
+ =?utf-8?B?Zm1TMTdtbE56QzVpUnhpeXQzR3FpaVNSempHM2tvckd5NzJ3QVJNT2xPbDdB?=
+ =?utf-8?B?NC95VUJXbXl1SFpoTXhSemNDeVdoTlMvZ0lFNWdFUnZyUm9jTkFjUElLUWIy?=
+ =?utf-8?B?cGN5UjRRN2NKT1k1UVJITy92VGxOeVBva2dZbzdRWXdyeXVNczY1cGNWZXdB?=
+ =?utf-8?B?ZzZxK2NLMzlqY25wc0RwQk9iZmZSV0VQU1Q5S2NYQjhyNFQrWjZZa3IzRTQv?=
+ =?utf-8?B?VUN4c3RROXRvUDdkWTloVktTZnY3cVVxRU1wYzBSMlJka2w0QWpwU25PQ0Nv?=
+ =?utf-8?Q?gz2/D0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NkhyWENLb2wzdWpzeENoNXJKUU0vckVOckpqSUY0T2ozS01YVHBSZEtHSUp0?=
+ =?utf-8?B?aGJZdzQwQlB3Nit6VENQMjlkV2R1Q0FRQ0lucGtEVjlZemI5Q01PZEhENkls?=
+ =?utf-8?B?TC9Wd0VtVnhsQXNpeXZUMzRocmsxYlBRUjNlVEl6aG4vMVpsWGIzM2V0UTM4?=
+ =?utf-8?B?ZmY5anlsSThoR2ozY0MrK3FYQU1jenczaGMxMlZGMmowaEtpNmJsNERIVGVL?=
+ =?utf-8?B?dEkrOEoyOXJ4SUl4WnVVRFJqNHFhU0xmMkVWV1FBVUpRdlJTWkZ4bEtDbHBv?=
+ =?utf-8?B?NjR0NXRsSjY0Y2U2ZytxL2ZmQ1l4ZllUclVaM0hpQUtFLzlrdXJ0NkdaUVZZ?=
+ =?utf-8?B?RlpLZnN4TmdKUjNWdHErQlJpT1Fxb2Q0bk0yTmxmYjkvUFJuWGE4b3F4ZDRz?=
+ =?utf-8?B?cm5CbkQ4TjFnUVRXeFcydjh6cjk2MUpaUmdsK2NLVTlIRTJCd0EvcFJwd00r?=
+ =?utf-8?B?NDFZV2YwVmtBOXZyVlRyUzZHeEdtdFZTbEErZmFOWmE1L2tnQ3p3cVoyc0NY?=
+ =?utf-8?B?RktoU1ArclhwWXdFYnNMbDFWd1E3VEpjbVZ5Ly8xeWhVZ0JoSjRNN09TbE1X?=
+ =?utf-8?B?eWMvSlNremQwWVNJcE5HWVZmTXZGNG5wbElKSGYzR3FmbTBoa0g1WDl0TEdo?=
+ =?utf-8?B?Ukx0NHBoZEtwQUxLSnhHN3MvYkxuMC9ncSt2WUEwT09rbnBuaGV1c1h6MFFh?=
+ =?utf-8?B?R0x1U3U0WW1vTzJFRVRHU3N2RnhXeWJjaFpCK2tkbi9rU3pEN2svZlRWb3Rx?=
+ =?utf-8?B?SzVqU0czU2JUc0RQd3A3eFByVlRBRnpZSnBWOFJTZHVoUGNNaDA2aGhSNzBB?=
+ =?utf-8?B?ZDZRVVhjb1JOWXZyQStObmFqMEFJQVIva2JwcFA0NUx6anNuRzVVRExoLzdi?=
+ =?utf-8?B?dnNvM1F5V2x6dW9mcnpRendzKzl0eEZOQ2I4VDZxOHhJaVFDR1UzWlNjVStn?=
+ =?utf-8?B?bUZza2RsY0ZvWDBqcTJ2NXYyWWsyWnpCdWJaN3ZPZkM5WjhOZlNFd0VCUklj?=
+ =?utf-8?B?REFEWUY0ZGNDbkdZdkpJYXVib0dnazY1Ky9ramc0dTIycWZDWW13TndVeXhV?=
+ =?utf-8?B?dHQyNG9mbjQ5c3RhSnNsRmkzTGZZTExZWUhDOUxqeVFrVWJUamVtVVpQNUxD?=
+ =?utf-8?B?NitVaEF6cGdtTDZ5dURhb1M0L0pzZmxwV1ZHSFVGdjl1aFU4NE9nR1N3Q1hp?=
+ =?utf-8?B?NjlDMUVLMEV3bnBXT1BzbTNuM3FSNXRTQTFFUkRuUnNzSTZKQnJLaWpZUW5R?=
+ =?utf-8?B?RnlZaUpDcnFDdU9LOU0yaGhHRGtWWXEvSUdSRnNndHl4ZTFBa2toUzYzVStu?=
+ =?utf-8?B?VVNmMEIrbFZ4WkZKN3RRVjVlL2VIQktLd2tBZEtXdWJybG9jTVBLeWc1RVp4?=
+ =?utf-8?B?Vmk0Y2daZkJ1bW1kNUE1YVZnQmNGd0FxYkZaMDcrRE44VEZnM2VOa1pSODhu?=
+ =?utf-8?B?REFlMEpvalN6Y2hMUHBVTkJzMlFvdk5WZm1lOTkwQkRiN21jZmhmeGFHUXo3?=
+ =?utf-8?B?eCtmdVFQKzlwQ1V5dlErNENRdU5sREg2LzBmTm83eDV3TmpkWVI1R1lNYk9t?=
+ =?utf-8?B?eTUvbmtFNXd3ZXhtOE8vOGNsTTZ4eXllUnNZTERZbmJ5YW43OHoyYVdBRzN1?=
+ =?utf-8?B?ZmFBdGVic29ZZjgySUhMeUY1YW9aZElFci92RTZXYlZobm5ucjFObDQ1anpB?=
+ =?utf-8?B?ODNITFB2VXE3RGRSU1BhR2JmNjRTcXA2NjR4UmNWSlN1SkFsTkVzZTFlTkth?=
+ =?utf-8?B?QW5sNnNRSER6b2lRYkRvNTlzU0J5ZmZpdkYzb2tHa21RaC9BbGZVdktVNU1X?=
+ =?utf-8?B?RzFMVFk3ZkhHM3RvRE0xV0E5dVlFajZBWnFtdUtrNHQvdEdab3JMSFA5cExa?=
+ =?utf-8?Q?D+OqZGnr0QxYM?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc47647d-828c-4d1d-4ae9-08df28f38e9b
+X-MS-Exchange-CrossTenant-AuthSource: TYVPR01MB10892.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 06:31:04.9144
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB7404
 
-On K1 boards an SPL reads the board EEPROM (0x50 on i2c2) to identify
-the board, and before DRAM training it programs the P1 PMIC (0x41 on
-i2c8) rails buck1, buck3 and aldo1. Boards that boot from SPI NOR also
-need the flash on QSPI.
+--------------m9mEhZVNtdS2mxS23Ml6w5cF
+Content-Type: multipart/mixed; boundary="------------hlec9N2arRzUhIst0dbu2YIY";
+ protected-headers="v1"
+From: Shengyu Qu <wiagn233@outlook.com>
+To: Jennifer Berringer <jberring@redhat.com>
+Cc: wiagn233@outlook.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ James Morris <jmorris@namei.org>
+Message-ID: <fbdabbf5-98ee-4e08-87f3-77861f9d8a84@outlook.com>
+Subject: Re: [PATCH 4/4] riscv: dts: spacemit: k3-com260-ifx: Add rfkill nodes
+References: <20260928231807.1757995-1-jberring@redhat.com>
+ <20260928231807.1757995-5-jberring@redhat.com>
+ <TYWPR01MB10887E1A3744FD44000F89E8F98922@TYWPR01MB10887.jpnprd01.prod.outlook.com>
+ <20261012183204.c845fc69@redhat.com>
+In-Reply-To: <20261012183204.c845fc69@redhat.com>
 
-Mark these board peripherals, and the I2C buses they sit on,
-bootph-pre-ram on the boards that have them.
+--------------hlec9N2arRzUhIst0dbu2YIY
+Content-Type: multipart/mixed; boundary="------------RzKVeGhcz4rDdSyGcZTUFF07"
 
-Assisted-by: claude-opus-5-5 dtbs_check
-Signed-off-by: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
----
- arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi | 7 +++++++
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 7 +++++++
- arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 8 ++++++++
- arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    | 8 ++++++++
- arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  | 5 +++++
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  | 6 ++++++
- 6 files changed, 41 insertions(+)
+--------------RzKVeGhcz4rDdSyGcZTUFF07
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-index 81c40df2a..6269d2ba7 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-@@ -64,6 +64,7 @@ &pdma {
- };
- 
- &i2c2 {
-+	bootph-pre-ram;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c2_0_cfg>;
- 	status = "okay";
-@@ -71,6 +72,7 @@ &i2c2 {
- 	eeprom@50 {
- 		compatible = "atmel,24c02";
- 		reg = <0x50>;
-+		bootph-pre-ram;
- 		vcc-supply = <&buck3_1v8>;
- 		pagesize = <16>;
- 		read-only;
-@@ -93,6 +95,7 @@ serial-number {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c8_cfg>;
- 	status = "okay";
-@@ -100,6 +103,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&reg_vcc_4v>;
- 		vin2-supply = <&reg_vcc_4v>;
-@@ -113,6 +117,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -127,6 +132,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -155,6 +161,7 @@ buck6 {
- 			};
- 
- 			aldo1: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 58035d886..e74505984 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -187,6 +187,7 @@ &qspi {
- };
- 
- &i2c2 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c2_0_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -194,6 +195,7 @@ &i2c2 {
- 	eeprom@50 {
- 		compatible = "atmel,24c02";
- 		reg = <0x50>;
-+		bootph-pre-ram;
- 		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
- 		pagesize = <16>;
- 		read-only;
-@@ -216,6 +218,7 @@ serial-number {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c8_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -223,6 +226,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&reg_vcc_4v>;
- 		vin2-supply = <&reg_vcc_4v>;
-@@ -236,6 +240,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1_0v9: buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -250,6 +255,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -278,6 +284,7 @@ buck6 {
- 			};
- 
- 			aldo1: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-index 635e95aad..406b7ca16 100644
---- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-@@ -201,6 +201,7 @@ &pdma {
- };
- 
- &i2c2 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c2_0_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -208,6 +209,7 @@ &i2c2 {
- 	eeprom@50 {
- 		compatible = "atmel,24c04";
- 		reg = <0x50>;
-+		bootph-pre-ram;
- 		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC18 */
- 		pagesize = <16>;
- 		read-only;
-@@ -223,6 +225,7 @@ product-name {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c8_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -230,6 +233,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&reg_vcc_4v>;
- 		vin2-supply = <&reg_vcc_4v>;
-@@ -243,6 +247,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1_0v9: buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -257,6 +262,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -285,6 +291,7 @@ buck6 {
- 			};
- 
- 			aldo1: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-@@ -386,6 +393,7 @@ &qspi {
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
-+		bootph-pre-ram;
- 		spi-max-frequency = <26500000>;
- 		spi-rx-bus-width = <4>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-index 246f8f2ab..0531bd003 100644
---- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-@@ -127,6 +127,7 @@ &pdma {
- };
- 
- &i2c2 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c2_0_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -134,6 +135,7 @@ &i2c2 {
- 	eeprom@50 {
- 		compatible = "atmel,24c02";
- 		reg = <0x50>;
-+		bootph-pre-ram;
- 		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
- 		pagesize = <8>;
- 		read-only;
-@@ -159,6 +161,7 @@ num-macs {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-0 = <&i2c8_cfg>;
- 	pinctrl-names = "default";
- 	status = "okay";
-@@ -166,6 +169,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&reg_vcc_4v>;
- 		vin2-supply = <&reg_vcc_4v>;
-@@ -179,6 +183,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -193,6 +198,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -221,6 +227,7 @@ buck6 {
- 			};
- 
- 			aldo1: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-@@ -320,6 +327,7 @@ &qspi {
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
-+		bootph-pre-ram;
- 		spi-max-frequency = <26500000>;
- 		spi-rx-bus-width = <4>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-index 2d1ba34cb..8e9bbbeb1 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-@@ -113,6 +113,7 @@ rgmii1: phy@1 {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c8_cfg>;
- 	status = "okay";
-@@ -120,6 +121,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&vcc4v0>;
- 		vin2-supply = <&vcc4v0>;
-@@ -133,6 +135,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -147,6 +150,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -175,6 +179,7 @@ buck6 {
- 			};
- 
- 			aldo1_3v3: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-index b907a1396..857b4ebe3 100644
---- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-@@ -143,6 +143,7 @@ &pdma {
- };
- 
- &i2c8 {
-+	bootph-pre-ram;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c8_cfg>;
- 	status = "okay";
-@@ -150,6 +151,7 @@ &i2c8 {
- 	pmic@41 {
- 		compatible = "spacemit,p1";
- 		reg = <0x41>;
-+		bootph-pre-ram;
- 		interrupts = <64>;
- 		vin1-supply = <&vcc4v0>;
- 		vin2-supply = <&vcc4v0>;
-@@ -163,6 +165,7 @@ pmic@41 {
- 
- 		regulators {
- 			buck1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1050000>;
- 				regulator-ramp-delay = <5000>;
-@@ -177,6 +180,7 @@ buck2 {
- 			};
- 
- 			buck3_1v8: buck3 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1800000>;
- 				regulator-ramp-delay = <5000>;
-@@ -205,6 +209,7 @@ buck6 {
- 			};
- 
- 			aldo1: aldo1 {
-+				bootph-pre-ram;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <3400000>;
- 				regulator-boot-on;
-@@ -298,6 +303,7 @@ &qspi {
- 	flash@0 {
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
-+		bootph-pre-ram;
- 		spi-max-frequency = <26500000>;
- 		spi-rx-bus-width = <4>;
- 		spi-tx-bus-width = <4>;
--- 
-2.43.0
+DQoNCuWcqCAyMDI2LzEwLzEzIDI6MzIsIEplbm5pZmVyIEJlcnJpbmdlciDlhpnpgZM6DQo+
+IEhpLA0KPiANCg0KLi4uDQoNCj4gDQo+IFRvIG15IHVuZGVyc3RhbmRpbmcsIHRoZSBwd3Jz
+ZXEtcGNpZS1tMiBkcml2ZXIgdGhhdCB1c2VzIHRoaXMgYmluZGluZw0KPiBjdXJyZW50bHkg
+b25seSBzdXBwb3J0cyBzeXN0ZW1zIHRoYXQgdXNlIFVBUlQgZm9yIEJsdWV0b290aCwgYW5k
+IGlzDQo+IG5lZWRlZCBmb3IgdGhlbSBiZWNhdXNlIFVBUlQgaXMgYSBub24tZGlzY292ZXJh
+YmxlIGJ1cy4gUXVvdGluZyB0aGUNCj4gY292ZXIgbGV0dGVyIG9mIHRoZSBzZXJpZXMgdGhh
+dCBpbnRyb2R1Y2VkIHRoaXMgYmluZGluZzoNCj4gDQo+ICJUaGlzIHNlcmllcyBhZGRzIHN1
+cHBvcnQgZm9yIGNvbm5lY3RvcnMgdGhhdCBleHBvc2UgUENJZSBpbnRlcmZhY2UgZm9yDQo+
+IFdpRmkgYW5kIFVBUlQgaW50ZXJmYWNlIGZvciBCVC4gT3RoZXIgaW50ZXJmYWNlcyBhcmUg
+bGVmdCBmb3IgZnV0dXJlDQo+IGltcHJvdmVtZW50cy4iIFsxXQ0KPiANCj4gSzMgQ29NMjYw
+IERldiBLaXQgc2hpcHMgd2l0aCBpdHMgRS1rZXkgc2xvdCBwb3B1bGF0ZWQgd2l0aCBhbiBS
+VEw4ODUyQkUNCj4gbW9kdWxlLCB3aGljaCB1c2VzIFBDSWUgZm9yIFdpRmkgYW5kIFVTQjIg
+Zm9yIEJULiBJIHZlcmlmaWVkIHRoYXQgbXkNCj4gcGF0Y2ggc2VyaWVzIGRvZXMgbWFrZSB0
+aGUgcmZraWxsIGNvbW1hbmQgYmUgYWJsZSB0byBkaXNjb25uZWN0IGFuZA0KPiByZWNvbm5l
+Y3QgdGhlIFdpRmkgYW5kIEJUIGRldmljZXMgd2l0aCB0aGlzIG1vZHVsZS4gSSBhbHNvIHRl
+c3RlZCB0aGlzDQo+IHBhdGNoIHNldCB3aXRoIGFuIEludGVsIEFYMjEwLg0KDQpUaGVyZSBh
+cmUgc29tZSBNLjIgRSBrZXkgY2FyZHMgdGhhdCBjYW4gYmUgYm91Z2h0IGFuZCBpcyB1c2lu
+ZyBVQVJUIEJULA0KZm9yIGV4YW1wbGU6IFJhZHhhJ3Mgd2lyZWxlc3MgY2FyZHMgKGV4Y2Vw
+dCBBOCkgYXJlIHVzaW5nIFNESU8rVUFSVA0KaW50ZXJmYWNlIG9uIEUga2V5IGNhcmRzLiBB
+bHNvIFF1ZWN0ZWwgaGFzIHNvbWUgUUNOQ004NjVBIGNhcmRzIG9uIHNhbGUNCndoaWNoIHVz
+ZXMgUENJRStVQVJULiBUbyBhY2hpZXZlIGJlc3QgY29tcGF0aWJpbGl0eSB3ZSBjYW4ndCBq
+dXN0IHVzZQ0KY3VycmVudCBpbXBsZW1lbnRhdGlvbi4NCg0KPiBJbiBhZGRpdGlvbiB0byBQ
+Q0llIGFuZCBVU0IyLCB0aGlzIGJvYXJkIGFsc28gaGFzIGl0cyBNLjIgRS1rZXkgc2xvdA0K
+PiBjb25uZWN0ZWQgdG8gc2RpbywgdWFydDYsIGFuZCBpMnMzLCBidXQgbm9uZSBvZiB0aG9z
+ZSBhcmUgY3VycmVudGx5DQo+IGVuYWJsZWQgaW4gdGhpcyBkdHMgYW5kIHRoZSBSVEw4ODUy
+QkUgbW9kdWxlIGRvZXMgbm90IHVzZSB0aGVtLg0KPiANCj4gU2V2ZXJhbCBvdGhlciBleGlz
+dGluZyBkZXZpY2UgdHJlZXMgc2VlbSB0byB1c2UgcmZraWxsLWdwaW8gbm9kZXMgdG8NCj4g
+Y29udHJvbCBXX0RJU0FCTEUgcGlucyBvbiBNLjIgRS1rZXkgc2xvdHMuIExvb2tpbmcgYXQg
+cmszNTg4IGJvYXJkcyBmb3INCj4gZXhhbXBsZTogT3JhbmdlUGkgNSBQbHVzLCBBcm1Tb00g
+VzMsIGFuZCBSb2NrIDVCIGFsbCBkbyBzbyBpbiB0aGUNCj4gY3VycmVudCB0cmVlLg0KDQpU
+aGF0J3MgZHVlIHRvIHRoZSBNLjIgRSBrZXkgc2VyaWVzIGp1c3QgbGFuZGVkIGEgZmV3IG1v
+bnRocyBhZ28gYW5kDQp0aG9zZSBib2FyZHMgY2FtZSBtdWNoIGVhcmxpZXIuIEFuZCB0aGF0
+IG9sZCBpbXBsZW1lbnRhdGlvbiBoYXMgY3JlYXRlZA0Kc29tZSBpc3N1ZXMgaWYgd2UgdHJ5
+IHRvIHN1cHBvcnQgVUFSVCBjYXJkcyB3aGlsZSBzb21lIHVzZXJzIGRvbid0IGhhdmUNCnRo
+YXQgY2FyZDoNCg0KaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjUwMjIwMTY1MDUx
+LjE4ODkwNTUtMS13ZW5zQGtlcm5lbC5vcmcvDQoNCkJlc3QgcmVnYXJkcywNClNoZW5neXUN
+Cg0KPiBVbmxpa2UgdGhvc2UsIHRoZSByZmtpbGwgbm9kZXMgaW4gbXkgcGF0Y2ggYXJlbid0
+IGFjdHVhbGx5IG5lY2Vzc2FyeSBmb3INCj4gdXNhYmxlIFdpRmkgYW5kIEJUIG9uIHRoaXMg
+Ym9hcmQuIFRoZSBzaHV0ZG93bi1ncGlvcyBoZXJlIGFyZQ0KPiBHUElPX0FDVElWRV9MT1cg
+YW5kIHRoaXMgbWVyZWx5IGFsbG93cyB1c2luZyByZmtpbGwgdG8gYmxvY2sgYm90aCByYWRp
+b3MNCj4gdmlhIHRoZSBXX0RJU0FCTEUgcGlucywgc28gSSdtIG5vdCBvcHBvc2VkIHRvIGRy
+b3BwaW5nIHRoaXMgcGF0Y2ggaWYNCj4gYW55b25lIGJlbGlldmVzIGl0IHNob3VsZCBiZSBk
+cm9wcGVkLg0KPiANCj4gWzFdIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xrbWwvMjAyNjAz
+MjYtcGNpLW0yLWUtdjctMC00MzMyNGE3ODY2ZTZAb3NzLnF1YWxjb21tLmNvbS8NCg0KLi4u
+DQoNCg==
+--------------RzKVeGhcz4rDdSyGcZTUFF07
+Content-Type: application/pgp-keys; name="OpenPGP_0xE3520CC91929C8E7.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xE3520CC91929C8E7.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+lMSoVV3z1s8dA1DK95ykSdIFtVZT
+=3Dr4B8
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------RzKVeGhcz4rDdSyGcZTUFF07--
+
+--------------hlec9N2arRzUhIst0dbu2YIY--
+
+--------------m9mEhZVNtdS2mxS23Ml6w5cF
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEET/yoGP3p5Zl+RKVuX75KBAfJsRkFAmrN0B8FAwAAAAAACgkQX75KBAfJsRkX
+JA/+O8KdCRQiS3XEv5W/upnaayULStHU93l+3/4aFH2dvFKANjkhU/IP9Ayycpj7kRKAdZN5MuS6
++NV750FAiiF76j8C8EsoEI65E360lGm7Ak+gQqccXtQNf5tLDNCYuLkGQornwZAfOq75rGDGEHTz
+kwvOzPEVoPTxziUqXI+t42HVPf9t9sZSYvHxohrzcOmfZxGBgm+/vF2/Y7EMkB9EdDdf3SISVH8n
+GBkiVtHrtdqNuFUAQqW1P6VxmDedW/v1srd9scrW0/5QGk2dFN0SF7ownujrCajSFi2D769oUqqi
+K0Q0znQVtpBqXw7CIB2PfG9//UyDtFVUEStQHAG3nH332qblNyt5Kn+iMHo5sGZ1Y4JTxOuALjXe
+KeXKKqvrEPddlEq7QUmIYXPAoQnkCb+q6ZOAVja08pHF0jYeaeNu/lC6GOm4X3Qxdw9Y6z4Nei2Y
+OeSQ/iAghQrLAvB//Q2jJ+rK5EzLpIC3UkVJvsN9rR9Qg6EYBMPKEYQmdwabvldYx10AQEuHC9IO
+R9aJKdB4iMb9dEaHtZTc++36zGx4FP7agaUryafvcPAPaETI2+U0tUQyLZdRp4/Ba1/3lBR9IYtp
+E4Yew20/iSP0GozZp/3ytrHdkPpxZzHVlJ7JRlFSyxk6lCicsamn31hsET23VGQT0eIm0mj72Y5s
+lPs=
+=Pa0K
+-----END PGP SIGNATURE-----
+
+--------------m9mEhZVNtdS2mxS23Ml6w5cF--
