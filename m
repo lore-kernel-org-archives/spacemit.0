@@ -1,145 +1,142 @@
-Received: from mail-yx1-f45.google.com (mail-yx1-f45.google.com [74.125.224.45])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8776C5632A1
-	for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 17:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792085908; cv=pass; b=Pvrs7tW4DtZfU2PaMg115c3ujtGjcI7zvsE5INscPbJR/tbcCmI1y+mXwAgg3/QpEDIzWBoDL6fvXugsvjKG11k3czvhsZ8Exkh5EN+vEdRij0edXTFOWXz6RfM5mAGZQDd1CdYt8jX3iLDscMTnbPAf0SwMxYDzkX/bWWs3dsg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792085908; c=relaxed/simple;
-	bh=bkxFv5PX8ujIxdonqIilaYDobdJDnLk8tXzGrWmcSt8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VUTHa2VrWsq/IE1zPIWS3dH8qCT3DM8JN6nINpwx48SaroH+Yg0lk/U72BFkxNqXOMxQ3kfKkFF89mMqqP31d5JYyImK0A8VmNtdspm5fVCIVZoG6ju4PippZNyH5NsfMYl4hSG0cadFhbhoTJzTfws3c/i9BLsbNQIsVPQR4hE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ila7klLs; arc=pass smtp.client-ip=74.125.224.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4262B569F37
+	for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 18:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792090598; cv=none; b=R7pscbk6zQ0vw77LD3yma+HV331fUHziyKcnLcTvjIjY+IN+ERVBseQFnhSoY7k1QWZPJ9p09sbsYd683oE0g0Nt3pKpqS6zS8KbjO1mKUh7Rf8AdZWQUhvymNSP8ok0qYaRMhmK1ZLzN3kWjrfa2P5NGBHnHeCS6zv4IXkammc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792090598; c=relaxed/simple;
+	bh=AYquGq+PWPwHCXs0e1iyppBvIZnSoNzpk6ygDyKiN40=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=c73TJTMCTUQJsa3cGnt5/cMrkAF6EVUGXTHgQw7mdTkkRxRnDCEvQpul1PniSWyOPjvxEh29abaJBdqAOSb2s4MftGzKDiiZmmiW+9MmeuW67PHlr9OxzYOJA0PubbF4M5YoEm7IRZmV/tqNj8biGz5Mc85U6Wn2dRDHY1JwDgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qSo0RsbQ; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ila7klLs"
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-676858d42f8so4959195d50.2
-        for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 10:38:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792085897; cv=none;
-        d=google.com; s=arc-20260327;
-        b=J7EsbkXgHqXftZKUTHZKAn8K8myMNHKlxE2UdCpv/TSCMPHrJm+kPyLT3r4Qojasrm
-         xPX5O1MLa9HqkljhYVNsXY1BTsTauxjjNhknPGMiBfKJjBbCMcPyiKNv0vDXmSQ1QGh4
-         gi5cheMMMJ6D/GMiVPimor9ZYTRbiw8hdviGQwBRRS7ArndfHLbGZg+gnCeg8fkJgR/h
-         sgGZvoz0xw8f6b/dhgx+26iWZhsLtV6cjq9vJJsqn+Nyv3PXZEOKkaKktEDeuReP3LMV
-         BNIdHF6hJ5GXutLs+R9xJRb1mMzy/hez5NcN9wWXCCz6o6mtRVyx1SrBWUGvR7wU1Rpb
-         VzdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RNR7hf8UYLE+m8+IlSqf9D9Kn/JvEzNZNospuZY38uA=;
-        fh=mmK//VToTNcf8zp+GUzyOcC3cXE9bJtX7aYQ9uUv2a0=;
-        b=AAmCEASbFWYS02urI3CaWXkLvyTar/kBjxfsIR9jzK6PX1A6M2OggPDWBgNkv7lauk
-         uanCPozRzRrh7QSlAtdSUJe0y8cNPUsBqT6hAciSr16U9UH0WvIJ8rZBSJxwp0jC/UwL
-         FtNziR1+GhrMDclX6KrjdQOoxW6welkkbfNbRNgLDESpX95mp/KFOZvI3JH8zrCAc+ZL
-         TYP2MW1o7Cz8iow3Es53u53AKF8ZncL6Ms7QhnuSBcOCfuWCp2JzEnrFVJWbsdJCEYxR
-         S0z7U+7jiACqqW0tyv1vkV3c06CudXg9ud2IkJpoE8Sx/ZfKhk2JLA9JLDtjaZIjFFk7
-         rYug==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qSo0RsbQ"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a172eb31f0so50302375e9.1
+        for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 11:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792085897; x=1792690697; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=RNR7hf8UYLE+m8+IlSqf9D9Kn/JvEzNZNospuZY38uA=;
-        b=Ila7klLsWISo+gOcydOFxcuONcjmvvw8pXrxD3bwdI9SAldca0xQfq1XPb7ad7IIpO
-         egvSakZ0HX62i4oKlmhDsTnSxPOaGOIVswiG+hBhJwZ9W3Qu8QbLd3hHmdhtgmlb+bN0
-         nuJ7ZKLNcS8vIs4+wVVQhT7/2QbHQMkXz4xq6W0dMCFAxeBzSmO0xogOvh2oNK1H0YIA
-         Iey2Nh/5L+xK2BRTN3iLNeJYDbLxO8bUhcv6X6Nofh0pCToaK7hNnFYzxjVRyqXaeWOe
-         t+kCkHpAis3daL6YR+BYcmJqGKD30DP/XKlbzUgJciFptrdlSyRW/nIne9hRnGBYwIYV
-         DKdg==
+        d=gmail.com; s=20251104; t=1792090591; x=1792695391; darn=lists.linux.dev;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=j8DFjBs5Cy+cqLEmVTjSkVi2zwWGVHnAGbcDhQszah4=;
+        b=qSo0RsbQNz8aDJwokWvwGsyJpDbaQeMQ7bUvlwQGYG8NWqJcIyypbhu1TNHeYDTMUc
+         /lVGgzzjpnSwi1GwVLH76yeqDuUhGGZkCI6Tb+ChKKWKA22AtLgkauDtGRz2B0L1SB1K
+         0DiWnXRsvsddNA9o9DWJs+MsBFOVm/db6yvhUGvnLUCw6yE35J2EIBnVlM4/6Ec+AcQI
+         47RHaJEQSftL/0j/a31M8JojQo1zLFB4f1/mstIOKkthqEcud/I39CWJrX2C4peDfwL2
+         ad+99Y+Wx/q7qGUdAhvZSRjQMDC55A0MJdebYYpAcZU15YwW+byUI506Aqm7jX6P579U
+         dJVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792085897; x=1792690697;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1792090591; x=1792695391;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RNR7hf8UYLE+m8+IlSqf9D9Kn/JvEzNZNospuZY38uA=;
-        b=B/XiI49y6OAswPavPMwLbxjwa7KQlJuyl03ydhHTDXZ91ofuj9DJLas8vsRoIwFcpP
-         xZCnYtJpUag77Pjcsv2sdPMQUq8GidEGt6bCuIDfwfhc46y0ekTj5SetSNw58zoOCsXw
-         D2w6e33CrxAdtdEorAjYxqqQIoKZXyQXLsJSBcg2Umjkjlc43DqVettUmnizyj+jBuE1
-         Ai/Rx2vZpSEo/91xMpOHxwVYZaXDUggIPsXKifAqVXwGCDOeN4ZT8kMtoN6+zHnyDISF
-         pC2cG48w8MpJKxzEtDhw7wUKNzTKJsY2vP+YwNpws4uHxfZDp/OnHWdXMYKPmfD7fLcf
-         Rm/g==
-X-Forwarded-Encrypted: i=1; AKwUvBypTQJ3Q/irRBwuJBda96HnNNb5BKfW42GLmPhQJaSpbh5lLHJPQkizC9cfeQ+TfFAi9PDPMPTeig==@lists.linux.dev
-X-Gm-Message-State: AFq9FYIW6nAyO1w+GeMe+nejhVj8EuDFajgbB1wQeEEiC19lBLk0UIxk
-	70wPw+MSrLrRAw6sWMXKOwEWd5wzarjgBof8BuZj8woN4OuLESpuaio/Ogq+yeqJgdC9MgmxhlW
-	yj8yEawsHmMSMp5lSZmdpmFIs3EAgXj0=
-X-Gm-Gg: AYBFou3QFE2jpYqmycTKy9Gb9d/YI305yjsMXtFvhakvXu86p4qWXB94IK7k2zi4Vrn
-	J/gdF3+43d8w/VQQAbn1EOWH/kG7X/Kys3AoIfXUYguWJThGc7i0uuF7bssReb1itYj95Wj/flY
-	1bfj7u38K0jn/kfjBZbekvhEG6F7ocYo3BA4Dy/AknUZDpf3lL0reL6jQYG93jY7XDeAXiGqIQn
-	aYhheQI1hboRSCERtinVWDuI3R0SmdBCfEbtBqatmoIOLAd9roMeztArVW/XZ+LfehWeWjAqxn4
-	IgX5x3rPbzXeY2zGEvpgDFkrnlRq1qLYEee3jf0T7B7xm8Aj8Fg9RliW2OsFRO0F++4=
-X-Received: by 2002:a05:690e:1c07:b0:679:aa90:d272 with SMTP id
- 956f58d0204a3-679aa90dd58mr432536d50.108.1792085897078; Thu, 15 Oct 2026
- 10:38:17 -0700 (PDT)
+        bh=j8DFjBs5Cy+cqLEmVTjSkVi2zwWGVHnAGbcDhQszah4=;
+        b=SR+ChsmbwpNpf0NIVQgDzdU8ZeH4IsNata2W2CCJ1jbLijyR9GIQTNgiCJD9lXjorX
+         yMfvCLEvSyrn0H0HJW5w7C0kpLM7K07TQJggFKUJ10NapFpChuguFyazr6y8OnQR6IiZ
+         OLTSGgsThRZZ0RSEuIn/egAtcgM/MnLs5EJ3ovHgu1waHER3cep45H/rrDhNMGZKGGGa
+         34mhQWqC7TCTTkCAncA6jf3Gdec/zHnISR26iGnBH8VkRYkQUISOqYXnSX+l35IB465z
+         rPRuja009k61Ec3ZmrG6XfaPN/EjgC60BQz3UAmf5RRMf5x60VMreZu42rvtG4S6C7RT
+         BNiA==
+X-Forwarded-Encrypted: i=1; AKwUvBy5yEabkozvg9sQwGM90I98AOt8uw+xvVdf5v4KXg/Xbji9g0+Q6nGmC0juqc7EXk5MHhHzPhQLTw==@lists.linux.dev
+X-Gm-Message-State: AFq9FYIOmaDUhFqM9gfqJwUWaGeubQyH5OFPgoZhipdDSoorFyiVlzNX
+	vTo4X9H923j4iQyKx3s7e023cY0nm1AlroxDMmjwcRUzKnJahZXFBkYf
+X-Gm-Gg: AYBFou0wCEmWCFAHyKvEMIrN+/oYQ6vR9iWgmkNNL7m7KHs4KoSCN+JVfM7+n6us2sq
+	TwENvVFsXn6o89BI7fvIbYr6AlddiPQv9tBUXunNvSdqTbLGBFIxFHDJGtkJFtTXzqZPHR3QzuY
+	Ma48+VdVlndaxU1MicywQdwK4F+3B5rvVfGmLaKW4efq+CURTXCJbm42SpgJUwP36+XZPrh6njl
+	iFNL0M9oDVRdCIqweCWxlGNOPNwaKxiC8SQ729uG9zQwahzmr1H4onpY0BIoVzmqJt11/oW30VM
+	kx6DhNPrd7paz9Z4KB67fgzRyaLoZUNa+78OkU0M8rjHchbOmz2XDhgDIom+wLRwLStNQS9NGA4
+	Vmtkpdzet6mt8p0TsVZpn5tAPqfxwpdiBSBPmsCo69PoQQtqwpcsQdKuZc9OyuY0KQE+wpoM9rm
+	nDY6Ef6R6D/DT9oOG1WX8acbdvb+2L145al7T+f8SGDm2tz7VPWfGvgaxgkquvuDlL6he3HeUR5
+	5hchwxkRsX7Dh6NChKpGXeMh76H0FK25Rx7SyAwAA==
+X-Received: by 2002:a05:600c:4747:b0:4a1:88de:9e8b with SMTP id 5b1f17b1804b1-4a18e49d65dmr398603945e9.5.1792090590951;
+        Thu, 15 Oct 2026 11:56:30 -0700 (PDT)
+Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.239.213])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bdc036a4sm106148295e9.11.2026.10.15.11.56.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 11:56:30 -0700 (PDT)
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Date: Thu, 15 Oct 2026 20:56:05 +0200
+Subject: [PATCH RFC 1/2] riscv: dts: spacemit: k1: add PowerVR GPU device
+ node
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261008-04-k3-pm-support-v2-0-6f778a53dd2d@kernel.org> <20261008-04-k3-pm-support-v2-2-6f778a53dd2d@kernel.org>
-In-Reply-To: <20261008-04-k3-pm-support-v2-2-6f778a53dd2d@kernel.org>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Thu, 15 Oct 2026 19:38:00 +0200
-X-Gm-Features: AclHuK-mkmvLNzpAloyGNWEU1xEwlRugYfUHBOpsjJVuzj_o9PRbUr7KYWotes8
-Message-ID: <CABdCQ=PAHxwH1+1OkLiW2ad+PTxNY6OmmPwOwAR3EoDe6Mt7Zg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pmdomain: spacemit: Add power domain driver
-To: Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Icenowy Zheng <uwu@icenowy.me>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261015-orangepi-gpu-v1-1-03566a615660@gmail.com>
+References: <20261015-orangepi-gpu-v1-0-03566a615660@gmail.com>
+In-Reply-To: <20261015-orangepi-gpu-v1-0-03566a615660@gmail.com>
+To: Alessio Belle <alessio.belle@imgtec.com>, 
+ Luigi Santivetti <luigi.santivetti@imgtec.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ Iker Pedrosa <ikerpedrosam@gmail.com>
+X-Mailer: b4 0.14.3
 
-El jue, 8 oct 2026 a las 5:45, Yixun Lan (<dlan@kernel.org>) escribi=C3=B3:
->
->   SpacemiT's PMU (Power Management Unit) consist of several power domains
-> which can be managed independently, depending on different application
-> scenario, each domain can be powered on/off for saving power.
+Add device tree node for the Imagination Technologies PowerVR Rogue GPU
+(BVNC 36.29.52.182 / BXE-2-32) found in the Spacemit K1 SoC.
 
-Tested on an OrangePi RV2 with the PowerVR GPU power domain. A few
-comments below.
+The GPU is located at address 0xcac00000 and uses:
+- CLK_GPU for core clock from APMU controller
+- RESET_GPU for reset control from APMU controller
+- K1_PMDOMAIN_GPU for power management from syscon_apmu provider
+- IRQ 75 for interrupt handling
 
-> +struct spacemit_pm_domain_param {
-> +       int reg_pwr_ctrl;
-> +       int bit_hw_mode;
-> +       int bit_sleep2;
-> +       int bit_sleep1;
-> +       int bit_isolation;
-> +       int bit_auto_pwr_on;
-> +       int bit_hw_pwr_stat;
-> +       int bit_pwr_stat;
-> +       int use_hw;
+Disabled by default; boards enable it individually.
 
-bit_* fields hold values 0-15, u8 would be more precise than an int.
-Similarly, reg_pwr_ctrl fits in u16 and use_hw could be bool.
+Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+---
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-> +static int spacemit_pd_power_on(struct generic_pm_domain *domain)
-> ...
-> +               dev_err(&domain->dev, "power-on domain: %d, error\n", spd=
-->pm_index);
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 3fabfd34114b..82cade2f76fe 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -5,6 +5,7 @@
+ 
+ #include <dt-bindings/clock/spacemit,k1-syscon.h>
+ #include <dt-bindings/phy/phy.h>
++#include <dt-bindings/power/spacemit,k1-power.h>
+ 
+ #include "k1-pdma.h"
+ 
+@@ -1119,6 +1120,17 @@ multimedia-bus {
+ 			#size-cells = <2>;
+ 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+ 				     <0x0 0x80000000 0x1 0x00000000 0x3 0x80000000>;
++
++			gpu: gpu@cac00000 {
++				compatible = "spacemit,k1-gpu", "img,img-bxe-2-32", "img,img-rogue";
++				reg = <0x0 0xcac00000 0x0 0x80000>;
++				interrupts = <75>;
++				clocks = <&syscon_apmu CLK_GPU>;
++				clock-names = "core";
++				resets = <&syscon_apmu RESET_GPU>;
++				power-domains = <&syscon_apmu K1_PMDOMAIN_GPU>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		network-bus {
 
-You could include the domain name failing, that would help identify
-what's causing the problem. You are already including the name in the
-"power-off" error message.
+-- 
+2.56.0
 
-> +static int spacemit_pm_domain_probe(struct auxiliary_device *adev,
-> +                                   const struct auxiliary_device_id *id)
-> ...
-> +       pmu->genpd_data.domains     =3D (struct generic_pm_domain **)pmu-=
->domains;
-
-This cast relies on genpd being the first member of struct
-spacemit_pm_domain. Reordering the struct silently breaks it. Consider
-allocating a separate struct generic_pm_domain ** array and storing
-&pd->genpd explicitly
-
-Tested-by: Iker Pedrosa <ikerpedrosam@gmail.com>
