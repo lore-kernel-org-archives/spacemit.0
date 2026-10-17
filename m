@@ -1,37 +1,37 @@
 Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329133B71A1
-	for <spacemit@lists.linux.dev>; Sat, 17 Oct 2026 21:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71B4CF48D
+	for <spacemit@lists.linux.dev>; Sat, 17 Oct 2026 21:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792271187; cv=none; b=bOBpiGCPHOweCRuYdpD7leb4nSoyf38g3dSih6eD/b6ryRbC0tf1vJobChPIb97uxQYPrZ9KrX4NoYx/mPELjH6io6lFGbeGD4Ht5vHYlTsW9V8qrIwwsBCtCFVWJ2gRBX7L0WmfzNkldUSPx5i1xiP3CEcyEZMLTmi0p2wB3hE=
+	t=1792273492; cv=none; b=Gb+MZWaNFyhjd0sxJXhQ5tJQpd1jGFfPoGFXX7K2lQ4GlKK9bpvDYn9Ryxtvy3x8RMuenqM2m8pPTvmAVuvLb50PvZrxNumDqSY08rBgTxygMYA8R8nfO9eUYLcCW49c9uO3plSOvY9lSZ4OQy48YTxTLr4ZBe8kS63oSznJJeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792271187; c=relaxed/simple;
-	bh=AVgNLZ3TFbJiXts+HVJihfsJS/suvsBreFJc0spb4eY=;
+	s=arc-20240116; t=1792273492; c=relaxed/simple;
+	bh=F5rpSiBMT/Ji1Laqgg5ujovwyOIDwBqrmZaV+2MX/M4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y91DsO10XaokDJAQBxbCotNrDxU/hDQ7P0ukNW0YvQoxGiI/9tpEtR2sz6KglhH8zizbkUMHgbBHR4REobvtvxl3Y/EDbwjXVnKJStFokgHRvI62If7xPlYjN+KkOkwtU/A49KBwaqZJ8LX7ZlEDjWdbQgoAT0lE50y7uCnctT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=f+dBEzyU; arc=none smtp.client-ip=116.202.128.144
+	 In-Reply-To:Content-Type; b=sVSI2qdvo1E3eabQ8lwigMGyM4sT233advEqTLoOGKhN/xIgUQ1i2v1flj6rf6SxkIV2fdUOmV6D+f3au1F64iwfTBiEKq2ovVedZoqNwUlKHMXqQqqFChBCfraPkQyoyAEnibf7uaHPhr8pR2KFW3NC0YRar5Tt9i6WKI3tvn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=kX2llkKe; arc=none smtp.client-ip=116.202.128.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="f+dBEzyU"
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="kX2llkKe"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1792271150;
-	bh=GZCIYxzwJgfq5iax1nk6spe3PnZmYcsROINLBRk7eCU=;
+	s=s2025; t=1792273465;
+	bh=s/wVudeSgmsXY2dWTplVbFIoFXGODJ+yqwF0jxDKHAY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=f+dBEzyU2h+xCUynaxy+XFsX/cazSMzV5qD8FbTAhL0Edy6tm/oXbImU/O5pFcexV
-	 eKg+L4m48Zmgv3ZrgUzSj9EkyoejvXXxruDHKtD2leIZ3LM0gWo+KrNML7nIL2ZsLH
-	 /3z7EMitRTGEr7BG7j7nNK8Te7T44WnUnLoHpQe6gbMVomB46QMzir+WfudKvN4DFu
-	 944mLM+i8k8D8Z2i/FuMFCN3UFpP202olP+/dZCDRQiE7QdbeeWhtubTD+l3wB8aqY
-	 tSBkpczkYaOaADll3fADeJsXmSiBap1OLrgrgMCS6Zwe4kDel1N6Jz8szQGV7PZTuQ
-	 NRm5dzNwjHB5Q==
+	b=kX2llkKe9MgLXAdyhC9lLGNE+erxsxxUEptOuqk0TgMVOnIgZhdVGj79al1WTnP8/
+	 3jQJd7rIZRPisbeEEFuYhcPOOhT9YHOrN0KvkGUVTkNs/B+3cgwllQq6ZiH0i3phep
+	 67f8HNft2EId89VNoObXetLvw4zSNopHOuE9WN70tWJHtAG0OYx4y0+qoGTU4qOWBw
+	 pDdGvWULdomVacVEUCDTALtXbIrFEZhBOG0M7jvdc99gvDCz8eT9dGTXsydObzfZe0
+	 26Z9dKdx8iHD0/1j4IlYajz9+lTs6PBVP8t9nyiQMl+Y6X3pScP4eq5esnANBZmOo6
+	 NWTbff2PDEA0w==
 Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
 	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 79CACB221DBD;
-	Sat, 17 Oct 2026 23:05:47 +0200 (CEST)
-Message-ID: <05e0c9e4-4e27-4114-866a-ec55c33ba349@freeshell.de>
-Date: Sat, 17 Oct 2026 14:05:40 -0700
+	by freeshell.de (Postfix) with ESMTPSA id 59401B2202DA;
+	Sat, 17 Oct 2026 23:44:23 +0200 (CEST)
+Message-ID: <13d6926f-f085-4214-8051-7bf7b5d92b67@freeshell.de>
+Date: Sat, 17 Oct 2026 14:44:21 -0700
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -39,8 +39,8 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] riscv: dts: spacemit: k1: mark boot-critical SoC
- nodes bootph-pre-ram
+Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: mark K1 board boot devices
+ bootph-pre-ram
 To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>, Yixun Lan <dlan@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
@@ -49,182 +49,365 @@ Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
 References: <20261017180141.3477743-1-alan.tseng.cs@gmail.com>
- <20261017180141.3477743-2-alan.tseng.cs@gmail.com>
+ <20261017180141.3477743-3-alan.tseng.cs@gmail.com>
 Content-Language: en-US
 From: E Shattow <e@freeshell.de>
-In-Reply-To: <20261017180141.3477743-2-alan.tseng.cs@gmail.com>
+In-Reply-To: <20261017180141.3477743-3-alan.tseng.cs@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 Hi Hung-Chun,
 
 On 10/17/26 11:01, Hung-Chun Tseng wrote:
-> A bootloader SPL that follows the K1 BootROM runs from SRAM before DRAM
-> is up. It needs the root clocks, the clock and reset controllers, the
-> console UART, the I2C bus of the PMIC (i2c8, which every K1 board
-> uses), and the boot media controllers: SD (sdhci0), eMMC and QSPI NOR.
-> Mark these nodes bootph-pre-ram so an SPL can use the upstream device
-> tree as is, instead of carrying the tags in per-board overlays.
+> On K1 boards an SPL reads the board EEPROM (0x50 on i2c2) to identify
+> the board, and before DRAM training it programs the P1 PMIC (0x41 on
+> i2c8) rails buck1, buck3 and aldo1. Boards that boot from SPI NOR also
+> need the flash on QSPI.
+
+I think this statement is too much a description of software. It is not
+interesting what the user-provided SPL does of some other software
+project here for the hardware description in Linux device tree.
+
+If the BootROM does this EEPROM configuration, then we could reasonably
+extend bootph-pre-ram tags with the understanding that any SPL will need
+those same interfaces. Does BootROM configure the EEPROM peripheral for
+access? If not, I think the justification is weak here to include this.
+
+Ask vendor-employed developer(s) to give us a flow chart of the BootROM
+boot flows and list of configured peripherals in each boot flow. At a
+minimum we should have those peripherals configured and refer to that
+correspondance for justification. Additional to this we should identify
+what is not configured by the BootROM.
+
 > 
-> These are the SoC nodes that the mainline U-Boot SPL for K1 currently
-> tags in its board -u-boot.dtsi files.
-
-Drop this last paragraph/sentence or place after scissors line, not for
-the commit message itself.
-
-Device tree in Linux describes hardware and not the arbitrary needs of
-some other specific software project. Any SPL executed by hardware
-BootROM SPL loader functionality in the SoC mask ROM will reasonably be
-expected to need bootph-pre-ram tags on peripherals configured by that
-same hardware workflow so boot can be successful in an initially
-SRAM-constrained environment before DRAM setup. This is not the same as
-stating that "U-Boot SPL for K1 currently tags..." which is a
-description of arbitrary software and not any correct justification.
-
-Examples illustrative how to reason about why bootph-pre-ram tags belong
-upstream and not as recommendations for what to say in the commit message:
-
-* Valid here upstream: BootROM serial UART SPL loader => U-Boot SPL UART
-YMODEM U-Boot main app loader
-
-* Valid here upstream: BootROM USB fastboot SPL loader => U-Boot SPL
-fastboot U-Boot main app loader
-
-* Valid downstream, not upstream here: BootROM USB fastboot SPL loader
-=> U-Boot SPL UART YMODEM U-Boot main app loader; it is valid downstream
-without additional effort as a side-effect of implementing all the valid
-upstream bootph-pre-ram tags
-
-* Valid downstream, not upstream here: BootROM serial UART SPL loader =>
-serial UART-attached Bluetooth BLE VibeCodedBootLoader; When there is no
-such Bluetooth BLE loader functionality in MaskROM BootROM code, any
-bootloader project may implement such exotic interface and add
-bootph-pre-ram tags in its own overrides downstream.
-
-This is not so easy to review for lack of knowing the fact of what all
-peripherals that BootROM may configure, and what tags might reasonably
-be then extended to any SPL in any given BootROM SPL loader workflow.
-Without knowledge of the BootROM code we then rely on vendor-employed
-developer review and community testing for outcomes.
-
+> Mark these board peripherals bootph-pre-ram on the boards that have
+> them, together with i2c2 where the EEPROM sits. i2c8 is tagged in
+> k1.dtsi, as every K1 board connects the PMIC there.
 > 
 > Assisted-by: claude-opus-5-5 dtbs_check
 > Signed-off-by: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k1.dtsi | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi | 6 ++++++
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 6 ++++++
+>  arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 7 +++++++
+>  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    | 7 +++++++
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  | 4 ++++
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  | 5 +++++
+>  6 files changed, 35 insertions(+)
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index 3fabfd341..5d9550272 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -322,6 +322,7 @@ cluster1_l2_cache: l2-cache1 {
->  	clocks {
->  		vctcxo_1m: clock-1m {
->  			compatible = "fixed-clock";
-> +			bootph-pre-ram;
->  			clock-frequency = <1000000>;
->  			clock-output-names = "vctcxo_1m";
->  			#clock-cells = <0>;
-> @@ -329,6 +330,7 @@ vctcxo_1m: clock-1m {
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
+> index 81c40df2a..acb8fa2e6 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
+> @@ -64,6 +64,7 @@ &pdma {
+>  };
 >  
->  		vctcxo_24m: clock-24m {
->  			compatible = "fixed-clock";
-> +			bootph-pre-ram;
->  			clock-frequency = <24000000>;
->  			clock-output-names = "vctcxo_24m";
->  			#clock-cells = <0>;
-> @@ -336,6 +338,7 @@ vctcxo_24m: clock-24m {
+>  &i2c2 {
+> +	bootph-pre-ram;
+>  	pinctrl-names = "default";
+>  	pinctrl-0 = <&i2c2_0_cfg>;
+>  	status = "okay";
+> @@ -71,6 +72,7 @@ &i2c2 {
+>  	eeprom@50 {
+>  		compatible = "atmel,24c02";
+>  		reg = <0x50>;
+> +		bootph-pre-ram;
+>  		vcc-supply = <&buck3_1v8>;
+>  		pagesize = <16>;
+>  		read-only;
+> @@ -100,6 +102,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&reg_vcc_4v>;
+>  		vin2-supply = <&reg_vcc_4v>;
+> @@ -113,6 +116,7 @@ pmic@41 {
 >  
->  		vctcxo_3m: clock-3m {
->  			compatible = "fixed-clock";
-> +			bootph-pre-ram;
->  			clock-frequency = <3000000>;
->  			clock-output-names = "vctcxo_3m";
->  			#clock-cells = <0>;
-> @@ -343,6 +346,7 @@ vctcxo_3m: clock-3m {
+>  		regulators {
+>  			buck1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -127,6 +131,7 @@ buck2 {
+>  			};
 >  
->  		osc_32k: clock-32k {
->  			compatible = "fixed-clock";
-> +			bootph-pre-ram;
->  			clock-frequency = <32768>;
->  			clock-output-names = "osc_32k";
->  			#clock-cells = <0>;
-> @@ -586,6 +590,7 @@ i2c5: i2c@d4013800 {
->  		syscon_apbc: system-controller@d4015000 {
->  			compatible = "spacemit,k1-syscon-apbc";
->  			reg = <0x0 0xd4015000 0x0 0x1000>;
-> +			bootph-pre-ram;
->  			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
->  				 <&vctcxo_24m>;
->  			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
-> @@ -726,6 +731,7 @@ i2c7: i2c@d401d000 {
->  		i2c8: i2c@d401d800 {
->  			compatible = "spacemit,k1-i2c";
->  			reg = <0x0 0xd401d800 0x0 0x38>;
-> +			bootph-pre-ram;
->  			#address-cells = <1>;
->  			#size-cells = <0>;
->  			clocks = <&syscon_apbc CLK_TWSI8>,
-> @@ -857,6 +863,7 @@ pwm19: pwm@d4022c00 {
->  		syscon_mpmu: system-controller@d4050000 {
->  			compatible = "spacemit,k1-syscon-mpmu";
->  			reg = <0x0 0xd4050000 0x0 0x209c>;
-> +			bootph-pre-ram;
->  			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
->  				 <&vctcxo_24m>;
->  			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
-> @@ -869,6 +876,7 @@ syscon_mpmu: system-controller@d4050000 {
->  		pll: clock-controller@d4090000 {
->  			compatible = "spacemit,k1-pll";
->  			reg = <0x0 0xd4090000 0x0 0x1000>;
-> +			bootph-pre-ram;
->  			clocks = <&vctcxo_24m>;
->  			spacemit,mpmu = <&syscon_mpmu>;
->  			#clock-cells = <1>;
-> @@ -877,6 +885,7 @@ pll: clock-controller@d4090000 {
->  		syscon_apmu: system-controller@d4282800 {
->  			compatible = "spacemit,k1-syscon-apmu";
->  			reg = <0x0 0xd4282800 0x0 0x400>;
-> +			bootph-pre-ram;
->  			clocks = <&osc_32k>, <&vctcxo_1m>, <&vctcxo_3m>,
->  				 <&vctcxo_24m>;
->  			clock-names = "osc", "vctcxo_1m", "vctcxo_3m",
-> @@ -956,6 +965,7 @@ uart0: serial@d4017000 {
->  				compatible = "spacemit,k1-uart",
->  					     "intel,xscale-uart";
->  				reg = <0x0 0xd4017000 0x0 0x100>;
+>  			buck3_1v8: buck3 {
 > +				bootph-pre-ram;
->  				clocks = <&syscon_apbc CLK_UART0>,
->  					 <&syscon_apbc CLK_UART0_BUS>;
->  				clock-names = "core", "bus";
-> @@ -1085,6 +1095,7 @@ qspi: spi@d420c000 {
->  				reg = <0x0 0xd420c000 0x0 0x1000>,
->  				      <0x0 0xb8000000 0x0 0xc00000>;
->  				reg-names = "QuadSPI", "QuadSPI-memory";
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -155,6 +160,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1: aldo1 {
 > +				bootph-pre-ram;
->  				clocks = <&syscon_apmu CLK_QSPI_BUS>,
->  					 <&syscon_apmu CLK_QSPI>;
->  				clock-names = "qspi_en", "qspi";
-> @@ -1328,6 +1339,7 @@ usb_dwc3: usb@c0a00000 {
->  			sdhci0: mmc@d4280000 {
->  				compatible = "spacemit,k1-sdhci";
->  				reg = <0x0 0xd4280000 0x0 0x200>;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> index 58035d886..b91db3204 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
+> @@ -187,6 +187,7 @@ &qspi {
+>  };
+>  
+>  &i2c2 {
+> +	bootph-pre-ram;
+>  	pinctrl-0 = <&i2c2_0_cfg>;
+>  	pinctrl-names = "default";
+>  	status = "okay";
+> @@ -194,6 +195,7 @@ &i2c2 {
+>  	eeprom@50 {
+>  		compatible = "atmel,24c02";
+>  		reg = <0x50>;
+> +		bootph-pre-ram;
+>  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
+>  		pagesize = <16>;
+>  		read-only;
+> @@ -223,6 +225,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&reg_vcc_4v>;
+>  		vin2-supply = <&reg_vcc_4v>;
+> @@ -236,6 +239,7 @@ pmic@41 {
+>  
+>  		regulators {
+>  			buck1_0v9: buck1 {
 > +				bootph-pre-ram;
->  				clocks = <&syscon_apmu CLK_SDH_AXI>,
->  					 <&syscon_apmu CLK_SDH0>;
->  				clock-names = "core", "io";
-> @@ -1341,6 +1353,7 @@ sdhci0: mmc@d4280000 {
->  			emmc: mmc@d4281000 {
->  				compatible = "spacemit,k1-sdhci";
->  				reg = <0x0 0xd4281000 0x0 0x200>;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -250,6 +254,7 @@ buck2 {
+>  			};
+>  
+>  			buck3_1v8: buck3 {
 > +				bootph-pre-ram;
->  				clocks = <&syscon_apmu CLK_SDH_AXI>,
->  					 <&syscon_apmu CLK_SDH2>;
->  				clock-names = "core", "io";
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -278,6 +283,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1: aldo1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> index 635e95aad..d2a39cf55 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
+> @@ -201,6 +201,7 @@ &pdma {
+>  };
+>  
+>  &i2c2 {
+> +	bootph-pre-ram;
+>  	pinctrl-0 = <&i2c2_0_cfg>;
+>  	pinctrl-names = "default";
+>  	status = "okay";
+> @@ -208,6 +209,7 @@ &i2c2 {
+>  	eeprom@50 {
+>  		compatible = "atmel,24c04";
+>  		reg = <0x50>;
+> +		bootph-pre-ram;
+>  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC18 */
+>  		pagesize = <16>;
+>  		read-only;
+> @@ -230,6 +232,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&reg_vcc_4v>;
+>  		vin2-supply = <&reg_vcc_4v>;
+> @@ -243,6 +246,7 @@ pmic@41 {
+>  
+>  		regulators {
+>  			buck1_0v9: buck1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -257,6 +261,7 @@ buck2 {
+>  			};
+>  
+>  			buck3_1v8: buck3 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -285,6 +290,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1: aldo1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> @@ -386,6 +392,7 @@ &qspi {
+>  	flash@0 {
+>  		compatible = "jedec,spi-nor";
+>  		reg = <0>;
+> +		bootph-pre-ram;
+>  		spi-max-frequency = <26500000>;
+>  		spi-rx-bus-width = <4>;
+>  		spi-tx-bus-width = <4>;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> index 23f32a8a3..a3d0e38ac 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
+> @@ -160,6 +160,7 @@ &pdma {
+>  };
+>  
+>  &i2c2 {
+> +	bootph-pre-ram;
+>  	pinctrl-0 = <&i2c2_0_cfg>;
+>  	pinctrl-names = "default";
+>  	status = "okay";
+> @@ -167,6 +168,7 @@ &i2c2 {
+>  	eeprom@50 {
+>  		compatible = "atmel,24c02";
+>  		reg = <0x50>;
+> +		bootph-pre-ram;
+>  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
+>  		pagesize = <8>;
+>  		read-only;
+> @@ -199,6 +201,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&reg_vcc_4v>;
+>  		vin2-supply = <&reg_vcc_4v>;
+> @@ -212,6 +215,7 @@ pmic@41 {
+>  
+>  		regulators {
+>  			buck1_0v9: buck1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -226,6 +230,7 @@ buck2 {
+>  			};
+>  
+>  			buck3_1v8: buck3 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -254,6 +259,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1: aldo1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> @@ -353,6 +359,7 @@ &qspi {
+>  	flash@0 {
+>  		compatible = "jedec,spi-nor";
+>  		reg = <0>;
+> +		bootph-pre-ram;
+>  		spi-max-frequency = <26500000>;
+>  		spi-rx-bus-width = <4>;
+>  		spi-tx-bus-width = <4>;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+> index eb77aae9d..5e2fde8be 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
+> @@ -187,6 +187,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&vcc4v0>;
+>  		vin2-supply = <&vcc4v0>;
+> @@ -200,6 +201,7 @@ pmic@41 {
+>  
+>  		regulators {
+>  			buck1_0v9: buck1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -214,6 +216,7 @@ buck2 {
+>  			};
+>  
+>  			buck3_1v8: buck3 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -242,6 +245,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1_3v3: aldo1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> index 790234f35..d4adfc5b7 100644
+> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
+> @@ -214,6 +214,7 @@ &i2c8 {
+>  	pmic@41 {
+>  		compatible = "spacemit,p1";
+>  		reg = <0x41>;
+> +		bootph-pre-ram;
+>  		interrupts = <64>;
+>  		vin1-supply = <&vcc4v0>;
+>  		vin2-supply = <&vcc4v0>;
+> @@ -227,6 +228,7 @@ pmic@41 {
+>  
+>  		regulators {
+>  			buck1_0v9: buck1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1050000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -241,6 +243,7 @@ buck2 {
+>  			};
+>  
+>  			buck3_1v8: buck3 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <1800000>;
+>  				regulator-ramp-delay = <5000>;
+> @@ -269,6 +272,7 @@ buck6 {
+>  			};
+>  
+>  			aldo1: aldo1 {
+> +				bootph-pre-ram;
+>  				regulator-min-microvolt = <500000>;
+>  				regulator-max-microvolt = <3400000>;
+>  				regulator-boot-on;
+> @@ -366,6 +370,7 @@ &qspi {
+>  	flash@0 {
+>  		compatible = "jedec,spi-nor";
+>  		reg = <0>;
+> +		bootph-pre-ram;
+>  		spi-max-frequency = <26500000>;
+>  		spi-rx-bus-width = <4>;
+>  		spi-tx-bus-width = <4>;
 
-Presumably the BootROM does configure all of the above? If so, the shape
-of this looks good to me, the device tree node sorting where
-bootph-pre-ram is added appears correct. With that,
+I do not agree with the "trust me, bro, I need this to boot" approach to
+device tree upstream if it is at all avoidable. However it is difficult
+to know without a listing of the BootROM.
+
+With that, and having no visibility into the workings of BootROM myself,
+the shape of this appears good. I'd like to see that discussion happen
+about what BootROM is doing and more specifically what it is not doing
+that we are amending for the benefit of software in this description of
+hardware.
 
 Reviewed-by: E Shattow <e@freeshell.de>
