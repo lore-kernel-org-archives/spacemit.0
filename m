@@ -1,138 +1,140 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5150C55820C
-	for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 18:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D39367283
+	for <spacemit@lists.linux.dev>; Sat, 17 Oct 2026 14:08:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792090605; cv=none; b=rBFJr4gmZ3LKTtMwg1LgHBncwqB6V2hAl+9XxncPpiO1oKbZtc+5F6WIfClMiDAiFHnL0X4CgW4YRl9S76w4gDDaB8eP1rV9styImaksyUEMEE5zOJ5ptIos1JQq9IJeZfYM41tB34CmW7cJn9obfrVa2v4zUcerClsRK/FK3/A=
+	t=1792246093; cv=none; b=vAU8Qo+/67F1kyXOtf530BcBTmIPqxFMQ9K/gpngkUUKESskpmVdcRy2mFSZjVQIffD723X0NM83zzNTYjn+ok1G8aTGU+/2FjsSom7OT/bKSwOEPe4+SuGTX0m4oFhPZ7MhlU445mOHMy81kqWL0kFUf8EpzpRXk8O3uYB9Vds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792090605; c=relaxed/simple;
-	bh=WfTIScce4+xOI3ZOn4jbGBOjmSx07uEqCRWoRnAARnM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eNcR+Cp/UZe2vFmq9IbgKf/xyXtbsHNOMjTKMsChAbz67TO35/MtKO/AR2vPlcd2zl/126LZk6ceQ1wCIavXIrM5ptN7bCPX7H5+uyN+RaN0OuBUgwELOQA05T6JbFdMB7N3+0rE0BCoNhgkulIQttN7hLLj7TryHfqdjqq55Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTmVBFoZ; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1792246093; c=relaxed/simple;
+	bh=c3zAGnbXG00dTHAYCXYMyd4rQBtIZC6Bxn8dsZvWsHk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Evfx13hpdTcpx18Sv5xQxm8MPutujOl3mE6+W8K/GhC7girAO0/icBC1PIISYMd6lyeBFAoqnwjsWHAyAtxr7L/3+dfFUfXMap/7vjCz7MBisbSb3x/TlVslICRl00d7WzLuNA1PIDO8c+IT7T9P1/HEo5HbwPMFHzgGp64S8pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAhFRpev; arc=none smtp.client-ip=74.125.82.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTmVBFoZ"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-49ff680331aso27495505e9.3
-        for <spacemit@lists.linux.dev>; Thu, 15 Oct 2026 11:56:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAhFRpev"
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-35cd4e8bdbdso1905650eec.1
+        for <spacemit@lists.linux.dev>; Sat, 17 Oct 2026 07:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792090589; x=1792695389; darn=lists.linux.dev;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=WFz+OPWq9luKuBDqe0uuJVjFv3DbmqRC69UJmoS/3w4=;
-        b=hTmVBFoZRDvwEipQeRdWEyQCVFLzBpqseoN7MVoAW3i2nhb+SG45s6rpFbH8aJzbFl
-         FQU3NiCCiokYYEV2fG3ErcLbadaOGijCWWzOkPHoESSuyM19EmxdTwokevqL8uVBUN4v
-         L7sq1m/mszRorhKyxpjZQe3Kmkk3WoYIJdZGJUS81si90IN9fYoudMnTwbn/mrEo/35e
-         IQO0P8NGVLWd0h+TEPq0TP9kxse1j18zRkbh0xqatZJHXgZxz5DRn7rWcIx9fMZvR973
-         /ihzGuepSwULzoNpIDz2s/KyU3vouR6ZKCuRtwoHPj6HY35+9mHGW3mQKFvZKzjrfBmd
-         y89w==
+        d=gmail.com; s=20251104; t=1792246091; x=1792850891; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=6GqqVEdUv42zaBEqCnBmiwK+siq8auSXn02n9bIP0WE=;
+        b=mAhFRpevacYuNE/zAU1cmebrl3QQ2LgOF+KnTuYPDEG+2UND4tKgCQ4gdjwMMTavfb
+         UGjQSlkOo6yRecMXzokyXZFdPsbKuudMjNRLJTfn4cxRnYzfHALzaQ0bkw+GPP4JtlCF
+         mzASn+Jix7Yrz2axuMFRMaPKwIknBsVMCRzGTPgbAZYFF7WXmn8ed/+1RZS18+tfd5Gs
+         HTzuJ5AKBfD24ITOT4Q+mLgUoceTCj56TAWeQJKwwEmpudEokTEGYyq6bmv/MJQWOQyY
+         G8jmSpwkmWrLHMS4zjtP3w1GZ2MYiVh9rnRCkBteLfUywgq9pDdEsd0Bs2EI9BcHVCN2
+         8AZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792090589; x=1792695389;
-        h=cc:to:content-transfer-encoding:content-type:mime-version
-         :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=WFz+OPWq9luKuBDqe0uuJVjFv3DbmqRC69UJmoS/3w4=;
-        b=XFkX91XcC0nMrADt1bLBTZ/kNMJ4xZ6Hq9jBCm8j1XwxgNdpr3xRGVKqwK6MNoJiB+
-         SHGbmU6jXDaTBJDSPiAjBS2et8wMPC3yx6POyzBd/VqXVEypxcq/77gvcrgyw0qldep6
-         7MgAcv4yCQfPkUZddu5DlGUdiVC265h+80HP34/6PjqJ7btMCoNBLn7Z/z4Bw6pcsspW
-         jSCot3yihGMFNZ1Ik2wqJsc9494Um+rXSiwPXWt8DMKq/wQXC+xX5E3nX/ZxdZcbU+UC
-         9DHzFAViovf6Sexe5menBHij0I5pshIWSKqH6tn7ubSMnHvgtymc+dmZAQJypRWxl1my
-         QgXQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxdH0kMmNyz3A7+wvwmA7+n0KXdTDeWzrNWvTfAg6ZO0UFiTbNyCHfLzDRN5dQNf4VK+k2dL22thw==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJ1ZjQCHUhZ4ZsSHD7/QFTf+lUqRd+yusublijlPRdsgREpqWG3
-	neqD6dqkIdEuwpTtiSZQq7SDZLa8S1QIya5fsPggLIwbBaNZ6EgAzFn7
-X-Gm-Gg: AYBFou3EA1NvsdWoJ7sA2Bx8c43lLv9VMqfN/PrSHnhzCofBtnxFGpi2njDQE5wb5Uv
-	CjdG4aJnIeILBbXES3rXVv6sgQbMDid87A6l4osS0JCtwYJkCefDi6xwqcyDsKGyEUOBl2N/nT5
-	Ge/KoqsAbIPW/olK9Vf4OyHFKQKANsU++rgHBDqu0WYoKZT2fm9K2gsIX6YZ66A0GDad6bKoCiW
-	3X5TCJ1yBK1JO3QvlPWGpyT6AbZOoUsQB4Uvrdx8w7Ta2N6ezmGzMLcOxECMhObmCgBxTEKGL6R
-	6OUKtyescLjF/4HsCLxRysIfrY6qaeAaLlsQSamZqWtFJEybWd7mUIq2W16+MpXOtik2rkjlocC
-	kk8JfFJjl5nfTm3lwluJHtiVmGNT4lZH4Q7q9NjeQ29sRwlokTExHZLxQ766DIgfo2Lht/CYs6E
-	yXczH+/dePOtKnRJstj2b1BRSn//sjZ56TuTs0pi5KeEWRrp5VTztPYWkDqYSwhALNP+YYZiSF2
-	AcZkQ49wAsX5kDN4bzHrnawmyl1ubutv38ust0H2Q==
-X-Received: by 2002:a05:600c:3144:b0:4a0:2423:946 with SMTP id 5b1f17b1804b1-4a18e48d362mr400641705e9.15.1792090589045;
-        Thu, 15 Oct 2026 11:56:29 -0700 (PDT)
-Received: from ipedrosa-thinkpadx1carbongen12.rmtes.csb ([67.218.239.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bdc036a4sm106148295e9.11.2026.10.15.11.56.27
+        d=1e100.net; s=20260707; t=1792246091; x=1792850891;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=6GqqVEdUv42zaBEqCnBmiwK+siq8auSXn02n9bIP0WE=;
+        b=U1mgQOvxiozofEp/irc3SbDmj0t2wl0iz2GQLCp/xJu4YkxysEq7MNh+PwC5Hg7IBV
+         qb4NcecY2jadBSviR1PVQjRVwYJBGwkkx6u6eSYi7WNm/jijkSarrbRDSB/p/qXCKtqn
+         SMeXV8a19IQrjLOai9RfbyGf5xVlnzzM2imEKMoVdHnh2fdP0JLzkdJ5i6eWMyC6zwCS
+         Talnukr02MgvzdFv4sDRLmsAK77tLhSh7/BuMuXoZq2V5tKKA0D96il9juGPY9+m6hcS
+         JSZ+gLuX+1fN3bJVa7FItrXYxhGU79sMWMRTqZGAWtky52GV9yCtLN8QU4VzIvnQbK81
+         gotA==
+X-Forwarded-Encrypted: i=1; AKwUvByXP0GYZHnpyBo+hvYR/K1I1wPH+VQbAkq3aYXcf4Z5jesSlmmUeJ+8aCCrq9P6Gl3/Oi37RO2OLg==@lists.linux.dev
+X-Gm-Message-State: AFq9FYKoKmmo7zXErFfCiwxWSVGnL2hq40849xrMHR3j4SYUcv/eZEec
+	Kd6lOvKHAJsRQTyKsrb/plX+G44zbSr4bfNdEl44/ic1ZHf2NZF5G82pGu9qAxxq
+X-Gm-Gg: AYBFou3zxBoh+icza5ibxUyW0s9Se8GB/8lMi8vhHyg4m3zuj6JToCjepoaT8Hz3D/8
+	VlE/BGsDBLn1Q4a8kUrsA8TWsvl5DAZdneHQLUzBG5zydrzrV2N5Q0KEeW7E2akCVJAuqhQ9ZgJ
+	GtgR/V0n0rPnF+gnxaenQK0NOY4HJtMOKkqzPCv73mUclzBaZwpS2xYAjHRNl7ZHdOGcFu7iGiZ
+	5RYUKF8BUtZt1QLH9urQgz0c0bB2b7bIgL2Jg6xp3Ah2g5LSa6R5CeLYPiwpJtTGGvmZT1/wh8s
+	SLSy4jJuFGsx9InNiB9Xn6nYTfGoLq7TQKA0AJ5KUKE4yBaTA1cuQu0+eJ78wEeD6gLn+c166FP
+	VB+SkRmQ+RJkopnrzK7dhao+2s4pc8sxXwGlRHMNfuS1GAs79BgQu38unnIRhrxGsleG7LgioK2
+	cd/no8Y1HReGuo/0rSwOPDMoChg1megKgt/l8MqQBS8uxwiP3Irmm4g89vBUrFOH4/o/zJpWEyQ
+	li2g0efaTTaHKBRImhua8GC+XnBYyqwL3LapYL3pEJdtO9PWVH8QI7LxIK+jZaJ9JCs9DHlDZKa
+	vt0FQTOehaped6H10sOt6aL/BdZbdckxKgBySKVkdcK9pksaXoJ6tw==
+X-Received: by 2002:a05:693c:8943:10b0:351:4a80:d94c with SMTP id 5a478bee46e88-361a2054e07mr4084483eec.21.1792246090528;
+        Sat, 17 Oct 2026 07:08:10 -0700 (PDT)
+Received: from alanhc-14700.tailb22ec2.ts.net (180-177-138-120.dynamic.kbronet.com.tw. [180.177.138.120])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-360820a02b8sm17766277eec.17.2026.10.17.07.08.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 11:56:28 -0700 (PDT)
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Subject: [PATCH RFC 0/2] riscv: dts: spacemit: Enable PowerVR GPU on
- OrangePi RV2
-Date: Thu, 15 Oct 2026 20:56:04 +0200
-Message-Id: <20261015-orangepi-gpu-v1-0-03566a615660@gmail.com>
+        Sat, 17 Oct 2026 07:08:09 -0700 (PDT)
+From: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+To: Philipp Zabel <p.zabel@pengutronix.de>,
+	Guodong Xu <docular.xu@gmail.com>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] reset: spacemit: Fix the RCPU2 PWM reset registers
+Date: Sat, 17 Oct 2026 22:08:05 +0800
+Message-ID: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDE0Nj3fwikGhBpm56QamugVGKhbFlipmpgVmaElBLQVFqWmYF2LhopSA
- 3Z6XY2loAe3MpI2MAAAA=
-X-Change-ID: 20260413-orangepi-gpu-02d839d6506f
-To: Alessio Belle <alessio.belle@imgtec.com>, 
- Luigi Santivetti <luigi.santivetti@imgtec.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- Iker Pedrosa <ikerpedrosam@gmail.com>
-X-Mailer: b4 0.14.3
+Content-Transfer-Encoding: 8bit
 
-Enable the Imagination PowerVR Rogue GPU (BXE-2-32) on the SpacemiT K1
-SoC for the OrangePi RV2 board.
+Every entry in k1_rcpu2_resets[] uses RCPU2_PWM9_CLK_RST, so asserting
+or deasserting the reset of any RCPU2 PWM from 0 to 8 acts on PWM9
+instead. Each PWM has its own register, RCPU2_PWMn_CLK_RST at offset
+4 * n, as k1-syscon.h already defines.
 
-This series depends on:
-- Yixun Lan's power domain series [1], which provides the genpd-based
-  GPU power domain driver required for proper power sequencing.
-- Baihui Liang's dt-bindings patch [2], which adds the spacemit,k1-gpu
-  compatible string to the img,powervr-rogue binding.
+On a Milk-V Jupiter running the vendor kernel, which uses RCPU2 PWM2
+for the fan, the RCPU2 registers read:
 
-The GPU firmware is not yet available upstream. A copy can be found
-at [3].
+  0x00: 0x4  0x04: 0x4  0x08: 0x1  0x0c: 0x4  ...  0x24: 0x4
 
-With this series applied on top of [1] and [2], the full GPU bring-up
-path works end-to-end on hardware:
-- Power domain: GPU power island on/off via APMU
-- Clock: GPU clock enabled/gated through CCU
-- Reset: GPU reset line deasserted
-- Firmware: PowerVR RISC-V firmware loads and signals ready
-- DMA: dma-ranges correctly maps CPU-to-GPU physical addresses
-- DRM: kernel exposes /dev/dri/card0 and /dev/dri/renderD128
-- IRQ: GPU interrupt registered, firmware watchdog running
+Only PWM2's register has its reset deasserted, which matches one
+register per PWM.
 
-Userspace rendering requires Mesa's PowerVR Vulkan driver
-(imagination-experimental).
+Use the matching register for each reset. No in-tree device tree uses
+the RCPU2 PWMs yet, so this has no effect on current boards, but it
+would break the first one that does.
 
-[1] https://lore.kernel.org/linux-riscv/20261008-04-k3-pm-support-v2-0-6f778a53dd2d@kernel.org/
-[2] https://lore.kernel.org/linux-riscv/20261015-spacemit-gpu-binding-v1-1-a7a23c7e7788@linux.spacemit.com/
-[2] https://gitlab.freedesktop.org/imagination/linux-firmware/-/blob/powervr/powervr/rogue_36.29.52.182_v1.fw
+Build-tested only (riscv defconfig, W=1); the fix could not be tested
+at runtime, as mainline has no RCPU2 PWM node to exercise it.
 
-Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+Fixes: c479d7cf06c3 ("reset: spacemit: add support for SpacemiT CCU resets")
+Assisted-by: claude-opus-5-5
+Signed-off-by: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
 ---
-Iker Pedrosa (2):
-      riscv: dts: spacemit: k1: add PowerVR GPU device node
-      riscv: dts: spacemit: k1-orangepi-rv2: enable GPU
+ drivers/reset/spacemit/reset-spacemit-k1.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
- arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts |  4 ++++
- arch/riscv/boot/dts/spacemit/k1.dtsi             | 12 ++++++++++++
- 2 files changed, 16 insertions(+)
----
-base-commit: 7e986b457d43edf8dd3eb3f6c34e55e92cd545f3
-change-id: 20260413-orangepi-gpu-02d839d6506f
-
-Best regards,
+diff --git a/drivers/reset/spacemit/reset-spacemit-k1.c b/drivers/reset/spacemit/reset-spacemit-k1.c
+index 8f3b5329e..dbd783c13 100644
+--- a/drivers/reset/spacemit/reset-spacemit-k1.c
++++ b/drivers/reset/spacemit/reset-spacemit-k1.c
+@@ -154,15 +154,15 @@ static const struct ccu_reset_controller_data k1_rcpu_reset_data = {
+ };
+ 
+ static const struct ccu_reset_data k1_rcpu2_resets[] = {
+-	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+-	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM0_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM1_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM2_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM3_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM4_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM5_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM6_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM7_CLK_RST, BIT(2), BIT(0)),
++	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM8_CLK_RST, BIT(2), BIT(0)),
+ 	[RESET_RCPU2_PWM9]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+ };
+ 
 -- 
-Iker Pedrosa <ikerpedrosam@gmail.com>
+2.43.0
 
