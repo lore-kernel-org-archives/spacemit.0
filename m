@@ -1,119 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F240E2E54D1;
-	Sun, 18 Oct 2026 00:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8353FC5B7;
+	Sun, 18 Oct 2026 04:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792281617; cv=none; b=tXUgLpwfMmOQf5uMAMfEShWNB86pEkZCpYKNHD9ejHFjRx3G9QoVRQ6VARMwU72Y8JYG5nk1sYS8JFBVSUpaqfwGSWNuG77Zmxj0EB4j5DbaRB1gF7QWxUbbruPM+q9X01s7KFlskkvNM5AEE0T0dO7ELdXsuioiJFtPZNCEDx4=
+	t=1792297622; cv=none; b=aQNX6WMPeFDA8wyxubPJookvcB35mAKt7bCd6MS3N0YNI4IV9D1agBBaZbr3wC1On9MjYWgMbeM9Q5CpOOVCq8de2C5GYNEuJYVQ2F0l15YfjRCQCUVq2+AFIFBafHI/tD5jT16KPPXu3uLrLv4NjWrnWcWaa92DO7Qwo2G/Ikk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792281617; c=relaxed/simple;
-	bh=3m0PA06qi4jPv/nIfqTSlJvhiVR5zkEhCrhYQWXdc8U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EsnKmgTQuhwDkHsUBWuQAq0iHT7iir/Jz2bqQwierEWk9zftMTjNKDsU908qvZTePlXCT6Ro6LEHMC8TYZZf+IPlBcyffrFerTDcUXRmufJNPQctclc/jtEm0ge2OeMArisDat8WoqcvKaERO0Xp/Nzmvp92nM4inZuu09KSdZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K3WxzISb; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K3WxzISb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6FD1F000C4;
-	Sun, 18 Oct 2026 00:00:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792281615;
-	bh=N6M32mEa33bKutMk3aL53Y6aX/BFdZJWD6dchSjXyWQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=K3WxzISbgYjZww2ONxRhoaWVqEzv+aCcwbJi5fDjJMCUNcfgGuk9pg3MN93YIoPuI
-	 lSAOcB0U5usa1+Hy6kcm63qMvSCww6U2uiKtzSXrGZOqRWn0G1fz7XZfbG04E6COQ9
-	 G7MEI/9nlITb2vgYeMztu4m2kt5wa7ktY7ddz/WAzhyQ7dKoo330QsbBdZKEtdC0Cb
-	 kqrGP0R0VXUBLo7aJdBGVujjBCLAwej/PEYD2kyD8ftFpjpBN83SP7/EC5/LyheKns
-	 +Y51IJh5CrqJ29Jjkc55Jj2lRsAG4LKd/PQ3w//5wAyeBZzl+3sSh7+6BtG8E2pqRv
-	 O8hF/5Mz3/V/w==
-Date: Sun, 18 Oct 2026 00:00:13 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>,
-	Guodong Xu <docular.xu@gmail.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] reset: spacemit: Fix the RCPU2 PWM reset registers
-Message-ID: <20261018000013-GKA112262@kernel.org>
-References: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
+	s=arc-20240116; t=1792297622; c=relaxed/simple;
+	bh=+JZBFoP6UNzCFMG8ksizQMfuFaGhbvgaHgjE0pQtPfU=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=TtvXAP13t5/52RQS2feQwu5wru8MyQmY26mJ//m4Zdkxs+sfGHYzsihLraO7bEE+QE5s3Bl6xpFigwq21Epo+7N99OHePbXTTL7exzAu+IQ+xo+9vYfbDvGjwlJstmBbTM/3laLvPd0bzh5CXaKmkK/KwMCySsvQTfAQP5OGgeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97A91F000C6;
+	Sun, 18 Oct 2026 04:26:54 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] PCI: spacemit: Ignore link partner PERST on K1
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+To: Encrow Thorne <encrow.thorne@linux.spacemit.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, linux-pci@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com>
+References: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com>
+Date: Sun, 18 Oct 2026 09:56:35 +0530
+Message-Id: <179229759512.2114.3306580489141327360.b4-reply@b4>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1642;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=+JZBFoP6UNzCFMG8ksizQMfuFaGhbvgaHgjE0pQtPfU=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBq1EqICXdhzjUEDQMjpvZ3wE8aqjI6trQnPERXd
+ f3BCRP+uG+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCatRKiAAKCRBVnxHm/pHO
+ 9RhIB/0UnDR/cESj/ARcD4ltFPWMso/Y5xVbiFQY1/4b25i2qjtVDRbpD7lI1LAgivEOE5F0p2J
+ f4YHBCbHjrJOTHsTWR6Ytqe4LD2d4Os3j19iUkzQRmEGw+tIeHY8pAhTeOk57zdKRAXt7DMqgYw
+ srp8+/o8jR9O6VbQN/GCaPSOCoxscKPxbUuYJYCISRR428OYkmUWOKEPZ6/a2zASB09HG2JI1ac
+ Qd74hdQr3HJGVUIprrUFwQUfHMgSRIAjQidIWMV7mXJ6TnIScvP7G33ipEunr7F2KSuk9Ocgtr3
+ 4NxELV3NJebnOqeLgHZVZ5663Q9mEYHelv4z6u+iA5xndgYT
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-Hi Hung-Chun,
-
-On 22:08 Sat 17 Oct     , Hung-Chun Tseng wrote:
-> Every entry in k1_rcpu2_resets[] uses RCPU2_PWM9_CLK_RST, so asserting
-> or deasserting the reset of any RCPU2 PWM from 0 to 8 acts on PWM9
-> instead. Each PWM has its own register, RCPU2_PWMn_CLK_RST at offset
-> 4 * n, as k1-syscon.h already defines.
+On 2026-09-24 10:04 +0800, Encrow Thorne wrote:
+> The K1 PCIe controller and PHY are affected by the PERST signal from
+> the link partner during initialization. With some devices connected,
+> this can prevent host initialization from progressing and cause the
+> system to hang while probing the PCIe controller.
 > 
-> On a Milk-V Jupiter running the vendor kernel, which uses RCPU2 PWM2
-> for the fan, the RCPU2 registers read:
+> Set PCIE_IGNORE_PERSTN before accessing the DBI registers. When set,
+> this bit makes both the PCIe controller and PHY ignore the PERST
+> signal from the link partner.
 > 
->   0x00: 0x4  0x04: 0x4  0x08: 0x1  0x0c: 0x4  ...  0x24: 0x4
+> This allows host initialization to complete without being affected by
+> the link partner's PERST state.
 > 
-> Only PWM2's register has its reset deasserted, which matches one
-> register per PWM.
-> 
-Also match vendor's code, see
-https://gitee.com/spacemit-buildroot/linux-6.6/blob/k1-bl-v2.2.y/drivers/reset/reset-spacemit-k1x.c#L317
-
-> Use the matching register for each reset. No in-tree device tree uses
-> the RCPU2 PWMs yet, so this has no effect on current boards, but it
-> would break the first one that does.
-> 
-> Build-tested only (riscv defconfig, W=1); the fix could not be tested
-> at runtime, as mainline has no RCPU2 PWM node to exercise it.
-> 
-> Fixes: c479d7cf06c3 ("reset: spacemit: add support for SpacemiT CCU resets")
-> Assisted-by: claude-opus-5-5
-> Signed-off-by: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+> Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
 > ---
->  drivers/reset/spacemit/reset-spacemit-k1.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
+>  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-
-> diff --git a/drivers/reset/spacemit/reset-spacemit-k1.c b/drivers/reset/spacemit/reset-spacemit-k1.c
-> index 8f3b5329e..dbd783c13 100644
-> --- a/drivers/reset/spacemit/reset-spacemit-k1.c
-> +++ b/drivers/reset/spacemit/reset-spacemit-k1.c
-> @@ -154,15 +154,15 @@ static const struct ccu_reset_controller_data k1_rcpu_reset_data = {
->  };
+> diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> index 0564c46e2f48..98f067e1ba81 100644
+> --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+> @@ -44,6 +44,7 @@
 >  
->  static const struct ccu_reset_data k1_rcpu2_resets[] = {
-> -	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> -	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM0_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM1_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM2_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM3_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM4_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM5_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM6_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM7_CLK_RST, BIT(2), BIT(0)),
-> +	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM8_CLK_RST, BIT(2), BIT(0)),
->  	[RESET_RCPU2_PWM9]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
->  };
+>  #define PCIE_CONTROL_LOGIC			0x0004
+>  #define PCIE_SOFT_RESET			BIT(0)
+> +#define PCIE_IGNORE_PERSTN			BIT(2)
 >  
-> -- 
-> 2.43.0
-> 
+>  struct k1_pcie {
+>  	struct dw_pcie pci;
+> @@ -137,6 +138,13 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+>  	if (ret)
+>  		return ret;
+>  
+> +	/*
+> +	 * When set to 1, the PCIe controller and PHY ignore the PERST signal
+> +	 * from the link partner in both RC and EP modes.
+> +	 */
 
--- 
-Yixun Lan (dlan)
+What? PERST# is an output signal to RC and input to Endpoint. PERST# is not
+controlled by the Endpoint, but only by the RC/host.
+
+- Mani
+
