@@ -1,413 +1,119 @@
-Received: from freeshell.de (freeshell.de [116.202.128.144])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E71B4CF48D
-	for <spacemit@lists.linux.dev>; Sat, 17 Oct 2026 21:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.202.128.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F240E2E54D1;
+	Sun, 18 Oct 2026 00:00:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792273492; cv=none; b=Gb+MZWaNFyhjd0sxJXhQ5tJQpd1jGFfPoGFXX7K2lQ4GlKK9bpvDYn9Ryxtvy3x8RMuenqM2m8pPTvmAVuvLb50PvZrxNumDqSY08rBgTxygMYA8R8nfO9eUYLcCW49c9uO3plSOvY9lSZ4OQy48YTxTLr4ZBe8kS63oSznJJeM=
+	t=1792281617; cv=none; b=tXUgLpwfMmOQf5uMAMfEShWNB86pEkZCpYKNHD9ejHFjRx3G9QoVRQ6VARMwU72Y8JYG5nk1sYS8JFBVSUpaqfwGSWNuG77Zmxj0EB4j5DbaRB1gF7QWxUbbruPM+q9X01s7KFlskkvNM5AEE0T0dO7ELdXsuioiJFtPZNCEDx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792273492; c=relaxed/simple;
-	bh=F5rpSiBMT/Ji1Laqgg5ujovwyOIDwBqrmZaV+2MX/M4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sVSI2qdvo1E3eabQ8lwigMGyM4sT233advEqTLoOGKhN/xIgUQ1i2v1flj6rf6SxkIV2fdUOmV6D+f3au1F64iwfTBiEKq2ovVedZoqNwUlKHMXqQqqFChBCfraPkQyoyAEnibf7uaHPhr8pR2KFW3NC0YRar5Tt9i6WKI3tvn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de; spf=pass smtp.mailfrom=freeshell.de; dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b=kX2llkKe; arc=none smtp.client-ip=116.202.128.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	s=arc-20240116; t=1792281617; c=relaxed/simple;
+	bh=3m0PA06qi4jPv/nIfqTSlJvhiVR5zkEhCrhYQWXdc8U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EsnKmgTQuhwDkHsUBWuQAq0iHT7iir/Jz2bqQwierEWk9zftMTjNKDsU908qvZTePlXCT6Ro6LEHMC8TYZZf+IPlBcyffrFerTDcUXRmufJNPQctclc/jtEm0ge2OeMArisDat8WoqcvKaERO0Xp/Nzmvp92nM4inZuu09KSdZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K3WxzISb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.b="kX2llkKe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1792273465;
-	bh=s/wVudeSgmsXY2dWTplVbFIoFXGODJ+yqwF0jxDKHAY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kX2llkKe9MgLXAdyhC9lLGNE+erxsxxUEptOuqk0TgMVOnIgZhdVGj79al1WTnP8/
-	 3jQJd7rIZRPisbeEEFuYhcPOOhT9YHOrN0KvkGUVTkNs/B+3cgwllQq6ZiH0i3phep
-	 67f8HNft2EId89VNoObXetLvw4zSNopHOuE9WN70tWJHtAG0OYx4y0+qoGTU4qOWBw
-	 pDdGvWULdomVacVEUCDTALtXbIrFEZhBOG0M7jvdc99gvDCz8eT9dGTXsydObzfZe0
-	 26Z9dKdx8iHD0/1j4IlYajz9+lTs6PBVP8t9nyiQMl+Y6X3pScP4eq5esnANBZmOo6
-	 NWTbff2PDEA0w==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 59401B2202DA;
-	Sat, 17 Oct 2026 23:44:23 +0200 (CEST)
-Message-ID: <13d6926f-f085-4214-8051-7bf7b5d92b67@freeshell.de>
-Date: Sat, 17 Oct 2026 14:44:21 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K3WxzISb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6FD1F000C4;
+	Sun, 18 Oct 2026 00:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792281615;
+	bh=N6M32mEa33bKutMk3aL53Y6aX/BFdZJWD6dchSjXyWQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=K3WxzISbgYjZww2ONxRhoaWVqEzv+aCcwbJi5fDjJMCUNcfgGuk9pg3MN93YIoPuI
+	 lSAOcB0U5usa1+Hy6kcm63qMvSCww6U2uiKtzSXrGZOqRWn0G1fz7XZfbG04E6COQ9
+	 G7MEI/9nlITb2vgYeMztu4m2kt5wa7ktY7ddz/WAzhyQ7dKoo330QsbBdZKEtdC0Cb
+	 kqrGP0R0VXUBLo7aJdBGVujjBCLAwej/PEYD2kyD8ftFpjpBN83SP7/EC5/LyheKns
+	 +Y51IJh5CrqJ29Jjkc55Jj2lRsAG4LKd/PQ3w//5wAyeBZzl+3sSh7+6BtG8E2pqRv
+	 O8hF/5Mz3/V/w==
+Date: Sun, 18 Oct 2026 00:00:13 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>,
+	Guodong Xu <docular.xu@gmail.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] reset: spacemit: Fix the RCPU2 PWM reset registers
+Message-ID: <20261018000013-GKA112262@kernel.org>
+References: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
 Precedence: bulk
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: mark K1 board boot devices
- bootph-pre-ram
-To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>, Yixun Lan <dlan@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20261017180141.3477743-1-alan.tseng.cs@gmail.com>
- <20261017180141.3477743-3-alan.tseng.cs@gmail.com>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20261017180141.3477743-3-alan.tseng.cs@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
 
 Hi Hung-Chun,
 
-On 10/17/26 11:01, Hung-Chun Tseng wrote:
-> On K1 boards an SPL reads the board EEPROM (0x50 on i2c2) to identify
-> the board, and before DRAM training it programs the P1 PMIC (0x41 on
-> i2c8) rails buck1, buck3 and aldo1. Boards that boot from SPI NOR also
-> need the flash on QSPI.
-
-I think this statement is too much a description of software. It is not
-interesting what the user-provided SPL does of some other software
-project here for the hardware description in Linux device tree.
-
-If the BootROM does this EEPROM configuration, then we could reasonably
-extend bootph-pre-ram tags with the understanding that any SPL will need
-those same interfaces. Does BootROM configure the EEPROM peripheral for
-access? If not, I think the justification is weak here to include this.
-
-Ask vendor-employed developer(s) to give us a flow chart of the BootROM
-boot flows and list of configured peripherals in each boot flow. At a
-minimum we should have those peripherals configured and refer to that
-correspondance for justification. Additional to this we should identify
-what is not configured by the BootROM.
-
+On 22:08 Sat 17 Oct     , Hung-Chun Tseng wrote:
+> Every entry in k1_rcpu2_resets[] uses RCPU2_PWM9_CLK_RST, so asserting
+> or deasserting the reset of any RCPU2 PWM from 0 to 8 acts on PWM9
+> instead. Each PWM has its own register, RCPU2_PWMn_CLK_RST at offset
+> 4 * n, as k1-syscon.h already defines.
 > 
-> Mark these board peripherals bootph-pre-ram on the boards that have
-> them, together with i2c2 where the EEPROM sits. i2c8 is tagged in
-> k1.dtsi, as every K1 board connects the PMIC there.
+> On a Milk-V Jupiter running the vendor kernel, which uses RCPU2 PWM2
+> for the fan, the RCPU2 registers read:
 > 
-> Assisted-by: claude-opus-5-5 dtbs_check
+>   0x00: 0x4  0x04: 0x4  0x08: 0x1  0x0c: 0x4  ...  0x24: 0x4
+> 
+> Only PWM2's register has its reset deasserted, which matches one
+> register per PWM.
+> 
+Also match vendor's code, see
+https://gitee.com/spacemit-buildroot/linux-6.6/blob/k1-bl-v2.2.y/drivers/reset/reset-spacemit-k1x.c#L317
+
+> Use the matching register for each reset. No in-tree device tree uses
+> the RCPU2 PWMs yet, so this has no effect on current boards, but it
+> would break the first one that does.
+> 
+> Build-tested only (riscv defconfig, W=1); the fix could not be tested
+> at runtime, as mainline has no RCPU2 PWM node to exercise it.
+> 
+> Fixes: c479d7cf06c3 ("reset: spacemit: add support for SpacemiT CCU resets")
+> Assisted-by: claude-opus-5-5
 > Signed-off-by: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi | 6 ++++++
->  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   | 6 ++++++
->  arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts | 7 +++++++
->  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    | 7 +++++++
->  arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  | 4 ++++
->  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  | 5 +++++
->  6 files changed, 35 insertions(+)
+>  drivers/reset/spacemit/reset-spacemit-k1.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-> index 81c40df2a..acb8fa2e6 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi
-> @@ -64,6 +64,7 @@ &pdma {
->  };
->  
->  &i2c2 {
-> +	bootph-pre-ram;
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	status = "okay";
-> @@ -71,6 +72,7 @@ &i2c2 {
->  	eeprom@50 {
->  		compatible = "atmel,24c02";
->  		reg = <0x50>;
-> +		bootph-pre-ram;
->  		vcc-supply = <&buck3_1v8>;
->  		pagesize = <16>;
->  		read-only;
-> @@ -100,6 +102,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&reg_vcc_4v>;
->  		vin2-supply = <&reg_vcc_4v>;
-> @@ -113,6 +116,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -127,6 +131,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -155,6 +160,7 @@ buck6 {
->  			};
->  
->  			aldo1: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 58035d886..b91db3204 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -187,6 +187,7 @@ &qspi {
->  };
->  
->  &i2c2 {
-> +	bootph-pre-ram;
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> @@ -194,6 +195,7 @@ &i2c2 {
->  	eeprom@50 {
->  		compatible = "atmel,24c02";
->  		reg = <0x50>;
-> +		bootph-pre-ram;
->  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
->  		pagesize = <16>;
->  		read-only;
-> @@ -223,6 +225,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&reg_vcc_4v>;
->  		vin2-supply = <&reg_vcc_4v>;
-> @@ -236,6 +239,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1_0v9: buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -250,6 +254,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -278,6 +283,7 @@ buck6 {
->  			};
->  
->  			aldo1: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> index 635e95aad..d2a39cf55 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts
-> @@ -201,6 +201,7 @@ &pdma {
->  };
->  
->  &i2c2 {
-> +	bootph-pre-ram;
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> @@ -208,6 +209,7 @@ &i2c2 {
->  	eeprom@50 {
->  		compatible = "atmel,24c04";
->  		reg = <0x50>;
-> +		bootph-pre-ram;
->  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC18 */
->  		pagesize = <16>;
->  		read-only;
-> @@ -230,6 +232,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&reg_vcc_4v>;
->  		vin2-supply = <&reg_vcc_4v>;
-> @@ -243,6 +246,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1_0v9: buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -257,6 +261,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -285,6 +290,7 @@ buck6 {
->  			};
->  
->  			aldo1: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> @@ -386,6 +392,7 @@ &qspi {
->  	flash@0 {
->  		compatible = "jedec,spi-nor";
->  		reg = <0>;
-> +		bootph-pre-ram;
->  		spi-max-frequency = <26500000>;
->  		spi-rx-bus-width = <4>;
->  		spi-tx-bus-width = <4>;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> index 23f32a8a3..a3d0e38ac 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts
-> @@ -160,6 +160,7 @@ &pdma {
->  };
->  
->  &i2c2 {
-> +	bootph-pre-ram;
->  	pinctrl-0 = <&i2c2_0_cfg>;
->  	pinctrl-names = "default";
->  	status = "okay";
-> @@ -167,6 +168,7 @@ &i2c2 {
->  	eeprom@50 {
->  		compatible = "atmel,24c02";
->  		reg = <0x50>;
-> +		bootph-pre-ram;
->  		vcc-supply = <&buck3_1v8>; /* EEPROM_VCC1V8 */
->  		pagesize = <8>;
->  		read-only;
-> @@ -199,6 +201,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&reg_vcc_4v>;
->  		vin2-supply = <&reg_vcc_4v>;
-> @@ -212,6 +215,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1_0v9: buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -226,6 +230,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -254,6 +259,7 @@ buck6 {
->  			};
->  
->  			aldo1: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> @@ -353,6 +359,7 @@ &qspi {
->  	flash@0 {
->  		compatible = "jedec,spi-nor";
->  		reg = <0>;
-> +		bootph-pre-ram;
->  		spi-max-frequency = <26500000>;
->  		spi-rx-bus-width = <4>;
->  		spi-tx-bus-width = <4>;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> index eb77aae9d..5e2fde8be 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts
-> @@ -187,6 +187,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&vcc4v0>;
->  		vin2-supply = <&vcc4v0>;
-> @@ -200,6 +201,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1_0v9: buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -214,6 +216,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -242,6 +245,7 @@ buck6 {
->  			};
->  
->  			aldo1_3v3: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> index 790234f35..d4adfc5b7 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts
-> @@ -214,6 +214,7 @@ &i2c8 {
->  	pmic@41 {
->  		compatible = "spacemit,p1";
->  		reg = <0x41>;
-> +		bootph-pre-ram;
->  		interrupts = <64>;
->  		vin1-supply = <&vcc4v0>;
->  		vin2-supply = <&vcc4v0>;
-> @@ -227,6 +228,7 @@ pmic@41 {
->  
->  		regulators {
->  			buck1_0v9: buck1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1050000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -241,6 +243,7 @@ buck2 {
->  			};
->  
->  			buck3_1v8: buck3 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <1800000>;
->  				regulator-ramp-delay = <5000>;
-> @@ -269,6 +272,7 @@ buck6 {
->  			};
->  
->  			aldo1: aldo1 {
-> +				bootph-pre-ram;
->  				regulator-min-microvolt = <500000>;
->  				regulator-max-microvolt = <3400000>;
->  				regulator-boot-on;
-> @@ -366,6 +370,7 @@ &qspi {
->  	flash@0 {
->  		compatible = "jedec,spi-nor";
->  		reg = <0>;
-> +		bootph-pre-ram;
->  		spi-max-frequency = <26500000>;
->  		spi-rx-bus-width = <4>;
->  		spi-tx-bus-width = <4>;
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-I do not agree with the "trust me, bro, I need this to boot" approach to
-device tree upstream if it is at all avoidable. However it is difficult
-to know without a listing of the BootROM.
+> diff --git a/drivers/reset/spacemit/reset-spacemit-k1.c b/drivers/reset/spacemit/reset-spacemit-k1.c
+> index 8f3b5329e..dbd783c13 100644
+> --- a/drivers/reset/spacemit/reset-spacemit-k1.c
+> +++ b/drivers/reset/spacemit/reset-spacemit-k1.c
+> @@ -154,15 +154,15 @@ static const struct ccu_reset_controller_data k1_rcpu_reset_data = {
+>  };
+>  
+>  static const struct ccu_reset_data k1_rcpu2_resets[] = {
+> -	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> -	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM0]	= RESET_DATA(RCPU2_PWM0_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM1]	= RESET_DATA(RCPU2_PWM1_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM2]	= RESET_DATA(RCPU2_PWM2_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM3]	= RESET_DATA(RCPU2_PWM3_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM4]	= RESET_DATA(RCPU2_PWM4_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM5]	= RESET_DATA(RCPU2_PWM5_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM6]	= RESET_DATA(RCPU2_PWM6_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM7]	= RESET_DATA(RCPU2_PWM7_CLK_RST, BIT(2), BIT(0)),
+> +	[RESET_RCPU2_PWM8]	= RESET_DATA(RCPU2_PWM8_CLK_RST, BIT(2), BIT(0)),
+>  	[RESET_RCPU2_PWM9]	= RESET_DATA(RCPU2_PWM9_CLK_RST, BIT(2), BIT(0)),
+>  };
+>  
+> -- 
+> 2.43.0
+> 
 
-With that, and having no visibility into the workings of BootROM myself,
-the shape of this appears good. I'd like to see that discussion happen
-about what BootROM is doing and more specifically what it is not doing
-that we are amending for the benefit of software in this description of
-hardware.
-
-Reviewed-by: E Shattow <e@freeshell.de>
+-- 
+Yixun Lan (dlan)
