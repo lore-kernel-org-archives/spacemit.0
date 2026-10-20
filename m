@@ -1,78 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.29
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792428070;
-	b=FQosHKIcwVou1P7qW66i3bbi1m29fr2KLRMiRtLc8k0RzD2P6XdpA5EFhCjqffY+isoe
-	 5TM9/xAwnVbfNbn3NWD/mAm281bB/6pkqVsYxPGt95nK+OfjmyNa0bjd0LEKvrOyPAAbm
-	 zRE8kK8CvS3MKQJUga65HdZiliI5cqHwBgxBwqKBK0fq/hL670hlgbTQu/aUmXq/wAXPp
-	 TVDHIMN42a08rrwtzMlECkaS+ygLEhZJQ3qs/O7DUxAuiuAWaXsQc14b9HlWxbfi+xMTx
-	 zkgens2TR+0Ds5qAs2v3ITJMQ8h7oo3Fl7PJRuxwqU/rfAv4BDZD3AZxclYfwdLskFw==
+	t=1792484264;
+	b=XxheAJHzMpn4NTo6nJN0b/3r8omJ7YZtuxvfEdD4xJj0bIrZvDfmqe8txsQJhm1Z+ngY
+	 s5KqW2IyY+PwCH7seL+/c6xYdq/0L6kEI5ZEqt72X6xGf6KXx4zK0/G1JID1QhC1LhD9M
+	 LjZ8L6nymNyHgbrug1beBPgYq36zk2frXBrCCLSnwoPAL+HUiJzJ3n0Y/za9GK3EbgxHa
+	 Hq3WextWUOOqpgN1OYZh5g9JqcMK1rOAwbFkZwI2z8IqPkPjlvKITsxiWvHTepPJXMJ1W
+	 zflAI2Fh1VOoP362GT8D2wxG6MD7rhykQy4UtgjzDg57DbR0J+1Ek0On+9p1lwfKKAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792428070;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=rbdfVHO0AKwNo2sneKiVEbPJk3OuiQ8lKgq/D/YXIj4=;
-	b=NORRN6wWWgQwM1rROhRJ1ISkRrgkxaJlXtJLBbR54+MsqU4sFFfHye8T4e4AflaUVOJD
-	 wHkOKGCeDwMPT/s+tGUICuvD3++Q7iDA1sA/WrrLQmLcCS1FzXTahDDnRi0nHresIex4r
-	 ZZF50HPCQr8PTF8vk9CrmY0YvjgYSij+uQJxOcr8a1BVlbtltNty6+uKt5r0c8plSLOFY
-	 txVIreWcp/iDlKg7DK/Qd6RKy3RSt+NEvZn5ns5SroxU/Z4/GF77wVTUTsNUkiT7wPeau
-	 dFu0JQ0EkWZUBNIPdzbqTwtX9nNtzz0aIgaHiy6RzDTQQ5M92W+l9g37ZZ0CkMJjb5w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792484264;
+	h=DMARC-Filter:DKIM-Signature:Subject:Mime-Version:X-Mailer:
+	 X-Original-From:Cc:Date:X-Lms-Return-Path:Content-Transfer-Encoding:
+	 Received:To:Message-Id:Content-Type:From;
+	bh=cDtDx7PTZzs4o4nilnbUUjmgVNV0A2BPpv//8jccmfM=;
+	b=QbNsFxDmr90WYOCP+YAMV7UPuMXFDWro8+vwGJAUQjrva879zzWjxLbN6PnRgdvP99EP
+	 aOlHQ6YckP1LzWCvdro5ftaQ57vXQHK5kZS4vEDvMuq4KjhKkxT5AujQMhMvPs/THUP5P
+	 4LDRU3t3Kox6xCq4rk8jqm2nOYJiwFrCja/hmA5nck9y/fZiXi5pnlBRQB0GryS4q3m3C
+	 GqL5IHPR2RC37yVrxOD700YWQg4tQGK8dFGZB7WkBNCoJic6uDhOuc9N1KfSyAPGhJL51
+	 V9JLG0W6ZxrFHt4nyUhdsyNKO5BeUfNdzZig908g8z85TVnlwIiRjxcc+NgLBe5Oj+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iJoCE9DB;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=deepcomputing.io;
+	spf=pass smtp.mailfrom=deepcomputing.io;
+	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=F6uNkYsz;
+	arc=none smtp.remote-ip=209.127.231.29
+Received: from va-2-29.ptr.blmpb.com (va-2-29.ptr.blmpb.com [209.127.231.29])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7FA606A31A;
-	Mon, 19 Oct 2026 16:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D6F606A31D
+	for <spacemit@lists.linux.dev>; Tue, 20 Oct 2026 08:17:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1D6F606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iJoCE9DB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360D71F000C4;
-	Mon, 19 Oct 2026 16:41:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792428069;
-	bh=rbdfVHO0AKwNo2sneKiVEbPJk3OuiQ8lKgq/D/YXIj4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To;
-	b=iJoCE9DB2Dexn5w31cqx1Is7Akz7QHS7QDtEZIpsTaGyksewCOPOZTkDqQFoFXl+3
-	 jBRd8C4q7edopIozvLloPBDNK3De5o3NttHYOvP8Eo008bFd8/DnmmMrUrm4nB41BG
-	 MIvMGQ4PSLNxua+sGZCv85rrFQ1T7HEmNPZ9g/qrAyRvDH8TiGgsTMuFEvWG04rQq+
-	 jk4MA9aJ9cBcS3saD9IRKX4TpRZX/gP0WD5D8ngtDXmn4E8uMaDvVWOm+MM4eIyPBy
-	 ykoktRYSXdG5lGcbVm3YRyoxpty48Z9EQLQI68IEg4ZBND6XSDDirexkSRygLMrqLR
-	 U1juSrQeIUKsA==
-Date: Mon, 19 Oct 2026 11:41:08 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Frank Li <Frank.Li@nxp.com>, Arnd Bergmann <arnd@arndb.de>,
-	Niklas Cassel <cassel@kernel.org>,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Randolph Lin <randolph@andestech.com>,
-	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
-	Alex Elder <elder@riscstar.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v7 1/6] PCI: spacemit-k1: Add device data support
-Message-ID: <20261019164108.GA2177470@bhelgaas>
+	dkim=pass (2048-bit key, unprotected) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=F6uNkYsz
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1792484250;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=cDtDx7PTZzs4o4nilnbUUjmgVNV0A2BPpv//8jccmfM=;
+ b=F6uNkYsz4tTHLrAVSbYwUXuAoBED5I/H/sbLFaqCFUEmMublUSJ0b3bkkM+gPkEpXB8Qhs
+ PjEb7c1t/6m6TmgbNhdTcTNWN6h1CRuS7DrhNWPH7sVlTeaI6LvUz2jBDj+5FuMdbUZYkD
+ Mbn7F/uU8GIY8c95ROIQq/gBAHyviJw8oe8ANUNS0MTVWcW1+ZDcD9yRLcQavJzz47Ucq2
+ XE0Om06kJ4jMxdeTSt5lIxLg4aq9ELIv3gTcCJgHUS6iXDnmUT6O7Vf8zPwPZq5HHIgqid
+ Nr4re2aq8Kl01ioKI/v1rvsQ3vXriNi15OA4U47uSeowMAtxRtqpbrdR9aU0Ug==
+Subject: [PATCH v2 0/3] Enable USB and SD for Deepcomputing FML13V05 board
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -81,110 +52,57 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260929083755.458238-2-inochiama@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.43.0
+X-Original-From: Sandie Cao <sandie.cao@deepcomputing.io>
+Cc: "Alexandre Ghiti" <alex@ghiti.fr>, <devicetree@vger.kernel.org>, 
+	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>, 
+	"Sandie Cao" <sandie.cao@deepcomputing.io>
+Date: Tue, 20 Oct 2026 16:16:33 +0800
+X-Lms-Return-Path: <lba+26ad72399+fc4508+lists.linux.dev+sandie.cao@deepcomputing.io>
+Content-Transfer-Encoding: 7bit
+Received: from roma-Laptop-12th-Gen-Intel-Core.. ([14.155.180.235]) by smtp.feishu.cn with ESMTPS; Tue, 20 Oct 2026 16:17:28 +0800
+To: "Yixun Lan" <dlan@kernel.org>, 
+	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
+	"Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>
+Message-Id: <20261020081633.3673704-1-sandie.cao@deepcomputing.io>
+Content-Type: text/plain; charset=UTF-8
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
 
-On Tue, Sep 29, 2026 at 04:37:47PM +0800, Inochi Amaoto wrote:
-> To reuse the K1 PCIe driver logic for K3 PCIe controller, add device
-> data to handle the K1 specific logic and make room for the incoming
-> logic for K3.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 30 ++++++++++++++++---
->  1 file changed, 26 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> index 0564c46e2f48..ab2953ad8f56 100644
-> --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-> @@ -45,8 +45,17 @@
->  #define PCIE_CONTROL_LOGIC			0x0004
->  #define PCIE_SOFT_RESET			BIT(0)
->  
-> +struct k1_pcie;
-> +
-> +struct k1_pcie_device_data {
-> +	const struct dw_pcie_host_ops *host_ops;
-> +	const struct dw_pcie_ops *ops;
-> +	int (*parse_port)(struct k1_pcie *k1);
-> +};
+This series updates Deepcomputing FML13V05 Device Tree: Add P1 PMIC 
+regulator tree, add USB controller and USB phy, Enable SD card.
 
-Does the "const" here add anything useful?  This patch suggests maybe
-not:
+This series is based on next-20261016.
 
-  https://lore.kernel.org/all/20260911233541.1650895-2-james.quinlan@broadcom.com/
+---
+Changes in v2:
+- Remove usb3b, usb3c node define in k3.dtsi, it's already uploaded by 
+other patch.
+- Add phys and phys-name define for usb3b, usb3c, usb3d in 
+k3-deepcomputing-fml13v05.
+- Remove cd-gpios, use non-removable for sdhci0. 
+- Remove vmmc-supply for sdhci0.
+- Link to v1: https://lore.kernel.org/all/20260922110231.3426011-1-
+sandie.cao@deepcomputing.io/
 
-> +
->  struct k1_pcie {
->  	struct dw_pcie pci;
-> +	const struct k1_pcie_device_data *data;
->  	struct phy *phy;
->  	void __iomem *link;
->  	struct regmap *pmu;	/* Errors ignored; MMIO-backed regmap */
-> @@ -274,14 +283,21 @@ static int k1_pcie_parse_port(struct k1_pcie *k1)
->  
->  static int k1_pcie_probe(struct platform_device *pdev)
->  {
-> +	const struct k1_pcie_device_data *data;
->  	struct device *dev = &pdev->dev;
->  	struct k1_pcie *k1;
->  	int ret;
->  
-> +	data = device_get_match_data(dev);
-> +	if (!data)
-> +		return -ENODATA;
-> +
->  	k1 = devm_kzalloc(dev, sizeof(*k1), GFP_KERNEL);
->  	if (!k1)
->  		return -ENOMEM;
->  
-> +	k1->data = data;
-> +
->  	k1->pmu = syscon_regmap_lookup_by_phandle_args(dev_of_node(dev),
->  						       SYSCON_APMU, 1,
->  						       &k1->pmu_off);
-> @@ -295,11 +311,11 @@ static int k1_pcie_probe(struct platform_device *pdev)
->  				     "failed to map \"link\" registers\n");
->  
->  	k1->pci.dev = dev;
-> -	k1->pci.ops = &k1_pcie_ops;
-> +	k1->pci.ops = data->ops;
->  	k1->pci.pp.num_vectors = MAX_MSI_IRQS;
->  	dw_pcie_cap_set(&k1->pci, REQ_RES);
->  
-> -	k1->pci.pp.ops = &k1_pcie_host_ops;
-> +	k1->pci.pp.ops = data->host_ops;
->  
->  	/* Hold the PHY in reset until we start the link */
->  	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CLK_RESET_CONTROL,
-> @@ -316,7 +332,7 @@ static int k1_pcie_probe(struct platform_device *pdev)
->  
->  	platform_set_drvdata(pdev, k1);
->  
-> -	ret = k1_pcie_parse_port(k1);
-> +	ret = data->parse_port(k1);
->  	if (ret)
->  		return dev_err_probe(dev, ret, "failed to parse root port\n");
->  
-> @@ -334,8 +350,14 @@ static void k1_pcie_remove(struct platform_device *pdev)
->  	dw_pcie_host_deinit(&k1->pci.pp);
->  }
->  
-> +static const struct k1_pcie_device_data k1_pcie_device_data = {
-> +	.host_ops	= &k1_pcie_host_ops,
-> +	.ops		= &k1_pcie_ops,
-> +	.parse_port	= k1_pcie_parse_port,
-> +};
-> +
->  static const struct of_device_id k1_pcie_of_match_table[] = {
-> -	{ .compatible = "spacemit,k1-pcie", },
-> +	{ .compatible = "spacemit,k1-pcie", .data = &k1_pcie_device_data },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, k1_pcie_of_match_table);
-> -- 
-> 2.55.0
-> 
+---
+
+Sandie Cao (3):
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add P1 PMIC regulator
+    tree
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add USB controller
+    and USB phy support
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card
+    support
+
+ .../spacemit/k3-deepcomputing-fml13v05.dts    | 223 ++++++++++++++++++
+ 1 file changed, 223 insertions(+)
+
+
+base-commit: 2efb7a11f1aa4d2dc285fe2680cca22cb9f72f64
+-- 
+2.43.0
