@@ -1,54 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=116.202.128.144
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792580893;
-	b=AG0sIU8BW0Q3IUeN8qGxmlK1h7tMx7ovcRQRSCkaOamrvQLLZGgr/d28XQWltIi+le4V
-	 JK8PiPg7Z2BhYbBK1/yzCUqNorgjGR4wA3+xWKLs2+RVcabNZ2gQq+X4gHqxA2oKGZ+Aw
-	 Ihx+Dzlx3HV+aGApYTES0lk+6hGkcpXTUVukhHTYQcsXqk5anvkjE1UJAjrLBi/sLcYwG
-	 3vCFz2VNsg5HLBOqdiTYWGFFQXe7FdFiV2gRi65uzLrRMVB7xEVFAyEBausLyiRNfB8Ni
-	 VZ4ecgZpsRfq6dDu0SWn+zMGgLnFAe5wkl3791a7D7GuEPYd4OlQGPEVqodVv2gziZA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792580893;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Lv7Omi5n8k/bxt6p6Ood58jQjPgelYC54rFdKIGqlDM=;
-	b=DeeBmiy8Ck0tuhS9jkswtQeDqGM42D5Q+fQgmYnoCflY82Crd/m11VmW+unfawLiUkxI
-	 e4LVscbNglM3Q6xaXd2DuiWz/oxgnOsuw16/4n6KRuqFRX60GuM7osOlvgQBz3ZH788HS
-	 VE94hVkdYgyKfiBTS/k8rcTQ+fHEoeiRAjAn9T6sXZx5lR5qzk58N92IdV1otVGlAqJ0j
-	 12Wjt9Jip/RaIJ+BdhNFCRd2SZ7v5pMZQ/qWGlCtc1F1d8aQ7++Qco7GCQwN/KxlrxTkD
-	 yEtF1OJFdqu+PoJo66scNOsPxOCaZAtAMaRFG/RDsMJAtG6iOwOxjI/CLdeLj/kSDLg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=freeshell.de;
-	spf=pass smtp.mailfrom=freeshell.de;
-	dkim=pass header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=RU6148x8;
-	arc=none smtp.remote-ip=116.202.128.144
-Received: from freeshell.de (freeshell.de [116.202.128.144])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792588142;
+	b=slcJn9YFKyGjXQhHTgcATYmXpqIJpZY/U6YiIEpk0D3ASzIfftDLukTDgO0sD9MeuM21
+	 qd4KcoGT7hBKjo0a9zq4c+Ti72Iq514u8WDiYOQMsVWFJzwlOCWgz0ULsQyYPK/04W2kK
+	 mGBqWOg6hu93XaZ+Tw5p75W0gFMQLsdzv8KwYMiUmPj9ikUymMUGk/yosajHfMc+Fk9p1
+	 00XJMjAynQAeFKO0+EUvD9Iev0zg/6MF+m8yM+2qAVj/dis1dRV84eKfAhsOJwpT3pb+d
+	 adYa5mh7xjyXsLfnVOafOKn8j3kbcH8J3q6FEN3zF7YyTBVVou2iPe00ory/oUz0J5A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792588142;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version;
+	bh=NACHf3MpA2Z29v6RpiB327pgryw33carefl3Um/1JYc=;
+	b=CEaCvVYs3zQdEEzNa+drCG9LEeg+tGGvHlv21y4EVOBhcVcZw2jyL8rJIpW9kTEcYMR0
+	 2PcmnxLPBJ5s63A9uJiNUGaKtMwVAeA58AoUUAg01/nCAC35hLxFaK/P1zNmPlUvyXWHW
+	 yaaQctnoLSy1AmuatSxwTzBPbDpQwRG/Zm6gwyUzSkXJkgF4ofMnPdnLfK1h5CQpPD+gU
+	 9oKzN8+AlqQ7OV0XiKb4nlkrkfcbAh+OxLRPFspo6jr+cOTsGksVGemORxmVijrQEa7/L
+	 Qpai04QpR3qPzA8VKUQOSLuXyr9zA5wX2IAcChmHoF4LfNqGLzFl8tCf4blkFI6FkQQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=pengutronix.de;
+	spf=pass smtp.mailfrom=pengutronix.de;
+	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=R8uGqCm8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5252606A31D
-	for <spacemit@lists.linux.dev>; Wed, 21 Oct 2026 11:08:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5252606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4798B606A329
+	for <spacemit@lists.linux.dev>; Wed, 21 Oct 2026 13:08:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4798B606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=RU6148x8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
-	s=s2025; t=1792580859;
-	bh=Lv7Omi5n8k/bxt6p6Ood58jQjPgelYC54rFdKIGqlDM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RU6148x8F8xQtgBEgbPeOFO/r4kqbrnkMiqhES+lxGo7EhBo4HEHYbI5PwrGnoLbg
-	 lqngIyqKCLwBZOQKovwE5liPCfPLgURH4u6qrwu0n1EDuy6vSMWb/Y6AWXO1Y2s4KY
-	 jD65I13FboQh/3dhd6PLXPRkFNOf/btq1yfHaj8dzj+fBYtQwYvziKxp073/vNt5Is
-	 EmGl1FhB0tU92jWSLuDq70HFbppfvzq2iB2ckGhrYacamUUbq0HE+0ZpUsjda5I1Zx
-	 BudGOG3uFTjx0qHf2gU7y2xQytgNo2+oZHcotJiT8sQJG1WbeaV7/RDQ00LsRf03FO
-	 ZvXrq/m3neQ7A==
-Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
-	(Authenticated sender: e)
-	by freeshell.de (Postfix) with ESMTPSA id 90006B2219EB;
-	Wed, 21 Oct 2026 13:07:36 +0200 (CEST)
-Message-ID: <b47b95f6-600b-4b0c-8aca-acd7c75d5d07@freeshell.de>
-Date: Wed, 21 Oct 2026 04:07:34 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=R8uGqCm8
+Received: from [IPv6:2a0a:edc0:0:900:1d::4e] (lupine.office.stw.pengutronix.de [IPv6:2a0a:edc0:0:900:1d::4e])
+	(Authenticated sender: pza@pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 543852017C1;
+	Wed, 21 Oct 2026 15:08:58 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1792588138;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NACHf3MpA2Z29v6RpiB327pgryw33carefl3Um/1JYc=;
+	b=R8uGqCm8/MGbuHjf7MIF9PQsjey3ZRTC+XBg48O8PIjxIHqJ1yTYne6gDmeiK0bzsSc8Ep
+	nQ27t/ShYxl+mJXok76eLztPt7FmTPpem96nxSFVRQ9x5YLkTu1TtMOMG0H7evWEjyBSDa
+	iIXP2GA/MzycPxckYuNqhZP77r9hP6095sKGVMXonKP3yIORX//xs17GdpBBmr99aSvXxh
+	DGC+qZfRsN0S52/Mv0t+VTEOT7qgZzVgelPl7Um4OW2pmJl1QnDhCF9nH7os7L7Sb0Xv7Z
+	PHapo4kEf9CMUsu/xf/j91kRIqbkdiv2vnhRU2NpqpDn4jeAaaI687oM5PwiEQ==
+ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1792588138; a=rsa-sha256;
+	cv=none;
+	b=S9IQz4z8979vZ6MEZIPMXQIOlMi8oGhu9HcjMk1PQdxKsnXNt9PavqnItUZRKwc5bxRKWi
+	pPQkCSCGm9pv1HkymuqwxJQiggWjS+BCicB6X/j0ngpAYbArY2cjbBIwOvfBiYHAxeyEXp
+	MI+QmLgtrcAJDnuZ5IFmHXuAMg2iILFRXT2zZhFVujVRdFo7k223jJsU2YGvS7otG5adnw
+	Yk23AWn9ZKh7iR9nXT+Sl8cTKqKChXPDNirPNQXJdM1jSfDPpP26/Uf17JPB8bs68taqLz
+	iyFFTYzq+jZ2AZ972Sdw2MYUDA+Ijp0FUHcOUIFqy12dO5K/lT3U7AZgsDWnUQ==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pza@pengutronix.de smtp.mailfrom=p.zabel@pengutronix.de
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1792588138;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NACHf3MpA2Z29v6RpiB327pgryw33carefl3Um/1JYc=;
+	b=MbUI2xy/T2JvUfljrMMoGD+NaxevJ5ArDj3fnSudjSm1Zzp2mpAh9/7/XKc/07JIQXBwhQ
+	ple4g8cTZ6BIbTmtvKUE79INCYUa1o/Rga1HDlbLYV16hBBNxMNdSnBzrrTxvkCXK/xLtV
+	l4Kv4qDgaD4Itzug/Po7SngurSI5Hb28jtODZjSmV8s5OXG6QzTXGLSf9gTZEKEbaFMA+x
+	7S0+rLktSUDSmgY/6yDNRKwtss9alTDYcmQOOAzxzcPyL5bAmMlGlWa56npUyp59lX/wh2
+	IYsz4cn9E311q5/KauA8AHkm2WK9E2c1AG5RAURyeZrgbTeirci7hKTXa315AQ==
+Message-ID: <5bf7f29d89ecc415ac5d7a3d62d0eac4c46e3a1f.camel@pengutronix.de>
+Subject: Re: [PATCH] reset: spacemit: Fix the RCPU2 PWM reset registers
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>, Guodong Xu
+ <docular.xu@gmail.com>,  Yixun Lan <dlan@kernel.org>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, Alex Elder	
+ <elder@riscstar.com>, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, 	linux-kernel@vger.kernel.org
+Date: Wed, 21 Oct 2026 15:08:58 +0200
+In-Reply-To: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
+References: <20261017140805.3278709-1-alan.tseng.cs@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,56 +94,37 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] riscv: dts: spacemit: mark K1 board boot devices
- bootph-pre-ram
-To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>, Yixun Lan <dlan@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-References: <20261017180141.3477743-3-alan.tseng.cs@gmail.com>
- <13d6926f-f085-4214-8051-7bf7b5d92b67@freeshell.de>
- <20261019141752.2077207-1-alan.tseng.cs@gmail.com>
- <20261021083425-GKA125937@kernel.org>
- <20261021110001.2905669-1-alan.tseng.cs@gmail.com>
-Content-Language: en-US
-From: E Shattow <e@freeshell.de>
-In-Reply-To: <20261021110001.2905669-1-alan.tseng.cs@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 10/21/26 03:59, Hung-Chun Tseng wrote:
-> Hi Yixun,
-> 
-> Yixun Lan wrote:
->> but for bootph-pre-ram, isn't it about the DT nodes which needed before DDR
->> initialization in SPL stage, and should have nothing to do with BootROM?
-> 
-> Thanks for checking with the vendor. I agree, the schema defines it as
-> "the phase that sets up SDRAM".
-> 
-> I also need to correct what I said earlier: the EEPROM is not only
-> used to tell the boards apart. It also holds the board's DRAM
-> configuration (number of chip selects, data rate and DDR type), which
-> has to be read before DRAM can be trained [1].
-> 
-> So in v3 I'd like to keep the i2c2 and EEPROM tags, and also tag the
-> EEPROM on the OrangePi RV2 and R2S, which I missed in v2.
-> 
-> E, does that address your concern?
+On Sa, 2026-10-17 at 22:08 +0800, Hung-Chun Tseng wrote:
+> Every entry in k1_rcpu2_resets[] uses RCPU2_PWM9_CLK_RST, so asserting
+> or deasserting the reset of any RCPU2 PWM from 0 to 8 acts on PWM9
+> instead. Each PWM has its own register, RCPU2_PWMn_CLK_RST at offset
+> 4 * n, as k1-syscon.h already defines.
+>=20
+> On a Milk-V Jupiter running the vendor kernel, which uses RCPU2 PWM2
+> for the fan, the RCPU2 registers read:
+>=20
+>   0x00: 0x4  0x04: 0x4  0x08: 0x1  0x0c: 0x4  ...  0x24: 0x4
+>=20
+> Only PWM2's register has its reset deasserted, which matches one
+> register per PWM.
+>=20
+> Use the matching register for each reset. No in-tree device tree uses
+> the RCPU2 PWMs yet, so this has no effect on current boards, but it
+> would break the first one that does.
+>=20
+> Build-tested only (riscv defconfig, W=3D1); the fix could not be tested
+> at runtime, as mainline has no RCPU2 PWM node to exercise it.
+>=20
+> Fixes: c479d7cf06c3 ("reset: spacemit: add support for SpacemiT CCU reset=
+s")
+> Assisted-by: claude-opus-5-5
 
-Yes, as based on published documentation and confirmed by vendor, that
-sounds good to me.
+Drop, see 1e035297ffda ("docs: remove Assisted-by references").
+Otherwise,
 
-> 
-> [1] board/spacemit/k1/spl.c in U-Boot, ddr_early_init() -> read_ddr_info()
-> 
-> Thanks,
-> Hung-Chun
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 
-Thank you Hung-Chun and Yixun,
 
--E
+regards
+Philipp
