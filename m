@@ -1,71 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792688033;
-	b=M63ozp2E0YUltDee7qITdCzidoCOij/EKmuxPF3hmIt5ZS4ek+Ekn6K35SQrBO6XVN7u
-	 hyTV4ER3nVKbCnjQpf7Iig5hoNhNPBJQiHVWS1MnH2kM+snpbfF7dsxGgWoAs9++DNF7v
-	 AEMuqLsNegtycNOIZ1FlBDA1WLrzNykPrcvGfDYHoNzTc8wnegG8sU+w7gL8gdhLISIIW
-	 Y1a1o5Odlc7zVxwEyVfP+zlRmMe9XIvo76sOrAXyueFSCj/q30zTI3Fnog4k6blnWqLOP
-	 PBzJ6p6DFp3uLBOx72C28dHLRXVRZZ1lbYZhcFzpOmu1kJd9/v1n9++vbcTyjmJhwrw==
+	t=1792717894;
+	b=4IX/X0akbwO1wDl5jPL4UI8vbzeP6dOnmkUY1x0g/Af/Mrh+FQi/BDKdEBx9lpikiQA6
+	 /dsXyxCRUQTk6eVe55h3v88Q6/R+FejFOfeWl37oQpGnoPBwcad40oJKkgnNegagJbRve
+	 20nV7leL3ETWfmY5fuuKiOlZJ1vr49arBxw7IRVh9Rf+wjCvR+H0DeWd+lhFx6VtU45vT
+	 cFeSWe7uRISejpnuMaxG+8Br03Ov6vs+/HUL/8uKpkcMJGLqRvAG8+QBWd2cLQ0Ong4Au
+	 V9wSqLLk4plVhEF9zmJBZa3I8VmstaLuSeHLZKxDU1pK7LdsUoFRHf5GuC6tTJHPxfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792688033;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:User-Agent;
-	bh=MN3l1M08sCGITJaNtvFuaCEwDyESp6f/Fe3N4avbuGo=;
-	b=2wcunnaicrX84A40oIbkSAzJQYI7PnrJ26EpAyx0l7NWaQnL7h3R7Ukq3UKEjkz2Qliv
-	 LGFIpIZ4/bLMdBLHuVXBdR1l1B6OurdsXkaQ/gertnkXPn1VIDf1LqAbTA4SHP673EvlZ
-	 JD69zJPQB7h3NjQygxxKOwnYul/l1FMe9/kg7DZHcRUUeXP1w0Cgwcb0bw0zxV+EPkBb+
-	 MnOqGncaiS+iNUEhQyzPOFhe9nLG1iL1Ympf2Pkc4YI3xcojfHhXz8s6Sl0cGVdgS8y16
-	 puUT74EKIU5JlxCYizZfYTmn3HfV/NYphY21h8laZ8/IL53w0hU+CCpxXivkxkabtOw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792717894;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=ca0MKmziHGn/ENW6MtF0WQWdMBBji0twFfNmZik5cvc=;
+	b=5AzGzL9mO/KGuw+a8KV6yaKQnn4nUjc9J6mjuiTjR6KFNXhlc2/qU9FQbNFtl7zSMCti
+	 SOtvPYa08X1g5Khx7dF8/7IKgaQWgWs3kUywl2m6ER3o/M8tjzMSzywpinI2cVUTcQo/3
+	 2NVEeVSpTt3/JQp5Hlrd/YH0q+TmmqBadHmiw2LPDWP+TLHj6qU1tvrW6B0kFJ7wGppIT
+	 TRQCOavri0DM8Pb65L/pu2iXcTlDw14nNNCLhgzd22RNzE6KkbUqqk3WC4v4qP6zFB4rd
+	 CwZUsCz9bKe6PJb+ZoyT2GQFCHWPrM1eTZVe3gx392EB9cwKukb9LSy5LaVbk1W4T3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=0vp9tCl7;
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FrZfPOTn;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7174606A319
-	for <spacemit@lists.linux.dev>; Thu, 22 Oct 2026 16:53:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7174606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759D606A324
+	for <spacemit@lists.linux.dev>; Fri, 23 Oct 2026 01:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=0vp9tCl7
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=MN3l1M08sCGITJaNtvFuaCEwDyESp6f/Fe3N4avbuGo=; b=0vp9tCl7c+otLaBYlnXL8J1OF5
-	eL2Izybj6MFAyiOHuhixca8q8nzKlYq2EqjjtB5CEuDRRVYuBblQbwD5e1lywvECG7edmLSLcGBQU
-	9caE0Ik3Sa/UTTqkCP4XtYhQiXk1eF3Mm0EeAqJFO0tns0ANjYGsZJh3Slz2PgXSNQOvW/DU1aWIV
-	toG2cCH+5+bQ0Z4tkJRMJnf1qMwSFfHNW+6rftLyHc/HIqFtU5qSzaQttYOH1FTyryioHwerxcAw/
-	QSpt+bsHkRCG4ygAgd9LFYkyeE7C4k9JgkiPqKWH2ardBBYIfzJt8c5T44LHo4ybOc0r+9R1QDzHm
-	/63CNNzQ==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xJw2v-0000000EAHB-2ts7;
-	Thu, 22 Oct 2026 18:53:41 +0200
-Date: Thu, 22 Oct 2026 18:53:41 +0200
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>,
-	Andy Chiu <tchiu@tenstorrent.com>, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: Random corruption on SpacemiT K1 (and K3) with RVV
-Message-ID: <ato_lUcnuZV30Mtj@aurel32.net>
-References: <apSYF5x1Tu7PlyL1@aurel32.net>
- <ap-SIQ9DLt-CfAx6@aurel32.net>
- <aqGNGp8PInSV4vty@aurel32.net>
- <arL0QBe_XYLO8Yy7@Tao-Chiu's-Mac>
- <arSshYwcyHjC2dh3@aurel32.net>
- <arS-yYLK8Df5knSE@gmail.com>
- <arX7PwOnlz0N9rUc@aurel32.net>
- <arnt6EEacEm3YRIC@aurel32.net>
- <db540b00-a017-4c82-9a6c-93e862dcde67@iscas.ac.cn>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FrZfPOTn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5EF1F01828;
+	Fri, 23 Oct 2026 01:11:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792717893;
+	bh=ca0MKmziHGn/ENW6MtF0WQWdMBBji0twFfNmZik5cvc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=FrZfPOTnVfZhsxv1GNB7Pt778yefpphIIR8UKOhtzih8FJJE1c7nFA8xJax0nL2mV
+	 1eSLgJSbWwe90kn9rZw9K28ri9aIecJXeXDbC35es3VUHxv1n3oHR/9jEzQLU8Q9pV
+	 m+0U/AfSKFI74782fBWXBk5k9JhBZbxrkyZZNiP7RqCC4usMuRXOCLMsV/geevyg1a
+	 olCbWUxMF7xSkMRTQZ+xk/qTr38V9RxRU/Q/KvzGsSzYecy3Q8WPFwg1NAXCyGGNXk
+	 aMcI00PnjXu7+hzphd/BT/TO3lzz6vfx7zhjt4rtRchggwSMJnsUwn9kGdxpVvhBS6
+	 xPfmoB+Q4IApw==
+From: Yixun Lan <dlan@kernel.org>
+To: u-boot@lists.u-boot-project.org,
+	Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Tom Rini <trini@konsulko.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Simon Glass <sjg@chromium.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Randolph Sapp <rs@ti.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	E Shattow <e@freeshell.de>,
+	Yao Zi <me@ziyao.cc>,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v4 0/2] tools: mkimage: add SpacemiT K3 boot image support
+Date: Fri, 23 Oct 2026 01:11:27 +0000
+Message-ID: <179267091870.88099.14500651911580762927.b4-ty@b4>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261010-spacemit-aihd-v4-0-e7152ae4d71a@pigmoral.tech>
+References: <20261010-spacemit-aihd-v4-0-e7152ae4d71a@pigmoral.tech>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -75,67 +69,28 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <db540b00-a017-4c82-9a6c-93e862dcde67@iscas.ac.cn>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi,
 
-Some small update on that. Sorry it takes time, it's just the bug 
-happens sporadically and I need a lot of testing to reach some 
-conclusion (and when I can't reproduce the bug, I am still not sure it 
-is not there).
-
-On 2026-09-29 12:07, Vivian Wang wrote:
-> On 9/28/26 12:32, Aurelien Jarno wrote:
-> > Hi,
-> >
-> > On 2026-09-25 06:40, Aurelien Jarno wrote:
-> >
-> > [...]
-> >
-> > That said Han Gao pointed me to this patch:
-> > https://lore.kernel.org/linux-riscv/20260807-vector_fpu_regs_status_rmw_fix-v1-1-0c16848b60db@intel.com/
-> >
-> > I have been testing it, and so far it seems to fix my issue with both 
-> > CONFIG_RISCV_ISA_V_PREEMPTIVE enable and disabled. Or maybe it just 
-> > hides the issue by changing the timing, as at this point, I haven't 
-> > fully understood how the bug fixed by this patch can completely explain 
-> > my observations.
+On Sat, 10 Oct 2026 00:31:06 +0800, Junhui Liu wrote:
+> The SpacemiT BootROM loads a first-stage bootloader from storage or over
+> USB in MaskROM mode. Vendor firmware packages this bootloader as FSBL.bin.
 > 
-> I don't know how that would cause what you have observed either, but it
-> does superficially appears to fix a real bug.
->
-> > Unfortunately, I have been able to reproduce the issue, even with this 
-> > patch applied. It just significantly reduces the frequency of the issue.
-> >
-> But this, I suppose, is still useful information that we just *might* be
-> on the right track.
+> This series documents the SpacemiT boot image format and adds the
+> "smtimage" mkimage type for the CRC32-protected K3 variant used in
+> non-secure boot mode. It provides the FSBL packaging needed for future
+> K3 SPL support. Select K3 with "-n k3" when creating an image.
 > 
-> Can you perhaps try this hacked together patch below and see if it does
-> anything? I just put guard(preempt)() or something around a bunch of
-> places I could find that access regs->status. It should apply to 7.1 and
-> 7.2 as is. (The coding style is deliberately horrible to minimize diff
-> lines and discourage others from shipping it)
-> 
-> (This adds some more widely-scoped guards, and AFAICT /replaces/ the
-> above linked patch from Guobin Zhang.)
+> [...]
 
-Unfortunately that doesn't fix the problem. I am still able to reproduce 
-it with this patch :(
+Applied, thanks!
 
-I also have tried with a 7.3 kernel, and I am still able to reproduce 
-the issue on both the K1 (the above usercopy issue or the not 
-reproducible GCC ICE) and the K3 (only not reproducible GCC ICE). 
+[1/2] tools: mkimage: add SpacemiT K3 boot image support
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/1d43f1c5f35614ef542532d563166c2ef8cdcbaf
+[2/2] doc: board: spacemit: document the SpacemiT boot image format
+      https://git.u-boot-project.org/u-boot/custodians/u-boot-spacemit/-/commit/b0acc14b606ced3c76c43594a474cd80fc791f4a
 
-Disabling vector extension in the device tree fixes the issue in both 
-cases. However the LLVM JIT doesn't care if it is enabled or not, it 
-just matches by mvendorid / marchid / mimpid so you just get a SIGILL.
-
-Regards
-Aurelien
-
+Best regards,
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Yixun Lan <dlan@kernel.org>
