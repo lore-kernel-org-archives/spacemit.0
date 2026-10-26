@@ -1,104 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.179
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792985899;
-	b=G4+sEz02y00CqRZW0ql4DXOfeAwdr7rU50QT5VvULuvJnSw0vJQwsD3WVlKE55jh4dzL
-	 oydSkMhpFurcdckMX+Naj1Zy2rO7ig5Ov9z/GLNXFxByV3iyL5ZbffgyDSL7xLWKKuI+n
-	 KJkWf3nQu6nZkkFS6gOJ87HCQ2UO3/sS7O8BaFRBrWUv/w4RaownhJ+zCvSuJxWTXZQkI
-	 w6of15ADsipAzrdNATxYNNY/+2leGw5Ynra/NagCTBMexhRhAI4L0snHMUhaPlqLs4kos
-	 rs5AI2MOKYCSkDEPOTcizmtxZ1m29TR9sQNLQIBmYlKVJFmgZrILC9RyJMX48az1phQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792985899;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792993135;
+	b=3oRxWdbJPfiK20AM/7AB3TdeM7lAL8yvsOKkWAUB4biumXnNnnwpQiuvex8lkJyXmJaw
+	 AjFe2PrrCM34FsD6HkyMIOCtEyp4WrG/W+NF8h/7az5S+SZ8Km44hBau+4SUUkQh8UqBN
+	 fL5oOVkDRO7cU1dDPAL7YNvSxka6Ha9WY0x57CBh0b5bq7jsymhZhg5+sWI+tKMHHjzm1
+	 74SFcNEH9lG/LlnL9bqB9WTdB+Ee4ZP9ZknnB7FhNxHlD6Yr55iEMiRd0jrzzO2uOGl7F
+	 pMYCAIYhueMMDZMwF4T0E0xygWWt61aDmIcHN+KlsD9yJ4Atzzm9xhcLJwGEmXC1QBg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792993135;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=LJ/LLdUvbUXDscVG28+mEznHp6VW8smsqWPUjig3N5U=;
-	b=eFPT217M0/VNeScAzMO4xfTBJjTXw4+LFyx3VGHZmeSGTvE7fPOuTxiE6p/M4AuH43tD
-	 /mFuQ12DS/jrTZmJUL0R7qcfUqkzUyeIVf6VjKQopuMtMH2fQgoJrbfIIK/7fdIJ4Zand
-	 RU4fqOD/jtkba/Lf29keQVBrXYOeVr5eLuxNC2BPYC9yMViEKVfA7bR5safQIH1Gx6Xjs
-	 uzjc1e8pLP/CWatnMfOhYZ27mW248colCgocyWsoUxVoAUB8kK42fPa6nktzaWQ/hdrKb
-	 0K8m8ELUveCjnkpVMmyZT4e6W/kCTSvj4SypxLzYzm5C1Qzs39gdOXURlPqZitg6sIg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=KRC9z7Hf6UT0/DB2ko9R8MQynM5giNRybmjOpJEixmM=;
+	b=4Y9IJYrxhP1Thi5fKiJSOFUv+AZO+wzqfsJJ0nQ9X5Xj8DE/WWwbwGSeYFJU2LatmfSv
+	 l4WbL/lWIiFh74eM/eib7hJsaJKjVjaKds4z3aXhZLOcu3MKbZHxK4mjNvDB2KsI2HTXM
+	 awVPtXIWGl20tu1SyBM9WJWvm+E1yZRRSRnowzV1IG02aYJQVbxBvrKdFW5/GoQJL9lkv
+	 pKAiCq8gzJ9v4S+cUzmvbjLQ7OzGSRXoPGS7X8PUci6quW30rTqmq3S0K798JdFG0yEl6
+	 cpzWrz3sa6+pB3Xe/Hu2vYLEmXCzQEWvD5NIr7/yQ9yl4tr5kAvGL77LoKn4VOQVDQQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NBo2X8Ob;
-	arc=none smtp.remote-ip=209.85.210.179
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q76wuUGO;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.45
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D23606A323
-	for <spacemit@lists.linux.dev>; Mon, 26 Oct 2026 03:38:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7D23606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B2E60A380C
+	for <spacemit@lists.linux.dev>; Mon, 26 Oct 2026 05:38:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02B2E60A380C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NBo2X8Ob
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-8a05f2d5cd3so949186b3a.0
-        for <spacemit@lists.linux.dev>; Sun, 25 Oct 2026 20:38:18 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q76wuUGO
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6af9a9451daso3958005a12.0
+        for <spacemit@lists.linux.dev>; Sun, 25 Oct 2026 22:38:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792993133; cv=none;
+        d=google.com; s=arc-20260327;
+        b=XyhhAOtnfv03h+5Aux+1xsn2JYWSdcnompRhbFtk55lIuwGwLCRbHSisZrDqA78dzf
+         gOO2MVL69eFb+VN66nHr0ZF/TvzvPiLxPn6XuyTwrONV4ZUqWWbYs953ahiVm/HyyMNE
+         6PQvGCuMnSiyMLONIt0yvmZRIqlLIsoh+H/bfx9zyVhJBh8C/AH6UBB1WFsZN7nOO6UZ
+         +rE7n3/tY0XnHcBPQVI/l2tWAtgqxi/OzBLTAHrhK2N2FxBrfTCrfK98dS4Fvb448JWd
+         GgLvLKgy5jqVgYZWWrqzpKrYaXqfnSOV6TuwBj5LDDefaiZdWmIGteWybQHdTZhXsGLX
+         bJPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=KRC9z7Hf6UT0/DB2ko9R8MQynM5giNRybmjOpJEixmM=;
+        fh=NqXF6V3hlOD4R15dMTvywMGCecjEGk3vJkJAjDuOMsI=;
+        b=GqyfEbQgePD2zgkkj51DXNFursrgA4R1rIrNRTJGfFAEgOdazKNRXo3+w28Ke+WL4X
+         pK+ePvptoWK5+vznwMwEdqUEGP0T3xqsQ6nmMsx99apSv0M7OaETuuYnkJ8eqsIK4yrY
+         lERK2LvmLmurDg55hoVbNg/6UfPGmla+1Mm20FleGs7rM7J276KsW1mGjfHej+IfBcYe
+         AFiYRDGJQ7tKa/nVxX5bI7keMXXqmfjee1qSUA/BRCb7icuPWDJzZ9B9rKRJjkbyLs4F
+         klA3l5DdkM10yUGYaqrD2rQ9PyPaOiIoSf4bYZNI5NxVmAYYyndGaRJydbE9q5FeHjJK
+         S5sw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792985898; x=1793590698; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LJ/LLdUvbUXDscVG28+mEznHp6VW8smsqWPUjig3N5U=;
-        b=NBo2X8ObM82SO9ZNaQ53DA0a8n+OS8bjA9mVSv4Z5/hmLivsZ7MG1mMqGNMITy/A0U
-         RoLeT8IrxMPZ3yzofU46CgpbzURuAMuLUdbeo4j7wKPCXJQbGcHDLgyOSqB7kprVmJSR
-         XQoAA8mKIv1qM6BIzGNWLAZfN+22U/mKGJf46hed19z4HCkPNfXY9DZbp50uCqDvDdZ3
-         5gWFJPZ0bF3T4juA9pTz2lc3RVVNjxygSEJhdJpxYt/41CH9VOUSehC8MkOa/ooyPFhO
-         b69gqf4Rhi+2U5cWdgzlv6WLKiFF2DRlwEHWq9t1v1u2OBiUbmzwyqh8mZHpZLZbE9Lr
-         V/zw==
+        d=gmail.com; s=20251104; t=1792993133; x=1793597933; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KRC9z7Hf6UT0/DB2ko9R8MQynM5giNRybmjOpJEixmM=;
+        b=q76wuUGOSfP+TyD7J6hKF0Oa6/2fuiQkBkuHvMRcJzIAZHjOhxcJ9Yx4d/WiI2NVGi
+         M/NbiGf5MuGa8bAvZ+PDdac4Pzydmtue8/cj6afaUidJ6o6hgGaJYLOaAra7IwMvLFOi
+         3MjWFXN+fEsv/ldfTjipwFwxKfQrrj18cGpMIKvTG2lvUMOzmW4aGrO9J8HRBmDkY1he
+         63Hb8EeZagwkZzQKfURwP1CMb+EGCe0XEK99cPhOZKsRppTtdBTsCx3Ky/5b48OxmNDD
+         5KqB7lNkxcX6BZI9T+I2MYgMxzHylh7AZdhg7X/qVyYslnmPStFIfKk6dVy3yejvFe6E
+         qHRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792985898; x=1793590698;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LJ/LLdUvbUXDscVG28+mEznHp6VW8smsqWPUjig3N5U=;
-        b=0PXtP7wTVeJCpOIL304zS4hIMagpoC8m4ieSqbWWsMDttcaKi3C9k+Uc5UFix/jlDj
-         3Zy+ITxyx8l5CWBBJD/UyPbH9ECHYjjbqiNlM0VliCT1gFWFgQ/TjChsLfAaCFAj5sx3
-         o2VGXD2R1C+T3migYcks/ITWzOTqTAtpNF2Of0/vWGEM2PFGyj2Osgxksioke7qHuD7N
-         8nWi0GXTBsR3z+j20/Fkl7uKpU9UcjeFrWrLodIN81eo+cVl/Urfa//PUpun+jG3NjyX
-         bZ+uK2FUh2Zsmk0ZnwJNEfRDPb3+kYNGfoJLMZ2hecnqjUsojKu6C2RPCOz3aAxUafno
-         Cypg==
-X-Forwarded-Encrypted: i=1; AKwUvByQEjDFGv3nJh93Dk/JtB0F+QVynBjpmLRBn8rsma2AcHeWLpkxIh/ivBMK5eYOWrFgXabtcOt0og==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJJzhzgzC7I1RhmUuei0UEehEjBC64c/H5jIhDviH9SxKRcAQPW
-	+Z/k7MZnKMxD0rg0FBGezF9KD6fbWukD/4Cq+ROq9DyIVzK+7BLJbr26
-X-Gm-Gg: AYBFou01V83ptH9CyZ2SyprxS4x6Yy2u2eG5qZtHc+NZga3HahS0nNUVJAFnowHLMt8
-	KKBhUzWo3szp0ZOjt+EaqxV3sT13yX18MukwXl05W9AJ/bI+CEawbawgxDpF8uTmhuyIOWqosFD
-	NduKYFHy8Q9HVOjEls2VtTKHF73uiFM39Vw1HgDyBzCrhBGQVsEYCCnjURd9M7FaCxL7XhoLSA5
-	XvE0ZjQWKdz7kx9IpLRdxz8493JSMX/4+bVEJo1KSgA+6cNI2HfC88TqZkFze5PG3tv/ATCAIbS
-	bey+WKruCZGegDICLwUpWm5hvcL/pNxCdITCIMYjNZv/IK/DBuRRlsPKftENdkFRTq2tiZzaSU1
-	lzn/O8ah2PS7/CjI9qaLQp9Vxx13pQfJe5Nv8Cem+t4RAMbg6QkpZVEd3nMmwoPWRKlGN2cQ1c8
-	4cknUh4PvPT6NM/yVfo0G+QLYB9tHR9RZVgnOgu4YNGuaxppR/tSOaCQ9Vvf9fCvQpi4mvIjFGG
-	j6DjKK2M2950pzAuQn3WW/q2e6WcpOI+C6elP6qBoK8nc4L4FXxCIUb4zVA3vcBaHnoWP5G3kE3
-	MhBj/Iq8NmoThbQyTloI2K0yN3MsX/+aQ1BgKJdkijgp0+n7Oks/tv86hWDIrGPoLZhG/pC4Wdp
-	kMitae8BcYv0VjfwezztmNCDDcIaKVm6vEwMveoEro+rWSGL1oBWueaFw
-X-Received: by 2002:a05:6300:6bc9:b0:3e1:bd77:2c92 with SMTP id adf61e73a8af0-3e7cd4cbe1bmr3717741637.68.1792985898172;
-        Sun, 25 Oct 2026 20:38:18 -0700 (PDT)
-Received: from alanhc-14700.tailb22ec2.ts.net (180-177-138-120.dynamic.kbronet.com.tw. [180.177.138.120])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd8ccc21017sm989192a12.10.2026.10.25.20.38.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Oct 2026 20:38:17 -0700 (PDT)
-From: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
-To: E Shattow <e@freeshell.de>
-Cc: dlan@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] riscv: dts: spacemit: mark K1 boot nodes bootph-pre-ram
-Date: Mon, 26 Oct 2026 11:38:11 +0800
-Message-ID: <20261026033813.432250-1-alan.tseng.cs@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <813d3f4a-66a9-48df-b9de-6a46b9388d0a@freeshell.de>
-References: <20261024092558.143621-1-alan.tseng.cs@gmail.com> <813d3f4a-66a9-48df-b9de-6a46b9388d0a@freeshell.de>
+        d=1e100.net; s=20260707; t=1792993133; x=1793597933;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=KRC9z7Hf6UT0/DB2ko9R8MQynM5giNRybmjOpJEixmM=;
+        b=KQ6NxVrcCwVnj39mf3H+mrevrJSW514uG6dAEV1r22pUXlTwboPjq1ZW1ZYEWuwW96
+         TiMAW72NEx08rAsvTTKjPcsovIVHhIR3ZPEJI6b0TpA29AATCAQ8kS5/nlj/b4ZJkMD8
+         mECCu8wqqnnLnCAqYJOBLE81uhiKjemnI6WRKSmBG04c7pL9R60TdeZOqD2GFmd8VVJF
+         1UD4ibeEg3+OQ9zqTiC+88PIVpolXOzK+GSSkSSduAs+b4HUlKugCjvOPtGvHuy9876V
+         r06QlWenvtGXLi8I+WEWMYM1V8JeY9JD10s9XWAOpYhtHH+jum8hTAf5HQG/S8iUKL0c
+         MM+A==
+X-Forwarded-Encrypted: i=1; AKwUvBzEzjmw8IcmMM+lbIEVsWYIP0Lz5HFekhTom6JP6r7u+XjRYyDpskbr0PrAJ1NRNPaf7iZYWQPUCA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJye7BhB7yjUDNoKYDPosyONNoyMNedP17AsfUjRlkH2jsrrx5B
+	yoZFhwP3QxjBbyBEj8FHo6vOWsa3QUT8w430N8T6HJjGxMzGOsW6W17Dvw0ze5aAyGo2Jj5KfzH
+	hOapWFD0xHmtYCoa8FnpTFWFQBswWJs0=
+X-Gm-Gg: AYBFou3q609fnt8tWKIBdttycSX4vuXjR2aB/WpDgx4lhVz4kFMc2xCTp6MDXeLBRJt
+	F8OhkGp95iKKGO9+YVDWSudoLMFMspCSY0SSrHdoy3ePfjDRYBOg0ILpUs/gLIrXa45nP4Eu9Jq
+	PfxdP7s6J34gjxdf46+mdSlbSzSquX/msLKdhrL6zQ4bUhhP5vqQ+l/fpYYMXqBzvLmaKTBlISd
+	l0VmBASUj3q8gz/tO6y17G0mVMrkioTwMqb64w/57hpJSXRAnnr6t/hvRlJ9NF4TfE4H37CONZ9
+	gdf9v4g3Vl+M6lSUdy0hK/On9bcr4rn1NsCNxFttlr1hiKZ6mpA6jz2DwQ04c3umgFUJeDZ3wfd
+	fDXBqw27Pi3n1PV1ucykZB4cFEJuuX8gt61E=
+X-Received: by 2002:a05:6402:5630:b0:6aa:1112:62f2 with SMTP id
+ 4fb4d7f45d1cf-6b442fcb0b1mr5488509a12.15.1792993133095; Sun, 25 Oct 2026
+ 22:38:53 -0700 (PDT)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -108,38 +103,96 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261024092558.143621-1-alan.tseng.cs@gmail.com>
+ <20261024092558.143621-2-alan.tseng.cs@gmail.com> <CANAwSgQ=Djw_o89MgvEsmKVxuNiE3Yuy=e0T5DcLfqCYy6eWMw@mail.gmail.com>
+ <20261025130206.187282-1-alan.tseng.cs@gmail.com>
+In-Reply-To: <20261025130206.187282-1-alan.tseng.cs@gmail.com>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Mon, 26 Oct 2026 11:08:36 +0530
+X-Gm-Features: AclHuK9RjSFEksyS7-_jnVXSvRIxT2GkoKRYV9Xd_PqlQ07C_F6NfX7RJdwzzV4
+Message-ID: <CANAwSgTiSiEfdLD7yUwcbFnXfRpnSNZu_GXLnQnXipc+ansnPQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] riscv: dts: spacemit: k1: mark boot-critical SoC
+ nodes bootph-pre-ram
+To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+Cc: dlan@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	e@freeshell.de, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi E,
+Hi Hung-Chun,
 
-On 10/24/26 07:45, E Shattow wrote:
-> Split the patches in this series so we have a clearly defined initial
-> changeset that does "Extend the BootROM configured peripherals to device
-> tree bootph-pre-ram hints for any SPL loaded by that BootROM in SD,
-> eMMC, and SPI NOR boot modes".
+On Sun, 25 Oct 2026 at 18:32, Hung-Chun Tseng <alan.tseng.cs@gmail.com> wrote:
+>
+> Hi Anand,
+>
+> On Sun, 25 Oct 2026 at 18:43, Anand Moon <linux.amoon@gmail.com> wrote:
+> > Could you update the pinctrl and GPIO configurations, including all
+> > necessary pin
+> > assignments, to bring up the SD card, PCIe, and Ethernet nodes?
+> >
+> > Please ensure that the required bootph-pre-ram properties are applied
+> > to the relevant
+> > pinctrl, GPIO, and other dependent nodes wherever necessary for SD card boot and
+> > SPL initialization.
+>
+> I'd like to keep this series to what is needed before DRAM is up.
+> PCIe and Ethernet are not used in that phase, and their pinctrl-0
+> entries are already in the board files.
+>
+> For the boot media, the BootROM has already set up the pins of the
+> device it loaded the SPL from. U-Boot's spacemit_k1_defconfig does
+> not enable SPL_PINCTRL or SPL_GPIO either, so the tags would have no
+> user today. SD boot on a Milk-V Jupiter works without them.
+>
+It is partially working, but the current approach is not ideal.
+I have made some driver and configuration changes to get it working on
+my Banana Pi BPI-F3.
 
-Thanks, that makes sense. For v4 I plan this split:
+The main issue is that SPL_PINCTRL and SPL_GPIO support are required
+for board bring-up,
+but these options are currently missing from the U-Boot configuration.
 
-1. BootROM: the fixed clocks, the clock and reset controllers, uart0,
-   sdhci0, emmc and qspi in k1.dtsi, and the SPI NOR flash@0 in the
-   board files.
+Here is my u-boot logs with some debug prints.
 
-2. DRAM setup, as an add-on for Yixun to take or leave: i2c2 and i2c8
-   in k1.dtsi, and the EEPROM, the PMIC and its buck1, buck3 and aldo1
-   in the board files.
+[1] https://gist.github.com/moonlinux/a491bf56bfa914e4bf5f661635eefe9c
 
-> Capture all the BootROM SPL loader flows
-> that we can understand (USB missing currently? please add this)
+> E also asked on the cover letter to keep the BootROM part and the DRAM
+> part apart, so I'd rather not widen it.
+>
+> > Additionally, could you update the regulator-name properties for
+> > vdd_core, vdd_1v8,
+> > and vdd_1v8_mmc?  On all the boards, the SPL code requires these regulator names
+> > to locate and enable the corresponding regulators during early boot.
+>
+> These names come from the U-Boot SPL code, not from the board
+> schematics, and U-Boot already sets them in
+> arch/riscv/dts/k1-bananapi-f3-u-boot.dtsi and k1-musepi-pro-u-boot.dtsi.
+> I think that is the right place for them.
+>
+I have made some changes while integrating this patch series into U-Boot.
+I am following the approach used in configs/starfive_visionfive2_defconfig
+to keep arch/riscv/dts/spacemit-k1-u-boot.dtsi as minimal and generic
+as possible,
+focusing only on the essential SPL bring-up requirements.
 
-USB download mode goes through the OTG port (FDL button, then
-"fastboot stage"), but mainline has no node for the USB2 OTG
-controller behind it yet. The DWC3 is a different controller. So there
-is nothing to tag for USB today, and I'd add it once that node lands.
+> > I am verifying the changes against the existing U-Boot board device
+> > tree and configuration to ensure
+> > that SD card, eMMC, PCIe, and Ethernet initialization work correctly.
+>
+> Thanks for testing. Please let me know how it goes.
 
-Yixun, could you confirm that the BootROM uses that OTG controller for
-USB download, and that it does not touch the DWC3?
+The goal is to move most board bring-up configuration into the
+upstream device tree,
+allowing each board to enable its peripherals using the existing
+upstream configuration.
+Once this patch series is merged into U-Boot's dts/upstream/, we can
+keep the board-specific
+configuration minimal, avoid duplication, and reduce the maintenance burden.
 
-Does this split look right to you? I'll send v4 after the merge window.
+>
+> Thanks,
+> Hung-Chun
 
-Thanks,
-Hung-Chun
+Thanks
+-Anand
