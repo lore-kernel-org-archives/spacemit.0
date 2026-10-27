@@ -1,72 +1,44 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.2
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=156.224.82.230
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793104152;
-	b=M6FaAqv63x8Wbq4X9sAyrKih6ZU/E+uBaxZXQ0YNGPHDJR9I82S/p0LfQ721h6+ZUYk1
-	 fo/QSMdGh3gCgfP5DR7hIePWdD0/aD1oSqLvoPIdxNSgJdO6vQHPq6D6iBfXlyYhwybqI
-	 dZcfAfOG+oP4tL1pSlTBtEIFJuCau+xo4MTRo10l+BBdCLEWUJ9rvrBnX9ma9D/BtwKrp
-	 wDWthKhoYs7eHVU2xdQgn8Icg4bt/LcAk5XwHyff7+ODEM/wEpDPKcQQcfIxYVN4zqFwR
-	 wG4yqS68JSEnSIy0SI2e9catm+VgS3leemSRjX9wzuz18g0/do8dxYCz4zd23dpjVWA==
+	t=1793104617;
+	b=esVlN30Upiah8gN/XA3Nn//ZjuIszTfNSoWbP4KZYPZZ3golo41wQt5A4N9eKhqdXTCx
+	 JSe/Y+LmzIeaxBzecEMbI19PilCEsj7sol4zJZfnZt+SzJX9+4zskrzsGomIIgmLNFsEu
+	 o3uv4gQdGsHrcbwIOAHVUQZIKYtg0977hK5c2qsnUW4OByDhjkKGFihLg2EgZOVAZEWGt
+	 8NqKzYzEjC8KzzqYyKm893kq1yV2aPnkSbfyYeA7WKUSb8c7/hT6ZBffXKO3ooAkBNt19
+	 sgPTuSjDbmyd/qMXTqkwn6hZtBRHYimSi7GSE4TrrGj2LoD0t7bjTPQAblT+eWIVVmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793104152;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:
-	 X-CM-SenderInfo;
-	bh=5rTEfJyH8+8TFmlvfs8UtpwLKWhfbVwPgm8PGgqTxGU=;
-	b=kM13lOY9Jyy/C9sniDuuu/msV9UBUg0CGniMJ7l6O0yNKdKgEnR7LYSl3ay9WefmOXMP
-	 r433uicCb7DevM+DjLs2Ol8l34mL/FPCk14rHqblMJgNSG1IIQOVp0r7IS+957k8c+FBr
-	 GlzY7Iq6zfzJMZGdNHil2AE+D8jgZvVUTJR4QyNDTF5pkVBUkHMCdXCJnBFNd1uSZkjXd
-	 CZa8oTUljXQTm2P6qAy7f91FIU4q/4lBfXfbzsFsIcJ8qTEQMWjeyVxn9ajxiFPc5FOeA
-	 fSh80oJR7eLW7jfEKwQqKoCf3iagXgxhIFe6lEbPykD1OW+iwtTJaKjBQlnZoagtAlg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793104617;
+	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:Cc:
+	 Subject:To:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-HM-Tid:X-HM-MType:X-HM-Spam-Status:
+	 DKIM-Signature;
+	bh=CiGmRdlkoViId5TfscHFKflRSN2mgmPjTQiT6qBmjg0=;
+	b=qOYKDUVxyFmnWYZ1uV/ZVn9MTpEmotQJm0qpx6PtfhMBgEuAGj3jq/Wm+5QENNSUZper
+	 doLu06w6D47QTNzm3JRngnZazApJpcnP19YPKmPu5nTfOd7vkZiPtNQe0BvRaj4oGbdoe
+	 /D3xji8kbh2KjIXJ4duPMS4iJfw2JAnvzW0f4tbiHU3EqVknV7gFJzqDhladOQGdGCFjw
+	 1CefOof7GjVH1/7fxZpAVcrYAGHOVvvD9UjAMoI1GyfbjUL6y/tNXQAmFzsXmfA3rWh0A
+	 azx05VYdbA9CcXFEmGbE6Qgl+3dGlS3qoeccpabHxH5Dn/WHVovHqQ7QhurZ/ljWy1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=163.com;
-	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=ie8Q0fCu;
-	arc=none smtp.remote-ip=117.135.210.2
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
+	dmarc=pass header.from=rock-chips.com;
+	spf=pass smtp.mailfrom=rock-chips.com;
+	dkim=pass header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=JcY10bMX;
+	arc=none smtp.remote-ip=156.224.82.230
+Received: from mail-m82230.xmail.ntesmail.com (mail-m82230.xmail.ntesmail.com [156.224.82.230])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF52E60A261A;
-	Tue, 27 Oct 2026 12:29:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CF52E60A261A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEF9606A31A;
+	Tue, 27 Oct 2026 12:36:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9FEF9606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=ie8Q0fCu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=5r
-	TEfJyH8+8TFmlvfs8UtpwLKWhfbVwPgm8PGgqTxGU=; b=ie8Q0fCuq74BxlHMKN
-	rqVQbExiWDMoqUzfp8O3Y/hWetwXPiAFKAyLO7FSIdPsoisDrRl7PnIb2yafKVk3
-	DbNld+Q7sGWlFp+SoTnJwMlWHEZm6yZ/CQkjgXae2uC+mH2aUYyoRXtP7kZskJqB
-	qEm607T+lG8JRwT/TzissUwC4=
-Received: from Precision-7960.. (unknown [])
-	by gzsmtp5 (Coremail) with SMTP id QCgvCgAH_5wFmeBq67qCCQ--.31668S2;
-	Tue, 27 Oct 2026 20:28:53 +0800 (CST)
-From: Hans Zhang <18255117159@163.com>
-To: bhelgaas@google.com,
-	lpieralisi@kernel.org,
-	kwilczynski@kernel.org,
-	mani@kernel.org,
-	jingoohan1@gmail.com
-Cc: imx@lists.linux.dev,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Hans Zhang <18255117159@163.com>
-Subject: [PATCH v4 16/16] PCI: dwc: ultrarisc: Use cached PCIe capability offset
-Date: Tue, 27 Oct 2026 20:28:27 +0800
-Message-ID: <20261027122827.2725643-17-18255117159@163.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261027122827.2725643-1-18255117159@163.com>
-References: <20261027122827.2725643-1-18255117159@163.com>
+	dkim=pass (1024-bit key, unprotected) header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=JcY10bMX
+Received: from [172.16.12.48] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 528682039;
+	Tue, 27 Oct 2026 20:36:42 +0800 (GMT+08:00)
+Message-ID: <311338f7-ae03-47b9-96fe-1ec2b2851c7b@rock-chips.com>
+Date: Tue, 27 Oct 2026 20:36:41 +0800
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -76,38 +48,61 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, imx@lists.linux.dev,
+ linuxppc-dev@lists.ozlabs.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-tegra@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 06/16] PCI: dwc: rockchip: Use cached PCIe capability
+ offset
+To: Hans Zhang <18255117159@163.com>, bhelgaas@google.com,
+ lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
+ jingoohan1@gmail.com
+References: <20261027122827.2725643-1-18255117159@163.com>
+ <20261027122827.2725643-7-18255117159@163.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <20261027122827.2725643-7-18255117159@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:QCgvCgAH_5wFmeBq67qCCQ--.31668S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Cr18Aw1UZr1xJrykur4rKrg_yoW8JFykpa
-	yaqr1YyF1ktr4Yyan2ka4DWFy2qFnxAryDJan7Kr13ZFy2krWUW34vka4FyFnrCF4UKryY
-	k3yYyFW7Gas5Jw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piFfOwUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6wY63WrgmQYa+AAA39
+X-HM-Tid: 0aa17d5ce66c03a4kunm8cbf4897570f
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaGktJVk9ISU0eTR5CHUIeHlYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=JcY10bMX5VWFSTKD/G7A+Y8NZJqvgD8AMt+1D9jMkiqr+9Jj2ehRz18pkYtHT8ZunL5eUiWUhHwAdDix7KG3Iz5rowwLyFwISqEK7Ufpz8TkQo2jzcOTYLFdc41EbsaxeluNB0tsf/s/ByM6UAVG153ph24+T3bO3XlJYxZOroY=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=CiGmRdlkoViId5TfscHFKflRSN2mgmPjTQiT6qBmjg0=;
+	h=date:mime-version:subject:message-id:from;
 
-ultrarisc_pcie_host_init() runs from the .init callback with the
-controller already enabled. Replace the capability search with
-dw_pcie_get_pcie_cap(). Since the lookup is performed lazily at the
-point of use, the driver no longer depends on any earlier caching step
-and the offset is always valid here.
+在 2026/10/27 星期二 20:28, Hans Zhang 写道:
+> rockchip_pcie_enable_l0s() is called from rockchip_pcie_host_init(),
+> i.e. from the .init callback, which runs after the controller clocks and
+> resets have been enabled. Replace the capability search with
+> dw_pcie_get_pcie_cap(), which reads and caches the offset at this very
+> point.
+> 
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
----
- drivers/pci/controller/dwc/pcie-ultrarisc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 
-diff --git a/drivers/pci/controller/dwc/pcie-ultrarisc.c b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-index 51e89180490d..85373b479b64 100644
---- a/drivers/pci/controller/dwc/pcie-ultrarisc.c
-+++ b/drivers/pci/controller/dwc/pcie-ultrarisc.c
-@@ -56,7 +56,7 @@ static int ultrarisc_pcie_host_init(struct dw_pcie_rp *pp)
- 	FIELD_MODIFY(PORT_FLT_SF_MASK, &val, PORT_FLT_SF_VAL_64);
- 	dw_pcie_writel_dbi(pci, PCIE_TIMER_CTRL_MAX_FUNC_NUM, val);
- 
--	cap_exp = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	cap_exp = dw_pcie_get_pcie_cap(pci);
- 	val = dw_pcie_readl_dbi(pci, cap_exp + PCI_EXP_LNKCTL2);
- 	FIELD_MODIFY(PCI_EXP_LNKCTL2_TLS, &val, PCI_EXP_LNKCTL2_TLS_16_0GT);
- 	dw_pcie_writel_dbi(pci, cap_exp + PCI_EXP_LNKCTL2, val);
--- 
-2.43.0
+> Signed-off-by: Hans Zhang <18255117159@163.com>
+> ---
+>   drivers/pci/controller/dwc/pcie-dw-rockchip.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> index af26a07c0c9e..753606193855 100644
+> --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> @@ -373,7 +373,7 @@ static void rockchip_pcie_enable_l0s(struct dw_pcie *pci)
+>   	u32 cap, lnkcap;
+>   
+>   	/* Enable L0S capability for all SoCs */
+> -	cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +	cap = dw_pcie_get_pcie_cap(pci);
+>   	if (cap) {
+>   		lnkcap = dw_pcie_readl_dbi(pci, cap + PCI_EXP_LNKCAP);
+>   		lnkcap |= PCI_EXP_LNKCAP_ASPM_L0S;
 
