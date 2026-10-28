@@ -1,48 +1,48 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.4
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=220.197.31.4
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793156844;
-	b=r2+9jGxiX1JW5LjpW89uQpxn4AXEENv32+mKF9ToamBInWGfeZySpUZ49c1kKpTdfU5j
-	 jDAAa7+fw1/d6OOsI7v9Z/xfbqKDUl1xAWa51l2sG2wNmWIzC8IjSzO+Ps0gJOSxOrDBd
-	 hdPZhxODqwGOI+3p2LnkwL5aRCV48VpAIMoT2WdMAtexq4lUmqiXcOfyrav83Y6rwT8iq
-	 EiziovFNiRbo4FvWQxw46IKPSxh0hCIzYHBjLEICTqjMPhIByYGBp2haGz13ct6wCH/oI
-	 uQ7ak0NlUAGCABGZh0G6/Ey0mA33LELOufgDpk+0LSvWTRmlenNDi1nzLND2/+9yJzA==
+	t=1793156851;
+	b=ysIM6D3PKbtqohrB/s6HvaI+8o1YGyUXryh19vv/cbZzfuMG9KXpPhCqylEwFBCthCwM
+	 +u/qiPFPcVg5kwkiBSbMUAjFVpi1T0YctdianEriLZRIP/0nZih3zMUdB3/r97t3gnfSI
+	 tiLi4Turw1eQ8Qe7awPLDP08ETENJJg2TFfEkoQ/7rcdUXuO3uVOrSwRYX1Z6nAloY3CO
+	 V098wOHytFjhySVlBsHxF3Pf6W/6CB4ibNJ/nVReQRqYkZKB6eqFUWGAef3bCH4rFXW+9
+	 NDndKpgJc58sGNV6c9YjUwn916pXbb7m4fT+ycfXUoop/MP9KaHkLNukoreWa7QPcpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793156844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793156851;
 	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
 	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:
 	 X-CM-SenderInfo;
-	bh=H7/WiFVVM2Ct9E/WSDPj/g8wukhy3907IvTWxmVmjP8=;
-	b=U9lmZizPXX5i4rrGZDVwSYtMMvuQypnO0zxxcqnBc5i+HvGZXw06i/Pb4W5kcbE93sg9
-	 uX/mqvm0LwIbvJSbbvocCSMkkxq01VO/TwKJDZLbM6kjGRPQBjPcOxbdOkZxAuGyhpdJ6
-	 LMp95dVH7i5V+NXHNBKbHGglfuIuEpb0JI/ivQPjjOwQSUy7zxE/jJEN4L2d4cdUQosSZ
-	 w5NaxyemynIEyzAtoS8odnTARWNuDtpXhfBAVo8lGb2226kgsKX3rID9KbIoZPPLJ3emF
-	 3BCBNqX54JyjkuP3iJAhiY0gGNpEucsCMhKkrjo256rwXvo9TtZfYAKelAKvAwqdUwQ==
+	bh=nEXGdJC+nnnfnf7AnSlpph3oGrheAJvtJd7pKFwHRr0=;
+	b=YUJsjlguQuINQCqB/lHdh9EzmF6AGX7S/Rz2cxn/7JK+PvOHHlRaFCFKc+6xVrY8yFP2
+	 /x7p7Z+Pbw+K+Jh68iWnH0eeceTfhr1+9KB3v4ehQDODzMAMJmBLMOT2XLm1yBLeMfiPw
+	 ijBGXcfNM9ef7LkYnd/cGe3SrSkju8LMNB1+h2skcVhdzHGX/fYcgx6IJ3BtqerKoRv9d
+	 BsFvpYOk8jUtr7q5hSocvORL+MeCjW5XPCKAEm504UuZAvliPCawNS/CVv0Sq3ATo3G0/
+	 HNr1wQFK4hEM3mpHNksa9hDekeR1w1tEG5//88PhIeviBU42nT2Rk79Xs0GtyAmVQrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=163.com;
 	spf=pass smtp.mailfrom=163.com;
-	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=JIC+3XoR;
-	arc=none smtp.remote-ip=117.135.210.4
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=pXPt6h9D;
+	arc=none smtp.remote-ip=220.197.31.4
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC23606A31F;
-	Wed, 28 Oct 2026 03:07:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ECC23606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A01606A321;
+	Wed, 28 Oct 2026 03:07:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81A01606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=JIC+3XoR
+	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=pXPt6h9D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=H7
-	/WiFVVM2Ct9E/WSDPj/g8wukhy3907IvTWxmVmjP8=; b=JIC+3XoR2kMfR2J5D9
-	4N+FL69uSijetsI0O8w8D2AZoMtL1Jt/dnuesm2kuf2eUnlJp5EAKz1Nu2X5IVQU
-	KlthXBDV+VqqhunuHfHwETE/YVqsEaiWt+aw/J++XDvj4nOzOTGsauxX7V7bddpL
-	9gn5lHSqmjA4pkU4IKALE7+2c=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=nE
+	XGdJC+nnnfnf7AnSlpph3oGrheAJvtJd7pKFwHRr0=; b=pXPt6h9DTD65L8XFFv
+	FHenj4yvv6zfOMSt0UAcropNQ2Vuy6ey5TGKfLnddVDEfQx1a2o8l+45u14kGY0f
+	x6O2f+rzOETBMN16euOQU38LiEPYwMZXq2TffgpJOjBEE5LsIxdq6zk0DvgmRtBb
+	4JqYUoxNF+BKnyy7mTu4KjLOc=
 Received: from Precision-7960.. (unknown [])
-	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wDnD07QZuFqZiY4DA--.60713S6;
-	Wed, 28 Oct 2026 11:07:01 +0800 (CST)
+	by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wDnVwncZuFqLzE4DA--.33198S4;
+	Wed, 28 Oct 2026 11:07:11 +0800 (CST)
 From: Hans Zhang <18255117159@163.com>
 To: bhelgaas@google.com,
 	lpieralisi@kernel.org,
@@ -60,11 +60,10 @@ Cc: imx@lists.linux.dev,
 	linux-tegra@vger.kernel.org,
 	linux-pci@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Hans Zhang <18255117159@163.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH v5 04/16] PCI: dwc: layerscape-ep: Use cached PCIe capability offset
-Date: Wed, 28 Oct 2026 11:06:40 +0800
-Message-ID: <20261028030652.2917756-5-18255117159@163.com>
+	Hans Zhang <18255117159@163.com>
+Subject: [PATCH v5 10/16] PCI: dwc: qcom-ep: Use cached PCIe capability offset
+Date: Wed, 28 Oct 2026 11:06:46 +0800
+Message-ID: <20261028030652.2917756-11-18255117159@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261028030652.2917756-1-18255117159@163.com>
 References: <20261028030652.2917756-1-18255117159@163.com>
@@ -78,51 +77,80 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDnD07QZuFqZiY4DA--.60713S6
-X-Coremail-Antispam: 1Uf129KBjvJXoW7uFyrXr45GF17AF43Cw13XFb_yoW8WF1fpF
-	Z8JF1Ykr18JF4SgFnF9a1DWr13GF9xAFW7Ja97Kw1avFyav3yUG3s0yryftFn7KFZFkF1a
-	v3y5tFW5uw4rAFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0piLZ2-UUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC6xbhhWrhZtbEBwAA3h
+X-CM-TRANSID:_____wDnVwncZuFqLzE4DA--.33198S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZryxZrWxGrWfGFWrKw1ftFb_yoW5XFy3pa
+	90qFWYyF18Jr48Xrs2ya1DXF13W3ZxAry7Ja97K34avF9F9w17Ka1jkryftrn7GFZ7KryU
+	Grs5t34xu3WayFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pEveH-UUUUU=
+X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7B-jh2rhZt-R5QAA3R
 
-Replace the dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) calls in
-ls_pcie_ep_probe() and ls_pcie_ep_event_handler() with
-dw_pcie_get_pcie_cap().
+Replace the three dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) calls in
+the qcom-ep driver with dw_pcie_get_pcie_cap().
 
-The probe reads the Link Capabilities register to save the values
-configured by the Reset Configuration Word anyway, so the offset is
-cached there. The link down event handler runs in hardirq context and
-can then simply reuse the cached value instead of walking the
-capability list every time the link goes down.
+qcom_pcie_perst_deassert() is the point where the controller resources
+have just been enabled and DBI becomes accessible, so the offset is
+looked up and cached there. Both the L0s and the L1 exit latency are
+then programmed using that same cached offset instead of walking the
+capability list again.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+qcom_pcie_ep_icc_update() may run from the global IRQ handler, which is
+requested before the PERST# IRQ. The helper performs its lookup at that
+point of use, i.e. exactly where the open coded search happened before,
+so this change neither adds nor moves a DBI access and does not
+introduce a new race with the PERST# handler.
+
 Signed-off-by: Hans Zhang <18255117159@163.com>
 ---
- drivers/pci/controller/dwc/pci-layerscape-ep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-index 527c57114dcfe..113be247b01b0 100644
---- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
-+++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-@@ -84,7 +84,7 @@ static irqreturn_t ls_pcie_ep_event_handler(int irq, void *dev_id)
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index e6afdc6198acc..3e2068f3fa117 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -308,14 +308,15 @@ static void qcom_pcie_dw_write_dbi2(struct dw_pcie *pci, void __iomem *base,
+ static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
+ {
+ 	struct dw_pcie *pci = &pcie_ep->pci;
+-	u32 offset, status;
++	u8 offset;
++	u32 status;
+ 	int speed, width;
+ 	int ret;
  
- 	if (val & PEX_PF0_PME_MES_DR_LUD) {
- 
--		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+		offset = dw_pcie_get_pcie_cap(pci);
- 
- 		/*
- 		 * The values of the Maximum Link Width and Supported Link
-@@ -268,7 +268,7 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, pcie);
+ 	if (!pcie_ep->icc_mem)
+ 		return;
  
 -	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
 +	offset = dw_pcie_get_pcie_cap(pci);
- 	pcie->lnkcap = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
+ 	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
  
- 	ret = dw_pcie_ep_init(&pci->ep);
+ 	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+@@ -398,7 +399,8 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ {
+ 	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+ 	struct device *dev = pci->dev;
+-	u32 val, offset;
++	u32 val;
++	u8 offset;
+ 	int ret;
+ 
+ 	ret = pm_runtime_resume_and_get(dev);
+@@ -493,13 +495,12 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+ 	dw_pcie_dbi_ro_wr_en(pci);
+ 
+ 	/* Set the L0s Exit Latency to 2us-4us = 0x6 */
+-	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
++	offset = dw_pcie_get_pcie_cap(pci);
+ 	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
+ 	FIELD_MODIFY(PCI_EXP_LNKCAP_L0SEL, &val, 0x6);
+ 	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCAP, val);
+ 
+ 	/* Set the L1 Exit Latency to be 32us-64 us = 0x6 */
+-	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	val = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
+ 	FIELD_MODIFY(PCI_EXP_LNKCAP_L1EL, &val, 0x6);
+ 	dw_pcie_writel_dbi(pci, offset + PCI_EXP_LNKCAP, val);
 -- 
 2.43.0
 
