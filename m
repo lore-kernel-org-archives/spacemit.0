@@ -1,74 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793353254;
-	b=dKFrI/aZCSwxQ3eGvyARxRUv139BVOk6M3rUi/VxdUEWjZ4kcVVVcRAtuQFc3B10Mdon
-	 kK5ACjXpIIcJS1Zp789tHznWCpJ5E9rmQ7l9rlfB+vnjU9PCc9ew8RXypxPzmBAzL4Hhl
-	 92dy0udCvf/+yNGiE4HH226bTnPc2u23ycL6wI1yzzwpIneElk9uolWRbVr/9y8O7AAfm
-	 j2zXmhiAyma+g1ZKpBvzarK7VY3qaCX13GWUSjtDdclZCbJM0XY2Oy4qWpXznE7lPhJGl
-	 q969cHK1wkFHkwn0hiFjCB+jpaRwwtk7v/iZ452GF2dqJCIL5hp7EW2Iyax/MC+Y9qg==
+	t=1793380752;
+	b=keGwQ9rM3Y91FbdJa9075pRzFOMx5FkUHPist4ZG/wRpqsDMXDWrj6X6ardwazo2K6Ys
+	 6Ly+Rv8VPDD3MhOI32QPLgTtUjtJjDABNal8Ru33FGv+X4zMHk2E92hWpdtry+RDwdJhn
+	 1/5V6q+LuFDfH1FNBOxm9rveHc23GNRSZ+L9ZHxflGWkQ8B3ZpJx85zxp9+HQAzYXxU/t
+	 IzhgsFZEe7Cs/+X0+MzNtWUwDsXK6pknFICwHFIemqkFqDw0HmyP7uZufudq1IZnYJffx
+	 Y8nZG09Iyut4apa6MAbR7eBtKdzWthP5C0q82JAa8ZWSDI4XLHMLsyHOQKJb/r+R4ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793353254;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
-	 Subject:Date:Message-Id:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
-	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=NIxqMKyYG+I1FTMitPEEM3EWEjjxuEu8hI5Iv15e8d8=;
-	b=TRdcHt/cQJIu/KnJb9zvWD/Ksok3Dq5KWNUT1kDBu6XctLF0YJS7NhOwWsEs0bZoT0JC
-	 SbyHmTC2niq8i9FjkSBqj4QpNgZpdudvfO4WVHZbc33wKEqiCcUXtSg8g01b9RRzxyZuP
-	 FwL+mtCTgOnmI4NoNCDgdL1N0OcEnegKGSD6UkdUravn6aMTy3seDYHVih9fzf/ciuzpX
-	 UU467PDIcyPF9e2Q/JbfOhPBc912cJIvzUFulaFUybsxFmiD8cuha3l0Eg2bf403mxCAG
-	 naT8SZ/g+knWvxaAAxp9v/RY4h+p9A0c0IS8v6VAkCLoRS+L2qqww6lSEGW82AlDLjA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793380752;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
+	 Subject:Cc:To:From:X-Mailer:References:In-Reply-To;
+	bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
+	b=L8C0fjYfmIjnlkQUo320XoYhkkQNxkHZdDuWWuX4ONipPdsOcdTH84/pHFievRiAG1zL
+	 IDFnclRgMaljCT3kHFgiCYx+Mr0JlpJIzE3OSLYHrOO6uERcdvH1F35/LfyZdidjr075/
+	 pXQsMZOdy0zeGIs2IbUzHOHu8s2DjsPw4tCKStJNvuWNZ8RyqLTtNg8gTtn28JagRepZ3
+	 th3X3KJ/E9kPJI99shPFiwyXPyLzr+dSYtRI+Z/J6pV6YWR8hECStOnHwkcJ/zs4bhYO0
+	 7NN4mXboQzF8nrnwpmOIHi5FZdyNsKc+sXwbS0jZp2mnEfYnnZAFS+eN9/3xu7buUxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=UwGhhSuR;
-	arc=none smtp.remote-ip=54.206.16.166
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=none header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Rsb4XItF;
+	arc=none smtp.remote-ip=209.85.219.42
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FC7606A32C
-	for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 09:40:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1FC7606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D235606A31F
+	for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 17:19:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D235606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=UwGhhSuR
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793353241;
-	bh=NIxqMKyYG+I1FTMitPEEM3EWEjjxuEu8hI5Iv15e8d8=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=UwGhhSuRqDTwZXbV5RreA8uFwVKQfqwJy0uhUiRoAAkOFKv//TJ45xb8kZmWVqHEo
-	 /Qyf2SPk24SFABLB7VlBpCEgE1qVAFOB00HsHhHLTPdv7H4MmYZ2m45R4ky5G1BPXH
-	 WrSLWnecuJ7l9s4kOAvh8j+H8WdTf270P9WFHS/E=
-X-QQ-mid: esmtpsz17t1793353237t9232972f
-X-QQ-Originating-IP: 5U1DF8ULzeZro/FTuuUh22awM6fJteIZcTjwwHXA5Jg=
-Received: from snode5.. ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 30 Oct 2026 17:40:34 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 4904317109447055735
-EX-QQ-RecipientCnt: 14
-From: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
-To: Yixun Lan <dlan@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: spacemit@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] riscv: dts: spacemit: k3: add USB3 port A (DRD) nodes
-Date: Fri, 30 Oct 2026 17:40:24 +0800
-Message-Id: <20261030094024.3226356-1-chunyan.zhang@linux.spacemit.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Rsb4XItF
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-91b55859245so14039996d6.0
+        for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 10:19:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1793380750; x=1793985550; darn=lists.linux.dev;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
+        b=Rsb4XItFZbCffZxRwwZw8kdnwjsFgvbS0pRHHAyipO/lbeFTTBlPfF8N7tlxIl58tE
+         yzE0yDvvNwT1cPBedQdjfl11p53O7ZBi6ULw05JBD3jMaQRjk4rfR6Z03dQEMqf3b2xR
+         WVLLjhOnOcZdK82UvR691uP3sPe2/91+MVyZf4wgV7Aw9Ut+9TECZX/n+hNO+rfAka6L
+         afP5hZiF3pTUJ8CvSFjLFxe+O/zNKSnhlATqeUYPCytlCLQ2Pzi8o3ICePV6NyGDKas5
+         LL4i5Xw7AKJjtfM/F0eDlovlbx9nlgKsSocVNWVRX3wiL1aJFW7R6tWu4xnhbK/+9xpD
+         qyhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793380750; x=1793985550;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
+        b=W+7Vb+hARd1/TckomfsuIbO/VtKjLZWwVa1W+L11uio53NSpe2Sef2KlieItHRxumE
+         ldaeiwwe0GcX99tWwSiSsSmf6/m1gWLtYx0/eLX3TBLJsafD+Nel0ofZGhBOJ4/1wZn2
+         z3CGtyF6kXqIycqNE/A+KsbN3N0REIfP3XpUHYp4hhEsCfd2tSBoQSUzFi6O7/Z2w/2p
+         kDnHhmOLlmy7Ty6Eo9/1Z2vGgCbUPf03Fc3dVVauHeevDbT9ORjmWy4VZuCHqF1lr2rg
+         f1tacCv6gwPx1LkzA+NM5Yilm+tYFPukeEinsPNKpsHEwXlMoA9a7uPn8aDZij3g6oC+
+         q2kA==
+X-Forwarded-Encrypted: i=1; AKwUvBzkqV/Rn4dOWNRUPrw0UH8tPO3D1+h8Y4HSidWyHUzkU0Q9FtmRMJ4xpaHG8IZjXpvLbxuYqqVZEQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYImfcgWOoy3QmBUmPzeyMqx6Im3xnn3X1psjvuVzrPd7AxD8gs3
+	D9fgue8BIdGAcP0M+dYM55b+c/6hJTA/U9/a1jz6kHrsvGQmW2jbLubvxUvfW2kWaxU=
+X-Gm-Gg: AYBFou1YeYTWRz87BoCZDSiN5yjM4tfkcGSJCakl57u81HUplZOMgVRQZOqmSVCX/t8
+	nPHPI/qXoVtsSsqNr4WBOA8jm24NLgfiTa7liubw67O4O69d6a6DGTjFSdO8FfxERzCh7XQ8h/D
+	7wYZOI43e6SuTxUTaCZ6wcF2l2hp5xYGZg5FcLF+e7nQR0mL172T0ZDu0Xz+E+K3Qrncqw22E6C
+	Z+eT6frOz9dDMoAgTyer8wP6WPWeYiqjzXFwRrln84hcJWmL4w47abSlXTpub+hzh2ZXm9v54BC
+	cjT02C6MbmUVPXsirZ04ldC/lVW6b/iJThIG9l8qriBGCIzixoY6ou0KtL47n5OBCTm7veBhdAG
+	74SHZWEeeovD91o1WCe1aEAM7SmBmNvmHXJkMSQQ4fzSk8fzwuMyLE4tXEQs1FFuCtbfFuW+alQ
+	/6GxiA1WxNmcXaQGvKUR5+vjP68Yh/DKFwhk85MY0Nz8qDHqrdLJbkL8X0mpDBeibEWFHuAneMB
+	osZhP73J6zbi1b8rgi/y+lW2Dy+SWLjPBhTlob7ao3FZlYmbg0/cYqL87K80mlOChSYuxvxu7sb
+	NQ+fhFhyg/cBgH38bOrfMYNc4jjCM6XNlQM98NzJ8VLj8qm6edAbLjv6flc5gCcx
+X-Received: by 2002:a05:6214:e82:b0:91c:71a9:34a6 with SMTP id 6a1803df08f44-91ca4b9af72mr48585976d6.37.1793380750212;
+        Fri, 30 Oct 2026 10:19:10 -0700 (PDT)
+Received: from localhost ([2001:1970:3847:e000:1977:be2f:4a71:2892])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f3db1asm20663476d6.16.2026.10.30.10.19.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Oct 2026 10:19:09 -0700 (PDT)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -77,107 +87,156 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: MM3MbTCua2rwwBkGzFFh+EGainYjDztOrp6+r97NdurKuRpADffVWP29
-	QLcoTxkAOeeL9WUcpI5poJvgQ+efjshxoflK8IwKeQ/hLM9Li3WrCpHv5hM7gML6vSxM1Fo
-	eHloIyDcVYawhNV8QajRDi0x5r0ofeQbQOcI/u70/EEMhq/dFP6n+gdECgE/MJH0V7Z5pnn
-	mjiS2N89MECl6i6oG/S3mXPIKQotcJUn58jpbqCl+NrmZN/8TcMmvX2lR247BaC9usTAYS7
-	sN1XXeX4nPMDW0yy5fCHCdLmBLyDUFsqiDar2AuhovtrVD3jOhMOb2YdGMRTr4AB3BxJjIo
-	ZvHei5/qcq3qiUAFK//0J0zhGP1VmI14LWKG7UTpu9sxtj9gt7ciYdcoNAEFeVQroZvMZbc
-	aXASbWjN1cv+1IoxnTfNEG6Uzs7MSBad0I2De1oYL+t8Z6meYtFXiFsczvH+2EZKKVQQnnj
-	b7/DHV1tqs4iv6gabdSCTRaMVBvuAksaJUYIvw4RzmMELDjMT1ksJXFqIo3tcrQHPh2aTtH
-	I83O4Yvid0sfaEa7faFSZLON0ShuWng8SHphdOO0ZK3KBfXXkuoBuqHNXfay+Bbcrv2lRYR
-	JlhMtTtzXwiamXlx6n5SAST+L01OAP96zi60/oWKS8kNqyT0kDKqpPbpoqaDcX44PovQIzA
-	iw052JeSBw/60AgWCQaeUwYJlZkUUyYdwrC3SHC4ZjuaMs4dkSbrtPghObZ1usvMmWrBgbZ
-	p0j0aB3p5WBJU4gq/xKmDGWa60m2QBIWXQCkmrCQZtAWmzsCK9maR6JwEnmdJU0aJN3sV8v
-	usmRu1+hoJL59niasIYqSfMktPIEY6fWqeKYASsYap0+WfkGXNS+4qNw3XC3pFJngp9/atZ
-	CNlaYj+Ce+Y5bYqG0yaj2BNHa5tje8+5S2amSUbkjFhkzVLmKiWdN5hY1B/PI4bg1GOc9Tk
-	qh62oJBtmHob9+aFkZEKu0hboucJBCsTx+fyH6qh+kmOVuxzIE06Ul113w6EcU3bqoWgzIr
-	d1wxpz8rSXZwPOZLMR0zWtEPDLVkDIm+de1RGSyX3it2EQd6cZebxs7aSwpJA1CrxwCcV5Q
-	j6QMT9rXZhrY6IgdbbaY2k3h14USIjx862aVtlyMo+C4WbakyhyJJO/piBM61Gf0MtbB7UC
-	XGnE
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 30 Oct 2026 13:19:06 -0400
+Message-Id: <DMICF1DA617T.1TZ7DMV5WG818@baylibre.com>
+Subject: Re: [PATCH v7 0/2] Add UFS Host driver support for SpacemiT K3 SoC
+Cc: "Anirudh Srinivasan" <asrinivasan@oss.tenstorrent.com>, "Aurelien Jarno"
+ <aurelien@aurel32.net>, "Jennifer Berringer" <jberring@redhat.com>,
+ <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@oss.qualcomm.com>, "linux-riscv"
+ <linux-riscv-bounces@lists.infradead.org>
+To: "Yixun Lan" <dlan@kernel.org>, "Alim Akhtar" <alim.akhtar@samsung.com>,
+ "Avri Altman" <avri.altman@sandisk.com>, "Bart Van Assche"
+ <bvanassche@acm.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Philipp
+ Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
+ Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, "Martin K. Petersen" <mkp@kernel.org>
+From: "Trevor Gamblin" <tgamblin@baylibre.com>
+X-Mailer: aerc 0.22.0
+References: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
+In-Reply-To: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
 
-Describe the DWC3 controller and its USB 2.0 PHY for USB3 port A
-of the K3 SoC.
+On Thu Oct 1, 2026 at 11:10 PM EDT, Yixun Lan wrote:
+> This series try to add UFS support for SpacemiT K3 SoC, the controller
+> components consists of System Bus Interface Unit, UFS Host Controller
+> Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+> Management Entity (DME), Transport Layer, Network Layer, Data Link
+> Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+> block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
+>
+> The DTS patch has been dropped in this series [2], and will send
+> in separate series once this patch accepted. For people who want to
+> test UFS driver, please grab the DT patch from version v5 [3].
 
-Only the U2 lane is described: Port A's SuperSpeed PHY has no driver
-yet, so the port runs at high-speed (maximum-speed = "high-speed").
+Hi,
 
-Enable USB3 port A with dr_mode = "peripheral", so it can be used as
-a USB device.
+I've been testing this series (and the DT patch from v5) successfully using=
+ a
+v7.3 kernel in Yocto's meta-riscv layer. It's been working well with fastbo=
+ot
+flash in our nightly CI. An example:
 
-Signed-off-by: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
----
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  9 ++++++
- arch/riscv/boot/dts/spacemit/k3.dtsi         | 30 ++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+https://forgejo.baylibre.com/tgamblin/boardgarden/actions/runs/827/jobs/9/a=
+ttempt/1
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index b084a35aa00e..74d4fdf9e405 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -323,6 +323,15 @@ &usb2_phy {
- 	status = "okay";
- };
- 
-+&usb3a_u2phy {
-+	status = "okay";
-+};
-+
-+&usb3a {
-+	dr_mode = "peripheral";
-+	status = "okay";
-+};
-+
- &usb3d_u2phy {
- 	status = "okay";
- };
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index c3f2dce0969c..220dfe29bb78 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -630,6 +630,36 @@ gmac2_axi_setup: stmmac-axi-config {
- 			};
- 		};
- 
-+		usb3a: usb@cad00000 {
-+			compatible = "spacemit,k3-dwc3";
-+			reg = <0x0 0xcad00000 0x0 0x10000>;
-+			interrupts = <118 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-parent = <&saplic>;
-+			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
-+			clock-names = "usbdrd30";
-+			resets = <&syscon_apmu RESET_APMU_USB3_A_AHB>,
-+				 <&syscon_apmu RESET_APMU_USB3_A_VCC>,
-+				 <&syscon_apmu RESET_APMU_USB3_A_PHY>;
-+			reset-names = "ahb", "vcc", "phy";
-+			phys = <&usb3a_u2phy>;
-+			phy-names = "usb2-phy";
-+			phy_type = "utmi";
-+			snps,dis_enblslpm_quirk;
-+			snps,dis_u2_susphy_quirk;
-+			snps,dis-del-phy-power-chg-quirk;
-+			snps,dis-tx-ipgap-linecheck-quirk;
-+			maximum-speed = "high-speed";
-+			status = "disabled";
-+		};
-+
-+		usb3a_u2phy: phy@cad20000 {
-+			compatible = "spacemit,k3-usb2-phy";
-+			reg = <0x0 0xcad20000 0x0 0x200>;
-+			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
-+			#phy-cells = <0>;
-+			status = "disabled";
-+		};
-+
- 		pdma: dma-controller@d4000000 {
- 			compatible = "spacemit,k3-pdma";
- 			reg = <0x0 0xd4000000 0x0 0x4000>;
--- 
-2.34.1
+For both patches:
+
+Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
+>
+> One known issue is that the device will occasionally raise BKOPS interrup=
+t
+> when doing some high load test, log from dmesg shows
+>
+> [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_eve=
+nt_handler: device raised urgent BKOPS exception for bkops status 1
+>
+> Link: https://spacemit.com/community/document/info?nodepath=3Dhardware/ke=
+y_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=3Den [1]
+> Link: https://lore.kernel.org/all/20260918-belligerent-succinct-kraken-7f=
+a592@quoll/ [2]
+> Link: https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-3-1f5d71f=
+1027d@kernel.org/ [3]
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+> Changes in v7:
+> - check err return value of ufs_spacemit_quirk_host_pa_saveconfigtime()
+> - Link to v6: https://patch.msgid.link/20260921-08-k3-ufs-support-v6-0-34=
+79768a2299@kernel.org
+>
+> Changes in v6:
+> - drop unused macro and dev_req_params
+> - use global PX_xx macros
+> - fix axi clock name
+> - drop dts patch
+> - collect tags
+> - Link to v5: https://patch.msgid.link/20260916-08-k3-ufs-support-v5-0-1f=
+5d71f1027d@kernel.org
+>
+> Changes in v5:
+> - adjust clock names
+> - add runtime power support
+> - collect tags
+> - Link to v4: https://patch.msgid.link/20260908-08-k3-ufs-support-v4-0-22=
+aa2bd97d3b@kernel.org
+>
+> Changes in v4:
+> - fix clock and reset settings
+> - drop function which retrieve value of tx_lanes
+> - propagate return error of ufs_spacemit_dme_set()
+> - check return value ufs_spacemit_check_hibern8()
+> - drop call to ufshcd_vops_phy_initialization()
+> - handle compiling warning if CONFIG_OF not enabled
+>  add __maybe_unused to ufs_spacemit_of_match
+> - Link to v3: https://patch.msgid.link/20260806-08-k3-ufs-support-v3-0-03=
+7fb322acdb@kernel.org
+>
+> Changes in v3:
+> - collect tags
+> - fix dt-binding warning reported-by sashiko
+> - fix low freq in opp-2 table
+> - fix err checking in check_hibern8()
+> - propagate err code in link_startup_notify()
+> - update documents for event_notify()
+> - ufs clock driver is merged into v7.3-rc1, update cover letter
+> - Link to v2: https://patch.msgid.link/20260725-08-k3-ufs-support-v2-0-45=
+036a2a2418@kernel.org
+>
+> Changes in v2:
+> - fix missing interrupts property
+> - move ufs node to k3-com260.dtsi
+> - convert freq-table-hz to operating-points-v2
+> - rework reset_control, fix header and drop global variable
+> - drop dump_host_regs() debug interface
+> - converge and refactor dme_set() operations
+> - massive reduce of busy delay() loops
+> - drop vendor specific hce_enable_notify(), fallback to default
+> - drop unused member from struct ufs_spacemit_host
+> - add COMPILE_TEST support to Kconfig
+> - comment style fix
+> - Link to v1: https://patch.msgid.link/20260702-08-k3-ufs-support-v1-0-1a=
+64a3ab128f@kernel.org
+>
+> ---
+> Yixun Lan (2):
+>       scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+>       scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+>
+>  .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  56 ++
+>  drivers/ufs/host/Kconfig                           |  12 +
+>  drivers/ufs/host/Makefile                          |   1 +
+>  drivers/ufs/host/ufs-spacemit.c                    | 652 +++++++++++++++=
+++++++
+>  drivers/ufs/host/ufs-spacemit.h                    |  77 +++
+>  5 files changed, 798 insertions(+)
+> ---
+> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+> change-id: 20260605-08-k3-ufs-support-c8b308e415e2
+>
+> Best regards,
+> -- =20
+> Yixun Lan <dlan@kernel.org>
+>
+>
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
+
 
