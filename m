@@ -1,97 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793345321;
-	b=U/sT9SWWryohwdx1XlGDaHnvttIk1DDLj9hOWEJD/iiyyn/wpcu4VLUpjj5nOd9cwbsq
-	 UXQqkWejbxgZfvW32Hwv/AdUzBwEl5q8eW/C2a7b97Y/j93PTFcPqAxoA65x1HzCG+hCz
-	 CBp3I4AUnpufSMqZ72Ygfqo2eWR0DN7JqP63KxNZhm4qFv/n9JxP8GHv7az5Z3C0p54hZ
-	 c/wPEW75SfoSswCfPlwFarvupOszrnY7+bZTqsXZp3rS7yUPYxvqWBSDBtyZmKphziXIi
-	 izIaZgMFIUJgFT6nYOiA60UzdOrRqJrQJdKWf6QdKotcmEW92pYQPI4VVXZinwcZnXw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793345321;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=7PxPIeRuNsvElsGXImQTEuL1CpgybTHblbxvuB0DOLI=;
-	b=aX7AFeie5cKk4jcR6pg6zpLQ55lEW4IHMczWQ2BalnvwP8UilXNc+IIoGVmQCfMrVKKK
-	 kq97JfW7Pwkw+o2u1TI2Q4lUdPsTHIjYAhHMj6G0wVhVMEXuoZUabqFy4yXZGWfAA4Ohi
-	 ohav3J/n71x8f+zC61WRJw1o78zj78ADCjjOufabBhjh7o/mut2Dq2TaFft08543qWOqE
-	 4lgUeCBS/g4JFg41Jlrg95ZrIGIJDF7Y8t9ubupfTTlJTDdYNzyt2yk1Av/dGEGWqmCaV
-	 eFGyXGd+F6rkaOczclBkWCahQqVU6rImZ9LId/GhM5TgVBr7yAIDK803sIAhYIxZBtQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=e1u0VV6S;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.51
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793353254;
+	b=dKFrI/aZCSwxQ3eGvyARxRUv139BVOk6M3rUi/VxdUEWjZ4kcVVVcRAtuQFc3B10Mdon
+	 kK5ACjXpIIcJS1Zp789tHznWCpJ5E9rmQ7l9rlfB+vnjU9PCc9ew8RXypxPzmBAzL4Hhl
+	 92dy0udCvf/+yNGiE4HH226bTnPc2u23ycL6wI1yzzwpIneElk9uolWRbVr/9y8O7AAfm
+	 j2zXmhiAyma+g1ZKpBvzarK7VY3qaCX13GWUSjtDdclZCbJM0XY2Oy4qWpXznE7lPhJGl
+	 q969cHK1wkFHkwn0hiFjCB+jpaRwwtk7v/iZ452GF2dqJCIL5hp7EW2Iyax/MC+Y9qg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793353254;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
+	 Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
+	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=NIxqMKyYG+I1FTMitPEEM3EWEjjxuEu8hI5Iv15e8d8=;
+	b=TRdcHt/cQJIu/KnJb9zvWD/Ksok3Dq5KWNUT1kDBu6XctLF0YJS7NhOwWsEs0bZoT0JC
+	 SbyHmTC2niq8i9FjkSBqj4QpNgZpdudvfO4WVHZbc33wKEqiCcUXtSg8g01b9RRzxyZuP
+	 FwL+mtCTgOnmI4NoNCDgdL1N0OcEnegKGSD6UkdUravn6aMTy3seDYHVih9fzf/ciuzpX
+	 UU467PDIcyPF9e2Q/JbfOhPBc912cJIvzUFulaFUybsxFmiD8cuha3l0Eg2bf403mxCAG
+	 naT8SZ/g+knWvxaAAxp9v/RY4h+p9A0c0IS8v6VAkCLoRS+L2qqww6lSEGW82AlDLjA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=UwGhhSuR;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276B5606A31D
-	for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 07:28:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 276B5606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FC7606A32C
+	for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 09:40:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1FC7606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=e1u0VV6S
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-679a420b5afso302718d50.3
-        for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 00:28:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793345320; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qnYpjvApRUOcbVkhBRRhLzFaJK1jUW0DVIFAtCGPuYqXW9VID0iB8cnjTyTVU34rNz
-         idH92JJi8tjm4sQN/I/9uYhWMA9ICgQqhMWEXB0+l7VXUaBf+ivs3lepRQ2tTtjvqqKA
-         4XXhnRcBF2Brinvdv4XzIvP/KeHy4kvUdvl1ibfjoYNxu52RnbLXJWlfOm9n0IHKR/Gm
-         cbfnBv2mSy1Wei8HdTP+EjGe6UyqbAHydx2hEr/wYKk5HC1W+mmeSSWAXIniTLGeORWz
-         A9ZLInOQhEDOik1PaqKIOTfniofBX+TojqeWoK1M6fbZpn2/jRsQC5RIKJ7ml/Q4xa/5
-         UPPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=7PxPIeRuNsvElsGXImQTEuL1CpgybTHblbxvuB0DOLI=;
-        fh=in3ptAsKA8Zusi3gBkescjL4CYa1PN9c4daP6qOjlrc=;
-        b=LNFRZjt/L4xgdVbo+cDDqVZg/e1h0jcBCFpL4nGny63uij0LCWIoZhvzhDluAhJ3RP
-         YucztHf/5vG59mQDSNiNUZp4Aq75c8WzeexaQqqYQ7z6y/srSmQx1TIPJrb0m4vDLCtp
-         zIRWX4+vc+74+D2WJ0jHXKO2vkscMfHLwdxcaN2eEmCdYXayRofIEeAgYUrcSa9S/QKp
-         0obGwGxACtuu1BNgDRccMw2YfUY84+kzDqeqh5jb7AQVW6V1nHcV8qzSulYvymLdtswZ
-         xoI8eJ6cb/8i6h7hrgelAPmIJFcPv66GpZQrcQTq7/p41CS/3FUcgguWDCPJyJlKta2Y
-         v6wQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1793345320; x=1793950120; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7PxPIeRuNsvElsGXImQTEuL1CpgybTHblbxvuB0DOLI=;
-        b=e1u0VV6SYYi6QwkU5B1SPm4uMgQEMGybYXZ9uSg3cTIQIrOR6jI7TRHyt8+RLRnsKu
-         SD28AoKJymf63U88/p2P/pBw49IVnR3k6iH77w6D/KNqfJEdAjs83tfIItQ3/9yT+UrP
-         M4DgrwOBWQRyivBSMu8N3pfkb6d3GyzHK98Zo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793345320; x=1793950120;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7PxPIeRuNsvElsGXImQTEuL1CpgybTHblbxvuB0DOLI=;
-        b=jcp0zeGQzZHC9ULdtMekGQWVbEwM9/eiRRIiypa8y7gzWMxVvxilBvkU7coHKrXTQL
-         TY8Ia6fEEQykHa444eJswb5ErA9NTd7u7mVE/p1rHzHoImHBpbc0SFczri1KT48aLk80
-         uDDyAtrhDpUDLHwpZfJxsMjCIncYer85lJc5jIHdJurPsgAMS6C56I5PL6dpQs00IXr0
-         4shVmlmBl4PH4pCNRohUqS1dRulunfJgG3BVb2+2kDsO8laLkyhvDfWwEiIWJZiXd/1W
-         l+PWZl5G1u8XqFYWwHuo6qQY2lMhCR/wrAGLkl3+EzCCQpC57+wsFOWQqGkV/4Sz9BhK
-         oC4A==
-X-Forwarded-Encrypted: i=1; AKwUvBxttsDxIsaSKmL61bmgV4PSpJgHGQlevvfXsCCM8qqBc13Pwfri3cxOuNolnmWBmvm4g3M+k1kt3g==@lists.linux.dev
-X-Gm-Message-State: AFq9FYLQE0pOe+tjKNJqcudtPErkNQg6JCUtoj2asVg+z/rl9oigGSUW
-	Ucc4Px+acIZ0Yjdeq5yvLzLvZNnv141Ca/h7HWp2SKejaMA69S6Rn7SgUqAanjg5iHu8JHBWUXT
-	YUw8gPuyZJ/PAzXnRM0ezDKXVkPARIxE2va5IlCkO
-X-Gm-Gg: AYBFou1yi3TGuqpD46foQLLVm7Str51psJgnpaoLZqaND8w/6HEiIH1bKR0BsrLI6Qs
-	MGjuUehjQlBr6BKohkM2c4dIgcIw+OWaGSL/+WvEvHml2iw0cxNYd/eud6YOrchdHcjHxsMBrnd
-	fX521+SaLgkD0at5RQH9iE3WaRXNySw7DGVwyagGO1Yvt/VqnQFfUJRTaKVn8mni9qFiYX8QnHM
-	jdbIOgF+wo/3yGXIWYSybDf70DDFqi/L5QqEBTBiXuZUOg0rjXu8eSeaK5+CIKjZMN831zoHrwx
-	viXwuV77Sb+fIZLNICCnHwF/V4bMu1Y3K1k2y5TdHeRx/XrJBCGKS2x7pVFKg/U/MCrrcQNLVSm
-	vggy4+4xxtrlvqfcuzijPCxXRR8TSHlTyiDWbntxEP5r3iZkyyCvUIBivlI8sdIrqscE=
-X-Received: by 2002:a53:ac8a:0:b0:679:9afd:c0c7 with SMTP id
- 956f58d0204a3-67ba508d24fmr864212d50.126.1793345320085; Fri, 30 Oct 2026
- 00:28:40 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=UwGhhSuR
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793353241;
+	bh=NIxqMKyYG+I1FTMitPEEM3EWEjjxuEu8hI5Iv15e8d8=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=UwGhhSuRqDTwZXbV5RreA8uFwVKQfqwJy0uhUiRoAAkOFKv//TJ45xb8kZmWVqHEo
+	 /Qyf2SPk24SFABLB7VlBpCEgE1qVAFOB00HsHhHLTPdv7H4MmYZ2m45R4ky5G1BPXH
+	 WrSLWnecuJ7l9s4kOAvh8j+H8WdTf270P9WFHS/E=
+X-QQ-mid: esmtpsz17t1793353237t9232972f
+X-QQ-Originating-IP: 5U1DF8ULzeZro/FTuuUh22awM6fJteIZcTjwwHXA5Jg=
+Received: from snode5.. ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 30 Oct 2026 17:40:34 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 4904317109447055735
+EX-QQ-RecipientCnt: 14
+From: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
+To: Yixun Lan <dlan@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] riscv: dts: spacemit: k3: add USB3 port A (DRD) nodes
+Date: Fri, 30 Oct 2026 17:40:24 +0800
+Message-Id: <20261030094024.3226356-1-chunyan.zhang@linux.spacemit.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -101,111 +78,106 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261014082037.1774672-1-wenst@chromium.org> <20261014082037.1774672-3-wenst@chromium.org>
- <7020a7a6-332e-4fd0-a659-d82eb768614c@linaro.org> <CAGXv+5G1kgyumbj7wGf6rPFbg3spSO0zYmEkn-hZT4qUdJbytA@mail.gmail.com>
- <03375a31-0ac6-47a4-b0dc-6327080e1622@linaro.org> <b4c0761b-34f2-42ad-97e7-ab34ae776281@oss.qualcomm.com>
- <8d4d3ec2-3c97-4a46-97f8-048fdf81b853@linaro.org> <CAGXv+5G_ig=k-eH8Cp0ES70WxTHcBS2TVj9VmHaG9caROiAuQQ@mail.gmail.com>
- <8ceba969-91d2-4b43-81d0-b26e7139664b@oss.qualcomm.com>
-In-Reply-To: <8ceba969-91d2-4b43-81d0-b26e7139664b@oss.qualcomm.com>
-From: Chen-Yu Tsai <wenst@chromium.org>
-Date: Fri, 30 Oct 2026 15:28:28 +0800
-X-Gm-Features: AclHuK87PpF6mvOIXqHCbuY1WKimiNRH2tQGnceMsfo-UR5TI782gxdvYJm286Q
-Message-ID: <CAGXv+5GFogx_kS=N1t8-SFTp+HyxLtoHzhnL6t8Zn0GBiqMoKw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] dt-bindings: usb: snps,dwc3: Fix downstream port numbering
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Felipe Balbi <balbi@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Sven Peter <sven@kernel.org>, 
-	Janne Grunau <j@jannau.net>, Neal Gompa <neal@gompa.dev>, Joel Stanley <joel@jms.id.au>, 
-	Andrew Jeffery <andrew@codeconstruct.com.au>, Ryan Chen <ryan_chen@aspeedtech.com>, 
-	Billy Tsai <billy_tsai@aspeedtech.com>, Michal Simek <michal.simek@amd.com>, 
-	Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Peter Griffin <peter.griffin@linaro.org>, =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
-	Tudor Ambarus <tudor.ambarus@linaro.org>, Heiko Stuebner <heiko@sntech.de>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Minda Chen <minda.chen@starfivetech.com>, 
-	Shyam Pandey <radhey.shyam.pandey@amd.com>, Wei Yang <yangwei1@eswincomputing.com>, 
-	Senchuan Zhang <zhangsenchuan@eswincomputing.com>, Hang Cao <caohang@eswincomputing.com>, 
-	Li Jun <jun.li@nxp.com>, Peng Fan <peng.fan@nxp.com>, Roy Luo <royluo@google.com>, 
-	Yang Xiwen <forbidden405@foxmail.com>, 
-	Ahmad Zainie <wan.ahmad.zainie.wan.mohamad@intel.com>, 
-	Robert Marko <robert.marko@sartura.hr>, Xu Yang <xu.yang_2@nxp.com>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Stanley Chang <stanley_chang@realtek.com>, 
-	Ze Huang <huang.ze@linux.dev>, Aswath Govindraju <a-govindraju@ti.com>, 
-	Roger Quadros <rogerq@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	asahi@lists.linux.dev, linux-aspeed@lists.ozlabs.org, imx@lists.linux.dev, 
-	linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, Mathias Nyman <mathias.nyman@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MM3MbTCua2rwwBkGzFFh+EGainYjDztOrp6+r97NdurKuRpADffVWP29
+	QLcoTxkAOeeL9WUcpI5poJvgQ+efjshxoflK8IwKeQ/hLM9Li3WrCpHv5hM7gML6vSxM1Fo
+	eHloIyDcVYawhNV8QajRDi0x5r0ofeQbQOcI/u70/EEMhq/dFP6n+gdECgE/MJH0V7Z5pnn
+	mjiS2N89MECl6i6oG/S3mXPIKQotcJUn58jpbqCl+NrmZN/8TcMmvX2lR247BaC9usTAYS7
+	sN1XXeX4nPMDW0yy5fCHCdLmBLyDUFsqiDar2AuhovtrVD3jOhMOb2YdGMRTr4AB3BxJjIo
+	ZvHei5/qcq3qiUAFK//0J0zhGP1VmI14LWKG7UTpu9sxtj9gt7ciYdcoNAEFeVQroZvMZbc
+	aXASbWjN1cv+1IoxnTfNEG6Uzs7MSBad0I2De1oYL+t8Z6meYtFXiFsczvH+2EZKKVQQnnj
+	b7/DHV1tqs4iv6gabdSCTRaMVBvuAksaJUYIvw4RzmMELDjMT1ksJXFqIo3tcrQHPh2aTtH
+	I83O4Yvid0sfaEa7faFSZLON0ShuWng8SHphdOO0ZK3KBfXXkuoBuqHNXfay+Bbcrv2lRYR
+	JlhMtTtzXwiamXlx6n5SAST+L01OAP96zi60/oWKS8kNqyT0kDKqpPbpoqaDcX44PovQIzA
+	iw052JeSBw/60AgWCQaeUwYJlZkUUyYdwrC3SHC4ZjuaMs4dkSbrtPghObZ1usvMmWrBgbZ
+	p0j0aB3p5WBJU4gq/xKmDGWa60m2QBIWXQCkmrCQZtAWmzsCK9maR6JwEnmdJU0aJN3sV8v
+	usmRu1+hoJL59niasIYqSfMktPIEY6fWqeKYASsYap0+WfkGXNS+4qNw3XC3pFJngp9/atZ
+	CNlaYj+Ce+Y5bYqG0yaj2BNHa5tje8+5S2amSUbkjFhkzVLmKiWdN5hY1B/PI4bg1GOc9Tk
+	qh62oJBtmHob9+aFkZEKu0hboucJBCsTx+fyH6qh+kmOVuxzIE06Ul113w6EcU3bqoWgzIr
+	d1wxpz8rSXZwPOZLMR0zWtEPDLVkDIm+de1RGSyX3it2EQd6cZebxs7aSwpJA1CrxwCcV5Q
+	j6QMT9rXZhrY6IgdbbaY2k3h14USIjx862aVtlyMo+C4WbakyhyJJO/piBM61Gf0MtbB7UC
+	XGnE
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On Wed, Oct 21, 2026 at 5:44=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 10/15/26 11:00 AM, Chen-Yu Tsai wrote:
-> > (Cc-ed Mathias, the xHCI driver maintainer in case I misunderstood xHCI=
-.)
-> >
-> > On Thu, Oct 15, 2026 at 4:44=E2=80=AFPM Neil Armstrong
-> > <neil.armstrong@linaro.org> wrote:
-> >>
-> >> On 10/14/26 18:36, Konrad Dybcio wrote:
-> >>> On 10/14/26 11:44 AM, Neil Armstrong wrote:
-> >>>> On 10/14/26 11:29, Chen-Yu Tsai wrote:
-> >>>>> On Wed, Oct 14, 2026 at 5:28=E2=80=AFPM Neil Armstrong
-> >>>>> <neil.armstrong@linaro.org> wrote:
->
-> [...]
->
->
-> >> How about the USB4, does it use the USB3.0 port ?
-> >
-> > I'm not familiar with USB4. A quick search says that it can tunnel
-> > USB 3.x, DP, and PCIe, and it doesn't have its own USB HCI defined.
-> >
-> > So I'm thinking the USB4 controller would be more like a nexus node
-> > or multiplexing node, or perhaps like a USB C connector. It has input
-> > ports for all the protocols it can tunnel, connected to their respectiv=
-e
-> > controllers (XHCI, DP, PCIe). The binding probably would be very messy
-> > if one controller supported multiple outgoing ports, as each downstream
-> > port has a 3-to-1 relationship with its respective upstream protocol
-> > interfaces.
->
-> Yeah that is more or less it.
->
-> There needs to be a connection between the USB4 router and the native
-> (USB3 *port*, not hub | PCIe *port*, not RC | DPTX) protocol adapter
-> where the tunneled packets end up at to create a PM devlink between it
-> and the USB4 router.
->
-> ACPI does that by adding a `usb4-host-interface =3D &reference_to_router`
-> property, for DT that's still undecided:
->
-> https://github.com/devicetree-org/dt-schema/pull/196
->
-> As far as the Qualcomm implementation goes, I was hoping we could
-> go forward with base1 numbering as the DWC3 is an XHCI controller:
->
-> https://lore.kernel.org/linux-usb/20260929-topic-dwc3_tunneling_state-v4-=
-0-63e296346d57@oss.qualcomm.com/
+Describe the DWC3 controller and its USB 2.0 PHY for USB3 port A
+of the K3 SoC.
 
-I don't have DWC3 manuals, but assuming its internal numbering follows
-that of XHCI, you can't just use "udev->portnum - 1" in patch 4. That
-is the logical port number on the root hub.
+Only the U2 lane is described: Port A's SuperSpeed PHY has no driver
+yet, so the port runs at high-speed (maximum-speed = "high-speed").
 
-Instead you need
+Enable USB3 port A with dr_mode = "peripheral", so it can be used as
+a USB device.
 
-    raw_port =3D usb_hcd_find_raw_port_number(bus_to_hcd(hub->bus), port1);
+Signed-off-by: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
+---
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  9 ++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 30 ++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-to get the 1-based port number for XHCI.
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index b084a35aa00e..74d4fdf9e405 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -323,6 +323,15 @@ &usb2_phy {
+ 	status = "okay";
+ };
+ 
++&usb3a_u2phy {
++	status = "okay";
++};
++
++&usb3a {
++	dr_mode = "peripheral";
++	status = "okay";
++};
++
+ &usb3d_u2phy {
+ 	status = "okay";
+ };
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index c3f2dce0969c..220dfe29bb78 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -630,6 +630,36 @@ gmac2_axi_setup: stmmac-axi-config {
+ 			};
+ 		};
+ 
++		usb3a: usb@cad00000 {
++			compatible = "spacemit,k3-dwc3";
++			reg = <0x0 0xcad00000 0x0 0x10000>;
++			interrupts = <118 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-parent = <&saplic>;
++			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
++			clock-names = "usbdrd30";
++			resets = <&syscon_apmu RESET_APMU_USB3_A_AHB>,
++				 <&syscon_apmu RESET_APMU_USB3_A_VCC>,
++				 <&syscon_apmu RESET_APMU_USB3_A_PHY>;
++			reset-names = "ahb", "vcc", "phy";
++			phys = <&usb3a_u2phy>;
++			phy-names = "usb2-phy";
++			phy_type = "utmi";
++			snps,dis_enblslpm_quirk;
++			snps,dis_u2_susphy_quirk;
++			snps,dis-del-phy-power-chg-quirk;
++			snps,dis-tx-ipgap-linecheck-quirk;
++			maximum-speed = "high-speed";
++			status = "disabled";
++		};
++
++		usb3a_u2phy: phy@cad20000 {
++			compatible = "spacemit,k3-usb2-phy";
++			reg = <0x0 0xcad20000 0x0 0x200>;
++			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
++			#phy-cells = <0>;
++			status = "disabled";
++		};
++
+ 		pdma: dma-controller@d4000000 {
+ 			compatible = "spacemit,k3-pdma";
+ 			reg = <0x0 0xd4000000 0x0 0x4000>;
+-- 
+2.34.1
 
-
-ChenYu
