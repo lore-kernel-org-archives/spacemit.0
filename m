@@ -1,84 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793380752;
-	b=keGwQ9rM3Y91FbdJa9075pRzFOMx5FkUHPist4ZG/wRpqsDMXDWrj6X6ardwazo2K6Ys
-	 6Ly+Rv8VPDD3MhOI32QPLgTtUjtJjDABNal8Ru33FGv+X4zMHk2E92hWpdtry+RDwdJhn
-	 1/5V6q+LuFDfH1FNBOxm9rveHc23GNRSZ+L9ZHxflGWkQ8B3ZpJx85zxp9+HQAzYXxU/t
-	 IzhgsFZEe7Cs/+X0+MzNtWUwDsXK6pknFICwHFIemqkFqDw0HmyP7uZufudq1IZnYJffx
-	 Y8nZG09Iyut4apa6MAbR7eBtKdzWthP5C0q82JAa8ZWSDI4XLHMLsyHOQKJb/r+R4ug==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793380752;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793464501;
+	b=h5aCX+EOSUhTVoSv2c7WQZQokATzbo9zULzYghXqwAtjp4EaHPXwJMrbJAc5nUcLgaC2
+	 BVZGA1v/aghw9CYmPK1QOud/qSeC6+0FjSV6SqEbSTASBTemExehRFwjg8VZ12MveHrZU
+	 4H4FIBsgDsi0oClePDNmAc+21VKGCA/8NSlnlpOZneH0HnovqKJCvMKiIxET6AzP87+9z
+	 F16AI75e2HT/3BU8/XOUiWzvihYGPLE3LhpbvKL6ED/WYAFx4eh3HtghLJw2U2u4jrM2T
+	 dXzyt/oYojBeop424mczSW3IohorwTFhf6pigE0PeIzjXLE6mYBV/EFXby6Yt0+XNXA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793464501;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 Subject:Cc:To:From:X-Mailer:References:In-Reply-To;
-	bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
-	b=L8C0fjYfmIjnlkQUo320XoYhkkQNxkHZdDuWWuX4ONipPdsOcdTH84/pHFievRiAG1zL
-	 IDFnclRgMaljCT3kHFgiCYx+Mr0JlpJIzE3OSLYHrOO6uERcdvH1F35/LfyZdidjr075/
-	 pXQsMZOdy0zeGIs2IbUzHOHu8s2DjsPw4tCKStJNvuWNZ8RyqLTtNg8gTtn28JagRepZ3
-	 th3X3KJ/E9kPJI99shPFiwyXPyLzr+dSYtRI+Z/J6pV6YWR8hECStOnHwkcJ/zs4bhYO0
-	 7NN4mXboQzF8nrnwpmOIHi5FZdyNsKc+sXwbS0jZp2mnEfYnnZAFS+eN9/3xu7buUxQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=baylibre.com;
-	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Rsb4XItF;
-	arc=none smtp.remote-ip=209.85.219.42
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=xh4+zw2NsvluCtokX+uj0ZJ8AJtCAX02SKccWbKLLC0=;
+	b=MhUQATHsrn1Mqu/8P1ptQXaObzO1jixV+bT1V1aXs9mEEXkoz4+RR9fDjo+KzyXc+h0K
+	 l+plimo32mHtIiJaEwDdd1zD/sUmVfbTnVoHBvfAnHK6B8Fx4qSTp5m27eYu2/k4CyF8R
+	 RkNhzNXlc53UIFNapQUZgwxGTyg8lZPdLmiwQky+VzES3T2zdbODNwHrqVphk/Mge3WLS
+	 v5REBZUXTmJ8xcIfwcIP0p9BlXfPKdww+RLVzdEHJRheoX4ngZCUmCccNCgWrarVW9L3w
+	 J/AI3/tbMZP1/FBM0/NPh8VFE1ml46jMl5v8T4jff4Ul/IKe9KYQBgKp3RMpV+jkIfA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CcYTKHd7;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D235606A31F
-	for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 17:19:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D235606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304F7606A31A
+	for <spacemit@lists.linux.dev>; Sat, 31 Oct 2026 16:35:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 304F7606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Rsb4XItF
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-91b55859245so14039996d6.0
-        for <spacemit@lists.linux.dev>; Fri, 30 Oct 2026 10:19:11 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CcYTKHd7
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-67a79750749so1023564d50.1
+        for <spacemit@lists.linux.dev>; Sat, 31 Oct 2026 09:35:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793464500; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fJh3WcftPlzAEr0TQx4kQo5DbkvZKI3wnRLz1biI36Jw+yu/gd+v8YAfsLtyoAHR2E
+         lgyM4B/JzUFSygWeMBPFCHWP7mi4/+CBfuQRudlewy5ApsUmk+zu6V8Z93BM+8o45Sk0
+         8kQKwblcu760Xj7bM3iZ+I9Zj7cNHQ+R8muacM/LqmE0EnLEgk9Yv3Apj5qC4/bt9j0c
+         Kwq0H3DePVxet0/qIs/T8kBdIZXto9vV+JAD+3YE5apJfen0rPdZI0gYJ3bnpqMKdhur
+         cTM/lvTPwp0yxZPI7pYUc2XWgLIA03vJq39liPsVvAPs48/2u4WCd24x2caGPEuagEC7
+         D51A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xh4+zw2NsvluCtokX+uj0ZJ8AJtCAX02SKccWbKLLC0=;
+        fh=r94GiPDmbhwIdJH5RzIr0kswKEfO0OI7b4MLgzhCdtM=;
+        b=Q64pNOmzo0ycr3TPZcuABymYHw7+Pvam+H2ggTKaVyjbvMY10L42eGfmc7tIflzAkq
+         +h626Ye/eAuY86CBUCbOrgsOW2xRhOFFQC48atp/lb5lHNDW95Tf5edUGsLCtypTyCFf
+         uh801QLQHqQlC6JQV6NFwt2LXxtwipF/78kuAqcX7WGnMLL++xKbTfEO7ykRMASGhMOX
+         jpUSiXY2VGy9w43eTHFz8VyCCzYRkoKSeEVn29wFTqpThgtZGaN3FL04xX8HiibseX5x
+         D/bYSYT7tFnFOfq3Nr44b9F0s4jp407mcAmRYzJCkm0LH3UDaAMuAjudVIObRWzg/tJb
+         eGBA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1793380750; x=1793985550; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
-        b=Rsb4XItFZbCffZxRwwZw8kdnwjsFgvbS0pRHHAyipO/lbeFTTBlPfF8N7tlxIl58tE
-         yzE0yDvvNwT1cPBedQdjfl11p53O7ZBi6ULw05JBD3jMaQRjk4rfR6Z03dQEMqf3b2xR
-         WVLLjhOnOcZdK82UvR691uP3sPe2/91+MVyZf4wgV7Aw9Ut+9TECZX/n+hNO+rfAka6L
-         afP5hZiF3pTUJ8CvSFjLFxe+O/zNKSnhlATqeUYPCytlCLQ2Pzi8o3ICePV6NyGDKas5
-         LL4i5Xw7AKJjtfM/F0eDlovlbx9nlgKsSocVNWVRX3wiL1aJFW7R6tWu4xnhbK/+9xpD
-         qyhQ==
+        d=gmail.com; s=20260707; t=1793464500; x=1794069300; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=xh4+zw2NsvluCtokX+uj0ZJ8AJtCAX02SKccWbKLLC0=;
+        b=CcYTKHd7F4w4QgpyEF5SnuwY+dEHcR0IUFK8L3Fj/ZZVRx8hMON5BbaRTK0RlQqiMa
+         ceW9cXPkjA1Vbg/vDh4T3v/7k9fqVQTeTx11r+LKc97NjxE1dvdP7AaIJHS5W5U2p1GE
+         62B3TwnF3SaOjNzlY4yXmU41e256Mp8AKLgEemZ3x2PIsehz9TYLBSIdzvMja4c5osXf
+         khOBciEoJyH5E+3AOL72+IekpngPGuOh1vQr7NtDNPAL/svSf2bPwukWU3R+y39XIDNV
+         /Ru+Ala0hXgpBcOIOXrVPlYAp0Jg1wBPdQ6WchzLgtxvW/jT5oeQH0jje+yYhpM7FNzc
+         kH0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793380750; x=1793985550;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793464500; x=1794069300;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JauK/xMdQboHkyA0i/AilFknl7ToPebcspkolAFjyJc=;
-        b=W+7Vb+hARd1/TckomfsuIbO/VtKjLZWwVa1W+L11uio53NSpe2Sef2KlieItHRxumE
-         ldaeiwwe0GcX99tWwSiSsSmf6/m1gWLtYx0/eLX3TBLJsafD+Nel0ofZGhBOJ4/1wZn2
-         z3CGtyF6kXqIycqNE/A+KsbN3N0REIfP3XpUHYp4hhEsCfd2tSBoQSUzFi6O7/Z2w/2p
-         kDnHhmOLlmy7Ty6Eo9/1Z2vGgCbUPf03Fc3dVVauHeevDbT9ORjmWy4VZuCHqF1lr2rg
-         f1tacCv6gwPx1LkzA+NM5Yilm+tYFPukeEinsPNKpsHEwXlMoA9a7uPn8aDZij3g6oC+
-         q2kA==
-X-Forwarded-Encrypted: i=1; AKwUvBzkqV/Rn4dOWNRUPrw0UH8tPO3D1+h8Y4HSidWyHUzkU0Q9FtmRMJ4xpaHG8IZjXpvLbxuYqqVZEQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYImfcgWOoy3QmBUmPzeyMqx6Im3xnn3X1psjvuVzrPd7AxD8gs3
-	D9fgue8BIdGAcP0M+dYM55b+c/6hJTA/U9/a1jz6kHrsvGQmW2jbLubvxUvfW2kWaxU=
-X-Gm-Gg: AYBFou1YeYTWRz87BoCZDSiN5yjM4tfkcGSJCakl57u81HUplZOMgVRQZOqmSVCX/t8
-	nPHPI/qXoVtsSsqNr4WBOA8jm24NLgfiTa7liubw67O4O69d6a6DGTjFSdO8FfxERzCh7XQ8h/D
-	7wYZOI43e6SuTxUTaCZ6wcF2l2hp5xYGZg5FcLF+e7nQR0mL172T0ZDu0Xz+E+K3Qrncqw22E6C
-	Z+eT6frOz9dDMoAgTyer8wP6WPWeYiqjzXFwRrln84hcJWmL4w47abSlXTpub+hzh2ZXm9v54BC
-	cjT02C6MbmUVPXsirZ04ldC/lVW6b/iJThIG9l8qriBGCIzixoY6ou0KtL47n5OBCTm7veBhdAG
-	74SHZWEeeovD91o1WCe1aEAM7SmBmNvmHXJkMSQQ4fzSk8fzwuMyLE4tXEQs1FFuCtbfFuW+alQ
-	/6GxiA1WxNmcXaQGvKUR5+vjP68Yh/DKFwhk85MY0Nz8qDHqrdLJbkL8X0mpDBeibEWFHuAneMB
-	osZhP73J6zbi1b8rgi/y+lW2Dy+SWLjPBhTlob7ao3FZlYmbg0/cYqL87K80mlOChSYuxvxu7sb
-	NQ+fhFhyg/cBgH38bOrfMYNc4jjCM6XNlQM98NzJ8VLj8qm6edAbLjv6flc5gCcx
-X-Received: by 2002:a05:6214:e82:b0:91c:71a9:34a6 with SMTP id 6a1803df08f44-91ca4b9af72mr48585976d6.37.1793380750212;
-        Fri, 30 Oct 2026 10:19:10 -0700 (PDT)
-Received: from localhost ([2001:1970:3847:e000:1977:be2f:4a71:2892])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91ca7f3db1asm20663476d6.16.2026.10.30.10.19.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Oct 2026 10:19:09 -0700 (PDT)
+        bh=xh4+zw2NsvluCtokX+uj0ZJ8AJtCAX02SKccWbKLLC0=;
+        b=LKGW8xM2T/NqGOByBm4CGM2KCTGg+68owwZH5bDnrQi2WIWl5Uvngl4Oj1PHu0JbG7
+         lW6oVv5Ze7n5IQNa1CLcKNCOar2Cvq1EkxWwuL0zGhdubZ0fhDIQ+rd9htRLH08YYX6k
+         4uDK8vOCQkEQZPbJAezvwbwrKnhLxg4t4WIxCc05TRD1Y53KKUXm8zkO6KBgZBML8Wip
+         jhgnkpRuNiaP9FJa0oMx8lNGHFYhpAwL96v2RQ0JnTnVK3u6KtCuqRsVNDSUpEQN7Oh5
+         X+DkWpfjgmI1g8vn8bUdw2YrWHcHJCdBmdu4ntf8cG0C5iAGEpyZ4N60Fy2e9PFgkjdW
+         7qlw==
+X-Forwarded-Encrypted: i=1; AKwUvBxGePPXhsHI90S7jwEiMyA6xPq3GUV8JJ9qsBRiQexbCa0voFsf/yPADpQCrbYYWW9tNz17PmFs1Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/1NRDD5LbsrhvWVs+nIPsNUJzhZNz1pEDrrGmm/N2ui4JKUttE
+	AhCajClCAka0YY9/0HSAhsdkXrW9O2WND8Q2u5MP5JVsfA3kbu8sIJ0ie4wCO1KH8TctIBjjTTz
+	VRzD7T05VLBwEp3W/DSmBSwXpnXtduCk=
+X-Gm-Gg: AYBFou0ggIlHqArqNY5xk9N6ptQMhQpvxUZrSXVEsjouJil+lMpew6hTLOt5W6aZMci
+	fLYJqDFXeOMIus7bMakVt150RjNYpXa1htTOwRy+WimgVIBZhhTz89rNtvMOvVPyRoDo+TCmhLj
+	t+BTFRK8fDdAZ9PKWB7qwXSbhXz/AkJPMcqGZQFVBmGTWqtUOe4uDRtPndPA1WVN+bs1ZY3BhbE
+	ZEkZ4mgOkftSmEKFs3Lf0L21G1CvKTBWDC46vzntpzRyNUv2+ptFAJwT3GdQbkkP3eD6/a0btOw
+	xxzZ/MuVDMuiZU3qUmRhtkPcNTLgrIUyn8gzrXFnAU+Y87TCdKsrs2oMeg6O6eWamd9BxFN3R9H
+	W+YZ1d0aE92jfjFglzuAFB7PVdGTU9/5rziKdHA3EM+ecrQbLf+DyEi4phvbo
+X-Received: by 2002:a05:690e:4514:10b0:670:fe59:3f7d with SMTP id
+ 956f58d0204a3-67ba502f92amr2477741d50.52.1793464500102; Sat, 31 Oct 2026
+ 09:35:00 -0700 (PDT)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -87,156 +103,95 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20261029-img-pm-autosuspend-v1-1-26851840a34e@linux.spacemit.com> <DMHSRIU2XCB0.35RV6ADY6W1IE@kernel.org>
+In-Reply-To: <DMHSRIU2XCB0.35RV6ADY6W1IE@kernel.org>
+From: Gyeyoung Baek <gye976@gmail.com>
+Date: Sun, 1 Nov 2026 01:34:49 +0900
+X-Gm-Features: AclHuK-jvh4fcghfPZ1KFb682ZDJ6x2_Cukku_cOj7Mrng853tNlYasYF_Ksjf8
+Message-ID: <CAKbEzns6CYjNXmf4jTx_eGSH2j6AjpKJPx=EtoqxweGLiQ85JA@mail.gmail.com>
+Subject: Re: [PATCH] drm/imagination: retry runtime idle when firmware is not
+ yet idle
+To: Troy Mitchell <troy@kernel.org>
+Cc: Baihui Liang <liangbaihui@linux.spacemit.com>, 
+	Alessio Belle <alessio.belle@imgtec.com>, Luigi Santivetti <luigi.santivetti@imgtec.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Yixun Lan <dlan@kernel.org>, imagination@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 30 Oct 2026 13:19:06 -0400
-Message-Id: <DMICF1DA617T.1TZ7DMV5WG818@baylibre.com>
-Subject: Re: [PATCH v7 0/2] Add UFS Host driver support for SpacemiT K3 SoC
-Cc: "Anirudh Srinivasan" <asrinivasan@oss.tenstorrent.com>, "Aurelien Jarno"
- <aurelien@aurel32.net>, "Jennifer Berringer" <jberring@redhat.com>,
- <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, "Krzysztof Kozlowski"
- <krzysztof.kozlowski@oss.qualcomm.com>, "linux-riscv"
- <linux-riscv-bounces@lists.infradead.org>
-To: "Yixun Lan" <dlan@kernel.org>, "Alim Akhtar" <alim.akhtar@samsung.com>,
- "Avri Altman" <avri.altman@sandisk.com>, "Bart Van Assche"
- <bvanassche@acm.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, "Philipp
- Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, "Martin K. Petersen" <mkp@kernel.org>
-From: "Trevor Gamblin" <tgamblin@baylibre.com>
-X-Mailer: aerc 0.22.0
-References: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
-In-Reply-To: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
 
-On Thu Oct 1, 2026 at 11:10 PM EDT, Yixun Lan wrote:
-> This series try to add UFS support for SpacemiT K3 SoC, the controller
-> components consists of System Bus Interface Unit, UFS Host Controller
-> Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
-> Management Entity (DME), Transport Layer, Network Layer, Data Link
-> Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
-> block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
->
-> The DTS patch has been dropped in this series [2], and will send
-> in separate series once this patch accepted. For people who want to
-> test UFS driver, please grab the DT patch from version v5 [3].
-
-Hi,
-
-I've been testing this series (and the DT patch from v5) successfully using=
- a
-v7.3 kernel in Yocto's meta-riscv layer. It's been working well with fastbo=
-ot
-flash in our nightly CI. An example:
-
-https://forgejo.baylibre.com/tgamblin/boardgarden/actions/runs/827/jobs/9/a=
-ttempt/1
-
-For both patches:
-
-Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
->
-> One known issue is that the device will occasionally raise BKOPS interrup=
-t
-> when doing some high load test, log from dmesg shows
->
-> [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_eve=
-nt_handler: device raised urgent BKOPS exception for bkops status 1
->
-> Link: https://spacemit.com/community/document/info?nodepath=3Dhardware/ke=
-y_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=3Den [1]
-> Link: https://lore.kernel.org/all/20260918-belligerent-succinct-kraken-7f=
-a592@quoll/ [2]
-> Link: https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-3-1f5d71f=
-1027d@kernel.org/ [3]
-> Signed-off-by: Yixun Lan <dlan@kernel.org>
-> ---
-> Changes in v7:
-> - check err return value of ufs_spacemit_quirk_host_pa_saveconfigtime()
-> - Link to v6: https://patch.msgid.link/20260921-08-k3-ufs-support-v6-0-34=
-79768a2299@kernel.org
->
-> Changes in v6:
-> - drop unused macro and dev_req_params
-> - use global PX_xx macros
-> - fix axi clock name
-> - drop dts patch
-> - collect tags
-> - Link to v5: https://patch.msgid.link/20260916-08-k3-ufs-support-v5-0-1f=
-5d71f1027d@kernel.org
->
-> Changes in v5:
-> - adjust clock names
-> - add runtime power support
-> - collect tags
-> - Link to v4: https://patch.msgid.link/20260908-08-k3-ufs-support-v4-0-22=
-aa2bd97d3b@kernel.org
->
-> Changes in v4:
-> - fix clock and reset settings
-> - drop function which retrieve value of tx_lanes
-> - propagate return error of ufs_spacemit_dme_set()
-> - check return value ufs_spacemit_check_hibern8()
-> - drop call to ufshcd_vops_phy_initialization()
-> - handle compiling warning if CONFIG_OF not enabled
->  add __maybe_unused to ufs_spacemit_of_match
-> - Link to v3: https://patch.msgid.link/20260806-08-k3-ufs-support-v3-0-03=
-7fb322acdb@kernel.org
->
-> Changes in v3:
-> - collect tags
-> - fix dt-binding warning reported-by sashiko
-> - fix low freq in opp-2 table
-> - fix err checking in check_hibern8()
-> - propagate err code in link_startup_notify()
-> - update documents for event_notify()
-> - ufs clock driver is merged into v7.3-rc1, update cover letter
-> - Link to v2: https://patch.msgid.link/20260725-08-k3-ufs-support-v2-0-45=
-036a2a2418@kernel.org
->
-> Changes in v2:
-> - fix missing interrupts property
-> - move ufs node to k3-com260.dtsi
-> - convert freq-table-hz to operating-points-v2
-> - rework reset_control, fix header and drop global variable
-> - drop dump_host_regs() debug interface
-> - converge and refactor dme_set() operations
-> - massive reduce of busy delay() loops
-> - drop vendor specific hce_enable_notify(), fallback to default
-> - drop unused member from struct ufs_spacemit_host
-> - add COMPILE_TEST support to Kconfig
-> - comment style fix
-> - Link to v1: https://patch.msgid.link/20260702-08-k3-ufs-support-v1-0-1a=
-64a3ab128f@kernel.org
->
-> ---
-> Yixun Lan (2):
->       scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
->       scsi: ufs: spacemit: k3: Add UFS Host Controller driver
->
->  .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  56 ++
->  drivers/ufs/host/Kconfig                           |  12 +
->  drivers/ufs/host/Makefile                          |   1 +
->  drivers/ufs/host/ufs-spacemit.c                    | 652 +++++++++++++++=
-++++++
->  drivers/ufs/host/ufs-spacemit.h                    |  77 +++
->  5 files changed, 798 insertions(+)
-> ---
-> base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
-> change-id: 20260605-08-k3-ufs-support-c8b308e415e2
->
-> Best regards,
-> -- =20
-> Yixun Lan <dlan@kernel.org>
->
->
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Hi Baihui, Troy,
 
 
+On Fri, Oct 30, 2026 at 10:55=E2=80=AFAM Troy Mitchell <troy@kernel.org> wr=
+ote:
+>
+> Hi Baihui,
+>
+> On Thu Oct 29, 2026 at 4:38 PM +0800, Baihui Liang wrote:
+> > Returning -EBUSY from ->runtime_idle() prevents the PM core from
+> > retrying the idle check. Schedule an autosuspend so the idle state
+> > can be re-evaluated once the firmware reaches ROGUE_FWIF_POW_IDLE.
+> >
+> > Signed-off-by: Baihui Liang <liangbaihui@linux.spacemit.com>
+> > ---
+> > Tested on SpacemiT K3 (PowerVR Rogue BXM-4-64) by running vulkaninfo
+> > repeatedly. Without this change the device intermittently stayed
+> > runtime-active after the last user went away, because the firmware had
+> > not yet reached ROGUE_FWIF_POW_IDLE when the idle check ran. With the
+> > change the device reliably suspends.
+> > ---
+> >  drivers/gpu/drm/imagination/pvr_power.c | 11 ++++++++++-
+> >  1 file changed, 10 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/=
+imagination/pvr_power.c
+> > index eb4b6ecdf4f..6f38249ffcb 100644
+> > --- a/drivers/gpu/drm/imagination/pvr_power.c
+> > +++ b/drivers/gpu/drm/imagination/pvr_power.c
+> > @@ -434,7 +434,16 @@ pvr_power_device_idle(struct device *dev)
+> >       struct drm_device *drm_dev =3D platform_get_drvdata(plat_dev);
+> >       struct pvr_device *pvr_dev =3D to_pvr_device(drm_dev);
+> >
+> > -     return pvr_power_is_idle(pvr_dev) ? 0 : -EBUSY;
+> > +     if (pvr_power_is_idle(pvr_dev))
+> > +             return 0;
+> > +
+> > +     /*
+> > +      * Firmware not yet idle; reject but schedule autosuspend so
+> > +      * runtime_idle() can be retried.
+> > +      */
+> > +     pm_runtime_autosuspend(dev);
+>
+> If I read the PM core correctly, when this autosuspend timer fires it
+> calls ->runtime_suspend() directly rather than retrying
+> ->runtime_idle(), so this looks equivalent to returning 0. Could the
+> real issue be the pm_runtime_put() in pvr_watchdog_worker(), which
+> perhaps should be pm_runtime_put_autosuspend()?
+
+I think sashiko's point is valid.
+
+Calling pm_runtime_autosuspend() from pvr_power_device_idle() when the
+FW is busy only adds a delay, and the device is then suspended without
+re-checking idle, and this is effectively the same as
+returning 0. I guess it worked in testing because the FW was busy at
+pvr_power_device_idle() time but reached idle before the autosuspend
+delay expired.
+
+How about moving the pvr_power_is_idle() check into
+pvr_power_device_suspend() (and dropping pvr_power_device_idle()), and
+returning -EBUSY after pm_runtime_mark_last_busy() if the FW is busy?
+The PM core then reschedules the autosuspend regardless of whether the
+last put comes from the watchdog or elsewhere, so suspend is retried
+until the FW becomes idle.
+
+I think this is the pattern described in
+Documentation/power/runtime_pm.rst, section 9 ("If the
+->runtime_suspend() callback returns -EAGAIN or -EBUSY ...").
+
+--
+Thanks,
+Gyeyoung
