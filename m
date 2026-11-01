@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793571398;
-	b=uAkE1mH8dEC9rA9N1RmuIe2FzxJozA2DpTSBBzgqfNe+icbVINnq8Fe+dTjv4Nxsky/W
-	 lAi4f/9BjbNPjor2IH43gtA9LOZ+qhz8WQl36xBC6NGhAmYJtZkMHfrLBZ0Z96ws5PeXD
-	 hitaT9Macvic/jXiDTyxNwkJAfw/16FliP7hPeedUwrRqIy6pPHdRlPn+czypyFWxAsAw
-	 zdpekaW/8IhlcifUQCprgoBEe7fUvfgML05okQmIhwRzGZGtyuIOZwYMaYMVAtwrjV3/u
-	 XbUvBPimX2GTS8p5d2hKz3tVulppjDdfc4uduivGmVyRfgVCaX9PN47wbDCWuC6Wm3A==
+	t=1793571410;
+	b=0W0S+S/CyIrk3kCd/BKbbWURskfFyjHloGIl949SRCWO2EB/YgYafKTDZu+gkIIxPyp7
+	 BwYbq7tAI+A1QbX4Vl253oIyGLNNzxeJ1uKFqIgbm5zbDX9AWTM5NBEJ+IOLyRF0zmalI
+	 m6hBRjxpyCMfQ8RkiSJpPQsjt9SyGiTf4w40sHr4Wx/d05sY4CBE9V19DZg4qH7AhKfRg
+	 EZqbnpr0VrXbPO3aVEBerJNxRVzJS9BD2aflvydXYX4AwQ7+GXVXIdbueLglpFm59z3xR
+	 BKXLqiPmqFJZAHkf02n3rjI1PK4L9MC28AH7W7X+i4RWZfXeTbKgninR/fOKb+8Rp5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793571398;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793571410;
 	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
 	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
 	 In-Reply-To:To:Cc;
-	bh=jgMNL39llvWo9fpC9p/QMlWjuszkHAxcrG1aLPRLi8g=;
-	b=wfIPuix1zr65J1mj/2W+lfiKY+YLAXSDmHPTXcL/ICAaoP3bLmv3BdXOMbFpyWuGu/Xb
-	 iYsHR0riojgZ+T6wqf3sHj180dGS7npbhR2b4pC8qClwAkpSwjSeYcOHmd7DxE1ef3/tm
-	 J2yuLqEBqq93xsGyt3WjwlHYu0woHe4fkhnW0o8lhZzRgNOYQld3SY36pQkkOhkazLG/i
-	 6mMv4I7lOqfRL8Z9um4TM6XjzKnuPA+SjLH66H+Vb03wsBWkzck4p5KIwvFB60UzHh99Q
-	 HlwvHRBzl3ahL0H73LaCg7CjTUTayLukrpkbkKq20TigNIhgIBacdJtbC53Tdlii+2A==
+	bh=qT2GUUvMsvsdxjeGOlN5O8jOvRC8RtpY6AMZ++u4SV4=;
+	b=QE+kc7OM0yJdZOd3+u9HRKh09+j7sShrYThFVQjBmscmQO6mvXCKKzZ/mFK5/g2ndbdc
+	 FHWVES26RkAFVzYpca564y0BCM+nF8HK8UiDx61NPul/k9OhjgcBU1EV1h2qJZlCxnUAa
+	 IITb82hZipIiEArIg2+uszh2VBvOuyJ0mdCWEIdaAO5Ho3RisGE9Fb36KwD/cmImDPVn+
+	 CdxPDqMVs+LmiWKDGtCs1OwtlawPUfjKH4i0flMpqNJGXKLgiD04mwFohjPuDaX2Rf68Q
+	 gKE0SK+DGFkM7zG3d817SorW7pg0ilgBgdjkupKvCwXbF6U754WrS46m050SQpZnvXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XYeaF+lL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="a/3BEpcj";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2584606ECF1;
-	Sun,  1 Nov 2026 22:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD9607184F;
+	Sun,  1 Nov 2026 22:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XYeaF+lL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495611F00919;
-	Sun,  1 Nov 2026 22:16:38 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a/3BEpcj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A1C81F000C1;
+	Sun,  1 Nov 2026 22:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793571398;
-	bh=jgMNL39llvWo9fpC9p/QMlWjuszkHAxcrG1aLPRLi8g=;
+	s=k20260515; t=1793571409;
+	bh=qT2GUUvMsvsdxjeGOlN5O8jOvRC8RtpY6AMZ++u4SV4=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=XYeaF+lLG+zcg+MoYoZlG0y/uk5q8MRTTDbq8BkdvkzUFl9Vun1ihD1SxAc2ECy16
-	 z4DWocwx1WWi47Oj9QiNtJ6jmhL7zmf5bxeoWHoY4yzM2kZQfolcuIAWxK+jS7cm07
-	 fmwAg/Ivw2hGS6A7TJkYkC3exTpBiM5aaokwLR9TjbsfP3pWR5EZZp804p7drBfMd8
-	 frNkLhYzNMl5ef+Cj82eXGRsRKL/A4gC1aPR37M48qabULeNXZFgqSenEBQ9QKLwWw
-	 Vzz4O5/hem3VSNyc/YuAn2p3V4AP0T1bhoNHZjIEalvXnARs3fwKPBkflkTi+V8isn
-	 Z38bORaSKlOQw==
+	b=a/3BEpcjERRS1qf1ykCRoCBxX8UxmcohB0yzmRvJnU2+gY5IhSpHZmpTJX7wZsWZx
+	 zNBg6DhehxxNhO40NOIsNPit4E75mWQMiEKi0py+NsH8Q7orlj2SbdYEJ7e8BuDQ2X
+	 2cB642WkEvvWfUEs8DYYeb2CIQawi2EDq+2UOAlDTFqFxZgGAqiHvAYf4efzlAoYQm
+	 3fHE42xKId9UvA1/Nb2UhG2VAg4/UPvGOYqLITZc7MqlWTAvP2xk87F35Zstthi/d5
+	 7Eg4txIqXtU/k2xtW1/pP9mPw1G8TyDhFGzXJd7A4EtREYqtpO6+0+2eiTXeTre+WZ
+	 GbhPPxXET+0Ag==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 4020238003B8;
-	Sun,  1 Nov 2026 22:16:38 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 401AD38003B8;
+	Sun,  1 Nov 2026 22:16:49 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,43 +54,46 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v9 0/3] PCI prerequisites for PHY consumer/provider split
+Subject: Re: [PATCH] dt-bindings: gpu: img,powervr-rogue: add spacemit,k1-gpu
+ and spacemit,k3-gpu
 From: patchwork-bot+linux-riscv@kernel.org
 Message-Id: 
- <179357139679.2624073.13873851750746305916.git-patchwork-notify@kernel.org>
-Date: Sun, 01 Nov 2026 22:16:36 +0000
-References: <20260810124315.433448-1-vladimir.oltean@nxp.com>
-In-Reply-To: <20260810124315.433448-1-vladimir.oltean@nxp.com>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-riscv@lists.infradead.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org
+ <179357140787.2624073.18323938412420431030.git-patchwork-notify@kernel.org>
+Date: Sun, 01 Nov 2026 22:16:47 +0000
+References: 
+ <20261015-spacemit-gpu-binding-v1-1-a7a23c7e7788@linux.spacemit.com>
+In-Reply-To: 
+ <20261015-spacemit-gpu-binding-v1-1-a7a23c7e7788@linux.spacemit.com>
+To: Baihui Liang <liangbaihui@linux.spacemit.com>
+Cc: linux-riscv@lists.infradead.org, alessio.belle@imgtec.com,
+ luigi.santivetti@imgtec.com, airlied@gmail.com, simona@ffwll.ch,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, dlan@kernel.org,
+ imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ spacemit@lists.linux.dev
 
 Hello:
 
-This series was applied to riscv/linux.git (fixes)
-by Bjorn Helgaas <bhelgaas@google.com>:
+This patch was applied to riscv/linux.git (fixes)
+by Rob Herring (Arm) <robh@kernel.org>:
 
-On Mon, 10 Aug 2026 15:43:12 +0300 you wrote:
-> "[PATCH v8 phy-next 00/31] Split Generic PHY consumer and provider API"
-> https://lore.kernel.org/linux-phy/20260505100523.1922388-1-vladimir.oltean@nxp.com/
-> became unmanageably large for a single patch series and needs to be
-> split per subsystem.
+On Thu, 15 Oct 2026 15:00:48 +0800 you wrote:
+> Add compatible strings for the IMG GPUs in SpacemiT K1 and K3 SoCs:
+> - K1: IMG BXE-2-32 (adds a dedicated entry for a single core
+>   clock and power domain).
+> - K3: IMG BXM-4-64 (shares the same configuration and entry as
+>   the T-Head TH1520).
 > 
-> Here are the patches pertaining to PCI extracted out of the larger
-> series.
+> Both SoCs require a single power domain provided by the APMU driver
+> (currently pending mainline):
+> Link: https://lore.kernel.org/all/20261008-04-k3-pm-support-v2-0-6f778a53dd2d@kernel.org/
 > 
 > [...]
 
 Here is the summary with links:
-  - [v9,1/3] PCI: cadence: Preserve all error codes in cdns_plat_pcie_probe()
-    https://git.kernel.org/riscv/c/fe108800a865
-  - [v9,2/3] PCI: Add missing headers transitively included by <linux/phy/phy.h>
-    https://git.kernel.org/riscv/c/a685daa02d97
-  - [v9,3/3] PCI: Remove device links to PHY
-    (no matching commit)
+  - dt-bindings: gpu: img,powervr-rogue: add spacemit,k1-gpu and spacemit,k3-gpu
+    https://git.kernel.org/riscv/c/16f30811a935
 
 You are awesome, thank you!
 -- 
