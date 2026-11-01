@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793571389;
-	b=KlChszm/K62e57J1AZnXDygGELmbkk2n44glte+hMN+fWiM+Tzb+MGAqkmhqxCISrroe
-	 snubfPG8XQTKhEfpTGs8lacbK4V2IrWVu/QHbJKwS2cpAVdLVUxiDqgia+PjWE+Pb7D37
-	 7nK9iQz6WgrhyqV1kuPg3hDuR7iJkjtu0uCc6HO11/sgIY6bXQzOooCAxTnIdPLow64se
-	 hs7Nm4V9ZQ9u+tbGp8woykYDJ78kOeJIouES4saxKE7VH8hpSMeJpzEjaAzgQRmGJ/yI1
-	 5qO2ZzEtEK/9ooi1Dy9YrrRHQRtNN3ZvGMkyNzEQCu/G/11LsAUlD7hghQIQOEehKHA==
+	t=1793571390;
+	b=dDntn0GPp56wng/7NI+SDjvfMd0Bibb8r1v2jtp3gMH/vB90ip42yjBsZ+l+hh7rWIWG
+	 PrGYug4/ElbOL2VeOj9waEQZiGZGs6XleAAmC97y02dCHX/fgblpBHsSj3nvWm3U0WRMP
+	 L0fcRODuZtyo4kZGdmcEA3I9S6JcCtiGWfa+yCKvtmBLbSEQeyhGMj8dL/LgVWvIy9q1Z
+	 dryMFFzPGvotrkCmt/gYJ7Ml3FQAtlkfqZi4DoVFwxg/spCp2ZVFuA1+lNuglqu6ZK8wL
+	 SsMTdxrW6Cn0aw//oVPlkIP3Khzm60hsv9c+uuBLP+xnuzkr0GehN903wH1u+edWxwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793571389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793571390;
 	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
 	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
 	 In-Reply-To:To:Cc;
-	bh=mYyAayRoZikGuVa2eTY9XdZusf49iXjgOkDtLITdEgk=;
-	b=FgXzY4f8kmJMV/cQGdc9Cg0ROkjCM0dUdUm8XYFeWYO38kDjAv/UDT0FjvaaaaBhsb0V
-	 wpHrV7NY/ReJQgTY9bO1rlUFw7zdaVTrh4jmRbqzXENywvq+wsMjZDyOs5O0ysHcUpr9J
-	 C8ZOeLFuo/3CKtV/NPYEqqARRAAWnq4L6uuVG/p7eTqgTosA+K8UoFB6ycl0ZueEK+KbU
-	 KDkwC1YMW5rSEoASKjY8Re/uJSk0ikZwvpGqlUWzeAvjAtnMeznDJoK48HJpVCUFgOYwO
-	 kkodGwj5NqE+jqJswUwItzcBNOVNsBNQC38IOik4aJ3MQAj3hdraRiXlce/BL9dSBGQ==
+	bh=kd1+6McIMPpXCjM/eK1XnUd0MHKq5CNasIzBEPub8/I=;
+	b=qq9D7pfpH65u+G4zyWKzEOHW0THcah1m7sen2xw/kdvl+6r0gTm8spq5x1EprwywyTfC
+	 EBcAkRK4cI/KbThDdjZvaaDxBCdVYmy7c7Z/GLm0tmSURAkOzAekejMG0UZtRNHAOxv1K
+	 6/Hn4h2BzfQhhVbiC6vlHNkv7grx4zmNantIeINkYFCur+rhAPeM7BkWkZBpM3tLH9iUB
+	 H2F5qXS98pFn0ujQAKOF92gJb8hFSI3dVeNWsTYcguQrn3mwj1ZREBrUvBRn0MTsok5fD
+	 yg2zd1iZxNr+O+Kr0EYzHKv5+6PaBvJdZjPlAKAaxTfoYMzfhnQ4pjuhNJNp+gNVXcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mXLfuPXP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YUlLLBZ6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C8606D137;
-	Sun,  1 Nov 2026 22:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF6560A2630;
+	Sun,  1 Nov 2026 22:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mXLfuPXP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5FE1F00919;
-	Sun,  1 Nov 2026 22:16:28 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YUlLLBZ6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79751F0093A;
+	Sun,  1 Nov 2026 22:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793571388;
-	bh=mYyAayRoZikGuVa2eTY9XdZusf49iXjgOkDtLITdEgk=;
+	s=k20260515; t=1793571389;
+	bh=kd1+6McIMPpXCjM/eK1XnUd0MHKq5CNasIzBEPub8/I=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=mXLfuPXPchjyCsKqUUn6GfbB242wECSzlW5Nl5mVJ6Zte83mHJNI4R4d8xkp7uYcd
-	 PsMB2hamerPq2dnWXNyCSG+wGVJoxOanUM42cDhwQZm6qnyCUjMMHEM/aieCRaZXTY
-	 YZ6bc9U50iXAKJ6034iAZfuM4+M84BeH8T0pGIdkGJ0NIMUEZ1bKDwpu6Qimh7lTAM
-	 tuhkR19/h7UrSYSq4bb66U5CX6UY/m+upd5rhiqJyHWOwF8yMk8WPOWyXOG1GECtPq
-	 WPFZslCedVeFfgCdotFp5j/booJbOqPkd8OugZblxDJ9R1gbY68KHhHXNfQ9JRpvCq
-	 9YL+YH3CTO18w==
+	b=YUlLLBZ6pm30l0+huWgQS5KFcpacV3sIViYlLlgtZBTFchxrnyS8Bp46ptx800GpH
+	 ms0tcCCwnBu8jhUpAixHI2ZMpbJ4BXne5Su4dMXO/7bUCVl9AQVIuUBLP4vl7wQZgv
+	 rZUklVe7MxMb57TOckoPSQz/SDQn9b5pexQYQ6rnr5y2PQEq0m0iBuIwllJyuFYCPt
+	 FgWrKGlFZ3mCBkOH5hjwzxX8senRjOfUuL2jk1ZgZ27JyA3nz0QEa+hdXnKH2Ks7cd
+	 yjsnEcGAfd78jUx35wSizQNDIH/DFAduRns5hrtdjcBw963LMRfCTmY/LrgNPoYmff
+	 gPp6G7yyQ4ZFA==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 873E338003B8;
-	Sun,  1 Nov 2026 22:16:28 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id BA1F138003B8;
+	Sun,  1 Nov 2026 22:16:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,40 +54,36 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/2] phy: spacemit: fix and enable the K1 USB 2.0 PHY
+Subject: Re: [PATCH V2] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
 From: patchwork-bot+linux-riscv@kernel.org
 Message-Id: 
- <179357138729.2624073.17557863773534626721.git-patchwork-notify@kernel.org>
-Date: Sun, 01 Nov 2026 22:16:27 +0000
-References: <20260825065007.69353-1-bbanelli@gmail.com>
-In-Reply-To: <20260825065007.69353-1-bbanelli@gmail.com>
-To: Bruno Banelli <bbanelli@gmail.com>
-Cc: linux-riscv@lists.infradead.org, vkoul@kernel.org,
- neil.armstrong@linaro.org, dlan@kernel.org, huang.ze@linux.dev,
- elder@riscstar.com, linux-phy@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
+ <179357138858.2624073.15621784518365922237.git-patchwork-notify@kernel.org>
+Date: Sun, 01 Nov 2026 22:16:28 +0000
+References: <20260817033038.2286436-1-guoren@kernel.org>
+In-Reply-To: <20260817033038.2286436-1-guoren@kernel.org>
+To: Guo Ren <guoren@kernel.org>
+Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ dlan@kernel.org, devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+ junhui.liu@pigmoral.tech, stable@vger.kernel.org, docular.xu@gmail.com
 
 Hello:
 
-This series was applied to riscv/linux.git (fixes)
-by Vinod Koul <vkoul@kernel.org>:
+This patch was applied to riscv/linux.git (fixes)
+by Yixun Lan <dlan@kernel.org>:
 
-On Tue, 25 Aug 2026 08:50:05 +0200 you wrote:
-> v1 was a single patch adding "default ARCH_SPACEMIT" to
-> PHY_SPACEMIT_K1_USB2.  Automated review pointed out two pre-existing
-> Kconfig problems in the same entry, and that change makes them easier
-> to hit: enabling the symbol by default means configurations that would
-> previously have left it off will now build the driver.
+On Mon, 17 Aug 2026 03:30:38 +0000 you wrote:
+> From: "GUO Ren (XuanTie)" <guoren@kernel.org>
 > 
-> So fix the dependencies first, then enable it by default.
+> The initial K3 device tree used generic/placeholder values for the
+> IMSIC guest configuration:
+> 
+>   riscv,num-guest-ids    = <511>;
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/2] phy: spacemit: fix K1 USB 2.0 PHY Kconfig dependencies
-    https://git.kernel.org/riscv/c/882af55e42a4
-  - [v2,2/2] phy: spacemit: enable K1 USB 2.0 PHY by default on ARCH_SPACEMIT
-    https://git.kernel.org/riscv/c/392101240b22
+  - [V2] riscv: dts: spacemit: k3: fix IMSIC num-guest-ids
+    https://git.kernel.org/riscv/c/69f95409f005
 
 You are awesome, thank you!
 -- 
