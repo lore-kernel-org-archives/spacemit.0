@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793571377;
-	b=DSmUx9C0WYsGPiDyk6qoMBjLUmiOoIliuiKjPUh+/Mz31FQp4/R/k12+ZIlYGaJa7UCC
-	 6hpzhoC0/PNRAz/mRomOagv6w2nqlkWG+z19oWP0vT5TXWvjt8gRnKTx5Z3KE/16HB2Qi
-	 NxROzqCMueRrpyw6evX6WOYEq+HoX1BKhP+v4DGVnfkwHsbXodUCmQ2Xqk6cwp/tQt7xa
-	 6uuoajhXUoNk3/Aox0PmbSrQMMyMkyDmHGcTVUFe4alHYWjvrCthquUl6GiEegjtGhpJQ
-	 /K2trgmG5aAbpVPCEQpCHJMN0/mlk5EnB0DaDPbY3JYUqinmkM512x2kB/Tv7rt6/Jg==
+	t=1793571387;
+	b=aOpAXfgqaB/+MCgPUjjzUhHoVpVfpDFdC3PtvZXwyDa1ZrfV7KUn7aoZ9oSgD4Z8CA/Q
+	 +Mte1GOu1i7lrLzKOm3EaJKCiw6I41HLqm+7THiIYOlUmCYgaVD+isb9f9QOvpZwrEkN7
+	 /0AbJZrCim461wn8hHC0y9A41LQmxbZ1LMy+PdO//4JJjz9SEqHQf6SLsivkP1WRoABwQ
+	 DNG5khuqmw1AUEb74PW+TQdvylJLnBuh3roaXn2mYGgwJWxWjWnp74fy4cyi7LOEJildV
+	 f47Q6AAImlS4YPuNGbXEmi7/gv2cE85QXPMyW8ngqY0ttR/Oz1kAncrpMwmWmoEduPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793571377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793571387;
 	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
 	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
 	 In-Reply-To:To:Cc;
-	bh=Y2PM7PaXPlUtwF7G8UYPMk8Ond4TLwOL7+2XwT/8nDE=;
-	b=Yp8wp1NYzhtoPMWYQLOVyoC7DN7hvX28hkdK3wPxgHZyJIsJMvfsqe9oPvyvy/xP+PPC
-	 HQc6Xn1jG3dHRZcdryDqkamkLZBBp/momrZz3qzVbUt5O6zsECvzecEg4ghP6gQ20fqOJ
-	 sMRIaFritgkK3UFCNR7A9K8+qZrwNa5t4dVf9uR0y5MPHzsLPXe9iEZF+Zpwd4ywnnBnZ
-	 PTDXDcIpugqLQF8I4JUQ//cGTNkOT2tNgnJFD0ntATkniL6d1cj70ZhlOw3rzsCzd81gZ
-	 YtHMnsHG+7QErmvYDEEaYIDG5WI20YYixZgIQOgELOC1xbKsrlwFzcJ18E674L451lw==
+	bh=rAJ8RZ06DBUIxOai16Zk+EZsC0WH9KSq0EKHRtQp2Go=;
+	b=pnc+6vb7ukNCD9tz3GYMshGUZlo/Qd0JFG8kFRcEHRy0au44kUwD7//shBBwcFCZbuMU
+	 VXvGdh00QwiYlH/wW59z9Sf92gPP6BYnzIQwceV5kxfHTTTjWtO5LZHVKLgeymqGaL8HG
+	 ZXz/733nP0DXtyNd3jlptWQ1tXdssdDxy8zABhc77v7uej5HjqvKFCrv3oSUEIlL+5ctb
+	 1t7UYHx0yuwgYjfLtGHMVgZZmcxgQoJh7RQ+f6WW1U0pYxGMrJLVvJDJnlOc/oZia+2JB
+	 i6gtBU8Ft6m+/HUZu+fNUx/3MCz/Lqq+zaoPNMzU+HT+k8kvt9F5XfD9N9j2KvH763g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b93Tisum;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XNxYgn1c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCF260A261E;
-	Sun,  1 Nov 2026 22:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72372606D12B;
+	Sun,  1 Nov 2026 22:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b93Tisum
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E473F1F00A22;
-	Sun,  1 Nov 2026 22:16:16 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XNxYgn1c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5F71F00A24;
+	Sun,  1 Nov 2026 22:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793571376;
-	bh=Y2PM7PaXPlUtwF7G8UYPMk8Ond4TLwOL7+2XwT/8nDE=;
+	s=k20260515; t=1793571387;
+	bh=rAJ8RZ06DBUIxOai16Zk+EZsC0WH9KSq0EKHRtQp2Go=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=b93Tisumf6w7GwGg8JsDtZTrtSbJIwBF1ayU27ZD9hDVNCKU+qHGncd2hKM6zZeEE
-	 jqomQF87URgdYK6poFOsR7kRwDChp6ccHh/bHjl9SrnVqpaxdjTQuZcMjisuMRbwBa
-	 8XGe+/7YUCA13wsqzPzmfTYPvAyhD6EnG59ZBNv+/suxVtJ9hEBYgi5Jmc1KVs0kwx
-	 bb3J2bs2zH9njzILt2JEGLSf3CPj4Sz/jrt8R8D19hpYS25c4F54gOQIW+OZzODjHg
-	 CQtQL42bgXBw4WrzOMtlYI14bZwlPgLM+40OhowN0JkJluG6I2TDV4KM6/AVlWy/PT
-	 yoYfcdU5IiCvA==
+	b=XNxYgn1cUplcs7rMKZov+gVfZttekYqS9yQpibvTc0mS2GfcQ6qWF/XvEAF0BQrr9
+	 78IOIiwVcitvPD3bCArlgVMVvVX8S7U31tAShHABo3SesCDuJWDNifsIDdXVK4uUH+
+	 h2FEWa6InFp/DtcXtMNv4GnbPi9toKoUpfyXZPmdetpom7ggOyX3/PBjJ3VkFBPvb6
+	 FXOH562IuRe9Ck6rt9dRTMD7hZTKgUTodyDzqDid1RP5KPf35gW3EWpqNJyIVwN1+v
+	 yoDAuy54ujFR8gtcI7VTMGgepWJrnXj6dNDcTxPk6Fl0xpb3H4ffIZqyH0RnRVm+qs
+	 hGKI/CcgZurhw==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D442738003B8;
-	Sun,  1 Nov 2026 22:16:16 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 405F738003B8;
+	Sun,  1 Nov 2026 22:16:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -54,45 +54,43 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5 0/5] Enable Bluetooth and WiFi on K3 Pico ITX
+Subject: Re: [PATCH v3] riscv: dts: spacemit: k3: add i2s0-i2s5 nodes
 From: patchwork-bot+linux-riscv@kernel.org
 Message-Id: 
- <179357137554.2624073.2079736918807982610.git-patchwork-notify@kernel.org>
-Date: Sun, 01 Nov 2026 22:16:15 +0000
-References: <20260928205012.3689405-1-aurelien@aurel32.net>
-In-Reply-To: <20260928205012.3689405-1-aurelien@aurel32.net>
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- dlan@kernel.org, spacemit@lists.linux.dev
+ <179357138580.2624073.12710670293488013963.git-patchwork-notify@kernel.org>
+Date: Sun, 01 Nov 2026 22:16:25 +0000
+References: <20260915-kx-i2s-dts-v3-1-cf0b90882a97@linux.spacemit.com>
+In-Reply-To: <20260915-kx-i2s-dts-v3-1-cf0b90882a97@linux.spacemit.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-riscv@lists.infradead.org, lgirdwood@gmail.com, broonie@kernel.org,
+ perex@perex.cz, tiwai@suse.com, dlan@kernel.org,
+ weijinmei@linux.spacemit.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, pjw@kernel.org, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, linux-sound@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, arnd@arndb.de
 
 Hello:
 
-This series was applied to riscv/linux.git (fixes)
+This patch was applied to riscv/linux.git (fixes)
 by Yixun Lan <dlan@kernel.org>:
 
-On Mon, 28 Sep 2026 22:49:05 +0200 you wrote:
-> This patchset enables Bluetooth through USB on the K3 Pico ITX board and
-> adds the rfkill nodes for Bluetooth and WLAN so that the devices can be
-> activated.
+On Tue, 15 Sep 2026 11:23:16 +0800 you wrote:
+> Add the six SSPA-based I2S controller nodes for the K3 SoC.
 > 
-> Note that WLAN support (patch 4) is only useful with the following
-> patchset, but they can be applied independently:
-> - https://lore.kernel.org/spacemit/20260923015016.64069-1-inochiama@gmail.com/T/#t
+> i2s0 and i2s2-i2s5 each have a dedicated per-controller sysclk
+> divider, so they use the published 7-clock layout (sysclk, bclk, bus,
+> func, sysclk_div, c_sysclk, c_bclk).
+> 
+> i2s1 uses 6 clocks (sysclk, bclk, bus, func, c_sysclk, c_bclk) because
+> its sysclk is driven directly by a DDN (ISCCR0) and has no separate
+> divider stage.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v5,1/5] riscv: dts: spacemit: k3: move USB3 phy to board level
-    https://git.kernel.org/riscv/c/a87ca1e5b5d2
-  - [v5,2/5] riscv: dts: spacemit: k3: add USB3 B and C controllers for Pico-ITX board
-    https://git.kernel.org/riscv/c/2b9612eceb96
-  - [v5,3/5] riscv: dts: spacemit: k3: add rfkill node for Bluetooth on Pico-ITX board
-    https://git.kernel.org/riscv/c/ea5cef6d5f3b
-  - [v5,4/5] riscv: dts: spacemit: k3: add rfkill node for WLAN on the K3 Pico-ITX board
-    https://git.kernel.org/riscv/c/2f3b7240a4c2
-  - [v5,5/5] riscv64: defconfig: Enable BT and WLAN support for SpacemiT K3 Pico-ITX board
-    (no matching commit)
+  - [v3] riscv: dts: spacemit: k3: add i2s0-i2s5 nodes
+    https://git.kernel.org/riscv/c/c37ee906b45b
 
 You are awesome, thank you!
 -- 
