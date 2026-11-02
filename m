@@ -1,44 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793600830;
-	b=l8DfXNVzCH+7hmsju+U4yBjo8vD7QKB2E0OzmddsG7+QdGqFDQD0D76p4x89AoUSffQ9
-	 Jb0kgTkfJn9jdPUM363q5Ja71jDJi+OIU1il8/lKLw9quDacx18BUGNpAa7+tP5WtmNzZ
-	 nC45iUzAkfE6XbvYAbxShnXR77rMBDZP6dOBUl5vGH4yuFbKe1ZI2aKuH0ctuDSynK1LW
-	 PapijDip4mJllvTgerp8goWkC7Fw5m2zjCxwKooc+cSN3n1N/gDk7K6Xrw23ZN/rfcvQn
-	 HJ7JSK6uXAG6Gp9OSs48eYC/9BGADijFiaotfoyD89mbfI+/8eRxBQO5VxVYFo7RlMw==
+	t=1793605395;
+	b=Vng6w0xt43FBBL53jXa3ngHrrJF5RzvN8ByBZPuUReRwrJwCWjgYfGsZqswQ6uCAHXgc
+	 iL2a/8s9JNa8devIP7QrSs2LtgVS7mSYcKl076GHZzTPSRfYaivuWdf17lH40jdp6NEZR
+	 RBOD9Fmzv9/sByUZW6EKPCIQsy6mNcJrydaD/a2lNn/76OxEnKKnBUz/Yd+8bThctVC4R
+	 rMMrAAExgnXfSOZWakyI3TOWzS9Sm4ghHIw82FJp624f8iy+AIPN10/WREmuBPBM0v1Kv
+	 nUNs09deR6NH8YcxEQRc06nIFYSfFfl9eutdUTX5Tqm8PysQGj/6eOwAP9hazsz1tMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793600830;
-	h=Received:DKIM-Signature:Mime-Version:Content-Type:Date:Message-Id:Cc:
-	 Subject:From:To:X-Mailer:References:In-Reply-To;
-	bh=2wkyyxCXcw31vN0kWDvVp8R9jdhVQobQ/AyYbLR2pHk=;
-	b=Uk+0zFK9LAue21ddL1QzE9OgM54Zg/Q7btAilUvjsemC2tompUq3a9w3hSZlOpBRXLVi
-	 agcnVkw2OLaQ08OwTfPThdnVD1Xa63bbvrAAJCISljc0+6FbBgj7VcZwQ/t3+4oHNWkH/
-	 Am23i3FkepqYQ+evz7xSpYkR7Yu+HWTUUZ6b+U2cWd+ble1b91swDYno/NSvcTiPlvwKL
-	 3IFkaxmOTHf4bovwJD9bTCadV3SdJkNUVRLs1XgVMYVN7qpILaQ6v1QsLrT2pCob6jscZ
-	 6OCGTuMZj670lUPIifCs3W3WGFZQVucGxE93EL90mmNOB7OJNoKqMduxOQELvJCsnVQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793605395;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=klOv1N84yVFiX5VyeIBQfSwBuik5rDbfaMDuPGgQBP8=;
+	b=bbA1pg5fnbARqpRiEecYXPOAJeIyR7Sjw107qw9nlQDvNKwTQtLfO3QAsgIzQ+DjPCaA
+	 mf4y7Gh9IUK3VWfqPYRNNQbKb6Zawp282tsNUmzdgOLnIhvIyFYKqUDXgFmpHmxZ0DumU
+	 5ruH/P0kySIfCNKNNRIxDrr+Qh2KMJdY1ga3yFB1d6GHE7oHNkqh32uXmEVNusvUkbcFn
+	 uTtl9YeBotWaSvMbXwNI+oV/cTRfuzkaFE4WNd47bAAlbF7FzL5zepYwmfhvPzcDpTLZC
+	 518cJ0ObzIAGVLza/ojFDXsfzcmzfjmR+XwPfebLNwkWfCxfMm6SbRl3VXgO+n0SwZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JUfj+mSF;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Otw4bcgG;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RFOhdnXW;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECBD606A324;
-	Mon,  2 Nov 2026 06:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8071606A327
+	for <spacemit@lists.linux.dev>; Mon,  2 Nov 2026 07:43:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8071606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JUfj+mSF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208CC1F000C1;
-	Mon,  2 Nov 2026 06:27:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793600829;
-	bh=2wkyyxCXcw31vN0kWDvVp8R9jdhVQobQ/AyYbLR2pHk=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To;
-	b=JUfj+mSFyWi89QZqMgxFHU1jsY8ia6jOnc5kmdWeX8UNEKiO37kG2oTLCBfuGQd1M
-	 93Apw1F76fupZmBgsGArRgUPPVERy7Yy4oL9lBRGzfwphsgwGL4cgMfY/Pc/BdSa7m
-	 zUEfVi9OUCWt3K6HWMtHPwyH3gd0sPRAT2foWrB7bbtorRxYYmzLrzcvehTUYOFoIT
-	 PS8/BSUBG50L86RyP9gRha77l9LsL7aWX0ve/+WlU8teBQYlng+IT/SN8FxuCSMJbX
-	 eN46VDHuGQ4r5y6o7vVp2BYOn1MorDvWQ5usgde4aRWVhiB7et6Rs3U4zKPv6Mxjwv
-	 9731/zMoa5DcA==
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Otw4bcgG;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RFOhdnXW
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6A23vFGx3348776
+	for <spacemit@lists.linux.dev>; Mon, 2 Nov 2026 07:43:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	klOv1N84yVFiX5VyeIBQfSwBuik5rDbfaMDuPGgQBP8=; b=Otw4bcgGn2SZvAAU
+	SHiX5S9Rrnm3QRUvZgrsRrqaD1dQiFSlL6Md4O+n4J4OGWK5rdgqDryMx/ELO3o9
+	XR2WZjLrBBBBT+XfyZi2JUlFaOkcZFTcMnIirfWcxJ1gx1u7d1dEJCtVS4f2vl0q
+	V4JDx9bri+DEGBQ25AaMFinqdsyFdOtaaABhZ56xYF5mpOgBkJM9Z2CgbBpcEBsX
+	Oe5llLh5WSVoaj/VW1LSKDHpP/+Q8VOLXwrDkVpMXR8btuMadadyEdw/PwnqDFeQ
+	n8KbV2HD7uzE5n6SLGqsl/i50c4wroRDDp3Vgls+M+01/nSjtv46kjeJyHRGqUV5
+	mvmKFw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hn7wxnsmq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Mon, 02 Nov 2026 07:43:13 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-93f5844e383so441778585a.1
+        for <spacemit@lists.linux.dev>; Sun, 01 Nov 2026 23:43:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1793605393; x=1794210193; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=klOv1N84yVFiX5VyeIBQfSwBuik5rDbfaMDuPGgQBP8=;
+        b=RFOhdnXWyPpisQHEOpi53ObGXU9XIPZz6Ydsk3hj8PpzXjhUwFKEkPpzPJRAXwY+NC
+         NPi8o2AOqZ2Mt9Ck7K708BB/W/gDj2lCXM9s+OkTlxcWkWW/fqDfJMBrTqE94IsE3l0P
+         2V9+06RvqA6GNiBdPJYYt0OaZSj8EgUEyEZ6SDu4WbSZ9Umk3WwIahzODxfB3JmOtp0Q
+         kk7EYaBWfqFz6xH2gbb2C3lVte9fxRVOlXD20PyAxysk+Qa6R2SeLT6bPlXrjkqutnvn
+         reSEMpYpaPW5U3lKQoZbK9Ji6S8vaTsKvuDsTatZbZhx3KukJwGqIWvpUAbBPCMkIGVc
+         pl0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793605393; x=1794210193;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=klOv1N84yVFiX5VyeIBQfSwBuik5rDbfaMDuPGgQBP8=;
+        b=mkeLA4y8wUCwwh602lw3gTw9DIlWxMJx8d/XcITjvk56K2FibfN2sr2YvbADt3uax+
+         75p8hM3P15rvd4EGQ7mr2CGLy1Ho8yhIPEETxYfWhcbWbkhLmEiUoVhD/B9ph1XpcLUv
+         oDytrgB9x04yV7YbCf+aYFMKBx/qNqCKUnW0afCzxVjzbWldtjjE9CLg2pc0FiCYGWfo
+         2EvDamo3scX+7YzMDOuM/+elVEbcAs7/Xk8QW2TZXuvIL5mTyrGvuULF36CiRwWdumwX
+         8LO20yaKEeQmYDt9mENzE7vn4/ikkLuJvesjMiToeARquPRCoa/EU7H9caiVyOWFSP4U
+         BJUQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwlTCE+2bs/o9Ieq/yEpSD7mdqU8Dz1yyozjPcB54L2Pgk1/h74ay+c+LJfbkYBQf3sh8pwOXEPYQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYLJ2w680Lst8efQ1hDKU3FgKIhnsum/n+YU7GGQNz5CoC/eMKnc
+	S1bivBzd2iZ2W/ztS0aNV2xvldHY96642BkE2MHc42jef2pI89APS3NvptOWP5stmcXR5lDsIfn
+	0tslgb5wRitiDvIe3NBHn0hmsqgMrmzld5CVaEG6zimaCBdcLFma7u1OhS/7/0w==
+X-Gm-Gg: AYBFou2jtCs9qXoKInSoJzDBHSZyUfZbZdfRO0oRDoVnGaidqYBGkN6lnk6OQrYc0Kw
+	OD99yIOiOPHl8iY0b3YJGIZavcfbr4jMyqduUEqpxlfCNmgi74laia/p28o4RtPZNL6ZS0Gw7sF
+	NRnPDYVr2GJQPf0wrUlUpPdrf9oGDdXet39XShgJ/cNDeDKTtmk05pXpFF8ZbHx86bGb9Gyh5JY
+	4or2TNC5/xRm2F+75FRzm5fyZ+lyt0pHzvffikW6MS/oPTFdMpPdRlheGxR+3f0OuyuII3GoOr8
+	RGYykBFW9p9BU2P57viBA/OWcXGFFBaqdbayCtgseDSIHYtGE7sCVaXY47XQ6SOau781EHLAQ9N
+	uJDdndxtRTgzhi7ICM7zwsMpoq8KVjXQytQqCuyqUFXnI2MZbf5gZNe8R2XwcxocqSuMeczqFcA
+	==
+X-Received: by 2002:a05:620a:29d4:b0:93f:3cb0:464b with SMTP id af79cd13be357-944216f1ff6mr1455248685a.49.1793605392608;
+        Sun, 01 Nov 2026 23:43:12 -0800 (PST)
+X-Received: by 2002:a05:620a:29d4:b0:93f:3cb0:464b with SMTP id af79cd13be357-944216f1ff6mr1455245285a.49.1793605392157;
+        Sun, 01 Nov 2026 23:43:12 -0800 (PST)
+Received: from [192.168.1.110] ([178.197.218.7])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b723cdsm18976337f8f.12.2026.11.01.23.43.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Nov 2026 23:43:11 -0800 (PST)
+Message-ID: <151dfde0-4057-4ace-88f3-3939612e4dde@oss.qualcomm.com>
+Date: Mon, 2 Nov 2026 08:43:08 +0100
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -47,129 +113,91 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=90a2fe1c88bb8110eb48ee7ba039607e9e01d3d22524d3001346e8bf68cd;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 02 Nov 2026 14:27:04 +0800
-Message-Id: <DMKIFFUY4T1C.TTDVVD0FOSF1@kernel.org>
-Cc: <linux-kernel@vger.kernel.org>, <spacemit@lists.linux.dev>,
- <linux-riscv@lists.infradead.org>, "Chunyan Zhang" <zhang.lyra@gmail.com>,
- "Troy Mitchell" <troy.mitchell@linux.spacemit.com>,
- <devicetree@vger.kernel.org>, "linux-riscv"
- <linux-riscv-bounces@lists.infradead.org>, "Troy Mitchell"
- <troy.mitchell@linux.dev>
-Subject: Re: [PATCH] riscv: dts: spacemit: k3: add USB3 port A (DRD) nodes
-From: "Troy Mitchell" <troy@kernel.org>
-To: "Chunyan Zhang" <chunyan.zhang@linux.spacemit.com>, "Yixun Lan"
- <dlan@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley"
- <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
- <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Aurelien
- Jarno" <aurelien@aurel32.net>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261030094024.3226356-1-chunyan.zhang@linux.spacemit.com>
- <auYxFRtKWbGAlRTL@aurel32.net>
- <CAAfSe-shesRwmdKhZojqbZjJejVEtA47NXBwNmrpAsTsk6m5rA@mail.gmail.com>
-In-Reply-To: <CAAfSe-shesRwmdKhZojqbZjJejVEtA47NXBwNmrpAsTsk6m5rA@mail.gmail.com>
-
---90a2fe1c88bb8110eb48ee7ba039607e9e01d3d22524d3001346e8bf68cd
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/2] Add UFS Host driver support for SpacemiT K3 SoC
+To: Trevor Gamblin <tgamblin@baylibre.com>, Yixun Lan <dlan@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman
+ <avri.altman@sandisk.com>,
+        Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+        Alexandre Ghiti <alex@ghiti.fr>, "Martin K. Petersen" <mkp@kernel.org>
+Cc: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+        Aurelien Jarno <aurelien@aurel32.net>,
+        Jennifer Berringer <jberring@redhat.com>, linux-scsi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+        spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+        linux-riscv <linux-riscv-bounces@lists.infradead.org>
+References: <20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org>
+ <DMICF1DA617T.1TZ7DMV5WG818@baylibre.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <DMICF1DA617T.1TZ7DMV5WG818@baylibre.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: J4mmWO22htXXRe-nG6qeDHyNEi-ZMiGw
+X-Proofpoint-ORIG-GUID: J4mmWO22htXXRe-nG6qeDHyNEi-ZMiGw
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTAyMDAzMCBTYWx0ZWRfX6quNKjXYBr7A
+ PO1wslxuN2bw5ZTNJRgookctcLbGE8yrj3itMfjZNx72zydEj/YjguW3Et67NUaC4mGlwQxJZKg
+ QR4aU0sz5vUnn+QlNu9qJdg+vO9xv9o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTAyMDAzMCBTYWx0ZWRfXzOJXe8uXPgsT
+ RitKZp/2AJ3fytX7LQpu0iX/IQA7NI4Pm2wEJFKVvTfAtG53EYF67a1FQ3yxxxJtj6g3Cn8WtVo
+ oYqWIiJ5AE7h9M2Ct3bH/ShyvjbFjDIfD2tv+kig/otGeZmybu1FhwbsIYll7h9CwnACrmOGy4Z
+ ycUDlvVMemNI9qQOyXQbuyY2jfwQwiX3/LM/MluEov91xZEYPgkZbgRdDf7xm9QF80xXpN4nj8T
+ qRtHg8SMA2x8Xc6U9JFeh2RjMqS7EGFlPus9pX5VKHF5pMDs61CJMGKhyTD5jRoyowqWf+Lg5Ow
+ xhITHXWqBU77nx9ha8d1MCiiYWAOInYiCHA/1PV6TfnBfotu/SQwHg2mauMSc9+ryjyc2wq4GpK
+ 2x55+dHblBCDZ0sYbIdX4Q2UlnvQ8o4PQCK+9EYrJmSc75smtvOlFrPdVHPMATgAttUgakv4oBa
+ zLtAl4/Y9USSdiU8yVg==
+X-Authority-Analysis: v=2.4 cv=JLquIMKb c=1 sm=1 tr=0 ts=6ae83f11 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=uyPgTw0bjBTS2cVxpiNm5w==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=IpJZQVW2AAAA:8 a=T2WrtOQxrTuvjP7BPBsA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=IawgGOuG5U0WyFbmm1f5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-02_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1011 priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610300000 definitions=main-2611020030
 
-Hi Chunyan,
+On 30/10/2026 18:19, Trevor Gamblin wrote:
+> On Thu Oct 1, 2026 at 11:10 PM EDT, Yixun Lan wrote:
+>> This series try to add UFS support for SpacemiT K3 SoC, the controller
+>> components consists of System Bus Interface Unit, UFS Host Controller
+>> Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+>> Management Entity (DME), Transport Layer, Network Layer, Data Link
+>> Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+>> block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
+>>
+>> The DTS patch has been dropped in this series [2], and will send
+>> in separate series once this patch accepted. For people who want to
+>> test UFS driver, please grab the DT patch from version v5 [3].
+> 
+> Hi,
+> 
+> I've been testing this series (and the DT patch from v5) successfully using a
+> v7.3 kernel in Yocto's meta-riscv layer. It's been working well with fastboot
+> flash in our nightly CI. An example:
+> 
+> https://forgejo.baylibre.com/tgamblin/boardgarden/actions/runs/827/jobs/9/attempt/1
+> 
+> For both patches:
+> 
+> Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
 
-On Fri Oct 30, 2026 at 5:40 PM +0800, Chunyan Zhang wrote:
-> Describe the DWC3 controller and its USB 2.0 PHY for USB3 port A
-> of the K3 SoC.
->
-> Only the U2 lane is described: Port A's SuperSpeed PHY has no driver
-> yet, so the port runs at high-speed (maximum-speed =3D "high-speed").
->
-> Enable USB3 port A with dr_mode =3D "peripheral", so it can be used as
-> a USB device.
+No, you cannot test a binding. Otherwise explain me how did you execute
+it on the device?
 
-Port A is a Type-C port behind a FUSB301, so please note in the commit
-message that it's device-only until the CC controller is described.
+So if tag does not apply to 50% of patches here, why you can't just add
+it to the ONE single patch where it applies?
 
-Was this tested with a C-to-C cable? That depends on the FUSB301's
-power-on CC mode, since nothing configures it yet.
-
->
-> Signed-off-by: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
-> ---
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts |  9 ++++++
->  arch/riscv/boot/dts/spacemit/k3.dtsi         | 30 ++++++++++++++++++++
->  2 files changed, 39 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/bo=
-ot/dts/spacemit/k3-pico-itx.dts
-> index b084a35aa00e..74d4fdf9e405 100644
-
-Please rebase onto spacemit for-next, which already has Aurelien's
-USB3 phy rework.
-
-> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-> @@ -323,6 +323,15 @@ &usb2_phy {
->  	status =3D "okay";
->  };
-> =20
-> +&usb3a_u2phy {
-> +	status =3D "okay";
-> +};
-> +
-> +&usb3a {
-> +	dr_mode =3D "peripheral";
-> +	status =3D "okay";
-> +};
-
-After the rebase these should go before &usb3b.
-
-> +
->  &usb3d_u2phy {
->  	status =3D "okay";
->  };
-> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/s=
-pacemit/k3.dtsi
-> index c3f2dce0969c..220dfe29bb78 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> @@ -630,6 +630,36 @@ gmac2_axi_setup: stmmac-axi-config {
->  			};
->  		};
-> =20
-> +		usb3a: usb@cad00000 {
-> +			compatible =3D "spacemit,k3-dwc3";
-> +			reg =3D <0x0 0xcad00000 0x0 0x10000>;
-> +			interrupts =3D <118 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-parent =3D <&saplic>;
-> +			clocks =3D <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
-> +			clock-names =3D "usbdrd30";
-> +			resets =3D <&syscon_apmu RESET_APMU_USB3_A_AHB>,
-> +				 <&syscon_apmu RESET_APMU_USB3_A_VCC>,
-> +				 <&syscon_apmu RESET_APMU_USB3_A_PHY>;
-> +			reset-names =3D "ahb", "vcc", "phy";
-> +			phys =3D <&usb3a_u2phy>;
-> +			phy-names =3D "usb2-phy";
-> +			phy_type =3D "utmi";
-> +			snps,dis_enblslpm_quirk;
-> +			snps,dis_u2_susphy_quirk;
-
-snps,dis_u3_susphy_quirk is missing too, like usb3b/c/d.
-
---=20
-Troy Mitchell
-
---90a2fe1c88bb8110eb48ee7ba039607e9e01d3d22524d3001346e8bf68cd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCaugtOAAKCRCYCe+A+TM0
-L6tmAQD6H+sVHQCkV2Ocd85M+lpBTtSKrtx5qkrvmHZhgR1TpwD/UzoIixtIl4bI
-99V9oZLJbvyGtVPtxaLmVdgI7NldqA4=
-=eBlM
------END PGP SIGNATURE-----
-
---90a2fe1c88bb8110eb48ee7ba039607e9e01d3d22524d3001346e8bf68cd--
+Best regards,
+Krzysztof
