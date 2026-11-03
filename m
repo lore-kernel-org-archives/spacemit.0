@@ -1,59 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793695077;
-	b=GPJh8pC2tlpNiwBpeYwRkYydVr0nn6x4Kx4HXt/uhRIf7oHjntbT4qAxR1aHNrakxSRj
-	 HtL0/bQI4x+vTQA6asG/p+9s+kZGL6FHR7JNTgNm5qy9p3kUteHQ931omU8smRxuqUd76
-	 7ip9hNC4wAff18vRUGvf7oMpq5bqENRsWqxhkAiqV6FLlN8CfISb7Eh1MUcfSv55vyDME
-	 YRFwuEtKZDxGLXhWZgpgnS6vgMRpUL2vAniUXJlCOHZNQdJQQQD7PlEZ5WV6YmmBI1h2e
-	 CHMr8uduB0EH0hFOuSrkB/5gP+dlwcizKGjB9abjDJCCU5YhtH+WpTcRDwgqs54IDPA==
+	t=1793696666;
+	b=Zax6QUWy6vA2o47r3p6TtQyYXBhBpJel3DwGIa+i6j8t8M1RB+vaylz6pbnHQXXiUpXs
+	 ZiuHEilLj1+TnkZJcQ9uszTrgUm7NjYfLZZj8o8nhBroWr/LC8eFpZfi03ddqpsqQ4qpL
+	 lVjzyRkJCyHnJFInxZxRh6R7uMVZHplrCQjVc2KWSKBUEOjYJsoqRbIRPoDOVcxxmuOvS
+	 R9EIXOT12UIsgnnePZew7HCw1DKut++gHu9kQfxp7lXBSexX2Y7j62cwaGgs16pmkhtEd
+	 MZW+OUVWy//DiJnMt1yQKoLxv6BGfbjU7RoMebdyiwLo5tejmpUE8eSuDwvc5JcjKAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793695077;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
-	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=TtZ7L+0FStK3cBA/dvaUkjGUZLnkhoPuIPbQ7OTOy9M=;
-	b=xf7ePafLhwSjZ5tb31Yomsu31SyzpRkH5g9n0lLOu5veNgzRWwjrrp/2lsCByJRYAWWw
-	 SfNFPllAKNEXcn2YGumWE5TBJ7/BF9siayR5pG7gEPsKCUORZShxNxEYJhEYYZ+GkalG4
-	 HLoQturQflxCfcaYKP3s5zH+nfZ9wdbFhfuFyCaM8AT+f0b+0oFuKrmQgOH+RFkyI52hf
-	 jqWu1PIxRtcuzSu/BbQdC0r6LV8S8hdhCd8F+nr8vuXBhcl32Yz0WDubWt/qTpvJns2+b
-	 wb3asfKIJ0tut6U+OEGAebUD83WcLoL5cm+qQLTZN5pSe/ckPrKdn6ynZEDKyA8uzfg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793696666;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=oqcwif+o3u40FPToGAPLvgMZ6cthmDqENUhGefULOww=;
+	b=XeUmJRmQZABwPAiGuNphbHLJq9hUTBwW86WqaiQwAPJAQ2kzp47NzZtbXtFm7XKzwlj2
+	 71L3cQj8oTZuspjPHEXoZ06woIr0+L08jgvENj6FPgXHf/4lSYJ+eS8Zv2Ud1FMsVY7YW
+	 1c6U08D9pYoul389xauA+zvdJ+v45kCwqQRpE35vg8bMWV9PRKDzYy9nFWKz+9xRI47Lg
+	 t0XkBthFGgHiFOu9B3YDL7MWS6hFNx/fY/SL0B0/1/7Yn1trCw2rWd2dBpnVV+DkLv1zP
+	 ma6nTdfIi+7F0TDXXsD+t4X2pjkyKzpblWXDahx6gay8uEEmNcuwsCe341GqLTbY8iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=YQaiQVua;
-	arc=none smtp.remote-ip=54.206.34.216
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h1xKU2tT;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B51606A97D
-	for <spacemit@lists.linux.dev>; Tue,  3 Nov 2026 08:37:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F3B51606A97D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE94F606A326
+	for <spacemit@lists.linux.dev>; Tue,  3 Nov 2026 09:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=YQaiQVua
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793695039;
-	bh=TtZ7L+0FStK3cBA/dvaUkjGUZLnkhoPuIPbQ7OTOy9M=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=YQaiQVuag2zAwv5W0T68QlpG/yh/AHzlsq3zqa+lMPQegpoJvU8HFFy3JDw92j9Io
-	 nyDOYNrF+MUfZGOjeaCBH2GQyqZzebV/JI8ivHG8E1SGKLZL4+2+FzK6mr7woTXbKb
-	 WuSDEspZPUZwRzARs693KmrphqRG5hkJGfq7WnBY=
-X-QQ-mid: zesmtpgz3t1793695037t030083c8
-X-QQ-Originating-IP: sI2LLpGLequLdxW9VHeaFrs2SKpIJE7lpGeu+1lQLK0=
-Received: from = ( [58.254.69.131])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 03 Nov 2026 16:37:14 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10615523159336062745
-EX-QQ-RecipientCnt: 16
-From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Tue, 03 Nov 2026 08:36:49 +0000
-Subject: [PATCH 4/5] riscv: dts: spacemit: Add the K3 APB timer
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h1xKU2tT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76981F00A1C
+	for <spacemit@lists.linux.dev>; Tue,  3 Nov 2026 09:04:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793696665;
+	bh=oqcwif+o3u40FPToGAPLvgMZ6cthmDqENUhGefULOww=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=h1xKU2tThc+PCjMmTSQl98ISc5OnxMMDKFMUPOC9vnlb9lQ4xXhBteZ2gpKXpRt7I
+	 w9lfHpMOf3jD7ltyrds0TP7N7c/b/Jj6B+osimdzSS0PSO++Rw2BGlJCslQ8ZoGQrh
+	 s035XhlTsRnNeYdvANd09qtbbDad5FtIteTxYMMEyv2lCo+HSmzUARhSS9QlY0zjzV
+	 N4+Kg7jXHxMi3kiA9ATievIktcA60E+48pt0/InTqwfA0sOKN1kO3xUiAcccV8xDT+
+	 +8Vutoj+WhzleMS5uiq6PG8imke4kD2NTobGiKFljbN6hq0teze7QLoDKWlRhqdiy5
+	 celxtNibeT47g==
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3accd1ff4c3so17956101fa.0
+        for <spacemit@lists.linux.dev>; Tue, 03 Nov 2026 01:04:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AKwUvBxdOr7lTq0ddx+/eam6sFGcDVW3oZvYg49EMOa1Zeykq9qmmRXCkSFzh5hvmf77bm+B9FxBT+h5mg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8iK5eKb3Pv8nKJNske4xignX6yMyxc1EWM2E0cgc56HHvxL70k
+	BlmmReAba/UklqP8Wn/Q988x+GWPppTBP/TcOGdNTJcYBIwa5VHtysEi6orKhBS16ox3OU2QjtD
+	sRXqxTRGA5Hluw8FRTfUPD8ux7NzKVMo=
+X-Received: by 2002:a05:651c:198e:b0:3ac:4da3:864f with SMTP id
+ 38308e7fff4ca-3acb7a9e0f3mr31016591fa.4.1793696664148; Tue, 03 Nov 2026
+ 01:04:24 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -63,90 +59,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261103-spacemit-soc-timer-v1-4-36722421db6e@linux.spacemit.com>
-References: <20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com>
-In-Reply-To: <20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1383;
- i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=Lakketge+7u3TGaLDJYVC3ImXbq0o9pWuFTAwlnXYmc=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFkv5yozHdn37fiEmoRFaWuW7kg4v1p8PYP9pIn+NQq8R
- 9YpPDbN7ihlYRDjYpAVU2TpfsCzrcAnyrZAoNAXZg4rE8gQBi5OAZjIvykM/1NFRW2brnxu9f3E
- VTr5Xeb3s54T1wtN2PZL/+DF2JNexyYwMiz+/ljmUb1uQSSL6tkDPl5hRx5FLfyy5KhNYKeN3o6
- Hb3gB
-X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MfoWz7r3VqW3+gkYNcai2LOCeVYjlYYV37hZjsbAiCR81r2lQZq7i/so
-	5hZDnZ3rfCDvj1BdVbrpbbYWhbg4ypIZkczFtZxY/I/ZKBmXTptZKblvjZXvfPiKNBiK5cv
-	ZNxqqk1yRVcbXwOdU2LSWUd4HpdyzlX5Rxpxo71irOBsuhfpXKB32pINQvucuRzFKuX8TaD
-	Lm74QsKvMDTrywRdVqET8S+tAUN/klO6ZtvRONiJFhUeGZWACpNQ/L6kL5U6q+mSgtIp+h/
-	chS9yVH2BjIVKZYlFcGUwXb/K7HYBnG/SBWPeOwFREQsR9s82Cq/bDixvQmwHiKocww25vo
-	3kL38/V2D/13ZcMSOweLoAbwHlJzhxWThv7yN8IeAuFbWxtWA1kyxRJlWAOyRi8XAqZk1QG
-	Y09bz4f5KS7Z2k5KpyXkWJdObii0jYjMm4RUxAI3U9GtFE1Jent75GDevwzIaOPTM+gkPkd
-	3LfdwnIUf2wTZhiTTvM8z4UdDqDHEV9nK9mNAJJ3D++nIBdxhJCyj4C7Qtu+8QVs8Ak0oxv
-	G4we3aDOHNKJuvBELOdo6gAxBQvD7c4OLf1k2MGe2pXy2disd4SHw6k8O3YI7nJkJFI/oAK
-	A+tlN9Q75fCsDG9/go+xDTZaEbHflOe2lBisrWrjmdQWA7Chuht2id4Lgpt+suBRQvCGGhI
-	bI4wWapzogLRsMeSTyhH95EWNurTDjwVQX6agdqlXQjwaYG+SlXS1UnC/F7svK86zr3otak
-	jkEF7Z337Q0CW9pKwgijoY1HS4NYlEouzxN5WCitq5kVatlUSDwqfLexq/g+3U7cqrmss7V
-	J1W5p7p8V3aw1V9sfeCV7mATCXfcC4PVKw7CHFUfvgg/dv461f9uWI31Qe9bbj+/c7jl3mW
-	eqkRYYMSENniUc0XhVM6xdR2WAops/0BnMH3Nb5QcU/eiEq9tdclYg9wt4/GdOXB7TPfHZ7
-	QvMBg1xcNIKejwjSDgvshb3xksA8mSY86WfWg3PgFGkrmLgeq1fTmOFNyIfLpyc59LQMKdU
-	NBreKBo91oE46IXKBOVDGJXKMv4BMmwjaSmS0tVzIE3d6XEyLGWytXwg1gDPzEzLviR8IPm
-	o+EH2S/ouxqG3BRblIi+6VVX3eTORaz06t5YuT51Jg5j4Rew1kjA1QE/MDahVZ5Md3Fefvc
-	U7JQSNPYodH21Ama37nvg+U3kDKwYc0/yuKF
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
+References: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
+In-Reply-To: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 3 Nov 2026 10:04:10 +0100
+X-Gmail-Original-Message-ID: <CAD++jLmoy=--GE4MScaTOa=x9+HAuvhHC7ixA_GYVme2vrcgZQ@mail.gmail.com>
+X-Gm-Features: AclHuK8feuY0PnTZqOb4xpNbcV0UYLP8c4l3kas742sFixN6cKUvbMAmIcJa7DE
+Message-ID: <CAD++jLmoy=--GE4MScaTOa=x9+HAuvhHC7ixA_GYVme2vrcgZQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] spi: use dmaengine_desc_set_callback()
+To: Frank.Li@oss.nxp.com
+Cc: Mark Brown <broonie@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Radu Pirea <radu_nicolae.pirea@upb.ro>, CL Wang <cl634@andestech.com>, 
+	Ryan Wanner <ryan.wanner@microchip.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Vladimir Oltean <olteanv@gmail.com>, 
+	Frank Li <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>, 
+	Haibo Chen <haibo.chen@nxp.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, 
+	Robert Jarzmik <robert.jarzmik@free.fr>, Heiko Stuebner <heiko@sntech.de>, 
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Andi Shyti <andi.shyti@kernel.org>, 
+	Tudor Ambarus <tudor.ambarus@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Peter Griffin <peter.griffin@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Yixun Lan <dlan@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Laxman Dewangan <ldewangan@nvidia.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>, 
+	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>, 
+	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>, 
+	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>, 
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>, 
+	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>, 
+	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>, 
+	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, 
+	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>, 
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>, 
+	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>, vkoul@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Describe the APB timer at 0xd4016000 and its counter 0 interrupt so it can
-provide a shared clockevent. Select the oscillator-derived 1 MHz input
-and connect the functional clock, bus clock and reset.
+On Mon, Nov 2, 2026 at 6:40=E2=80=AFPM <Frank.Li@oss.nxp.com> wrote:
 
-The register interface is compatible with K1, so use the K1 fallback
-following the K3 compatible.
+> From: Frank Li <Frank.Li@nxp.com>
+>
+> Replace open-coded assignments to callback and callback_param fields
+> of struct dma_async_tx_descriptor with calls to the
+> dmaengine_desc_set_callback() helper across SPI bus drivers.
+>
+> No functional change intended. Prepare make to struct
+> dma_async_tx_descriptor private to the DMA engine.
+>
+> Signed-off-by: Frank Li <Frank.Li@nxp.com>
 
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
----
- arch/riscv/boot/dts/spacemit/k3.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Makes sense.
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index e89d2cc5ca8c..cee313232c11 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -777,6 +777,18 @@ syscon_apbc: system-controller@d4015000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		timer1: timer@d4016000 {
-+			compatible = "spacemit,k3-timer", "spacemit,k1-timer";
-+			reg = <0x0 0xd4016000 0x0 0x100>;
-+			interrupts = <26 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&syscon_apbc CLK_APBC_TIMERS1>,
-+				 <&syscon_apbc CLK_APBC_TIMERS1_BUS>;
-+			clock-names = "func", "bus";
-+			assigned-clocks = <&syscon_apbc CLK_APBC_TIMERS1>;
-+			assigned-clock-rates = <1000000>;
-+			resets = <&syscon_apbc RESET_APBC_TIMERS1>;
-+		};
-+
- 		uart0: serial@d4017000 {
- 			compatible = "spacemit,k3-uart", "intel,xscale-uart";
- 			reg = <0x0 0xd4017000 0x0 0x100>;
-
--- 
-2.56.0
-
+Yours,
+Linus Walleij
