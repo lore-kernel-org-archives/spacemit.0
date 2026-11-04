@@ -1,88 +1,127 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.13
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793806711;
-	b=tLszH2JlmEoBeRPODM+meMMesU8V6b8WpxjIQQENQhab98YAHwaRsftZbn9Wj+MTCg6J
-	 WpD9tn/4fWmUVVks3VJ58xtMy2QhXHZJgDdLyp/7K7Vb9UVw0rJ3N8h9JDOWn/DIamGnd
-	 yjgi5QO62E4dZJNEKyG2HIU6AFTt6ewZnzmc9+SJLcBq11WSzDnIHHlKkTevaSnRnk049
-	 /a9Q1UY6BZakHtO3h8ol3l2UrhHoTXh/EULdKPzgfHsmXVrBJnHcmBRlDFLks4a5cFKl8
-	 9KQDCfiFJgV0y6qQ8nhnOLvgBDIyRld3wXO6zdEbK3BWMGJ+g7zWrwtnuvg65wxoMXg==
+	t=1793811450;
+	b=WPC9oDEyR+/1ERoDm8KPpMh0FRLjjTWq2e2lj5u3m8e/rL3LaIJx1PiNFRH6MgEWnVk9
+	 7eAeJkKyNFE7RxRTFUk0AXhK8QO4yv+qdmtXOTITB79f9bZPG4GBK+cogJfpw8Pa0orR+
+	 kGwn6a9XUz2C6IisnwPuqNkKPfCiDtJ3VCGJImce9Hoo2kqf/vrnljAPY7u1ymNYhOzLg
+	 m/Z3BD8gJp7BPxJPUgXKoUVMLisV2dOwagawG6TSRTysPfJXVwBT8pFKpcz8NgJXL4gDC
+	 kLuzbSgFXwwg21PvvudFXxATWiQleRjt8QdzT8VtnQO50M/UuioBJqzgyoHGiqkQtlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793806711;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=N69nyzayYSxR+NwYu0yvIulH3s3QqZkTbmCgK6AZMFs=;
-	b=jtO1y2u8Irs4Uo1DgnZcAimLhABBv3LNOFzSyTGMaDGE7vaNPQE8AXmf3pu+ysOTTN1Z
-	 2NWVTEtOrqfM0MCQmsu5wFgHY48tpfLQ2S789gAFOxYxeUl8pFj5eNqi/lIPHKg6B0rmn
-	 oImfd+S+d7c/a7kZW732kV+yIAV7EsR3A8ji4oBzR+CPjDQrs/EfJ277sbtLcbOK07Id8
-	 wlzBF2SM3rhdLJ0t0u6LiTTPFL+1NRqVA5gdgRRtSVkqCBEynQNsGIqutiyRHxUV/2ZVJ
-	 KHaNCdBL1uzXKlgkQpYQYdOp3ypaVQ1ir39Fvon3g4JtAODSIP2nm9hmIICVkKyf9gA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793811450;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=8izICEiwnQYZgjlS2jA+WnZteNa4n7VbKpZ/O6pW3kg=;
+	b=wO9Mgn9tG5XQYy9xPe1pf6uVSnu9zl1+Im9EhHIYWKCrhCHbCHToesG+EPzIZz1Xx0hS
+	 L9h+YD2XHrI9GKFrxx2BTgLSP+w43h8qMEkDXlwjAhaHkTQNZDmH92UNA51MITnw8juK+
+	 6660Zwble90ZY5WumSRxT78s94U+6ncXg8IvXkwMPes3hrrRbxjEYR6+NEWWmnlojSt0U
+	 PKWjgel/LHLWC8481Iv0nnIf4G83kkKHPCxOMzrziPgxO6zJlQza+8OegDFn+GUPrcf14
+	 IYsI4HwYp/dmsz68oMZGayHVYlz5lqlQ9bNwYvoxV6GuzLfRMySzheyvehXQUDYIGdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yLhjg5xJ;
-	arc=none smtp.remote-ip=74.125.225.136
-Received: from mail-wm2-f8.google.com (mail-wm2-f8.google.com [74.125.225.136])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kFu+4Fcc;
+	arc=none smtp.remote-ip=198.175.65.13
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E26C6082BDE
-	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 15:38:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E26C6082BDE
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE9F606A329;
+	Wed,  4 Nov 2026 16:57:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3AE9F606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=yLhjg5xJ
-Received: by mail-wm2-f8.google.com with SMTP id 5b1f17b1804b1-4a77811be24so3795855e9.0
-        for <spacemit@lists.linux.dev>; Wed, 04 Nov 2026 07:38:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793806709; x=1794411509; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=N69nyzayYSxR+NwYu0yvIulH3s3QqZkTbmCgK6AZMFs=;
-        b=yLhjg5xJ1AVy/IoOiJRwzYy5yY9f2ULyFBX18QCfBj/+5QsH5PTek5hcyT8XR+LUUm
-         bO+ApI3j5OKOMq1boxTz7UgPqEhGGbdkdx7bNOcXvqOKhdjorui3JSr/N4AeZJ/6ROl0
-         DGAN7i0ZlkB0LpKYdYZPH37d4IzsKZO1teyOInrCy5LrSaE55DrdSpXwP8qpu13472CF
-         WU7NPIL6/D4uR8Lm48i8Q8xCJGImaRtM0g/SzZAF8RqIGjIC7rLLbyadGIFqUc0x4CVu
-         EXp+NsUCwhNINvwtuMU2ZABIC9JXv5lgP0gjwTP6+oc5M97w6vePr6unRK5Xe8VxrZmB
-         FWqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793806709; x=1794411509;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=N69nyzayYSxR+NwYu0yvIulH3s3QqZkTbmCgK6AZMFs=;
-        b=o4mXsq2Q2YIstwBkvfZbNXwze60yWZXsDLNVJxQ4T3MmTrWDft8vzXY3BoJO5RJBo1
-         XmGOIUeNBQny8x1dUwjmOn9G7MEc3i60B9CYj/IuNbl8VYdjZ2d9lJuUxbrk+uX7FfXU
-         oGAu1Luvvu21j685EO2047V4GrXlONwYV8+Sk92/TEO4l+b0GwufDqpDKi811Skd1UiW
-         wD4+ycN+MfsZTBfLI56ebtHl20MTM3lWxtG+P7ZOsBHcPuYPvMmvseMp50TU0ATKLhSI
-         c5EZjLFlKjzXbEQ+4622WVKBbAPT/XCyryOgUI9FqhTYarti9DksF+39Z93a3TPfNJ+A
-         i6Kw==
-X-Forwarded-Encrypted: i=1; AKwUvBxC4ShceALSNedioS2VZ0eOuaNOwXPEjJEy+m+ySegCxgLgrdHj74o3DBGAeSZyO5x0tBn/sTdD2g==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+KGbhm0LPl4544+Rahdmtq+Vj2vyGYJRDODPkaJ50gGx7xm1N1
-	OdwYeLXPnFx83Merc5jEWFoholEOmKC13mSLtEuOlVwGzYed65mamgT/
-X-Gm-Gg: AYBFou3dESy+jVukZmtHaEQjTJrcI3HA3Jz9uH6XYpxsZsjFQWIp2BQSIuYDotoPs+C
-	/Wo9v776rc78OI3XUhAfELLa/uXm/Omr9q2ES3MgjK7Rslof57xtcHJAtyOifTGJ3h0OISHSl3y
-	X/0BreYLhyWSORmKytuGShlD6irDAAqZZrk20COQKimd7d+VnK2mytrY9Y1dqSxag6CVpi5OQpl
-	QxCFkIBzAAc859MCw6Mb7NshFV227U0ixQxnDx6MF1Kj5x2nS0TSJ6/4GZrmZ6A/NuDiad9/n1N
-	wiIz9I9fqO/sBAOjQsB2uEwKiwXsl/ofnFnOJpZ9ya7A3XygMDnp1c5B5uKq2hcY1QYR5T3auBZ
-	LE5Lrsqn5LXf0FjjB3WnSc+FpF9WOT2mkkIAdb9YHzTHq4V4U/IwQdZxnel91WnmgJWfAHMt5s+
-	7o+Ucs/S2RpRfrcycQNiQEcQnJbnHVvM0iY6L/5zwG4MewpDVZuIht8UJp/OwZbiSRdcNVCyJ/C
-	D77xYEFNUtEK1jDLyeOXTCKFxCEwqJlmD4SuiWlgdfwSEgUzVx/sTMv+7bJ0F9T3buwrSD34ZHo
-	IIjinkWEW9UW1cAP//DIP4/9m7Dju24AeRQOJHkr
-X-Received: by 2002:a05:600c:8706:b0:4a1:e0d5:293e with SMTP id 5b1f17b1804b1-4ac1765d3ddmr394129375e9.21.1793806708283;
-        Wed, 04 Nov 2026 07:38:28 -0800 (PST)
-Received: from [192.168.100.182] ([182.180.105.19])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b43c17ecdasm89849875e9.5.2026.11.04.07.38.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 07:38:27 -0800 (PST)
-Message-ID: <496706c6-e15c-43ab-ae0f-6230e098dfb2@gmail.com>
-Date: Wed, 4 Nov 2026 20:38:23 +0500
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kFu+4Fcc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793811450; x=1825347450;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=kA+R8pE/sj6tJF3qdsiBNT3subr7oV44Dq41fpFh520=;
+  b=kFu+4FccF4mwUg+lujbS5S2z+QsSmjNhZ2VXE9pkRUGU5JFaHhAYGvqD
+   2m2d8WwUUduzhkv25AeyGq18y54cB2L2uwYz+0iORYVvJTVVqTvdzFX//
+   nY/LI7ZovPrR1J/Ai8kBe7wWWVYp/ULULxkbABr1DAiW55rj7hOf7G6gZ
+   WmDtFd7z6TbAA9Sx7emazezcXk6wyGhs6R9EPg4judjPYKUoCeL8ToSJa
+   3CitTzz5hVIteV4+ew2YrFRFmrpP9KOFL1SzmRjSdGs8owXQpa5mnZ86b
+   oA3jcPhvKxK5Rvl0dLUipiF0DGa6BFYUhPbp38L1Oxg0Ubz/xy5n/6N/x
+   g==;
+X-CSE-ConnectionGUID: xsLuKGdFQ4+Utplw9BM9gA==
+X-CSE-MsgGUID: FfH5cRaoSqacH2mxTLQ6rw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2455731"
+X-IronPort-AV: E=Sophos;i="6.27,195,1787036400"; 
+   d="scan'208";a="2455731"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 08:57:29 -0800
+X-CSE-ConnectionGUID: i6LkdCHBS8aHv+axP23p/Q==
+X-CSE-MsgGUID: bTVdwHnSQh2Pf9cSJkKNSQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,195,1787036400"; 
+   d="scan'208";a="7158496"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.24])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 08:57:16 -0800
+Date: Wed, 4 Nov 2026 18:57:14 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Frank.Li@oss.nxp.com
+Cc: Mark Brown <broonie@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Radu Pirea <radu_nicolae.pirea@upb.ro>,
+	CL Wang <cl634@andestech.com>,
+	Ryan Wanner <ryan.wanner@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
+	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>,
+	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
+	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>,
+	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>,
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
+	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v2 1/1] spi: use dmaengine_desc_set_callback()
+Message-ID: <autj6pr_bPaul3w0@ashevche-desk.local>
+References: <20261104152253.3279052-1-Frank.Li@oss.nxp.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -92,74 +131,93 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] PCI: spacemit: Ignore PERST# bit for controllers
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, linux-pci@vger.kernel.org
-Cc: Rob Herring <robh@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Ping-Ke Shih <pkshih@realtek.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Alex Elder <elder@riscstar.com>, Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig_=28The_Capable_Hub=29?=
- <u.kleine-koenig@baylibre.com>, Pengpeng Hou <pengpeng@iscas.ac.cn>,
- "open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
- "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
- open list <linux-kernel@vger.kernel.org>
-References: <20261104140750.761330-1-alitariq45892@gmail.com>
- <DMMHM7OIO97H.2SHNC575QC4PY@linux.spacemit.com>
-Content-Language: en-US
-From: Ali Tariq <alitariq45892@gmail.com>
-In-Reply-To: <DMMHM7OIO97H.2SHNC575QC4PY@linux.spacemit.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261104152253.3279052-1-Frank.Li@oss.nxp.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-
-
-On 11/4/26 7:14 PM, Troy Mitchell wrote:
-> On Wed Nov 4, 2026 at 2:07 PM GMT, Ali Tariq wrote:
->> The k1_pcie_init() does not set PCIE_IGNORE_PERSTN bit of the
->> control logic register, which causes controller to reset itself once
->> PERST# signal is asserted even when acting as host.
->> On Orange Pi RV2 (SpacemiT K1), this resets the controller and wipes
->> the IDs. k1_pcie_deinit() leaves PERST# asserted, so when k1_pcie_init()
->> runs again, its first DBI access hangs the CPU.
->>
->> Set PCIE_IGNORE_PERSTN bit of the control logic register of APMU
->> in k1_pcie_init() before enabling resources so controllers
->> dont end up resetting themselves when PERST# signal is asserted.
->>
->> Fixes: ff64e078e45f ("PCI: spacemit: Add SpacemiT PCIe host driver")
->> Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
->> ---
->> Hang log: https://kernelci.cloud-v.co/scheduler/job/420
->> Fixed Log: https://kernelci.cloud-v.co/scheduler/job/430
->> ---
->>   drivers/pci/controller/dwc/pcie-spacemit-k1.c | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
->> index 92a71ea90ac3..af6028e8825a 100644
->> --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
->> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
->> @@ -47,6 +47,7 @@
->>   
->>   #define PCIE_CONTROL_LOGIC			0x0004
->>   #define PCIE_SOFT_RESET			BIT(0)
->> +#define PCIE_IGNORE_PERSTN		BIT(2)	/* 1: ignore PERST# */
-> A similar but earlier patch can be found here [1]
+On Wed, Nov 04, 2026 at 10:22:45AM -0500, Frank.Li@oss.nxp.com wrote:
 > 
-> Link: https://lore.kernel.org/all/20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com/ [1]
+> Replace open-coded assignments to callback and callback_param fields
+> of struct dma_async_tx_descriptor with calls to the
+> dmaengine_desc_set_callback() helper across SPI bus drivers.
 > 
+> No functional change intended. Prepare make to struct
+> dma_async_tx_descriptor private to the DMA engine.
 
-Thank you for pointing.
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> # dw, pxa2xx, topcliff-pch
 
-I missed that. I will check that patch.
+(Note, you forgot to add the list of the drivers to the Rb trailers of other reviewers)
 
-You can drop my patch.
+>  drivers/spi/spi-dw-dma.c          | 6 ++----
+>  drivers/spi/spi-pxa2xx-dma.c      | 3 +--
+>  drivers/spi/spi-topcliff-pch.c    | 6 ++----
 
-Regards,
-Ali
+> --- a/drivers/spi/spi-dw-dma.c
+> +++ b/drivers/spi/spi-dw-dma.c
+> @@ -397,8 +397,7 @@ static int dw_spi_dma_submit_tx(struct dw_spi *dws, struct scatterlist *sgl,
+>  	if (!txdesc)
+>  		return -ENOMEM;
+>  
+> -	txdesc->callback = dw_spi_dma_tx_done;
+> -	txdesc->callback_param = dws;
+> +	dmaengine_desc_set_callback(txdesc, dw_spi_dma_tx_done, NULL, dws);
+>  
+>  	cookie = dmaengine_submit(txdesc);
+>  	ret = dma_submit_error(cookie);
+> @@ -498,8 +497,7 @@ static int dw_spi_dma_submit_rx(struct dw_spi *dws, struct scatterlist *sgl,
+>  	if (!rxdesc)
+>  		return -ENOMEM;
+>  
+> -	rxdesc->callback = dw_spi_dma_rx_done;
+> -	rxdesc->callback_param = dws;
+> +	dmaengine_desc_set_callback(rxdesc, dw_spi_dma_rx_done, NULL, dws);
+>  
+>  	cookie = dmaengine_submit(rxdesc);
+>  	ret = dma_submit_error(cookie);
+
+> --- a/drivers/spi/spi-pxa2xx-dma.c
+> +++ b/drivers/spi/spi-pxa2xx-dma.c
+> @@ -154,8 +154,7 @@ int pxa2xx_spi_dma_prepare(struct driver_data *drv_data,
+>  	}
+>  
+>  	/* We are ready when RX completes */
+> -	rx_desc->callback = pxa2xx_spi_dma_callback;
+> -	rx_desc->callback_param = drv_data;
+> +	dmaengine_desc_set_callback(rx_desc, pxa2xx_spi_dma_callback, NULL, drv_data);
+>  
+>  	dmaengine_submit(rx_desc);
+>  	dmaengine_submit(tx_desc);
+
+> --- a/drivers/spi/spi-topcliff-pch.c
+> +++ b/drivers/spi/spi-topcliff-pch.c
+> @@ -1022,8 +1022,7 @@ static void pch_spi_handle_dma(struct pch_spi_data *data, int *bpw)
+>  		return;
+>  	}
+>  	dma_sync_sg_for_device(&data->host->dev, sg, num, DMA_FROM_DEVICE);
+> -	desc_rx->callback = pch_dma_rx_complete;
+> -	desc_rx->callback_param = data;
+> +	dmaengine_desc_set_callback(desc_rx, pch_dma_rx_complete, NULL, data);
+>  	dma->nent = num;
+>  	dma->desc_rx = desc_rx;
+>  
+> @@ -1084,8 +1083,7 @@ static void pch_spi_handle_dma(struct pch_spi_data *data, int *bpw)
+>  		return;
+>  	}
+>  	dma_sync_sg_for_device(&data->host->dev, sg, num, DMA_TO_DEVICE);
+> -	desc_tx->callback = NULL;
+> -	desc_tx->callback_param = data;
+> +	dmaengine_desc_set_callback(desc_tx, NULL, NULL, data);
+
+Yeah, data can be replaced by NULL as has been already mentioned.
+
+>  	dma->nent = num;
+>  	dma->desc_tx = desc_tx;
+>  
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
