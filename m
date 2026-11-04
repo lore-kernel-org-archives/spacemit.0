@@ -1,53 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.83
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793775957;
-	b=RUh+8spSYN7YBg5WtU2+tjIy8HaEMPJbX621GIJdD3+PQB8VB/R/aNaSD96T/MB0mWtX
-	 mn5I15mMyzU6QTICwJy00y2SoL3mKhT0O3HXMro84aIfCxNLAu9txtkmN8aLL4lsNa1IH
-	 hU0v5O9M9+D2ndeIT8vXIKZFa1itZjWz5oja0zfqYImVe1KNhS4yKoyMfDepn2/jPaJ14
-	 SP87KWt9Yaq8pNzMiLhiYnAWwT0chtdhdTLM8yW3IdW3aKeUoQi5h0coK1Y/9C9G9HEg4
-	 EdXSnPNLBDtbUO2WB1YGFzz5d1xL80MdRz1WrfK16cLlCspqZBzH0WMpuw4IOPPRmAQ==
+	t=1793776605;
+	b=h4gpTrh+6FA5xkBwSDL7ln1VJ49dq/0vFXNT2lvZFBoLMSa5z5nmON8u/frQNwurQg+P
+	 uX9a2P89P8DqX9fKOr12oAHY/Kws15+P7dbZWgf3Cw6g8vXRxjUaIWkF6vpm+t6xBAO22
+	 GJU3lNoDRnoXkt4XTIori3xDPe6lMbEyaSqaQq94PkWNL60iBGfi+9Jz81OqWeYMs9pnv
+	 b9ADUzhtS0aJkHEVegLGv89+PYgB4syT1vrPalh3gdR/fJS8IoKfy8L72IY/25fe4Uiqs
+	 PN52JTNpg9tLAw/k0yRlL6hbb3yqhz5g8noozHezRixBriPbK+J4Jbmw8ueEc4j6+5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793775957;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=BOuJK6WkkKKX8xYxb+ZkMXUR/W9XdLruFvEV7oi8Prk=;
-	b=s9Zbh1tc8dfoxEN/iUQxmL8h3h6a8eljuV23aBzIL18I9lNKMqI8zfz+bGIWobrBfXGh
-	 Bze5KpuPEZO+IL9tNBx5gIQSh4hYyB72uKMXg3/ABGkvb5hBqJagRZmXvnYA4aueK+6eD
-	 n7pItx1MXqnPrCLi20nNBUCDfBj+ONr+Hz7Zz1JeCD+DmyfZaUWBcAVUln1MH439fkPMU
-	 j+bK/QbRq+ZBxZo7UfrEOu87YPVxts+xnVUfs8TZCDntxWXnBx6ugPn/FJaaKGaswNB2F
-	 kWh7B+P8GRCSLgAgsIhvN6jSRBbED7B+nMiUFKVpQdFBAPw2k3+gwj2JyllFSykrrtg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793776605;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=ZE8qefhjNUN42/HTX83ywp+pDkPHnSBIju1ZzbF7IWU=;
+	b=Yd4R5fElJXS0nibbjHmNnG9RZP83Y4S9bbbP2thhT4kkXjagTzE6Q03OGy5WI2KegcHj
+	 fTrmYaWsOuJULvtwlpfVefPsLn+wA7gQnzGpTm7kh5ThWqwf8o4cn8826RMuVc+XQRUVB
+	 6Ra4SeLUXbGd0dv33agn1MZn+62TeUJNkZV3Uy5AV4OH5HJipQDF4AAejDU8BUXMM9K5k
+	 r8inVSAWTelVUPrFHMY1NaRZsSrbPBkAWcJ+WX9Q0yYSrimsoxTJXqeFlIqQjoVx/1TQG
+	 xoOQHYedSBRe1DqlraHvWjHdDpebwdAhpIu87pXQGsjs0Q+XeYQ1sJcCZUMmqExAuSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	arc=none smtp.remote-ip=95.215.58.83
-Received: from mta1.migadu.com (out-83.mta1.migadu.com [95.215.58.83])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=brpsQPfu;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B347606A31B
-	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 07:05:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B347606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=rSnU8lJu7f/t4TTjB5ud1DlUs3JtaUJ65UuR/fs2+h8=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793775947; v=1; x=1794380747;
- b=AsX9geCNDR7EPS7ICq2wQRuHqBdiMM04HJ0Z50ez3gs9n3fsl3AvJBTlbJ2yaPqriMoHqV/+
- gghE309eJsfZjsim1i8kAkvycJkYbjUibM0lYyuq2GeZNF5j3xLDeBbuvwYSewzyH3Rcx9EUBM9
- CvOccltcEoZus396viEG4XSY=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: by mta11.migadu.com with ESMTPS id 5f8c3ce56e6e10fc;
-	Wed, 04 Nov 2026 07:05:47 +0000
-X-Mizu-Trace-ID: 5f8c3ce56e6e10fc
-X-Migadu-Flow: FLOW_OUT
-From: Troy Mitchell <troy.mitchell@linux.dev>
-Date: Wed, 04 Nov 2026 07:05:40 +0000
-Subject: [PATCH v5] riscv: disable local interrupts and stop other CPUs
- before reboot/shutdown
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F23606A326;
+	Wed,  4 Nov 2026 07:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=brpsQPfu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466511F000C1;
+	Wed,  4 Nov 2026 07:16:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793776605;
+	bh=ZE8qefhjNUN42/HTX83ywp+pDkPHnSBIju1ZzbF7IWU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=brpsQPfuLUSvTJIEqioSRn+DqsdN3x9zVfM0YDnl9DoqW+A06FIT69caz5ivWkSJv
+	 Z5yZFgUbfrDusHk6n1ri4I/39/yASKyhFVDw3+IrqmxGVtumMFym++WGjREonVmDS3
+	 d8NXlkm4pv7I58dlRtM01cnClrDOWHpSxJAjYt4VGRouAUHc5Vcb3WDCJptvD20IE4
+	 pTJs2fxZ2HhrMXzdMU6+kvD21QRC28V1X/XyXkGxetMJLhVQ+XSiBa6zBjlLOAZJnS
+	 hNrpI+HYJogAmHBKYd0ec3oKT7wf6M5kj4Cr7rLucKl4CcP0ybHd8n5Tv07zDNH5wP
+	 GStt95XkW0Cyg==
+Message-ID: <44b59f8c-d1c6-4955-89ac-3184f3292d75@kernel.org>
+Date: Wed, 4 Nov 2026 08:16:36 +0100
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -57,143 +51,80 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/1] reset: add support the GPIO provider with
+ #gpio-cells=3
+To: Marc Taylor <marctaylor700@gmail.com>, bigunclemax@gmail.com
+Cc: p.zabel@pengutronix.de, brgl@kernel.org, linusw@kernel.org,
+ andre.przywara@arm.com, martin.botka@somainline.org, dlan@kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-sunxi@lists.linux.dev, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev
+References: <CAKNLDZOndyGxLSWgBDrq0Vfbt88Pa5S2MDHVcnkHzAH3TQDpaQ@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <CAKNLDZOndyGxLSWgBDrq0Vfbt88Pa5S2MDHVcnkHzAH3TQDpaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261104-v7-0-rc1-rv-dis-int-before-restart-v5-1-956ec09c900d@linux.dev>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/63RTWrDMBAF4KsErTtBv1bTVe9RspDGo1pQW0FSR
- Urw3SvaQkxXLnQ1vM33HsyNFcqRCns63FimFktMSw/m4cBwcssrQRx7ZpLLgSshoFngkFFAbjD
- GAnGp4CmkTJCpVJcrGK/ISKe9FifWoSmWmvLHV0cT/bz8iWsCBHjUg9fKCHT4/BaX9+txpMbOn
- W9yS9pdpOwkJ8RHE7y3Ifwm1YZUfBepOmkcN9YGHIUafshycUhzrEdM87et7/aJ75uru62l93r
- gqF2g7dy1myGnGeqUyd2f9Q/2un4CZIiKIiACAAA=
-X-Change-ID: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
-To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- spacemit@lists.linux.dev, Troy Mitchell <troy.mitchell@linux.dev>, 
- Aurelien Jarno <aurelien@aurel32.net>, Anand Moon <linux.amoon@gmail.com>, 
- Jisheng Zhang <jszhang@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3853;
- i=troy.mitchell@linux.dev; h=from:subject:message-id;
- bh=rSnU8lJu7f/t4TTjB5ud1DlUs3JtaUJ65UuR/fs2+h8=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFmvbrpYVG79FSj093Ts1y/71zva7PD+fC1bkHfj7fc7v
- rRPmaO8uaOUhUGMi0FWTJGl+wHPtgKfKNsCgUJfmDmsTCBDGLg4BWAiTPoMv9lK7+8ozDvmccSn
- 7KxFt/h7249lWQzXzuxWUxIoaLL31WX4H3bkfpp2+2uFW5LiHxb/fnWrSNT4xsFzPB28xTu/cfX
- tZwAA
-X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 
-Currently, the RISC-V implementation of machine_restart(), machine_halt(),
-and machine_power_off() invokes the kernel teardown chains (e.g.,
-do_kernel_restart()) with local interrupts enabled and other CPUs still
-running.
+On 04/11/2026 04:56, Marc Taylor wrote:
+> Sorry, my mail client mangled the inline diff in my previous reply
+> (indentation stripped, and it turned "
 
-This implementation fails to provide a deterministic execution environment
-for registered handlers in the restart or power-off notifier chains. These
-chains are intended to be executed in a strict atomic and single-threaded
-context.
+Then please switch to standard email clients. See also kernel docs for
+helping to setup normal apps properly handling email.
 
-Specifically, under CONFIG_PREEMPT_RCU, rcu_read_lock() does not increment
-the preempt_count. If local interrupts remain enabled, the environment
-is not guaranteed to be atomic. This can lead to a context misidentification
-within generic kernel teardown code, causing it to incorrectly enter
-non-atomic paths (such as attempting to acquire sleeping locks), which
-results in fatal "scheduling while atomic" splats or system hangs.
 
-Additionally, stopping other CPUs ensures the primary CPU has exclusive
-access to the hardware state during the final teardown phase, preventing
-unpredictable interference from other active cores.
+> https://www.google.com/url?q=http://spec.np&source=gmail&ust=1793850929317000&sa=E"
+> into a link). The
+> attached reset-gpio-3cell-v7.2.15.patch is the correct version; it is
+> re-attached here so this message stands on its own.
 
-Align RISC-V with other major architectures by disabling local interrupts
-and stopping other CPUs at the beginning of the shutdown sequences. This
-guarantees the architectural expectations of the kernel's restart and
-power-off handlers are met.
-
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-Tested-by: Anand Moon <linux.amoon@gmail.com>
-Reviewed-by: Jisheng Zhang <jszhang@kernel.org>
----
-Changes in v5:
-- Rebase onto v7.4-rc1.
-- Add Jisheng's Reviewed-by tag.
-- Link to v4: https://patch.msgid.link/20260907-v7-0-rc1-rv-dis-int-before-restart-v4-1-42bb460c4afe@linux.dev
-
-Changes in v4:
-- Rebase onto v7.3-rc1.
-- Link to v3: https://lore.kernel.org/r/20260330-v7-0-rc1-rv-dis-int-before-restart-v3-1-5a0577fcd136@linux.spacemit.com
-
-Changes in v3:
-- add Aurelien's tag
-- Link to v2: https://lore.kernel.org/all/20260317-v7-0-rc1-rv-dis-int-before-restart-v2-1-0ecc85fbb7ff@linux.dev/
-
-Changes in v2:
-- expand the fix to cover machine_halt() and machine_power_off() for
-  architectural consistency.
-- update commit message
-- Link to v1: https://lore.kernel.org/r/20260311-v7-0-rc1-rv-dis-int-before-restart-v1-1-bc46b4351cac@linux.dev
-
-To: Paul Walmsley <pjw@kernel.org>
-To: Palmer Dabbelt <palmer@dabbelt.com>
-To: Albert Ou <aou@eecs.berkeley.edu>
-To: Alexandre Ghiti <alex@ghiti.fr>
-To: Yixun Lan <dlan@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-riscv@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Cc: spacemit@lists.linux.dev
----
- arch/riscv/kernel/reset.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/arch/riscv/kernel/reset.c b/arch/riscv/kernel/reset.c
-index 14eb08a6db85..ec84e3c94a3a 100644
---- a/arch/riscv/kernel/reset.c
-+++ b/arch/riscv/kernel/reset.c
-@@ -6,6 +6,7 @@
- #include <linux/efi.h>
- #include <linux/reboot.h>
- #include <linux/pm.h>
-+#include <linux/smp.h>
- 
- static void __noreturn default_power_off(void)
- {
-@@ -18,6 +19,9 @@ EXPORT_SYMBOL(pm_power_off);
- 
- void machine_restart(char *cmd)
- {
-+	local_irq_disable();
-+	smp_send_stop();
-+
- 	/*
- 	 * UpdateCapsule() depends on the system being reset via ResetSystem().
- 	 */
-@@ -30,12 +34,18 @@ void machine_restart(char *cmd)
- 
- void machine_halt(void)
- {
-+	local_irq_disable();
-+	smp_send_stop();
-+
- 	do_kernel_power_off();
- 	default_power_off();
- }
- 
- void machine_power_off(void)
- {
-+	local_irq_disable();
-+	smp_send_stop();
-+
- 	do_kernel_power_off();
- 	default_power_off();
- }
-
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20260311-v7-0-rc1-rv-dis-int-before-restart-5b3e52a4b419
+I have no clue what are you referring to to, but I am not opening any
+attachments. I doubt other maintainers will.
 
 Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.dev>
-
+Krzysztof
