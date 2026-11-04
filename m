@@ -1,83 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.133
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793798629;
-	b=glL5eThuBA+d7zYgK6lxSiQGPPBsICM1NLkRklR2eFXBaX62+XvQfR6Z3wiXw8Q+31AT
-	 NXa5HYqNUI1/kZ0iI7Z+vaWT6BtrXMlKCGB61V+aEpOEJZz9oTMEXjvw4SmUKBn5bPdaI
-	 nLhBNSbeVoGm/Lb6DVKa7NVHh/zeHsKezjYakITZTuRvGUCc+1MvaJ1pzg3ob74mFw5sz
-	 tM0KwbI/wLwuCyeAOlC4yxmylb7RyIq4KyGCSKqojFuLqCO2kVQjf445qwSZPTJXLlB0x
-	 G0kbglWCqe5H7ULruw+l3GPGrXUh0ZpehaaF0aOcQ8prxergX9arqDyC0cWKT99P6UQ==
+	t=1793801371;
+	b=I+1GwyJDxTa/XtlMiOvrjXEKzXdbZWCzrqToZUjSWrWH+Q5zS3KI2ieqNo1IL/Bg9sAq
+	 /1VaJ2zHSp7NmTD42PFXjaOiSbQbU5BdNyOdsQeXvrhEWExdeIEmewlX3rLg5+cL0sUdr
+	 bLelFejLGEoR6DRGLZK1gD98UO+RCSpYR1s53Yrvl11/sFuOLhqo2acMKJexqAxkfF2bo
+	 CT77eyghv2NfsjlYcB8ihNNQSr5Fmgnjm0DpK/duPo+OhisPhmjGTdpBD+cpZ8tjsB5Hf
+	 5DyPRw8qZ4vB1yf+sFLgAI3ZdnY+JvT23O3oYxrdTAwkHqOXi+MFjj8n+tlma5+vdFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793798629;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=oFQnvnnH43Wjq3NYgvbhyicdVMArULRPqgjr7vsX1pw=;
-	b=zgeaB1xuQ/sfDYQgX2HxodOtYYDHRYKuGOoNhevG41E1R44YNaCyvs3+hsIkyPluM7uh
-	 V7TzqJ2zQOeCmkLpMrWdw8MstiIv4cOJr2jjXa5SFcnENCDCZ1arIoLYIJSbFKy4bBLIl
-	 BBbOFDgrvt2DIPiuTxRQCcE/rbtzFQfkCFNFZqWUb87+Sx/pfOLbqORdKO6PzxX2nu5lS
-	 0o2eNMZGEGqv85Zv3kVep954etuNm3qHGz1dDqit9DqD8blWL4ZTVaSnQKY+2giq0s3rC
-	 qJ5wS/u3AEmAz+4BscX+0ppwSWBgVB1IE5A1Y2sLLkzfpZpaN1zkp7vHl+QKgwvk8TQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793801371;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=feOTu3Fjg6/kqLdoArqxeRe79rB82tCPqWr5RYI27tE=;
+	b=euWjWiIu3zZhqqqxSY3odfbpIchN3EwynmTTCdNuGa6p4j7ZyXvl3jVwnaZkLHvp1gXF
+	 3WOUpXd4EnLDsOsT1e8jBRxEJcXL/xBg3aYcmEbHLXha6hOuBHPgZpDchK6PAjqcMMGEW
+	 IgOsE/Jg8ja4o5O0cMyNpKX4fLX0RojYAB9RLfXwDTyF03EqnlegJE2Qy5YpLeyWgDsCu
+	 FcxD8vUigdXM5jXaLQ2VKwwVdxzVBqJYjILqagcnAEUAZ4NPW3oI4HJUtU/5OghYUHmtT
+	 g6kbVcCrUHk/BJKsqqVoyu+YDS6sl/8hmOqWWdjUULnBbiLk4Zx1uxm50QKY6JmEMPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QcpuR7ET;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bhWlwctQ;
+	arc=none smtp.remote-ip=74.125.225.133
+Received: from mail-wm2-f5.google.com (mail-wm2-f5.google.com [74.125.225.133])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC8D606A31B;
-	Wed,  4 Nov 2026 13:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545A2606A329
+	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 14:09:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 545A2606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QcpuR7ET
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39071F000C1;
-	Wed,  4 Nov 2026 13:23:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793798628;
-	bh=oFQnvnnH43Wjq3NYgvbhyicdVMArULRPqgjr7vsX1pw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QcpuR7ET2kcVQW1ILYUtFcGQUEsKGY8ZeaQ18BLfMdpM6Zy6dkppvEbCV6rUBWF+Z
-	 Avh461nN5C3d1WxLXpdJfJmRlSx94IWc0WORuZHjgQFVG8AHCMBDHIBB21RFeWNL7c
-	 CYfv29sCqv9yv9eKKZCmsvqy/46JQVY9jYhn4wBixP0qFjGg8bGSfVE5wP+9W86Y5x
-	 86TU3B/xrwNjStTaH8iRHT9M3mYY+xdVYghtd2X3Xd+x2Sbcg6RdDy1a0wNkaZh/lu
-	 rv/Ff6yJHH6uJzZihNSR3BrMSXAfQ0wbr/gGY+M+iePQDMSrsMBvSsPT1SYiR62UgJ
-	 Znax0soeaSpHQ==
-Date: Wed, 4 Nov 2026 14:23:46 +0100
-From: Thierry Reding <thierry.reding@kernel.org>
-To: Frank.Li@oss.nxp.com
-Cc: Mark Brown <broonie@kernel.org>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Radu Pirea <radu_nicolae.pirea@upb.ro>, 
-	CL Wang <cl634@andestech.com>, Ryan Wanner <ryan.wanner@microchip.com>, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>, Haibo Chen <haibo.chen@nxp.com>, 
-	Linus Walleij <linusw@kernel.org>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>, 
-	Robert Jarzmik <robert.jarzmik@free.fr>, Heiko Stuebner <heiko@sntech.de>, 
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Andi Shyti <andi.shyti@kernel.org>, 
-	Tudor Ambarus <tudor.ambarus@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Peter Griffin <peter.griffin@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Yixun Lan <dlan@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Alain Volmat <alain.volmat@foss.st.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Laxman Dewangan <ldewangan@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Sowjanya Komatineni <skomatineni@nvidia.com>, Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>, 
-	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>, open list <linux-kernel@vger.kernel.org>, 
-	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>, "open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>, 
-	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>, 
-	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>, 
-	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>, 
-	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, 
-	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>, 
-	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>, 
-	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>, vkoul@kernel.org
-Subject: Re: [PATCH 1/1] spi: use dmaengine_desc_set_callback()
-Message-ID: <aust2fUAFSsAXK9g@orome>
-References: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bhWlwctQ
+Received: by mail-wm2-f5.google.com with SMTP id 5b1f17b1804b1-49e7b06acb8so3093885e9.1
+        for <spacemit@lists.linux.dev>; Wed, 04 Nov 2026 06:09:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793801369; x=1794406169; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=feOTu3Fjg6/kqLdoArqxeRe79rB82tCPqWr5RYI27tE=;
+        b=bhWlwctQ706ZrG84o7OWPIRvBFKCJjDUEGapHu5Q4wSNr7JfLHehTNXTxb/IN8hssV
+         KBz8T5oV8VXOnBJuxJIzpBpHngvr5kY0Po8eAeZ6UB4JjM8NLH/EdLodkUU+5B9GC+mn
+         iW8BrBjGWJlkW+ER6VieouQUiQf3PEz4rXEMOtfIZObFPNeLf0jBBmVjFsKohC81wb/v
+         nS8VThUigb3ap6UU33mxET06u2YO7CV7ST39FV07ckiPHeR8eJYXl4f68ZSurUvboVx4
+         VyeLzSQDTpFwjMYENq4HQ8pSTjjG1AsQcgnp1RULsxW/ZU0lND/t+2dnBpzp0Xooo1Wh
+         ZUMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793801369; x=1794406169;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=feOTu3Fjg6/kqLdoArqxeRe79rB82tCPqWr5RYI27tE=;
+        b=RnCOIhHQL/UN3Fpjl1pTsdlfv3MLlHxiXuZrQmHe04f2zD9LJV0Cj9PzijlwT6Hw9K
+         maXRD1sPNi4CtwHCPSpqJenZAZBjy0686G7bLC8Re8OkscSlCJ1HZJw+gxgqN5XH4nCu
+         4+fakwiMYEN6yMLJG7y0A6cfc8V6EHg6IdfRmaF7foFjNUGx8Ep9DxCK46zu/rm/fwWh
+         pwn8JEOwPTedljCzbTYGGsS2fotBqvacj2rsKCGODX4vHZ9uIlAP/brVHVcR3Q0R1g9K
+         hLcXNz/3B+TKIsfaqr8G1wAKa+9Wo5PUBS2T034gMWRcdZfGfrb3HfP1kc1LwBc9wOt0
+         xHmA==
+X-Forwarded-Encrypted: i=1; AKwUvBysYJMiK6aXlr/0ISsjDfIq8Oula0t676F8XzVPO4cBfTorO6GUiiKc686XuyAvty0k9lZD8LewmA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z90xx5PGKtMi/QixdoQyJrpC2AKWY6X1zB0PsEWJVnHovKEUwyS
+	vBKeMAT04I5dnTJFMyr1r6wbzL5Hec36XnvkIqBJBMKyUYOayzqNQVfq
+X-Gm-Gg: AYBFou1wRTA8v5lPNho4EjjmDLGYbNrjGEoQT1A1M5Xb2tB8FyEBbCcXWmCpJxizlqt
+	GLLJOR/Il+6lgmYIG7KWQTUWv1J9jtnRe7nh5Y11YQc3ZYmMUnTwL7fWu6zdE8v8q8ML8mY6dpj
+	xoAAStrw8vnV4b7A8wfn34eQKZHuFXZVM9mUyevlGAKTUJDUaf3LpqGXmV9UQg0VnkmC1iIohSD
+	Y36f3/tOidSepPL2fYVE4oqMPOAGT+5WxyA3WU02jabn9H2QuSoQ5ueid3wugpv/Dh1JZ8IUzDW
+	YnrTvSOi4wch8xnpsBTQnYXUAseK6ejOn4tNVlwzQ8ovnGRIQPuG5LHoM9lAuO/+++BI863iCir
+	AZN1vdjiLVeQNyIkzHfrZ2EzOt22xaQwhGmwszX2+EHum72r/fieS9uaH7LDpDtL5G9WlWwT++U
+	Oz/uKS8oa9Qp/VUSwN+No3uafplsjXj5w3VQxRpeRy0NiJtqBg+w59fMHFmOwXP2uBz6auZ5YMd
+	d/gFG6IoOmg8DPeWdNQ27Z6ten0/giMqdzSKkASHUABojqzSIkY2/VPflncgZLZY1WVZbXaWHAg
+	XyeqEWekzEzUzwa9egvfLmS0A/AQzD9sY3OhMsvHnTTGZCIpNHLo2g==
+X-Received: by 2002:a05:600c:a107:b0:4af:e04f:cbaa with SMTP id 5b1f17b1804b1-4afe04fcd89mr177944795e9.29.1793801368473;
+        Wed, 04 Nov 2026 06:09:28 -0800 (PST)
+Received: from workstation.. ([45.249.9.114])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b411de95b4sm40977605e9.0.2026.11.04.06.09.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 06:09:27 -0800 (PST)
+From: Ali Tariq <alitariq45892@gmail.com>
+To: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-pci@vger.kernel.org
+Cc: Ali Tariq <alitariq45892@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Alex Elder <elder@riscstar.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] PCI: spacemit: Ignore PERST# bit for controllers
+Date: Wed,  4 Nov 2026 19:07:45 +0500
+Message-Id: <20261104140750.761330-1-alitariq45892@gmail.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -87,153 +109,60 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="unoy3twvi5fxh2md"
-Content-Disposition: inline
-In-Reply-To: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
+Content-Transfer-Encoding: 8bit
 
+The k1_pcie_init() does not set PCIE_IGNORE_PERSTN bit of the
+control logic register, which causes controller to reset itself once
+PERST# signal is asserted even when acting as host.
+On Orange Pi RV2 (SpacemiT K1), this resets the controller and wipes
+the IDs. k1_pcie_deinit() leaves PERST# asserted, so when k1_pcie_init()
+runs again, its first DBI access hangs the CPU.
 
---unoy3twvi5fxh2md
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 1/1] spi: use dmaengine_desc_set_callback()
-MIME-Version: 1.0
+Set PCIE_IGNORE_PERSTN bit of the control logic register of APMU
+in k1_pcie_init() before enabling resources so controllers
+dont end up resetting themselves when PERST# signal is asserted.
 
-On Mon, Nov 02, 2026 at 12:39:58PM -0500, Frank.Li@oss.nxp.com wrote:
-[...]
-> diff --git a/drivers/spi/spi-davinci.c b/drivers/spi/spi-davinci.c
-> index 087735ed9c80c..b115daf2c76f3 100644
-> --- a/drivers/spi/spi-davinci.c
-> +++ b/drivers/spi/spi-davinci.c
-> @@ -703,10 +703,8 @@ static int davinci_spi_bufs(struct spi_device *spi, =
-struct spi_transfer *t)
->  		if (!txdesc)
->  			goto err_desc;
-> =20
-> -		rxdesc->callback =3D davinci_spi_dma_rx_callback;
-> -		rxdesc->callback_param =3D (void *)dspi;
-> -		txdesc->callback =3D davinci_spi_dma_tx_callback;
-> -		txdesc->callback_param =3D (void *)dspi;
-> +		dmaengine_desc_set_callback(rxdesc, davinci_spi_dma_rx_callback, NULL,=
- (void *)dspi);
-> +		dmaengine_desc_set_callback(txdesc, davinci_spi_dma_tx_callback, NULL,=
- (void *)dspi);
+Fixes: ff64e078e45f ("PCI: spacemit: Add SpacemiT PCIe host driver")
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+---
+Hang log: https://kernelci.cloud-v.co/scheduler/job/420
+Fixed Log: https://kernelci.cloud-v.co/scheduler/job/430
+---
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-You could probably drop the cast while at it.
+diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+index 92a71ea90ac3..af6028e8825a 100644
+--- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
++++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+@@ -47,6 +47,7 @@
+ 
+ #define PCIE_CONTROL_LOGIC			0x0004
+ #define PCIE_SOFT_RESET			BIT(0)
++#define PCIE_IGNORE_PERSTN		BIT(2)	/* 1: ignore PERST# */
+ 
+ struct k1_pcie {
+ 	struct dw_pcie pci;
+@@ -131,11 +132,19 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+ 	struct k1_pcie *k1 = to_k1_pcie(pci);
+ 	u32 reset_ctrl;
++	u32 ctrl_logic;
+ 	u32 val;
+ 	int ret;
+ 
+ 	k1_pcie_toggle_soft_reset(k1);
+ 
++	/*
++	 * Ignore the PERST# signal so the controller does not reset
++	 * itself when it pulls PERST# low.
++	 */
++	ctrl_logic = k1->pmu_off + PCIE_CONTROL_LOGIC;
++	regmap_set_bits(k1->pmu, ctrl_logic, PCIE_IGNORE_PERSTN);
++
+ 	ret = k1_pcie_enable_resources(k1);
+ 	if (ret)
+ 		return ret;
+-- 
+2.34.1
 
-> diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-> index b25f94b2ef738..7798197d5b350 100644
-> --- a/drivers/spi/spi-fsl-lpspi.c
-> +++ b/drivers/spi/spi-fsl-lpspi.c
-> @@ -634,8 +634,7 @@ static int fsl_lpspi_dma_transfer(struct spi_controll=
-er *controller,
->  	if (!desc_rx)
->  		return -EINVAL;
-> =20
-> -	desc_rx->callback =3D fsl_lpspi_dma_rx_callback;
-> -	desc_rx->callback_param =3D (void *)fsl_lpspi;
-> +	dmaengine_desc_set_callback(desc_rx, fsl_lpspi_dma_rx_callback, NULL, (=
-void *)fsl_lpspi);
-
-Same here.
-
->  	dmaengine_submit(desc_rx);
->  	reinit_completion(&fsl_lpspi->dma_rx_completion);
->  	dma_async_issue_pending(controller->dma_rx);
-> @@ -648,8 +647,7 @@ static int fsl_lpspi_dma_transfer(struct spi_controll=
-er *controller,
->  		return -EINVAL;
->  	}
-> =20
-> -	desc_tx->callback =3D fsl_lpspi_dma_tx_callback;
-> -	desc_tx->callback_param =3D (void *)fsl_lpspi;
-> +	dmaengine_desc_set_callback(desc_tx, fsl_lpspi_dma_tx_callback, NULL, (=
-void *)fsl_lpspi);
-
-And here.
-
-> diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-> index cadf0b93f4403..f8a3ac11f49d0 100644
-> --- a/drivers/spi/spi-imx.c
-> +++ b/drivers/spi/spi-imx.c
-> @@ -1738,8 +1738,7 @@ static int spi_imx_dma_submit(struct spi_imx_data *=
-spi_imx,
->  		return -EINVAL;
->  	}
-> =20
-> -	desc_rx->callback =3D spi_imx_dma_rx_callback;
-> -	desc_rx->callback_param =3D (void *)spi_imx;
-> +	dmaengine_desc_set_callback(desc_rx, spi_imx_dma_rx_callback, NULL, (vo=
-id *)spi_imx);
-
-Here, too.
-
->  	cookie =3D dmaengine_submit(desc_rx);
->  	if (dma_submit_error(cookie)) {
->  		dev_err(spi_imx->dev, "submitting DMA RX failed\n");
-> @@ -1756,8 +1755,7 @@ static int spi_imx_dma_submit(struct spi_imx_data *=
-spi_imx,
->  	if (!desc_tx)
->  		goto dmaengine_terminate_rx;
-> =20
-> -	desc_tx->callback =3D spi_imx_dma_tx_callback;
-> -	desc_tx->callback_param =3D (void *)spi_imx;
-> +	dmaengine_desc_set_callback(desc_tx, spi_imx_dma_tx_callback, NULL, (vo=
-id *)spi_imx);
-
-And here.
-
-> index eb3485149e75a..fdda26eb311fb 100644
-> --- a/drivers/spi/spi-topcliff-pch.c
-> +++ b/drivers/spi/spi-topcliff-pch.c
-> @@ -1021,8 +1021,7 @@ static void pch_spi_handle_dma(struct pch_spi_data =
-*data, int *bpw)
->  		return;
->  	}
->  	dma_sync_sg_for_device(&data->host->dev, sg, num, DMA_FROM_DEVICE);
-> -	desc_rx->callback =3D pch_dma_rx_complete;
-> -	desc_rx->callback_param =3D data;
-> +	dmaengine_desc_set_callback(desc_rx, pch_dma_rx_complete, NULL, data);
->  	dma->nent =3D num;
->  	dma->desc_rx =3D desc_rx;
-> =20
-> @@ -1083,8 +1082,7 @@ static void pch_spi_handle_dma(struct pch_spi_data =
-*data, int *bpw)
->  		return;
->  	}
->  	dma_sync_sg_for_device(&data->host->dev, sg, num, DMA_TO_DEVICE);
-> -	desc_tx->callback =3D NULL;
-> -	desc_tx->callback_param =3D data;
-> +	dmaengine_desc_set_callback(desc_tx, NULL, NULL, data);
-
-This is a preexisting issue, so nothing to do with your patch, but I'm
-not sure I understand the purpose of setting callback_param to !=3D NULL
-when callback =3D=3D NULL. If neither callback nor callback_result are non-
-NULL, then callback_params seems to be completely unused.
-
-Anyway, none of the above are blockers, so:
-
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-
---unoy3twvi5fxh2md
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmrrMd8ACgkQ3SOs138+
-s6EYaw//UO6AHvJ+t7TrjGZA+UYLQHdy+GHHN92wIwin6E29tqokUx9FRtT1mxc+
-QfpP+rIE6hr579pxyCp6mS/ocEtwyvXQ0NiQxu2KDDs4YHYh9OK6JhUHGwGtYn6r
-P3Dhqwabt4yfcKDEwG00Xps8UwXK/mLJYsm5TPXnS0FiFetZeNGK0KORgB977tWk
-4CEOjQOIvgKJIDgW0ornKkP5p3u5Nf+8qI6OuOkCkPmuK4Ed9DTwjHxzdx3M1Enf
-6X9C8OMo5MWcn5Q4WWN4YwG/S+yYPkhz8wZOotBTvMcl1xLiz8Uc9Vn5AiDcH6hG
-W8z1TXNaLhzBAE+Ov9viiL/wkD5sunZNnYLjkBsyxY1Lt1LNkOgvJGnKrf7u7Nn1
-9NMMQEdb07ppFaphiVGbHRFmKFfVimrXPKBIbjoDfyFF7DscLjhXzl4ICwv4RaMR
-k9vh0aZ4Efy2fOA4v61ePYYIY6sNjy+jyQp5YwXrToTkJ6UfnPyF9xeIBHJNM91Y
-WqO7StU+DRjiP3FKmfYMt6rLJFe/SgGJ35vOl2fgMHD2NNRGafYIWsC0jHpteo8s
-mA1Rd9Sj+E1fQqzIi+8a9grsUfq4aodwBgy3MNZhqs+6JG6BadJmTD+r/POrX7BJ
-9MPiWfYSOGkvf4dm2lHIJ2nQVZZcUtLrj/Hm6DakNESIle457lU=
-=AUYN
------END PGP SIGNATURE-----
-
---unoy3twvi5fxh2md--
