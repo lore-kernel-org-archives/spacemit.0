@@ -1,110 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=185.125.188.123
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793796214;
-	b=12c+VU4hvOQxSGJZ/MYy4XkWalWofYKKNin7M56AqyjRsLbBudGkWzSXfd0ZDUhjkQPl
-	 HbgNZO8SEPi2qiwTRGbxBlJOk1T1ornt7LLDBOqpS0lhp4hphkblN0s3X1Mic1JMftiCw
-	 o6MG7U1c0QAv31CUpc1r3lrf9dim3Tnt6t6X/suUYe0tdpss+s7l5TOnE9ugykYkN+n2E
-	 eqaJPyQvBsh+96Tv8U2W65m21hhFUuG2xJAGomB7sgzom0xGEJ0Uwm1QBXmiqI14UNdhT
-	 qxcgZk0DqZgbpv/PJZSbD0ZLhIji3oVQ87l8uIJONI7c+y1Kj1Z5MFLvD27HtlL6L6A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793796214;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:
-	 X-Google-DKIM-Signature:X-Forwarded-Encrypted:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=KGzmHEtMcujY3rqdKLq4G+eIWN6ovjCAqdXSAfenRsE=;
-	b=KxcidcmNR8IRtmE4ZFAc+8Y3S4X8LtyMwgQj2Qtd8d5BSEYP1gLb/VACt+/An29qTDwI
-	 EHT2K9yY/fRokY3onyD2OpcXAJQ+prehUg0nuuriCBk2XMJ6XAGL1aW5vHSH/7eAAkeK5
-	 yJKCxTWr9xhtftUo5tDu8oohpSL4Sbz8EhHoiJynZ42g/chdpVH7dw3HwrVwWQZ/5bpD7
-	 ROMIpakVUb9z1Zh9+tu3iFjZwud+tbh1qdfvWV1m36nEPX6rOPh9dVAakorKWcj7HKz+V
-	 M1QQZBEYbV71KjmL+9zP2+XR3GN+iFFPuAE03BDOf+pbEXHldxadgTtBLxf1VzNjMog==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=canonical.com;
-	spf=pass smtp.mailfrom=canonical.com;
-	dkim=pass header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=hXxZf016;
-	arc=fail smtp.remote-ip=185.125.188.123
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.204.34.130
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793796364;
+	b=HHzB5/YZwno79esYlDyh1PDI8QeJz+eL27ZD9BtZBvabWIeJQFAjzJiHjYXqUkbxKV1L
+	 WMo/wEon1LMdbhtWNX94gxbjdHY7v1zbszThbGYgUOjpfYO95KQVmqJB/0Za/a8MbY6dz
+	 aeGHOoRumnWROe9QJuvI68/oqd6KCRYmLB1nfYqIW+9vflwgr4hx/XhKEEJn/Y2guNMR4
+	 9soF+DLVPW/J+eeJhas2trfBIlk5c7fSSsG9sIB9udur8krYDCObuHe8IQs8V93QQwyL7
+	 vQD4aNzKwWlxqWkmaXK/Jy7vKf5yJnChQohdkJduxb3VTKLc/d5f26pXcoSMiennNvA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793796364;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Subject:From:To:Cc:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=ud7i8nnvBkdRVkVjV5P07IGY/fDmIFTDHSVtW4K9wfw=;
+	b=pCpm/twyGn9Gmqtk+FfeWDUklRA8JROc3kL/XzO/5ZWuuqFJ5XvmDS27xpB0D/kv0R+q
+	 Q+7wsUdQZ41noddeLCBgPjit3CekXA0ILMucOFiTkJjn7HC1zoaqgSEV05wv/0Zex+geI
+	 /AlxUz18/t/FcOEU46xcQ1A5EIPiL2WYNqrmRgH9TtJXsBBKBACVLO8DKW8l/Nq7/o5pz
+	 ch/1OAwX9G/FSB4sQ6KWMSLvPVzlHsLCmduIgCiKV8uwN6RYdueCLkmSmlK4VnqyN2+UD
+	 oPJSs9oP+mZkOapjCP4aF/xKC+VXeGuad23Pw93tsSfGTlFfF97Iz3eAGS9zABDa+UQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=vwNJdk9R;
+	arc=none smtp.remote-ip=54.204.34.130
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795DD606A31B
-	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 12:43:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 795DD606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57D1606A31B
+	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 12:46:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B57D1606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key, unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=hXxZf016
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A87D83F161
-	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 12:43:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1793796210;
-	bh=KGzmHEtMcujY3rqdKLq4G+eIWN6ovjCAqdXSAfenRsE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type;
-	b=hXxZf016eSpDLt2Tj7WemwTlgaYoJAkq6Gnn4YR8wAPGuhCc+DaizT+tFyH5FtiwP
-	 4yNQ8o/4FWDplsPakemx50DMT29VDiZkDd9BJqKKne8N7NV5O53bS2CX615y52/Jge
-	 Yu3T/n82kd7ZtvUv7VgzaWNDL8iWRANQ+nElMcskVKWxS/H3B7trM0SNLLW9gdD3yp
-	 2+VHx1lf8Zuv9EptTCY8/iFUY0NIuVYqwitq+tRZErxXC+7AoSEg9yY4iPMGuRyi3n
-	 LogNavYInIaRxf4jI+m//5nIIL1h4jWCbjOKxVbMNlqtkiB1xeBryqSGaeV5XPM7EV
-	 CkPC5Y33prVGPJwW9sFZUTDaX0yEF0rsGzkswtNgvnWuZIIXsgof2LuzOKFBc+8EXd
-	 ygJVRQjXuEqQi/kpioA+mVrsN4A1V+RhkRwQEQNFa/5fYnruPqNl8WtapgOE3cYl3d
-	 K21dtAPA9MVslCuTjnPYv5wc8bScyhyYbB6WQvTO04/37hhKTjNpoWNodlHwE4Zk+o
-	 n9dxpNKaTc4axn8y7H/MaNnv2ylzzZv9EAHeSNO5XmuKYzNLEn5f7PoFPtTzKv/nke
-	 oAmSeiXFTqlZ+OmWrOo/oCPS8eSdxCNEHGRXt3dt4+ZvPyu+Oo6o0gDmQUZsEjszrU
-	 Fl/gzuqZEr5HcLMdtNI9ZkQ0=
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c465c4c8da0so93331366b.2
-        for <spacemit@lists.linux.dev>; Wed, 04 Nov 2026 04:43:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793796210; cv=none;
-        d=google.com; s=arc-20260327;
-        b=I/MPj8mMZc5dM6eRC/qh/JE7AFxpy18Bf40OrdTzH6IZxNTPF0YSuvszA09NTqG9BQ
-         IwYSQfnyVvbswVE10RIYhd5xw4pnsy0232pjcM8a9D0Mjbs7lcRI+dndU9mvoxC/qGf/
-         5oOO05rnHg+b1hX6gB3ll4sXueXPduTUhcrs4y4fwE0Z0RPH00eusrIhEsGvJJnCXFkh
-         JOeGPwDZ3NDEi7Qq79jhMSb1z5P75vfrxSoeQ63oYaKamdF5M+SskrcQJOPlhq/Ai+xq
-         K4zl1PzGfuiS+IRxrbk1ULWc9Y/c29lGvReofOJyaaenoRpX5ImWNecmJfPE/S0AspLC
-         dcpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version;
-        bh=KGzmHEtMcujY3rqdKLq4G+eIWN6ovjCAqdXSAfenRsE=;
-        fh=/ZgutNTYPB051iIgfzGUMFlF6zH8MCgwzSaBMXC1KJU=;
-        b=a6HKZmWjoyV62W0535nxi6hdkjBAasY4SxnQUgRv94OBbYUqcqetw0wgzbQi0z38YV
-         8YCOi+I3dGMm6tNWKQFkFPJ5meNnD9D+/QMEeNFblxSXwPeUbg/UxMn+FOC3Y9HD9/Cj
-         sZI2FwihWVj4195B4vgm+Kbdv5dxg2Y4QF2nDkPLOU4hHI8M6aXNHsQSV4txHe++dqF0
-         nDMPeHUr230mFA2cfygZ6Bv8BdfZtWQ0X7i0d5WUa45CKQUQ70i3HFKpg8tgf5jrjUGN
-         9X6smBBHRe0nBHjybMPj/wErsV+gdOXk9i9bps3awI5gDYZRj+m6qS20TFZS8iikPEav
-         qRqg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793796210; x=1794401010;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=KGzmHEtMcujY3rqdKLq4G+eIWN6ovjCAqdXSAfenRsE=;
-        b=uKj6KukteRSYSO9B2txajJmYkcL5RXJX9ZZzY0FpLVHylT1YrecYqnyF+d55QWVuQi
-         u0Z8ys0V4QF05em35UrJxlbw/Fc8sIg8bJUbYJKck4hueGop+ppSJxywov4c3oUTAzAw
-         qo62nklrUWO5NpuO01/xPEAwMJ8AcNkQ9Vh5CyjNvHFPTOcRGJX5tHbInOt6gjQLByOV
-         iY4KNl4hxTm5BAamOL1Ign103tK1aL7/mnXckuQGr2snjEafPe8fPpwQrwu+oB0s4jpj
-         9u5hiG0rWVJHKczMix5VCICyX5ja3/nB7vNBXeRkKIFm4pbvxaiPHqLarKeiY9ZtElIc
-         RXRA==
-X-Forwarded-Encrypted: i=1; AKwUvByIMYNK0fOirR/QP4Uw5GxhcjG/niFrY4ATQ8FxSX4mf7MZi7XHMObtnMTE5MfISbZ8bDP73LXFUQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z97cyfOmTFxlqsZkrsy5Kbmlcz0JnD07KjpOq3ATuTHYnHlrorI
-	VAcyuZ8IqvAU0B5ZG/frXu15E048Huje8nWvRWxoIDity+/OyeTKSws+3ESJJTaU72mSzXG8HiY
-	vDgAltEtNGXCQ0+83YV2wvlR4UJR7Jo7G6ODc05y5IiAys890at/r6qF5aWZSpzT0m+PQ7rx5B7
-	3hbPvc/ptJgSp5XJocNBIDRTuNEbJGrqUixzOiRgLSPDAYsQ87mYU=
-X-Gm-Gg: AYBFou0HhJFYUptIhasKKHoUgiypSFWWevyoJoL5uBdTNa55eaT6XVpeierL5Lho5Dc
-	FRW4V7iVRx2t4lgXt+gO5Du4uUr/mmqehezjlfljMfJrlg6qlMWDgvL9Zp8umswaTMYQYAV4GrC
-	+TZ/DbqBvv9kBFfxWB//oeNqUZLLCo6sj++c/uh3qUf89sCkhA+FvqlIRpmcly6Om8dkO1J+ATH
-	o4THbihMo880w==
-X-Received: by 2002:a17:907:9098:b0:c31:c767:ae0b with SMTP id a640c23a62f3a-c4cc31d0c6amr700108466b.0.1793796210232;
-        Wed, 04 Nov 2026 04:43:30 -0800 (PST)
-X-Received: by 2002:a17:907:9098:b0:c31:c767:ae0b with SMTP id
- a640c23a62f3a-c4cc31d0c6amr700107266b.0.1793796209840; Wed, 04 Nov 2026
- 04:43:29 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=vwNJdk9R
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793796333;
+	bh=ud7i8nnvBkdRVkVjV5P07IGY/fDmIFTDHSVtW4K9wfw=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=vwNJdk9Rqznf8c0Jd+ViAy9HSDB0XzxyptvnWEJW8/lKu2YobJLyZUkhDg617qtHA
+	 9X5s/cjZlNIr2099WbfnyOufkqTIPyEY33L9fS/tlps+uNTIH4WMXmKfAwW9/o2k7f
+	 ZbTyLKOWZuKu1i5OmbaOPrdfj0uNFZSt0Ap574ro=
+X-QQ-mid: zesmtpgz6t1793796331t28955be0
+X-QQ-Originating-IP: hJ9E/gMI2dwNw1YEW3nJrkwLffT0S2bkqJlyttVlVJ0=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 04 Nov 2026 20:45:29 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5863053726233936690
+EX-QQ-RecipientCnt: 16
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -113,35 +58,64 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261104-k3-bs01dcma-v1-0-794025247e4a@linux.spacemit.com>
- <20261104-k3-bs01dcma-v1-2-794025247e4a@linux.spacemit.com> <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
-In-Reply-To: <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
-From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Date: Wed, 4 Nov 2026 07:43:03 -0500
-X-Gm-Features: AclHuK9NNW0S9qfwpVQn7uKkEb-AwCUJMy4Mu66BWXEGz1K_BfAONgexdW5Tcwk
-Message-ID: <CAJM55Z9nuO3MneQqBm3K2V2SjOXqXsZcDx9pMzVhxMJJ73xc9Q@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=b7d78e441824c4b04bea4fdbdffd564c14f6ff6ad7497c5a67632b196766;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Wed, 04 Nov 2026 20:38:47 +0800
+Message-Id: <DMMFL4TP6K9U.5WFLI5G6YC5@linux.spacemit.com>
 Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 BS01DCMA support
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Guodong Xu <docular.xu@gmail.com>, Yangyu Chen <cyy@cyyself.name>, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Emil Renner Berthing" <emil.renner.berthing@canonical.com>, "Troy
+ Mitchell" <troy.mitchell@linux.spacemit.com>
+Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan"
+ <dlan@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt"
+ <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
+ Ghiti" <alex@ghiti.fr>, "Guodong Xu" <docular.xu@gmail.com>, "Yangyu Chen"
+ <cyy@cyyself.name>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.21.0-reader-ipc4
+References: <20261104-k3-bs01dcma-v1-0-794025247e4a@linux.spacemit.com>
+ <20261104-k3-bs01dcma-v1-2-794025247e4a@linux.spacemit.com>
+ <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
+In-Reply-To: <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NVrDa/vn3l+O9qiowlTD2zaHKE0g++nF0vjHVbzY0C5kPKcQLtb4u+2L
+	qjPDvKpym0s8Db3rTBZjdVtuIuNVW7Z4S3e+nEb0R96VUj3nxKycKSJPlEN3Sr7dsiZPZ4D
+	KX08oz8aDvuSRrdpIuQGiWQrCB4+2eGOlaCOlPkD4YuWjL7bz9hMGUOERICj1CAkzASR+y2
+	Ex0LuOXq5asYsXOlYvBIA6ZgFPFsQK4nMU2WwbGfJfPMijwDt4/5MRZcKYcwG69SPvTsF6t
+	xydpwvCM6cejj3FmdW1jUtQMIgQHTxSy2/NbPf1oeASk4amm1qAU0aYdUGp/HGLAe14Rk8S
+	kZxRWsb3j3vRNm4QoQeORotIoW84Q7NFmgq9HMGkDQh3urUuiufOQdNw4VG5r7WS+s27tGp
+	wHooCq1VDwzpiMCobOxXelAfSDJBie7gBT+q+iP+xq49WRsqXhwsmf080ARMT7TmBHeGtIN
+	6ITSGA5eFdfIspJVlob9KSHqg+dtY2CaRC9gVdREATaYDZatDP71wXdcknsZXzk3I+Bv32u
+	jUh71/yR4Msxjzhzny5mgE1/59DfZepTTMzOkGS/v2GAay41hwaJEce2mk1ZiXHDNpsdvnN
+	nVkqeEnqNB5MX0azSvNSSDuEpjpGFU7zC3C/erwMeAM2ek9BVaiFh+cdB30CbNS8aR7nA4k
+	/m1vqaWruf4q2I6wwqK+EPrbBD6Ki/5V3eoCPYLamdD/v7zUa2aRUAXsJxi+38V+zVOVYN5
+	w2PhSazs/PRqkLJW2sXl69H7zUIYf2AbAq2UQfAUrDLhff2NVZWTBlhdJLcpZRlCczE41+Y
+	vlOzZngukDGS25bMc1uqymyv+vw7NMGNE99INhFfRtiTgV2cAk/6zNgF00JCjYV0NjPDulJ
+	vOLlhO1wNGBF8+YIpKUaJoVpMP4OhYQweD8gh7LiefkDkQqajkRVIE/GmF9Zr3Py9b+yAGW
+	aUK2/VpuyLd+0B7ktRjaxKkW17F8kyP2yQ501fk1zuZN/1naGSE6M+G8Cb8sSRPvjpfYkKy
+	ZKsWI5iRUBMbOmhtXIHXw/IP25NXIpiAXXbhDUeMQ/M8c6IIEZaJGixfjaFeuNwCmUXtYUU
+	qewk1aNk321
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Wed, 4 Nov 2026 at 13:21, Emil Renner Berthing
-<emil.renner.berthing@canonical.com> wrote:
->
+--b7d78e441824c4b04bea4fdbdffd564c14f6ff6ad7497c5a67632b196766
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+
+On Wed Nov 4, 2026 at 8:21 PM +08, Emil Renner Berthing wrote:
 > On Wed, 4 Nov 2026 at 07:24, Troy Mitchell
 > <troy.mitchell@linux.spacemit.com> wrote:
-> >
-> > K3 BS01DCMA is a board equipped with a SpacemiT K3 SoC, 16 GiB of LPDDR5
-> > memory, a P1 PMIC, an EEPROM and QSPI NOR flash.
-> >
-> > Add initial support for the serial console, EEPROM, PMIC and QSPI NOR
-> > flash.
+>>
+>> K3 BS01DCMA is a board equipped with a SpacemiT K3 SoC, 16 GiB of LPDDR5
+>> memory, a P1 PMIC, an EEPROM and QSPI NOR flash.
+>>
+>> Add initial support for the serial console, EEPROM, PMIC and QSPI NOR
+>> flash.
 >
 > Hi Troy,
 >
@@ -158,11 +132,22 @@ On Wed, 4 Nov 2026 at 13:21, Emil Renner Berthing
 > arch/riscv/boot/dts/spacemit/k3-bs01dcma-<something>.dts that
 > describes the extra peripherals that can be accessed when the module
 > is plugged into the server.
->
-> Unfortunately Dong didn't yet give me the name of the server using the
-> BS01DCMA modules that they showcased in Shenzhen.
+Ah, I think I got the product form factor wrong. I'll double-check this
+with Dong. Thanks for pointing it out!
 
-Ah, it's called the Cluster Server RV2768
-https://spacemit.com/community/development-kit/cluster-server-rv2768
+--=20
+Troy Mitchell
 
-/Emil
+
+--b7d78e441824c4b04bea4fdbdffd564c14f6ff6ad7497c5a67632b196766
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iIYEABYKAC4WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCausnVxAcdHJveUBrZXJu
+ZWwub3JnAAoJEJgJ74D5MzQvwR0BAIMhLAVoskfIVLiSUa7AOkJcF8Seux/3ZYNB
+5w+rYXNuAQD5XKQ71sqJjooaXjxAwzwcJGIyf9TnZuNkxHNXuC/DDQ==
+=LQsG
+-----END PGP SIGNATURE-----
+
+--b7d78e441824c4b04bea4fdbdffd564c14f6ff6ad7497c5a67632b196766--
