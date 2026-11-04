@@ -1,100 +1,131 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.41
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793817292;
-	b=KoASxmSwfhXlTDqGCWJhy3+H4TuEnndO1LRFiw9eXL5ltv+MUDbQ0T7+d/95H7f5w/wB
-	 OkRigoQwZfP5Xv4+b2hoDIQYYppxrmlnhuA2c5DJw665slrPGOMYVEAEI+7OqFBIUoBPu
-	 C4UhgSXdGgImdIkBLWqvHAGf/+nRskQkOc4WStZYGRxYTwecaMNyEg/8ylV1vUY8hi3/T
-	 3VCiDpQikqBvyGsJcDiDDzw3287zinwZFHzIPNuSEAqkE2FdFzWITs5iS+OxfPHpkWjC+
-	 mmjo0G7KzmmpBOsSBxo14r5noBJzsBZS737mogW40pQOXqb9BkU4Gbnirja07/h/7Fg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793817292;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=inKoJkd5OXoLymkRd5+ohV9ATRnfy1E/adzijjekINI=;
-	b=1F/DLIhPpB5NJcNLXB1JhgRtzxg33NUs6RjzjUT2RoPpQCWCovQ2Il8aKXZ9TSBQQKbb
-	 xrkTezgwjnqL4kQwYxHcRmYU4f2xmWAPkrcdAg6BEsTciXDWVGoXFQD7NvEWuwAYH4OcY
-	 vq0SPbMfCHPl45O4+6mFT2BSSWqiDMx+qaOZO/z3Bs+M4pVUn++Cma9/1JOibXjneErf4
-	 SC4c3DWzX4a1gqFkefmWK+cHWZ1e/kLMRrRjqcKIo07xnAZ9FLBLfNgzTusd1zeM66JSF
-	 PKU2RIFCUWuy9E+7w1+r62VUiUOzqY4gsfYxSbi7GaoandrQt53N8Gxpq5TliJH89cg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hUC4pAwE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.41
-Received: from mail-yx1-f41.google.com (mail-yx1-f41.google.com [74.125.224.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793824897;
+	b=WdvSb94bbzgrApWqF0PZ8tt7qRyO+IM3POE+LqDBg9c8R90FHrVBKaAuy8jWTj4Eqn1B
+	 lxHhNMv52DUGFQwWr+sfkXeE4B8Npu/RAt/UG50R3Xi1ItI2oGDdfALmmQBOjnnFK3+g0
+	 exBybvNvqPbj0IvXhInCUdKlXOZyRxOf9a7g0HpgdrF6X3OtuG6mnBgTtdQpG7UXEd84V
+	 tl2Mn6gWtCaez0QMl6AMEXnDpk1mDCFwSJkG0+ZTmNaEqIZ8YRWW+rF61+LdZlEYP03mW
+	 VzYBumD6WsuxmcftGreRHqYNvF/aM6gx/foo2EXhiTHyNx2nNnjDxYnYcwzBg9lb4dQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793824897;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=Qx7MHHrNbw+2RJi+sFRPQAnCg+8tt1jKOtfnhlR4Oms=;
+	b=fubDDdvYoDzg+lbWTa8GDBSzmvsD1r3Mw1Iun8siEMN6rHv/FR7MdKLepj8k1rGADmfQ
+	 ycPlpnCPwTX37ZwM0Vf0/1x1VLNhtxgiAiJDLxtKPYWZgeDC+YRqJw285osTDtTWEjPGH
+	 iiNQRleO4/nm6M5wqcWWohsIMPl2pZZ7kglA91JUPPBj5qhNKLhiwk04trZnJXsgNysOb
+	 SAx1Sr1XBOii2LnSk2prtidWIGjv23Ssuy/P7biURYQtkndREwiCNpnUgLaxWT/wCL3mD
+	 3pxk/dz+pFpNOol1QwSyL2CiMYveIqICkUB0U0gsSsWkkJOrhKBzo7eVHQfc/beqe8g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GOfbVRuN;
+	arc=none smtp.remote-ip=192.198.163.18
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C923606A339
-	for <spacemit@lists.linux.dev>; Wed,  4 Nov 2026 18:34:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C923606A339
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454126076363;
+	Wed,  4 Nov 2026 20:41:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 454126076363
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hUC4pAwE
-Received: by mail-yx1-f41.google.com with SMTP id 956f58d0204a3-6798eb0d190so921628d50.3
-        for <spacemit@lists.linux.dev>; Wed, 04 Nov 2026 10:34:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793817291; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UG4/xUR+eOr+WKcU+Z0Ag7WDmcGtr2bOLji7twioI4DMp3CaTzrtzQwsjfh3EGra9U
-         L90IpO6vEUMLhQbaoPO1aHTA+GoYonxqoUFN3cGf7i8XjH/vq1VTYEJacPlZ0mmarj05
-         ZLEDRT/NmYW1hsGsFezjhlgOUBLxBMMV7aAHU/8HQwvLI/HolY7JwiuLsyMT9cJBSz3P
-         a/a6btlnYOfAbf/tmCtjWhynKia7R4LM+6iZN06C36cf8dGrB+9kLSBY4iW95gbjpkSy
-         gUi1LkhHpn8mZgM5TPlwgAAqegq7Y258PWbjD0e11VxHePVPOw07WwUgq29cfzYAcGid
-         0THg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=inKoJkd5OXoLymkRd5+ohV9ATRnfy1E/adzijjekINI=;
-        fh=f2mclPvVZ1uarM5OUayo8xa3+np1/52M3zIPJEex6a8=;
-        b=G4bovMbuDcUMWQrE5k9ChkM71es2MmQgoyAmI2D8a4vPoWHZ3+xmbSyci92hfSovzd
-         Fts+Zwm03SAZmjTGkcPKz0bJfjve55D5FhtvJLTxRqxYGEs8OVP+JEm1wJ0kDRvG4/LG
-         boxaRdcKgBWLsYBvpIbLI+t7oPzIdmNjzxLCcV74XubtFwQekfVFaoVvks3wUHnuxdhG
-         AMYcm0OUwQjQt5XDtjwlCCZShqVOO5q7CCwDvG+Iu97TWQoCf/V83EdSNFnOmTQx3v2v
-         4mRcWsQ9t+xj/QREF1bsZJBiLSDgIqRTCXQjAx9mI1M33sFRCv7RtZ4SHBksdw7OAS6l
-         uF8Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793817291; x=1794422091; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=inKoJkd5OXoLymkRd5+ohV9ATRnfy1E/adzijjekINI=;
-        b=hUC4pAwEyePssy8TCbgHp91tbwudkUEJcJQy8xYhLtcG83vM91yxGa52Svy4RIRpEJ
-         ovC4pYBl5pLEKblQhWS5+3EowjVMKuBv56hosu4wrD/eN8hJb0bk9qkApNX+lHQr+RCC
-         SMyXKXqWT99HeiVXaKle3Shwl4KFcm1rk3DFAk+Mq7o7mc5+qCYG403L/OHsdzpbPoeO
-         V8p1dcL7iG4bStzF68+yotlnnosH3jRN9IHuWaK2Kx0qd4xXobkMV6pzZtTURPmtTVL8
-         2OjwrV4EI3e+96lSL3u0IKW2FFRdcRBgaXweFfKhEM74kgGkFnCnCyKlwzPKKb372kBK
-         cPbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793817291; x=1794422091;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=inKoJkd5OXoLymkRd5+ohV9ATRnfy1E/adzijjekINI=;
-        b=ElnCVHP2n4YnG45dIqkw42n+rvN5PyR0V5MlhSzTQ/bjmPIBvPKS0pixXuNwpLHBYM
-         EMJfFGY0qbZwyLplowJ4KYBFxq0TtNqB6gMW83D/MLMOm7uByMpZODSBjeKNr5xUW+7B
-         ddT2GMkFnnOE7pLg7lArfLzZ59KB5hSsRbMI83J3UkquIl74+Xn32Lx+uK1TjYXiumcP
-         TOkQQHLhTIibb+mHDsEmq733XR6JUCjkAzqhbizQ+aMzRJrrNQ2dnkg0E5MCl4b2JZUn
-         1trX8ePbRyW78sEz0i4pBrKaN6+TOwjGbGo57rLH1lxuoMvla9QNk/k8AvQAtgcyHGth
-         gBGA==
-X-Forwarded-Encrypted: i=1; AKwUvBzvSr3aqfGxiZdEaNz26DcIEfrfcNoyc5q8ciKon29dwMzUniLXW5CWkKyu4npsSWYuxog5jmubyQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9GIjs2iaj7sDyJ0S1zTeohPZsVzxQ54ixmMqVqHLMAt2mpah+K
-	LFS/8xQkHqRyE0qveMdhJujET7WMGl6zD09qYNXWwfGKO226SSh2McbiFPZnT3I6ooPmZX69uf9
-	FUO/i49nZkvp2vLHL7Usu3xIc4b32TWs=
-X-Gm-Gg: AYBFou2Cq2X8k/LSMCPw1woDzthf7Xq/mrWGov4dix1EWQJyGNsM6jdOfDi20GNFrNo
-	lKv2/ni1jhFedvFxoB8jGYKR8dS4LzN2wFBd5EtJ/C3VHFZjTr/6R5M16ShR/xUs3sv/SM/Rk1z
-	Mi2X7c0V4mGg+MQuuduAxW127Vfqatx66KebShcQ61n5+gzWaVvgfIh+xKuc3pBcoYECax/xlzZ
-	HoLeywG6poc/AUoMm+Ayu48RiA4/ED6qpMiv/1YS4iLVs9TVEt3fOoVbqZF4oIpU6URx8wZgbc2
-	CO4LmBBS7K340yPnw60wwbyQBY3URZ1jMuhvrJ6OLYorsO6TU7UWsfnAns/WiS0uGa1PivLxuAL
-	ohlJvKkMuwBlilkLmuhfrs6rGFI7CcFpJrmeMkw==
-X-Received: by 2002:a05:690e:1183:b0:677:d419:8a27 with SMTP id
- 956f58d0204a3-67ba501b9c2mr13354407d50.51.1793817291284; Wed, 04 Nov 2026
- 10:34:51 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GOfbVRuN
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793824897; x=1825360897;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=qy06o8rSwtIgsUFLykqayukx7m8Y35VeFGwAllplMWQ=;
+  b=GOfbVRuNbvFhJqnu4QVO0qp5PUuXriYWkWcvbcexI3JoqKv+KTjohMXI
+   NX6SdGn/kgLm7FX/4qntpHlkNLWgPmpcV5tV151acOyBW6GYqvQN6M9fe
+   cEe5wJif/Jb+sSqa715mefUmojt49RJs3m09d0rSOHUWXEHtjuVUUutfp
+   DWTxpzkZyb3oifGcmMgZyzXZ4OqmlBrfeoTXIPmZ1b/8mBLZ+XQUEKYiJ
+   bJfrfThZzhZbvuddA/fAPyzEk2cOtG8Lb8DYWm1O/pUzm1hPkzoqWACqY
+   LCW0L/FeP4QZj5wMem+ojg6wRB6rhDQcgY5P5O+HjHPyssSUnSsAmsUYT
+   g==;
+X-CSE-ConnectionGUID: lR9aJQjPSoC0oBQQlPlziQ==
+X-CSE-MsgGUID: A/ibzmRuTB6WgZuw6RjNog==
+X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2634916"
+X-IronPort-AV: E=Sophos;i="6.27,195,1787036400"; 
+   d="scan'208";a="2634916"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 12:41:36 -0800
+X-CSE-ConnectionGUID: knzF51FkR/mGB1dYlMjHAg==
+X-CSE-MsgGUID: PDZ5doidQvG2tEJnuVcvCw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,195,1787036400"; 
+   d="scan'208";a="7214061"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.24])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2026 12:41:23 -0800
+Date: Wed, 4 Nov 2026 22:41:21 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Frank.Li@oss.nxp.com, Mark Brown <broonie@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Radu Pirea <radu_nicolae.pirea@upb.ro>,
+	CL Wang <cl634@andestech.com>,
+	Ryan Wanner <ryan.wanner@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
+	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>,
+	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
+	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>,
+	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>,
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
+	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v2 1/1] spi: use dmaengine_desc_set_callback()
+Message-ID: <auuYcS7-YqJKcUbE@ashevche-desk.local>
+References: <20261104152253.3279052-1-Frank.Li@oss.nxp.com>
+ <autj6pr_bPaul3w0@ashevche-desk.local>
+ <7f96599b-681d-4963-bdda-1274371ac84f@kernel.org>
+ <f1fa853d-1703-411d-b2d2-0fb0b176c2fa@kernel.org>
+ <autqC143h7Qf1R9H@ashevche-desk.local>
+ <9e39502a-dd17-4fa2-98a3-9019523cb5e8@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -104,31 +135,86 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com> <20261103-spacemit-soc-timer-v1-3-36722421db6e@linux.spacemit.com>
-In-Reply-To: <20261103-spacemit-soc-timer-v1-3-36722421db6e@linux.spacemit.com>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Wed, 4 Nov 2026 19:34:00 +0100
-X-Gm-Features: AclHuK_BL_NkBC94LItzmxoqmdRwZHsCG21WJll4bbRrLdBM3Wvnf0wDs-TvvBg
-Message-ID: <CABdCQ=M_FwJOEG9Lhzahk=qA-qmqMH1QeGg7dfFPWdwT=4J63Q@mail.gmail.com>
-Subject: Re: [PATCH 3/5] riscv: dts: spacemit: Add the K1 APB timer
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Daniel Lezcano <daniel.lezcano@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9e39502a-dd17-4fa2-98a3-9019523cb5e8@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-El mar, 3 nov 2026 a las 9:56, Troy Mitchell
-(<troy.mitchell@linux.spacemit.com>) escribi=C3=B3:
-> [...]
-> +               timer0: timer@d4014000 {
-> +                       compatible =3D "spacemit,k1-timer";
-> +                       reg =3D <0x0 0xd4014000 0x0 0x100>;
-> +                       interrupts =3D <23>;
+On Wed, Nov 04, 2026 at 06:27:40PM +0100, Krzysztof Kozlowski wrote:
+> On 04/11/2026 18:23, Andy Shevchenko wrote:
+> > On Wed, Nov 04, 2026 at 06:08:39PM +0100, Krzysztof Kozlowski wrote:
+> >> On 04/11/2026 18:02, Krzysztof Kozlowski wrote:
+> >>> On 04/11/2026 17:57, Andy Shevchenko wrote:
+> >>>> On Wed, Nov 04, 2026 at 10:22:45AM -0500, Frank.Li@oss.nxp.com wrote:
+> >>>>>
+> >>>>> Replace open-coded assignments to callback and callback_param fields
+> >>>>> of struct dma_async_tx_descriptor with calls to the
+> >>>>> dmaengine_desc_set_callback() helper across SPI bus drivers.
+> >>>>>
+> >>>>> No functional change intended. Prepare make to struct
+> >>>>> dma_async_tx_descriptor private to the DMA engine.
+> >>>>
+> >>>> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com> # dw, pxa2xx, topcliff-pch
+> >>>>
+> >>>> (Note, you forgot to add the list of the drivers to the Rb trailers of other reviewers)
+> >>>
+> >>> These should be acks. RB creates false impression entire commit was
+> >>> reviewed. Our docs also clearly state entire commit:
+> >>>
+> >>> "Reviewed-by:, instead, indicates that the patch has been reviewed and
+> >>> found acceptable according to the Reviewer's Statemen"
+> >>>
+> >>> (not patch or part of patch)
+> >>>
+> >>> "By offering my Reviewed-by: tag, I state that
+> >>> I have carried out a technical review of this patch to
+> >>> "
+> >>>
+> >>> (not patch or part of patch)
+
+Documentation doesn't cover partial reviews at all.
+
+> >>> When you accept only part of this code, you basically Ack. I really
+> >>> dislike these half-done reviews, which later appear in logs and tell you
+> >>> nothing. You could have clear security bug here, but 10 review tags. How
+> >>> useful tags...
+> >>
+> >> And let me even bring a better example. Imagine a patch, doing massive
+> >> refactoring of core SPI stuff, 1000 lines of code, complex locking and
+> >> also simultaneously updates drivers to new API changed in this core.
+> >>
+> >> Reviewing that 1000 lines of code in core SPI with complex locking takes
+> >> someone 30 minutes. He gives Rb tag, gets credit.
+> >>
+> >> Now you come, look at SINGLE line in a driver and give Rb tag. For 10
+> >> seconds job of looking at one changed call in one driver.
+> >>
+> >> You just Acked, you did not review "the patch" (quoting submitting patches).
+> > 
+> > Your example is doubtful because the patch is combined from independent pieces.
+> > The Rb fits very well the listed drivers. The problem is that some of the
+> > people combine changes into a bundle (and not proper per-driver series).
+> 
+> The example is actually real. There are many patches changing some core
+> subsystem API stuff + many drivers, and they are done correct as one patch.
+> 
+> Looking at two lines out of 50, 100 or 1000 (here is 740!!!) is not
+> reviewing "this patch". Is acking it.
+> 
+> All of the Rbs here are half baked, meaning they did not review "this
+> patch" (quoting submitting patches document).
+> 
+> But sure, if we want to play such numbers game, I will be sending
+> reviews for single lines.
+
+I'm not playing anything. The problem is that the patch unites the files that
+have distinct maintainers and unrelated to each other code. That's why in the
+subsystems I maintain, I almost always require to split on per-driver basis.
+Yes, exceptions are possible, but has to be quite rare.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-K1 timer specifies interrupt as <23>, but K3 uses <26
-IRQ_TYPE_LEVEL_HIGH>. The IRQ type should be consistent.
