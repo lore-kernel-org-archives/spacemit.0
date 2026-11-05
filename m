@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.19.206
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793847238;
-	b=Yh7DpA8xvRfJiUlgckAGyFxSf2G2fenoyl0v3sROcH3WQc0haqfBsI6aZBJVV+npw7rQ
-	 vHqrCv/7PofUrtBRrDB8+/DMdXdvps6kgLLuVCK+htU/CrDMRVdA1VQgxMd1fqkW/xs9r
-	 BFNHmGdbHcdf4ivH7uw5jRZfDo38cHVQ89XiJl40fJfHu4dtkp9WVC2UcHdoTL/m7ovx9
-	 mOIIlshymk+17GJbjOWdcEM0HLC/fKylxf3XDZ4VnJrHT9CthtvT/835ffZUTVIHjjMau
-	 vv16Pjv0+EefSF5arngzCa76xl65kzpFr/CPXvYBmFBiGFeHDjRZB5eHLNlKSdY6E3g==
+	t=1793848282;
+	b=pdTTs/4yFMBEGlIHnOhvFBkdZ5gMuqQpvEDiSncukRZiAeesdIG1Xwkw/slYQrPE3PkE
+	 s67qfg0+ESgY/0cTq4oeg9Sd4VP4BGrcdX11myAsC1uWTArIKPzrWAr1ABmTSNX5sg8be
+	 NQkWXHYREh+LLri2+yTmYHkqiu7T/pkLJNF6c5RTx2XfQge0DgbOopyq0CtsEISL9RsAm
+	 CmTJnDTssIVtZmMHtp6tlFzncLKFh8MfUg1EQaaPIplhaqJntq7mOWzFjoHFsb560s5uW
+	 cq4TDL3JTHHNtrttpri3NSE7LNEhO/MCUzOn+0D9OXU/C/y+eOcCPsooY6ahq5hw0Pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793847238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793848282;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:From:To:Cc:
-	 Subject:X-Mailer:References:In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
+	 From:To:X-Mailer:References:In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:
 	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=makHNIiYLvU4q0uL7GjudiJJsJnjWba7FoFQaU2CjTA=;
-	b=YRgLMYdiEMeg4pKc1powuzQLWA/XtQx1eHA25MthHTE8slkgC3VrpLqLSHdp1xQQnmzt
-	 QCrtCAaX54ZTBUZRm6L43Q3PXzBdG1HBFJCPjczKwytK8e/XkQM5zPy/I0h1TLkq4lo2T
-	 lL+q5kUtE3OaKKpHrF/z9A82qRax+wICHQ0SmOjcibdqCI4ua9s3HikJA83kwmBjS/gaS
-	 U5hcrxBCPZo4kGP0l4EHm7vqs/kUk9QXSUolJZ8IpxJnEz+R28I/zDnz5dPmdSxA8r8a8
-	 26pWgSXvnh1mb8KGZV27wRgk97Jie06N7ZVUu8VqV80ucL7GlEwBCENvDcyVLuH6ZRw==
+	bh=elWbl+OffFQuIIm3yhMS8vybFO0kHurUhaRvfp7EAfw=;
+	b=s/rt4eE8W4BGfyRrDrWL4n2a5Lr2mG0CaYquNTwibTW+7v95M4ZYCSjF6d3lJpxXbKBP
+	 P4xrXDBsV/M4vxSGnQQGSeBg8boBHf2xKw5C+EdV1FUIMxBU56553ErTAlpA8UHJKI4wg
+	 mtVeUR3NmtIFgVZnT3eniJgroqpx0Y7rEqPwB+2jFAYb98FwI3gQQBhC24PTBAqHJLAcJ
+	 qswuAMXi42onmNAVNgC5Ed7dKlDx9W3RcGSbi1iMUxlEX13na1YALY4AHC/JVh1GBOgrj
+	 2I9napNAo1+BKdBB2vnjyYo/yaDgElNSOF2R+PuVsXAgZpSOmfZFaDvY6MRVYeBUqng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=dG7Zq9oZ;
-	arc=none smtp.remote-ip=54.206.34.216
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=rd7VFLaP;
+	arc=none smtp.remote-ip=54.207.19.206
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEAC606A31B
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 02:53:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CFEAC606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63682606A326
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 03:11:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63682606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=dG7Zq9oZ
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=rd7VFLaP
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793847195;
-	bh=makHNIiYLvU4q0uL7GjudiJJsJnjWba7FoFQaU2CjTA=;
-	h=Mime-Version:Date:Message-Id:From:To:Subject;
-	b=dG7Zq9oZA0ud7MBYBH+jyazqhIvywclr/H2PHUIWbLqQtgC8ZftuNbA5f/kRf8fQG
-	 viEqytWRUhYALIER5ShHmLYL8H71SakkLFi++21zm+bo4NWPdIfr30Bt163GFGsr0V
-	 paN26fNUWLJLvDZByfK8p/ZLddlEsMip5GoCE0JI=
-X-QQ-mid: esmtpsz18t1793847187t057bf204
-X-QQ-Originating-IP: izYglXd86ZAHYwcrBOKCmCQvXih/anefE6LCbO6xayY=
+	s=mxsw2412; t=1793848257;
+	bh=elWbl+OffFQuIIm3yhMS8vybFO0kHurUhaRvfp7EAfw=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=rd7VFLaPowHCqUz/0ZqNnCNuCnedb5Ij2k/7h/uKZOENVHl6zdz2w0V2jgdyVPwnI
+	 kZkTkbtvtO6/a7bvL58wCmNWJluOiOaxIPOcgECjPKPYGZVls5JwP4+x7yYIYhBuC6
+	 ktNKqrjNFdhCNosjBFySIALk8O0equZdRFJqS1sU=
+X-QQ-mid: zesmtpgz9t1793848252t934e3f3d
+X-QQ-Originating-IP: PzFdMtmjvpoEZUFriSo1/f1E/ApJhGnMm7BqxTlGO+Q=
 Received: from localhost ( [8.218.183.135])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 05 Nov 2026 10:53:05 +0800 (CST)
+	id ; Thu, 05 Nov 2026 11:10:47 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13090883998075243027
-EX-QQ-RecipientCnt: 12
+X-BIZMAIL-ID: 10634412826085304588
+EX-QQ-RecipientCnt: 17
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -61,61 +61,96 @@ Precedence: list
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 05 Nov 2026 10:53:05 +0800
-Message-Id: <DMMXR8IGD585.1QXMWPOMI19UL@linux.spacemit.com>
+Date: Thu, 05 Nov 2026 11:10:47 +0800
+Message-Id: <DMMY4S89W1PJ.WWIUJ905SLXU@linux.spacemit.com>
+Cc: "Bruno Banelli" <bbanelli@gmail.com>, <linux-pci@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, "Alex Elder"
+ <elder@riscstar.com>, "Yixun Lan" <dlan@kernel.org>, "Lorenzo Pieralisi"
+ <lpieralisi@kernel.org>, "Krzysztof Wilczynski" <kwilczynski@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, "Bjorn Helgaas" <bhelgaas@google.com>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Uwe Kleine-Koenig"
+ <u.kleine-koenig@baylibre.com>, "Javier Martinez Canillas"
+ <javierm@redhat.com>, <linux-kernel@vger.kernel.org>, "linux-riscv"
+ <linux-riscv-bounces@lists.infradead.org>
+Subject: Re: [BUG] PCI: spacemit-k1: port C probe hard-hangs a CPU with one
+ endpoint on Milk-V Jupiter
 From: "Encrow Thorne" <encrow.thorne@linux.spacemit.com>
-To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Encrow Thorne"
- <encrow.thorne@linux.spacemit.com>, "Lorenzo Pieralisi"
- <lpieralisi@kernel.org>, =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
- <kwilczynski@kernel.org>, "Manivannan Sadhasivam" <mani@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Bjorn Helgaas" <bhelgaas@google.com>, "Yixun
- Lan" <dlan@kernel.org>
-Cc: <linux-pci@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] PCI: spacemit: Ignore link partner PERST on K1
+To: "Manivannan Sadhasivam" <mani@kernel.org>, "Encrow Thorne"
+ <encrow.thorne@linux.spacemit.com>
 X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
-References: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com> <DLN6TV32A766.2BWYLKQW9ZYG5@linux.spacemit.com>
-In-Reply-To: <DLN6TV32A766.2BWYLKQW9ZYG5@linux.spacemit.com>
+References: <20260825052249.66921-1-bbanelli@gmail.com>
+ <DLKRGJBNFVQO.15WZ2SXQLOY0T@linux.spacemit.com>
+ <xuafb5qshj6rowe3v6sxyfvtemy4wg2ttqs7lcwu3txu2mpyzm@fr72njh6zgvi>
+In-Reply-To: <xuafb5qshj6rowe3v6sxyfvtemy4wg2ttqs7lcwu3txu2mpyzm@fr72njh6zgvi>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: OVxgrqsLORmRqorTkuJKvGn06tCDXz/QWhYmxmB9XDSmlKYv+Ro0IKB6
-	HZpp3NjZy7ys73+jQrpPyCL/vA4h/LuBy7/fvZlNqNGquqG76Sjicf5JwMMyaedwuD/wHG2
-	/F7blEh6v+bBoZpqmvJlaSbFsz5qUOxherz10lPaYNfyW4wUuhR5jqyy7vhUl96CtjCTzYt
-	tS8vAYAF8QS2B0iR7D4isZAZp7G3o8vLgxe8VutItplbcGjySNj910CkSUcL1j8nvdRJCRG
-	D7x125ElwMe9QegU0++f9QXZ1M3YZMSaJ4FoJHTrYCcMy7/3uClUt9ao0wp/0Y0qMsKLsKM
-	CvEIuq5fVi0jbFVI53sN+Cl3g1Un3urFE9X+/cqmB6dgjwEyKGpuSaGIpUW950ic+VZE3kA
-	VcKXt9tb6XrCdad7q/KlMWIPJ+V+263StKLiFJerXmQ5fqZlqSfDOz119lrPpHvNtRl9hus
-	mSY1rrKmHv3030SGBvFt5LE1QSbOXdITCRx2diC2NHde7Cqjh3UWqy80e3JaqjYLUbM0Iyk
-	Gsf1uIOOUZmzMah2P8S7JJaMqy7v6VqFlR0RH5VyrbZgoIF8Sl7gEqtorEC9oLi0lksI0x8
-	sHqCV4nnC/jgI6GAym6TATUGWojJp6dj3rN4nXISfsb41ERYhOTigV4xaR6KV6qqDiXp699
-	OEUnty3DS4H30X22KOhjxMeTsiTQzPhi0ZZ562Kcqvr2ZX8KKIQMnfP7d6fX2VTW9lBqX1x
-	yw4JTz4vaCy/FpUznLTsxwx/od1ClDNv2dzEdUaJt6E+QKbHK4xF+CAdzUwP+FshddH+x/8
-	icjJesqvjvMxwG3xVl1DpPBYYM3Ss2OuX+IG0+bEoGe9vXzkL7WubK5VKCWj6+0P1VYgbib
-	uhesW+qBN7VI7D7sCo+H/Bjwyp1oUNGaKc75lJpRs2w1k5YYC3BxIteGfJz877UyJEJh1uc
-	kJ0ZbYU0adrs9OGbvqdGSxBdFdSXn/BJPpheKDKWzfRrb7X2xaHnMJx26O9aKgXvLX6xE9G
-	IWa8dcs/MTzh4fkCxhDSS4V0ano8n7wLN2IZJfJg==
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: M6X4Jj6nmWQyum/iMKz8TxjkkJ7y/4Dfp2UGPg1Nck+98wNvcvLORLQs
+	MTB5O+r07L6tCVLtuO8Q2MdhRqzq3TxfbCYqtA8mThs/mJQ42AJCsWlUrjwCKmKxSEB0st/
+	IjM7gJMpl0vK+PMSooTN8SVRqieZ9ohDChhZds9zyGQwfDtKk4TQvltDqb+9r330b+XCY+0
+	iL1HPFkOuIMKeReO07ijlngEnPv9NVlpprYEv2MMlXcxxS5MCLD0SaCbe3ELsyBUueufj9q
+	i+HszP7fBQWcQV5w12SegnqyLOSnvypcpnuwZ7Jgu/+yOTcO/kzScYLVawOCiRNk7qU+/4m
+	4/Jpb4G2toR/IWVsOL4uL9sM0yy4EGML/hTPlt/tLUqnceEUCsxsIVnUWOvAzF4Kz292Ne/
+	be/SKCQ4e8d3yMAZyYOO+JgK0M6OV7fGiN35oVomkIgnSe3R+1zf1b6vLecf1n+wEev76bH
+	P7ireGMJUrUFQ88J3Thhl8TRmVuJIsHY3bBwaGHYSjQWL4jowG6pUBpkYS1/IXP7xByB27k
+	edIQjGjNwWIIzRQZunTLQbMYB6A5/Wv/5gRj8Gaf88nmSM54n5K44c1svqCW96ozymjZEwx
+	aNP+VCuXVPeulZgLk/NVYczO7u9rrkJ3wGwjkSmzOAQzHeY2EoMOgqgKBMXIDXyGndvFtJO
+	25FLZQ89F+jPQBZ+DHVgRICDkuTQ8ff/CMGLFPa5NdTELSRaoQVVCrCeyUft5NIPe6laAfM
+	hPXNKGIdq+rjamRW6q7/kOucLU2ryC/KKQgUIVJE52C+F3x0hXXs8hOJu6uFZLA+c3w6aX2
+	+bh2Vpc+n13mQuSXsPDfyNKyZRaJH8fdac44JSlLIk4ytcSsBMsBZ1mCSlIB06+ATCh4ePp
+	o6IS5E7coP1OgX6UjxVZCmEZsebL1WeTIfXtELzTWMKuzdIAPuvrpRHWfe9WyeU2nMbI0hY
+	bE7hxXQzVrocer1d+7Cw0BP3CPTbGcRnrkpXDx8bk7RPCmprqd6HnWyYCqZSMegoHSPu6qq
+	HIwRdlow==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
-On Thu Sep 24, 2026 at 10:23 AM CST, Troy Mitchell wrote:
-> On Thu Sep 24, 2026 at 10:04 AM +08, Encrow Thorne wrote:
->> The K1 PCIe controller and PHY are affected by the PERST signal from
->> the link partner during initialization. With some devices connected,
->> this can prevent host initialization from progressing and cause the
->> system to hang while probing the PCIe controller.
->>
->> Set PCIE_IGNORE_PERSTN before accessing the DBI registers. When set,
->> this bit makes both the PCIe controller and PHY ignore the PERST
->> signal from the link partner.
->>
->> This allows host initialization to complete without being affected by
->> the link partner's PERST state.
->>
->> Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
-> Fix tag and reported-by tag [1]?
+On Mon Sep 21, 2026 at 4:03 PM CST, Manivannan Sadhasivam wrote:
+> On Mon, Sep 21, 2026 at 01:55:42PM +0800, Encrow Thorne wrote:
 >
-> Link: https://lore.kernel.org/all/20260825052249.66921-1-bbanelli@gmail.c=
-om/ [1]
+> [...]
+>
+>> Hi Bruno,
+>>=20
+>> The issue was caused by a missing hardware configuration in the K1 PCIe
+>> initialization.
+>>=20
+>> The PMU PCIE_CONTROL_LOGIC register contains an IGNORE_PERSTN bit (BIT(2=
+)).
+>> The hardware manual describes it as follows:
+>>=20
+>> =E2=80=9CWhen set to 1, the PCIe controller and PHY ignore the PERSTN si=
+gnal from
+>> the link partner in both RC and EP modes.=E2=80=9D
+>>=20
+>> This bit was not configured during RC initialization. As a result, the
+>> controller and PHY could still be affected by the PERSTN input during th=
+e
+>> early DBI accesses. With the Intel I225-V installed, the first DBI acces=
+s
+>> could remain pending and hang the CPU.
+>>=20
+>
 
-Thanks, I will add it in the next version.
+Hi Mani,
 
+> What does this 'PERSTN' bit controls? PERST# or something else? PERST# is
+> controlled only by the Root Complex btw. Also, why does this missing regi=
+ster
+> configuration only affecting Intel I225-V endpoint and not others?
+>
+> - Mani
+
+PCIE_IGNORE_PERSTN masks the PERST# pad input to the local K1
+controller and PHY. It does not control the external PERST# output.
+On K1, this input path remains active even in RC mode, so a low
+level on the pad can also hold the local controller in reset.
+
+We found a 1 kOhm pull-down on the PERST# line of the particular
+Intel card we tested. Together with the Jupiter board's 10 kOhm
+pull-up, this kept PERST# low from power-on, including during the
+first DBI access. The other devices we tested did not hold the
+line low in this way.
+
+After removing the card's pull-down, PERST# reached 3.3 V.
+
+Regards,
+Encrow Thorne
