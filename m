@@ -1,47 +1,106 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793876787;
-	b=DLxAIZttFkFTY3rH4amWZ5llsfbZd2Qatwn4Rx1YyHtibcr4w+DskrfdDt4bSyw7L7GI
-	 zPN/jGUgm0L86wbw8L1+erPf8szdjh+p+tqPLVqlpVeUJP7C0mhjrkGBzBnmLDp4QZI/M
-	 GWZVyGuR743XjB1VUF4Q1hItvBfs0drvwc0l3is8sBGAS7r8mGsWuaXIPdVp6XTem0r0e
-	 ldbWuJB/Rey15bt+E1rQwTB8IECmGArxLrHO/ePHnbW9A4QyZ052C/wnxwRjvZ/wkGMzb
-	 5lC7wLAFueRLV+KQ1bkLUrhgssq4+Ic/2T14jLO97X6RubnOVFQuC77upsQTaB2ZbCw==
+	t=1793882154;
+	b=EPH1pi4k2djY/Y5ye+DGEVPzo9PTKjOlQOrl51/WoS4bSTBSIawut8ekuRGY405Ewsk3
+	 1b1H8xoZSUODRSyleV76dqNbcmJc/2lz/gq0mY78YYxHvjvpvNdrEYX82qkWUWC3w8dJx
+	 leXBtn3G0cK+yCJOy2rJPhS1wWB3I5cOWgADx66W9pqDQxbsc+ZkQEnuQaCZF6xQnXxK6
+	 URUtP2x7yZ2BPCN4pgdf12/aACnBAJASp8xE6dNV8VPN1D/GspZ1kfP20eHVNOJOxEVBH
+	 Av9MAXN+LrjtnJo+pf6Bc4NRp82V/dFy5ZtgEjEoQbbPaKOMW5ruIeOY+IwJ3Gt8baw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793876787;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=8uFBTt6l9qrmjnlo/lzMuxG35eGIBIWy2pFI1wbTXQs=;
-	b=udTW9pfy39IphNn2stNXgcyy4WiyPbPtB/ZOIGlJMeWtLZiGg6WbW4OcqbqhJeevQ2A0
-	 qgoJIe/i5ALyX6bWNj94qEtbUjAKYWRCUBM46Ph/cCRaitdEaUHl/Uri+LQ+TP4e8+NLU
-	 Vpqd5/o963gt5FpYTbSI1G0ia39F1/CQA4zHLl1UdUBCk7NRZ2fIgXsFSuHuJza1iyMRd
-	 OpThiX3rCb2WWcpJSGv9NxLmBwpeXQXg1D4+JvJeOp/TBzwEKHrCTPyoR4UXLPHdw4jTI
-	 HzQl6Kwku6VrMKcV/ZOBq2VjA7aQUaN1OBz2/Q5hERxptxouwlkqfSJVl/+Wa4ZkNsg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793882154;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
+	b=WXnOij5N33M345SRteVSnbnpOASURRmwDi1875OMJTAo6xA5yhF7eiqm6rdHzo/c+C17
+	 x6hUJv/tWVbIgq2Aq35B4v7kfLpvPuyHjVn0hd5hcYxc0Sc2z7KZ9BnsqUe09cdLJqqAE
+	 Q7vV2j/xisS4lQ4EMTwl7/WwcU9NpbABwcX/5yV3tyWUFavcltYA4UKO1nUnFX5i0glhU
+	 +wXWM/zJmRNhhfDZPdwsHPQYruL7llxual7zZijhbKDHZRGmR4zyJIhQof0KBbFIQMtqB
+	 OzKfmQrh50f1ULy4xrZG8cC14tn4gWH7D+8HGMetSf5yVmJTVk3UDzK4VQnvv9cMSBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iuU79YlY;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s9XJ7Y3e;
+	arc=none smtp.remote-ip=74.125.225.128
+Received: from mail-wm2-f0.google.com (mail-wm2-f0.google.com [74.125.225.128])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71D1606A326;
-	Thu,  5 Nov 2026 11:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC303606A33E
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 12:35:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC303606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iuU79YlY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4E01F000C1;
-	Thu,  5 Nov 2026 11:06:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793876786;
-	bh=8uFBTt6l9qrmjnlo/lzMuxG35eGIBIWy2pFI1wbTXQs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=iuU79YlYRu9wGbacW+vpTg9ffAbYE6lICdlGoClgZT/3QE7f0GtlAIJraHprzi37T
-	 RQ4PAQLBZd3u1KCl7xeRVtQepzl4SQQ9NvXHpgexnlvKDAMtvJ59QZF50ETnxt75E9
-	 GjgYPY2+hp17tcJio44a8fUwQ435dmclkhcrR2o5FGK0EmZHTKH0mK9JcvlyMcZKwK
-	 6RZKpzdTFd3VDafCS+pfLlBFu0meixLfkDwKj+wggkqV13eDvOgaIw79oHKH7MbYzv
-	 DzYNgs1xXMYQknJ+G62HFn04h70v86LpJ8GbJ0q61/uKqyU7s3kLHZeTPeH2Nwfbt5
-	 fBr0P/B2JkWwQ==
-Message-ID: <041a6cdb-b9de-41f4-bf58-4376a280f434@kernel.org>
-Date: Thu, 5 Nov 2026 12:06:05 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s9XJ7Y3e
+Received: by mail-wm2-f0.google.com with SMTP id 5b1f17b1804b1-4a2d6bfe8d6so6354465e9.1
+        for <spacemit@lists.linux.dev>; Thu, 05 Nov 2026 04:35:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793882152; x=1794486952; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
+        b=s9XJ7Y3eHdwyjN4qcHIaLwrn/7qar+Pa3jZDec1zoFDWMubGgQaWHQyrYouq/1zR0q
+         SoM+5GEDHOSF5Lidhdzf4nSzATkZnbGN+q5E109CKDnsHB+e+I++DCRvMicz8uF+o8ZA
+         zZB5Yb8vAvT226splcx3AdYzd9r3dPAYIKUmYGkdWKtWVzA8rRCv0OVLxhc+WGO5MBk9
+         DapN6f1FLi0MS3vwTKYkMgO7YW9GGpI6kNjty+iiapPLMPnUjUuveSs6J2ShKwDxAqz5
+         WU914znE7De13a1n090guU4GenB7qqAMlGe0b7FSDRkMCzvyGf6H1Y+2tpbiKz6cnbT3
+         QX8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793882152; x=1794486952;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
+        b=t1y4zRsJUdb7lplP+DNaNCjVOQa5VYLfVnpLnDM1VQuW9hjLhi5fAqkm3H3+bQFNGr
+         mj6vwjDP9+S5jrWKp7JwoY9euSnwBljRVo+Ds8sUAy90zblBTDu7KHWiBd2APX8Gk3YZ
+         LI+Sg5RhE1fZfHEEWT4LbTms96RLhU+foRRrdYqxBTFI9HKW8Q/oCjv8Q6FDW7IB/FKo
+         Xj6Gx5v9J0h5yNbMP619ilvk7v5F2i8P/dx9ICYXD9GVBzlerIAvVR4CrQblzziNu1Zu
+         4k/uXR557dGPWHLyNaOP23o2EzOL8pTWam5s9HFu2+Y1d/spFLdcFWuugjTmH7OfzqV2
+         RfXA==
+X-Forwarded-Encrypted: i=1; AKwUvBw6wWL6MbwP7VWNiijURVjHt+WFhvs3mYG0Knb+dQMcIMd/i3U8wzCS5IXV+dtFogCkwjthm5WCQg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/L2uKxsZ9TmLD2n6TmKBuRYIzHetuEohY/nvkIwzmGtroI4Ca+
+	v2yY8D7fGIuZwS8gtrmAB8zFIqKLX3FPfO8hNTxD8ZDFIvh7+OocWoYW
+X-Gm-Gg: AYBFou1WEOxzhu0TEdODJfWLH4bRPVDUSAANkdd6iPJaUuWXEFelo53WhDBV8P9zPyf
+	skOD6pZzi0rQdz3jl2jUSA524bVSSW4qeEP1JgdxiwCCc0mFoztZGtPbqy2gopCqAkiYzm5DaFc
+	06WSnIK4SU2FGrQD22Tp6Gv6i4v0a+Ubh2y0WpONMokiCnymsgoWTejNoNthB3QQ4TNGZPKKOGA
+	9O+ZaaMAvfpK1lPOuBV5XUXpDcc5UqFe8TQ2XKJon6wGquIb5KB6MJP2wEQBM8CbYhrEbGUw9se
+	2IaueMhM07XxMMIpBNWd085yVO/4EvfsUmvZelSgOKjnd3xIC7hlQ2MKymG1/ka4xzG+giR4HOJ
+	pr5KsPz7qgd782ZG0CfP0PIgVsFAd1znsR6hWNMQF8MXvjpJFABmO7U+FlHx09y5kXF+p/OERhW
+	hef095nECAD0vmcm0eySwyyNeuGSsj+jNYjbn0iadi18cEPoZeeQP0zfwNgu8dgv56l44abXqyi
+	0qv97KJOUElvvhCzBzrOSL3LmANjA1Lp/E4zXAIXotwtFMrCvItx5ZYuXVOCvFuoY74QiinmZXR
+	yWJrT9TUn1XDs9RvwRCuSjAIzH/KVEOaYD6w
+X-Received: by 2002:a05:600c:3547:b0:4a1:e69d:90e8 with SMTP id 5b1f17b1804b1-4ac1889d442mr421740485e9.22.1793882152080;
+        Thu, 05 Nov 2026 04:35:52 -0800 (PST)
+Received: from workstation.. ([182.180.105.19])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b433ebd278sm114419535e9.3.2026.11.05.04.35.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2026 04:35:51 -0800 (PST)
+From: Ali Tariq <alitariq45892@gmail.com>
+To: netdev@vger.kernel.org
+Cc: Ali Tariq <alitariq45892@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Tomas Hlavacek <tmshlvck@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
+	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and emac_suspend()
+Date: Thu,  5 Nov 2026 17:34:37 +0500
+Message-Id: <20261105123441.2524171-1-alitariq45892@gmail.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -51,127 +110,61 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] spi: use dmaengine_desc_set_callback()
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>
-Cc: Mark Brown <broonie@kernel.org>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Radu Pirea <radu_nicolae.pirea@upb.ro>, CL Wang <cl634@andestech.com>,
- Ryan Wanner <ryan.wanner@microchip.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Vladimir Oltean
- <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
- Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
- Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>,
- Robert Jarzmik <robert.jarzmik@free.fr>,
- Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
- Andi Shyti <andi.shyti@kernel.org>, Tudor Ambarus
- <tudor.ambarus@linaro.org>, Peter Griffin <peter.griffin@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alain Volmat <alain.volmat@foss.st.com>, Chen-Yu Tsai <wens@kernel.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>, Laxman Dewangan
- <ldewangan@nvidia.com>, Thierry Reding <thierry.reding@kernel.org>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Sowjanya Komatineni <skomatineni@nvidia.com>,
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Masami Hiramatsu <mhiramat@kernel.org>,
- "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
- "moderated list:ARM/Microchip (AT91) SoC support"
- <linux-arm-kernel@lists.infradead.org>,
- open list <linux-kernel@vger.kernel.org>,
- "moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE"
- <linux-rpi-kernel@lists.infradead.org>,
- "open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
- "open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
- "open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
- "open list:RENESAS RZ/V2H(P) RSPI DRIVER"
- <linux-renesas-soc@vger.kernel.org>,
- "open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
- "open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
- "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
- "moderated list:ARM/STM32 ARCHITECTURE"
- <linux-stm32@st-md-mailman.stormreply.com>,
- "open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
- "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
- Frank.Li@oss.nxp.com, vkoul@kernel.org
-References: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
- <2154003.0S5aU1g85B@diego> <auxcf206A1yMnHkX@ashevche-desk.local>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <auxcf206A1yMnHkX@ashevche-desk.local>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 05/11/2026 11:37, Andy Shevchenko wrote:
-> On Thu, Nov 05, 2026 at 10:52:38AM +0100, Heiko Stübner wrote:
->>>  	/* rx must be started before tx due to spi instinct */
->>
->> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-> 
-> Please, use "# subpart(s)" syntax with this tag
-> 
->    Reviewed-by: Heiko Stuebner <heiko@sntech.de> # rockchip
+The emac_resume() calls the emac_open() and emac_suspend() calls
+emac_stop() functions directly without holding the lock through
+rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
+with rtnl_dereference(). But since no lock is being held,
+rtnl_dereference throws a suspicious RCU usage on
+Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
 
-That's a lot of work for you, Andy :)
+WARNING: suspicious RCU usage
+drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
+Call Trace:
+phy_detach_internal+0x490/0x5f2
+phy_disconnect+0x90/0xc0
+emac_stop+0x114/0x626
+emac_suspend+0xac/0x126
+platform_pm_suspend+0x72/0xe4
 
-But I keep counting here, one person of Rb's did it right, and there was
-one more correct Ack (for parts). Five persons here and one more at v2
-gave blanket tag, while reviewing only parts. :)
+Hold RTNL lock before emac_open() and emac_stop() with rtnl_lock() and
+release the lock when functions return with rtnl_unlock().
 
-Best regards,
-Krzysztof
+Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+---
+Warning Log: https://kernelci.cloud-v.co/scheduler/job/549#L2168
+Fixed Log: https://kernelci.cloud-v.co/scheduler/job/557
+---
+ drivers/net/ethernet/spacemit/k1_emac.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+index 71a80838bffd..aca25a9e1e9e 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.c
++++ b/drivers/net/ethernet/spacemit/k1_emac.c
+@@ -2033,7 +2033,10 @@ static int emac_resume(struct device *dev)
+ 	if (!netif_running(ndev))
+ 		return 0;
+ 
++	rtnl_lock();
+ 	ret = emac_open(ndev);
++	rtnl_unlock();
++
+ 	if (ret) {
+ 		clk_disable_unprepare(priv->bus_clk);
+ 		return ret;
+@@ -2056,7 +2059,9 @@ static int emac_suspend(struct device *dev)
+ 		return 0;
+ 	}
+ 
++	rtnl_lock();
+ 	emac_stop(ndev);
++	rtnl_unlock();
+ 
+ 	clk_disable_unprepare(priv->bus_clk);
+ 	netif_device_detach(ndev);
+-- 
+2.34.1
+
