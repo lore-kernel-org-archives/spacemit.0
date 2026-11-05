@@ -1,126 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=116.202.128.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793875088;
-	b=yL50hrDfjoVMLkhhzElwtKNlXraRzfQm9tsQyvrHnX9zRpbijOHDgh9B+gKCljnsr7SL
-	 69Pb0MOHYJNb8eemGWvoMoHah/VLpqt1L40W0Lq+dzaqIS8RMyIyvYxpbH/xImIw1skVs
-	 olKjygl4aYuAsKrzA+J0u6bEje4TBevTjZOuipooUx6lR5MvBPmVYPS+tMAS/rdnzI/CL
-	 qqFXR57IlMvnDuf6vu7Lxi4/TQe+dmqqDG7uUSnkC0+sz4dDQZamuJ34SGi9dToo7/Cf6
-	 ARoIyLHNKLiCHyvBc4QLt/wFakQGnf10a1gvKCjAeFv9y7VaEVMBngto/uMJFwh9IAA==
+	t=1793875380;
+	b=GwgHQY6ahV9xWNl0u1Bd4HG6qYZBGzkuL6DLsLvbD/AABH1Cf08LeLxmzud64BIJmaco
+	 JMbM9vQ8R/b4pUKRZbXJa91W6oWXrrqbgx7He5gOLXWNcG/8+LeEI/DJ66zNL/KXRzYlp
+	 24hIAkHJFItGPUyH+N/J+Z+Qs5z9sgikHOXagbhuUlPb2cKPZ7LGKjre04fILAZTHAxZ9
+	 0y4iR8aMKzVzPVEtIglK5UMFG9JKic98Zaf5WqPMjC1IBorhH7ipVDNHS//sFwbnRsns6
+	 Guu/NZhw6AaGyyjGmKDSN/tsOLrYFlc6JPf82XVnTaLOgwveyESpinA18zF9Ai3/BmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793875088;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 Organization;
-	bh=Kb0CzJzsHsZ+UWHQAp2uA/S+bpBIx9myNk0nvO3EvbQ=;
-	b=SQs1Q+fCjqOv5rNRe8OUrutXXhVNL2VNWO0ihYnARYAnaYVwBPGuWdH9o8f76/J/tdTw
-	 /H0cs2FgQQhrCfBrbk76N3eIOf9HTeeMirwZgezH2RSHBmJt70XgZurjA6rGreuGo3yi8
-	 cDDAaJ/pKqHRnH3k5cSkmjqdgR3YenIN34V3PJ08cyJJXgTo1Wp37Z9vn/DQ7k0ahnGfG
-	 VBtAoC11PtFb0GU3bm9jhYAdsPxmAstT2g5z2QMj0tgW/q8JHSd1aPOJY1caqxj9Gup34
-	 BFfrQvOLAyV6b1k9GCqtrFTD6Wb58X1ejsPKzGbRYPo1i4t/sHzIH6KOuOHg39GQZ/Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793875380;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=LY48cpV0y54qEv+ziTpWevRO8FRdZm6CABLVHzZZ+3I=;
+	b=xLnnm+bJ7crOIKTTzxIG+aIAVKpOqeIwCpYkdYIenUs/eSsf0B4lMPyb6xvHMIgVRBjX
+	 Fk5Fzm6Nl2CHxgEBLDMywZQwytstcA7fYv1FWwtAP7LVY9ek7U+jscBQF/Ua4rhZabyIK
+	 IZ7aPVaGuKPbRtIgitRaSydfi6cSMPSODs92IHkwbYXThKd37Uf5GIPaFNyfFzx9gYkXS
+	 I3cIrvGnM1pxEq6OxWT9UuyoEs4Iw47kZVIquRK0HKinwjU//fEG3rptCbK0ZmS/bCL4x
+	 gjlEFM4dOWKwoPahZDnb4EIEFfWcl6IoCc4yzavBn/VhkvdolEIu4nwqEJxvGYjZ4Yg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=A4rKjlRB;
-	arc=none smtp.remote-ip=192.198.163.12
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=freeshell.de;
+	spf=pass smtp.mailfrom=freeshell.de;
+	dkim=pass header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=TBry9vQL;
+	arc=none smtp.remote-ip=116.202.128.144
+Received: from freeshell.de (freeshell.de [116.202.128.144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D771D606A31B;
-	Thu,  5 Nov 2026 10:38:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D771D606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E65C606A31B
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 10:42:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5E65C606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=A4rKjlRB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793875087; x=1825411087;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=eqO4A+ClsqjEqfXPQ0TFlIOZ+1UsCC9oIYRbbnK4e7s=;
-  b=A4rKjlRBVFVKIEQC4EavgCR17/xSyjTrOEB2Tb84HNkL6B9y4XJRT1QM
-   iUwkaAxPJL3QUyzkBOA2luwvYVxfQEtYxAZEW+GgljOK2viemRDECySII
-   WP7y3aEe+2a85svsfCglP2dbIrcCrEpO3+UJsHfe9yqiygMRa6YlwWPEW
-   SH/E8Be2sTsitocPTdbj6RjtMQXjuD7nznitbEIfRXlPNJPABOF93RqS8
-   OPhcFvq5cMM3UjilmzE5ltY/OlPLJqNBytdS6Dli+9Pk356d8cgqYZwW5
-   whsC1IhkOREAn7phf37f1DlJwQbvCLs1O+8Yiwt+HbJIKiDSNPAN1i8lB
-   g==;
-X-CSE-ConnectionGUID: yYSVdaxVQyG5N5LMgLWXPQ==
-X-CSE-MsgGUID: DUe1Xnc2SLCdB8du9wQTtg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2560337"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2560337"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 02:38:06 -0800
-X-CSE-ConnectionGUID: xIegnpX+Sr+k5gjNuD4pbQ==
-X-CSE-MsgGUID: Wcy7neyfQa2lUKLW6Cyinw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="7281977"
-Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.244.144])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 02:37:54 -0800
-Date: Thu, 5 Nov 2026 12:37:51 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>
-Cc: Mark Brown <broonie@kernel.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Radu Pirea <radu_nicolae.pirea@upb.ro>,
-	CL Wang <cl634@andestech.com>,
-	Ryan Wanner <ryan.wanner@microchip.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
-	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>,
-	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
-	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
-	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
-	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>,
-	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
-	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>,
-	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
-	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-	Frank.Li@oss.nxp.com, vkoul@kernel.org
-Subject: Re: [PATCH 1/1] spi: use dmaengine_desc_set_callback()
-Message-ID: <auxcf206A1yMnHkX@ashevche-desk.local>
-References: <20261102174005.3933649-1-Frank.Li@oss.nxp.com>
- <2154003.0S5aU1g85B@diego>
+	dkim=pass (2048-bit key, unprotected) header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=TBry9vQL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1793875341;
+	bh=LY48cpV0y54qEv+ziTpWevRO8FRdZm6CABLVHzZZ+3I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=TBry9vQLy9zXjlzdD3mWMp0vCGbmJRard8DI1NekNJ8v9IEzcDd2wRrQ+wtMkpzKI
+	 bbON9/TC6zvv7ZF/nYCLXhF2kqdINuVz5NjU5+/3KhN+r3IL++BEWtXByMA961lr63
+	 5HKtD+j2Y7AwQA0QwhTJLFt5tO2rv6yLjWUwDR3dp+Aat6+6tozWUCHMZSnMAIjRHg
+	 S/YnpZt6mmDLqrQpq7ATUWePWVcD6+MhRHZWwNG6E0nHlI6qdslQJJjpy5dwSBA64S
+	 CuFj2bN66jqxyxD2muvdE8NXC9W2m3TND81rZETFSF+LbK3DdtselDhJL79w6e8sgo
+	 8nHiNed7bvZ0A==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id 63687B22067C;
+	Thu,  5 Nov 2026 11:42:19 +0100 (CET)
+Message-ID: <0c4b79f0-383a-4884-8132-59dcb3487cd3@freeshell.de>
+Date: Thu, 5 Nov 2026 02:42:11 -0800
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -130,58 +58,60 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2154003.0S5aU1g85B@diego>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] riscv: defconfig: Enable AT24 EEPROM and ONIE TLV
+ layout
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20261105-k3-com260-module-sd-nor-mac-v1-0-138b39d74602@linux.spacemit.com>
+ <20261105-k3-com260-module-sd-nor-mac-v1-4-138b39d74602@linux.spacemit.com>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <20261105-k3-com260-module-sd-nor-mac-v1-4-138b39d74602@linux.spacemit.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 05, 2026 at 10:52:38AM +0100, Heiko Stübner wrote:
-> Am Montag, 2. November 2026, 18:39:58 Mitteleuropäische Normalzeit schrieb Frank.Li@oss.nxp.com:
-> > 
-> > Replace open-coded assignments to callback and callback_param fields
-> > of struct dma_async_tx_descriptor with calls to the
-> > dmaengine_desc_set_callback() helper across SPI bus drivers.
-> > 
-> > No functional change intended. Prepare make to struct
-> > dma_async_tx_descriptor private to the DMA engine.
-
-[...]
-
-> > diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
-> > index 1a81fd94b4396..f8d6cea2f3dad 100644
-> > --- a/drivers/spi/spi-rockchip.c
-> > +++ b/drivers/spi/spi-rockchip.c
-> > @@ -475,8 +475,7 @@ static int rockchip_spi_prepare_dma(struct rockchip_spi *rs,
-> >  		if (!rxdesc)
-> >  			return -EINVAL;
-> >  
-> > -		rxdesc->callback = rockchip_spi_dma_rxcb;
-> > -		rxdesc->callback_param = ctlr;
-> > +		dmaengine_desc_set_callback(rxdesc, rockchip_spi_dma_rxcb, NULL, ctlr);
-> >  	}
-> >  
-> >  	txdesc = NULL;
-> > @@ -500,8 +499,7 @@ static int rockchip_spi_prepare_dma(struct rockchip_spi *rs,
-> >  			return -EINVAL;
-> >  		}
-> >  
-> > -		txdesc->callback = rockchip_spi_dma_txcb;
-> > -		txdesc->callback_param = ctlr;
-> > +		dmaengine_desc_set_callback(txdesc, rockchip_spi_dma_txcb, NULL, ctlr);
-> >  	}
-> >  
-> >  	/* rx must be started before tx due to spi instinct */
+On 11/5/26 00:23, Troy Mitchell wrote:
+> The OrangePi RV2 and R2S device trees take the Ethernet MAC address from
+> the ONIE TLV data in an AT24 EEPROM, and the K3 CoM260 module stores its
+> MAC address the same way. Without the EEPROM driver and the ONIE TLV
+> layout, the MAC address lookup keeps returning -EPROBE_DEFER and the
+> Ethernet controller never probes unless the bootloader passes a MAC
+> address in the device tree.
 > 
-> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+> Enable both drivers as built-in so the MAC address is available as soon
+> as the Ethernet driver probes, including for network root file systems.
 
-Please, use "# subpart(s)" syntax with this tag
+This does not make sense for platforms which have no use for EEPROM
+driver in Linux userspace.
 
-   Reviewed-by: Heiko Stuebner <heiko@sntech.de> # rockchip
+> 
+> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> ---
+>  arch/riscv/configs/defconfig | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+> index 04ae305d5511..a76f801d8eed 100644
+> --- a/arch/riscv/configs/defconfig
+> +++ b/arch/riscv/configs/defconfig
+> @@ -276,6 +276,8 @@ CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
+>  CONFIG_PHY_STARFIVE_JH7110_PCIE=m
+>  CONFIG_PHY_STARFIVE_JH7110_USB=m
+>  CONFIG_LIBNVDIMM=y
+> +CONFIG_NVMEM_LAYOUT_ONIE_TLV=y
+> +CONFIG_EEPROM_AT24=y
 
--- 
-With Best Regards,
-Andy Shevchenko
+Enabled as module, please.
 
+>  CONFIG_NVMEM_SUNXI_SID=y
+>  CONFIG_EXT4_FS=y
+>  CONFIG_EXT4_FS_POSIX_ACL=y
+> 
 
+-E
