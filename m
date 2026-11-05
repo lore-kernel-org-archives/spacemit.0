@@ -1,62 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.92.39.34
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793843201;
-	b=0H2FiUAizj8BSuGLzkyLESrhkDuXd/sHbHoM+9D8yb7FSXSdRAiUD/R2iiI8l4I6IbQ1
-	 MEv9TxAbGs5shSxIeHMpgLE+mPk9uaLghCKqEr+/R7JQ1FavLhpFwBv/Zdf1D9lOqW22W
-	 IBBKmLSNVKbNkpVnn2PzclYFTbXCYZ1InnIrvAEOi0F/6asNYsViI+xJcWSZ8qaMlS54D
-	 CB3NRuXx2HuV4DSf3E/vAW7krovuJG/vxaG1eUOYLOhfhv8voivdqDsdQNJJNq2mkI1WB
-	 6NMqhiUantQNZUOGRPt+ZrmkWmjH6Wq2ZNoDYv0Exl+0lYeoH2rcytIf77yvea4+Amg==
+	t=1793847144;
+	b=KugwF9szOcPKkzaR4b2FGdWw6iPsLUHiGRyM8p5Nn+rIjkLkU5CpDQkM4szGLDfO0oAU
+	 jxkbXw+UNwZr68s89an3wV3ayZv5sbC57HGS+XVz9WVQaDPImUWbFb1LX6ldbCZ+lpkYo
+	 hZ/clKWNfg6undbWVU6lhL0GOMPeBvX8ptRLrnmK5CRaE1XCFsnavYAdLqyl+5gNIUwn0
+	 KSoe48gQJP9flVUvv3HLYpkCWPgk2NaSYEhs+nXSMZYTYPkNURM1IocEWTuvf8PihfQV2
+	 owvS0maki3y46j9wbybEYuSkUqQonEGVpOKA/LrYZPVjUQIoWMC6NYVf6Cxe4XFCwIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793843201;
-	h=DMARC-Filter:DKIM-Signature:Message-Id:From:References:Content-Type:
-	 Content-Transfer-Encoding:Date:To:Cc:Subject:Mime-Version:In-Reply-To:
-	 X-Lms-Return-Path;
-	bh=mAEHk156ALRm/Yk38m2Sb6tcWOHC1b8Vy26wU1dgEA0=;
-	b=36ud0lTcRclKMkfF/zf1ExBmLZ/6aNje2QaC5xuY/xnz6s+/t+w5Pl27+B3SHUy7S65n
-	 efwV7YZTm8nTykjNvKM1SKE3KXwEVxeq7LeLJHpu5hd+uSj3eJFg7PbmvQRKBs1OP1rpD
-	 0o1sAlxg5HxuL3kVBRPZCJAQZAJTTtVGvyP8sm2BBZawezD2Lz3p9K49tnOj5Zx60x0jq
-	 VcUcOI04FWjxKIsbBz4CEmp6B7Wt835+GvfynYs11++U46uSRDvrTp4ciwvmUVA/SemT8
-	 Eyj2BzYUpJ7/C4xDRkN+qWryoMxcqieSbxiZIYkqmVXZtZwz0xzQVQFfzHVjta6+nJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793847144;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
+	 From:To:X-Mailer:References:In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=pSQlM765W4jXpSl/SCbV9elszf49mnxaxw8VUy+qP6Y=;
+	b=4srMBdm2Vra3UI3WFym0aVO8KSzwz/RzyPx1uhix4FOmg6hZ/YWBkr27y8eIWMkhOZkl
+	 lNTl7DKlm/jDUIEJK2dZIl8NlWa/UedwzE0rAe1WYxgjMNGUkNsF+p++rFHLvIPMRlIub
+	 i1/oideFXuKQnfm6UH10g/jBKEJU/hCBGf4xdfORSrxNKKgHGjV5oK+6AOelSrNK6AX+U
+	 mNP/RAqf2iUqwzb7McfHDfuRCrNxRrnHs/bFnqZu4KSRjUlndPuGRMq8LsCKjipIzUohp
+	 dpyV8bEmOByBb2kA+oEftpjfzFMLzW9/pLFnUzLNaTf/OqhaZnulOgtkXxABBVXYAww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=deepcomputing.io;
-	spf=pass smtp.mailfrom=deepcomputing.io;
-	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=SotxgQiF;
-	arc=none smtp.remote-ip=209.127.231.44
-Received: from va-2-44.ptr.blmpb.com (va-2-44.ptr.blmpb.com [209.127.231.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=YbuxoscO;
+	arc=none smtp.remote-ip=54.92.39.34
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861AB606A328
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 01:46:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 861AB606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19462606A326
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 02:52:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19462606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=SotxgQiF
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1793843190;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=mAEHk156ALRm/Yk38m2Sb6tcWOHC1b8Vy26wU1dgEA0=;
- b=SotxgQiF9ljVkzBcaF38B0g9igWK+Sm+1s6SPsJGdXH5mSb2fEUHnmh259S6ynBaULJxfK
- Czv6nKXHVNPctX2O28H/FaMNv10WEJ/nlW8lVxfCDQy9N2Pi0ulj9VyS2+XrWNBSnwNUrq
- 5N1NYFIip+5Uj5ucbVs46rOgd8gyZARBhmKOATJyQFZBmmnxxp2YF5xC8pfU7VJHQrHpDR
- b6is6TcK/261tUoAjao97baDkpGvZ9WbqxMzLvCaXnaelkWO7jewMdYpdAsyMce/gvP1oz
- ldmeaAQFjOL8RgxKpOxlZTVdyrXXyucP97jN26JpoaP4/XMWLK/6qCTuoVWxyg==
-Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.4545f39b.8adf.4983.b26a.7df21480401c@feishu.cn>
-From: "Sandie Cao" <sandie.cao@deepcomputing.io>
-References: <20261102060105.100645-1-sandie.cao@deepcomputing.io>
-	<5f595068-671e-4823-95af-da1702354a16@murena.io>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 05 Nov 2026 09:46:27 +0800
-To: "Maud Spierings" <maud_spierings@murena.io>
-Cc: <alex@ghiti.fr>, <aou@eecs.berkeley.edu>, <conor+dt@kernel.org>, 
-	<devicetree@vger.kernel.org>, <dlan@kernel.org>, <krzk+dt@kernel.org>, 
-	<linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
-	<palmer@dabbelt.com>, <pjw@kernel.org>, <robh@kernel.org>, 
-	<spacemit@lists.linux.dev>, <troy.mitchell@linux.spacemit.com>
-Subject: Re: [PATCH v3 1/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: add P1 PMIC regulator tree
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=YbuxoscO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793847104;
+	bh=pSQlM765W4jXpSl/SCbV9elszf49mnxaxw8VUy+qP6Y=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=YbuxoscOgHThcRxXOdh5gkG3Lny9wK/JJF1vTgfTEFROLzZSJPMaaLzG2MHqyVAhr
+	 imQeRgQzLBvLyMDC2av1s8+r7ucRVr6EJAHmFqBwxB1pFkadAM/dhGWDnMcWgQYP9I
+	 OWT/CqlqL1zJ5QlEwanFGkyzQMzuXL2nd0r7Kdyo=
+X-QQ-mid: zesmtpsz2t1793847097t2b788bd9
+X-QQ-Originating-IP: BDByG9NYEZlnDz7mxM6v9n2dhLlOWgRPpDEX+pHQrWk=
+Received: from localhost ( [8.218.183.135])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 05 Nov 2026 10:51:35 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 14892018786734316387
+EX-QQ-RecipientCnt: 13
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -66,73 +59,101 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
-In-Reply-To: <5f595068-671e-4823-95af-da1702354a16@murena.io>
-X-Lms-Return-Path: <lba+16aebdff4+668d01+lists.linux.dev+sandie.cao@deepcomputing.io>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 05 Nov 2026 10:51:35 +0800
+Message-Id: <DMMXQ358UWUZ.35H3HEEEUW1V8@linux.spacemit.com>
+Cc: "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, "Manivannan
+ Sadhasivam" <mani@kernel.org>, "Rob Herring" <robh@kernel.org>, "Bjorn
+ Helgaas" <bhelgaas@google.com>, "Yixun Lan" <dlan@kernel.org>, "Troy
+ Mitchell" <troy.mitchell@linux.spacemit.com>, <linux-pci@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] PCI: spacemit: Ignore link partner PERST on K1
+From: "Encrow Thorne" <encrow.thorne@linux.spacemit.com>
+To: "Manivannan Sadhasivam" <manivannan.sadhasivam@oss.qualcomm.com>,
+ "Encrow Thorne" <encrow.thorne@linux.spacemit.com>
+X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
+References: <20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com> <179229759512.2114.3306580489141327360.b4-reply@b4>
+In-Reply-To: <179229759512.2114.3306580489141327360.b4-reply@b4>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: M182XWJxg1fqJITtHxQLvebLEkcMXiMjIGfbBAk+TLCRDofSVABmYl36
+	aPmcxYs2y8KTHrbh4DpiBhapUf0M693EZ5yQ3BpC1/yngov892HyLbnCrm/IveR64wu15wH
+	lEsGXC66HuXIgZAw2Jr0p4HR//ajNazw2UeZQ+AmY/BydtEJtVQuQw/m23uV53lYE5VJfji
+	lUftQjmFcGMy8Fw9m3JjtNbNJSwmqF8z5N1cSBqF1IWAI9hX2yBJjXMtqw6gZfSqfHzpVo5
+	MK7k2BmcZcAqve79OL/udxyyzTp1a9oyG75hig83kzSUTUb+4mBns5PUfz3RxkRUdSHwUkz
+	iRrJRcFUXMimPlxBtP1ioW5+u7GqiPAXEOdH/1AmC4P/i/xvf1VCCpOzU2RCvJBOb/rdQT2
+	bwGYkrqIAc/xMZgYb702DXS0bzDGINvg1AOWoBWsv0RDO8gxkrfUnE62l090SXtpe8JC7CX
+	dBRAA/gs99RWEC+c6MB6/Ln6S39fWRAQURcinR6UHX03Vv76Rx5wcfWWLyabfv+jRs4tqik
+	KsVSIo10WW5XllOk4DWVmY+NtXsrXXIkjduyAIE6ZS6Aflho/5ionKNCztg2f/KBvPKouwp
+	bAWzJO9qN+w2J7xRBrnMMYDbquo4YMv/gmYdI5nz9wEm4HcTYzBcazJMJAXnzFm5Je4b60O
+	kr2Em8yZfWN0+cnIQvHvjdtBKYTE94by5lVkvIVUg4jOM37CojWCXZtJtHYNRXqaTLwBKxZ
+	APAetXi864MU5ZwD+/3TZ2awTNqVlR1u5xybP1nsqipt9+ISFOdEoQLoj1xS8zuFxJJCXL+
+	pGSI7HvIZ2lUAkSnkWMGbd1OQajzXUxAXbuB1MXpilDB5+0WDlzUK+kvmAzdqMAPpTk+nlP
+	Z7OpbRS4mB7Lo3aPngJnly+G8C/koLudDkDhs7zCyxap0+x3VZ7PqmdAX5WhEd5yLI61Y8w
+	utXHZCpwCl9nCtCiID+hwWhe11J4KJ/wGZpJgbJfVEOiZvsqlj3HLxj73
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+X-QQ-RECHKSPAM: 0
 
-Hi Maud:
+On Sun Oct 18, 2026 at 12:26 PM CST, Manivannan Sadhasivam wrote:
+> On 2026-09-24 10:04 +0800, Encrow Thorne wrote:
+>> The K1 PCIe controller and PHY are affected by the PERST signal from
+>> the link partner during initialization. With some devices connected,
+>> this can prevent host initialization from progressing and cause the
+>> system to hang while probing the PCIe controller.
+>>=20
+>> Set PCIE_IGNORE_PERSTN before accessing the DBI registers. When set,
+>> this bit makes both the PCIe controller and PHY ignore the PERST
+>> signal from the link partner.
+>>=20
+>> This allows host initialization to complete without being affected by
+>> the link partner's PERST state.
+>>=20
+>> Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
+>> ---
+>>  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>=20
+>> diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci=
+/controller/dwc/pcie-spacemit-k1.c
+>> index 0564c46e2f48..98f067e1ba81 100644
+>> --- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+>> +++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+>> @@ -44,6 +44,7 @@
+>> =20
+>>  #define PCIE_CONTROL_LOGIC			0x0004
+>>  #define PCIE_SOFT_RESET			BIT(0)
+>> +#define PCIE_IGNORE_PERSTN			BIT(2)
+>> =20
+>>  struct k1_pcie {
+>>  	struct dw_pcie pci;
+>> @@ -137,6 +138,13 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+>>  	if (ret)
+>>  		return ret;
+>> =20
+>> +	/*
+>> +	 * When set to 1, the PCIe controller and PHY ignore the PERST signal
+>> +	 * from the link partner in both RC and EP modes.
+>> +	 */
+>
+Hi Mani
 
-> From: "Maud Spierings"<maud_spierings@murena.io>
-> Date:=C2=A0 Wed, Nov 4, 2026, 23:31
+> What? PERST# is an output signal to RC and input to Endpoint. PERST# is n=
+ot
+> controlled by the Endpoint, but only by the RC/host.
+>
+> - Mani
 
-> > diff --git a/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts=
- b/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
-> > index b5d5112de358..804abc85602a 100644
-> > --- a/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
-> > +++ b/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
-> > @@ -22,6 +22,161 @@ memory@100000000 {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0device_ty=
-pe =3D "memory";
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D <=
-0x1 0x00000000 0x4 0x00000000>;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};
-> > +
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0reg_aux_vcc3v3: regulator-aux-vcc3v3 {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D=
- "regulator-fixed";
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-name=
- =3D "AUX_VCC3V3";
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-min-=
-microvolt =3D <3300000>;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-max-=
-microvolt =3D <3300000>;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-alwa=
-ys-on;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0};
-> > +
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0reg_aux_vcc5v: regulator-aux-vcc5v {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D=
- "regulator-fixed";
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-name=
- =3D "AUX_VCC5V";
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-min-=
-microvolt =3D <5000000>;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-max-=
-microvolt =3D <5000000>;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-alwa=
-ys-on;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0};
-> > +};
-> > +
-> > +&i2c8 {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-names =3D "default";
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-0 =3D <&i2c8_cfg>;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D "okay";
-> > +
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0p1@41 {
->=C2=A0
-> I believe this should be pmic@41
-> If it needs a label it could be p1: pmic@41 but the node name should be=
-=C2=A0
-> more descriptive.
+You are right; my earlier wording was misleading.
 
-This patch follows k3-pico-itx.dts, it uses p1@41. And k3-com260.dtsi uses =
-pmic@41.
-I will uses pmic@41 in next version.
+On K1, the PERST# pad input feeds back into the local controller's
+internal reset input even in RC mode. Thus, the RC can reset itself
+when asserting PERST# to reset the endpoint.
 
-Best regards
-Sandie
+PCIE_IGNORE_PERSTN masks this input path without affecting the
+RC's control of the external PERST# signal.
 
->=C2=A0
-> Kind regards,
-> Maud
->=C2=A0
+Regards,
+Encrow Thorne
