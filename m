@@ -1,106 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.128
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793882154;
-	b=EPH1pi4k2djY/Y5ye+DGEVPzo9PTKjOlQOrl51/WoS4bSTBSIawut8ekuRGY405Ewsk3
-	 1b1H8xoZSUODRSyleV76dqNbcmJc/2lz/gq0mY78YYxHvjvpvNdrEYX82qkWUWC3w8dJx
-	 leXBtn3G0cK+yCJOy2rJPhS1wWB3I5cOWgADx66W9pqDQxbsc+ZkQEnuQaCZF6xQnXxK6
-	 URUtP2x7yZ2BPCN4pgdf12/aACnBAJASp8xE6dNV8VPN1D/GspZ1kfP20eHVNOJOxEVBH
-	 Av9MAXN+LrjtnJo+pf6Bc4NRp82V/dFy5ZtgEjEoQbbPaKOMW5ruIeOY+IwJ3Gt8baw==
+	t=1793886055;
+	b=zQyu+zs8Ar0U0vfvVO4A7HTgPBhepdTs45yRH7waqQSISMBdYHtzodPMjkpBzkqhxR7s
+	 oPYlzHACEjvemgGCYtptxAJfLAcmvegiiXlevmgq/Olbf6R/zAiaaDD/67MeFidSsAKVt
+	 Y79JQWKLKWRTLGvIxlik9qlp3WtbGt3N7lh2H8o8Vh/E1gMzAJGb8FXYBCl6mcKIcGl4I
+	 jso3xX6RlyVhjmWt0kvxtFJLI9Gn6338nqug6T4FQMb6nIHWX+Z6UE20HO0repw+vT3Fm
+	 elY8v4glmGDzzE06WPB+AfbtD56hB4KvAOChf3px+XfeqmgqWN7I7elrn7/hSB3H5EQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793882154;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
-	b=WXnOij5N33M345SRteVSnbnpOASURRmwDi1875OMJTAo6xA5yhF7eiqm6rdHzo/c+C17
-	 x6hUJv/tWVbIgq2Aq35B4v7kfLpvPuyHjVn0hd5hcYxc0Sc2z7KZ9BnsqUe09cdLJqqAE
-	 Q7vV2j/xisS4lQ4EMTwl7/WwcU9NpbABwcX/5yV3tyWUFavcltYA4UKO1nUnFX5i0glhU
-	 +wXWM/zJmRNhhfDZPdwsHPQYruL7llxual7zZijhbKDHZRGmR4zyJIhQof0KBbFIQMtqB
-	 OzKfmQrh50f1ULy4xrZG8cC14tn4gWH7D+8HGMetSf5yVmJTVk3UDzK4VQnvv9cMSBA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793886055;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Debian-User;
+	bh=cayOl+ah2VntGuMKSFZe0/sOYOLHGMSfHTljLp1hqos=;
+	b=rSp03ynUxv7cbh+2J9GjOxnOxJwWO/UwqgBkXiMXVUq2OO8X9ZWJ/zjvDaMdzma7s+Rc
+	 0aj2tRRB7j7mOrEqat0+RgquBNdHgPlhW7JOUv9Lbg/IZrqz5G19Xqd3FOx5mQpzs1lpq
+	 zh1rNRTLDsxJrVl5Ol5iAmXPw6Wc1jCj/OHkLzL9BljEEpkDD0Rn4IzVMvRaO+2L0FGbB
+	 5cSQ/4GsHTjLElukQ3wrUkrnQ+TTwzP+iBF+16ZTQqhrTIJoXShtvgvlSZtCtZlWgxNxS
+	 iVcmpL77qq25lqAVM4zAohniYJ0U4WjPrpOQxeccGTbnKHa+SG2/JlJpl3zA6see0fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s9XJ7Y3e;
-	arc=none smtp.remote-ip=74.125.225.128
-Received: from mail-wm2-f0.google.com (mail-wm2-f0.google.com [74.125.225.128])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=debian.org;
+	spf=pass smtp.mailfrom=debian.org;
+	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=BcsHNlT1;
+	arc=none smtp.remote-ip=82.195.75.108
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC303606A33E
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 12:35:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC303606A33E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40915606A335;
+	Thu,  5 Nov 2026 13:40:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40915606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=s9XJ7Y3e
-Received: by mail-wm2-f0.google.com with SMTP id 5b1f17b1804b1-4a2d6bfe8d6so6354465e9.1
-        for <spacemit@lists.linux.dev>; Thu, 05 Nov 2026 04:35:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793882152; x=1794486952; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
-        b=s9XJ7Y3eHdwyjN4qcHIaLwrn/7qar+Pa3jZDec1zoFDWMubGgQaWHQyrYouq/1zR0q
-         SoM+5GEDHOSF5Lidhdzf4nSzATkZnbGN+q5E109CKDnsHB+e+I++DCRvMicz8uF+o8ZA
-         zZB5Yb8vAvT226splcx3AdYzd9r3dPAYIKUmYGkdWKtWVzA8rRCv0OVLxhc+WGO5MBk9
-         DapN6f1FLi0MS3vwTKYkMgO7YW9GGpI6kNjty+iiapPLMPnUjUuveSs6J2ShKwDxAqz5
-         WU914znE7De13a1n090guU4GenB7qqAMlGe0b7FSDRkMCzvyGf6H1Y+2tpbiKz6cnbT3
-         QX8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793882152; x=1794486952;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=C/jFN8eJhh5ybkPCJN1GH5EEF9QQtG/kp2iWAhig7A8=;
-        b=t1y4zRsJUdb7lplP+DNaNCjVOQa5VYLfVnpLnDM1VQuW9hjLhi5fAqkm3H3+bQFNGr
-         mj6vwjDP9+S5jrWKp7JwoY9euSnwBljRVo+Ds8sUAy90zblBTDu7KHWiBd2APX8Gk3YZ
-         LI+Sg5RhE1fZfHEEWT4LbTms96RLhU+foRRrdYqxBTFI9HKW8Q/oCjv8Q6FDW7IB/FKo
-         Xj6Gx5v9J0h5yNbMP619ilvk7v5F2i8P/dx9ICYXD9GVBzlerIAvVR4CrQblzziNu1Zu
-         4k/uXR557dGPWHLyNaOP23o2EzOL8pTWam5s9HFu2+Y1d/spFLdcFWuugjTmH7OfzqV2
-         RfXA==
-X-Forwarded-Encrypted: i=1; AKwUvBw6wWL6MbwP7VWNiijURVjHt+WFhvs3mYG0Knb+dQMcIMd/i3U8wzCS5IXV+dtFogCkwjthm5WCQg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/L2uKxsZ9TmLD2n6TmKBuRYIzHetuEohY/nvkIwzmGtroI4Ca+
-	v2yY8D7fGIuZwS8gtrmAB8zFIqKLX3FPfO8hNTxD8ZDFIvh7+OocWoYW
-X-Gm-Gg: AYBFou1WEOxzhu0TEdODJfWLH4bRPVDUSAANkdd6iPJaUuWXEFelo53WhDBV8P9zPyf
-	skOD6pZzi0rQdz3jl2jUSA524bVSSW4qeEP1JgdxiwCCc0mFoztZGtPbqy2gopCqAkiYzm5DaFc
-	06WSnIK4SU2FGrQD22Tp6Gv6i4v0a+Ubh2y0WpONMokiCnymsgoWTejNoNthB3QQ4TNGZPKKOGA
-	9O+ZaaMAvfpK1lPOuBV5XUXpDcc5UqFe8TQ2XKJon6wGquIb5KB6MJP2wEQBM8CbYhrEbGUw9se
-	2IaueMhM07XxMMIpBNWd085yVO/4EvfsUmvZelSgOKjnd3xIC7hlQ2MKymG1/ka4xzG+giR4HOJ
-	pr5KsPz7qgd782ZG0CfP0PIgVsFAd1znsR6hWNMQF8MXvjpJFABmO7U+FlHx09y5kXF+p/OERhW
-	hef095nECAD0vmcm0eySwyyNeuGSsj+jNYjbn0iadi18cEPoZeeQP0zfwNgu8dgv56l44abXqyi
-	0qv97KJOUElvvhCzBzrOSL3LmANjA1Lp/E4zXAIXotwtFMrCvItx5ZYuXVOCvFuoY74QiinmZXR
-	yWJrT9TUn1XDs9RvwRCuSjAIzH/KVEOaYD6w
-X-Received: by 2002:a05:600c:3547:b0:4a1:e69d:90e8 with SMTP id 5b1f17b1804b1-4ac1889d442mr421740485e9.22.1793882152080;
-        Thu, 05 Nov 2026 04:35:52 -0800 (PST)
-Received: from workstation.. ([182.180.105.19])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4b433ebd278sm114419535e9.3.2026.11.05.04.35.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 04:35:51 -0800 (PST)
-From: Ali Tariq <alitariq45892@gmail.com>
-To: netdev@vger.kernel.org
-Cc: Ali Tariq <alitariq45892@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Tomas Hlavacek <tmshlvck@gmail.com>,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	linux-riscv@lists.infradead.org (open list:RISC-V SPACEMIT SoC Support),
-	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and emac_suspend()
-Date: Thu,  5 Nov 2026 17:34:37 +0500
-Message-Id: <20261105123441.2524171-1-alitariq45892@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=BcsHNlT1
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=cayOl+ah2VntGuMKSFZe0/sOYOLHGMSfHTljLp1hqos=; b=BcsHNlT12nA+YrSs/yRQfTMO5p
+	C1AEYURjocvZzLl7GjwphDEfRVdYqCD9RQ4WSY1RRadoooX7PEBQd2njIbSf0/8jAi5D8GScOyO0Z
+	nQzofL3rkkHavZNegA2NJpWPSzvkTW65cBDV5gGUBpYYF1At8PsL5E957J0wG74iUl78HgOMgRWVd
+	8krpw4mt0iFi6G3+l0/amB2R9RxV3H1IsBL4A7HUApVc9x8AdTicgmu3Kzm8VOt3JFnGSCilpsRyr
+	TBApv+jFdlfxpHhRB+A8nXol+C281WEVBnrOR1udOBkiuXEDHDjppxGjcjT8697ze2O3nyo2UcxNm
+	RKs+KCLQ==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1xOxhk-008XWA-2g;
+	Thu, 05 Nov 2026 13:40:37 +0000
+Date: Thu, 5 Nov 2026 05:40:31 -0800
+From: Breno Leitao <leitao@debian.org>
+To: Ali Tariq <alitariq45892@gmail.com>
+Cc: netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Yixun Lan <dlan@kernel.org>, 
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vivian Wang <wangruikang@iscas.ac.cn>, 
+	Chukun Pan <amadeus@jmu.edu.cn>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
+	Tomas Hlavacek <tmshlvck@gmail.com>, Muhammad Bilal <meatuni001@gmail.com>, 
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
+ emac_suspend()
+Message-ID: <auyG7hGJtMzV0Gbi@gmail.com>
+References: <20261105123441.2524171-1-alitariq45892@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -110,61 +74,31 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261105123441.2524171-1-alitariq45892@gmail.com>
+X-Debian-User: leitao
 
-The emac_resume() calls the emac_open() and emac_suspend() calls
-emac_stop() functions directly without holding the lock through
-rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
-with rtnl_dereference(). But since no lock is being held,
-rtnl_dereference throws a suspicious RCU usage on
-Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
+On Thu, Nov 05, 2026 at 05:34:37PM +0500, Ali Tariq wrote:
+> The emac_resume() calls the emac_open() and emac_suspend() calls
+> emac_stop() functions directly without holding the lock through
+> rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
+> with rtnl_dereference(). But since no lock is being held,
+> rtnl_dereference throws a suspicious RCU usage on
+> Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
+> 
+> WARNING: suspicious RCU usage
+> drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
+> Call Trace:
+> phy_detach_internal+0x490/0x5f2
+> phy_disconnect+0x90/0xc0
+> emac_stop+0x114/0x626
+> emac_suspend+0xac/0x126
+> platform_pm_suspend+0x72/0xe4
+> 
+> Hold RTNL lock before emac_open() and emac_stop() with rtnl_lock() and
+> release the lock when functions return with rtnl_unlock().
 
-WARNING: suspicious RCU usage
-drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
-Call Trace:
-phy_detach_internal+0x490/0x5f2
-phy_disconnect+0x90/0xc0
-emac_stop+0x114/0x626
-emac_suspend+0xac/0x126
-platform_pm_suspend+0x72/0xe4
-
-Hold RTNL lock before emac_open() and emac_stop() with rtnl_lock() and
-release the lock when functions return with rtnl_unlock().
-
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
----
-Warning Log: https://kernelci.cloud-v.co/scheduler/job/549#L2168
-Fixed Log: https://kernelci.cloud-v.co/scheduler/job/557
----
- drivers/net/ethernet/spacemit/k1_emac.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 71a80838bffd..aca25a9e1e9e 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -2033,7 +2033,10 @@ static int emac_resume(struct device *dev)
- 	if (!netif_running(ndev))
- 		return 0;
- 
-+	rtnl_lock();
- 	ret = emac_open(ndev);
-+	rtnl_unlock();
-+
- 	if (ret) {
- 		clk_disable_unprepare(priv->bus_clk);
- 		return ret;
-@@ -2056,7 +2059,9 @@ static int emac_suspend(struct device *dev)
- 		return 0;
- 	}
- 
-+	rtnl_lock();
- 	emac_stop(ndev);
-+	rtnl_unlock();
- 
- 	clk_disable_unprepare(priv->bus_clk);
- 	netif_device_detach(ndev);
--- 
-2.34.1
-
+This would work, but I am wondering if it would be possible to call rtnl
+inside the _open function, when dealing with the PHY? in other words,
+shrink the time rtnl is held.
