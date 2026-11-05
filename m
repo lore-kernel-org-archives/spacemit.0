@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.243.244.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793840476;
-	b=Oxehonhs5IhmsjivhnbaRlBB76zeqslx35Hn66WZxKtd5OBmbJDYbaGYQvfPfJXEwl46
-	 U42td6zJIi9rb2VtwkWwtKBpRXoT15bD+h4R8dHgAk26x15ncL9LEdu4rySVajdYhoRiP
-	 YkDouwcjBVgbG+TPfyzA/zZ8+ifr0i2S2c+6rdSoQ3+Yxl8KtYCqtqFQBGnVj5WHPSOYh
-	 gJyUeenWy2EgNs9LOPCZyaSSSF0ESIs17BWMkbLCItY+XQ4Z3CkskF7hrzxWIp2csPer3
-	 jn5PClWBmbq0fsdidGA5laBw3lS9LQsgAu0j6AP0RnxZHPdCChSJv4HkwS3SjNeLYjQ==
+	t=1793840783;
+	b=iNYYKY/ZHGBOMgB5YdCyxKHP9xIMt/7znzcLoNeh50yj3lDMt0/xPga3+OEnBV87Kx7w
+	 /LlNyVdbnz+Apb/AOkKYXlwzbK/iRAEcyrblBpnMq+K9K42z5ZpEcoSUmzAHWuJehBmZf
+	 DX1S7JIk0PQxkB6DVOV5KB+DV6uQMLUu20dLVXPOIePJavr8fr6leRWQGJyXbKDJyb6qi
+	 1AgJWRLOoWRVVa9JAJQ3vsM7Zes/lakJgH5Sk6F4JPsHeDN9ICK6ITEIXq22Ezkde9iSG
+	 WhodCEEmRGXbWkKvrfMHiILj+hZbFmro/TkSsCPWigEYI85AEci5bFiKKrS6xQWCqaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793840476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793840783;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=kZxX/XIkUIJjuTAxtj9rZq8g8wa65n2oh9KUXIeg7Jw=;
-	b=DKEyWuQmrJ4uQOT4n7aSU7b3cPNO7H2zyila9WZZRpi+mPB5Y8pvrSxAxMeOd3CTaAca
-	 RFUavNBFBzinqEm94OO8hpyMno2Iyti4Q1WyCsEjO8YrTB4zgInJDe2A3wtmnvFF71GUQ
-	 e2zqXo/kXIaWamAiWhtkkNDSik2gP9UCqY5bfQUdfs+079E+g4CfObslGUWWkA6ofWhxf
-	 7kmgYAXZNrdTVBjh3UBfQUYfnOw/GsrZ57ZMH2oIkyDiL0Q8bOYhOioNGujZgaKW08uqQ
-	 SOrFg9EtUqEzMVxKPoCO5P0fwdZUqf6kNgI0GhrO7ledJlRuS9WqzYMK/qnzR5CXuVg==
+	 Content-Type:Date:Message-Id:To:Cc:Subject:From:X-QQ-IMAP:X-QQ-SSF:
+	 In-Reply-To:References:Content-Transfer-Encoding:X-TUID:X-QQ-SENDSIZE:
+	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=Z6KzLUrXAz/7ezwxnktJkotKAtm3QpIuW+6JblMcjgU=;
+	b=YlgJ4/6bOZcmypKtNEtpi8oYBpHhk8SVlh13dN5Yu8mdr1bgTmXaCFFSwdA77+r70Sde
+	 x8gg0ZK1TSkT8Hmzlwnzyr3N5hz4fBBADJ33xF72lGsTR+lF9WhxF6GUkLtVwHCr2bPMU
+	 6bvxgC0jiT4S45Q0ojR3OncCDJo8yoJSpjISr/xz5fbo1lxTJjlllLLjvouczmtdeIHzh
+	 86xukdRIRYgp4/C+YTSyl/2U6r9/Fs++nUOEiUx1LEHcB3ZhOWVuHV8zyZqSJvh4j7GiO
+	 iIqfGS0fn2u/pdJoHaoSoaIB6j3umhzCYJeXVWhFvl9/+QfB1YH1fEg5RMrwi9rToGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=gW30Pkey;
 	arc=none smtp.remote-ip=54.243.244.52
 Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A401606A326
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 01:01:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A401606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73FE606A328
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 01:06:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C73FE606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=gW30Pkey
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793840430;
-	bh=kZxX/XIkUIJjuTAxtj9rZq8g8wa65n2oh9KUXIeg7Jw=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=eMR10iCuDsFB1F78SQwns91/ipxyB7mOxad6ESpd88ZvFIjKpj/akcwHlXtIdCwwl
-	 Ou4DipQck0jyIQYbeWHT4kwcNTV36CGWcwFKFBZ+GqDLsqvAxtZO3prWnUzw8JqwUw
-	 ByACrxS2jSSln4YLVdmNhMljLKusqm+G8q2cz9Jg=
-X-QQ-mid: esmtpgz14t1793840425t9f665007
-X-QQ-Originating-IP: 3kPxtlDRI3SKmHDdIjQxdPAEL0gM87Iz4VIbjjf+RIA=
+	s=mxsw2412; t=1793840750;
+	bh=Z6KzLUrXAz/7ezwxnktJkotKAtm3QpIuW+6JblMcjgU=;
+	h=Mime-Version:Date:Message-Id:To:Subject:From;
+	b=gW30PkeyylzigtFyedAgvwjpTbVkLmAYMIL7NBkSYjCJZDyS5Byd2gd+ARZUFYsGl
+	 ZPiasFCzbL8Yo8rbK64ln1YzDpoPRE4eCYR8jNq8BELz/K8baWEVSJ/GP5u0bLSmM2
+	 uJG82FG0utuoXWscvdgPUsfwPU78EB3xIQ32WGCM=
+X-QQ-mid: esmtpsz10t1793840744te03083a1
+X-QQ-Originating-IP: f1iOjw8CoXrK9BH5TL6CnZ6XmusYLHJuBDVeTopfVro=
 Received: from = ( [58.254.68.27])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 05 Nov 2026 09:00:23 +0800 (CST)
+	id ; Thu, 05 Nov 2026 09:05:42 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13532499832840154010
+X-BIZMAIL-ID: 1357862901825971351
 EX-QQ-RecipientCnt: 17
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -57,80 +60,95 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=ac3ca7b792b26755fe7a725c28bb57121983448927d4375be7781694ab05;
+ boundary=44909840bed98da606b822ce956ecc68a224b49c56b1dc02428b296ecab0;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 05 Nov 2026 01:00:20 +0000
-Message-Id: <DMMVCWRCJKLN.3GKI5P3X6TQNB@linux.spacemit.com>
-Cc: "Daniel Lezcano" <daniel.lezcano@kernel.org>, "Thomas Gleixner"
- <tglx@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan"
- <dlan@kernel.org>, "Philipp Zabel" <p.zabel@pengutronix.de>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
- <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>
-Subject: Re: [PATCH 3/5] riscv: dts: spacemit: Add the K1 APB timer
+Date: Thu, 05 Nov 2026 09:05:39 +0800
+Message-Id: <DMMVGZBBQYU8.29I5BD5M9Z92Q@linux.spacemit.com>
+To: "Iker Pedrosa" <ikerpedrosam@gmail.com>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Daniel Lezcano"
+ <daniel.lezcano@kernel.org>, "Thomas Gleixner" <tglx@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>,
+ "Philipp Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, <linux-kernel@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>
+Subject: Re: [PATCH 2/5] clocksource/drivers/spacemit: Add K1 timer support
 From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Iker Pedrosa" <ikerpedrosam@gmail.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com> <20261103-spacemit-soc-timer-v1-3-36722421db6e@linux.spacemit.com> <CABdCQ=M_FwJOEG9Lhzahk=qA-qmqMH1QeGg7dfFPWdwT=4J63Q@mail.gmail.com>
-In-Reply-To: <CABdCQ=M_FwJOEG9Lhzahk=qA-qmqMH1QeGg7dfFPWdwT=4J63Q@mail.gmail.com>
+X-QQ-IMAP: 0
+X-QQ-SSF: 0000000000000000000000000000000
+In-Reply-To: <CABdCQ=NH2NDYVXvBFoM0k-Gn9XB=F5FX_y+uNomjTCb0TtpqFg@mail.gmail.com>
+References: <20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com> <20261103-spacemit-soc-timer-v1-2-36722421db6e@linux.spacemit.com> <CABdCQ=NH2NDYVXvBFoM0k-Gn9XB=F5FX_y+uNomjTCb0TtpqFg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-TUID: fCS71Nn8OH1k
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MiUxkXieYO8R5F479AZG0CCaMSPpI8BjUSMydLSCmKzOjNvTBU8VtAxi
-	JXZtp8ezY8aeOdCyzCS68nr5BR9s4J5taYFHCI29RbWgLuuaEgBiio42s4AfEgpVvUW1v5C
-	vz44OcAsPCP8c2ym2stbX2lS/5w9FjlRiuXwS1ywnZUr8nXmP1lrmXPzYUbSJxmmp5jBnrV
-	v80FChJoAqRZgz5jzHb6l7KXGEYf7amU0KYmfWCqP5MX0KbJGYuF8aVSx0zogG3ooezDwm6
-	5+nUenLK6WLTULzqQ6QokEePTnHJv4O/Av7FPNhq3xL3UVje/OWHF988AjgpQEpA1WUy3//
-	HC4ZJIhi1Jrm3ZdzR3xV8XG4EtNAfDEcygQf1RDkRAvt9bdBzgBfn20Gcb2cidTyxJSKgHp
-	Epsliz4+qn7LT59G0rfjR1Vb2ucHv1wS4NxLQWtALGh5TPdutL0jtJ9z/GJ2VzVMFjNdKIt
-	rma1VXM+Roq0LryzShJY275dJO8/4hPop8YWZEXxkadRB49/GRhsM9IB0dNIcjmojx+SHVj
-	3KOujew+YVtQkJKtndue5qytOKPklFQoyEfudQGI7Z4RMrlKyNuro4/qyWiroKJi4w/nPvs
-	PrnB/mL3AWFMSYnMr3yh0+cHDf/QAhpzzIXnW2AJkfn9vbmBFXokVBi5QVfcvCB8Wcl6O7v
-	JM+XqSM+3kCcXdfhAEOooifBDp08DMR6OSuAkooEEx8Kuc2DGAWTnRy6UQIJN7RLF+DhfgH
-	GkQY2tPUD4puqZdudoev8npCls87+8gfRom5zdsQgs57B7WN4lCtSmWiN3APxjX2OztO902
-	zhtEwyAfKdGo8IhlGFGDcemzzZZ5V00xxX8ye/Ag1amGAEdiTM7/572BAy0d3clZysxob/N
-	LIvdMRi81e4zn+PVOx1pqYx4HDUPIKwQJnZL86Idf5220YQfzvIB5DkSHt6urfbodVjK/YB
-	F2FkRkaeJd4/PWhzeVCMSOsprMYdVAi8Z/aXaya/Tb/nM8S20lcRsksxLE3tyo23dl4uw/j
-	ugMuTeJusH9FT8OtPFDt3kSoMofx9CASt5N8u1LYU3g/rv6MdJrLZKiIcskY7w02zUI333n
-	PfcnNp74GY93SlLilW4oIaEj8LklxqT9QrhsGVl5biU
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NkLA2q2LD229lrTptkMGgc3LgSv0NORU3hyi4g8YZEoQ0JrgUVzEAP9P
+	GMgTehFb2YFC5LHAljXetK3oQtyWvztbfDl0fW/MWCkLEJ8L/aBEVQCXeQnO+EfbaKtXkSV
+	WbPGOKkLvnz3AxJDVRb4E681HzmQbYt1hSGD6lFgmFenFETFPu39c4Funr0I1NKMu2xaD4K
+	ARClesWr5T2RVKHslcofSzsol4K02efQToZgfIgJfKAIAcBEPdFM93QQASsbXOtXxb4O4HI
+	YbTJUvRdnJU15qZIPZXv2Bbd9Dwdp6Z2vPvtE5/2HoV1qcABnKcddjOfJB/ldAaPb39JmMP
+	qamLIJBPAeplHraw5xIFUjDER33MGl+tqIZ/ZbxLtH02ysgLqNXpamgI3oPY1NCfXq07RLP
+	96hvw9SOp3th14X4dzGtXOOmeZ8T0NKY9HyLVsa5AKcNv6oShBxApLNgfGRE6BBIs7oWRph
+	KeS3zOC/byftJGef+m1TbFMfsbyA+L2iyTSqeXPX8NUtZLlCzFtybvHokp5Wfo9coh2BLTl
+	mf/rs3fITvJY1w9xG/FEOaOXFo56QZ5UQRvOGugO06EiXjNvPQ7a3fWuwrLXd12hRHCUTgv
+	yUb3VLAMy5sbfHBQux0AlWRZs35G+Cz2IoHmdOzCvNTjaIiO/XTlUELxsdqKBx49D7pvxll
+	qOz89fyCZ+eGGsDtVLxLtvlTqbpdtDugjEybBwJClw/gOG87MlheAa0tWdj65f9zTRhgRJV
+	xhXsnpyKH8x/PmgqlIb/FcLejjyOrFPoFw60GaiLE/B/8+jfkid3M+i3Vk271ai191Dz5+B
+	hxkFI4izv1q4HRG2Kt6crTYyf6ijyxz/cc2SLrHFYV3SIpJW2J/Rx9bJfkJ8ucmmBfujNVg
+	nCS1MZW9hzJH6hdzOAJHtVDAdhiwsftDCIMfRmnod/RpdXBUqlfjdwtUy0Kc9f912RGnt4t
+	0HDKy4wH401iAp9Drq2nUZR/u7FZn6NlQenpoVgVB3uG1xBVNd6MN1rIG7qFJPKwOxciK9G
+	QZ4Dofa8SqTn9jv/qFOK0lt8ZFoXFKWKQRvaFFJyyYNLneADJ8hiU1JKjEeClHW3XRZouwN
+	msJyMthmjUh
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
 X-QQ-RECHKSPAM: 0
 
---ac3ca7b792b26755fe7a725c28bb57121983448927d4375be7781694ab05
+--44909840bed98da606b822ce956ecc68a224b49c56b1dc02428b296ecab0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-On Wed Nov 4, 2026 at 6:34 PM GMT, Iker Pedrosa wrote:
-> El mar, 3 nov 2026 a las 9:56, Troy Mitchell
-> (<troy.mitchell@linux.spacemit.com>) escribi=C3=B3:
->> [...]
->> +               timer0: timer@d4014000 {
->> +                       compatible =3D "spacemit,k1-timer";
->> +                       reg =3D <0x0 0xd4014000 0x0 0x100>;
->> +                       interrupts =3D <23>;
+On Wed, 4 Nov 2026 19:28:00 +0100, Iker Pedrosa wrote:
+> > +       irq =3D platform_get_irq(pdev, 0);
+> > +       if (irq < 0)
+> > +               return irq;
 >
->
-> K1 timer specifies interrupt as <23>, but K3 uses <26
-> IRQ_TYPE_LEVEL_HIGH>. The IRQ type should be consistent.
-No, K1 uses the PLIC but K3 uses the APLIC.
+> Consider using dev_err_probe() here for consistency with the rest of
+> the function.
+platform_get_irq() already prints an error through dev_err_probe(),
+so I'd rather not print it twice.
 
+> 32768 looks like a magic number. I'd recommend you to add a comment
+> above explaining the clock rate bounds.
+
+> 3 also looks line a magic number that could have an explanation. I'd
+> suggest you to add a macro with a proper name to have it properly
+> documented.
+Agreed on both, will use named constants with comments in v2.
+
+> The device tree bindings support both spacemit,k1-timer and
+> spacemit,k3-timer, but the driver's of_match_table only lists K1. You
+> should add K3 to the list.
+K3 is described as "spacemit,k3-timer", "spacemit,k1-timer", so it
+binds through the K1 fallback. I'll add K3 to the match table only if
+it ever needs different handling.
+
+Thanks,
 
 --=20
 Troy Mitchell
 
 
---ac3ca7b792b26755fe7a725c28bb57121983448927d4375be7781694ab05
+
+--44909840bed98da606b822ce956ecc68a224b49c56b1dc02428b296ecab0
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCauvVJCEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+QZwD+LjXA7nF7yyOy
-r5aU5N43nrOkq5zWRWyg3wPUqMQ60okBAIu/lWTjTK76ntl7G6+I0RE4LaYRG3ec
-dmzhL1IFj68D
-=Fl9h
+iIYEABYKAC4WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCauvWYxAcdHJveUBrZXJu
+ZWwub3JnAAoJEJgJ74D5MzQvMTcBAJiD4kR1iAZMK1VbPW2J2bTMBOjkpvGkklin
+34cjePNAAQCEM2Pd5FKJRojTn0AA5gzgAvnCFeqcVgmsKyYYY9m0AQ==
+=FeT9
 -----END PGP SIGNATURE-----
 
---ac3ca7b792b26755fe7a725c28bb57121983448927d4375be7781694ab05--
+--44909840bed98da606b822ce956ecc68a224b49c56b1dc02428b296ecab0--
