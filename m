@@ -1,70 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=43.155.65.254
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793886055;
-	b=zQyu+zs8Ar0U0vfvVO4A7HTgPBhepdTs45yRH7waqQSISMBdYHtzodPMjkpBzkqhxR7s
-	 oPYlzHACEjvemgGCYtptxAJfLAcmvegiiXlevmgq/Olbf6R/zAiaaDD/67MeFidSsAKVt
-	 Y79JQWKLKWRTLGvIxlik9qlp3WtbGt3N7lh2H8o8Vh/E1gMzAJGb8FXYBCl6mcKIcGl4I
-	 jso3xX6RlyVhjmWt0kvxtFJLI9Gn6338nqug6T4FQMb6nIHWX+Z6UE20HO0repw+vT3Fm
-	 elY8v4glmGDzzE06WPB+AfbtD56hB4KvAOChf3px+XfeqmgqWN7I7elrn7/hSB3H5EQ==
+	t=1793888470;
+	b=mo1F5gFsVzh07ph3r7i17uNk3Ki8tXzg4b9DVYFoheASX8Qq2REoO/0PbZ0iEDeJckpE
+	 bL7AVKlD0S14bKRLhgS3jJZMw2spwqLLp2FQJpfhJQ7pRkZ8+m57QkwAVSwjA8fwU6keM
+	 ZF2jICIvuKmmeCcrYUAfr62da+hNtkblW6D/EuNNs5H1jtNE35jeGa0Qi8d/iwkPnoVP7
+	 NeLpLh+VjXu9RKsjAoyYLgo4/OkuVh7F61Rtl8lgdXS9KO0/5CHkNqXeQAgLmvL/Hdk9I
+	 C9n9bvfLYmmtjDSBuM3WdGUE+Uf9VT+fn2Fz6K7RgD59H0NORRPFOJPKHbf3DasFJbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793886055;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Debian-User;
-	bh=cayOl+ah2VntGuMKSFZe0/sOYOLHGMSfHTljLp1hqos=;
-	b=rSp03ynUxv7cbh+2J9GjOxnOxJwWO/UwqgBkXiMXVUq2OO8X9ZWJ/zjvDaMdzma7s+Rc
-	 0aj2tRRB7j7mOrEqat0+RgquBNdHgPlhW7JOUv9Lbg/IZrqz5G19Xqd3FOx5mQpzs1lpq
-	 zh1rNRTLDsxJrVl5Ol5iAmXPw6Wc1jCj/OHkLzL9BljEEpkDD0Rn4IzVMvRaO+2L0FGbB
-	 5cSQ/4GsHTjLElukQ3wrUkrnQ+TTwzP+iBF+16ZTQqhrTIJoXShtvgvlSZtCtZlWgxNxS
-	 iVcmpL77qq25lqAVM4zAohniYJ0U4WjPrpOQxeccGTbnKHa+SG2/JlJpl3zA6see0fQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793888470;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 Content-Transfer-Encoding:X-Mailer:References:In-Reply-To:
+	 X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-SPAM:
+	 X-QQ-RECHKSPAM;
+	bh=Qj6ko1N3dgjOtQtUQnSyDi9DsI3Oyz7n8DZ/lHsW7LY=;
+	b=A0x6fz68G3xfLUlpFq97CeZx9Ca+xmsnCgYIDotziE3aX++c0JpSoZOAaAdvqTbvWuTb
+	 zEqJaWd4PcDm8hn2RrR/C0ZiYKBiTn0Bf8ezWTf/S9fm+qUR6BQikvCQtJUqzOZYyXKpL
+	 JBc2rj2w4lsStSsNwUN9CDODF+peBmsCjfe4wJOUH6Rmb2OfDFuRelhLNaxCJK5lQYjNJ
+	 KEaIw+q/yu/Zy9wEbXaS/WQ/U0mFRkpOnCv9wSHiCDGlipj/XDC7z0XXbWENslLp3f1PE
+	 n0kEGv8iwgh1ciNoqIeonX1aNDyoFXzqPpELUCDNA8X9yi2QbZuAiBGYJdUkWJBIAcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=debian.org;
-	spf=pass smtp.mailfrom=debian.org;
-	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=BcsHNlT1;
-	arc=none smtp.remote-ip=82.195.75.108
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b="tNWh3/k6";
+	arc=none smtp.remote-ip=43.155.65.254
+Received: from bg4.exmail.qq.com (bg4.exmail.qq.com [43.155.65.254])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40915606A335;
-	Thu,  5 Nov 2026 13:40:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40915606A335
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F4B606A31B
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 14:21:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4F4B606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=BcsHNlT1
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=cayOl+ah2VntGuMKSFZe0/sOYOLHGMSfHTljLp1hqos=; b=BcsHNlT12nA+YrSs/yRQfTMO5p
-	C1AEYURjocvZzLl7GjwphDEfRVdYqCD9RQ4WSY1RRadoooX7PEBQd2njIbSf0/8jAi5D8GScOyO0Z
-	nQzofL3rkkHavZNegA2NJpWPSzvkTW65cBDV5gGUBpYYF1At8PsL5E957J0wG74iUl78HgOMgRWVd
-	8krpw4mt0iFi6G3+l0/amB2R9RxV3H1IsBL4A7HUApVc9x8AdTicgmu3Kzm8VOt3JFnGSCilpsRyr
-	TBApv+jFdlfxpHhRB+A8nXol+C281WEVBnrOR1udOBkiuXEDHDjppxGjcjT8697ze2O3nyo2UcxNm
-	RKs+KCLQ==;
-Received: from authenticated-user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1xOxhk-008XWA-2g;
-	Thu, 05 Nov 2026 13:40:37 +0000
-Date: Thu, 5 Nov 2026 05:40:31 -0800
-From: Breno Leitao <leitao@debian.org>
-To: Ali Tariq <alitariq45892@gmail.com>
-Cc: netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vivian Wang <wangruikang@iscas.ac.cn>, 
-	Chukun Pan <amadeus@jmu.edu.cn>, Siddharth Vadapalli <s-vadapalli@ti.com>, 
-	Tomas Hlavacek <tmshlvck@gmail.com>, Muhammad Bilal <meatuni001@gmail.com>, 
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
- emac_suspend()
-Message-ID: <auyG7hGJtMzV0Gbi@gmail.com>
-References: <20261105123441.2524171-1-alitariq45892@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=tNWh3/k6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793888458;
+	bh=Qj6ko1N3dgjOtQtUQnSyDi9DsI3Oyz7n8DZ/lHsW7LY=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=tNWh3/k6YRp0HcBvXBVUVuq4YORLFT/7XsjQBb9rwNIxUjWXnRZCgA2u5zh8wEQXm
+	 dXq9O+Ln/KyXBEkNukhWGdzpBTjbkr/rTEqMHgArO2pC+2Mn2Iuk2MjdzXL6oabKH4
+	 hvoK0FEA6VLUH6ucf+2chZH7CObK8QbS2OEJBlkA=
+X-QQ-mid: esmtpgz15t1793888456td5594c5b
+X-QQ-Originating-IP: yBFPL2ZTyWZz24PGoH1FCJQ1EtD4gvUo9iOr3+labVM=
+Received: from = ( [183.48.245.66])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 05 Nov 2026 22:20:53 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9366842104901777624
+EX-QQ-RecipientCnt: 14
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -73,32 +59,104 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261105123441.2524171-1-alitariq45892@gmail.com>
-X-Debian-User: leitao
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=dda49a7eb14547398a92cd8d13a7d78afa9d0d5b3d65ebe7063bbb21050d;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 05 Nov 2026 14:20:52 +0000
+Message-Id: <DMNCDUADFF3L.2ZLV0D2ZZ8CRB@linux.spacemit.com>
+Cc: <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/5] riscv: defconfig: Enable AT24 EEPROM and ONIE TLV
+ layout
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "E Shattow" <e@freeshell.de>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul Walmsley"
+ <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
+ <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: aerc 0.21.0-reader-ipc4
+References: <20261105-k3-com260-module-sd-nor-mac-v1-0-138b39d74602@linux.spacemit.com> <20261105-k3-com260-module-sd-nor-mac-v1-4-138b39d74602@linux.spacemit.com> <0c4b79f0-383a-4884-8132-59dcb3487cd3@freeshell.de>
+In-Reply-To: <0c4b79f0-383a-4884-8132-59dcb3487cd3@freeshell.de>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M2z/kxGgDm0n/d0ck7D7Wy7+LrazgwpDU7hS6yDw3UK5ewC+b/5uO+Gq
+	iM6zLuEOcmCP2iB0ze93/9myAu/90fCH8q46J0oNmlMqAG3O41HtewubMk6Mx8c16FkQEmS
+	M0MYfZGz4tLTf4GDfgunyBJ8+i+wqhTutVb2j2iZb45S8zEVbEvUBHF2cogNMhIqXCjsOTp
+	a7xhTQfXPw6eaM+SnFmUywcLuevDRuq8QbR2E6TCeMDZCA2Y6XXlii2Wo2pT+pLKLBoyKHI
+	FWo235+466LogsjrYK5UqoEgZRo4qTDnxdW+TW9685O+Cz4NndKwhuHgc7sF+NITJoNjNwC
+	4jLYzEqSxNUNVljA/vz+RYoT1jRJJN6CB1gQvkD46QfZTy/Nk4HcuX1oQL+dJYn2iPKSVEk
+	rzVSNBK3zxEtflwSifnXiGvBP5gmPUxooh6WZsViLw3zKw71oNYty+PqITPCOwAlnP2PxJ0
+	HGsEI3ZHITQBaGGYww6ZU1m63eKRSxSTQgDYAReJHRzDsRI/8puNtdDNCOsiQdQhvVL1qNJ
+	9TMpJcZkEd939OOBvJW9OAOmf0mAuo5Zv92HeKnJN1mEf1/m1xbCN73By4yHhkBG5ZWXxxI
+	XlhNWQ+MIbTE5s/BreNM/UOnlPVEKupXpEwvWKp1noxh7sGrhRkZueEq3AJ2rVLRjuAeJxr
+	1Lgncm5mE0TBEcjd6P4MqGZ+Wft62aA1F8yB8Xz8baYu910+T3UQyp5AhkKwl4FhiW4/Pfv
+	NDl87C+w7dRnKiDoSTdz5mfbtguvbEMGAlT2e1snZPgtuazL6nbah0yusZ3KatcGIKhetm/
+	NpdnWkWfbE8NNF3F/+rytMz7nP+lzxuFm/7z8xDurNpNoQts2suN2hRkja8gjP/+FdX5pB/
+	ECr/jvyeDW9IX96z0bMEFAQPbNZXZBdeDB1vCqKCFZ7razxSktKu4ofx4I3S+yrKlhQdRtI
+	rZqEwZJ2cawO968XitdRzGN0+VAIm0SaKThV1XwhUJxV4cIsswd5dZgIK1N91YiI4xUA9zy
+	EqCPkh39OWDugfa9LJBWxdu5/5sJXGjzcjJ7+WeImLHb34JFgwhDENmdVEvwmnbqZiQadV8
+	zGpyXi4MMA3UII4vBls2dCb7cISCexH3mR+4ni6IUaFEhnkgZB0Y9Zyr+2WFleWO4KZ875d
+	rOvGbkNJ7BIwUTwNhUMUCZH50Q==
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+X-QQ-SPAM: true
+X-QQ-RECHKSPAM: 3
 
-On Thu, Nov 05, 2026 at 05:34:37PM +0500, Ali Tariq wrote:
-> The emac_resume() calls the emac_open() and emac_suspend() calls
-> emac_stop() functions directly without holding the lock through
-> rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
-> with rtnl_dereference(). But since no lock is being held,
-> rtnl_dereference throws a suspicious RCU usage on
-> Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
-> 
-> WARNING: suspicious RCU usage
-> drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
-> Call Trace:
-> phy_detach_internal+0x490/0x5f2
-> phy_disconnect+0x90/0xc0
-> emac_stop+0x114/0x626
-> emac_suspend+0xac/0x126
-> platform_pm_suspend+0x72/0xe4
-> 
-> Hold RTNL lock before emac_open() and emac_stop() with rtnl_lock() and
-> release the lock when functions return with rtnl_unlock().
+--dda49a7eb14547398a92cd8d13a7d78afa9d0d5b3d65ebe7063bbb21050d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-This would work, but I am wondering if it would be possible to call rtnl
-inside the _open function, when dealing with the PHY? in other words,
-shrink the time rtnl is held.
+On Thu Nov 5, 2026 at 10:42 AM GMT, E Shattow wrote:
+> On 11/5/26 00:23, Troy Mitchell wrote:
+>> The OrangePi RV2 and R2S device trees take the Ethernet MAC address from
+>> the ONIE TLV data in an AT24 EEPROM, and the K3 CoM260 module stores its
+>> MAC address the same way. Without the EEPROM driver and the ONIE TLV
+>> layout, the MAC address lookup keeps returning -EPROBE_DEFER and the
+>> Ethernet controller never probes unless the bootloader passes a MAC
+>> address in the device tree.
+>>=20
+>> Enable both drivers as built-in so the MAC address is available as soon
+>> as the Ethernet driver probes, including for network root file systems.
+>
+> This does not make sense for platforms which have no use for EEPROM
+> driver in Linux userspace.
+>
+>>=20
+>> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> ---
+>>  arch/riscv/configs/defconfig | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>=20
+>> diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+>> index 04ae305d5511..a76f801d8eed 100644
+>> --- a/arch/riscv/configs/defconfig
+>> +++ b/arch/riscv/configs/defconfig
+>> @@ -276,6 +276,8 @@ CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=3Dm
+>>  CONFIG_PHY_STARFIVE_JH7110_PCIE=3Dm
+>>  CONFIG_PHY_STARFIVE_JH7110_USB=3Dm
+>>  CONFIG_LIBNVDIMM=3Dy
+>> +CONFIG_NVMEM_LAYOUT_ONIE_TLV=3Dy
+>> +CONFIG_EEPROM_AT24=3Dy
+>
+> Enabled as module, please.
+Yes, you are right. Will be module in the next version.
+
+--=20
+Troy Mitchell
+
+
+--dda49a7eb14547398a92cd8d13a7d78afa9d0d5b3d65ebe7063bbb21050d
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCauyQxCEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9ZSwD6AxJbBe8W18yH
+nr4KCfjIsJCOqNmdf0vzp8XWweapmi4A/1NGR2u7q/A/7Ho7/TlsOtBYjUmXNKZ4
+lwAjGYrg+mAL
+=AhUC
+-----END PGP SIGNATURE-----
+
+--dda49a7eb14547398a92cd8d13a7d78afa9d0d5b3d65ebe7063bbb21050d--
