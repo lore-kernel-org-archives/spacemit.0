@@ -1,49 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.30
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793842400;
-	b=y67oEQ7GFlrTo53MtjOZhLNDmgb18fRjVjHTDeSzzYYBD5u5f964zkwJaRW0rkhTahg0
-	 l5WRjx/BnDgAbN803F+HpdJOAt0HX5jQyKNAD78FRbgLu/COlQxDLHPfH1q5QJkpYALox
-	 JxSwTvpHWrK/E4j2Z9k2HnyobmamVZeQWLKsasxQbN6jjOEFrOKEHkn1j0fTI4jFhv0GY
-	 SLaBECBv7+m7EzrvZ1NUTngHPc/Ck2vIHKq90MFq2T2hDCVjJgK4urAkOoJ2w+DSdLKFZ
-	 wRBIpU1aNRhCsXH7QrZJFqrfmKiDSl2We6092UQGmo7aRy20VJXswpvLORr0Y1TH9dQ==
+	t=1793843201;
+	b=0H2FiUAizj8BSuGLzkyLESrhkDuXd/sHbHoM+9D8yb7FSXSdRAiUD/R2iiI8l4I6IbQ1
+	 MEv9TxAbGs5shSxIeHMpgLE+mPk9uaLghCKqEr+/R7JQ1FavLhpFwBv/Zdf1D9lOqW22W
+	 IBBKmLSNVKbNkpVnn2PzclYFTbXCYZ1InnIrvAEOi0F/6asNYsViI+xJcWSZ8qaMlS54D
+	 CB3NRuXx2HuV4DSf3E/vAW7krovuJG/vxaG1eUOYLOhfhv8voivdqDsdQNJJNq2mkI1WB
+	 6NMqhiUantQNZUOGRPt+ZrmkWmjH6Wq2ZNoDYv0Exl+0lYeoH2rcytIf77yvea4+Amg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793842400;
-	h=DMARC-Filter:DKIM-Signature:Subject:Mime-Version:In-Reply-To:
-	 References:Content-Transfer-Encoding:Date:Message-Id:Cc:Content-Type:
-	 To:From:X-Lms-Return-Path;
-	bh=/d8AjzMR8Kwx0Lf9prj+CTkH5Cp2jbRHWYUWf3O5Nro=;
-	b=nc6dnpYuzPMRt0SBzXtFGZvGMw75dbjMgZqQbRomFi38iVjPgrcG/wGBLKpraLEm9x19
-	 2qeVZl34fXyiPfgtIPWD16kBfWNKTMxJWjc45k+uroGyhXpxQ4i/U4nKTsUKePFDGmtMt
-	 sNlZtwT4uOkIAas/vynvM0AMyG3pgf4nnotgQ4pdjjiV+xhojXUI8GapT94DJUOLEeX/b
-	 ImslK6aiQT/GP3HZG79nUuorCiF73weFG41v2IcsyinyJmo2J1Iy/2qdwtMc1R3EPGX3O
-	 B5rt0pD2arKu3MxH+NnWyqcgITOiWOTSddbWj+I3IU7f+FMr2ZLXTWQl65nvt86bJ3A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793843201;
+	h=DMARC-Filter:DKIM-Signature:Message-Id:From:References:Content-Type:
+	 Content-Transfer-Encoding:Date:To:Cc:Subject:Mime-Version:In-Reply-To:
+	 X-Lms-Return-Path;
+	bh=mAEHk156ALRm/Yk38m2Sb6tcWOHC1b8Vy26wU1dgEA0=;
+	b=36ud0lTcRclKMkfF/zf1ExBmLZ/6aNje2QaC5xuY/xnz6s+/t+w5Pl27+B3SHUy7S65n
+	 efwV7YZTm8nTykjNvKM1SKE3KXwEVxeq7LeLJHpu5hd+uSj3eJFg7PbmvQRKBs1OP1rpD
+	 0o1sAlxg5HxuL3kVBRPZCJAQZAJTTtVGvyP8sm2BBZawezD2Lz3p9K49tnOj5Zx60x0jq
+	 VcUcOI04FWjxKIsbBz4CEmp6B7Wt835+GvfynYs11++U46uSRDvrTp4ciwvmUVA/SemT8
+	 Eyj2BzYUpJ7/C4xDRkN+qWryoMxcqieSbxiZIYkqmVXZtZwz0xzQVQFfzHVjta6+nJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=deepcomputing.io;
 	spf=pass smtp.mailfrom=deepcomputing.io;
-	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b="NW6/6Jnh";
-	arc=none smtp.remote-ip=209.127.231.30
-Received: from va-2-30.ptr.blmpb.com (va-2-30.ptr.blmpb.com [209.127.231.30])
+	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=SotxgQiF;
+	arc=none smtp.remote-ip=209.127.231.44
+Received: from va-2-44.ptr.blmpb.com (va-2-44.ptr.blmpb.com [209.127.231.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0443E606A31B
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 01:33:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0443E606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861AB606A328
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 01:46:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 861AB606A328
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=NW6/6Jnh
+	dkim=pass (2048-bit key, unprotected) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=SotxgQiF
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1793842388;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1793843190;
   h=from:subject:mime-version:from:date:message-id:subject:to:cc:
  reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=/d8AjzMR8Kwx0Lf9prj+CTkH5Cp2jbRHWYUWf3O5Nro=;
- b=NW6/6JnhJJ7Wt9dub9t9fuM1m8qckHGHDpKh3GXjqjz0Vr+TdtP1ra00SWhU3x8wRj7PW2
- 9pXuWHG/Kr194TjEzZ9CmRZavFFjUK1PV+c6B2bBc2o0gxW7wpuVqEH8gy3cGgRrljADYB
- oov5K/UdoXQpTHYN6NJHGuZYWPA2OjY1tOVf5QLVhkJer8CWfu57Znyof5woiFWcHkEuks
- pl+xOIIIPyjEVQnRcTTIEmICcoAx7A8EUyp6SOwibG0XwGE2V7YkZnj469DhudYX/eqMo7
- g3fKh6lmbN5DC9khyprdt9uJyxHWhW8zV9M18bCuXqRZziUtObI9nJrQYhhzug==
-Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card support
+ bh=mAEHk156ALRm/Yk38m2Sb6tcWOHC1b8Vy26wU1dgEA0=;
+ b=SotxgQiF9ljVkzBcaF38B0g9igWK+Sm+1s6SPsJGdXH5mSb2fEUHnmh259S6ynBaULJxfK
+ Czv6nKXHVNPctX2O28H/FaMNv10WEJ/nlW8lVxfCDQy9N2Pi0ulj9VyS2+XrWNBSnwNUrq
+ 5N1NYFIip+5Uj5ucbVs46rOgd8gyZARBhmKOATJyQFZBmmnxxp2YF5xC8pfU7VJHQrHpDR
+ b6is6TcK/261tUoAjao97baDkpGvZ9WbqxMzLvCaXnaelkWO7jewMdYpdAsyMce/gvP1oz
+ ldmeaAQFjOL8RgxKpOxlZTVdyrXXyucP97jN26JpoaP4/XMWLK/6qCTuoVWxyg==
+Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.4545f39b.8adf.4983.b26a.7df21480401c@feishu.cn>
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+References: <20261102060105.100645-1-sandie.cao@deepcomputing.io>
+	<5f595068-671e-4823-95af-da1702354a16@murena.io>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 05 Nov 2026 09:46:27 +0800
+To: "Maud Spierings" <maud_spierings@murena.io>
+Cc: <alex@ghiti.fr>, <aou@eecs.berkeley.edu>, <conor+dt@kernel.org>, 
+	<devicetree@vger.kernel.org>, <dlan@kernel.org>, <krzk+dt@kernel.org>, 
+	<linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
+	<palmer@dabbelt.com>, <pjw@kernel.org>, <robh@kernel.org>, 
+	<spacemit@lists.linux.dev>, <troy.mitchell@linux.spacemit.com>
+Subject: Re: [PATCH v3 1/3] riscv: dts: spacemit: k3-deepcomputing-fml13v05: add P1 PMIC regulator tree
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -53,72 +66,73 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
-In-Reply-To: <DMMVRQOY5TBN.J0PHJAAZSC2F@linux.spacemit.com>
-References: <20261102060012.100623-1-sandie.cao@deepcomputing.io> <20261102060155.100679-1-sandie.cao@deepcomputing.io>
-	<DMMVRQOY5TBN.J0PHJAAZSC2F@linux.spacemit.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 05 Nov 2026 09:33:05 +0800
-Message-Id: <407ce3d77416bb2522b7906b0df3d5adf02c27ee.569e40bc.e0a4.4c5f.856e.9977de981adb@feishu.cn>
-Cc: "Yixun Lan" <dlan@kernel.org>, 
-	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
-	"Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
-	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>, 
-	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-To: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-From: "Sandie Cao" <sandie.cao@deepcomputing.io>
-X-Lms-Return-Path: <lba+16aebdcd2+11d859+lists.linux.dev+sandie.cao@deepcomputing.io>
+In-Reply-To: <5f595068-671e-4823-95af-da1702354a16@murena.io>
+X-Lms-Return-Path: <lba+16aebdff4+668d01+lists.linux.dev+sandie.cao@deepcomputing.io>
 
-Hi, Troy:
+Hi Maud:
 
-> From: "Troy Mitchell"<troy.mitchell@linux.spacemit.com>
-> Date:=C2=A0 Thu, Nov 5, 2026, 09:20
-> On Mon Nov 2, 2026 at 6:01 AM GMT, Sandie Cao wrote:
-> > Add the device tree node SDHCI-0 controller for onboard Micro SD card s=
-lot.
-> >
-> > Signed-off-by: Sandie Cao <sandie.cao@deepcomputing.io>
-> > ---
-> > =C2=A0.../spacemit/k3-deepcomputing-fml13v05.dts =C2=A0 =C2=A0| 22 ++++=
-+++++++++++++++
-> > =C2=A01 file changed, 22 insertions(+)
-> >
+> From: "Maud Spierings"<maud_spierings@murena.io>
+> Date:=C2=A0 Wed, Nov 4, 2026, 23:31
+
 > > diff --git a/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts=
  b/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
-> > index 84f66dd8f962..4471338a9774 100644
+> > index b5d5112de358..804abc85602a 100644
 > > --- a/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
 > > +++ b/arch/riscv/boot/dts/spacemit/k3-deepcomputing-fml13v05.dts
-> > @@ -184,6 +184,28 @@ &combophy {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D "okay";
-> > =C2=A0};
-> > =C2=A0
-> > +/*
-> > + * Onboard SD card slot:
-> > + * Plugin/Plugout the SD card before power-on the board for secure.
-> How about: "Please insert or remove the SD card while the device is power=
-ed off."
-
-Ok. I will fix in next version.
-
-Best Regards
-Sandie
-
-> > + * It works as a boot media. so set it to non-removable.
-> > + */
-> > +&sdhci0 {
-> [...]
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0non-removable;
-> [...]
+> > @@ -22,6 +22,161 @@ memory@100000000 {
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0device_ty=
+pe =3D "memory";
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D <=
+0x1 0x00000000 0x4 0x00000000>;
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};
+> > +
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0reg_aux_vcc3v3: regulator-aux-vcc3v3 {
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D=
+ "regulator-fixed";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-name=
+ =3D "AUX_VCC3V3";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-min-=
+microvolt =3D <3300000>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-max-=
+microvolt =3D <3300000>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-alwa=
+ys-on;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0};
+> > +
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0reg_aux_vcc5v: regulator-aux-vcc5v {
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D=
+ "regulator-fixed";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-name=
+ =3D "AUX_VCC5V";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-min-=
+microvolt =3D <5000000>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-max-=
+microvolt =3D <5000000>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regulator-alwa=
+ys-on;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0};
 > > +};
 > > +
-> > =C2=A0&uart0 {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-names =3D "default";
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-0 =3D <&uart0_0_cfg>;
+> > +&i2c8 {
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-names =3D "default";
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0pinctrl-0 =3D <&i2c8_cfg>;
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D "okay";
+> > +
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0p1@41 {
 >=C2=A0
+> I believe this should be pmic@41
+> If it needs a label it could be p1: pmic@41 but the node name should be=
+=C2=A0
+> more descriptive.
+
+This patch follows k3-pico-itx.dts, it uses p1@41. And k3-com260.dtsi uses =
+pmic@41.
+I will uses pmic@41 in next version.
+
+Best regards
+Sandie
+
 >=C2=A0
-> --=C2=A0
-> Troy Mitchell
+> Kind regards,
+> Maud
 >=C2=A0
