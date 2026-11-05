@@ -1,135 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=43.154.54.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793873190;
-	b=KB72238RgI9c8ce40saEwJ5P3RQxFlpZC+7+uvHGyhWflSzZE5Pwf8RNJdWQ4iXNKlY3
-	 DCXaPXa0iSs2ebVjdL1OcHw8R4lKhJyBLAfkUV6mbrOPZP8OqrFnNJSmhUJsRp0Zl3iUE
-	 FJNLQ/4id4wESRHqoBM05D765/ZlNOuMAZsMGEn4mmrs+dT3u/VJyPiCJeJg2T7kACjrX
-	 DwVTmC9S7k0iEL6qe0YRNQsIFH4Nc/1hDaSzsqL/kh+LjLUNTxo9OUyTFBg4QsKn53hrF
-	 FQYqP7gX1aBhrY5dCKM9Mlr4bynqNtH48uEiz63huBpIOat02gmnp7jR6RifkL8QaIw==
+	t=1793874710;
+	b=ZKHjGRlkY4HWrF2VL0Fct1ELGaBqzRqlPBNuPQXom0ASHZdsFY9mcLDkC9qREqlbDqz+
+	 Hyc5si/m5wuNKFnpTz/Q5cvFK3JgB4EvjLErxXOKeHELbxSgL5bEcldXlMIN+P6NdCNbT
+	 V/SXJ7dGSHffjzx0wsXzYI4A5bYR+tsJWwgrlRyBK8aQpnQsC0aqLwp9wBhvDy1Eee6oR
+	 708InYI2wHP64PfG+xZgmMrpJrIollKBFIZCn83GjqY9gFP5R2tAYBj5GSZ1jfw3RDGkh
+	 +edGfug5lgYmptCzz0yTojnky4fJclbFQom2eaMPOg3XKZFo2MF4A1xmvGD5tIRL0Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793873190;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization;
-	bh=9eN0QkSa1ecIUgCfCf76DF+V7dyFmgHFBWvD0/9mpfY=;
-	b=acTYFbKKbJHxSLycr/wrjatbMfZae4A8ZmSKXTvqtwPhVtG3huiRAnqsaLrFoNt9y1LJ
-	 tq6OiH660uQnXzvOxzMUgIzkjL+6S7vFXYUlebXKfI5FxgLhtI32k50RsWkYN4KDqLC9V
-	 9dK1Kmi1CeizJRjBck9FLYt1k7DKkJjRLdRix2YbCZDxe1Wq9ifax9RCzYy9jpPflwAxn
-	 cxM9c31ycFuUyuopDnUERQDybO2RNn61Dvs2BrVWseXk7Eo+RGXGn8AVecA+mqtedBx3j
-	 0hML+CH/+/uEYOnIDs+fGEVTO87s3w3SqTNQUHP9vkH871guODtYfQEf77bDnMszbFg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793874710;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
+	 Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
+	 X-QQ-XMRINFO:X-QQ-SPAM:X-QQ-RECHKSPAM;
+	bh=QpryRELSGG80FrBTzrLF4Ebl/cDHIgqfhVdJfsX/2Ck=;
+	b=FaHJ4AIS4SHzQSgI2ibrfSrUGfLrE0cZ9ONZzJ6nJNTNW3sjiqPaY9vH9GNFUuaqLsMG
+	 GiJwujOQPZk5NPCyp0FhHbOHcJpmh/9gUNRFgkACejAR03W0Pu/Fm6tFlVRo/26iTT1mB
+	 jMO9DMAUh/I9BUTtyDdzc7Im8ftOoSbUt+DWj3LR5UjMR7dOXVF2q0i3xfDFtzUTxLKi7
+	 m/Wm0/VTvcJymJO0WAm5qGwthynyJOwCYWXUMpyqu+H40O5eZoBLL1wot0535P98Z16Q1
+	 3ygvuHzovTe3/AD/Stp/gWARMxQBEh5+BUOgZ/0nqg1lIOY4njt/6bPoU7gm7Dni28Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ehmTMZmr;
-	arc=none smtp.remote-ip=198.175.65.19
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Mcj63AoA;
+	arc=none smtp.remote-ip=43.154.54.12
+Received: from bg4.exmail.qq.com (bg4.exmail.qq.com [43.154.54.12])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4840D60A263F;
-	Thu,  5 Nov 2026 10:06:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4840D60A263F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89400606A326
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 10:31:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 89400606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ehmTMZmr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793873190; x=1825409190;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sHuju/foWw79h0Lx9lDW6+4gtj0ksiGlzl0r5P+LOfY=;
-  b=ehmTMZmrMqnYz2X6mrOdbbN7OuMRpJGYMOgVpj9q19RhmobBEqL23FL7
-   P3Aa2xHuMYI7uPPOO1fMUlHnsDJ07XuctqygghYOuZhfDZqtLKnQDNCUM
-   RxlktuQHR32Kpq9G5t+lYDbqRV6Y93/YU7CrseEVAQ6xX7DZI+JypgJb7
-   VFtpe6IDigflPnIW1/xD94t1W/7NTLrNzKhQCkaqrnNF0TyRf1a2TSa6V
-   O6gawcoPGEjYOqbSz1D7uMkNyN0qDyhDD6nUj9FaUCGUHshDeC+FqR8si
-   AZtleHUc3wwk7vqi2wdMOekS55fwyDBYQvHIfJ4Q21FfR0G93zIfF0jkw
-   Q==;
-X-CSE-ConnectionGUID: 97yT9J+xSsa0gLl769WcKg==
-X-CSE-MsgGUID: McSn2q8WTOiwLV3UHck8Ww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11956"; a="2687012"
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="2687012"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 02:06:29 -0800
-X-CSE-ConnectionGUID: 96Aad4J6Td2JN0y4EunOKw==
-X-CSE-MsgGUID: fNrhP6vdSb+xZdaYz36idw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,197,1787036400"; 
-   d="scan'208";a="8733180"
-Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.244.144])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Nov 2026 02:06:17 -0800
-Date: Thu, 5 Nov 2026 12:06:14 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Frank.Li@oss.nxp.com,
-	Mark Brown <broonie@kernel.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Radu Pirea <radu_nicolae.pirea@upb.ro>,
-	CL Wang <cl634@andestech.com>,
-	Ryan Wanner <ryan.wanner@microchip.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
-	Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Mcj63AoA
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793874696;
+	bh=QpryRELSGG80FrBTzrLF4Ebl/cDHIgqfhVdJfsX/2Ck=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=Mcj63AoALgifsDYgU9vBGy4J90Hp2sv2lyMKh/3DvDG/34+xGnOugdnR9jgDnH+g/
+	 kWVb9758lfeKO7nbcTeTpkO/ezCAgLyC+g4DBp9a75fSieeyoS4JMipM8uHTrVyFmX
+	 Jc14fF2SpNJa+2LxClMLzPjEs9u1OdFGxADRcJI4=
+X-QQ-mid: esmtpsz11t1793874693t02fac1d7
+X-QQ-Originating-IP: 4eTnkOOCAXSXOIckUgJdTR9LbDF8/V9x8+qSR90OPrc=
+Received: from snode5.. ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 05 Nov 2026 18:31:30 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 313034118725653772
+EX-QQ-RecipientCnt: 14
+From: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
+To: Yixun Lan <dlan@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
 	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
-	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>,
-	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
-	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
-	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
-	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>,
-	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
-	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>,
-	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
-	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: Re: [PATCH v2 1/1] spi: use dmaengine_desc_set_callback()
-Message-ID: <auxVFt8_vZKzYniK@ashevche-desk.local>
-References: <f1fa853d-1703-411d-b2d2-0fb0b176c2fa@kernel.org>
- <autqC143h7Qf1R9H@ashevche-desk.local>
- <9e39502a-dd17-4fa2-98a3-9019523cb5e8@kernel.org>
- <auuYcS7-YqJKcUbE@ashevche-desk.local>
- <63c24437-4261-4a51-be7e-31ac0759a095@kernel.org>
- <auxGom0XR-Hax9b3@ashevche-desk.local>
- <00390a20-7630-4066-9779-06c8f915a176@kernel.org>
- <auxH_WzaOLsQ4-go@shikoro>
- <auxOFGTRAKb5bLXD@ashevche-desk.local>
- <auxQU_PU4bwLJUch@shikoro>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH V2] riscv: dts: spacemit: k3: add USB3 port A (DRD) nodes
+Date: Thu,  5 Nov 2026 18:31:25 +0800
+Message-Id: <20261105103125.2727341-1-chunyan.zhang@linux.spacemit.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -139,25 +78,118 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <auxQU_PU4bwLJUch@shikoro>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MIGuSZJZg3QGnuivF94uB/SQtZveRJWXwr9qj/ZN4VKL3ddLulf9HXVL
+	ev86CQAYYGkpNjg01/hPA/9CVdsd35q8rH9Nh0M7Lp9G44pCmcUy9UuPcgumLME7tEfj+ko
+	snuvJ0Yi5zp/pcCsW66hKaLbXtHuvg27RLRGBbQhgsirbXr9kEOwDzDXRqm28aDCJRWbPrk
+	45WH5hZAsW06jtDYQg84euE+L5kqSMBT4f2/0OSQ99fGHT6/jaqgzh9jBgNto7P+2b7n6uC
+	zNrUWkqOtPkG5Jy3dFE42TfW11Iim81iS614o3V+D38YNbCXCyBRlrLzg+fC3HSN1SIZUF2
+	/roy0ULTecSQLVur5tYoQsgviPnaPRqPTgkHn+oDyPplbL2i0lM/YuIgBsjnKMOaXdWlJCx
+	1C/HVW6Kdceq9kt+XcHEyq2h+YES8G7uprvbdeHHGtg0WXeDRiFM7XPBNbL/d+8CBwxRYcn
+	6dsaA1HwR0vlDRm/Ptbk8J5xJLHfJZhJyNMhy/MSGbLRxUsR+Ad8e/Jtn2Bm/nPD0tqP9g8
+	qHqClFgf+6jiBL2AukhklwVqNyJl68jjxycKgLjsyvyRxTIyVylz2icwjVmM0kORB5jro8K
+	RUeZToMOz6WDCHQNYpeBVA1wyoNYZnY/K8rGB/s6llKAM+ftYa5vHDFTv9zwiXSnGMPPZqX
+	zGRuStyVcKGujVREmszCynQCy95dz0KGeyL/82B6pNvG/zjIBZnUF6Mr0nYwWLZqYsQilKl
+	46caKi4jAJ7NPlCcg9wdcKJXAVDuvhQMJXFiw9FIux1LzizYz/HnAbzTSvGJmu9CMkc7fbd
+	KEjc4zDljnXif1aptdNcHDN1C5auhQ6x20wFNto8Gl0NeMovZQ/jM/3nZ5+hl5PhSMyFFdy
+	2S8CpGp+bzPLx7E1mgQwUrEFgkjna6PFS2ycMe44suVHQer9X4nDFk4hYGRRwUkidiAnlqf
+	l0CbgXWITpcqBXJNnuFFUgyPw6Rzx6De2K3JpRCbqIc/FBc9rZts1hFH6FoN/Jw0+S48sXU
+	jgmvFxeX10DOznwsAHG7M91kUVJY2ytjDU3mKzjTuKU3J6sGZlqbvyGOX6auYNkALRgzWPe
+	w==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-SPAM: true
+X-QQ-RECHKSPAM: 3
 
-On Thu, Nov 05, 2026 at 11:45:55AM +0200, Wolfram Sang wrote:
-> 
-> > Then I MUST started REQUIRING to split the patches in such cases to actually
-> > review them?
-> 
-> Okay, this is a solution, too. Or requiring "# subparts"
+Describe the DWC3 controller and its USB 2.0 PHY for USB3 port A
+of the K3 SoC.
 
-TBH, I am flexible to both. Depending on the situation. I don't want to blame
-the author or require additional work when it's not really required. But on
-my side I still want to *review* the piece. So, "# subparts" is fine to me.
+Only the U2 lane is described: Port A's SuperSpeed PHY has no driver
+yet, so the port runs at high-speed (maximum-speed = "high-speed").
 
+On the K3 Pico-ITX, Port A is a Type-C connector behind a FUSB301 CC
+controller, which is not described yet. Nothing configures the
+FUSB301, so the port relies on its power-on CC mode. Enable Port A
+with dr_mode = "peripheral"; it is device-only until the CC
+controller is described.
+
+Signed-off-by: Chunyan Zhang <chunyan.zhang@linux.spacemit.com>
+---
+Changes in v2:
+- Rebase onto v7.4-rc1.
+- Move phys/phy-names to the board dts, matching usb3b/c/d.
+- Add snps,dis_u3_susphy_quirk and snps,parkmode-disable-ss-quirk.
+- Note in the commit message that Port A is a Type-C port behind a
+  FUSB301 and is device-only until the CC controller is described.
+---
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 12 ++++++++
+ arch/riscv/boot/dts/spacemit/k3.dtsi         | 29 ++++++++++++++++++++
+ 2 files changed, 41 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index dda420900aa2..d0fbed23ccca 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -337,6 +337,18 @@ &usb2_phy {
+ 	status = "okay";
+ };
+ 
++&usb3a {
++	phys = <&usb3a_u2phy>;
++	phy-names = "usb2-phy";
++	maximum-speed = "high-speed";
++	dr_mode = "peripheral";
++	status = "okay";
++};
++
++&usb3a_u2phy {
++	status = "okay";
++};
++
+ &usb3b {
+ 	phys = <&usb3b_u2phy>;
+ 	phy-names = "usb2-phy";
+diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+index e89d2cc5ca8c..2d2569cfe676 100644
+--- a/arch/riscv/boot/dts/spacemit/k3.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+@@ -687,6 +687,35 @@ gmac2_axi_setup: stmmac-axi-config {
+ 			};
+ 		};
+ 
++		usb3a: usb@cad00000 {
++			compatible = "spacemit,k3-dwc3";
++			reg = <0x0 0xcad00000 0x0 0x10000>;
++			interrupts = <118 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-parent = <&saplic>;
++			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
++			clock-names = "usbdrd30";
++			resets = <&syscon_apmu RESET_APMU_USB3_A_AHB>,
++				 <&syscon_apmu RESET_APMU_USB3_A_VCC>,
++				 <&syscon_apmu RESET_APMU_USB3_A_PHY>;
++			reset-names = "ahb", "vcc", "phy";
++			phy_type = "utmi";
++			snps,dis_enblslpm_quirk;
++			snps,dis_u2_susphy_quirk;
++			snps,dis_u3_susphy_quirk;
++			snps,dis-del-phy-power-chg-quirk;
++			snps,dis-tx-ipgap-linecheck-quirk;
++			snps,parkmode-disable-ss-quirk;
++			status = "disabled";
++		};
++
++		usb3a_u2phy: phy@cad20000 {
++			compatible = "spacemit,k3-usb2-phy";
++			reg = <0x0 0xcad20000 0x0 0x200>;
++			clocks = <&syscon_apmu CLK_APMU_USB3_PORTA_BUS>;
++			#phy-cells = <0>;
++			status = "disabled";
++		};
++
+ 		pdma: dma-controller@d4000000 {
+ 			compatible = "spacemit,k3-pdma";
+ 			reg = <0x0 0xd4000000 0x0 0x4000>;
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.34.1
 
