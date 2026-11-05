@@ -1,59 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.243.244.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793867385;
-	b=w00eZezOzulo66C3nJZvkbzosaElfo3fdKf7leMrXkVpXmTpMCqN5w5e66ebbrG+rAcf
-	 cB4pumC/WE+kv0QumdvZSo5vZCiFxZYNngI6FAOY0VCeP7c38ciqz3+UrsSSTdnbWQQTt
-	 YKnVWwFxZ/CJYiXC0PBIhJWEZQKalhIaQL6OyMwTxiufjM69y6uEkyB4DOA2ljX7OEj9H
-	 mCvjPKkgU+ZA+FE8rNIzOMKP2KX3rRwZH/kAMJi1DOY4H1ZRGpuZgiAj35r1+zP0a+56F
-	 X62NB3tc88T8q3//rdOdeFOZb2WcGRtJH4NK0amul+MTlhWtAm/oW5Id6aQCqHtgeaA==
+	t=1793867386;
+	b=wavjFCIUYOFUqrspTDg4X/HVzq29Ds2JhQkdwrbDhL3mkhl/HBfYJJ4oTHg5Nwcjm6nq
+	 trBpEDOeAUt8TuFIbXxLkfez5TofdOzbGded0mrBGENjqHYu9v88DGWkzefeCRzuSVPoM
+	 MWcPJYK7Cj0GQH/bcGiS3L0es6SoG8s52rMi0XRrwIHJZ1rDu2ZnfqSt5FDDs8RTGskmS
+	 czywUPnG5RvBdEqLh8w+yCeygCUY3tTbGip2vvmBhJcJA4RvpanpzGj1fbSvA2sgnX6TY
+	 EF1mo2cihkq7ekeN7ILkyE3s7VpE9zA42u6w5UxTcucAD3iFhgCMLKO6HqFbp1mh9Iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793867385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793867386;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
 	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
 	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=HpKrwB9rCAuUJd/mdqKwOdrJ24+UX+4D0BCjQpCzHeo=;
-	b=iKt1kJ8z7BdFYzNxDzna/tRBr8o50bf38zlZI7ZZBEdPiZ9HXGPC8WBEvUiLqYJ3R+YX
-	 HnUGeFPH+WFyfnhMiuOn1p1HSsi3aHRmBposgtJMejQqTlPnrQLpIbGDbNJk7QmfbAE0G
-	 IPtLX+cvlMT8/GuIrI4ybdg048GALPILip4+in3hOrLzuqJhLryfNF56SRN7HohjWG22O
-	 LF2vxMZgGj4wxLRo9bLljpkt8HCD0pEDWZFk1CHLoeHdOpr1pTBuseXAn6qfL7wQIxBgK
-	 beCz5GWQQ+0r4h70EkMhC1nxPSag/76SMrOyuzzvCNO5t6s4IrYeUWVgmKzNcEx53xw==
+	bh=CopvvqhWid9fiExsBsxW2G2T9Z5Dr++oJhDSpnNEa7E=;
+	b=P7pV34LcfMQx91wZMmg3I/GgqhcKOWs/KB3gQiP6VllzzOKGcbCrw6xRDrgWBme/LhEi
+	 TCH+8T8mPsUSsHExbFjBeqz1k0JjKi4jT6WDa6jTPSR/bz9x3ayy2WFSGtDt+pozvGH3E
+	 TLHPjDo5BlUwYyDQVvrf7JYjoRR7vgb2lduSzK5HV7SC/oQKll5sVPGh9oKYVX3knzwDM
+	 gjZrG+71qDC2QC4rOkr+oMiBxi9LSk5eSCuO4BroN1S+At82ZDjDNjoqLw1b+v0/UCEwH
+	 FnVHQMaBIybnZbnrxdo/kCRqANKP9PMurjFNTjbk7u67hLmhl7NSSf6+cKfl+1b091Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=udCHJPIs;
-	arc=none smtp.remote-ip=54.243.244.52
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=tycrbvdT;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580A3606A326
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 08:29:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 580A3606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCC8606A31B
+	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 08:29:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4FCC8606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=udCHJPIs
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=tycrbvdT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793867379;
-	bh=HpKrwB9rCAuUJd/mdqKwOdrJ24+UX+4D0BCjQpCzHeo=;
+	s=mxsw2412; t=1793867375;
+	bh=CopvvqhWid9fiExsBsxW2G2T9Z5Dr++oJhDSpnNEa7E=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=udCHJPIsC22Tg5EdmmU+meBVc0Xa++gl5/5CBS3nHGf7CH7bMx/MFDuUvPEiNkZJS
-	 a2fjRC0jXOmjVo6GzAjj4s57S5khqLG12XSa+KVZcgGa24X1CphtyWj2BCzPq6OTpj
-	 XoJ2DPgnBb1T1alVrfucMuvHj9aKuJH9Prm9o2yw=
-X-QQ-mid: zesmtpgz1t1793867378t0c8c3d9b
-X-QQ-Originating-IP: RX1adP727/U1jyvgtCrXrR1MW19ffD4TGAPRM99bsf4=
+	b=tycrbvdT+RV7mYB1eAtRzCIy0Tou9MpJGN/4I9cjlGjGe8a4V2kSCIu2S2T1geQyn
+	 oRBAWpXB1cR2xMAYxX4PN5Bwu0hrsjxicAEjVu+GDPGHf3RY8OE1SrI73QnQKAV/3r
+	 ouixB63NCJ5P6g6B+Owfe0iYJq21xLGAVWl6kbKA=
+X-QQ-mid: esmtpgz15t1793867374t0c3a66c1
+X-QQ-Originating-IP: W/Ln7rBhQsWfKhGVkC9nM9jBRkjphOV2anfcWAXMPbU=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 05 Nov 2026 16:29:35 +0800 (CST)
+	id ; Thu, 05 Nov 2026 16:29:31 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11866058336167670261
+X-BIZMAIL-ID: 1637689771413805763
 EX-QQ-RecipientCnt: 15
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Date: Thu, 05 Nov 2026 08:29:27 +0000
-Subject: [PATCH 2/2] riscv: dts: spacemit: Add K3 CoM260 IFX TQ support
+Date: Thu, 05 Nov 2026 08:29:26 +0000
+Subject: [PATCH 1/2] dt-bindings: riscv: spacemit: Add K3 CoM260 IFX TQ
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -65,7 +65,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261105-k3-tq-dts-based-on-com260-v1-2-aa0b7714aed0@linux.spacemit.com>
+Message-Id: <20261105-k3-tq-dts-based-on-com260-v1-1-aa0b7714aed0@linux.spacemit.com>
 References: <20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com>
 In-Reply-To: <20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -77,115 +77,59 @@ Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2339;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=849;
  i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=+Ys6xDTlkWYC2lhqTf399k5bJBFMMlgJMp/BntR0DlM=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFlv7NI+1jZsPftm1WLPg/Ehq+5emG48dXe9g/68B8yBG
- ecVo4RdOkpZGMS4GGTFFFm6H/BsK/CJsi0QKPSFmcPKBDKEgYtTACaSuInhv2t1wtyq6A8OK6ee
- te2851NZ9i/zybXUplcrn7WrL57H18/IcJD3gOT7t32NK/Zq3tdZ5fSGr+iBfIB5540S/9ZlUmJ
- ODAA=
+ bh=0cRTat3hlAAUdXn7s5TJaU5uAtb3Men7e3BzfMITEU0=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFlv7NI6eq62H3GW8UhsPzyHfU2aSWLYY6Oe8FcFXzrLN
+ K37Pp/sKGVhEONikBVTZOl+wLOtwCfKtkCg0BdmDisTyBAGLk4BmMjmRQz/887v9VF8tkttt956
+ nqONJbfusJyTN6jbfj8rhd3DdIfWaYb/kUyWKdOfZJ+Kbe7eocEpXX/KxKlzM8PGzF4/Ma79zBc
+ 4AQ==
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
  fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Mdg51hMop9NqkkY6Pqxoow2q1Z8DZP6QSzVg9cA4vaItFB0DzC6H/E22
-	PwoLZAry9d0PeIGhovwG3dVb04OGyJyW3+kYxHbBJsTSxA4TMtICPMNeku2jk5DGn9uOQEh
-	Ac5vpj9y+O1QFi6bNmaLk97KHkqqHKhPl1ztcAfG141A6tJm+IFnXPaxCchfE0HCW9IpoJY
-	SI+AQU+aKg/Omk3ZJFB6vS5i8zlVZ7WLLhPSjQGqAEQpxXClHq68N+bese0u4rOYQ3P9P3s
-	RuzlNdyS3qS0TMUTubjlG09xe/L7slrQJZwHpAkPQ5Zng62OumjCEItSDVl2pcZFl9lSN1h
-	5LdKDHSJSuNp2undHnALEhUvH8YLGpnkCfiFWu6bg3P84nRu/pXuE8CoU8izCaU38yIFmi5
-	VzGJqGO6VSpEJWY1bom0e2teU9h2FWcYEvCMWFxyjzIk8HVA2zSVjjPekJP+ZE/vVeLQC6C
-	mxPwEDGGJbC/LvguX6+EfEj6whz0Sm8lSTFv9MPiEjSe9seFS19qqsgL8Mj668skiJMXEBb
-	z2nv1+IRo43LdP8SvTnjQoiQSVjGGg9c0LUvvDudP+V2/6vk7x3C2Cr/dXtdcsfP/P/m4/s
-	orZuaNr90Qxub68vlIlXD1TK/5TCDslZ/fdDWESvojVJjpvXo15oCxCy07vgL40490Oc9RC
-	PS+Y/1swbdng2ym5hvSf7j4ugImFGXYoTLtv0KCSnUwYwnXDeHnG8cuKcODwcboTstYeI6d
-	4+5MCjJ/1afIzqv/7DdWy/8IWsKMvrw26ZVTwg1P7ablxBR1I+54fnm19Xedp5GRtmQVUKT
-	H6PuqmNHpUflUv6y8KPy38n+FepeHXj0EyhrO4iAymp87Jz4Y7LfnkGfcc+ZGu9r1uSX6D/
-	Twnbv6CG49EoanxeBrxIWaN48pllxOLwCEXmGifSZSvNFedm3F6xwqknN5xi8RmalVX6Mjc
-	xkd+kDPYnKcmx/T9H6y23s1lnewTBDpBHF29s3dqbrN+Hl9cQOdZDy9xzvWA++DPHldTqz+
-	wBOJk15RNzjGVzZvLATyy+tDdLFSdAORBquvWGFiSDIbPXqnMSOJCzd72ygfgd0rAHv3uxs
-	v+bL6YW+N8dkPzNmFoEYjNXd5zx8O6MYQ5fR0Fp5FJjPw4flzOVeQ07sVgSbRVS5e+28lRK
-	OvMQ0tmC9HC5ZZuJD0ohR4M6iqlc1rN+19mpCWihdccwm70=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: N3i14PjB5Od7hDrGQvkUvpN1bzhyBChT3MXt/eBolPzpUk/Tdqi6NRbe
+	r3V6SpcLYrLccqUPKyO4z6x37LF8+zJtkk4ZeB0c68bWfDAvvFIg0mf6UmqxUALwNPERhDS
+	Dv8/4UJ81mCVjz1LGRwsvyMdr2ELx0npXrVGN1XQUo74V1zl/p4VKbFSxhNCtwUdVOgIRAz
+	HwbMFICtElaTF2wRPnvtPqPwR0fQ/gEE/jEkr5nf2LY30qVLVTjK+IXRTZx6WLFnfeFv6yL
+	vhBx3miVbz/gzMshfUI1Pt3u03/XVj/xSk2qo3TYUYSRch4xIZPHrmW3jA7hhwgbqc0CnS9
+	Z3HIijyFpYTfmBuJiySlPiFoiZXUcy52ea1MVOtjikluNZpEiiUFuxl21DYRslRdt+qwJXg
+	gM+fJe46fbBPidzjClKQQFvt2xm0jHIqun1BypEwmeUC009Q3ReGLdCNQoIbHynMeU0pmT+
+	uyMumUjT6usAkjDSlVJOMtl38YgqPXNuqi/rXrla//++O1G1mN/7vbcx1Q3rCXwcZHoa8z8
+	HrRT7uZzmedLVsm3zqa15eOjfnsRq/EC3DqiyCmnN24OEWtsfJo3rIVparMJS0Y2d/6xuDC
+	1uIX4mI4ko+ErOdMDvezNxRdkzQqDNq4eBT2aG6qM8K9eFPwfXyM9Aez2AecFhX1ojvoieO
+	YTPnsVBmWOxZ5WPB13VJrtAg+r4LfCs9fmaZ4ubE9Kpxt4Qjfps1eSr/dYbursUhEJaB/YM
+	vV3wUwNSJjWD9uXF74PO+XAjXMKGRLsx+gbGGGByLNDa9t8PfY5aeNXXrfkJAjLLcHkDDJq
+	zym6MLzckdy0P+BSQALWm615Ukx3AQOfIh8DZmgox/1Qw/Etrh0fx7644rGKpThLZ8OXTll
+	vknCS7MWCKG7AchTw1j2Dg38S9v9Z8XyLszBFt5ceYaEbdBKm1UwtYxgEgxMff0nR7ucLjV
+	JF1SHafeustPYSu9fHgXSkD0NQtFCLnErujOrnTLWX/pLcOzCuUdUlDpmWhvzJ0aU8sCke2
+	a75lAztwCpj6lu1F2sEQI34X1B8D46HBN46lcJS3u5ziXQ00+EZr3UqcyzxbGtMp+r6mlBv
+	iqJDJ+D1tYLsZFVVhTFOZOdsEs3IPR4aA==
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 X-QQ-RECHKSPAM: 0
 
-Add a device tree for the K3 CoM260 IFX TQ board. It reuses the CoM260
-module description for the UART console, Ethernet, module EEPROM and
-PMIC.
-
-Describe the carrier's green and yellow Ethernet PHY LEDs while keeping
-their existing hardware state. Enable ALDPS power saving on the
-RTL8211F PHY and disable its unused CLKOUT output.
+The K3 CoM260 IFX TQ board combines a CoM260 module with an IFX TQ
+carrier. Add its board compatible with the CoM260 module and K3 SoC
+fallbacks.
 
 Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
- arch/riscv/boot/dts/spacemit/Makefile             |  1 +
- arch/riscv/boot/dts/spacemit/k3-com260-ifx-tq.dts | 44 +++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ Documentation/devicetree/bindings/riscv/spacemit.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
-index 851b701e5da4..fe664f84e1dd 100644
---- a/arch/riscv/boot/dts/spacemit/Makefile
-+++ b/arch/riscv/boot/dts/spacemit/Makefile
-@@ -6,5 +6,6 @@ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k3-com260-ifx.dtb
-+dtb-$(CONFIG_ARCH_SPACEMIT) += k3-com260-ifx-tq.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k3-deepcomputing-fml13v05.dtb
- dtb-$(CONFIG_ARCH_SPACEMIT) += k3-pico-itx.dtb
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx-tq.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx-tq.dts
-new file mode 100644
-index 000000000000..6d9b2dbd825d
---- /dev/null
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx-tq.dts
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/* Copyright (c) 2026 SpacemiT (Hangzhou) Technology Co. Ltd */
-+
-+#include <dt-bindings/leds/common.h>
-+
-+#include "k3-com260.dtsi"
-+
-+/ {
-+	model = "SpacemiT K3 CoM260 IFX TQ";
-+	compatible = "spacemit,k3-com260-ifx-tq", "spacemit,k3-com260", "spacemit,k3";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		ethernet0 = &eth1;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&phy1 {
-+	realtek,aldps-enable;
-+	realtek,clkout-disable;
-+
-+	leds {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@1 {
-+			reg = <1>;
-+			function = LED_FUNCTION_LAN;
-+			color = <LED_COLOR_ID_GREEN>;
-+			default-state = "keep";
-+		};
-+
-+		led@2 {
-+			reg = <2>;
-+			function = LED_FUNCTION_LAN;
-+			color = <LED_COLOR_ID_YELLOW>;
-+			default-state = "keep";
-+		};
-+	};
-+};
+diff --git a/Documentation/devicetree/bindings/riscv/spacemit.yaml b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+index 4ee9c88984b4..9b115b4e4b9b 100644
+--- a/Documentation/devicetree/bindings/riscv/spacemit.yaml
++++ b/Documentation/devicetree/bindings/riscv/spacemit.yaml
+@@ -40,6 +40,7 @@ properties:
+       - items:
+           - enum:
+               - spacemit,k3-com260-ifx
++              - spacemit,k3-com260-ifx-tq
+           - const: spacemit,k3-com260
+           - const: spacemit,k3
+ 
 
 -- 
 2.56.0
-
 
