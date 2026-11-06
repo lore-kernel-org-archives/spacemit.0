@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793975200;
-	b=aajsOoT/kbwyS4n/ZySE2Ym5XI1aYBEe1C4WrcqFPQ8dtzFnrLu/o6Gb51qAVKuNI/1F
-	 PA540TZVhtcUMf5zsq1E4Gc9yV9QKe6HwdA7PU81sByblgG0K1CgaMBg8xEbQDJ4kR5Xg
-	 LTSw/8FFpDOhC5aE7xUKcANDPX9oXKaT1l64iNVE9pcP6MznjUa67VcgiptvyZeN8lWLy
-	 8oI4k72Ct2l+D9SXH/Z9pzLkrt5YLdc+dld/dtReURidLZxpGgRnmW1HcAPslBUf2R4LT
-	 5KI6Shd9zQ1QarWxr0XQqM9rqbBTcBeir/hl1o7mRrVdVhosLII9K2yro0FF9erBKcw==
+	t=1793975369;
+	b=M3gW9fY1o/5hfaQ+/3tucf9HnCvYjLm8o6XRY2m5Ou2pwbEh7z5KAgD2ddEG+ZG0lKFk
+	 uFPCNzoO6+9qRdDRd7/4dKzX8Ol1KxXSJm2IygNZ+JetUwlTqwM+jXzdT5cCiuLibrqI4
+	 vj/QQlOjnY8eMN9epBohvLuK+fnptvdCf/XgaqJsOtvL2vYULcgFfIIM41HUgrrLACRQ/
+	 M7ww3yJXOE6r5CQF8f9zE2GF9WOOqf3ATrTw5oCg5fVsq0byojAU8MtJhu+YZH/oH1rPu
+	 Hz8sfhRRBu0apFWbZZAWAmQwumSlPCZPkdFvIQiu1FuEZZQiC2MLCsQMNQyfx2+vkGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793975200;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793975369;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
-	 References:Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:
-	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=ies+2HW5mTG1O2fNxFjPMdL4QQNBslFCepJ6zX5a7fw=;
-	b=V4g+DejDc8dFM5iKG5LsOMaa6fkBBhnFBHPcnrfYSjD80ve+w+UWlUXYtFS758qE7DSK
-	 9GCfOsfLjwY5iQ4KoHVPw+60R/EVrAGtNRc4b9D7d98MFkvZxQQzTgKRzajjkIvF8Zej9
-	 GYNTbXr4gWO45bh5rO/OnS4SYIXQV7AArbsVaoGVx2UgrDq6j4MckgD9lCIgAVdPYhfGH
-	 e5gsqDFakJEeK1dK5cCrewX6EPBCkDxJKqun2FRkSzdWsypKyyST9trfzSXJaXX5mruKl
-	 QNYgfMovg6GT3qbiQXr8yItoGliPxQwQQuHQ7+5Yn8BDLQRyyegzCJzWEXkYOHmLcvA==
+	 Content-Type:Date:Message-Id:From:To:Cc:Subject:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=vzMC/t7/9F/wHvk0dCiUSdp5ZVi9RLoAVmLD5Z32e+M=;
+	b=m3ANER3/XaKliwOm6exyiy1TLKCALNYlKUKRr8EYl6oXS8avMJcF09eBwGUQpBCmYdu5
+	 vaWaDVrpFcWVnFQs1ZOMg0AgOMbnMN072YZSROa2LHa2i5+7oIF/KCDnHArtW2v9hG5Hr
+	 XlCuayMajpj1lApYxocS6ypVwvxgAnYd7mSK69mHgfnUedtQGxVAS9DMNM+5aHmT7+Ghr
+	 SifqkbeXqdHP9W60Oz8EGfJ9XTj+dFVjt5R2+hNRq9V+NVCzMmepn2Xji1VJaXTPVpT5g
+	 tg11+Hssgsr8hac+WejJ0EaByXxLIiVugbyurg3MAHi9BtL63UO1LibhO88Y8nikxDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=eU6Zz58d;
-	arc=none smtp.remote-ip=54.254.200.92
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=A1WzslVd;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6488B606A329
-	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 14:26:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6488B606A329
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36209606D80A
+	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 14:29:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36209606D80A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=eU6Zz58d
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=A1WzslVd
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1793975188;
-	bh=ies+2HW5mTG1O2fNxFjPMdL4QQNBslFCepJ6zX5a7fw=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=eU6Zz58dH00WEa6FL+zeebtmEJrNcxY/Krp8P3Wzqp4360LcsJf4xZiMXr3tceCcE
-	 svAAp2N4byiBKqkFw0QiZKn4HbKLZ74oS4ptwE3NEh3wBkw9nTiaqPw+8ZHFeLI9oo
-	 Uanj8YI3WS8/LwOB8uWsKhcxD1s/yj9EzjDvwjZg=
-X-QQ-mid: esmtpsz20t1793975182tbd35ad97
-X-QQ-Originating-IP: TXe3qKmdAqKHaOhVsQVWL6itOrYqiQ+KBF3bprKbVQA=
-Received: from = ( [58.254.68.27])
+	s=mxsw2412; t=1793975344;
+	bh=vzMC/t7/9F/wHvk0dCiUSdp5ZVi9RLoAVmLD5Z32e+M=;
+	h=Mime-Version:Date:Message-Id:From:To:Subject;
+	b=A1WzslVdCUQ/WJRfgyBj3jhc6Lkume/x8blyh77ieCLwqzcI/nARd1gSrHWLm18ko
+	 jIHf/fMUK4r2wHT7dS+UWEwwJvRCFYQNW3A5gmk26iRRdFyNmWl4t02uHbsia69AkQ
+	 O5GrC29p8pB7S3kia/RQF0FYIUdlUCa4MI0Y/wPI=
+X-QQ-mid: zesmtpsz6t1793975342tfca03cd3
+X-QQ-Originating-IP: FXWx1J02SNiwq6D76KpE+jmmvOYqfA66DcWE0D9isCM=
+Received: from = ( [183.48.247.17])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 06 Nov 2026 22:26:20 +0800 (CST)
+	id ; Fri, 06 Nov 2026 22:29:00 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11997525554458896140
-EX-QQ-RecipientCnt: 19
+X-BIZMAIL-ID: 11635340926689287876
+EX-QQ-RecipientCnt: 20
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -60,12 +60,15 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=dccf64d274bd60cba0fa2d9ae238bd5d3708f6eae0880e28d195f102ba69;
+ boundary=2e4d8a39a2bea6f818a63b3ff9e25a3c00c3087051a22930243346653cb5;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 06 Nov 2026 14:26:19 +0000
-Message-Id: <DMO74K2MG3D7.15UUOU1O66K6N@linux.spacemit.com>
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Vadim Fedorenko"
- <vadim.fedorenko@linux.dev>, <netdev@vger.kernel.org>, "Andrew Lunn"
+Date: Fri, 06 Nov 2026 14:28:59 +0000
+Message-Id: <DMO76LFWHRFZ.1CQNNBZQE9X10@linux.spacemit.com>
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Breno Leitao" <leitao@debian.org>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>
+Cc: "Vadim Fedorenko" <vadim.fedorenko@linux.dev>, "Ali Tariq"
+ <alitariq45892@gmail.com>, <netdev@vger.kernel.org>, "Andrew Lunn"
  <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, "Eric
  Dumazet" <edumazet@kernel.org>, "Jakub Kicinski" <kuba@kernel.org>, "Paolo
  Abeni" <pabeni@redhat.com>, "Yixun Lan" <dlan@kernel.org>, "Vivian Wang"
@@ -76,75 +79,78 @@ Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Vadim Fedorenko"
  <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
  emac_suspend()
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Ali Tariq" <alitariq45892@gmail.com>
-In-Reply-To: <c55c5878-d9c1-4863-bc55-99d334ba2ede@gmail.com>
+X-Mailer: aerc 0.21.0-reader-ipc4
 References: <20261105123441.2524171-1-alitariq45892@gmail.com>
- <DMO13SWAGZAN.NYISGLGI7Y5A@linux.spacemit.com>
- <c55c5878-d9c1-4863-bc55-99d334ba2ede@gmail.com>
-Content-Transfer-Encoding: 8bit
+ <auyG7hGJtMzV0Gbi@gmail.com>
+ <6c36ec6d-5bc8-4ac3-8ad0-79eac7873b67@linux.dev>
+ <DMO12HWY5N64.2IJ5XMUKM8WWR@linux.spacemit.com>
+ <au2_yS85zJYqOaYm@gmail.com>
+In-Reply-To: <au2_yS85zJYqOaYm@gmail.com>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MgHozbPPr2uXgP1SLKJNKX0MU8mJtRMwKsqd8FFPf/CApPbZk5H0RdWV
-	2IuTYIIQVfzRXjR59LdWeKfGLpM7lGSvOJiXxqsT0L5A12z0BINeq8nr+PgZH78hDygz9jS
-	F7dvONFH4P+gorhye0ML7cCFUlMhurd0NX1f/VD3OjE5IPViUZdbrFp5tIyBpym8XD+j0oX
-	40Z1FvYJu1EkdwoQDesdQ4E2g9NQGIFWec3Tw6wz7MRkaYgf8cCWQiRInZd4LfC8bGKVKmV
-	L7H8fGm3fHsjPR2oxDDa5LPKOfgXnP4c4IgR05Xu6VtbwpUi3ry5FyyT2oIcn0giRMlWZu1
-	Qx0eC0bwJ/idAm0zgLrBCrA+q/ZI+xklVpQJ09/QfebNOgd+JOL83zD0Ely7y2ZEDzje+s7
-	8w0iYmk19VKgKr1LBtqrlUnlklU/+fK517B+paFsR7OPmnD4rLKpt+ZlEZwRiL6e8zL8Zps
-	hqcGhvziGJpyHYSkXkpD0UVGuk1N5sfwc2O0XIC84L3eHHmPdx7FZHUT8nNDyTa8leujFzm
-	le1wnXT6WAm9jdsrRHv359l2wRzgK8cA972fDKpbEBka6H0n37XjDt2D5cFV4xbDo8HGGew
-	Oli85Otpd0aRaH/rNs7xPBZQ5/ebfeUA7VWsyapuKSfc4XW+DOanf2ELshdJNurI3o4ZObg
-	nNZeRzfgAzISi313CFbhRXDvpcpP8umB9b9mCl3ebN7qDX+BUf7cbaFAI3VZsYNynDvetDt
-	ZlX9+lJySR6PwQ7XPHBYP1nuK0WnMnhLvukB7blwUhyLX/B/v4tZ8Pq8oSewhNnRhyDHUg5
-	1h+8F3NxtZs8QPyWiVRcaJERYG2i7YYpD8ZDGSgJt4ecnkFM/XKazxgCeIfoX/lyWQCVYJY
-	NL1n3oxDWcsFu64cC0OIsHQonk9fFxU8qYno89C55tY46CToE3UHS317zaS72rb3Pvi90+0
-	BgyumNGf4/DzseVq0Y9c1ZWIJJczll6zAQl9yWqkruf5AlTNBaTjmNhxMVE/CSBKNf7wpwk
-	am+u023+iw6pCIuq4sDQJh9hPJ4Y9yc4vuX5M/ofFjBtv5qVfJzeGOw4kRiR2iax+YNFUsg
-	AGI3kH5fjr/IAfOH5s3uqgfczHy4AbA9SfPR1EDojgR3mOb5r8cPbs933KhRx4CsA==
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MeLso3b7zQmNLST0XqVNLyTWsfrX11Z1ePc5yBgFMtG6Jii4wFCUA08P
+	7iGs5Ucx6CvC7foE+P0Zb5lfTDmPaG1PBsvsMhYW0v/ENCoWZlhnwJXm4U8I9uiXJ/PEMaZ
+	k8FyAvoUp1/qgV971kTDIYKePrkaQ35xZ6RdBnfNCwF6mX3y3DP30OmcpcYsPBf1ON/NHzB
+	5qUWuFoOzHrTZZlVFQEeGlQzTeXPwUIVCxIwprQmwMQcNKtEaJ7S+5mdca4wwV0g6E0k4M9
+	04ggUgr6859hzudETy/mKWc2mEVLsBPodx5IUNQZ++SxxCswUkqpzdOUiseiU2l2W+hPgDR
+	BBahmOQM7JO0Cuonc0t4Ebo0fP5Fa2L62sUU5pVQ0vzsEI1mlSH/9BpnswGwuFqHLKOZest
+	3NjUOjL/ZXonkvq3p4fbE0UlY/jpgemH25xZU1foK+qWtNhKMd735BxiwpgsDuUkE6LW75U
+	QiE5GYOm7fDsIurH9vk1t0d/L5lSxssydvez0i1KGoEl6lxQIWr82Yqe199BCBKbrnG5aD3
+	X+Mwl49OaXnC2544rJteJCwHqTXyWb8Ftj8Ha8ktY5WYYJ083h79cY5BQRVCL0vTLn7rDZs
+	Q16lFu+mSw1K9wLewUqovbWIAVqeOxxkK1+7eRCdYUNUsdJz7InA4DJvD0PwhnBL7wZF3U5
+	s0usvguG2/PeTU6zRCbXmcBsm5rWLQbfVFF62JDwutk8HuTXJKkgRMLxmbPKwgquhSiwFAo
+	/CE5MZ1NkpwbITLW7GDxpNbHtX1z/IzLwq2+3fG59+E8+w2glitGex50D9x75l9v9ru2IIH
+	bR+OXtD6nqddxkeqli9CmtZmdM5fjV+Zw9vJLnyuhWItU9Tv71+k/vyhFTzirGATj8T9tLm
+	NJsCpOdeSgitIyyyCctH2kwKRltkt71M6nK6uqNpgJghWLbtloPBULiLLP20V9wcwY7AQ6G
+	+RhCw/rWreJxovNJ6y8KA9nT7Jp3WWZ0GzeG4+Md9pWU8pUOaNCCbE8PuIJ8sllmRMpJNDa
+	kmfJ3gb0bPr+P9DblJAw5IjzSpil5ap9QGc/xkqsg4WPxbePE7ORiugOnnnVaBQc9ncrRAP
+	R5Cf8XyR/GPkjdayTNpp27YRzBKEwCKGxqfkh2iM5HxwTu02eiMdYT7X67J/7cWdHD5RbrB
+	qaAYY6r9JTRXgfURGXAutRj5mQ==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
---dccf64d274bd60cba0fa2d9ae238bd5d3708f6eae0880e28d195f102ba69
+--2e4d8a39a2bea6f818a63b3ff9e25a3c00c3087051a22930243346653cb5
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-On Fri, 6 Nov 2026 15:44:50 +0500, Ali Tariq wrote:
-> For the deadlock, I think the correct function to call is
-> rtnl_trylock() inside the emac_tx_timeout_task(), which would return
-> if the lock is already held and will hold the lock if it is not.
+On Fri Nov 6, 2026 at 11:54 AM GMT, Breno Leitao wrote:
+> On Fri, Nov 06, 2026 at 09:41:31AM +0000, Troy Mitchell wrote:
+>> On Thu, 5 Nov 2026 23:28:31 +0100, Vadim Fedorenko wrote:
+>> > > This would work, but I am wondering if it would be possible to call
+>> > > rtnl inside the _open function, when dealing with the PHY? in other
+>> > > words, shrink the time rtnl is held.
+>> >
+>> > +1, especially in emac_open() rtnl is needed only in error path case
+>>=20
+>> emac_open() and emac_stop() are also the driver's .ndo_open and
+>> .ndo_stop, which the core already calls with RTNL held, see
+>> Documentation/networking/netdevices.rst +214. Taking rtnl_lock()
+>> inside them would deadlock on every open and close, so the lock has to
+>> stay in the PM callbacks.
 >
-> What are your thoughts on this? Does a v2 changing rtnl_lock() to
-> rtnl_trylock() inside emac_tx_timeout_task() make sense?
-rtnl_trylock() there is fine, it fixes the suspend case.
+> That makes sense to me.
+>
+> Reviewed-by: Breno Leitao <leitao@debian.org>
+This tag is deprecated. Version 2 will use a different approach [1]
 
-Looking at it, I found an existing bug though: once the work holds RTNL
-it deadlocks on itself, on every TX timeout:
+Link: https://lore.kernel.org/all/c55c5878-d9c1-4863-bc55-99d334ba2ede@gmai=
+l.com/ [1]
 
-  emac_tx_timeout_task()
-    dev_close()
-      emac_stop()
-        emac_down()
-          cancel_work_sync(&priv->tx_timeout_task)  <- waits for itself
-
-rtnl_trylock() does not help with that. Please fix it in a separate
-patch ahead of this one, e.g. by resetting in place instead of going
-through dev_close()/dev_open(). Feel free to add:
-Reported-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
 --=20
 Troy Mitchell
 
---dccf64d274bd60cba0fa2d9ae238bd5d3708f6eae0880e28d195f102ba69
+
+--2e4d8a39a2bea6f818a63b3ff9e25a3c00c3087051a22930243346653cb5
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCau3jiyEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9EhwD/bCyatTRIBS+r
-zpKFQzPzJykRoAVi4Rh6mDltoPZYzRkBALYRVcX6Wn1PJuX0hMwEF/A7ErpRIC/z
-5Ba+Vr8flvEC
-=Qi5F
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCau3kKyEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8XngEAvtzBFhWPFmid
+I0DRo4WtvPrX94+31sqkjSWGVgnTIfgBAOgNph85ce2o+93QlLRtOrPDaCJBz/OQ
+/EOLlRcW7+EO
+=qdeh
 -----END PGP SIGNATURE-----
 
---dccf64d274bd60cba0fa2d9ae238bd5d3708f6eae0880e28d195f102ba69--
+--2e4d8a39a2bea6f818a63b3ff9e25a3c00c3087051a22930243346653cb5--
