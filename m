@@ -1,72 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793966072;
-	b=pY+bcWY6/OcjIbLmxcJkk69ugGikWc0C4XqDLb4u7EaNpSDzcv3v+f05U3tbeiNiNez4
-	 ji6dDQZ2hKVew0prDdF3TzdYnPI9J4rVszdktaMOGDIKix3IASaD7TUn80bYiW1G+ZWA2
-	 G/iF1iMVbxfhGs95EQ56WWlJ34VfuHXevU/kpX38lBQL4pmXwTf54j/dUurvgZ8+tcHfP
-	 2oqVXHva1UkNe+F9gAjFqbXK9vt0gFm62bHKNddG0QBfDGDZRJUsWIZSyXc/3CfUcyT52
-	 /q13HuWhgbnFNJ/XcIMmX9uSLsYwbTEdKoJHwHem5KyTgkIdQlPIz6fa0UJfQT7bL+A==
+	t=1793967386;
+	b=vAN8E5LgLhmcgADau6BTg0U5UHoYrCFGeByFCBki+vYHotSNmCyrD/I3uzZEUUnRTwb8
+	 PT7OhDnxmnEcNXmjZv1Pl6uNQlCPQLcfEVh0p2H0cegcAU9SlmnXNKKsHdGwLRU0ZDbw8
+	 sPSCEOvWQApcvKw4E7/Eo7CiC5oDESSLkJP+8PIjqh0hdfcrTNpzT58yguePlsLzuXzcX
+	 wncIxIqG2bAJMqLDUcN8MkGGXqWE25Ta5G+YwaLetk81zeXz8YtzNTVZIItK8xUiyhBxt
+	 Makpa5KmqxB3etVXTCXWdLJBGivMvMORBjnRNz9Vc4mbIyYjcYDdvC1ljwD2eksJFsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793966072;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Debian-User;
-	bh=pB0iZgKEny2fvSR6eS1A0tzFJUrMX/Uyf3/srhOTE2A=;
-	b=mnWvUPuGmRXhW3zXs4WE6phJAYjN6UKWnLrIOls8L69EtHXX36eHHtSGbiroi1efiIx0
-	 ilY6/INJ5xJSqz4o1SzJ1PYrmRNgP9JJkoTFrId+9V4Y7r0yWr/ZM9iBT2S38JPcGExvh
-	 taAIKrdsWjk0gH4DBXXH3IrFAkYG+VMYSdXK7Jo/1uC/1yMUFv2bFAppgrBBhwUjk6J2E
-	 0RATCLB3JeaHhG9B9DQM3/inFsZRTareza8Dbsiz246f2DcrWZ/FXwkoVTCWcpCixE+Fs
-	 nEbEQbN7Eu68nPGk0tt3Y4bHk6iFPBc/NAhCLUpWWG33Zncu+pRW8ATsCUT8WivF4LA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793967386;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
+	 References:Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=uPV41jSVh75rYc+JIJbUNHJbDDtf2LfeuBMNekJNoXI=;
+	b=4ivcUA+3XbL9qEXP0Ty+qHU6byOo2adP9OT3qcbPM9SX4GVZV0GMNQeVjjy6l+myJ8dJ
+	 iXVyr6c1hrM3R8Xhyh4uTopfx/ski3V7gY7USjeHBDvto+4tf+ZJIEvPVNd8pzx6pK15a
+	 1wT+O3IT740EdbAtRRtMViX7+omWh0errbOBjL+WPyu3WRThLYcBGpi+qDorSNfh06lts
+	 K0eBJ1xeFOd/iwA6/nxJAhsjt/IGdiXMOhidaEUSN9FAxP0S9GfbwEAD6Jf9vbbzbleYI
+	 K+C+DO8/vrfCS/DKWLRJI9CzXFqo7qJE3GZbet484Lp1BNBeF8H8qZztc4+Ir59hU5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=debian.org;
-	spf=pass smtp.mailfrom=debian.org;
-	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b="WLxq2Wd/";
-	arc=none smtp.remote-ip=82.195.75.108
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=aOiYjqch;
+	arc=none smtp.remote-ip=54.254.200.128
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66325606A32D;
-	Fri,  6 Nov 2026 11:54:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66325606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CB1606A326
+	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 12:16:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58CB1606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=WLxq2Wd/
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=pB0iZgKEny2fvSR6eS1A0tzFJUrMX/Uyf3/srhOTE2A=; b=WLxq2Wd/hptJdFC/EzGqrSGlvq
-	yIsyA3/bgqiOO7kXsrqke/n5XlMt/7rMp5rvXYbotyo3YWNAx4jWx5ZyUKaDhyzaHA8TGjvkQnoC4
-	b+rPKv93sD7Q3rDWIRvszfrCcPo1ljWrB2BEiRjk4sf67HZKIKvePdGc4LKqsq8GmuJWx70+yIVvK
-	KGjgOKsduh09JDUqgNgCZbOVPeDyn3J3pdbuKCHA+QJcYPDueKIiP3ZwFnfCT4PwFXKu3ncEQYe5m
-	47Q8IKHNhMeeqo3oM51IHdG3WdcJg30YMCtu/3tjuvktCpGmXHsqDXJ42Rp3oPveLqIh9fGGIhtDF
-	gl/MdH6A==;
-Received: from authenticated-user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <leitao@debian.org>)
-	id 1xPIWS-009GUp-0P;
-	Fri, 06 Nov 2026 11:54:20 +0000
-Date: Fri, 6 Nov 2026 03:54:14 -0800
-From: Breno Leitao <leitao@debian.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Vadim Fedorenko <vadim.fedorenko@linux.dev>, 
-	Ali Tariq <alitariq45892@gmail.com>, netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Yixun Lan <dlan@kernel.org>, 
-	Vivian Wang <wangruikang@iscas.ac.cn>, Chukun Pan <amadeus@jmu.edu.cn>, 
-	Siddharth Vadapalli <s-vadapalli@ti.com>, Tomas Hlavacek <tmshlvck@gmail.com>, 
-	Muhammad Bilal <meatuni001@gmail.com>, Maxime Chevallier <maxime.chevallier@bootlin.com>, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
- emac_suspend()
-Message-ID: <au2_yS85zJYqOaYm@gmail.com>
-References: <20261105123441.2524171-1-alitariq45892@gmail.com>
- <auyG7hGJtMzV0Gbi@gmail.com>
- <6c36ec6d-5bc8-4ac3-8ad0-79eac7873b67@linux.dev>
- <DMO12HWY5N64.2IJ5XMUKM8WWR@linux.spacemit.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=aOiYjqch
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793967363;
+	bh=uPV41jSVh75rYc+JIJbUNHJbDDtf2LfeuBMNekJNoXI=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=aOiYjqchXoq+x7L4YmfMKFJdirrnFkXFaqMf2R0VSCuZzqYlLTNqZ4fqrVZ90uV0t
+	 qV2m1u4e3x87MINI53+v5h2FY/SE0PzxNVk1BoxiEEk784AFusOt2+KJV06V6NfmLr
+	 OKRG1CGrWNOkceXTzhhXZ0TMtWrSq95iL+oexfgM=
+X-QQ-mid: zesmtpgz5t1793967357t99f51f88
+X-QQ-Originating-IP: 5CM8gtx0OpiyIrvv908inz6iqEmJ5kK3cBL1mHMnBbk=
+Received: from = ( [58.254.68.27])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 06 Nov 2026 20:15:55 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 2384512835884255270
+EX-QQ-RecipientCnt: 16
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -75,26 +58,126 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DMO12HWY5N64.2IJ5XMUKM8WWR@linux.spacemit.com>
-X-Debian-User: leitao
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=1b3755cfd99b64d0a0dda969f37ac993ccdcbb4bdd501bc08f16b6da9e66;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Fri, 06 Nov 2026 12:15:54 +0000
+Message-Id: <DMO4CP89Q1AA.17HKYA50DLY8L@linux.spacemit.com>
+Cc: <srini@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+ <conor+dt@kernel.org>, <dlan@kernel.org>,
+ <troy.mitchell@linux.spacemit.com>, <pjw@kernel.org>, <palmer@dabbelt.com>,
+ <aou@eecs.berkeley.edu>, <alex@ghiti.fr>, <p.zabel@pengutronix.de>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Jiayu Du"
+ <duge1256@gmail.com>
+Subject: Re: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Jiayu Du" <duge1256@gmail.com>
+In-Reply-To: <20261106060525.346873-3-duge1256@gmail.com>
+References: <20261106060525.346873-1-duge1256@gmail.com>
+ <20261106060525.346873-3-duge1256@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NhOYPyditAFRQ5uYznxRKF8muA5nO+NaNcSH2Lhnac2NP9UG2XU0YBE7
+	NSNa1+V5moxihLAFuACLYPZMTmpTrJtV25ZxbhJtE2nn5Tw1kneqTBBmD42OfK9JbpJeZvZ
+	ESH9srt4i/zwtfgUQUERIuHzjHv6NO9wi7RYayeRNFYn4PGWvyRsudajNbSsRatHPoF8dN/
+	Wn/3rbjJOHrpQS7BNCWNwPw2v1ZGfK2dP+jxIFxHWe0FMzpGgtkBtewBVDiSWuk1vmf//KS
+	LtCxRhxfuQLT4AiBmtlb5bZyZ8/srxmqthG0pxwhmme2ZaES2ZNKnXgRzTnhhDOcCsGCib+
+	wSaaOm/xfTRGjbhxoxWr28dZXUJIMmQK6+6HkMVO96OvoeHLRhlf2buLSpzMCeEMAcJlpkL
+	wCCvQckU+2wWsi1uiFgUxzS46CTU2u7ctzE/CdJCyK/HFulq2tqxIYUfA1GZJG2fMFZW+st
+	vptgWr5H5swm9TTCB3n+O7OjQolt6g670D/MU4xhbaq1l+fGTfdy7uADKO3FinWqKRoQxhx
+	eeXaQ7Le6QAXloxWrP6eKVPtDEncmU6+7C4T7hjnK0EfBSV0ioLkFvqGs++J2qfui0LHUQE
+	0HoDXKpZ6eujIs2PXbagVp20SLUCk1OGj0XmxahHndmUFQYa7K+SDrQ4K4VFrUgQdbnste5
+	JAtM/Pn/7+3gMYRvC+lrBS63MIgBzN99F3eSCq3hLupML3kjdpLl1KA02IY0dj+2iSYK4mN
+	Y52Q00skO2k2vFopzP1cr66dP4+Fdx/nzsgwCmfQSXX1anQziDzcOlqSTnr8UdXGlO7K44q
+	F1IHau+ULbz4xQhpKjQ2mBb0aW4phraf6ODvHsZCG3FDf9jctl44sjqH1LedEKc/CON22QD
+	azJB2a68rjhAQ25XMavtQAt5wR27w5RID8DgIPCYSIuVqHVl5E30/wCb4WUTxFw9AjmN/IY
+	wZ5bfvgTb0YPCAZqfPypOiBtzkCIoZG5NGCUTVEpFY8f+7ACXXjs8NSHihe1RbXJ9CKQvvf
+	PX4V1NoCMkHKLdmjf5aoIHXqI7jS/g0wP6y9PbPSazfu9vFwk3U6eEUPN8iXzcnsxi0d+HW
+	hoEcGgT6R9kpGlhczNFJ34RVuOggf5J4TqsljIqCqcE
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-On Fri, Nov 06, 2026 at 09:41:31AM +0000, Troy Mitchell wrote:
-> On Thu, 5 Nov 2026 23:28:31 +0100, Vadim Fedorenko wrote:
-> > > This would work, but I am wondering if it would be possible to call
-> > > rtnl inside the _open function, when dealing with the PHY? in other
-> > > words, shrink the time rtnl is held.
-> >
-> > +1, especially in emac_open() rtnl is needed only in error path case
-> 
-> emac_open() and emac_stop() are also the driver's .ndo_open and
-> .ndo_stop, which the core already calls with RTNL held, see
-> Documentation/networking/netdevices.rst +214. Taking rtnl_lock()
-> inside them would deadlock on every open and close, so the lock has to
-> stay in the PM callbacks.
+--1b3755cfd99b64d0a0dda969f37ac993ccdcbb4bdd501bc08f16b6da9e66
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-That makes sense to me.
+On Fri, 6 Nov 2026 14:05:24 +0800, Jiayu Du wrote:
+> Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3
+> eFuse controller. These banks contain temperature calibration
+> parameters and other configuration data.
+The rest of the window holds the root key and the SSK, which is why
+only these two banks are exposed. Please say so here and in a comment
+above k3_efuse_keepouts.
 
-Reviewed-by: Breno Leitao <leitao@debian.org>
+> Snapshot the shadow registers with aligned 32-bit reads and expose the
+> data in little-endian order at controller-relative offsets. Serve
+> reads from the snapshot and use keepouts for the remaining register
+> ranges. Keep the AES_WTM clock enabled and its shared reset deasserted
+> while the provider is registered.
+Why keep the clock on? Reads are served from the snapshot and nothing
+touches the hardware after probe.
+
+Tested on CoM260:
+- clock on only around the snapshot: probe and unbind/bind work, the
+  clock stays off (AES_CLK_RES_CTRL 0x00c30050), same bank 0/7 data.
+- this patch: unbind gates the clock and asserts the reset
+  (0x00c30070 -> 0x00c30040), rebind reads the same data.
+- this patch: 3s of WTM_RST or of clock gating leaves the shadow
+  values and FUSE_READY unchanged.
+
+[...]
+>
+> +	depends on COMMON_CLK && RESET_CONTROLLER
+Not needed, both APIs have stubs.
+
+[...]
+>
+> +#define K3_EFUSE_REG_SIZE		0x400
+> +#define K3_EFUSE_BANK_SIZE		0x20
+> +#define K3_EFUSE_BANK0_OFFSET	0x104
+> +#define K3_EFUSE_BANK7_OFFSET	0x190
+Nit: the last two are not aligned with the others.
+
+[...]
+>
+> +	if (resource_size(res) !=3D K3_EFUSE_REG_SIZE ||
+> +	    res->start % sizeof(u32))
+No need to validate DT here. Drop it and use
+devm_platform_ioremap_resource().
+
+[...]
+>
+> +	reset =3D devm_reset_control_get_shared_deasserted(dev, NULL);
+This asserts the reset on unbind, rmmod and probe failure. The fuse
+data survives, but WTM_RST resets the whole GEU (FUSE_SCLK_DIV_CNTR
+went back to its boot value). The driver does not need the block after
+the snapshot, so use devm_reset_control_get_shared() and only
+deassert it.
+
+[...]
+>
+> +		for (i =3D 0; i < K3_EFUSE_BANK_SIZE; i +=3D sizeof(u32)) {
+[...]
+> +			put_unaligned_le32(val, efuse->data[bank] + i);
+Please poll FUSE_READY (GEU_FUSE_STATUS bit 1, offset 0x184) before
+taking the snapshot, and fail the probe if it never sets.
+
+--=20
+Troy Mitchell
+
+--1b3755cfd99b64d0a0dda969f37ac993ccdcbb4bdd501bc08f16b6da9e66
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCau3E+iEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8/6QEAllu4wjVxKXH3
+uf4Pn1BZKUjMfwLjUg+BimDFWivcETIA/007JxYadXwHPjWz8USoQQ1YsrDbubN+
+o3RBNq5Q4U0D
+=nbMm
+-----END PGP SIGNATURE-----
+
+--1b3755cfd99b64d0a0dda969f37ac993ccdcbb4bdd501bc08f16b6da9e66--
