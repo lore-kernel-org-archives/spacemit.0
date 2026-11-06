@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793945226;
-	b=GDq29RWilV3u0/R//KErKf8x5aZR6+uwrxuwFOErc+7IMs8LOTDhtwjqRMJxyWR7cLtT
-	 4qGpJHZsk1Oec6bvtJiLGEgfVj9aB8JVRvuTUjMJUmfGGW6Zly6k2MLKq1adb0lqXL7lZ
-	 gfwoCDqXRzx3g0tM8mK6JPWw/MN5H3gx3TDMrHN3h0JDb1W5EkqPnEMVlQcVEs9HEyfHV
-	 DaJHcJ01lZH6TRAFvxf+zWrrlNPr0r1yTUtR7VqrHDWk6bwKV3fX3kpoPxndvctv4hB83
-	 3KhTrs6M59YwL3jJyiQJl6n8ud8MTCcAv4b6EdGRzZT8x5k9jN0TI/mkRZb5HdPvTRw==
+	t=1793945234;
+	b=c7pfjO431saMId63JdAtKdIYshPmQhtjQvCSKQVNRXey31uSFlOTEI2Hwze6GF5g8SLb
+	 M3OwVY5RTBNuHe170OKK1bQ6aGXzYS+FVLjkkzPE161Ou+YhS5xGbz15PS3fHM0IPiyMQ
+	 tyz5/5ZuOnjKJKCG02CLOOx7gl2ru6hg/fYc87Ljxh5Y6sZwc7bK5HxNJCkd/zEIqAmZC
+	 Z70jcZqN5EP/9tS5QX7sUmCnlxRD2gE6uC+hDiVlwCUbEngIBIeAT5WJ3XdRXtqDO6Jlq
+	 YvvfWnWbppESzLVf4goku/1rsncz1PZ/bp/0XY25hQzqnUA4kcyqBX6nsxUmy9jId3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793945226;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793945234;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ELq0ou+C6nHSxjAqQFysu+9NjstawTtJSoslQjowt8M=;
-	b=Qel+MhGa65D36cBQ3RnCQpK6tPF/QWVF5V0I84RpyNIajcr6cUh0U2lUN6zmMcU5Fb6k
-	 Bi14lWnuWYqMQDKHNVSZ6rdFPp/PQ9iVR4XTot2sLscdcLcBXnO1CNJn0Mh9BGWg4xat5
-	 jKcO3Fn1UXpGc998jl7rSF7jiLS7EtL55eb3aj+qk0LWp8R1ibj6fyn3HHkPQ9m27WMh3
-	 nEJuKvzupbGEgu9XfPmjwFOZHuWNUVIchomAeFJhkSB2o36BJvqmzuSKNvo8LZZ2k8Ktx
-	 yunTKIFTQkv8MuOrZDpOASYVZQN3H3N/0rmkpIR2GbXUrQpeXu/qiAlnsyB1wn2Q57Q==
+	bh=6tf8e1TiIZCPiuqeGmQ9C1JUjOtS/N/aYWA/KP8sylw=;
+	b=QDGYZusD24w5nYlxz/t4+VL2rzzb/DBStSdQRlN+Tl8Mj4oxW5IqUh0tpypdaOu/bBWZ
+	 yNdKYHsCLQlza2SK5b8ESPuRsQoHAM85WEq+dOmb2w3xryKUOZy88szYLB0Jya1IQMAT1
+	 JE9tivqbGHiuqgPAqvyeRc1ELJX6+4tW/LLh42y+zmkldJgoj/0b+/xs8MyAVGd3XtbHM
+	 BkL49hN6II2jSDyDa8VALXYyfp+GKqFVlSWbTr5L+lQ7pR2ercR3RLcExOtV7vHMDhCgY
+	 tnDUmv06DFHIFVK6hBZ5Q7jfYQV2fCsVDKAXG2YXA8Gm9CebGXUoojEThah2EgrlkjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jErpv9i0;
-	arc=none smtp.remote-ip=74.125.82.181
-Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uY6eZD47;
+	arc=none smtp.remote-ip=74.125.82.49
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51E8606A326
-	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 06:07:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B51E8606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB0606A335
+	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 06:07:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 94CB0606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jErpv9i0
-Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-36f8cdd30beso704325eec.1
-        for <spacemit@lists.linux.dev>; Thu, 05 Nov 2026 22:07:05 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uY6eZD47
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-1ae18eb9b69so421042c88.0
+        for <spacemit@lists.linux.dev>; Thu, 05 Nov 2026 22:07:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793945225; x=1794550025; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1793945233; x=1794550033; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ELq0ou+C6nHSxjAqQFysu+9NjstawTtJSoslQjowt8M=;
-        b=jErpv9i0cJfGMuY9/iU+qFPB17mBWwe60VjBUwP8RQ91zMCWgadO99rsqdLMOI9KO/
-         dtLtNXxnjf0nQB534aEA7wrtXoEgeoIaX7hqkd8FUs4QdAgnRoKgKJOWcO/hdfUW8vxL
-         hiYDb0Dg2+zhuklZDZOLrw/aH3T+F9knrly8Lyogcz/+xU62NHslY1NWhO4L2sdHDXeK
-         +0VA4+v2NaUqxoCJGbU0sxKSYJHQps9/2JZoYynIyKxgyrqTfev0AniR3XlcK33Kt7ED
-         DWw5pH4T7x054/XDh2eteurNo1KKENfYLmlgEsICtI/ajrCodsQABKcNg9JzBTD0K/tb
-         3cgw==
+        bh=6tf8e1TiIZCPiuqeGmQ9C1JUjOtS/N/aYWA/KP8sylw=;
+        b=uY6eZD47kFxRXOPyz6/UUqBY1H+gfxur6emOLxmGSqjvC9NNpdGxwFUR64aBBTAOav
+         B/LbuLtcTILTQ7aorMaOnaEbuZsGNwr3sWJh11mywn+T/if+WqxaGz2CV+3FGeU4wdlq
+         EuwFD+jXyCf6Rq6ThI7jOI8DEtIN5BaeyAxSJHqXCPr8LQa6iRhraiGVOMnDigbez/lo
+         STdibf64uAGP6Cdow9CHyYuF3pbYrKvlWXY6POArZMmruXtPb5BdGn7FfKzEDTc+sonh
+         /KiwQeC+egfniyqC2AuAjXnFlEhFrxZ/AwSkMkTy63TgqUm/iQ2yr6XPvWokEUXMn8oP
+         oATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793945225; x=1794550025;
+        d=1e100.net; s=20260707; t=1793945233; x=1794550033;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ELq0ou+C6nHSxjAqQFysu+9NjstawTtJSoslQjowt8M=;
-        b=mGCuOI4xzLj6PZlv/lNxZQ30y8h96P3VK7/zsbnz2oZ6M27ocLBB/LlZk383Dul63R
-         mN1NSEH7EZbr9V17d8bigJPz4lAoTxxtCRQ/IJwMPGR7tDRNUFygDugeQYmBxib+MsKW
-         cXd3yvAq0x5X/12wmF6FCdYnl5rcCkVZPi5ACdDqNIUxazdmRujswVRUFahsVzQ41YCl
-         MfJoXWCRZptPZJEZRMb8KbxzTgorIujna5CLr5w3gHiyxnWwajZaDs25gbCbxePZScvA
-         T8g8gcY1qTwW2KKdoF8lyMZRFtLdA2n8J4tz0PHNI5vPEApexTiPTpFCGz72H+o2AsrA
-         bzSg==
-X-Forwarded-Encrypted: i=1; AKwUvBz08PtnxM67nJZzDA5hkjhFhjgH+EBALcLTHin3ooMEBcB6JG21NDwzBtnnzYAYZp0ySLIsOU56YQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8WyNEoIEi5ipVCh31tzFhdx+faCJDWzys/T8iyz35MVvnkcldB
-	/fc+Ig4l2ha/11Jg27fXP8Lt1+07OvJl8KPN8FexrCxBtjm3UIKfYNXH
-X-Gm-Gg: AYBFou2YvYGh5IthhdJI5lubwn5ynbXOctQMTIsDx7ny6/4dwQj9493VCMEgpIfHmrn
-	bhYGc5ibF7GPIZs97BTT0u9xDrC/snapTG3G17lzkYNGomBjYLxYO/EOXg7iBcm6t4RPJzUTK1h
-	bBcXCkUIBW6jDulaU4DHcZiC0qZ5Ga3hKUSUoMk3q1k6CkyASe6pbhJrufw0PpiynXDli/MYpCM
-	Rh586ifObrGt3HpBelUMn7SlX5dxGh3yfA6tB3hSDAmdiAbCciP+T8WV86EviK3Iuw+7VYwtjxR
-	NlWsMzE6YxcG+qUPXvLsQLi8fGxeMYmWBmopORvA7Fl//lUQXo+oWGunpKg16SrQ7rzs3V9zAU9
-	nPQqgVIScl3FS4o2hwoi8VQ5NNXX4dAoxnJD44xnZ7saRyvHSJMUv2xxJb96p88asoP1DBAHLJy
-	/BrhuPibjymfULt/zcmWEHpv3IeGRnGCG5SIjZ4FYtDKFo7dY13YDdVTiLSPpt/RlEbs436TaOs
-	YhqcAlkv2tYSHonvxoTrZ1Ri8qOd9CiykNI/jS2d7WRsLFDnkY5kva1v+wC6XSdkiCnmcruRAxH
-	HN3MREdMcDRQMTcTMo32Ru6kRCya5LzP0dclZI0c5baHBpBnlCzz
-X-Received: by 2002:a05:701b:450e:10b0:195:c6c2:c6b with SMTP id a92af1059eb24-1b25d35462bmr1797486c88.35.1793945224722;
-        Thu, 05 Nov 2026 22:07:04 -0800 (PST)
+        bh=6tf8e1TiIZCPiuqeGmQ9C1JUjOtS/N/aYWA/KP8sylw=;
+        b=wc+KcW38xg9N1dW7o/mch2IZvwDckULkKmTF9DrCJvDqOk5g0FdAZKJ5RT2iVqjEEj
+         Oo7CG1XwSiilcQX/B7p7V/FfXtuNeWccW/kGjPz3IdVU73GcotSaeercnPMucNUNAwIg
+         A/E5YASQnBveDYS1FbXhAJrzIpCcY24GWEiDURES1L20Q2LCYqmVLNvkzt62rG5NKT2w
+         A1ZeNiV+ULFSpidU0P1zpy/leCkhTw4r5866QIxlr+ECE/332Mf6pEd4cmTS4Csjyvlt
+         Ao6cq05VmpR3ROs1YkvkiBdFAMdQ1UiV6+N+6doMLgBubf+dUNJ3E50yt5Y7YvBbkpLo
+         MSXg==
+X-Forwarded-Encrypted: i=1; AKwUvBxpBDJhm0DnRcb2iS1Y+SuOpKOFnAk5Ttj4QTlrm7+PbWWHiZ90DPR+KjgJhEMVM2zuuj8JKW9ZeA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/aJxlLnySMjUfLrLlK4sSkEGCZkrBH42s2AyaRtF/CwbOH6cmZ
+	vAlqrCZClZDV+Ryl+1iuWOAZ1LUQtJ+2Q4owm19BJZFBzPQcuw4QppfQ
+X-Gm-Gg: AYBFou040zs056fOSpHlkgU4YYudoi+d+uZ070TCQUldqDRwM64oDl6AVT42UvyxUDQ
+	ViODzOIqxaNZLV241Cpj5cj6rzQ7gyg5JkLiWu2cS3UGIUfHcPua73Lu7CKCkBYa8SmpDHKOCSe
+	xvi9065lf6rMZNbvYsaKMTYY+ITuDMfU0WPYFzQy7AMcu4mYJPi80YfWgEdlbq8GL0IpjfQudHo
+	hNmCn+x9z7/ERTfbWCvHJU/SPHIYz8TCndLUTAuswy4XO2akTrnNeQey74jPSpRGe0RbzIAT1U8
+	IRNrJ7RjKUDK7NwcloZgX3wNI2/nJayko34ASBl24a6i3iLbTXXdOjF0aD2vV/ntS7GX0qFNFWp
+	oKi1uLMDSyxU2XjD+/UkPOdlslUs/vfcobticTGrcCqEIVhuNNZ0cRoqROfyva0Neh719ypneeo
+	bbroUxk5ot7W1/KWka5X9eRfYlrSgw0Wnfema60fQ1j0ejUeyTuED8gTPRu1qt2QN3hQf2pko1b
+	kGWKM2geTcq0ApL2O525jHPPXq5CFFFQkdKpKeoQsBsJ+GamFvnZ2zP6kmevRF1KiLAbW2HmMr6
+	VcIyTsGcgPIfJ0vmCvX2V/cWscHLFBBmciHbwj0mxJt/Fv9qp7If
+X-Received: by 2002:a05:701a:c907:b0:182:6c6c:d876 with SMTP id a92af1059eb24-1b25d2fe798mr1729112c88.8.1793945232552;
+        Thu, 05 Nov 2026 22:07:12 -0800 (PST)
 Received: from duge-G3-3500.taila331c7.ts.net ([183.192.220.13])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b25e4e079esm2780992c88.19.2026.11.05.22.06.58
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b25e4e079esm2780992c88.19.2026.11.05.22.07.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2026 22:07:04 -0800 (PST)
+        Thu, 05 Nov 2026 22:07:12 -0800 (PST)
 From: Jiayu Du <duge1256@gmail.com>
 To: srini@kernel.org
 Cc: robh@kernel.org,
@@ -95,9 +95,9 @@ Cc: robh@kernel.org,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Jiayu Du <duge1256@gmail.com>
-Subject: [PATCH 1/3] dt-bindings: nvmem: Add SpacemiT K3 eFuse controller
-Date: Fri,  6 Nov 2026 14:05:23 +0800
-Message-ID: <20261106060525.346873-2-duge1256@gmail.com>
+Subject: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+Date: Fri,  6 Nov 2026 14:05:24 +0800
+Message-ID: <20261106060525.346873-3-duge1256@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261106060525.346873-1-duge1256@gmail.com>
 References: <20261106060525.346873-1-duge1256@gmail.com>
@@ -112,106 +112,231 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Describe the SpacemiT K3 eFuse controller and its readable bank 0 and
-bank 7 shadow windows, which contain temperature calibration parameters
-and other configuration data.
+Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3 eFuse
+controller. These banks contain temperature calibration parameters and
+other configuration data.
 
-Define the AES_WTM clock and reset, little-endian data and
-controller-relative NVMEM offsets. Use fixed-layout cells for the
-temperature calibration parameters.
+Snapshot the shadow registers with aligned 32-bit reads and expose the
+data in little-endian order at controller-relative offsets. Serve reads
+from the snapshot and use keepouts for the remaining register ranges.
+Keep the AES_WTM clock enabled and its shared reset deasserted while the
+provider is registered.
 
 Signed-off-by: Jiayu Du <duge1256@gmail.com>
 ---
- .../bindings/nvmem/spacemit,k3-efuse.yaml     | 63 +++++++++++++++++++
- MAINTAINERS                                   |  5 ++
- 2 files changed, 68 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml
+ MAINTAINERS                       |   1 +
+ drivers/nvmem/Kconfig             |  14 +++
+ drivers/nvmem/Makefile            |   1 +
+ drivers/nvmem/spacemit-k3-efuse.c | 151 ++++++++++++++++++++++++++++++
+ 4 files changed, 167 insertions(+)
+ create mode 100644 drivers/nvmem/spacemit-k3-efuse.c
 
-diff --git a/Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml b/Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml
-new file mode 100644
-index 000000000000..93f4301c8289
---- /dev/null
-+++ b/Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml
-@@ -0,0 +1,63 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/nvmem/spacemit,k3-efuse.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: SpacemiT K3 eFuse controller
-+
-+maintainers:
-+  - Jiayu Du <duge1256@gmail.com>
-+
-+description:
-+  The K3 eFuse controller provides configuration and calibration data through
-+  shadow registers. NVMEM uses little-endian data and controller-relative
-+  offsets. Read access is limited to bank 0 (0x104-0x123) and bank 7 (0x190-0x1af).
-+
-+allOf:
-+  - $ref: nvmem.yaml#
-+
-+properties:
-+  compatible:
-+    const: spacemit,k3-efuse
-+
-+  reg:
-+    maxItems: 1
-+    description: The 0x400-byte eFuse controller register block.
-+
-+  clocks:
-+    maxItems: 1
-+
-+  resets:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - resets
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/spacemit,k3-clocks.h>
-+    #include <dt-bindings/reset/spacemit,k3-resets.h>
-+
-+    efuse@f0702800 {
-+        compatible = "spacemit,k3-efuse";
-+        reg = <0xf0702800 0x400>;
-+        clocks = <&syscon_apmu CLK_APMU_AES_WTM>;
-+        resets = <&syscon_apmu RESET_APMU_AES_WTM>;
-+
-+        nvmem-layout {
-+            compatible = "fixed-layout";
-+            #address-cells = <1>;
-+            #size-cells = <1>;
-+
-+            temperature-trim@19a {
-+                reg = <0x19a 0x2>;
-+                bits = <4 8>;
-+            };
-+        };
-+    };
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 46c416cadacd..0a9eb764ffee 100644
+index 0a9eb764ffee..e0af83ecee37 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -26525,6 +26525,11 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/sound/spacemit,k1-i2s.yaml
- F:	sound/soc/spacemit/k1_i2s.c
+@@ -26529,6 +26529,7 @@ SPACEMIT K3 EFUSE DRIVER
+ M:	Jiayu Du <duge1256@gmail.com>
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml
++F:	drivers/nvmem/spacemit-k3-efuse.c
  
-+SPACEMIT K3 EFUSE DRIVER
-+M:	Jiayu Du <duge1256@gmail.com>
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/nvmem/spacemit,k3-efuse.yaml
-+
  SPACEMIT RESET CONTROLLER DRIVER
  M:	Guodong Xu <docular.xu@gmail.com>
- L:	linux-riscv@lists.infradead.org
+diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+index d2f5bb236663..28d6c59fbd74 100644
+--- a/drivers/nvmem/Kconfig
++++ b/drivers/nvmem/Kconfig
+@@ -476,6 +476,20 @@ config NVMEM_SNVS_LPGPR
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called nvmem-snvs-lpgpr.
+ 
++config NVMEM_SPACEMIT_K3_EFUSE
++	tristate "SpacemiT K3 eFuse support"
++	depends on ARCH_SPACEMIT || COMPILE_TEST
++	depends on OF && HAS_IOMEM
++	depends on COMMON_CLK && RESET_CONTROLLER
++	help
++	  Say Y here to read configuration and calibration data from the
++	  SpacemiT K3 eFuse shadow banks. The boot firmware must have loaded
++	  the shadow registers before Linux starts. Programming and reloading
++	  the fuses are not supported.
++
++	  This driver can also be built as a module. If so, the module will
++	  be called spacemit-k3-efuse.
++
+ config NVMEM_SPMI_SDAM
+ 	tristate "SPMI SDAM Support"
+ 	depends on SPMI
+diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
+index 5e70bad9f0f9..d29716957faf 100644
+--- a/drivers/nvmem/Makefile
++++ b/drivers/nvmem/Makefile
+@@ -81,6 +81,7 @@ obj-$(CONFIG_NVMEM_SC27XX_EFUSE)	+= nvmem-sc27xx-efuse.o
+ nvmem-sc27xx-efuse-y			:= sc27xx-efuse.o
+ obj-$(CONFIG_NVMEM_SNVS_LPGPR)		+= nvmem_snvs_lpgpr.o
+ nvmem_snvs_lpgpr-y			:= snvs_lpgpr.o
++obj-$(CONFIG_NVMEM_SPACEMIT_K3_EFUSE)	+= spacemit-k3-efuse.o
+ obj-$(CONFIG_NVMEM_SPMI_SDAM)		+= nvmem_qcom-spmi-sdam.o
+ nvmem_qcom-spmi-sdam-y			+= qcom-spmi-sdam.o
+ obj-$(CONFIG_NVMEM_SPRD_EFUSE)		+= nvmem_sprd_efuse.o
+diff --git a/drivers/nvmem/spacemit-k3-efuse.c b/drivers/nvmem/spacemit-k3-efuse.c
+new file mode 100644
+index 000000000000..d106053beae8
+--- /dev/null
++++ b/drivers/nvmem/spacemit-k3-efuse.c
+@@ -0,0 +1,151 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * SpacemiT K3 read-only eFuse driver
++ *
++ * Copyright (c) 2026 Spacemit Co. Ltd.
++ */
++
++#include <linux/array_size.h>
++#include <linux/clk.h>
++#include <linux/device.h>
++#include <linux/err.h>
++#include <linux/errno.h>
++#include <linux/io.h>
++#include <linux/module.h>
++#include <linux/nvmem-provider.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/reset.h>
++#include <linux/slab.h>
++#include <linux/string.h>
++#include <linux/unaligned.h>
++
++#define K3_EFUSE_REG_SIZE		0x400
++#define K3_EFUSE_BANK_SIZE		0x20
++#define K3_EFUSE_BANK0_OFFSET	0x104
++#define K3_EFUSE_BANK7_OFFSET	0x190
++
++static const unsigned int k3_efuse_bank_offsets[] = {
++	K3_EFUSE_BANK0_OFFSET,
++	K3_EFUSE_BANK7_OFFSET,
++};
++
++static const struct nvmem_keepout k3_efuse_keepouts[] = {
++	{
++		.start = 0,
++		.end = K3_EFUSE_BANK0_OFFSET,
++	}, {
++		.start = K3_EFUSE_BANK0_OFFSET + K3_EFUSE_BANK_SIZE,
++		.end = K3_EFUSE_BANK7_OFFSET,
++	}, {
++		.start = K3_EFUSE_BANK7_OFFSET + K3_EFUSE_BANK_SIZE,
++		.end = K3_EFUSE_REG_SIZE,
++	},
++};
++
++struct k3_efuse {
++	u8 data[ARRAY_SIZE(k3_efuse_bank_offsets)][K3_EFUSE_BANK_SIZE];
++};
++
++static int k3_efuse_read(void *context, unsigned int offset, void *val,
++			 size_t bytes)
++{
++	struct k3_efuse *efuse = context;
++	unsigned int bank, index;
++
++	for (bank = 0; bank < ARRAY_SIZE(k3_efuse_bank_offsets); bank++) {
++		if (offset < k3_efuse_bank_offsets[bank])
++			continue;
++
++		index = offset - k3_efuse_bank_offsets[bank];
++		if (index >= K3_EFUSE_BANK_SIZE || bytes > K3_EFUSE_BANK_SIZE - index)
++			continue;
++
++		memcpy(val, efuse->data[bank] + index, bytes);
++		return 0;
++	}
++
++	return -EINVAL;
++}
++
++static int k3_efuse_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct nvmem_config config = {
++		.dev = dev,
++		.name = dev_name(dev),
++		.id = NVMEM_DEVID_NONE,
++		.owner = THIS_MODULE,
++		.type = NVMEM_TYPE_OTP,
++		.read_only = true,
++		.root_only = true,
++		.reg_read = k3_efuse_read,
++		.word_size = 1,
++		.stride = 1,
++		.size = K3_EFUSE_REG_SIZE,
++		.keepout = k3_efuse_keepouts,
++		.nkeepout = ARRAY_SIZE(k3_efuse_keepouts),
++	};
++	struct reset_control *reset;
++	struct nvmem_device *nvmem;
++	struct k3_efuse *efuse;
++	struct resource *res;
++	void __iomem *base;
++	struct clk *clk;
++	unsigned int bank, i;
++
++	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++
++	if (resource_size(res) != K3_EFUSE_REG_SIZE ||
++	    res->start % sizeof(u32))
++		return dev_err_probe(dev, -EINVAL, "Invalid register window\n");
++
++	efuse = devm_kzalloc(dev, sizeof(*efuse), GFP_KERNEL);
++	if (!efuse)
++		return -ENOMEM;
++
++	clk = devm_clk_get_enabled(dev, NULL);
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk), "Failed to enable clock\n");
++
++	reset = devm_reset_control_get_shared_deasserted(dev, NULL);
++	if (IS_ERR(reset))
++		return dev_err_probe(dev, PTR_ERR(reset), "Failed to deassert reset\n");
++
++	for (bank = 0; bank < ARRAY_SIZE(k3_efuse_bank_offsets); bank++) {
++		for (i = 0; i < K3_EFUSE_BANK_SIZE; i += sizeof(u32)) {
++			u32 val = readl(base + k3_efuse_bank_offsets[bank] + i);
++
++			put_unaligned_le32(val, efuse->data[bank] + i);
++		}
++	}
++
++	config.priv = efuse;
++
++	nvmem = devm_nvmem_register(dev, &config);
++	if (IS_ERR(nvmem))
++		return dev_err_probe(dev, PTR_ERR(nvmem), "Failed to register NVMEM\n");
++
++	return 0;
++}
++
++static const struct of_device_id k3_efuse_of_match[] = {
++	{ .compatible = "spacemit,k3-efuse" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, k3_efuse_of_match);
++
++static struct platform_driver k3_efuse_driver = {
++	.probe = k3_efuse_probe,
++	.driver = {
++		.name = "spacemit-k3-efuse",
++		.of_match_table = k3_efuse_of_match,
++	},
++};
++module_platform_driver(k3_efuse_driver);
++
++MODULE_AUTHOR("Jiayu Du <duge1256@gmail.com>");
++MODULE_DESCRIPTION("SpacemiT K3 read-only eFuse driver");
++MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
