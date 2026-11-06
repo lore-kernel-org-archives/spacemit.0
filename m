@@ -1,54 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.94
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=52.59.177.22
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793917716;
-	b=ZghGpmDhppD4hKplSXnwMgT9PSTwLiIY3gDZ4Fah6oNoDpBmkWCrTVkLFqNAWol1zRBw
-	 z0isxWM8hU8vNNnLmQfW6xh2lFccEa4NvFOGESFk3YCwOqbAWJ86ZPVbmcQSzBGjg6Y3H
-	 uMYmvUH7PfggInSM+FwBTPIK6AUdVvgzikSkh/zvfHXdTEGu5807IzEZSe/xlW1HFw8IL
-	 oS8caj01AEQePNMBNef7kLuEK32FXzJBNIjHhaI7jcION6sqUHHP7fgruylcdTcnMhWip
-	 jwI+q1Re3ng8fgec8XkhyJWSznh30gWXFARmJDbs83/3rjlnf3RiKX7TkBT2bEDaRMg==
+	t=1793931174;
+	b=xDJfoWL76keLuFxtepumq/IPZqsi0Ipvmh33lMxnMklakE5KdJn2iJP+6VExYoXqeVQg
+	 oRXix7Yg0kZJX1f19UKMfx4fal79nVONMg+sqSyawpO5HYlx/QPJvSBRr5fSn6JsaxlDm
+	 t2PZlAdROY/fDDjKSfo1gOx5EZsbFMyNZrgtBwQuIc2HPak3nJd1SwWxshMbe8+HAgyTy
+	 ACzinm3/hmd8w02jh4omtdqAUnYy2vea6JWevVXIF2ve44IaLWfP/6uovHGXWAE3VZODr
+	 4wC7uHsvrALWryCCfDAC7yqvBoSTN17lwL/m5PoK9Hm42VzJpIy0bkSzrUyukDfGORQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793917716;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=teFZI5ZT0tF3baaZ5GsOyIljCJ7tSwWYOvxyzPD92zg=;
-	b=X9VVevnJUyy/6CCdXl1h34X2Gy6MW+JuPUZPf7ERWe/y0gFYmH0QbCZrnls9ChHAFIFp
-	 bN28Z9Ji6diTOSV3v/OsLXApYwqdc67OsTPHTyUIJ93itSI0E31owZcq8DShGm0478oe7
-	 Jz5mk7pGSwe9nOJpfhMGcA9HaBYObJMo8HgI4eLmarGGCdUUwuw7qSQ2Gf0su8LXBKJSp
-	 5COID+pJ5QsVozjlIAa9XBG3zDU0iNX0ouuSYWgAFlLVBC9weHpTuo8H/IK14h1eZvNcS
-	 ORqowDo73qQg5B8Vkr/j4U7vvWb3OInnGF07j2n63lq2hNhKbf8f5Uw6t8so/9yZLpA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793931174;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=AbuVg4vN10ZA2hcaRa+VCPVPKcQZSgmZ/Iv8DAJnQGg=;
+	b=e+5sKnC7cE7YVbuP8D5TxIjir/Z59Mif3jZYecBXmo0qufjnQNXT0i1misaJBL4K6gbo
+	 pBx64vZIfpTGs7NKzN3nSYDcAgD4KPeNCNQEwjq/JJF+2bENWLvYuvonFNJ5wIlg4tzRr
+	 bNxD/yG3R9jyHTrQyFgmd4OnfiRXza26iVJrVkHThWb5AzqH3l3rTOwqRj/eg/YwN/l3F
+	 xlAd1sVszUrUJEuNgsqzSJSgaEg27lslemaCt7H+QSwERDZPKNX0Gd1FI2nBUrO9WvHE/
+	 jFeroW+ccK1b7VBIl4GIa7hRuuZO5l6e1x1fMzd9GlGUUdjInqibINptpG+mIMFL45g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=k7n7M399;
-	arc=none smtp.remote-ip=91.218.175.94
-Received: from mta0.migadu.com (out-94.mta0.migadu.com [91.218.175.94])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Kf0pnMM7;
+	arc=none smtp.remote-ip=52.59.177.22
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B568606A328
-	for <spacemit@lists.linux.dev>; Thu,  5 Nov 2026 22:28:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B568606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7939B606A31B
+	for <spacemit@lists.linux.dev>; Fri,  6 Nov 2026 02:12:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7939B606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=k7n7M399
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=RMLKgoqWLv73HkP/fp6tsjHhZlyH0aziusIjVEhYzLc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793917714; v=1; x=1794522514;
- b=k7n7M399r7CdMfhJhF/pQNTZZqYvtpZ5ydqHsfEf5gRKfF0w1BwoyoTUp8hvxCpvWS/4D3Rf
- i1fTkZZUMvgSHD0rDEzCJjgyyMjFBfe+ITXArBI7XdY9xiOjdkRFyAR52IKEFBXRgiCAvjQwjzK
- AoklpAN/HvcQSj5OTb4mFcLY=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8774a739f2d0ed26;
-	Thu, 05 Nov 2026 22:28:33 +0000
-X-Mizu-Trace-ID: 8774a739f2d0ed26
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <6c36ec6d-5bc8-4ac3-8ad0-79eac7873b67@linux.dev>
-Date: Thu, 5 Nov 2026 23:28:31 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Kf0pnMM7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1793931060;
+	bh=AbuVg4vN10ZA2hcaRa+VCPVPKcQZSgmZ/Iv8DAJnQGg=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=Kf0pnMM7yw1bDZSio6QOf0LdL7sW1Autj2vxxYUIyHV9ybxrZyQhJHMgNuy63CWLE
+	 0wics4rfGxM0jD4m8ClBkStwaoqH7kaLqU17b7csSrA+M5n72n3zLYc97R453bLGrH
+	 XPt3HpoZPbjJzEO1HDtJdI08kz+vfHSHvBf+dh9g=
+X-QQ-mid: zesmtpsz3t1793931058t953477e7
+X-QQ-Originating-IP: BbYzGvXJbyXNANJbyxX8YavOnC2uj3ZadAP1LufNDGI=
+Received: from [10.0.50.11] ( [61.145.255.150])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 06 Nov 2026 10:10:56 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12396898183467200051
+EX-QQ-RecipientCnt: 15
+From: Encrow Thorne <encrow.thorne@linux.spacemit.com>
+Date: Fri, 06 Nov 2026 10:13:53 +0800
+Subject: [PATCH v2] PCI: spacemit: Ignore PERST# input in RC mode on K1
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,52 +63,111 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
- emac_suspend()
-To: Breno Leitao <leitao@debian.org>, Ali Tariq <alitariq45892@gmail.com>
-Cc: netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Yixun Lan <dlan@kernel.org>, Troy Mitchell
- <troy.mitchell@linux.spacemit.com>, Vivian Wang <wangruikang@iscas.ac.cn>,
- Chukun Pan <amadeus@jmu.edu.cn>, Siddharth Vadapalli <s-vadapalli@ti.com>,
- Tomas Hlavacek <tmshlvck@gmail.com>, Muhammad Bilal <meatuni001@gmail.com>,
- Maxime Chevallier <maxime.chevallier@bootlin.com>,
- "open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
- "open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
- open list <linux-kernel@vger.kernel.org>
-References: <20261105123441.2524171-1-alitariq45892@gmail.com>
- <auyG7hGJtMzV0Gbi@gmail.com>
-Content-Language: en-US
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-In-Reply-To: <auyG7hGJtMzV0Gbi@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20261106-spacemit-k1-pcie-fix-v2-1-6d74563b01d5@linux.spacemit.com>
+X-B4-Tracking: v=1; b=H4sIAOA37WoC/22NzQ6CMBCEX4Xs2SXtKgQ8+R6GQylb2Sg/aZFgC
+ O9uJeHm8ZvMfLNCYC8c4Jqs4HmWIEMfgU4J2Nb0D0ZpIgMpylVJGsNoLHcy4VPjaIXRyYKU5c6
+ ZojkX1ECcjp5jvGvvVeRWwjT4z/4y6196CC//hbNGjUpRnVldm9LZ20v695Ie5dQOHVTbtn0Bn
+ Sv+S8EAAAA=
+X-Change-ID: 20260921-spacemit-k1-pcie-fix-256ffa8d382d
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Yixun Lan <dlan@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Alex Elder <elder@riscstar.com>
+Cc: linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ Bruno Banelli <bbanelli@gmail.com>, Ali Tariq <alitariq45892@gmail.com>, 
+ Encrow Thorne <encrow.thorne@linux.spacemit.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793931244; l=2232;
+ i=encrow.thorne@linux.spacemit.com; s=20260922; h=from:subject:message-id;
+ bh=7T2alXfTc2E2Sig8ddTkVljE6R+muw/GFLNKQx4Ilng=;
+ b=7Ca91mnujtzIqog/FDsDTW3KYGl2aSZeVwmkYHx8AmdCachE0LwPezwTcEMXQBrHZI7J2aSBy
+ yJwHpwhXnr/CAllIgl1MQmsGO5dujjO4KQjBYUjq0Na91h6EFnLv+E2
+X-Developer-Key: i=encrow.thorne@linux.spacemit.com; a=ed25519;
+ pk=2pmSCQKuWBw48bo9mVmWM77uEWdezu/geF0k1YMFzN4=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: Mfm8HKGnOlI9/73z/3UqV3IwxbashggCw5UKvSrorhABfst2bcXFqShS
+	ZlM3aPcvozGTrB9o4p3FyFUDxhbAY+y6pLT0I/qz9GFxvX6ogmxFFjGuWZ41+JDJ7pr7gNi
+	PJ9aC0bsR14zaikyVo0KcU3w9wVPNT7Z4cGyzdHHteiREievSXBFF/IafE+xaWDzp86o5Fj
+	Xee7nangQoJ0vinaPtf2J/dX0UAarwipqbQXTqAWrUWb1AZ0W3a+fVyDsGnZCeTS+xcA9AN
+	EJcp7+9w3YGlEADrqYMed2Av2TWPDWAzrDAoyK/f5haFyApJ6reBVf379D6LnBqe+QQGtUW
+	VtKLEb1syoUqxKhU4dqXjL/5v9Bjd8KqazukaItsZcRFG4jA/qJmgAD5TKBCyf5W5kdsWU4
+	gQpoxkiZf5od7H0pcb0j1Ea13MPizx5EOcFBTkcsf+r/hij2ylZyUwBxBgq/xkGEHWLssXh
+	eVgXJJm0aBq6hHuCNnr8S9iGP9e/rW0gYq2hU9JwYvxc31i4Qy+bV7v5kFmFpVSyy3UnGWq
+	rA8NXekYvygcj+P41bspN6rzjmEuqoXBsFyg6auTT+EeonaabW58ukAp9ozVH4c8YVqwycY
+	PIJi0K81HgXxJROfECndHldZ6ujSwtrO3A4fobz7RHSRQPa8kbJUGKbyfGVMmxahAQagrwq
+	+hRdPzsuzVqm+HwFC2wMmY98UIZL37HkLeFQeX77hSSGpXoIc2gfP2RlEVJ3MESXRmvguTh
+	DFSr9QhwbiHxFT2CW76SAo34KypwFTslQ/tUakAkNevY0FVXrQcX+CH9+0YMpLhnWXwdtqf
+	4a6LU9JX5KN2Yi6mXoX0jswIcReyXrDTsDBOVTRQLdujMPgyobMZKAXKQ8GmhLFnYbmtDlC
+	6C63GWgDeMR/gH0/nwPXyxvUA1/I8eAFPHJtG915obSqXx1EPrsc9LBbq/E0GHTMZ9fawSW
+	aDjdB9bY0SoatCXcNr29YMzf8Y7z2U8Jbn9D/orMP0CykLVNwtbJlpbBD/LNdUdwdC2K1Lz
+	iC3uorm/vYpHonWSf6H9lMR73PUPMdBQluPJIWh9viDYTfclaPXiyFOUVQH9lzjH2BNZLeF
+	g6UpmI4XMS0vkspf6rvgDEW11CondrAAxAPr4ZrEc6eOUuMYt9dKVIjmlpqQ9iz4CTAG2pm
+	5Q2fSu5IdtOe1hs=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On 05/11/2026 13:40, Breno Leitao wrote:
-> On Thu, Nov 05, 2026 at 05:34:37PM +0500, Ali Tariq wrote:
->> The emac_resume() calls the emac_open() and emac_suspend() calls
->> emac_stop() functions directly without holding the lock through
->> rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
->> with rtnl_dereference(). But since no lock is being held,
->> rtnl_dereference throws a suspicious RCU usage on
->> Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
->>
->> WARNING: suspicious RCU usage
->> drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
->> Call Trace:
->> phy_detach_internal+0x490/0x5f2
->> phy_disconnect+0x90/0xc0
->> emac_stop+0x114/0x626
->> emac_suspend+0xac/0x126
->> platform_pm_suspend+0x72/0xe4
->>
->> Hold RTNL lock before emac_open() and emac_stop() with rtnl_lock() and
->> release the lock when functions return with rtnl_unlock().
-> 
-> This would work, but I am wondering if it would be possible to call rtnl
-> inside the _open function, when dealing with the PHY? in other words,
-> shrink the time rtnl is held.
+In RC mode, the K1 PERST# pad input also affects the local controller.
+Without PCIE_IGNORE_PERSTN set, asserting PERST# to reset the endpoint
+also resets the RC, losing previously programmed register values,
+including the vendor and device IDs.
 
-+1, especially in emac_open() rtnl is needed only in error path case
+Set PCIE_IGNORE_PERSTN during RC initialization to prevent this
+feedback. Set it before the first DBI access, since PERST# may already
+be low when initialization starts, causing the access to hang.
+
+Fixes: ff64e078e45f ("PCI: spacemit: Add SpacemiT PCIe host driver")
+Reported-by: Bruno Banelli <bbanelli@gmail.com>
+Link: https://lore.kernel.org/all/20260825052249.66921-1-bbanelli@gmail.com/
+Signed-off-by: Encrow Thorne <encrow.thorne@linux.spacemit.com>
+---
+Changes in v2:
+- Rebase onto v7.4-rc1.
+- Explain the PERST# pad input feedback into the local RC.
+- Use PERST# in the subject, commit log and code comment.
+- Add Fixes, Reported-by and Link tags.
+- Link to v1: https://lore.kernel.org/r/20260924-spacemit-k1-pcie-fix-v1-1-002b5c1ba9fc@linux.spacemit.com
+---
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+index 92a71ea90ac3..bb60a35c2885 100644
+--- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
++++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+@@ -47,6 +47,7 @@
+ 
+ #define PCIE_CONTROL_LOGIC			0x0004
+ #define PCIE_SOFT_RESET			BIT(0)
++#define PCIE_IGNORE_PERSTN			BIT(2)
+ 
+ struct k1_pcie {
+ 	struct dw_pcie pci;
+@@ -140,6 +141,13 @@ static int k1_pcie_init(struct dw_pcie_rp *pp)
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * Ignore the PERST# pad input in RC mode so asserting PERST# to
++	 * reset the endpoint does not also reset the local controller.
++	 */
++	regmap_set_bits(k1->pmu, k1->pmu_off + PCIE_CONTROL_LOGIC,
++			PCIE_IGNORE_PERSTN);
++
+ 	/* Set the PCI vendor and device ID */
+ 	dw_pcie_dbi_ro_wr_en(pci);
+ 	dw_pcie_writew_dbi(pci, PCI_VENDOR_ID, PCI_VENDOR_ID_SPACEMIT);
+
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20260921-spacemit-k1-pcie-fix-256ffa8d382d
+
+Best regards,
+-- 
+Encrow Thorne <encrow.thorne@linux.spacemit.com>
+
