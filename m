@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.243.244.52
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794055731;
-	b=3RjLEtID5KTfh+X226jSfA6S6K2kidEW8aV9YQtVFt+xwx7VbXtZ2ZBbyCrqFGGp9CEg
-	 IuwFZhPcD38j7vJA6vqt+YVm9nv2ANHItZWYgA8Q5t/E/za4d24UV9xHkNb3+ujonHXAi
-	 WkOrXYDga9Bqzv241ccqjQMBQpJ6OFPjgkdTbkKzSM1/YcsKt9wDZ1Ny4qX6L0CgblUpK
-	 34X6onLZBacFczjQT2niod6IN8iquoUup5evZventAq3gYCa2GD5LEiK5PDJf6XPkROcq
-	 /K2XfJUdZzmRvlwkZJHQFiT9C1TQ/qdHmC8xcLf1tvy3p/LWLWiqQilVJAy9kecR72A==
+	t=1794057597;
+	b=CalGIyE27AaiNz20fV7CY5rIljR3uQTJtkwrx2vTSxQpGBwdtiK9BsQ/2kYduVGSLXoy
+	 qvMl/MB+K51I76ybldxh0lwIilRlFSI2Cb4WqvZMyGOV4LhHBlt2g3Ho1QTf4p9vl285q
+	 xUPS3vjA30NslcLjB3nbITFWKs4b5jcs3bLUkIImj5cLQcxodgi+Bwa8tb+0InnibFJeK
+	 Q5Pi6ISAQCqIswG16yqT/DTCFAhXUEjUygzlNwUzi/i9YImW9RJCix0rDKMNgOm5hncJW
+	 gNCnbH4+SQZY7R5ZqWxXKXDflk2EZIIcwQC+3IsqwAIHdHBHCZ2F6TW7j37sv0yoXdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794055731;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794057597;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
 	 Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
 	 References:Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:
 	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=CaW/VQHTPMCaOIjymW1vJwqHbfTh8Y4QG0yBDvfrK/U=;
-	b=r0EbKynKE3m9CxxZD4WSS+miiMELNU7tBSnQ8w8KRSao3YqNkPSDgHjtriCI0++liayt
-	 IoU0dUM4vF4M6TFpvdiBgCoFSuZf9SB4saqVk05QuIa7/o/n6CRouaSTbN6vpRPNTs7BX
-	 JJ/Z+F1ckkXeGkBslQLr7tun/Xee2LjpShIQHbpYXlErgPShkOnul6W24cuMrVNpB31eh
-	 tRfVdM2kafMDQdfmcWOjKsCzGkzsLb6vbLEaDtiGGO3BMRlSq/ZveEcJd034QoZv46im/
-	 8U/KZD3XkwQ8RArJTtL44ZWYYRFukafqQh4LWBSICtfmdPcXmcpI5HAOyD+a5CoMAqA==
+	bh=Vv1qxZPlk0vkh8L3xJUWyUVlD4vXJ4Gcl2ZuiOio4dw=;
+	b=AEYYbQpSmyvJJNxMUECHTJiRX+ui286aDKjCWzHDRTUupWnjDn4YGdI1A4rLkQXmJffY
+	 KWoN3/sI7sj3hGsvFMUd6OFFjNtG1WZGL0Wg4i5T2oJpukHy/0ot2NwaGtu7hv93u2Fgf
+	 5pFZe7Z5obkaAMmSBJFz3NFP+9o/qj88l70p7gfk81MszsfF3EaxuZPmR5UJZI+L13tfL
+	 yfd6tZFhj6Q9anppqlGmrdlFsGQSXtY1S5Q4emSDf5ap6K8P0KAvsJRMSiOF1BUqqXUJu
+	 2ZRKfjk5HfI2DURjpXSiXl+caDhmAwwPPth7mJcODtBBe1UiwXF3bElSJRxb6NnSJ+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b="eC/Vn1Is";
-	arc=none smtp.remote-ip=52.59.177.22
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=CYldCipq;
+	arc=none smtp.remote-ip=54.243.244.52
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B26A606A326
-	for <spacemit@lists.linux.dev>; Sat,  7 Nov 2026 12:48:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B26A606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54359606A32F
+	for <spacemit@lists.linux.dev>; Sat,  7 Nov 2026 13:19:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 54359606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=eC/Vn1Is
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=CYldCipq
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794055718;
-	bh=CaW/VQHTPMCaOIjymW1vJwqHbfTh8Y4QG0yBDvfrK/U=;
+	s=mxsw2412; t=1794057586;
+	bh=Vv1qxZPlk0vkh8L3xJUWyUVlD4vXJ4Gcl2ZuiOio4dw=;
 	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=eC/Vn1IsbiohnHTB1tSgsdIYWwZcVVOXqLN8jRbOlccGiNqVAuYIQC9NqoyBB1gjS
-	 Q1mYRKc1o3dT/vJ2POHXmVhwloyPVlqK1luc8WfnMorWm4tMMc4H9YhsICG7s2bliT
-	 vKZemOswUccsL19cQpV3nKVwoUgvCA7ZvUHRyf/8=
-X-QQ-mid: zesmtpgz1t1794055717t9ee4a99b
-X-QQ-Originating-IP: adEHd0p0H88g7XXNw58gtXAVSCXWiNn/74yyaDVntEE=
-Received: from = ( [120.237.158.181])
+	b=CYldCipq5BagZLXme6wuPePkCbHZaFQx6CDcKEdW3CR4GoNL/AHcndA1sl2gxuRe5
+	 NJ1VEzr7H45Me1JjNlboBfvsFVZoD2cZB+MHP7MXQlBIfzmyTaqVhQ1sPOA91VOdbO
+	 wj59PrxeUrFQcEH9SIbPo759rX5u7NxVELeGaA9E=
+X-QQ-mid: zesmtpsz2t1794057585t8b0d7424
+X-QQ-Originating-IP: MnVFJSGk3Q8VFD+XQqbWfmBpJkYvSe1EFIeqkTdJt6o=
+Received: from = ( [58.254.68.27])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 07 Nov 2026 20:48:35 +0800 (CST)
+	id ; Sat, 07 Nov 2026 21:19:43 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 18126235862293624817
+X-BIZMAIL-ID: 9492300081805224949
 EX-QQ-RecipientCnt: 14
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,10 +60,10 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=4fdca5886438fb7c941b336a5dfc31a05971bb73792b2c2cbe0940973e86;
+ boundary=cd90495969691536a859394151b1932e9ba645d5efb1309eed502dd53e7b;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Sat, 07 Nov 2026 12:48:33 +0000
-Message-Id: <DMOZO92UHE9L.2PC9QE72225NX@linux.spacemit.com>
+Date: Sat, 07 Nov 2026 13:19:39 +0000
+Message-Id: <DMP0C29S8OJL.3SBBFOOCLLE1K@linux.spacemit.com>
 Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Rob Herring"
  <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
  Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul
@@ -74,94 +74,94 @@ Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Rob Herring"
 Subject: Re: [PATCH 3/5] riscv: dts: spacemit: k3-com260: Add SPI NOR flash
 From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
 To: "Sarah Emery" <sarah.emery@canonical.com>
-In-Reply-To: <79211469-cf77-414c-9a10-2b684833ad64@canonical.com>
+In-Reply-To: <DMOZO92UHE9L.2PC9QE72225NX@linux.spacemit.com>
 References: <20261105-k3-com260-module-sd-nor-mac-v1-0-138b39d74602@linux.spacemit.com>
  <20261105-k3-com260-module-sd-nor-mac-v1-3-138b39d74602@linux.spacemit.com>
  <79211469-cf77-414c-9a10-2b684833ad64@canonical.com>
+ <DMOZO92UHE9L.2PC9QE72225NX@linux.spacemit.com>
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NpebRJ4Rwrau3Sdz/kxEp7NwDGkGjgfaH4r/aOxK90RUB3jsolxKVyA2
-	uSKCajNHAV+eAGl8asM78jOcXziAhZANGLtPAMkRGT510XOAnBDlVaNgfIaR1eI6hQCrNLg
-	W5bjB5tnDbxwIFHGeRHy2j++bcf9fEqvYy8s9i+YgvDtR1OqbXurThMsN2jNstbtwb8rDa3
-	yJvFkNcJGlvAYdW8svLbe4BmZKpN452s/Yg8nOCyQBTgRdU+VmRYRiuVf+2y2vIZ1We3/YE
-	POLaKH4uqJvlfMXSGex990NTNaVMCQxzomFZJnHKtOdhw78k53CXK/Y9vcdiYef7NdnTjt1
-	nkJ+t5Jv/a1nBS/fpHgC76yuWaGTmjFwu/49GUoZ4jlW3fzRCb/+kPezIbz7fzztY2NAnNl
-	GNLVgtjAEwkIcGP7Xge+DAkRtEeoJ3i26B2BRCQzl3+f6X7s8WVOUvd7q8TTqbOnJDsr7DR
-	B3gahb/62LbpXKYQuqW/s9MV+EYs1JuwqafEFONKRBa3b5jPmNUruP99/pVtPazJ3ydlgzH
-	KsoRYsSMI4+JtlT00OyD4KL+cHPkuadgruzQyIy5m25rvF9U2qCUxIQQAXHqIcfJURMS0ND
-	7fIykpQkn7G3CgRm4xc1agHZqSa8PVSdlaAlkKS/ZR00iUBAHhXHrCVTUGtBeK6p4pI8dNZ
-	A76oXvP46uB/oCRjUj6AvmvKrK+wZ2LHH9nbZet/UJjBZTvArnRZRTknU+0yZ9EXczjf/Zf
-	Kk5Nq46yPNTS2gn4nomy88Bcc8LCwjEoVa3pJbZA/Hs7A9ZrVadKiG+wcfRw3e90E0aUtOv
-	rLM50U0WxYZ5PA9UMuaG1F0/zDJgQXveIg+NilI2EeY+XNLU5mw62zqiDeQn62L6NOH/Ma3
-	X5rlutHfgHh7R/TKH4fHo7Gu3LQMNvdjGemYHZedI8HHs2N/9NO9DL/5O1LjqkY9g7TTPns
-	6WscL9oBp5J206pXwBalW4BhjB+fZRLbiCA7xrg+3m+UNq55Mx6LJyh7WQbCZTQKOYPozwH
-	LYkqUYcei056gzd0W5j0i96fzK6oJl9merBEbYdCyKnfuvBkMZfBTZqEGIVUSyvLDUvfIrn
-	xrEBWI19IUDGLM0+kRb6xw=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M4rL4XrBLbwKcgXYdAzZ7Fj6FVw1625bw40kZxg7X4sx8Glm5iKgFLbu
+	JRv02fxx+nleACDZUEeAsmaIbfB5o0fJzIUJ8MqBoPk65EYJ7ErruHTZYR3rt1I+uKhLLyg
+	NmLKva/uKBCJQ4IeyxhaGzPqopPfs+65b3mutcVidU5/Zk3NhKk+U5iMvAf599HR+ySpPtW
+	q8lluW8WAhpSN0S0W521eyH01fsuBeQSQIGkb4VN5Mvv5j+BTlJEgzZUXs/Mx+BCYzQJHek
+	T5B7NjAWfg9SmpV76YFHk5l3bv3zKyFcBLc3VJ8GqKH6fLrEk1rk2CzthS+62ZrWkLI3k2f
+	OSfIwNIzaqdrtAx+J6BVp2P1YL/xTh1I8Wry00tN0bxFJormasLMnFV3ZWK3bEUe2iTpNxM
+	eLiI/5Zt1x352uEydV24id6CieljO4T61HaVGcZ2tGMhXHtOXaM3eQCEbm4xAnBUKJDH9q3
+	vbVtpjdkZWtkZWKEDAqCr00KFyrySyEDXgkNKPd1r8fAzFXy7BED7jQTpy4rU46tmn3o+ST
+	MxlJRBI5vUD8d5WK3D52Q+rnwCjMPUqrFvCyYra3JCNYBd2T6bbLHup/ZVjg+Sacg3dLZV+
+	OgpEyn/n5NSfwtz/S7Rvf88LRMncaSF1h9SuUPUpLBg9DrqTXflXkeiEk4JLbh5nJ8L191d
+	N5utkRoVK6xJyHGYcdG8IwPKr4338sEpFeCKbEgZ0GsKrn2NVF+VHdXriFcBDc76up/i35F
+	kXz/yK+ae0x8yG9dvdrhHXbS3QfWZEi0ueOq6QNyXWfz6e66fyeMtNB2tuX/olM6+fcEUXV
+	SgXoza3IOdSKbyMd7J+aTx6qmGvUMvkKhD++GffcI5edcGmhIKKBGhaxyntRIk6B1KeWsEc
+	zeLQKd4ich+tM43zBbvMR0NzFuseQH7ZzmJlSOMtzfVh7e28ZJRFkBfsZDFjb5hu3R6ioJr
+	wcv4E/cUq+ATOPb7x0KZXfOkVG+so55BNDwOF3R3/rcurVeGo8XpbCxeefLyuAQL2drHYpT
+	RaKLzpU98JXxf7Qm5Atwros0YfXsCWlYGel/V8NQ6OWEjCcYxAAyxPckHGJUzQCvr6cu7MO
+	/ig7WIwhGlVWBmqMV/AqLc=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
---4fdca5886438fb7c941b336a5dfc31a05971bb73792b2c2cbe0940973e86
+--cd90495969691536a859394151b1932e9ba645d5efb1309eed502dd53e7b
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-Hi Sarah,
-
-On Fri, 6 Nov 2026 17:25:48 +0100, Sarah Emery wrote:
-> > +			uboot@210000 {
-> > +				reg =3D <0x210000 0x5f0000>;
-> > +			};
+On Sat, 07 Nov 2026 12:48:33 +0000, Troy Mitchell wrote:
+> On Fri, 6 Nov 2026 17:25:48 +0100, Sarah Emery wrote:
+> > > +			uboot@210000 {
+> > > +				reg =3D <0x210000 0x5f0000>;
+> > > +			};
+> >
+> > This partition ends at 0x800000. On the CoM260 with EDK2,
+> > 0x700000 to 0x7c0000 holds the variable store (NVRAM and FTW), so
+> > reflashing this partition from Linux would erase it.
+> >
+> > I think we could split it like this:
+> >
+> >     uboot@210000 {
+> >        reg =3D <0x210000 0x4f0000>;
+> >     };
+> >
+> >     var@700000 {
+> >        reg =3D <0x700000 0xc0000>;
+> >        read-only;
+> >     };
+> >
+> > What do you think?
 >
-> This partition ends at 0x800000. On the CoM260 with EDK2, 0x700000 to
-> 0x7c0000 holds the variable store (NVRAM and FTW), so reflashing this
-> partition from Linux would erase it.
+> The layout here is the one used by the SpacemiT boot firmware for K3,
+> where U-Boot owns everything from 0x210000 to the end of the flash.
+> The EDK2 that SpacemiT ships for K3 (including the CoM260
+> configurations) keeps its variables in memory and does not use the
+> flash for them, so it has nothing at 0x700000.
 >
-> I think we could split it like this:
+> Which EDK2 build places the variable store at 0x700000?
+Sorry, I checked an outdated EDK2 tree. The current SpacemiT EDK2 for
+K3 does store the variables in flash, in a separate region pinned at
+0x700000 with size 0xc0000, and the firmware image itself goes at
+0x210000. So you are right, and I'll split the partition the way you
+suggested in v2.
+
+> > The Pico-ITX node also uses 0x5f0000, but I think it should be
+> > modified to split out the var part too if it makes sense here.
 >
->     uboot@210000 {
->        reg =3D <0x210000 0x4f0000>;
->     };
->
->     var@700000 {
->        reg =3D <0x700000 0xc0000>;
->        read-only;
->     };
->
-> What do you think?
-
-The layout here is the one used by the SpacemiT boot firmware for K3,
-where U-Boot owns everything from 0x210000 to the end of the flash.
-The EDK2 that SpacemiT ships for K3 (including the CoM260
-configurations) keeps its variables in memory and does not use the
-flash for them, so it has nothing at 0x700000.
-
-Which EDK2 build places the variable store at 0x700000?
-
-> The Pico-ITX node also uses 0x5f0000, but I think it should be modified
-> to split out the var part too if it makes sense here.
-
-Same answer as above.
-
-> The Pico-ITX flash node also has vcc-supply =3D <&aldo2>.
-> Shouldn't this be present here as well?
-Yes. On the CoM260 the flash is also powered from P1V8_QSPI, which
-comes from ALDO2. I'll add it in v2.
-
-Thanks for the review.
+> Same answer as above.
+For Pico-ITX, the same layout applies, so its DTS should get the same
+split in a separate patch.
 
 --=20
 Troy Mitchell
 
---4fdca5886438fb7c941b336a5dfc31a05971bb73792b2c2cbe0940973e86
+--cd90495969691536a859394151b1932e9ba645d5efb1309eed502dd53e7b
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCau8eISEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+uCgEAthE6bIYvOlzD
-wqobCMr4ha0WNJvGiNXT/BT3N7SAiJkBAN4u1t6ku3jmGXMK3UEnU6i/5sdIj3X7
-h8QseFaXeUUB
-=84Ci
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCau8layEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8mjAEAgs2JcthFsP1D
+X0CRVNci79azmcIjmw43lI/q3Mp1We4BAJiF7dDYWSszpFNzPWE068epMe+unJfn
+VBoMajSNo8cN
+=FnAV
 -----END PGP SIGNATURE-----
 
---4fdca5886438fb7c941b336a5dfc31a05971bb73792b2c2cbe0940973e86--
+--cd90495969691536a859394151b1932e9ba645d5efb1309eed502dd53e7b--
