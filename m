@@ -1,59 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.194.254.142
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794091516;
-	b=a3nwMfthz2P3h4MzZPmpokwTOD2zd3ruwrSE+5ZdIqKVTO1ve8UUDDdpzCAx8Pd1ngTa
-	 luJUDAepG2NsuMmEIAvMnIxQKVNaTIluC2VaPf/xdw+whwfzmxOt8Px9hk76nrveOhs5H
-	 Ruswk8YGFouKJoN2iRuQFh1psnsNyvatJoo1Qi5Sop9FhBzCNEHxTpNWmJETkOzpPap3q
-	 jUFdVwWtsJg0iMQcnLMtHc9KVMcNITGQ83luqvAL+T0V1qsz3G65OSPxcUhStntQx91YS
-	 BO/GLBszy53stfjhftnF02lsQ/2aXyqU7jZXx/qlBkEWG7RWYm9Gx+afnhafC/f3mIA==
+	t=1794122376;
+	b=fDlFGJH8WbrBiPuEVF39T5UXEnENrUTQDHxY4Zp1AKdwmH1gVwTteCvw6S2emKWVJaZk
+	 CJ2ru3wCdvUPPR4bcT36JKk/FVXlE/S+zSP5D2uzXrSjo95DTVr33N9Se0KGo02b0RcEO
+	 9b+y/8w4NfJzk3nYeCZgp6wCbBUw+BKjXykoqL6BuGHHtjtD6IUPKUU+cL8bQ0aqajTH5
+	 9w7K08ygNTjPxrQKvq6A/gITMiYSPb4CjmS9TrbMAW4NIUP/4nMLPknrmWyNkI1brbDa1
+	 R9KvN0IxzSpaBudthFjOeFKnBZXSLJliCzvwxggoXmbBFCii0Q/l+l7i3pRlJRI0bVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794091516;
-	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
-	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Mailer;
-	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
-	b=TzMR85idSYNhM+wSMS7heG0h7qka7SxG38xRH6d6/UjOSzbSww1Nv4T7Bi9ypEfFgdQ1
-	 lzTF/JKlQam4Pg26dYvgceXva1QtvSbdDi9iyirpcg7giRoPZW6QSuhZ9YGhPKB9etHEU
-	 l7J84djR+n/C+92d4BJtfWNeOU9x+nu6ILYFLaLtkMpViKc5sQYz081iNQ3M4XWol42NB
-	 auvF/oAXPSHi0dHtkcywKC3F/3cX74UGZg/2YxmHqYx+VBE74btsWLZOMjqRYi1go9wk5
-	 pdYbbuqL8ILPTfIok+oxuRJMc7aZjUqujwhMR4FtMJ76O8k6BGX5OtrtzHHCBnCXyjg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794122376;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Subject:From:To:Cc:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=oK11WFoEYcxKkv5gOP1n+/n0b5JmGN4huhLMKQpylEw=;
+	b=asqIpuhAiAzf8btSCmE4abvqfLO+ILF6AJhoi4urB6TOzYXUbG8D7uhq2w8ru2FiXClf
+	 nMYvLFusXsUbo6W3oB6uOw2NMpdGuCEHNK9ycazNCEoA1+h1j1g0JgZFxT5WwkOgrzs00
+	 Xh0nL5RG7iFVvtAomd7bOOsNnGr2h0nP67MfsGS5yJGUTdkXu92aEZ07qOH1l7fsSVgs8
+	 /IPru2rxULK8YClIcHmRqjzjrrjq2UDzstSCdNelKJndX++oYAV8cXP5KYU/Qaec9x6RL
+	 BObGVF4gEQRkVNLdNceWtrO+jfNCYuVllTDpEdUvyea+xLhfl6u1x3NZnq5u/FN3eKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=VFDZBFhx;
+	arc=none smtp.remote-ip=18.194.254.142
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E58606A32C;
-	Sat,  7 Nov 2026 22:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C18606A320
+	for <spacemit@lists.linux.dev>; Sun,  8 Nov 2026 07:19:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F1C18606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4951F0089F;
-	Sat,  7 Nov 2026 22:45:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794091516;
-	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=WnnaW6MPIQMe5PP2NqlUxaetG2uBm1miygWQ2RwaFHPcW743Qpf4SaYmS2T1W61ye
-	 WtdLYYA4E71F2MSu+qlnK1gs3ILHqyGdT0fIPskWakrOfWSf75OrgTnIPXrPPbnDod
-	 RcpTsR04TFbydLjDDwd7MPCIYTKMNw0PRvfh2SaPORn7p1LhhCmIWA1+NUUJlmZax0
-	 E8mF6dwI4qrxmJn4dvjOc2AJqdOH8WXq9NMbU1SD6QAYbX5EaDHjYAttWMTX9DFOwC
-	 dipLk31/oxxl8oL8kBrRhFzBxfDn15PRVa46dzLqpqkiTQAsjbCkyMrtEWMXA1h5cP
-	 2SIHlV9PuGYRA==
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
- jingoohan1@gmail.com, Hans Zhang <18255117159@163.com>
-Cc: imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20261028030652.2917756-1-18255117159@163.com>
-References: <20261028030652.2917756-1-18255117159@163.com>
-Subject: Re: [PATCH v5 00/16] PCI: dwc: Cache PCIe capability offset
-Message-Id: <179409150473.143243.11323239293809371653.b4-ty@b4>
-Date: Sun, 08 Nov 2026 04:15:04 +0530
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=VFDZBFhx
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794122369;
+	bh=oK11WFoEYcxKkv5gOP1n+/n0b5JmGN4huhLMKQpylEw=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=VFDZBFhxBpsg4a8fgdFMmvshrrlVoQAcFWvoM4UJ0p+D0GaPsEAQ93TE9XBOEk3Lb
+	 gnnQ90p9Ga3WWHEBbs+CvWJh5UjTEcxe2UosH218ChliKGWWOMmpNsR24LIg/5T1Uz
+	 rDIGG5iSq1yKuUIFDeyUsr4RUf3nVnV3+9RA83OM=
+X-QQ-mid: esmtpgz15t1794122363t4cfaa196
+X-QQ-Originating-IP: 70UR/8/Qz3+J8nvl4pXEMghTUj9NoHrmNfQe2/YfDAM=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 08 Nov 2026 15:19:20 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 17965104858753304052
+EX-QQ-RecipientCnt: 20
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -62,62 +58,104 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.16.0
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=a02f21ac2a7151b86497f96503bce060f3b96109e2e2f1aeb6516b655868;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sun, 08 Nov 2026 07:19:19 +0000
+Message-Id: <DMPNAPNEGQ5I.XYUIB7Y8HDCA@linux.spacemit.com>
+Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
+ emac_suspend()
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Andrew Lunn" <andrew@lunn.ch>, "Ali Tariq" <alitariq45892@gmail.com>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Vadim Fedorenko"
+ <vadim.fedorenko@linux.dev>, <netdev@vger.kernel.org>, "Andrew Lunn"
+ <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, "Eric
+ Dumazet" <edumazet@kernel.org>, "Jakub Kicinski" <kuba@kernel.org>, "Paolo
+ Abeni" <pabeni@redhat.com>, "Yixun Lan" <dlan@kernel.org>, "Vivian Wang"
+ <wangruikang@iscas.ac.cn>, "Chukun Pan" <amadeus@jmu.edu.cn>, "Siddharth
+ Vadapalli" <s-vadapalli@ti.com>, "Tomas Hlavacek" <tmshlvck@gmail.com>,
+ "Muhammad Bilal" <meatuni001@gmail.com>, "Maxime Chevallier"
+ <maxime.chevallier@bootlin.com>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.21.0-reader-ipc4
+References: <20261105123441.2524171-1-alitariq45892@gmail.com>
+ <DMO13SWAGZAN.NYISGLGI7Y5A@linux.spacemit.com>
+ <c55c5878-d9c1-4863-bc55-99d334ba2ede@gmail.com>
+ <12a95b3a-9c8b-4a2d-9b81-12b3839e64a9@lunn.ch>
+In-Reply-To: <12a95b3a-9c8b-4a2d-9b81-12b3839e64a9@lunn.ch>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MME7GB1W8aIneB/PcnuM8U0HR8lqg7GEcSYyh9QnR9iBnl8iEvUaLDs4
+	6y0C5UuGxSfDnqzxzpUILr176+VdxBTwR1CSnzMDOC+Qh64bELgxp/Hkyp8noy9Of25x46I
+	/FnKlE/K/Rv97xcdgLt8WOdpfz7R+SNdoWYkSobFnDgYXdBpBp9BuSteBFDD84LanRBk5yh
+	Ci7jACHXSjtxnv/aS2WA8zuGNRSseo75nNLqeuTuZmg5qBuFSR/Dx9aJrngEuMf8thqPwXc
+	EgbGXUUQ4uvkfglsErxUet2fT06GQMb0gkzzQLJWyYxuXZwMQy9Ikms3sCuoeOkhyvd5LJ3
+	vJrmCD7t6MTpycaEGJDh7ENFsLoa8SLK/+P2VbNLLLzGqOLsiUnfnExMVuJ0XQHBACXY0DO
+	r09q5vimGa+iWbPEWeS5/IFEkzkYJl6ZnFHo0VP32ZXEuQJaiksiu1ZpaZwOuk/lDQfmGBj
+	tMdKZMa9oASYqrd9h3QEe64zXx1qJndo9TQlD571lEdVKeEzFjKvoXbOaWf32t+FFVy1SBJ
+	6jvmOJQjuiFj1UvEZZXvIROxmSK1LikxQNMXJYE3lpnuEMAU5WlRAB3dWS5VvHgXU1P5D9a
+	nNmC/JfvFz+lEVgcCtZLOJvwyAgudId9Gkr4W1W/HfwHtVxPQhk4zOsI6AJZcz5TMleTwTn
+	i/X4E+fdA0J9T6YDttqRhOgcTHZJk9MTBR7+dAwegXF/fV1t12vT0XNYbnLNuMYGkvxawVO
+	4+GY4W2pdZ3X+fcMLzZ4C/W/ls/OqICi4t3fMBjSrbxgqeYBxrKusKgaPqwPO8odPZvsdiz
+	NdS02qsMFbCHKtfvsGXdMV/QuOYtbfn8iCJ5xx6eaIR9Jzd4xGm7iFSZQBtubStlAmRiyC7
+	3jEF4G6meoq1M9Y4lsS1FQKT2dBOG9SdMUgWxkLLVesRTELpbHSb9Mrj3o3MZOW1+ybznnj
+	d0HpuSi8tJRU/67lqDuHmXQ345vrxITw/t40GAc3+NEYV7j2WO7TqZUOr1wZ4KRYsKXoijm
+	pr0ietjlLZP164/EV3cCLyj/S3IGn8RRTqcvHSb+rR8LNhkvQ5n79PzcuxYL6i/kZeisyKb
+	uG6rS3XrpBy+4PN+1E6IfDjNXH2tz3XnTyxTTTfRjHu
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
+
+--a02f21ac2a7151b86497f96503bce060f3b96109e2e2f1aeb6516b655868
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+
+On Sat Nov 7, 2026 at 5:32 PM GMT, Andrew Lunn wrote:
+> On Fri, Nov 06, 2026 at 03:44:50PM +0500, Ali Tariq wrote:
+>>=20
+>>=20
+>> On 11/6/26 2:43 PM, Troy Mitchell wrote:
+>> > On Thu,  5 Nov 2026 17:34:37 +0500, Ali Tariq wrote:
+>> > > @@ -2056,7 +2059,9 @@ static int emac_suspend(struct device *dev)
+>> > >   		return 0;
+>> > >   	}
+>> > > +	rtnl_lock();
+>> > >   	emac_stop(ndev);
+>> > > +	rtnl_unlock();
+>> > >   	clk_disable_unprepare(priv->bus_clk);
+>> > >   	netif_device_detach(ndev);
+>> > This can deadlock. emac_stop() -> emac_down() calls
+>> > cancel_work_sync(&priv->tx_timeout_task) with RTNL now held, while
+>> > emac_tx_timeout_task() starts with rtnl_lock().
+>> >=20
+>>=20
+>> Thanks Troy, that makes sense.
+>>=20
+>> For the deadlock, I think the correct function to call is rtnl_trylock()
+>> inside the emac_tx_timeout_task(), which would return if the lock is alr=
+eady
+>> held and will hold the lock if it is not.
+>
+> rtnl_trylock() is generally a workaround needed for badly written
+> code. Please try to avoid it.
+Agreed. If the reset is done in place, the work does not need RTNL at all,
+so .ndo_stop can keep cancel_work_sync() as is.
 
 
-On Wed, 28 Oct 2026 11:06:36 +0800, Hans Zhang wrote:
-> The DWC PCIe core and its platform drivers repeatedly call
-> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
-> PCI Express Capability structure, including in paths that run more than
-> once such as link polling, suspend/resume and interrupt handlers.
-> 
-> Add a cached pcie_cap field to struct dw_pcie and a
-> dw_pcie_get_pcie_cap() helper that performs the lookup on first use and
-> caches the result, then convert the core and the 14 platform drivers
-> that use PCI_CAP_ID_EXP.
-> 
-> [...]
-
-Applied, thanks!
-
-[01/16] PCI: dwc: Add pcie_cap field and caching helper
-        commit: d018ff4be8961981828e75afd36eef90cc524cd8
-[02/16] PCI: dwc: Use cached PCIe capability offset in core
-        commit: f83a7b55517012496bd9539fbbdeeecf0d1e9ff9
-[03/16] PCI: dwc: imx6: Use cached PCIe capability offset
-        commit: 8472374576d300d36de20ad592fd1f39181b85a8
-[04/16] PCI: dwc: layerscape-ep: Use cached PCIe capability offset
-        commit: 87427cc9d7115088e92e8c92c282e28481c9b26b
-[05/16] PCI: dwc: meson: Use cached PCIe capability offset
-        commit: 53f9ed3d6807c6aa79944ed42b3362aa89192956
-[06/16] PCI: dwc: rockchip: Use cached PCIe capability offset
-        commit: bf5c3f4975010750c535b127cb3ab81951c7ffd0
-[07/16] PCI: dwc: eswin: Use cached PCIe capability offset
-        commit: 386b9fa49e26afbd76d934f136f68bc355791ce8
-[08/16] PCI: dwc: fu740: Use cached PCIe capability offset
-        commit: 6fba557b82f4996786d12676f554ad12e67e46d9
-[09/16] PCI: dwc: intel-gw: Use cached PCIe capability offset
-        commit: 02305ad3ad2f918ac009e8ae4c2df8c2b11dc0bc
-[10/16] PCI: dwc: qcom-ep: Use cached PCIe capability offset
-        commit: c489e1008df8a7456686ab637593582be63f14c9
-[11/16] PCI: dwc: qcom: Use cached PCIe capability offset
-        commit: 38af9eda49198b0b2e3d90324af6c5b00123d4ec
-[12/16] PCI: dwc: sophgo: Use cached PCIe capability offset
-        commit: 328c6d507696eb3b075efa6236cdc1c12a2a800c
-[13/16] PCI: dwc: spacemit-k1: Use cached PCIe capability offset
-        commit: ef2bc56f097aafdeee7fceb68d2ca9e4c6956dbf
-[14/16] PCI: dwc: spear13xx: Use cached PCIe capability offset
-        commit: ebd968f20c61b3d86165d9e1bc387044dcf73707
-[15/16] PCI: dwc: tegra194: Use cached PCIe capability offset
-        commit: 8078927bf27866ecc5251919ec6b41478ae620ac
-[16/16] PCI: dwc: ultrarisc: Use cached PCIe capability offset
-        commit: 64e2e54238dc1a63d4c8bd827d140bdffef05403
-
-Best regards,
--- 
-மணிவண்ணன் சதாசிவம்
+--=20
+Troy Mitchell
 
 
+--a02f21ac2a7151b86497f96503bce060f3b96109e2e2f1aeb6516b655868
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavAidyEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9B0gEA1znr4tPpsYVC
+nAv98ga0dRZipfyxeRX03GPDfyO2H9kA/0MZoMdmj9AE80+OsoJRT6mWefpeM6Si
+aoXyFnKOqZsD
+=cK0u
+-----END PGP SIGNATURE-----
+
+--a02f21ac2a7151b86497f96503bce060f3b96109e2e2f1aeb6516b655868--
