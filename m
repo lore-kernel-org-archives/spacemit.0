@@ -1,55 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794237606;
-	b=uSsJ9XMjFDfKVhRIz+rpIkW9DkVzrguefUVGOd5aZJU8EDp2g6bdrYWFeUnLxpBUgPcy
-	 j+XzXpf3PnM/4cQksgesNRF82Hs3cLq71oZ2jYIDparEvZI+RX0L8ivRSlazJuUmDiQVH
-	 yEe1k1FumeTq7TaW/EDGZC8lcvlagmGQREKthYHq60pQpqAyOGHVQbAiuZe+jrXJX7GOB
-	 gmSrwHbXiQzbp+LjIAzGFE3Dlt9hMDSl31rs5TLcd0ieSnaly/rBsVcPZSGi3K1E5g1BZ
-	 ZUcvxq6fIDcq9uHvyl6EWUapxdYUXzjGnnt8QWdTlORimlqpJe1TmI6uzBGEFECveJg==
+	t=1794246975;
+	b=vWVr+fkUsMP9QtA88LDPPsHB38lOb1ACQVqxNEfG2iSJ/ohd/cTIvovz3DLubpjUsniB
+	 +tnyfLZXByuTZUA1/ZedIBFd/Q8PCQHRq5o3FO/jkO1KH6NNwTHn9WN+ZZLDoUV1wKlfF
+	 0OOlA5NNHpxkX3jdMloQrdC4TbPP485nqgV2K24Is1vmiYwSBoxjKNGYBP0gSEJUOs8qX
+	 Wozhel/TT9z1qkud8WwPExZlPaPH0Jl1DWRCcOl7AGRXHNg2RT3HMnTb2V/PMzIs28wc/
+	 OFagStyk7G21uSqYyM/6a1jFvurqcuvkNR5kaLnpctSjyLSRza/y4KngmmfSzHpAjlA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794237606;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:From:To:Cc:Subject:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=vsIPcLDMIXTyEwRreAWLcBzGkN1NpY74ZgulLKfOydY=;
-	b=u2lxvVboqdXajOFIHreBS0rHNrq60Yg4fMsw3NeWMAygQPxvsU7OcCCFzR/Y+umIzwzP
-	 Wjhrm5Sa88uyKPk7d4pHR1xqEQNqmmSlZ9sGh9QzN/8uW/5xAkhmBoOgK1M2K4wlBDncz
-	 fSUwgbWl3/JCAKBdiRutPCkWmWhMNJECGH7u71K9Cawt6OIoksbycF2LxoFX+fYYNWONy
-	 qva/sLYiMYmzeay59ZKLSAsMv9Fd4nA6IzXF2LMgQhXRrG8+JQt6SNeo6P+cA8t+udHur
-	 rLObLi3rIGjtG7pLYchC9pS5+6PEWMmKkuGBpWtGrZQvy9+snz4CVOVktDE7b7+2D0w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794246975;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=if0cEUuJl6s7o+37uuaoQnPEf1nh2eR1DDff4vzhVvw=;
+	b=lTKpnYsFSFiLIvRRVpw/r8rh66XbwJj4P9iS93+x6nmHp0qyXJ7SHyonigz36FcfpclL
+	 9nmrc91D3fkyMk77KgY6M5365UkIvRgzkNKLaHTySncsO2DXZi0ZQjf3i0V/KiVOunMmf
+	 8AkbUpgWm9n65MofyZ4zFlLt1nhEdVvrYYGwTjX3/LczOcwY62nbThQ1qkj7rm9Oa3NJH
+	 WmXqBk8/C7gABaFgaoAltNFdxenioaF8SubJ5tdgxVIErx19D6XxMPXKxiY/Z1ZkG7J0d
+	 9TMA4h4f38rvmFTuNtxqjKJ951BQgxcxBw0EtKgpq/o2CPtjCEdVIyjT6X5mAZx9vvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BuctK3Du;
-	arc=none smtp.remote-ip=54.206.16.166
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=oYDVBy24;
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DF7606A31C
-	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 15:20:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67DF7606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9F6606A326
+	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 17:56:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C9F6606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BuctK3Du
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794237582;
-	bh=vsIPcLDMIXTyEwRreAWLcBzGkN1NpY74ZgulLKfOydY=;
-	h=Mime-Version:Date:Message-Id:From:To:Subject;
-	b=BuctK3DuIvKekUC2uSyt5xjib4q/GmO0uwTGUHxT/c6/EcpvDNSkWVJmdhWrxz+Jr
-	 c2C0sd5txupCJKleL/ut0ezyjGKHjkKfePU0zqqIWqz6s18BIHB7C9BZX3oci8e6fM
-	 iLPEdzqmyFscqSXqupQv8I9A2uwz5P7zi/IuJ8pI=
-X-QQ-mid: esmtpsz17t1794237576tb0683395
-X-QQ-Originating-IP: Zc/gz7/geC3Mn7EbL4LCmN3uWkfa4QiL7HNG6KBXuGI=
-Received: from = ( [58.254.68.27])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 09 Nov 2026 23:19:34 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7132004335593761603
-EX-QQ-RecipientCnt: 17
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=oYDVBy24
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id E539B20D174F;
+	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id CA90220D1763;
+	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr CA90220D1763
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794246971;
+	bh=if0cEUuJl6s7o+37uuaoQnPEf1nh2eR1DDff4vzhVvw=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=oYDVBy24embrLcOhPvc9Soom3Wb65A7jOH7HnOfsg25PrEG3kA9kjALksaYLGTVFN
+	 tXhemg5Ep+rY8ADfNrM5Af6yYCG6kO0qgQ1t0CdApljhd2Zfsb4ghSQERIis1mTttn
+	 dqkBnOIqcruJvOnGG4VsTKUSOd0o59qwY1phmkGT9YAwdDSGe99EGCf/LIS/sqeMpQ
+	 9HJIRj2n/2l8txgZBH9PxyNgn17Aebx83JMa2cY9xmCqh5STI47qlb/NhQwwzzHBH0
+	 L8j66/G2oFEG/YmQ6l/Xx5tupok6+anikzA/UGQzmLM7C5DZKjhNab8PQhJRNASYYn
+	 O2HozvcdvJwwA==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id Gr6o4wC3rV3i; Mon,  9 Nov 2026 18:56:11 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id 5236220D174F;
+	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Yixun Lan <dlan@kernel.org>,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] riscv: defconfig: enable onboard USB hub support
+Date: Mon,  9 Nov 2026 18:55:49 +0100
+Message-ID: <20261109175555.323067-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,114 +79,44 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 09 Nov 2026 15:19:33 +0000
-Message-Id: <DMQS4Y2FACDA.3T8ZB1OUW5HCP@linux.spacemit.com>
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Yao Zi" <me@ziyao.cc>, "Jiayu Du" <duge1256@gmail.com>,
- <srini@kernel.org>
-Cc: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
- <dlan@kernel.org>, <troy.mitchell@linux.spacemit.com>, <pjw@kernel.org>,
- <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <alex@ghiti.fr>,
- <p.zabel@pengutronix.de>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261106060525.346873-1-duge1256@gmail.com>
- <20261106060525.346873-3-duge1256@gmail.com> <au6niF5xiqj7cqJ4@pie>
-In-Reply-To: <au6niF5xiqj7cqJ4@pie>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MvGpJ04VJ1WqcVvjUaJwKh/8a0Sruq22nabdpa4Ch2nhBmsG9191jPHo
-	URs0twg4d4WTWV/hAUKx9RFx9IDZgvvDiyJoCkNXL30Cn/uCbaosYm4sjwM6QNVy+bXTw8v
-	+E2VLca19foQMm97iharwmVSvvAw0HnFehzME/kaM/5wqbb6ffguHuGhGHOWhhs++BBzWtJ
-	WuqTI65StKnZPO/oOlDPpyDnKWeYdS1/4EPovO1zWfSf6QMU98cc3HXjYkE7d1fdxHBjO4C
-	dcEvpScNleFMNOGDr8hEg2DxlmK8SLpece0AgBPfuq/QZRfcOmUR411GD/HFY2Avc/3oMZC
-	/9F0vmA8McswPQkFXeef3UhW7kY5ZFenfuiD97DEczp77/JM2OLoGtuD9HkBvXEqu3La5wE
-	d2qwIoWroWxuE4LMw84fB5aLz1+3Tct+Ex8qc+ZnR1z619/hhl4lIp07x1RHpxY+zAFaHW1
-	Ns7ekr9Hrjx3ZXc/jtPhIrkwvBS0IxM89xnfBhwPlgwEGsn3od1A9ApN0mQLOg/sgrPUsCi
-	gk32gxbQ8ctEk1iwkvi506Pl9cRkYn6J8NZotdNY435mTy5589KxyLviWfazFVGDW2vJN6t
-	ggm7DGpfu5J4n5Yl1Q+fccsma1v+wYYewiTCGNuyLHKKExLpgLYHwwc6hg5kIBSvY33YNxw
-	fm94p5zWDXzEBGQVOR488juE9gHqG/zGcLIbpQRKdz2T+lgPAglj1c/LGW508B/HTwvtr5S
-	dnp6xeED+iqjHWtba8ojixV2aaqkNb4j+IpZiKPCmfFuKj7Cm+P/h/oo8aTrV1nj/r0LWuW
-	gRpi0UW+Fx0FQ3UZRmsw0ylR2xgmNhT8Ztd7mKBV8TiXqabjanUszw2pQfGOe+d/58JMU55
-	taBY/eHOHfiRi805etPbKTjAAe2iJZlWEu7KDGG1mO37AXwErPZQDJLb1bwpIklbzlj2oXu
-	Xl6+TxzRbVPMusX3hOaEBQvp9wSIsgOPhOzrGGopUMAiFth7hx8gcKwHwDUI8i5NCJ79V7U
-	NMurUIMEvgKtbg99uX4r3AK0vMH77AtX3FQt4tzZ9Maijh4uaS7D6vAWZzTRHy5nLZsLFNF
-	/vS+MzqDtfgEqnsnUM3ut7RrpjlrNZhjw==
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
-
---54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Sat Nov 7, 2026 at 4:22 AM GMT, Yao Zi wrote:
-> On Fri, Nov 06, 2026 at 02:05:24PM +0800, Jiayu Du wrote:
->> Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3 eFuse
->> controller. These banks contain temperature calibration parameters and
->> other configuration data.
->>=20
->> Snapshot the shadow registers with aligned 32-bit reads and expose the
->> data in little-endian order at controller-relative offsets. Serve reads
->> from the snapshot and use keepouts for the remaining register ranges.
->> Keep the AES_WTM clock enabled and its shared reset deasserted while the
->> provider is registered.
->>=20
->> Signed-off-by: Jiayu Du <duge1256@gmail.com>
->> ---
->>  MAINTAINERS                       |   1 +
->>  drivers/nvmem/Kconfig             |  14 +++
->>  drivers/nvmem/Makefile            |   1 +
->>  drivers/nvmem/spacemit-k3-efuse.c | 151 ++++++++++++++++++++++++++++++
->>  4 files changed, 167 insertions(+)
->>  create mode 100644 drivers/nvmem/spacemit-k3-efuse.c
->
-> ...
->
->> diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
->> index d2f5bb236663..28d6c59fbd74 100644
->> --- a/drivers/nvmem/Kconfig
->> +++ b/drivers/nvmem/Kconfig
->> @@ -476,6 +476,20 @@ config NVMEM_SNVS_LPGPR
->>  	  This driver can also be built as a module. If so, the module
->>  	  will be called nvmem-snvs-lpgpr.
->> =20
->> +config NVMEM_SPACEMIT_K3_EFUSE
->> +	tristate "SpacemiT K3 eFuse support"
->> +	depends on ARCH_SPACEMIT || COMPILE_TEST
->> +	depends on OF && HAS_IOMEM
->> +	depends on COMMON_CLK && RESET_CONTROLLER
->> +	help
->> +	  Say Y here to read configuration and calibration data from the
->> +	  SpacemiT K3 eFuse shadow banks. The boot firmware must have loaded
->> +	  the shadow registers before Linux starts. Programming and reloading
->> +	  the fuses are not supported.
->
-> I didn't read K3's TRM, but is there a reason to depend on the
-> bootloader to do so? We should depend on the state set up by bootloaders
-> as less as possible, I think.
-The GEU hardware loads the shadow after reset. So YES, we don't need to
-rely on bootloader.
+The Banana Pi BPI-F3 (SpacemiT K1) has a VL817 USB 3.0 hub behind its
+DWC3 controller. The hub's power and reset come from the
+"usb2109,2817" and "usb2109,817" nodes in the device tree, which need
+the onboard_usb_dev driver. Without it, the hub regulator (USB30_HUB)
+stays off and the board's four USB-A ports are dead.
 
+Enable USB_ONBOARD_DEV as a module, as arm64 defconfig does.
+
+Tested on a Banana Pi BPI-F3 with v7.4-rc1 (dwc3 enabled as a module):
+the module autoloads, the hub comes up on both buses and a USB mouse
+on a USB-A port works. Without it, only the root hubs are seen.
+
+This patch was prepared with the help of an AI assistant (Claude),
+which also ran the build and boot tests.
+
+Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+---
+ arch/riscv/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
+index 04ae305..8fb6d7f 100644
+--- a/arch/riscv/configs/defconfig
++++ b/arch/riscv/configs/defconfig
+@@ -222,6 +222,7 @@ CONFIG_USB_CDNS3_HOST=3Dy
+ CONFIG_USB_CDNS3_STARFIVE=3Dm
+ CONFIG_USB_MUSB_HDRC=3Dm
+ CONFIG_USB_MUSB_SUNXI=3Dm
++CONFIG_USB_ONBOARD_DEV=3Dm
+ CONFIG_NOP_USB_XCEIV=3Dm
+ CONFIG_USB_GADGET=3Dy
+ CONFIG_USB_CONFIGFS=3Dm
+
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
 --=20
-Troy Mitchell
+2.53.0
 
-
---54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavHkhSEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9AggD+Mnv5Zg61NgXz
-ZDjIUJwrW/PSgOH3CWNzSHDOpq+DrYUBAOfObntacDDKXGuGn1wmRp6Qp8QY8cAv
-pn30xGwgyhMG
-=ZrI5
------END PGP SIGNATURE-----
-
---54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d--
