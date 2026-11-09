@@ -1,76 +1,135 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.11
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794246975;
-	b=vWVr+fkUsMP9QtA88LDPPsHB38lOb1ACQVqxNEfG2iSJ/ohd/cTIvovz3DLubpjUsniB
-	 +tnyfLZXByuTZUA1/ZedIBFd/Q8PCQHRq5o3FO/jkO1KH6NNwTHn9WN+ZZLDoUV1wKlfF
-	 0OOlA5NNHpxkX3jdMloQrdC4TbPP485nqgV2K24Is1vmiYwSBoxjKNGYBP0gSEJUOs8qX
-	 Wozhel/TT9z1qkud8WwPExZlPaPH0Jl1DWRCcOl7AGRXHNg2RT3HMnTb2V/PMzIs28wc/
-	 OFagStyk7G21uSqYyM/6a1jFvurqcuvkNR5kaLnpctSjyLSRza/y4KngmmfSzHpAjlA==
+	t=1794247062;
+	b=hqXjzfdiomgQili6THUUbUkLXhgmLCOjwlmkMr91KkKe3zEX5ejW413j/SYHSoVla5R0
+	 BWD2t9IFsRdpjnPqH2LRUmXsCRWwoIKuHkkD+0+43E1NPZT3w3+PtIL89z6/DK2EAKg83
+	 oNhSXJZrSQaxAJuSgniwweX3VIJOxZOU+nx4qyYWPzrSSXwBXYNy/TqeqRfMnYOB3lCMv
+	 3JQsFaTIpmHGnUPfAMNklgzQHspmMhRyX8c8lRLqXNIvsxleadwmppDQYmCcwDS4YD+Nv
+	 pcztAeZ2NVjwIHajYGH+yFA74C/ytGU1VUFgA1DraSB1lJVU332BvOIgXMCQt6Qeqrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794246975;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=if0cEUuJl6s7o+37uuaoQnPEf1nh2eR1DDff4vzhVvw=;
-	b=lTKpnYsFSFiLIvRRVpw/r8rh66XbwJj4P9iS93+x6nmHp0qyXJ7SHyonigz36FcfpclL
-	 9nmrc91D3fkyMk77KgY6M5365UkIvRgzkNKLaHTySncsO2DXZi0ZQjf3i0V/KiVOunMmf
-	 8AkbUpgWm9n65MofyZ4zFlLt1nhEdVvrYYGwTjX3/LczOcwY62nbThQ1qkj7rm9Oa3NJH
-	 WmXqBk8/C7gABaFgaoAltNFdxenioaF8SubJ5tdgxVIErx19D6XxMPXKxiY/Z1ZkG7J0d
-	 9TMA4h4f38rvmFTuNtxqjKJ951BQgxcxBw0EtKgpq/o2CPtjCEdVIyjT6X5mAZx9vvA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794247062;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:Organization;
+	bh=9Cc+2gtfN2/LHuRHGFLJjMnOZd72QDWhyPb9mjrBQIM=;
+	b=u7NP+7a2c1Yv020+YRdCd6aS03ng5WltSY4cHjjuSJy5k6sLOF0ekTL/7EorlcYBuHjo
+	 8zhJQluAN+uukUDCrIRb9pejzyMSBTQZuKz+wrOWNzZAaAIl4wk6tSKDVk9w7A3QOVsjh
+	 xdZVsluWDahXT3XNGuLOX9jNfRyiLJItb0AVSxImhQXclcHnTTy48BcoMT6JByM7JIQpE
+	 EgJcc7Mn1/qHMeZAZgK/H7pRJ7peqi0oOKLJMdxy5DbIK+Z1r6B7KX4MMDDWiG/1onbY7
+	 KWuTxfE2riKKbYOry6pfMXdhq1+7009fCNUqkdfb1vbH7AhFVlpohp86BqrZ3UFsCZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=oYDVBy24;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RYE80E4L;
+	arc=none smtp.remote-ip=198.175.65.11
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9F6606A326
-	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 17:56:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C9F6606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B67F606A325;
+	Mon,  9 Nov 2026 17:57:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B67F606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=oYDVBy24
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id E539B20D174F;
-	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id CA90220D1763;
-	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr CA90220D1763
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794246971;
-	bh=if0cEUuJl6s7o+37uuaoQnPEf1nh2eR1DDff4vzhVvw=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=oYDVBy24embrLcOhPvc9Soom3Wb65A7jOH7HnOfsg25PrEG3kA9kjALksaYLGTVFN
-	 tXhemg5Ep+rY8ADfNrM5Af6yYCG6kO0qgQ1t0CdApljhd2Zfsb4ghSQERIis1mTttn
-	 dqkBnOIqcruJvOnGG4VsTKUSOd0o59qwY1phmkGT9YAwdDSGe99EGCf/LIS/sqeMpQ
-	 9HJIRj2n/2l8txgZBH9PxyNgn17Aebx83JMa2cY9xmCqh5STI47qlb/NhQwwzzHBH0
-	 L8j66/G2oFEG/YmQ6l/Xx5tupok6+anikzA/UGQzmLM7C5DZKjhNab8PQhJRNASYYn
-	 O2HozvcdvJwwA==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id Gr6o4wC3rV3i; Mon,  9 Nov 2026 18:56:11 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 5236220D174F;
-	Mon,  9 Nov 2026 18:56:11 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] riscv: defconfig: enable onboard USB hub support
-Date: Mon,  9 Nov 2026 18:55:49 +0100
-Message-ID: <20261109175555.323067-1-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RYE80E4L
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794247062; x=1825783062;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/GGAxNjyNSTAgb+4GsAIS07jSZ/uzkJHlCxb0K1tUUw=;
+  b=RYE80E4L4jf+eo3yiNmYGvjkREiK14P7tpe2VTbck8ZSyfp/TeAWS5he
+   Ydc1pMWVHQTvD6dqXwK2DCBMJREpZ2FA0BK5yRMiv3HT2aHyRUMQpt/ad
+   0YsiSK6ITcQ6TMxMbD0ojpZZtMh8nej1ULGVuNc4NOQje0LVgQI7V9k1n
+   RwbgmQ1f17yoZnD3BGGoXT+41rwyrOKWFwlc09/3aKQ3FWis09A6urYN1
+   he6mfWqzIbpzf4W+kESQ1CHyspmUeLnmkAMmd5Dc/Eo9K51umHnm+CxzA
+   Rrq7rC/Vq8QK2pdUWOp6cryd3vA2ccLYPwU43a/bRbqxyqnSiLqQvuerk
+   Q==;
+X-CSE-ConnectionGUID: ahWk49nvRkuczItyEQINHg==
+X-CSE-MsgGUID: ZlQDGFFaSG+kXM0E9n/tfA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11961"; a="2866560"
+X-IronPort-AV: E=Sophos;i="6.27,204,1787036400"; 
+   d="scan'208";a="2866560"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 09:57:41 -0800
+X-CSE-ConnectionGUID: wb2AMpMXSwWy17Y7mVRXlA==
+X-CSE-MsgGUID: AJ9NiomKQuqzRxE8oUxCRw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,204,1787036400"; 
+   d="scan'208";a="7927416"
+Received: from amilburn-desk.amilburn-desk (HELO localhost) ([10.245.244.144])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Nov 2026 09:57:29 -0800
+Date: Mon, 9 Nov 2026 19:57:26 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Frank.Li@oss.nxp.com, Mark Brown <broonie@kernel.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Radu Pirea <radu_nicolae.pirea@upb.ro>,
+	CL Wang <cl634@andestech.com>,
+	Ryan Wanner <ryan.wanner@microchip.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>, Han Xu <han.xu@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>, Linus Walleij <linusw@kernel.org>,
+	Daniel Mack <daniel@zonque.org>,
+	Haojian Zhuang <haojian.zhuang@gmail.com>,
+	Robert Jarzmik <robert.jarzmik@free.fr>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>, Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Sowjanya Komatineni <skomatineni@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
+	"moderated list:ARM/Microchip (AT91) SoC support" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE" <linux-rpi-kernel@lists.infradead.org>,
+	"open list:FREESCALE DSPI DRIVER" <imx@lists.linux.dev>,
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+	"open list:ARM/Rockchip SoC support" <linux-rockchip@lists.infradead.org>,
+	"open list:RENESAS RZ/V2H(P) RSPI DRIVER" <linux-renesas-soc@vger.kernel.org>,
+	"open list:SAMSUNG SPI DRIVERS" <linux-samsung-soc@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+	"moderated list:ARM/STM32 ARCHITECTURE" <linux-stm32@st-md-mailman.stormreply.com>,
+	"open list:ARM/Allwinner sunXi SoC support" <linux-sunxi@lists.linux.dev>,
+	"open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v2 1/1] spi: use dmaengine_desc_set_callback()
+Message-ID: <avIJhv7p2v30U8H9@ashevche-desk.local>
+References: <7f96599b-681d-4963-bdda-1274371ac84f@kernel.org>
+ <f1fa853d-1703-411d-b2d2-0fb0b176c2fa@kernel.org>
+ <autqC143h7Qf1R9H@ashevche-desk.local>
+ <9e39502a-dd17-4fa2-98a3-9019523cb5e8@kernel.org>
+ <auuYcS7-YqJKcUbE@ashevche-desk.local>
+ <63c24437-4261-4a51-be7e-31ac0759a095@kernel.org>
+ <auxGom0XR-Hax9b3@ashevche-desk.local>
+ <00390a20-7630-4066-9779-06c8f915a176@kernel.org>
+ <auxNmE8yZVP-wL2e@ashevche-desk.local>
+ <3dc7277e-2f6b-44a6-9085-2e33d989c1c9@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -80,43 +139,81 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3dc7277e-2f6b-44a6-9085-2e33d989c1c9@kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-The Banana Pi BPI-F3 (SpacemiT K1) has a VL817 USB 3.0 hub behind its
-DWC3 controller. The hub's power and reset come from the
-"usb2109,2817" and "usb2109,817" nodes in the device tree, which need
-the onboard_usb_dev driver. Without it, the hub regulator (USB30_HUB)
-stays off and the board's four USB-A ports are dead.
+On Fri, Nov 06, 2026 at 08:20:33AM +0100, Krzysztof Kozlowski wrote:
+> On 05/11/2026 10:34, Andy Shevchenko wrote:
+> > On Thu, Nov 05, 2026 at 10:07:30AM +0100, Krzysztof Kozlowski wrote:
+> >> On 05/11/2026 10:04, Andy Shevchenko wrote:
+> >>> On Wed, Nov 04, 2026 at 11:54:56PM +0100, Krzysztof Kozlowski wrote:
+> >>>> On 04/11/2026 21:41, Andy Shevchenko wrote:
+> >>>>>>
+> >>>>>> But sure, if we want to play such numbers game, I will be sending
+> >>>>>> reviews for single lines.
+> >>>>>
+> >>>>> I'm not playing anything. The problem is that the patch unites the files that
+> >>>>> have distinct maintainers and unrelated to each other code. That's why in the
+> >>>>> subsystems I maintain, I almost always require to split on per-driver basis.
+> >>>>> Yes, exceptions are possible, but has to be quite rare.
+> >>>>
+> >>>> That's independent problem. Patch could be split, but it was not. Since
+> >>>> it was not, receiving end should act accordingly, e.g. when performing
+> >>>> incomplete review of only part of the patch, do not call that entire
+> >>>> patch was reviewed by giving the Rb tag, but give Ack tag.
+> >>>
+> >>> No, (partial) Rb != Ack.
+> >>
+> >> It is, because there is no partial Rb tag.
+> >>
+> >> There is partial review, but not partial Rb tag, please see exactly
+> >> submitting patches. It repeats the same in three separate places:
+> >>
+> >> "Acked-by.... user may not have carried out a technical review of the
+> >> patch,yet they may be satisfied ..."
+> >>
+> >> "Reviewed-by:, instead, indicates that the patch has been reviewed and
+> >> found acceptable according to the Reviewer's Statement:"
+> >>
+> >> Above important: "THE PATCH"
+> >>
+> >> It is not "the patch or its parts"
+> >>
+> >> Further:
+> >>
+> >> "I state that:
+> >> (a) I have carried out a technical review of *this* patch to evaluate
+> >> its appropriateness and readiness for inclusion into  the mainline kernel."
+> >>
+> >> And further:
+> >>
+> >> "A Reviewed-by tag is a statement of opinion that *the patch* is an"
+> >>
+> >> In three places it is THIS or THE patch. Complete (exhaustive) list of
+> >> options what can be reviewed to get the credit and give statement of
+> >> oversight.
+> >>
+> >> Statement of oversight DOES NOT include "part of the patch".
+> > 
+> > So, it means I MUST from now on REQUIRE a split before reviewing.
+> > Right?
+> 
+> Why "from now on"? The reviewer's statement of oversight is worded like
+> that since beginning? Also nothing stops you from reviewing parts. We
+> discuss the statement of oversight and its result: giving Rb tag. The Rb
+> tag is not output of some review, but agreement with statement of
+> oversight and performing what is stated there.
+> 
+> You can review parts, but you do not provide Rb tag.
 
-Enable USB_ONBOARD_DEV as a module, as arm64 defconfig does.
+No, I'm not going to review something that I may not put Rb tag on.
+I can NAK or ignore (or Ack without viewing, but it equals to ignore to me).
 
-Tested on a Banana Pi BPI-F3 with v7.4-rc1 (dwc3 enabled as a module):
-the module autoloads, the hub comes up on both buses and a USB mouse
-on a USB-A port works. Without it, only the root hubs are seen.
+-- 
+With Best Regards,
+Andy Shevchenko
 
-This patch was prepared with the help of an AI assistant (Claude),
-which also ran the build and boot tests.
-
-Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
----
- arch/riscv/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 04ae305..8fb6d7f 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -222,6 +222,7 @@ CONFIG_USB_CDNS3_HOST=3Dy
- CONFIG_USB_CDNS3_STARFIVE=3Dm
- CONFIG_USB_MUSB_HDRC=3Dm
- CONFIG_USB_MUSB_SUNXI=3Dm
-+CONFIG_USB_ONBOARD_DEV=3Dm
- CONFIG_NOP_USB_XCEIV=3Dm
- CONFIG_USB_GADGET=3Dy
- CONFIG_USB_CONFIGFS=3Dm
-
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
---=20
-2.53.0
 
