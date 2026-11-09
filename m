@@ -1,84 +1,109 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794222105;
-	b=SW54+B7MpZc2UyzyXFKAjG3l87QNMBa+1bxhiBLAUysqO5iHEUtuUe5wMhZwP8i9xxhP
-	 CEK4Tr1vZ6DxZJ//0XH0WUrniAr/qoZJW+rQ9H09F4FkPkt1/RQpDol4hLrHwlOC1DMln
-	 OLGsLTCEMwCV3KBS7T4NTBsTzebyioqDtWkQHVc5EX4bYdFcLVWQ41yKK6Di20PQ6VKyb
-	 G2SOYpRaYqZ5KYSstJhRerqn3dNu1SK2YXHogcl648j5WLqTx6QNGYHfWLsXg1FbImeYV
-	 Y5VWZghLwTnnyC4NO0YHJceo2tiGYXzAhERfvHff00wNXFJCcKB9V8I1B0ggRJnXVPw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794222105;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=S1FGdhZllrMjEm+POPzDgDYLMUR3eBpyJGxotFxGSLQ=;
-	b=AyJUDOc4xOs/tDSXSNol/ybXTb97fTEl6MP6M0Rhen2WwFaZ3YxQljaaVKAS9f7XiX8L
-	 H3+y2yjT3fhGYNfQ1NCc1rH5pWh92f6NwGozbuuIgqG6U0oTRRi68KViLCceXAIHLWWUL
-	 66H4wjISkGpyNFogOrOINOf71lHTKJSIKWFu69e9KwcN2I9umJscneOXgA8RjC0qKLevc
-	 fBU7TxkX8PigZwlb9goEnwBoqCndScuzxjbXbUizhz/ZZB/IBlfzR/tNJpTVxRFqDHldb
-	 2W/oXrXmjxAJMB68NqB6mSvEqP5c3SfvV7Lbkec9Oounjmr7eWkzHvWOr/ylVIWKCsg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=FsI+0jWU;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=185.125.188.122
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794222648;
+	b=Gv58R1LwfEM4Qtp6PE+ifUdqG+q3EpSJXXkEuvIQjPbGe5abjwNJexrrCOxxmY0FcWF8
+	 G6vVKwjVtjvaUL3sfSR4XuwqKaPF0Xj+Q4XgDVTu0qUATbmCJ3vDevhnYvjZrZfe1Hz/o
+	 FxeuCaeV4HUU9Md3up/KsybEyj1W9M6Rb5lKWSq4CKmtN30S6lNfQRulBVzisPzd8l0RL
+	 P1SD006iQAInsx+OXegBmq0Rd/wVzEbeiTThPiRe5JTeuTa4tZYafF9uItGyDDg/788eu
+	 gWwXBUsIitmLYNGSdd4EX/AAyXIXrn6KeL7qYY0lS97+5Q0RnklmLkH8SwG8Oe8MosA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794222648;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:
+	 X-Google-DKIM-Signature:X-Forwarded-Encrypted:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=llvqyMiXnc/47moE8culPRvGGeNKWMoMtXMZ7VTfmpM=;
+	b=Vg5JVBk5A2rQvNIYAcl/b5Tgoruu3U/ro7nj2Bg0egfsgYdY3cNDIGVfeoHAUllxOF4o
+	 Cbgr/rx1EJJhORsqrKxrOHy9ZkKY9J638M1H0gNkSEFLm4nzw0B0M2wy6pkP5IWsfHkTR
+	 gC3IrFv5h6m1s1RGTcpRCURYPGeI+JJoguQ/h0RNzWrZqerknfAIXjsfLVzS8Ogb8IRUf
+	 X4kVrYIj1M24LRYOFOcRtdnqLb2p4+X5oYu88E+HghNRWaJ9nNPBQcKIN0qC9REj7dyT8
+	 kItDyHhE6ElG6pjqQGWpDfNgibKk3DG8dnTyN/DZGoksapmusxtv5oy1prp2/W31/kA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=canonical.com;
+	spf=pass smtp.mailfrom=canonical.com;
+	dkim=pass header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=l5b68OsS;
+	arc=fail smtp.remote-ip=185.125.188.122
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5C5606A325
-	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 11:01:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E5C5606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9D7606A31C
+	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 11:10:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7C9D7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=FsI+0jWU
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id D6A0B20DDBC5;
-	Mon,  9 Nov 2026 12:01:35 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id B8A5820DDAE3;
-	Mon,  9 Nov 2026 12:01:35 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr B8A5820DDAE3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794222095;
-	bh=S1FGdhZllrMjEm+POPzDgDYLMUR3eBpyJGxotFxGSLQ=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=FsI+0jWUv/4iqCVTv5yZiD8sKZSgm4Th3SmP+5UAUFz/vsUot3xkKqxr/Fdoxw4UF
-	 f5fuXlDHmzcgOk2056X11ZynLgICdRTX1KgpAsoLYCdLpEjtu9SQz8bkU67dYVOUCk
-	 IB6mH5XXdBC8y+4pZhnES8Wb60DdLKZ9eHifl0s1HkI99DYGzhGSCXQtDvtJYz80ZP
-	 DyybB57KeR7uLBzZzizx46gP0xxkhL0ovoKQToIAYD8HS/we9xm1UxAn1P/dS+xjWt
-	 gEu6GDFKLDonucVkbkoTSQQEk+OP+VSqiN74wZQCklnd7AC6HksZ40zZAIqpwnKTX3
-	 cswpiuzkq5Fbg==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id HLlD2-6wYjs1; Mon,  9 Nov 2026 12:01:35 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 00C9D20DDBC5;
-	Mon,  9 Nov 2026 12:01:34 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Troy Mitchell <troy.mitchell@linux.dev>
-Cc: Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-Subject: Re: [PATCH v5] riscv: disable local interrupts and stop other CPUs before reboot/shutdown
-Date: Mon,  9 Nov 2026 12:00:43 +0100
-Message-ID: <20261109110104.293157-1-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261104-v7-0-rc1-rv-dis-int-before-restart-v5-1-956ec09c900d@linux.dev>
-References: <20261104-v7-0-rc1-rv-dis-int-before-restart-v5-1-956ec09c900d@linux.dev>
+	dkim=pass (4096-bit key, unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=l5b68OsS
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com [209.85.218.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id D9AD83F2D1
+	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 11:10:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20251003; t=1794222638;
+	bh=llvqyMiXnc/47moE8culPRvGGeNKWMoMtXMZ7VTfmpM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type;
+	b=l5b68OsSoga1Tc/V2WxA4LnSS//BWiPJpGdA0cGXiFcTBlGnvBHORXTaGLL7XMa4G
+	 e+I8VXkaAzbWOnSSroPen36IXqwnm+TL0zSWTo3clnKWBnNIf2IkPjc85sxZKprPM+
+	 iXWqANQ6gSUfM7u0VcE0pyu8zt6wNtsQgahvZGl0gr6suip1A+Fbndn+WxWEEWYjQw
+	 omWLte5rceEpgUqp42iFM4RbuNdhFrKH4dJyqKJsFLyJLYCwZRHttHHim3azjBepEx
+	 F9yhfqUw4hNgVLnlD2lBM3YNh5ok0UdnhoNNh6b7IqIGxi6jwrG4bfxX9p0WUCeVgp
+	 ePZqS5u6oPrQaG06VdHWR+dfL5TRnpEK44Z6PFkFgqIyRLrNiimtvVRm3nc5n4ZjvD
+	 xb2taZU+25gYSxzTrGkVdYZz9TqYWQBSFIqU+diuZDgbJHUjo2RVtBOSlwaJfomNSu
+	 kp/GW6Fu6nFcxlBpRJxoEGAImYW/05j1DK/wSD0drL8wuFasa/w37cct0MJVNatX96
+	 LxZXyhB0EHVup6u0ykAfTqIxSbSPNszseSddR8VjdmRZCs+hFZZ/hHTLUihHqqJVU4
+	 HmDkjmq2dula8Gg/DGsjhtcIexSsJ757M1KfYP9IP9CqeZMHnT23dYIG4FNdX1asrc
+	 hX/zRA2F82eS1qM017KND09U=
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-c3f88d2ff28so60294666b.0
+        for <spacemit@lists.linux.dev>; Mon, 09 Nov 2026 03:10:38 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794222638; cv=none;
+        d=google.com; s=arc-20260327;
+        b=q2b3zzOeShRw2PH3H9sJJLPzEH/fn/GPwdCrdjV60bMKfl3gnDckQkDGizbHyVV8pB
+         bBZ3AsypSh5CmolT9xwgf/zo63wZvjS5n0L0/HbJ+Lg5/7gq+KyXnp8EYIeMFVzodZUG
+         cPJXggGmXu3RzeI5wfWPhi0xwyTpyxBO6kpg/3ZQGoVvCQUM/xsMMLKuudN2qzlv9qJH
+         aEiCbI0COTY0oqVcIzk0Sytxoi2pwL9PNk8Bg4YFgcdv2PMGSiEFP4g73TkrDb1weWFd
+         lmfY4ynUko+zBkQD3jfI40sj+79h4LUv4De/sMcpBNIDHO8bVEBJhQVvhhLla8RPKhUD
+         oHjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version;
+        bh=llvqyMiXnc/47moE8culPRvGGeNKWMoMtXMZ7VTfmpM=;
+        fh=QtPNiV8FDrNDALLZfwop3YFjRkBXhxgAZDIxDW8D+ck=;
+        b=lVbG+6w0XwRqkG1NwNEquzj6GfNkOGr17XnY46Vph6CfEzAlnllf+4oyKQl8a4OGvq
+         nLLH/Fno63s61q9fJ/azHAVmuqVhsf6Xw24URcnqmaaZpinrn6xJIKQHmhUVs+5g6HeH
+         3FFWWUSWd3blAmNsoAFAgW1bRctO3VFgY7rR0vqTHQtMNPuc9gREfjQYA7xceJr0Cvkq
+         /T6mUJdzRZpiSEn+wVQ5SqleZ3J1D4XvBVG4sVqLgFKeeV1HT5yWyvMZxOZlKCLHwzFv
+         b8jBdbHYmvNpZbN8zUQ/LZV02OEAE/55+LFFgfylWEK6QuyXtsoqY9E30J8gv8GTjGgA
+         lK4Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794222638; x=1794827438;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=llvqyMiXnc/47moE8culPRvGGeNKWMoMtXMZ7VTfmpM=;
+        b=uY/hUCe55XQdM5jbT8NnNLr394sSstXtH80tQRWuAAO5g2aZmrf5NN4WZSejLsxM21
+         Xh4CxudSlSeqsd2+HiZJpTf3wl/YvdyuUu53EGRFycbUsYdK8r9uXFSqBjS6NXTr7c1m
+         m4n5IW3wDb/uGzrRrh5dPg5W2Y9IoOLTXEtXPwYcmVKZUF+oy6gDIab/aGkfBcat+Zah
+         G0cdbTEdu5e6hPvLnL3kdA4xZ7CEPwPq0tyHwFdwxtk1rQAee7r/Ri0BKB+tteo9nsyK
+         hqHXuEJX5QmUCQyW03Hwl2c4GDxLUljL1679cx0vcpKVvkEhMvaOuciKr2VZ3jIOKkWb
+         nHHQ==
+X-Forwarded-Encrypted: i=1; AL+hErHW/18k091+ZimnTugmu2mACTfxc1iaEnE7yFFUecr2gW2cjGaqZiniDjpcLH/q5Oa926h+8D9kDg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+kr7O/zHpj3/sOpP2LQh8yuQJr75hXjzb2TiyDgbG7OZhhTV4G
+	PSE8XkaPgOIXbyXTU+kBtdv+CSDsIApOvdIr7ODAXHTn0b/CP6tfQe9bT0Z1wAMFYw5Hnwudzma
+	RrDyiXVrgqE0JbWgd877NACWDG2g9uoyUPCUUgts/5kLpnQjEoAy+x1Q5b7cwkoqmXY0Y0l7lGM
+	1shKHgeIL4qwc1nYvw7sk/MkcC7hcpELvyFZt554XU3MuWcOCOPxk=
+X-Gm-Gg: AYBFou1MGO4hZtHDE7iVNbgbOb+WXQBrq+TYs4RAae4D5VnZ48WzjB8dE9NatVtFs2a
+	RqdGILQ6tBJLXpNMmpoAYKKkcjbSPHBcaWksv5NS0O2oLONAfqDo2wL2S0Dx3v+/md60z8YR6Bb
+	nilsYK5BS3Wvs0l8gQfqGLPS1/HW4Z+VCyVJRI4bkgAsUQjpFlOTo/zQs=
+X-Received: by 2002:a17:906:f591:b0:c41:960c:8c62 with SMTP id a640c23a62f3a-c4d6daf39ccmr262303166b.30.1794222638461;
+        Mon, 09 Nov 2026 03:10:38 -0800 (PST)
+X-Received: by 2002:a17:906:f591:b0:c41:960c:8c62 with SMTP id
+ a640c23a62f3a-c4d6daf39ccmr262300066b.30.1794222638061; Mon, 09 Nov 2026
+ 03:10:38 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -88,31 +113,66 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20261104-k3-bs01dcma-v1-0-794025247e4a@linux.spacemit.com>
+ <20261104-k3-bs01dcma-v1-2-794025247e4a@linux.spacemit.com>
+ <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
+ <CAJM55Z9nuO3MneQqBm3K2V2SjOXqXsZcDx9pMzVhxMJJ73xc9Q@mail.gmail.com> <DMNTD3S9CNW1.1H4CMNHDJM69D@linux.spacemit.com>
+In-Reply-To: <DMNTD3S9CNW1.1H4CMNHDJM69D@linux.spacemit.com>
+From: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Date: Mon, 9 Nov 2026 12:10:10 +0100
+X-Gm-Features: AclHuK966um7PTpChOfRAdNHmU0xq_O_8ADd9fyC1m0kLv_yr1nWEQyElP2Eazg
+Message-ID: <CAJM55Z_HOuvxNmAi2m3kjtQ3tuYEDNtfyvrcb=F-Z1p6K1VSCQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 BS01DCMA support
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Guodong Xu <docular.xu@gmail.com>, Yangyu Chen <cyy@cyyself.name>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 04, 2026 at 07:05:40AM +0000, Troy Mitchell wrote:
-> Specifically, under CONFIG_PREEMPT_RCU, rcu_read_lock() does not increm=
-ent
-> the preempt_count. If local interrupts remain enabled, the environment
-> is not guaranteed to be atomic. This can lead to a context misidentific=
-ation
-> within generic kernel teardown code, causing it to incorrectly enter
-> non-atomic paths (such as attempting to acquire sleeping locks), which
-> results in fatal "scheduling while atomic" splats or system hangs.
+On Fri, 6 Nov 2026 at 04:39, Troy Mitchell
+<troy.mitchell@linux.spacemit.com> wrote:
+> On Wed, 4 Nov 2026 07:43:03 -0500, Emil Renner Berthing wrote:
+> > > I just had a talk with Dong from Spacemit. He tells me the
+> > > BS01DCMA is the name of a module similar to the com260, only it has
+> > > a different form factor and each module consists of 2 separate K3
+> > > nodes. Similar to how the com260 module can be used in a small
+> > > carrier board (spacemit,k3-com260-ifx) and in a 10-node server
+> > > (spacemit,k3-com260-tq), I'd expect to see a
+> > > common arch/riscv/boot/dts/spacemit/k3-bs01dcma.dtsi describing the
+> > > module itself, and then an
+> > > arch/riscv/boot/dts/spacemit/k3-bs01dcma-<something>.dts that
+> > > describes the extra peripherals that can be accessed when the module
+> > > is plugged into the server.
+> > >
+> > > [...]
+> >
+> > Ah, it's called the Cluster Server RV2768of much
+> > https://spacemit.com/community/development-kit/cluster-server-rv2768
+>
+> Hi Emil,
+>
+> I've checked with our hardware team. BS01DCMA is indeed a module, so
+> the "board" wording in this series is wrong and I'll fix it in the next
+> version.
+>
+> I'd still like to keep a single k3-bs01dcma.dts though. The module is
+> only used in the RV2768, and that carrier is essentially just cabling
+> to PCIe network cards. Those are found by enumeration and there's
+> nothing else on it for the K3 to control, so a
+> k3-bs01dcma-rv2768.dts would have nothing to describe.
+>
+> Does that work for you?
 
-On Banana Pi BPI-F3 (SpacemiT K1), v7.4-rc1 defconfig, every reboot warns=
-:
+Honestly I'd still rather have the k3-bs01dcma-rv2768.dts. It's hard
+to predict the future and I think having the extra file is a very
+small price to pay compared to the confusion of having
+'spacemit,k3-bs01dcma' describe the RV2768 server and then something
+else to describe the module, that's actually called just BS01DCMA if
+someone ever makes a different carrier for the module. Also it makes
+the physical reality of the RV2768 being a server of multiple BS01DCMA
+modules more obvious from just reading the device trees.
 
-  WARNING: kernel/rcu/tree_plugin.h:330 at rcu_note_context_switch+0x46a/=
-0x48a
-  ...
-  spacemit_i2c_xfer_common+0x342/0x5f6
-  ...
-  spacemit_p1_restart_handler+0x24/0x5a
-  do_kernel_restart+0x1e/0x26
-
-With this patch the warning is gone (2/2 clean reboots, 2/2 warnings
-without it). Testing done with the help of Claude (AI assistant).
-
-Tested-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+/Emil
