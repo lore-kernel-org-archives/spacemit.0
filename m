@@ -1,63 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794228649;
-	b=XQkWN+AlUTgwZOSExttGbMi/fYpY32+ab6j7uEts1I22sLXFu3ahxxNqXVAH1vp2nqNc
-	 Tm3lzxIJZrYV+3baFHPJNjitwt/OeIfXw1XoD4u+6aF6rcuAMeQGyI+nKwhqdfkJFIb5H
-	 ugYvdiEJANv0+gWoE6ThkaiZdXZVLSQhgetel7u/KanFAkZqY2N/OXJ2P8k/1nY9OOfZz
-	 ZwIDR/7A4SMO6JwIG5Vku89M9/S88n0XRIDAcP6630J8q8x3UnQRZKHOXPVPMoOQZUH7D
-	 OnrGBjo6qeLVaH8H/pdYQcPXOeLLuAu8fGTUtGGMlNw9Q+82PjixDjlmYikFGWPhawQ==
+	t=1794237606;
+	b=uSsJ9XMjFDfKVhRIz+rpIkW9DkVzrguefUVGOd5aZJU8EDp2g6bdrYWFeUnLxpBUgPcy
+	 j+XzXpf3PnM/4cQksgesNRF82Hs3cLq71oZ2jYIDparEvZI+RX0L8ivRSlazJuUmDiQVH
+	 yEe1k1FumeTq7TaW/EDGZC8lcvlagmGQREKthYHq60pQpqAyOGHVQbAiuZe+jrXJX7GOB
+	 gmSrwHbXiQzbp+LjIAzGFE3Dlt9hMDSl31rs5TLcd0ieSnaly/rBsVcPZSGi3K1E5g1BZ
+	 ZUcvxq6fIDcq9uHvyl6EWUapxdYUXzjGnnt8QWdTlORimlqpJe1TmI6uzBGEFECveJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794228649;
-	h=Received:DKIM-Signature:Subject:From:To:Cc:Date:Message-ID:
-	 In-Reply-To:References:X-sashiko-severity:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=JjNSwO4mZ69wgWNuljj9jgcvdRQfwcVoIjX8RvCsKvM=;
-	b=yj9JA2eGqcKrllWdXRwsET4KApHoRgEjakvBNDPNZXt+D3bREB844XnAJzG19TxjDWnp
-	 u3LODZVjyavZugVECIyW355PXQubOFSUotfcqXdkbtk90uoM+8GzNEDxAoR2IWduNFzks
-	 R1IQNH35B6JfJgFx2+MJWweBip9kdXnr/5BriT1QNxY09pjPDDaC21XvNTyx+f+DfJmKg
-	 td1eiL9SnY4Kt+i35jJD/tP4RgFxYNbosCFLjNBsK835RbLH+M1BnRQTcCjWWixA9QZFv
-	 mGb9ecj8oPTDJaLcmX7dY8ccpMQr/ZJq9owfCcrTYxZ/dAnuTPRCwmTJB1Zc87can0g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794237606;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:From:To:Cc:Subject:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=vsIPcLDMIXTyEwRreAWLcBzGkN1NpY74ZgulLKfOydY=;
+	b=u2lxvVboqdXajOFIHreBS0rHNrq60Yg4fMsw3NeWMAygQPxvsU7OcCCFzR/Y+umIzwzP
+	 Wjhrm5Sa88uyKPk7d4pHR1xqEQNqmmSlZ9sGh9QzN/8uW/5xAkhmBoOgK1M2K4wlBDncz
+	 fSUwgbWl3/JCAKBdiRutPCkWmWhMNJECGH7u71K9Cawt6OIoksbycF2LxoFX+fYYNWONy
+	 qva/sLYiMYmzeay59ZKLSAsMv9Fd4nA6IzXF2LMgQhXRrG8+JQt6SNeo6P+cA8t+udHur
+	 rLObLi3rIGjtG7pLYchC9pS5+6PEWMmKkuGBpWtGrZQvy9+snz4CVOVktDE7b7+2D0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AMcdWkPh;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BuctK3Du;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753EC606A322;
-	Mon,  9 Nov 2026 12:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DF7606A31C
+	for <spacemit@lists.linux.dev>; Mon,  9 Nov 2026 15:20:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 67DF7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AMcdWkPh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF081F0089F;
-	Mon,  9 Nov 2026 12:50:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794228649;
-	bh=JjNSwO4mZ69wgWNuljj9jgcvdRQfwcVoIjX8RvCsKvM=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=AMcdWkPhAWKw4Kty4An/ZtOYneJtvpJDr03C4k9f4tW0Mo6sgerdBVpzfABUh/Izz
-	 RkYVqnfH+aQq6TxHIcOTPO9nHVxllQqqI5DJZKjTmZy/zYILGN0a0xlyY4h0Dr8/aa
-	 5EmkN/gp8IT7gS80cbk7N/hnq86JwIN+KeT5TLtD/1Pp8NgR8gNeuWqLWiOxlArV98
-	 lf9ViQfLIxjFbx23pEDq01GJDwvSkGChDztuhHnw56pwxwZMe40GVH5SoxrMhAFFpy
-	 ZdM2Q1b4RIxcK6EUM6ZOYnd80/6fgCvOEJUEB5mFrxshCiSW9wYfunJjU88fCRa7cI
-	 Cw5wlVwLKqaug==
-Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
- emac_suspend()
-From: netdev-bot+sashiko@kernel.org
-To: alitariq45892@gmail.com
-Cc: netdev@vger.kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
- edumazet@kernel.org, kuba@kernel.org, pabeni@redhat.com, dlan@kernel.org,
- troy.mitchell@linux.spacemit.com, wangruikang@iscas.ac.cn, amadeus@jmu.edu.cn,
- s-vadapalli@ti.com, tmshlvck@gmail.com, meatuni001@gmail.com,
- vadim.fedorenko@linux.dev, maxime.chevallier@bootlin.com,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Date: Mon, 09 Nov 2026 12:50:47 +0000
-Message-ID: <179422864754.994134.12281861683384047552@kernel.org>
-In-Reply-To: <20261105123441.2524171-1-alitariq45892@gmail.com>
-References: <20261105123441.2524171-1-alitariq45892@gmail.com>
-X-sashiko-severity: Medium
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BuctK3Du
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794237582;
+	bh=vsIPcLDMIXTyEwRreAWLcBzGkN1NpY74ZgulLKfOydY=;
+	h=Mime-Version:Date:Message-Id:From:To:Subject;
+	b=BuctK3DuIvKekUC2uSyt5xjib4q/GmO0uwTGUHxT/c6/EcpvDNSkWVJmdhWrxz+Jr
+	 c2C0sd5txupCJKleL/ut0ezyjGKHjkKfePU0zqqIWqz6s18BIHB7C9BZX3oci8e6fM
+	 iLPEdzqmyFscqSXqupQv8I9A2uwz5P7zi/IuJ8pI=
+X-QQ-mid: esmtpsz17t1794237576tb0683395
+X-QQ-Originating-IP: Zc/gz7/geC3Mn7EbL4LCmN3uWkfa4QiL7HNG6KBXuGI=
+Received: from = ( [58.254.68.27])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 09 Nov 2026 23:19:34 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7132004335593761603
+EX-QQ-RecipientCnt: 17
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -66,209 +58,114 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Mon, 09 Nov 2026 15:19:33 +0000
+Message-Id: <DMQS4Y2FACDA.3T8ZB1OUW5HCP@linux.spacemit.com>
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Yao Zi" <me@ziyao.cc>, "Jiayu Du" <duge1256@gmail.com>,
+ <srini@kernel.org>
+Cc: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+ <dlan@kernel.org>, <troy.mitchell@linux.spacemit.com>, <pjw@kernel.org>,
+ <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <alex@ghiti.fr>,
+ <p.zabel@pengutronix.de>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+X-Mailer: aerc 0.21.0-reader-ipc4
+References: <20261106060525.346873-1-duge1256@gmail.com>
+ <20261106060525.346873-3-duge1256@gmail.com> <au6niF5xiqj7cqJ4@pie>
+In-Reply-To: <au6niF5xiqj7cqJ4@pie>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MvGpJ04VJ1WqcVvjUaJwKh/8a0Sruq22nabdpa4Ch2nhBmsG9191jPHo
+	URs0twg4d4WTWV/hAUKx9RFx9IDZgvvDiyJoCkNXL30Cn/uCbaosYm4sjwM6QNVy+bXTw8v
+	+E2VLca19foQMm97iharwmVSvvAw0HnFehzME/kaM/5wqbb6ffguHuGhGHOWhhs++BBzWtJ
+	WuqTI65StKnZPO/oOlDPpyDnKWeYdS1/4EPovO1zWfSf6QMU98cc3HXjYkE7d1fdxHBjO4C
+	dcEvpScNleFMNOGDr8hEg2DxlmK8SLpece0AgBPfuq/QZRfcOmUR411GD/HFY2Avc/3oMZC
+	/9F0vmA8McswPQkFXeef3UhW7kY5ZFenfuiD97DEczp77/JM2OLoGtuD9HkBvXEqu3La5wE
+	d2qwIoWroWxuE4LMw84fB5aLz1+3Tct+Ex8qc+ZnR1z619/hhl4lIp07x1RHpxY+zAFaHW1
+	Ns7ekr9Hrjx3ZXc/jtPhIrkwvBS0IxM89xnfBhwPlgwEGsn3od1A9ApN0mQLOg/sgrPUsCi
+	gk32gxbQ8ctEk1iwkvi506Pl9cRkYn6J8NZotdNY435mTy5589KxyLviWfazFVGDW2vJN6t
+	ggm7DGpfu5J4n5Yl1Q+fccsma1v+wYYewiTCGNuyLHKKExLpgLYHwwc6hg5kIBSvY33YNxw
+	fm94p5zWDXzEBGQVOR488juE9gHqG/zGcLIbpQRKdz2T+lgPAglj1c/LGW508B/HTwvtr5S
+	dnp6xeED+iqjHWtba8ojixV2aaqkNb4j+IpZiKPCmfFuKj7Cm+P/h/oo8aTrV1nj/r0LWuW
+	gRpi0UW+Fx0FQ3UZRmsw0ylR2xgmNhT8Ztd7mKBV8TiXqabjanUszw2pQfGOe+d/58JMU55
+	taBY/eHOHfiRi805etPbKTjAAe2iJZlWEu7KDGG1mO37AXwErPZQDJLb1bwpIklbzlj2oXu
+	Xl6+TxzRbVPMusX3hOaEBQvp9wSIsgOPhOzrGGopUMAiFth7hx8gcKwHwDUI8i5NCJ79V7U
+	NMurUIMEvgKtbg99uX4r3AK0vMH77AtX3FQt4tzZ9Maijh4uaS7D6vAWZzTRHy5nLZsLFNF
+	/vS+MzqDtfgEqnsnUM3ut7RrpjlrNZhjw==
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-Thank you for your contribution! Sashiko AI review found 2 potential
-issue(s) to consider.
+--54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-Critical: 0 · High: 0 (2) · Medium: 2 · Low: 0
+On Sat Nov 7, 2026 at 4:22 AM GMT, Yao Zi wrote:
+> On Fri, Nov 06, 2026 at 02:05:24PM +0800, Jiayu Du wrote:
+>> Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3 eFuse
+>> controller. These banks contain temperature calibration parameters and
+>> other configuration data.
+>>=20
+>> Snapshot the shadow registers with aligned 32-bit reads and expose the
+>> data in little-endian order at controller-relative offsets. Serve reads
+>> from the snapshot and use keepouts for the remaining register ranges.
+>> Keep the AES_WTM clock enabled and its shared reset deasserted while the
+>> provider is registered.
+>>=20
+>> Signed-off-by: Jiayu Du <duge1256@gmail.com>
+>> ---
+>>  MAINTAINERS                       |   1 +
+>>  drivers/nvmem/Kconfig             |  14 +++
+>>  drivers/nvmem/Makefile            |   1 +
+>>  drivers/nvmem/spacemit-k3-efuse.c | 151 ++++++++++++++++++++++++++++++
+>>  4 files changed, 167 insertions(+)
+>>  create mode 100644 drivers/nvmem/spacemit-k3-efuse.c
+>
+> ...
+>
+>> diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+>> index d2f5bb236663..28d6c59fbd74 100644
+>> --- a/drivers/nvmem/Kconfig
+>> +++ b/drivers/nvmem/Kconfig
+>> @@ -476,6 +476,20 @@ config NVMEM_SNVS_LPGPR
+>>  	  This driver can also be built as a module. If so, the module
+>>  	  will be called nvmem-snvs-lpgpr.
+>> =20
+>> +config NVMEM_SPACEMIT_K3_EFUSE
+>> +	tristate "SpacemiT K3 eFuse support"
+>> +	depends on ARCH_SPACEMIT || COMPILE_TEST
+>> +	depends on OF && HAS_IOMEM
+>> +	depends on COMMON_CLK && RESET_CONTROLLER
+>> +	help
+>> +	  Say Y here to read configuration and calibration data from the
+>> +	  SpacemiT K3 eFuse shadow banks. The boot firmware must have loaded
+>> +	  the shadow registers before Linux starts. Programming and reloading
+>> +	  the fuses are not supported.
+>
+> I didn't read K3's TRM, but is there a reason to depend on the
+> bootloader to do so? We should depend on the state set up by bootloaders
+> as less as possible, I think.
+The GEU hardware loads the shadow after reset. So YES, we don't need to
+rely on bootloader.
 
-If you believe none of the issues are legitimate, please reply to each
-issue of Medium severity or higher and explain why the AI is wrong.
-If any of them are legitimate and you plan to respin, please let patchwork
-know by including "pw-bot: cr" as a separate line at the end of your reply
-(one such reply per series is enough).
+--=20
+Troy Mitchell
 
-- [Medium] Possible ABBA deadlock between rtnl_mutex and the TX-timeout
-  work, added to the suspend path.
-- [Medium] The new RTNL section does not cover the netif_running() check
-  that decides whether to call emac_stop()/emac_open().
 
-Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but it is High
-  severity and involves the same work/RTNL pair.
-- [High] This problem wasn't introduced by this patch, but it is High
-  severity and sits in the function the patch modifies.
+--54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d
+Content-Type: application/pgp-signature; name="signature.asc"
 
---
+-----BEGIN PGP SIGNATURE-----
 
-net: spacemit: Hold RTNL lock in emac_resume() and emac_suspend()
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavHkhSEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9AggD+Mnv5Zg61NgXz
+ZDjIUJwrW/PSgOH3CWNzSHDOpq+DrYUBAOfObntacDDKXGuGn1wmRp6Qp8QY8cAv
+pn30xGwgyhMG
+=ZrI5
+-----END PGP SIGNATURE-----
 
-This patch takes rtnl_lock() around the emac_open() call in emac_resume()
-and around the emac_stop() call in emac_suspend(). The aim is to silence
-a lockdep "suspicious RCU usage" warning from phy_disconnect(), which
-reads a pointer with rtnl_dereference().
-
-> diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-> index 71a80838bffd0..aca25a9e1e9ef 100644
-> --- a/drivers/net/ethernet/spacemit/k1_emac.c
-> +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -2033,7 +2033,10 @@ static int emac_resume(struct device *dev)
->  	if (!netif_running(ndev))
->  		return 0;
->  
-> +	rtnl_lock();
->  	ret = emac_open(ndev);
-> +	rtnl_unlock();
-> +
->  	if (ret) {
->  		clk_disable_unprepare(priv->bus_clk);
->  		return ret;
-
-[Severity: High]
-This is a pre-existing issue, not one introduced by this patch. It sits
-in the function being changed, though. What state is the device left
-in when emac_open() fails here?
-
-By this point the unwind in emac_open() has freed the TX/RX rings. One
-of two things has also happened:
-
-- emac_up() failed, and its error path called phy_disconnect() and
-  pm_runtime_put_sync().
-- emac_phy_connect() failed, and ndev->phydev is still NULL from the
-  previous suspend.
-
-The IRQ is not requested and NAPI is disabled. emac_resume() then gates
-bus_clk and returns, but __LINK_STATE_START and IFF_UP are still set.
-
-The next "ip link set down", unregister, or emac_suspend() (which sees
-netif_running() as true) would then run:
-
-emac_stop()
-  emac_down()
-    phy_disconnect(ndev->phydev)   <- phydev is NULL
-      phy_is_started(phydev)       <- dereferences phydev->state
-
-Can this oops?
-
-Past that point, emac_down() would:
-
-- write MAC registers with the bus clock gated
-- call free_irq() on an IRQ that is not requested
-- call napi_disable() on a NAPI that is already disabled
-- underflow the runtime PM usage count
-
-Also, emac_clean_rx_desc_ring() would index the NULL rx_desc_buf, and
-emac_suspend() would call clk_disable_unprepare(priv->bus_clk) a second
-time.
-
-Separately, emac_alloc_tx_resources() and emac_alloc_rx_resources()
-kfree() the buffer array when dma_alloc_coherent() fails, but they do
-not set the pointer to NULL:
-
-	if (!tx_ring->desc_addr) {
-		kfree(tx_ring->tx_desc_buf);
-		return -ENOMEM;
-	}
-
-Could a later teardown free tx_desc_buf (or rx_desc_buf) a second time
-through that stale pointer?
-
-> @@ -2056,7 +2059,9 @@ static int emac_suspend(struct device *dev)
->  		return 0;
->  	}
->  
-> +	rtnl_lock();
->  	emac_stop(ndev);
-> +	rtnl_unlock();
-
-[Severity: Medium]
-emac_suspend() checks netif_running() to decide whether to call
-emac_stop(). That check runs before rtnl_lock() and is not repeated
-under the lock:
-
-	if (!ndev || !netif_running(ndev)) {
-		clk_disable_unprepare(priv->bus_clk);
-		return 0;
-	}
-
-	rtnl_lock();
-	emac_stop(ndev);
-
-Can another RTNL holder close the device in between?
-
-Here is one example. The netdev is moved into a netns, and that netns
-is torn down as system sleep starts. cleanup_net runs on netns_wq,
-which is not freezable. It holds RTNL and calls dev_close(), which
-calls emac_stop().
-
-Meanwhile emac_suspend() has already seen netif_running() as true. It
-blocks in rtnl_lock(), then runs emac_stop() a second time. There,
-emac_down() calls phy_disconnect(ndev->phydev) with phydev already
-NULL, and phy_is_started() dereferences it.
-
-emac_resume() has the mirror case. It also tests netif_running() before
-rtnl_lock(), so it could call emac_open() on a device that was just
-closed. That would leak the rings, the IRQ and the PHY attach.
-
-Would it make sense to take rtnl_lock() before the netif_running()
-test, with netif_device_detach() / netif_device_attach() inside the
-same locked section?
-
-[Severity: Medium]
-Does holding RTNL here invert the lock order with tx_timeout_task?
-emac_stop()->emac_down() does:
-
-	cancel_work_sync(&priv->tx_timeout_task);
-
-and the work handler takes RTNL first:
-
-emac_tx_timeout_task() {
-	...
-	rtnl_lock();
-	...
-}
-
-emac_tx_timeout() queues the work with schedule_work(). That uses the
-system workqueue, which is not freezable, so the work can run during
-system suspend:
-
-CPU1 (worker)                      CPU2 (suspend)
-emac_tx_timeout_task()
-                                   emac_suspend()
-                                     rtnl_lock()
-  rtnl_lock()  <- blocks
-                                     emac_stop()
-                                       emac_down()
-                                         cancel_work_sync()
-                                           <- waits for CPU1
-
-cancel_work_sync() goes through __flush_work()->start_flush_work().
-That finds the executing worker with find_worker_executing_work() and
-waits on a barrier queued behind it.
-
-Can this hang suspend? Lockdep may also report a circular dependency
-between rtnl_mutex and the work's lockdep_map, which would swap one
-splat for another.
-
-The ndo_stop path (dev_close() under RTNL, then emac_stop()) already
-has this pattern. This patch adds it to the system sleep path too.
-
-Could the synchronous cancel be kept out of any RTNL-held section?
-Options include cancelling the work before taking RTNL, using
-rtnl_trylock() and requeueing in the work, or a disable_work() based
-scheme.
-
-[Severity: High]
-This isn't a bug introduced by this patch, but it involves the same
-work and RTNL pair. Can emac_tx_timeout_task() wait on itself?
-
-emac_tx_timeout_task()          <- running as priv->tx_timeout_task
-  rtnl_lock()
-  dev_close(ndev)
-    __dev_close_many()
-      emac_stop()               <- ndo_stop
-        emac_down()
-          cancel_work_sync(&priv->tx_timeout_task)
-
-At this point the work is executing, not queued. start_flush_work()
-finds the calling worker itself through find_worker_executing_work().
-It then inserts a barrier that can only run after the current work
-returns, so wait_for_completion() in __flush_work() never returns.
-
-Would every TX timeout recovery leave the worker stuck while holding
-rtnl_mutex? That would block every RTNL user. With this patch, the next
-emac_suspend() would also block forever in its new rtnl_lock().
-
--- 
-Sashiko AI review · https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261105123441.2524171-1-alitariq45892%40gmail.com
+--54f102bc4fad2f6519c1e85625df03a1f0d11fed53a9ec5e8b7d6b0e8a4d--
