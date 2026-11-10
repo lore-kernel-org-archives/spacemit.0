@@ -1,60 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.125.188.122
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794308221;
-	b=KvmsWCZoLGxDgPM/XtyoQmpYEV8fZ+48KCSB0PzY6O/e6Wj5Gww5PRRNBrfWCVtUoT7Y
-	 AnkPC4Gg1fTuZbNw4ZzRFC9/zRzjhzRNhd1Z7Z4FwQL42gw5bg8ogzq4PZVJqS+vQUP6x
-	 9HViHZ0TQv5psiShsFZrBQW5oQB3/94pc8ZtOTg0hhQpBzn6FXTmNu2DTevdqQzY+ViRw
-	 utXrcYDrc/Z1AVBGSsWnmcj1VkmXTqjMgEiQTqNWHDxhDneggruCPVBpyZxsTnQqiDvs5
-	 F4ZC4tQBECYzxPCj5wqYbUL9OPo+gw2vvDmvUyqaOed8giiS1+fZ7uRN/ShPi6MO17w==
+	t=1794314800;
+	b=15oxn9JcxMKdOpcP+7M/3VO3jmO8rKhTxHTfDtvxwr35b96sJXXjIFBFIPvPm2L+m0/S
+	 Ol2jSJvkGOC2HfObezouKaNa1xL6LXH5FU4m6dMAwyOqUCOT98SOMU/fUuTgiQ8GvySXH
+	 H5kffgkNuWul6bkhUKsjEDAh0FYJwCerUm7q57neFTGlJNEJrZCvfBOkSvVu/yvJBIxEi
+	 eY2VgpxhVAB2JclyQObqjsxkCGaE9m7++2IjmYI9oe7si38UcYtshi/0TFrqHmvGlTmAw
+	 WQWOhXSuAOD9fbl08hPIRzJk6PAH8SJWdfGzo4/iPZZ7lXqZBitCOTOWqczVh8t+FvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794308221;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=yYiBagOWcslaP5fFjDzsUoDb/X8ymLQTjZmMzDj0cQI=;
-	b=uD24ureKFbFTTH7dnXpmZvAWj3jbp4Vgb/9M5yqgFpFe+xQa6VYlPVWrK0znkgbnEFcu
-	 CwH4VJKSAznl4tOw0l51lmvOAW2dJq2fDYAIPSiPjFYBU88avkwKG1odFeLPf86Hsc80a
-	 LRKyBiCo9zjSao6l2S3C51LJ9pd16gnC8bUq64hiE1sEvHnkRwrRDPVfb/5PzrzHARozT
-	 E2Y/t4Rjz0MKbizbTmJNudoBF4BgfqwxEavIhA7fWhb7PrFP8NV5zVb04/qn0/OOCTWsr
-	 Bkt6KKW2BmkoelKp1aUVYf7NHT/9OcYkj+1QCNi99nBh1mQPGPtyxzRrj9lDOQBJoxw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794314800;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:
+	 X-Google-DKIM-Signature:X-Forwarded-Encrypted:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=3tf9Nhm3wEIZKlX+voEioL0VaJtWq62Gp0ZaFsQlRI4=;
+	b=Rl7bvxPxi+TpZIF7QJYlEttZ1lfNwJ11n49deHKtplCN0ri3jlVBAtHI7X5YHGSRQYhw
+	 XmZwWaG/Fq7i0tyGOdZ5gKqYUYBlFwbOk9GmQLP3i3of1m9mFTFgtG37OzTGKohZ5MpY9
+	 3Lh9ZvpbGc/3ShKqBKZUZ5sCKNlYsErALBJ5nfU9mk0IuLfM1S14hVxg8bsXrF6gK6W44
+	 AUmudxia/J6DTEHFMdkaNd+DMustqicIwzSK6qQBKwB33VDqz4n1W2PLp2CVfcRJpvhnu
+	 JDmcEDrFreJG4CxZkzi9Z36Em7ZK5Ta0bu8wsS6ivdejTR2n9Wdfk8DVUAlDv2Ucyzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PlEvOM2Y;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=canonical.com;
+	spf=pass smtp.mailfrom=canonical.com;
+	dkim=pass header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=TrICYwcA;
+	arc=none smtp.remote-ip=185.125.188.122
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280D9606A321;
-	Tue, 10 Nov 2026 10:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B300606A33C
+	for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 12:46:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B300606A33C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PlEvOM2Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ED41F008A2;
-	Tue, 10 Nov 2026 10:57:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794308220;
-	bh=yYiBagOWcslaP5fFjDzsUoDb/X8ymLQTjZmMzDj0cQI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PlEvOM2YRIZR+c3pFtg6FLYfZSD1LfYFaVgyGJ5nHhH/FmgpYnP+G+XWJnWlpsOvh
-	 aqYmcsjfoMohZAdVcOPGFh8Eh05u3fW+9cEIVNSV5dzqcc13iNevdsjP9Nfir86BYN
-	 2EYbj0xF3PbCK0noup/owF88hhPFTnEa7opHOTlzIg1YXSlDlWKD2fEfaKoZssnz9R
-	 Y/EIzp6M5CspnCMsl34DxT3LdhBZekEKRmKcUggCh6CP+s8tgltiiBUv63DLZgejXn
-	 f7RGmMpfMR2VdOJqk0+jgMRdVBHXFWUTZaSgbcxleaXfvzFIL2mhz2a5m6hD5bQCkr
-	 6rgexRC1hN18g==
-Date: Tue, 10 Nov 2026 10:56:58 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Iker Pedrosa <ikerpedrosam@gmail.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] pmdomain: spacemit: Add power domain driver
-Message-ID: <20261110105658-GKA2005@kernel.org>
-References: <20261108-04-k3-pm-support-v3-0-b9dc0857039b@kernel.org>
- <20261108-04-k3-pm-support-v3-2-b9dc0857039b@kernel.org>
- <DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com>
+	dkim=pass (4096-bit key, unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20251003 header.b=TrICYwcA
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com [209.85.128.70])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 1C0E740267
+	for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 12:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20251003; t=1794314791;
+	bh=3tf9Nhm3wEIZKlX+voEioL0VaJtWq62Gp0ZaFsQlRI4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type;
+	b=TrICYwcAYTtrym8vDSAPT2wgzAF6FWMVQILkGZ048uOL9bJbddoTVrQ+s2aIVhcwv
+	 /h9YG7JSJFBRaNN0DohhY/xSM8GMZ+4ZwvUI0jeuz027MjN4YhVbTyteeQBWTtNxlT
+	 PJpMAiWU2YLtuQp48TDReaMZS9XTSAMG8L316JWIZ1xxJvkMjEark3j8Zj9vIsM5ps
+	 EVfA7daemXnXcacplbEpxgZl0i+8lJ8p3RpFo024DSeM0rep3gsHuVc35cpqE6l467
+	 Dm3yasT5zTR8g+iva6PTrUi3L/rrVuxq8vuT9PfsVnXnlXsksyosjnEPLg18UUDQIZ
+	 KhzKLiHqZ6uuLSS0aHO+908AYOIOX4ae/fRS9qGw1RgQLoQqlnagxwVJePiVbtf+Ti
+	 /ujEoxzpXtCEIcJzPuyi9ReEvpSogfu9PViRDmCAVrW6ICd22KOgw87mOWQYMQhVf+
+	 64zB5k78FQbmaHlrHkzdhkDLxTcmcb7B/7Dpm0zRYXe4s413Z2v2KwGPm7vKmuGk56
+	 7UsGcDmRW0j/PxxS2A9V5rnXK/aJPuQhmRPb2egmrKw5eAt19nYA04nfieHyu+IRS8
+	 XpI+aYVPDXDqdWlXVwib9zs8A/jD8hbF3QiQBT4vvl29aQTFaTD8zPkPFqabWCE4Kc
+	 JRudUlc/u6TkibyO6nuWY578=
+Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-49febef74e3so13638915e9.0
+        for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 04:46:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794314790; x=1794919590;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=3tf9Nhm3wEIZKlX+voEioL0VaJtWq62Gp0ZaFsQlRI4=;
+        b=WWFaiIKuLiAw6GBiPLVfbtJKjjUI4GZedMGzwUDBMd+nLx1M+FfmMEa2kqKRWVwFzY
+         8OAfhd/0lX2U8ZbUui14EktAeXl38x+kT0cohTSuoXfigZ+f5U7dDvTL1eNIP4dBPlFI
+         f3HS/jQmMSgfuoacgGRDsFJ2Ehp8fa9iaaRezR2kfdKBk7ztNjGcSySVkaT1E3sX5dGi
+         MYaK9u04EwiT8Kn0FpnSsCnj2YNdz8u21bpDyGb7kP3D+p2BYjWmLi41KfXXpo8KIqFT
+         BrxfRV3A6G1zFB3GIitO1L4T8rh+fyJdT3iLB7LSLrd8n+J4UGDN3NVsF53BcsYDOq+n
+         lx7g==
+X-Forwarded-Encrypted: i=1; AL+hErGOqbZs08ocxH415sb/riS23f0HoYR9cpSnR/fvvmrpMtzm9QxVbojUUOrG3wp5WW5WRSK4f43nPw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/+by92zr9FUo2mVTjnP3rhWvh6a0Xa+/bmIzlgnmcnPQwCaYj+
+	Itb7DH8E2ZCRIr+huaECMijKQeJLU9sp/62shLBTXJf6k2THX1xYO3qSKyKkR7hPicLD/uLcmf7
+	cFTXK8ATzjL6/FZq+2Z7u/J9WXym6ooh3fI5JXxQ/Gv+Qt7S2RKfH9AXuTk0s0lNsY59PfiQtkz
+	fa
+X-Gm-Gg: AYBFou2wst8t5J9eSGgm26oVJnAb7vYzbYDf+mJ0TazHyEVrE4TqNVblt0LixWYHCD4
+	9mJzd82irGo6tA5BtJH00bggqw6Bhy9U+3d/cdXQvIo3F0Qo4IYIUD8z+805HzFoVjyabSxxOI1
+	8wpM3zJwcslvq684jhIO1Re3hSlFgj1ZZ/q0W0HwiKtkBvhddnEaFKqqaKyBvBF//c4PHTPsCGM
+	J/lW90ntQ9IVYIOlDDJuWQ3Cm74GtdybX6A9NzwfmWxFoJl+p44svdJSRXXtm2saRmVnoVTulON
+	cWtHSV4fK6QWmw4M45SO1miybTWtFGwmHNvjI79u1FlbRZU6EjNtf2c4VvCsx0NIZnesqZ8BeZa
+	Jq/oKc8SduU9Bi53q+OeZK8DDQhkN+8uH9OJny/c5Otd2T4BoSKPrXnZPJRmy709LONWplXpsoY
+	KPBA==
+X-Received: by 2002:a05:600c:870e:b0:49f:c5aa:9ef4 with SMTP id 5b1f17b1804b1-4ba0234267amr41310505e9.8.1794314790552;
+        Tue, 10 Nov 2026 04:46:30 -0800 (PST)
+X-Received: by 2002:a05:600c:870e:b0:49f:c5aa:9ef4 with SMTP id 5b1f17b1804b1-4ba0234267amr41310155e9.8.1794314790230;
+        Tue, 10 Nov 2026 04:46:30 -0800 (PST)
+Received: from ?IPV6:2001:67c:1560:8007::aac:cab2? ([2001:67c:1560:8007::aac:cab2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ba01fe9357sm71022925e9.9.2026.11.10.04.46.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2026 04:46:29 -0800 (PST)
+Message-ID: <fcd2fc41-5af8-4256-8296-a5435fdf41db@canonical.com>
+Date: Tue, 10 Nov 2026 13:46:28 +0100
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -64,99 +103,55 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 CoM260 IFX TQ support
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>,
+ Guodong Xu <docular.xu@gmail.com>, Yangyu Chen <cyy@cyyself.name>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com>
+ <20261105-k3-tq-dts-based-on-com260-v1-2-aa0b7714aed0@linux.spacemit.com>
+Content-Language: en-US
+From: Sarah Emery <sarah.emery@canonical.com>
+In-Reply-To: <20261105-k3-tq-dts-based-on-com260-v1-2-aa0b7714aed0@linux.spacemit.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 Hi Troy,
 
-On 07:12 Mon 09 Nov     , Troy Mitchell wrote:
-> Hi Yixun,
-> 
-> On Sun, 08 Nov 2026 10:36:02 +0000, Yixun Lan wrote:
-> > +config SPACEMIT_PM_DOMAINS
-> > +	tristate "PM Domain driver for SpacemiT SoC"
-> [...]
-> > +	  Say y to enable device power management through PM domains.
-> This is tristate now, so "Say Y or M".
-> 
-Ok, will update
+On 05/11/2026 09:29, Troy Mitchell wrote:
+> +	model = "SpacemiT K3 CoM260 IFX TQ";
+> +	compatible = "spacemit,k3-com260-ifx-tq", "spacemit,k3-com260", "spacemit,k3";
+> +
 
-> [...]
-> > +#include <linux/io.h>
-> > +#include <linux/err.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/pm_domain.h>
-> > +#include <linux/regmap.h>
-> > +#include <linux/auxiliary_bus.h>
-> io.h, err.h and platform_device.h are not used right now.
-> 
-Ok, will drop them
+On the CSB1-N10SPK3 server from Firefly, using 10 K3 nodes, reading the 
+TLV EEPROM of a node gives: "TLV 0x21 (Product Name): k3_com260_tq".
 
-> [...]
-> > +static int spacemit_pd_power_off(struct generic_pm_domain *domain)
-> [...]
-> > +	if (ret) {
-> > +		dev_err(&domain->dev, "failed to power off domain %s: %d\n",
-> > +			p->name, pd->pm_index);
-> > +		return -EBUSY;
-> > +	}
-> 
-> -EBUSY drops the -ETIMEDOUT returned by regmap_read_poll_timeout();
-> why not print ret and return it? Same in spacemit_pd_power_on().
-> 
-Yes, I think it's ok to propogate the err
+The latest EDK2 from SpacemiT derives the compatible from the TLV EEPROM 
+name, so EDK2 will report "spacemit, k3-com260-tq" as compatible. This 
+is by reading the EEPROM that was factory-flashed, so it is not 
+something easily fixed by a firmware update.
 
-> [...]
-> > +static bool spacemit_pm_is_off_state(struct spacemit_pmu *pmu,
-> > +				     struct spacemit_pm_domain *pd)
-> [...]
-> > +	return (reg & bit) ? false : true;
-> return !(reg & bit);
-> 
-Actually, there isn't much difference, your version is slightly short
+My understanding is that the nodes from CSB1-N10SPK3, the "K3 CoM260 TQ" 
+and the "K3 CoM260 IFX TQ" are all the same: a "K3 CoM260" module on a 
+"TQ" or "IFX TQ" carrier board.
 
-> [...]
-> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
-> > +{
-> > +	struct spacemit_pm_domain *pd;
-> > +	int i, ret;
-> > +
-> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
-> > +		if (!pmu->domains[i])
-> > +			continue;
-> > +
-> > +		pd = to_spacemit_pd(pmu->domains[i]);
-> > +		ret = pm_genpd_remove(pmu->domains[i]);
-> > +		if (ret)
-> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
-> > +				pd->param->name, ret);
-> > +	}
-> > +}
-> [...]
-> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
-> > +{
-> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
-> > +	struct device *dev = &adev->dev;
-> > +
-> > +	of_genpd_del_provider(dev->of_node);
-> > +	spacemit_pm_domain_cleanup(pmu);
-> > +}
-> pm_genpd_remove() fails with -EBUSY while a consumer is still attached,
-> but pd is freed by devres anyway. Set suppress_bind_attrs like most
-> pmdomain drivers?
-> 
+Is there two different carrier boards name "TQ" and "IFX TQ"? Or is it 
+just the same thing, called differently in this patch and in the EEPROM?
 
-No, I won't add suppress_bind_attrs
+I've seen EDK2 referencing both configurations ("TQ" and "IFX TQ").
 
-As I'm also aware of this problem, but intend to address it in a different
-way, and should send a patch in another separate thread..
+I'm not sure how devices out there are referencing themselves. But if it 
+is in fact one device and the EEPROM calls it "k3-com260-tq", this patch 
+will not work for device-tree matching.
 
-In my opinion, Adding "suppress_bind_attrs = true" will only mitigate
-the problem, in the case of this driver, it will still trigger a problem
-while unloading the driver with rmmod command if built as kernel module,
-consumer side won't get notification with the event. Ideally the device link
-machanism should solve this, currently I'm working on a patch for this..
+What do you think? Can you clarify the situation?
 
--- 
-Yixun Lan (dlan)
+Many thanks,
+
+Sarah
+
