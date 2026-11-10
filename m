@@ -1,55 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794300324;
-	b=iGtvSR/8A7sqWIos9AuK1VjE9VPQ8gyZu8u05Izv2HrHZQclKMNRMy43hnIcEOdkX5su
-	 NnAX4xcjUbj4hCXuGNfBmQx5WyYmpchC0qdZdr1595CByf1J9KfNZSsI+hPpyg0CEWZ5W
-	 r4UR5BpsGe+XMWwquDFFkap5QCITt8F+gl8OoqUm1fw0nGQPfA1ede+8Xe3BtbbcFLefb
-	 o7f8g85LimKmLr+fkwCRnfeWuuUrtcQnMx/R2UZnmhAJ3XzeRhgQWBOB0JzXfwd+MBNSl
-	 oYQYW/uaBiKSiQms6cjqBh4IxkUJnEmofO6mBlqjgMXdDsRUQQ9m8+ElCfY/AtVwKiw==
+	t=1794308221;
+	b=KvmsWCZoLGxDgPM/XtyoQmpYEV8fZ+48KCSB0PzY6O/e6Wj5Gww5PRRNBrfWCVtUoT7Y
+	 AnkPC4Gg1fTuZbNw4ZzRFC9/zRzjhzRNhd1Z7Z4FwQL42gw5bg8ogzq4PZVJqS+vQUP6x
+	 9HViHZ0TQv5psiShsFZrBQW5oQB3/94pc8ZtOTg0hhQpBzn6FXTmNu2DTevdqQzY+ViRw
+	 utXrcYDrc/Z1AVBGSsWnmcj1VkmXTqjMgEiQTqNWHDxhDneggruCPVBpyZxsTnQqiDvs5
+	 F4ZC4tQBECYzxPCj5wqYbUL9OPo+gw2vvDmvUyqaOed8giiS1+fZ7uRN/ShPi6MO17w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794300324;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 Content-Transfer-Encoding:In-Reply-To:References:X-QQ-SENDSIZE:
-	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=sUto69GneM3/21N1G4JPtL94JDaDhP2/KjnoIeniECk=;
-	b=Mqr+i4K1xsEp9fiGYG1DWtb3fBIWmeU3zHQ5taI/VDDIeK5VXIv67BBib3OCIkktLqxw
-	 KhOqbMkRBqroLqt3HnXedIzMtVnAi3jb3xfSWguWHUkPs+D43veZZ8TEZeNOlNTtxx7o4
-	 ijpk2pjMjlMZQDxkyUWRVgJIM3LIzFeJs7OYIfzw8KMpuZSMJYPmEE32lMompO1RajL2L
-	 xMFdZRggEymmXbs2hXeojWI1o3R0dVurSlE5w0aFtTOXwqBwTwF1yu7k0lI9AlCBcTFYI
-	 hUw5AbbMdDsPmVrG2iNK+xkCrXEfzCot8lswqnb/zDatSGhiBWyb7jpUOEpex3t5tNg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794308221;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=yYiBagOWcslaP5fFjDzsUoDb/X8ymLQTjZmMzDj0cQI=;
+	b=uD24ureKFbFTTH7dnXpmZvAWj3jbp4Vgb/9M5yqgFpFe+xQa6VYlPVWrK0znkgbnEFcu
+	 CwH4VJKSAznl4tOw0l51lmvOAW2dJq2fDYAIPSiPjFYBU88avkwKG1odFeLPf86Hsc80a
+	 LRKyBiCo9zjSao6l2S3C51LJ9pd16gnC8bUq64hiE1sEvHnkRwrRDPVfb/5PzrzHARozT
+	 E2Y/t4Rjz0MKbizbTmJNudoBF4BgfqwxEavIhA7fWhb7PrFP8NV5zVb04/qn0/OOCTWsr
+	 Bkt6KKW2BmkoelKp1aUVYf7NHT/9OcYkj+1QCNi99nBh1mQPGPtyxzRrj9lDOQBJoxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Pmrp1zLQ;
-	arc=none smtp.remote-ip=54.207.19.206
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PlEvOM2Y;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374C2606A32A
-	for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 08:45:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 374C2606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280D9606A321;
+	Tue, 10 Nov 2026 10:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Pmrp1zLQ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794300281;
-	bh=sUto69GneM3/21N1G4JPtL94JDaDhP2/KjnoIeniECk=;
-	h=Mime-Version:Date:Message-Id:From:To:Subject;
-	b=Pmrp1zLQtx/5nIr+Y5iQ2mlQeMA1CYwGweLyEYJAh7qy5//x4lI597D4KpAhYE8R9
-	 JYWJDdpP5cWGd++UMpi1H7c4UCla7UMwVQRmY4nP/MysInDHirSrCzz2nWdqGU1Hw9
-	 Z16dzNPqvJF7dDxht4xbY3dBQJyEr70QYZWWPM18=
-X-QQ-mid: esmtpsz16t1794300279t7e784a46
-X-QQ-Originating-IP: RZyIr1RkrL/Ze4oQ+7VPt95YCi+emVuRwyceRtOz8jI=
-Received: from = ( [183.48.247.17])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 10 Nov 2026 16:44:37 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8600440983646492188
-EX-QQ-RecipientCnt: 19
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PlEvOM2Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82ED41F008A2;
+	Tue, 10 Nov 2026 10:57:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794308220;
+	bh=yYiBagOWcslaP5fFjDzsUoDb/X8ymLQTjZmMzDj0cQI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=PlEvOM2YRIZR+c3pFtg6FLYfZSD1LfYFaVgyGJ5nHhH/FmgpYnP+G+XWJnWlpsOvh
+	 aqYmcsjfoMohZAdVcOPGFh8Eh05u3fW+9cEIVNSV5dzqcc13iNevdsjP9Nfir86BYN
+	 2EYbj0xF3PbCK0noup/owF88hhPFTnEa7opHOTlzIg1YXSlDlWKD2fEfaKoZssnz9R
+	 Y/EIzp6M5CspnCMsl34DxT3LdhBZekEKRmKcUggCh6CP+s8tgltiiBUv63DLZgejXn
+	 f7RGmMpfMR2VdOJqk0+jgMRdVBHXFWUTZaSgbcxleaXfvzFIL2mhz2a5m6hD5bQCkr
+	 6rgexRC1hN18g==
+Date: Tue, 10 Nov 2026 10:56:58 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulfh@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Iker Pedrosa <ikerpedrosam@gmail.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] pmdomain: spacemit: Add power domain driver
+Message-ID: <20261110105658-GKA2005@kernel.org>
+References: <20261108-04-k3-pm-support-v3-0-b9dc0857039b@kernel.org>
+ <20261108-04-k3-pm-support-v3-2-b9dc0857039b@kernel.org>
+ <DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,107 +63,100 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=18f11060a803f47ff361742ba8691daff4c6fbfbe03e1b9c377f4db00c26;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 10 Nov 2026 08:44:36 +0000
-Message-Id: <DMRED3CXA5IJ.3FLQ7UFUTN0R9@linux.spacemit.com>
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Mah=C3=A9?= <frederic.mahe@cirad.fr>
-Cc: "Marcel Holtmann" <marcel@holtmann.org>, "Luiz Augusto von Dentz"
- <luiz.dentz@gmail.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Yixun Lan" <dlan@kernel.org>, "Vasily Khoruzhick" <anarsoul@gmail.com>,
- "Alistair Francis" <alistair@alistair23.me>, "Paul Walmsley"
- <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
- <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, <linux-bluetooth@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: enable Bluetooth on BPI-F3
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20261110074607.363918-3-frederic.mahe@cirad.fr>
-References: <20261110074607.363918-1-frederic.mahe@cirad.fr>
-	<20261110074607.363918-3-frederic.mahe@cirad.fr>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MShfLn39PbN2APgg9dvNoZD0mnyzgy9+pWI3O+qvUle3b+72Hb0DW5jh
-	+1gCDbjd+J6Io1XLGyUL13hxdi0ki1gq0pJ+KDFHfB/PxOpOwYu8ItIbIcCW+oH/XS3N/8S
-	3frioK4ctTvZZ1UX8eLcegFjaLe/mfvqvycD1gu8jSaRR2aFiO5BRdO9lzjxgHppMC+uAD7
-	ziP8QK5WcvnB7tTI3bvuspACf89XB65k2y7PIR1pThs9AkArppm5KfHtyBtVclpsdmmuDsU
-	VfyfZ+CrsJ5HFDQSvsOwGPr0SC7Cx8kD5cirKakzwiqSbJJz/bXQC7S1ux7M6IYiJDppUXG
-	ANqtTgZ4YadObYvv31A9sYRFxhk+xkksh1ydebGUTEx5tCTACBQfky8uSnAk4g4mb3ECQ7Z
-	Wfcn+blF/AKUNaMCwoltRdF4AVbMwLdC+Y9A0czXxiroI062FNF25SVEzkburqCPIZ0rb1Y
-	SDvnNcQXsZfqEcJfQZqNsofkskEnK0+QA9BoY5PXDDnQ2M1gJIxz6rz6hy3MNJ9IdxIqIVt
-	qvtjCNE5yX45Y5n1adxttOhK0tdUexuAyG5kuwwKqNOiNWEj9UCzSfvKHOh4VBrGwaBK45w
-	JJc0NSCtAriyyptUxrqLDP2f7imKpUM87cTaRcYv3hpFELUtMh5lFYzom+Os9jSh7yPahpC
-	HUz4apRyc+iXTQXIWNZX5dwahwEi5dUN2OzsuSP+1uWt0tIDSnOXO6q3b+64VEvbjUVj3fW
-	0Ukh+Fl7gJ6EBPBGyklAxHR47iHcGAwQb0ICJvb9+FKk9wpOGy9zJ7SkugIabFPSxaZCIpO
-	yjY7F7HylA1FHqWzHNGlo44pMZXU6yETsISwUYavcdmGFtI3gvaAygBRxgOm/t9fCTenvUw
-	zJw6SMh1JcNDXBKxlkTJFbV7B0wdAT5yeclqbUebsCH6Gg1y7KwgUIvumPMGAvxL/p4p3n4
-	5iGR/MjDrnIEsmc1kLO7ofIJbFK878qTg+DGkYl7oOEXlktShgdkvraqlyL+Vm7P1ltc1XP
-	qg8khqNHQFfsQQaP5ApNt4X6v0rK51vqbawxm53SB0KH1rquATxoPaiZmCIwiDZbMRWh7jm
-	mpasRtzGCriChpZJ5QTUcw=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com>
 
---18f11060a803f47ff361742ba8691daff4c6fbfbe03e1b9c377f4db00c26
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Troy,
 
-On Tue, 10 Nov 2026 08:46:07 +0100, Fr=C3=A9d=C3=A9ric Mah=C3=A9 wrote:
-> The BPI-F3 has an RTL8852BS module whose Bluetooth part is on UART2,
-> with hardware flow control. GPIO 63 powers Bluetooth on and GPIO 64
-> is the device wake line.
->
-> The firmware config switches the UART to 1.5 Mbaud, so take the UART2
-> clock from the 48 MHz slow_uart2 clock.
-slow_uart2 is a programmable divider (MPMU_SUCCR_1), not a fixed
-48 MHz clock. Its rate is whatever the bootloader left there.
+On 07:12 Mon 09 Nov     , Troy Mitchell wrote:
+> Hi Yixun,
+> 
+> On Sun, 08 Nov 2026 10:36:02 +0000, Yixun Lan wrote:
+> > +config SPACEMIT_PM_DOMAINS
+> > +	tristate "PM Domain driver for SpacemiT SoC"
+> [...]
+> > +	  Say y to enable device power management through PM domains.
+> This is tristate now, so "Say Y or M".
+> 
+Ok, will update
 
-[...]
-> diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv=
-/boot/dts/spacemit/k1-bananapi-f3.dts
-> index 58035d886..280adc9dc 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> +++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-> @@ -383,6 +383,21 @@ &uart0 {
->  	status =3D "okay";
->  };
-> =20
-> +&uart2 {
-> +	assigned-clocks =3D <&syscon_apbc CLK_UART2>;
-> +	assigned-clock-parents =3D <&syscon_mpmu CLK_SLOW_UART2>;
-Please add CLK_SLOW_UART2 to assigned-clocks and set it explicitly:
+> [...]
+> > +#include <linux/io.h>
+> > +#include <linux/err.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/pm_domain.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/auxiliary_bus.h>
+> io.h, err.h and platform_device.h are not used right now.
+> 
+Ok, will drop them
 
-	assigned-clock-rates =3D <0>, <48000000>;
+> [...]
+> > +static int spacemit_pd_power_off(struct generic_pm_domain *domain)
+> [...]
+> > +	if (ret) {
+> > +		dev_err(&domain->dev, "failed to power off domain %s: %d\n",
+> > +			p->name, pd->pm_index);
+> > +		return -EBUSY;
+> > +	}
+> 
+> -EBUSY drops the -ETIMEDOUT returned by regmap_read_poll_timeout();
+> why not print ret and return it? Same in spacemit_pd_power_on().
+> 
+Yes, I think it's ok to propogate the err
 
-> +	pinctrl-names =3D "default";
-> +	pinctrl-0 =3D <&uart2_0_cfg>, <&uart2_0_cts_rts_cfg>;
-> +	uart-has-rtscts;
-> +	status =3D "okay";
-> +
-> +	bluetooth {
-> +		compatible =3D "realtek,rtl8852bs-bt", "realtek,rtl8822cs-bt";
-> +		enable-gpios =3D <&gpio K1_GPIO(63) GPIO_ACTIVE_HIGH>;
-> +		device-wake-gpios =3D <&gpio K1_GPIO(64) GPIO_ACTIVE_HIGH>;
-> +	};
-> +};
+> [...]
+> > +static bool spacemit_pm_is_off_state(struct spacemit_pmu *pmu,
+> > +				     struct spacemit_pm_domain *pd)
+> [...]
+> > +	return (reg & bit) ? false : true;
+> return !(reg & bit);
+> 
+Actually, there isn't much difference, your version is slightly short
 
---=20
-Troy Mitchell
+> [...]
+> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
+> > +		if (!pmu->domains[i])
+> > +			continue;
+> > +
+> > +		pd = to_spacemit_pd(pmu->domains[i]);
+> > +		ret = pm_genpd_remove(pmu->domains[i]);
+> > +		if (ret)
+> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
+> > +				pd->param->name, ret);
+> > +	}
+> > +}
+> [...]
+> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
+> > +{
+> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
+> > +	struct device *dev = &adev->dev;
+> > +
+> > +	of_genpd_del_provider(dev->of_node);
+> > +	spacemit_pm_domain_cleanup(pmu);
+> > +}
+> pm_genpd_remove() fails with -EBUSY while a consumer is still attached,
+> but pd is freed by devres anyway. Set suppress_bind_attrs like most
+> pmdomain drivers?
+> 
 
---18f11060a803f47ff361742ba8691daff4c6fbfbe03e1b9c377f4db00c26
-Content-Type: application/pgp-signature; name="signature.asc"
+No, I won't add suppress_bind_attrs
 
------BEGIN PGP SIGNATURE-----
+As I'm also aware of this problem, but intend to address it in a different
+way, and should send a patch in another separate thread..
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavLZdCEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9shwD/ctzYIBUZsuLe
-dMFLfduAxPc7n4ySob06tzWvF4yFEtYBAO20Qqsvk4E1YLuWVcrPvgvy6Z/0EImi
-egn5XeWhGVkK
-=3dgM
------END PGP SIGNATURE-----
+In my opinion, Adding "suppress_bind_attrs = true" will only mitigate
+the problem, in the case of this driver, it will still trigger a problem
+while unloading the driver with rmmod command if built as kernel module,
+consumer side won't get notification with the event. Ideally the device link
+machanism should solve this, currently I'm working on a patch for this..
 
---18f11060a803f47ff361742ba8691daff4c6fbfbe03e1b9c377f4db00c26--
+-- 
+Yixun Lan (dlan)
