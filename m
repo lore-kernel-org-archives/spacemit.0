@@ -1,99 +1,80 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.54
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794339049;
-	b=OyJgr9RmOmXnPWg0huaYISHStkDcgcr/VOWiOB3LKZU7JoOLLjT7lcdrpWmo+J4yy/xn
-	 f/Ep423rEtimtP/4z4BLaapGua3H0tEBUj6r7TvpF0MzVQ5ft4uR5AD8HaYwJ3taF0DD/
-	 Yx0oCie5cyfieSvwqtWKlTQ+2r2hoN8TLNjzisd6sPvfZI42CBTK03wAZ+YUlP/6iq3wS
-	 XxctUw0GMY8m++kxN/APmcq+VVW0r2Qvomdnt+Eu5XB5Fw6Bv8f6d3M/JnPvXPVbbTg1U
-	 Bfw396sWBEs6qVXPH3628KBMD5TrXEcxFHhT/5gloWYm//tVHW7sLXPRuIrKxZrrO6A==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794339049;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=bxDwPFOXkyRkRlbGoiQb8iudRyw26lOximDKyM7mel4=;
-	b=ZDkDfz60Tq22qDY+7S+zbAl+wzi4MaIY7OzBhbzM6AEhFN3eNQzw8YWpks75jd/OvdLY
-	 5OmeeqDplPyDHTXPyVAAm4ezrrOf9TGCuqFVyNrQGP4z7nh1OFzpuZUw4OxSUPu3NwZmI
-	 38cVFJxuSXFivxlADv58fjUqsHyICNN1hQCvV5Yfp0BJn7xP1hk23BDOYSvRBdtkWZWmy
-	 2lDnGjqAiiwTQSlhEnPBlRowe8z7R1PH5OrF5QIxORKdJBSiGW4nRhrrMzRltXxsRwkDo
-	 7Zg4qzdWiDUrQHkW9EHCHoWFFjVpr6DGS2xpNBXN9gZOx+PeEhr3CqdchbiR5HbxJuA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S+rojFST;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.54
-Received: from mail-yx1-f54.google.com (mail-yx1-f54.google.com [74.125.224.54])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794343755;
+	b=DU2qAF0G8BbEqoITnboQvZSZj5JB5/18L7VOr7wy7VHo/D7ixt1TgYAnWEHVRJ6V3Aqq
+	 gRyBsQKfjtj3SjOvQvMlwhghse1U4WrcgXyVNp7aJa5jw5i6gaaoo6Z74DHwBplJT4GLl
+	 bHlKziK2308bjn/0h8Nq/Elki0MSdonG0VKPsyzxGgdZgw76C4WNsfj2+nsqy49ebogDm
+	 VABVYldRgiTp2HC5fKPPqpqU24pzOSeV9zPWNesKIsz3sRsdWExPt9T1nrsiUphLaXxbr
+	 e5w0TLmkQB3OrMFuZh6AeT9IZAY8e2qeTD+U9IPKO3HKmkGpTZ5T8ea6UurZZfRLbrQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794343755;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=Bf/AaZlKXJsIZfpfcnPrYCQ8TrA8wpK1qNvneo+qbhA=;
+	b=wvMcxkKj2SeVUqhoewku7ubUmoSi1xcjinl4RnMEep2r9HwmLB+qIOpvs4VVottk0QbH
+	 ecV8KlXugSlde4rpB0fm2NLl5zYyDMIZPrGZoN/pzFrZC37zzle1jUpxz0C/kCb5Vg9ho
+	 sTey5y1nbe0pDeQOiz9IbrxuJEYkcg9V0abat7a5FdoYbJYfJzjetfoUjsrx2GdC8Rgwf
+	 8pPWY24/726Sw6H+rEffTtk4xMiiRFdVJrxwkEOr0kHDVPe/JXVjT3YZ5NfYEUwt0j74W
+	 I6WqFrsFEzDTyCwsipZibXigwAzyDfYAooxvms8VyYyVllB2JjEVY87xrV6Ek6gfmPA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=pmYBiPny;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABE9606A33C
-	for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 19:30:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9ABE9606A33C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4130606A31C;
+	Tue, 10 Nov 2026 20:49:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C4130606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=S+rojFST
-Received: by mail-yx1-f54.google.com with SMTP id 956f58d0204a3-67be5d0e9cbso1756267d50.3
-        for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 11:30:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794339047; cv=none;
-        d=google.com; s=arc-20260327;
-        b=MTcxsRzYlzv6H+SeJ229HQ8c3lAEEAbAz4RY4lwQQyKJcgvA6k+3cF9EVOkIazNgk5
-         WwiqniLkNYWl1Fjxfhp0fCASRk2YmSRzWKQ6JLvsPo5y9pv7MCqGrVfb2RIzkD366oKG
-         nD0lYwEjvn0h+RqJukjQN8t0rg5XjxUn3/DB8sRoh47sYqXTHlwzrWk6C5/6oukSiDCB
-         OYEetZaOq7Ara1YsjH+WdSpUeOk1y/F6unYXadfAyKwZRPcu9r+Dkzs3RskQlmk3ViJI
-         2PCdzknge0+djB2uBLWm+fxpbrJyuexEkN9Pe7uXL/pHKyjb86k7SPDhR2Do5SDqW7YX
-         ZhHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=bxDwPFOXkyRkRlbGoiQb8iudRyw26lOximDKyM7mel4=;
-        fh=iwDjuAaRo0ysgqQwnvSbg0zW8tNh+JPLrrXuG3WpdQg=;
-        b=UmqlItJSprlBWQSbB6K4eSRAlV23DcnrjyyBKJfzbBrlCchE+8rAlMpY7xifrSJ9s4
-         ZvHHSfBVgSrfRFi+SwyB9e7g9wAxR6rqvGBhlpuqWHpVLL64yrTiAIAd5EIb5e/TXbhm
-         DMeeazR7S2a4ZV6URI7viVlS2wtM9I+Cq/p9gz7PyMU5yoDd5NIRrOstNGzoULGgBRne
-         ibmHKHpoZbK9jNf1m/lir8/mF84lCyc4KFHmDMVmf6i3PD+jqxsjgFe24ShRZCuBTFZW
-         uEKpxr7cjroHXdqxC41EeA1tMTgBGhBIEhdD/GgzVPl5PjfNFi9nvX71+5sldRIF6ZDf
-         yXGg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794339047; x=1794943847; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bxDwPFOXkyRkRlbGoiQb8iudRyw26lOximDKyM7mel4=;
-        b=S+rojFSTLhi+BQqWTE+E7g4JBsustYFex7/5n2hKwBXDAoQlrWtKcxyVgpvAJDn+fD
-         Pkxy8lEI/Ruha4985Gobwv2hGfLH9AVR1paUqk6s36K3AwLXtj2LDiMBajVIln5bAk4k
-         qjWmPt3NyUGpVgSjRqTA2+fgqs8t7mqo1bX6x/WtT7lYCSiwEm2LLIdoO4VcMj343KZ1
-         eqrX2a4Gr/bXfisnYbfJ5/vleBwnI8NYYloAVZVa6aLUOM2k6XV+p3Y5U6joPA89yue3
-         yQvTxi3jhhGEysnYiBOVIgwqvVtWteKdm9wahaJ0QbCB/a6pHf4Y7ri5Qi9hyCHCiRUb
-         657w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794339047; x=1794943847;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=bxDwPFOXkyRkRlbGoiQb8iudRyw26lOximDKyM7mel4=;
-        b=ahbScntvwda3kXKcWrPZG+RAav9hGyGlXHv2slPodCi21uy9PusPlsff0W4WwGJHGs
-         6zYaMIue47oschRofDS65GPxv46xYf7BvhvivpO48Bb2LV7cD/LNSufLSsd5IWQ9qEO4
-         es185xR2FbV3cAZUSqtu1jPhFmPMtoEcaXUhdUvowYXa0eD6wkKl+eWFc4voOK07Of6w
-         hnzSBhND1GPrOkQwyyns2YEBWtgt0RC8Q3Wj6NltL+Xj40LWhhv1rOKD40IUc6bKYcmm
-         g5rrN06Ic8wPn8cYWgjYjpP9HcIPeC0oDWvmI+PaE5Py1UcYqgNTd/3eCsMXklRf9wzi
-         fukQ==
-X-Forwarded-Encrypted: i=1; AL+hErGyypj3nIvCVAiL/DjdhTRKUHP7IJRu/9x0o0lB4+zrzfdmRID4He6yW98LmP3vC0EGiOrwYImUEA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8oKpeaYZRiT/lgO/qWrCdVwO53Sgwe4oUZNo0qf6OBSnNFLFGw
-	kPILIb1a1SHrt2hGmVMImVsaXdu6HagUKAPpnOpGDRrJqniom8fgxdtibWOHrPzHwDAowuUeKna
-	L9Q9kDK0z31J/FODEgDghpGtBApPv2XY=
-X-Gm-Gg: AYBFou1jwnXPFV29ldM25v5wQDhk5fIuyH+P9DKxlVk4H5iptZqlC6Nhi04sXNxwrA/
-	VAhp+wde6inrytHSGV8XrlcZDfircknR/cEFOweJ6/fVBARWJ0Ry37qRIx+gzm0JvzZaDlRJGo2
-	dxoal5ELryd4Tf/JnOjJFzMGmsdfaLYZEPh01khWN+bKMgXeBjd6mWeD47x/Q8akB/cstCX9jWP
-	SykayXnx1ZoEA0ZSMW+XCKYjmSpBkzStPrNy/2S7lrGmDVqxKblTiDjenMFf5mlYyNzWkArtviT
-	gtbKg8hD7LOe3D7v4joFYdyck8/UrKmmQbWlrmYSw8usTC7OVhIX7w5fZyAeoGLvRew/I/C9Mb6
-	4h+cei/zZqAVyKfK7ZbCaDxGLcHN/qfnFUTywwg==
-X-Received: by 2002:a05:690e:43c1:b0:67c:2804:fa9a with SMTP id
- 956f58d0204a3-67c67fd7c9emr126041d50.36.1794339047361; Tue, 10 Nov 2026
- 11:30:47 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=pmYBiPny
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=Bf/AaZlKXJsIZfpfcnPrYCQ8TrA8wpK1qNvneo+qbhA=; b=pmYBiPnySBBL4gRZjkA7D5oEG4
+	qsoLjT/oqrSpb2nB1K2BiwI7t+BYONzCkNvW/vYMaSImd9sOQHenUmUl4En53uLq8OhLPUfRFmWSK
+	ZiBhdv8Ihhfe4SUK1fnnM4aXnxQWIltfmsqdgMkzFVufirT+q6Tk6DYT6K4QIqZ1O35exzSFfq+dJ
+	iHhsnArmCOxOFTmplXA/boQc8H2a8T5+C4dTSCxPTcp7M8a7qYwfRnOT0wvIufmdXGVHTJI2lYsz/
+	xaqYynG2gonG3JUWoCGzcJDqmHWPHjYrzAV+HVzCG4Lxw9g/OSxqgl8/iKFqeguAmrwPlWUpyxeis
+	/Wvb8Oxw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xQsm8-00000006IgS-0eMv;
+	Tue, 10 Nov 2026 21:49:04 +0100
+Date: Tue, 10 Nov 2026 21:49:02 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Anand Moon <linux.amoon@gmail.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+	Alex Elder <elder@riscstar.com>
+Subject: Re: [PATCH v1 1/2] i2c: spacemit: Avoid sleeping during bus reset in
+ atomic context
+Message-ID: <avODPs8yytWCMxn3@aurel32.net>
+Mail-Followup-To: Anand Moon <linux.amoon@gmail.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>,
+	Alex Elder <elder@riscstar.com>
+References: <20261110061429.2036-1-linux.amoon@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -103,27 +84,47 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261015-orangepi-gpu-v1-0-03566a615660@gmail.com>
-In-Reply-To: <20261015-orangepi-gpu-v1-0-03566a615660@gmail.com>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Tue, 10 Nov 2026 20:29:00 +0100
-X-Gm-Features: AclHuK-V5XriYQc7jPlMOpsvH2O8V3xAiSzCm-87ylsSLg9H0W8yUGZ1h1oG_o8
-Message-ID: <CABdCQ=N8afBsoZcTA7He3FOR9D2K-yieb9i4cAa=WksjoHm5aQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/2] riscv: dts: spacemit: Enable PowerVR GPU on
- OrangePi RV2
-To: Alessio Belle <alessio.belle@imgtec.com>, 
-	Luigi Santivetti <luigi.santivetti@imgtec.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261110061429.2036-1-linux.amoon@gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi all,
+On 2026-11-10 11:44, Anand Moon wrote:
+> The spacemit_i2c_conditionally_reset_bus() function uses usleep_range()
+> to wait after triggering a bus reset request. However, this function can
+> be invoked during atomic I2C transfers (such as power-off or restart
+> handlers running in atomic notifier chains), where sleeping is illegal.
+> 
+> Replace the sleep operation with the driver's internal helper,
+> spacemit_i2c_delay(), which conditionally uses udelay() when running in
+> an atomic context, avoiding "scheduling while atomic" bugs.
+> 
+> Assisted-by: LLM
+> Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Cc: Alex Elder <elder@riscstar.com>
+> Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> ---
+>  drivers/i2c/busses/i2c-k1.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
+> index ff32876e24d3..f4b21d7efaaf 100644
+> --- a/drivers/i2c/busses/i2c-k1.c
+> +++ b/drivers/i2c/busses/i2c-k1.c
+> @@ -332,7 +332,7 @@ static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
+>  		writel(FIELD_PREP(SPACEMIT_RCR_FIELD_RST_CYC, 1),
+>  		       i2c->base + SPACEMIT_IRCR);
+>  		writel(SPACEMIT_CR_RSTREQ, i2c->base + SPACEMIT_ICR);
+> -		usleep_range(20, 30);
+> +		spacemit_i2c_delay(i2c, 20);
+>  	}
+>  
+>  	/* check sda again here */
+> 
+> base-commit: b3dfbde62cf1981c4638939c159dfd087b7a72e9
 
-A friendly ping on this RFC series. Any feedback or thoughts on this
-approach would be greatly appreciated.
+Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
