@@ -1,88 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794390630;
-	b=G/qT6QDVD2oB94WhXLnzCkICltWX+N9X9ar27rHnOMTZaKTD23sdMaYSx1haz/WXe96g
-	 hRJGwFrHlNopTKkxxsMesenHiLBeMzldSwDpAa6QFFgn6Zv8Wpok5e4hiEi3mO+oFhLxN
-	 bgCNLxPkpIu5KaEpgNQVrAQkGp/xUxcKDaOhj3558o0NCOiGks8Yt4kukRSZS0FIGG4n/
-	 bTKWcPcC6k95KAVk8Y12KQIn3T9f0PL9Yb7y8Ztt6vrtSMOswQRia+igNUEftpvC2ywVm
-	 VmaRaRLYSWTc/DWuaoB5Dv6skud1dJxfSUyMjklueTsgKHFnuJeCEabMTSgfBzmnpBQ==
+	t=1794390760;
+	b=ClmONQPn8PkdjFCCpVEC9UOuUtwuxwFVxFGMoA2rsPMuAw8ZVDCo/1f4M+jWpGLMMrrD
+	 B9b2CyvlrrsGV+F6vQBOL5DyLvqPSG4oqyzt+xeMYLMgcU0/9CNkB462tg23dae0NCtQy
+	 4cepNH2S1L+R6fN+nqLdmgqKhN9IHVuDcjoDGlueypVBHge2V19TFo7og7tRR7aRJL0B5
+	 arColYlXxa5h5WCdDZVmQBY3RE4FwdhuRvabZUjWtq7QCfQn2KA4Ht9E5WwaW7a01lKMd
+	 aP8LFneOCxFR+jrrJURIfLEJ4uQ64hqwCGq9rDcrz6iMUADYT26Khgpv5yGMIOZb1XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794390630;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=eLu1xb+NMDTuiY/+RyWofsl80izFbG+riI3quVrTUhk=;
-	b=o8gZ2WUUe7mPBLcqto9U4HA6Tb1MQD6UXYhuCD1/sddaOQvHRUcwuRtoHljrwHHvCiqx
-	 oaE7Xwqcp4RClhnV/msKtHOR5rjtgm+2RH47bGqF9QY2Appa9JcFudojM3LoMXLvVEQ7W
-	 blhLZOL0zQvtOGdVRVIy8TLMKTHObKaOddvmGVuNZoBfng672uoYzmk/xf7vRykr3iKeP
-	 xcvYbqg61xTlALDgpdIlkagf9werdqf5Lnolw1jczDGwlr+72RkfagBbBTDOyufzeEA2+
-	 yjxEspl4QFJbk4SnlU03fVriQB7tux1VrPF1xByu/z08C4fZ8IlkIMl/pDl++WcxHPQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794390760;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=GWi9Mrn0MCeiOZQc5+4kfVX0EHtk3DfuQOjdPxmcFTQ=;
+	b=kL1bT34IlDvWiUOpYTR5EXJpOY2pB/yNz1seAjwfzzg+UKi3MU6B9Pjj25w39/Hydqaf
+	 oIg2rE2A2vH+vOoMDvVyZt/e0vifgPrOoEfvyrV6R+wLlT80hZWhGabv3d2shmZbU+58E
+	 Wp8syVlgl0Y/yPKwBqSSI9L+bQjmCjqjw1f8geyDY34T1RYapN88kfUgptP3uQW+r/kgq
+	 4EMRBh0BTR3jOQAvIS2ZgiU9ywWuhPAkdGCMLyP34vwbcDZ6eHxY66LTvE2li2dEY7Mry
+	 zNepWWXcF3Tny1ZrCkgxhuuyebxUqs7qitijd9Foq64uZmW2Tyf/wElmNkFn46+CTmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=NmOYxAAT;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=f7+rYJlO;
+	arc=none smtp.remote-ip=54.206.34.216
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE71606A326
-	for <spacemit@lists.linux.dev>; Wed, 11 Nov 2026 09:50:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5DE71606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832EA606A324
+	for <spacemit@lists.linux.dev>; Wed, 11 Nov 2026 09:52:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 832EA606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=NmOYxAAT
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id CC9EC20DCBFB;
-	Wed, 11 Nov 2026 10:50:28 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id AC12F20D7CEE;
-	Wed, 11 Nov 2026 10:50:28 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr AC12F20D7CEE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794390628;
-	bh=eLu1xb+NMDTuiY/+RyWofsl80izFbG+riI3quVrTUhk=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=NmOYxAATRQROalXzPOcW+uo9n+nMssOvmsRkXb0DAVG3l/l0deKnvWFOACnKun5VG
-	 48J8nouprXrwEg1afhWvj/9D+eI20LY3aQmvTWNmruMmpkozUBvDamHHra9VtgSVoJ
-	 Z+IKjNMmcbGLDdNvpe/uvkrz8jEbm/y0yeCVwLBuq7ovTQ/oOWk6mui6WSO8YE10Qt
-	 PsNiEe21xUaobr0BRokPdcuPsNKgXW5ULRVE0w84Bjj/dgyUjHIQuwXlzJhpAYnHJw
-	 jyZeN5EWurSkn9nHLb5SJ/8rKTTV32s5DQmViMYK5+9MuxZfMlz0WJbATC/e4+PspZ
-	 6YVCKjtIUDOpQ==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id le9kw9Hd74oC; Wed, 11 Nov 2026 10:50:28 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 932AA20DCBFB;
-	Wed, 11 Nov 2026 10:50:27 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Yixun Lan <dlan@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Alistair Francis <alistair@alistair23.me>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	linux-bluetooth@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: enable Bluetooth on BPI-F3
-Date: Wed, 11 Nov 2026 10:50:01 +0100
-Message-ID: <20261111095001.444031-1-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <DMRED3CXA5IJ.3FLQ7UFUTN0R9@linux.spacemit.com>
-References: <20261110074607.363918-3-frederic.mahe@cirad.fr> <DMRED3CXA5IJ.3FLQ7UFUTN0R9@linux.spacemit.com>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=f7+rYJlO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794390708;
+	bh=GWi9Mrn0MCeiOZQc5+4kfVX0EHtk3DfuQOjdPxmcFTQ=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=f7+rYJlOFA26NTV0INBR35r0W21EOZe4WDucyr825KEFuCV1tXwNLgeCkfWBesNgj
+	 OaP0KKJUiu4Y5UgsgNJIIHnyZg15a2FiSX87V5z2Fa4vZHpf+1ST88QJDW5t4++MNa
+	 6KJlGjyANok5Rh/+YwWbgVe9TB7mE4viCdr8qmhs=
+X-QQ-mid: esmtpgz16t1794390706t35ab9cf1
+X-QQ-Originating-IP: 7/3GNwEBAt+0SADWshzJh1j73v8R28IgqdTX80eo1hM=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 11 Nov 2026 17:51:43 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6762194668848470308
+EX-QQ-RecipientCnt: 20
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -91,19 +58,86 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=25e53c27b1c6852924479b566cbfa263ebbd1c7ea96f00b6a8984ab5ea2b;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Wed, 11 Nov 2026 09:51:42 +0000
+Message-Id: <DMSAF0L4F8ZU.1R534QOL67WB5@linux.spacemit.com>
+Cc: "Vasily Khoruzhick" <anarsoul@gmail.com>, "Alistair Francis"
+ <alistair@alistair23.me>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
+ Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, "Troy Mitchell"
+ <troy.mitchell@linux.spacemit.com>, <linux-bluetooth@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>, "Conor Dooley"
+ <conor.dooley@microchip.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: net: bluetooth: realtek: Add
+ RTL8852BS
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+ "Marcel Holtmann" <marcel@holtmann.org>, "Luiz Augusto von Dentz"
+ <luiz.dentz@gmail.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Yixun Lan" <dlan@kernel.org>
+X-Mailer: aerc 0.21.0-reader-ipc4
+References: <20261111094557.443481-1-frederic.mahe@cirad.fr>
+ <20261111094557.443481-2-frederic.mahe@cirad.fr>
+In-Reply-To: <20261111094557.443481-2-frederic.mahe@cirad.fr>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: M83iEva+1QDBUBgdA7sSAtJcG3q5n/Zygl/jupVTurhnL4J4aBVtHSbE
+	icNuHZVnyuKnrEe8xPNF8sjgyZtuyeDzcEZ0hebOWObGvoTG9OgrMG778xKPKL464aFiRux
+	IoBuUmmOSZ47LZHGIvkdvdLuv/rQIBu4xw02iNIWRy1cnMppQSIwZZ4ZRY8wKZkln4iqDWX
+	j3EK6Gjio29t3T9V55wvT62Q3dcppbiGhQ5g44W+URE0piS3QJVakXdZ9IH8r5gv0VlqKzQ
+	kyby+dpDxy40j4+DuVLlkisrw0Vn/wfDU2KbpEGcfpqJKP5RGUlv4OH01bbE5uOETUpUMuI
+	EIgLK+Y9kPim3QQvXhdUXZZXDp64ttK1z+QnL6wXae6oWhCz4BAkPZN57kn3kXElG3Z5Lfi
+	rNkwe2B2/cVaVQZUuqyz7Pt2yEg+XGao8C3E2sLI9g3zAX1G1gtcFIe4df4Yaw4IetWg7PN
+	oQnbYjygK3OOWeLitGY2nFnSstepc7C6UArtns4XlkeMGYzMEReFmKxQ6bM1zHuV/xAtl2N
+	E2qu08efNj4RAF74CDMQdD2iTH+EuY/9pgEnWJsiJIaSytGzDmLaix6II1226hB5oF6M8Qz
+	Zb2moevaDdTHMv+Ljb/4S8hc/ghEHx3u6iH6HcsD3fR1ANAx9Vd4K88Novrk1SCm0W+vin8
+	7Cl6itjMSB/3BhNmf1bOXIwpTpI2C0yMacu1eNYB8CpqBcK07MUdI2MrV8Gvh6JdOQysqM0
+	3hlHx9YBAZG8rGrvPfMMBQYS6r8h7dw8mcfZH1Qz1ZFEDpYxDrfLnOuCrWN7XEwbypZEWB6
+	S1/xIx3e0tuB6AsahnqXkRSha5KyjF48t2jwVtrybsMPqopnEYHeab8UWQGI3/ruPg9yV6v
+	VrdJFnNTSscLXfeFgfd1Yz3W8KoDGH2Fc8tVwJaSI2IQZpyfhnschD5K3sS7qK0PbgZBU7V
+	w+HghMIBs+cugiPWEMd/z35Ril+6DUv45ePwEHq+l7vwjo97Vx9/+p3n0hRYpgquNxeP267
+	dNzhlDCNG3wEHwZyPMcjgIyvZUFIz154GfvRnU5l8JrkgapwK5vHpGte+tg+KhckvmmLhwh
+	A==
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
+
+--25e53c27b1c6852924479b566cbfa263ebbd1c7ea96f00b6a8984ab5ea2b
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-On Tue, Nov 10, 2026 at 08:44:36AM +0000, Troy Mitchell wrote:
-> Please add CLK_SLOW_UART2 to assigned-clocks and set it explicitly:
+On Wed Nov 11, 2026 at 9:45 AM GMT, Fr=C3=A9d=C3=A9ric Mah=C3=A9 wrote:
+> The RTL8852BS is a Wi-Fi 6 + Bluetooth 5.2 chip with Wi-Fi on SDIO
+> and Bluetooth on UART (H5). Its Bluetooth part works with the
+> RTL8822CS driver data, so use realtek,rtl8822cs-bt as fallback.
 >
-> 	assigned-clock-rates =3D <0>, <48000000>;
+> This patch was prepared with the help of an AI assistant (Claude),
+> which also ran the tests.
+>
+> Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> Reviewed-by: Alistair Francis <alistair@alistair23.me>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-Thanks, done in v2:
-https://lore.kernel.org/r/20261111094557.443481-1-frederic.mahe@cirad.fr
 
-I checked that the rate is really applied: with 24 MHz in the DT,
-slow_uart2 runs at 24 MHz; with 48 MHz, Bluetooth works as before.
+--=20
+Troy Mitchell
 
-Fr=C3=A9d=C3=A9ric
+
+--25e53c27b1c6852924479b566cbfa263ebbd1c7ea96f00b6a8984ab5ea2b
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavQ6riEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+JWwEAo3AjrXyZm7p4
+9ZEUTYiTXAsJq4AVvELJfl2OA3dhFlYBAOWsMtFYDasIhrqeWg8qqk6/Kagb+qd1
+IfEbAOyLKHIJ
+=CYdm
+-----END PGP SIGNATURE-----
+
+--25e53c27b1c6852924479b566cbfa263ebbd1c7ea96f00b6a8984ab5ea2b--
