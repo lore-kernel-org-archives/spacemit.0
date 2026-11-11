@@ -1,80 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794389402;
-	b=wehEUwLoPGop0MscUzseVoCJS/xEl6SK60ZmRXi+Ham2orddxTBpQSkT9TqDetSf9CJr
-	 zff39iARdkiDOGY/nksCTM60ZPDNm3okPjFe0rs26I+zJuWqtDFROwkV1aL1OCkvdVZuU
-	 q45Kdemy02Hu/SZkUEbchmLHacoPufTUDVR1L0Hnpoa4P8zeamcrym3Qtm/XXhKl/7TrB
-	 rgsoMaahF0XuqDyBI9sh5+N41lTaykKAjp9Folo2lQiEHyfqiGm2I8X5WEwBeCOKGFYmA
-	 4I7xIahJm/loMLFs3+NlqywgFwsSh47wT9/BU3ykLZhxcKxxWCXi+3iS4d0FRuuclGg==
+	t=1794390404;
+	b=AGLHlXsThvTDpoIhBQJTDF7bEXXo8PcgIoaXWUn/8OW9XrtJizt7EHKZ/uk/jcZFrD+g
+	 XyC7FXsov/5FJZUVfGdS8IkF81X0dIaA+dtmSYn6UYYYhfXFkXXKibcjwyF24lXhlWV6n
+	 zy1C5IXt+bohJLm3yEktd9ARzcsW2EebnMwoqgFJf0oBFg6W2VIeiB2bB5t/DsNQGRXLv
+	 gJIh8AB+9RrtY5rV875E1zbSNCECRRt7t5Ip156/chdQyFY2pzCzMfR9ZL8xSo+Pqnw8R
+	 7602Y6exwi34J5MeKFetlbeh5D18IGnnmIdy8L6yBw1wqJc6T9VDk7jkMyleuRj+kEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794389402;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=aCEmHAMMqjdgQujqmJ5VIUQOP6Jloh9KuH8qoIGfibw=;
-	b=wgvM0YmMRDukfOYb+mLOa90K4OYRDGOaDr/reoaDW8LcCywBN2/nEA1/BNFO9XGKHMmp
-	 OfyPh8w51vIc28+uxANpjr8rqEn11Kb2nliHzSsjCnvgb1/N7EulrjHqklV0n5A4WGn5u
-	 4Y48bhws09AVfDPI8CnDMNxaEWP8SjdHK7Pwqrp03SDjGgEAOCeQHhmzELilWUQOgRzjZ
-	 w+FcH4Bidpkb4EzIeac3GX3k14C4OY4Qm9bYVRJS8xcCPVnA748VgkTcuC5JB1z9iuvzL
-	 rUD3GLRJQ5XVPYQ7DgIg775P00y438UKwqDzVmMQSCEK7/2nkpTEPrpRYFKWq0CM6fw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794390404;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=cSfKq6TaMYfXhvJwtGxYyQkyoPg2VJBA/tCs61AB3jM=;
+	b=QgW+Ff/P09HcLLM50H7Sr4w8NvtS9F1AnXd3cp6L38hwba9nt3vQsojtR6FVZtUZGW7W
+	 N5EDHa40RFNsioMSM+HjUHI4u7r6LiHhmNBerth28GdZCI0rbDzVIC29RHr9VxOMRKYv8
+	 FhElle+TSg84zcxRgRyWRvGp1Iw8UDNuliLxyLT+h079dSlchw/semBTbx9JTqKXxxAMy
+	 dF1ZNv8sDQS7yZtqZRC9YJJdLBp0R5+6wHKygQ/M5I7UAoP5l9EysYjfErJUdEvyLMNxU
+	 0Ib/lCQLTYY8W9SoETjDv6lWxa94MAwdus5iB76PSgJtv+Hsis8Y/dd1irEtXkIGOxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=xLL2XTZP;
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=UhMUXiiS;
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DC0606A32E;
-	Wed, 11 Nov 2026 09:30:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88DC0606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D15E606A32E
+	for <spacemit@lists.linux.dev>; Wed, 11 Nov 2026 09:46:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4D15E606A32E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=xLL2XTZP
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=aCEmHAMMqjdgQujqmJ5VIUQOP6Jloh9KuH8qoIGfibw=; b=xLL2XTZPRMU0ZS9YR2uE9FHjdA
-	GKPBXK8r8BVFfPnkLzjhMtkuLLTVTQjIL2eXUOMMJX1WYADn1eRRGzXVJj6z+oH+uXl4vLhrXqiP0
-	fjGsUZWDVoyY/dpnWiYyTy8LXVMzsSfkCt33gLhpAi0Y/bCLgigZfUcyZvaNuYNSHLd7yjc9uHdxs
-	QJV9wbOSeXbuedTVHuEMiKz05i3QOjvnr0oyca0zh30YSYi3WwmVZ6NzBMvbd+09wBxC3MmxMZ2Jc
-	yFHPRNc6dZfr/YRIFaYTm720x01U86xJv9q1N2FW7r0biqs0bHP/uTu/zj7yu9W87HrpXMpPf1/30
-	MAywDWDQ==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xR4eT-000000072xD-3EjV;
-	Wed, 11 Nov 2026 10:29:57 +0100
-Date: Wed, 11 Nov 2026 10:29:57 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Anand Moon <linux.amoon@gmail.com>, Andi Shyti <andi.shyti@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v1 2/2] power: reset: spacemit-p1: Use atomic I2C
- transfers for power-off and restart
-Message-ID: <avQ1kVTvdCmS1MxN@aurel32.net>
-Mail-Followup-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20261110061429.2036-1-linux.amoon@gmail.com>
- <20261110061429.2036-2-linux.amoon@gmail.com>
- <avOL1mCkI4YSaDeO@aurel32.net>
- <DMRZGMGRLD4S.KT6VEU28902E@linux.spacemit.com>
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=UhMUXiiS
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id 5AE5A20DD1E9;
+	Wed, 11 Nov 2026 10:46:35 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id 3177920D7CF3;
+	Wed, 11 Nov 2026 10:46:35 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 3177920D7CF3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794390395;
+	bh=cSfKq6TaMYfXhvJwtGxYyQkyoPg2VJBA/tCs61AB3jM=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=UhMUXiiSz+gMpFWPXbet/zD2CYIaqCGw+zxZ8+Ap6dH5zT3KGRN1vcbYPKiu+EIZf
+	 UeemDeg3xLmuW0mFweA4eKVYxQMPm5O+ZMbO89md+C3tHKawBwl0G/ouDMj6tGWnkM
+	 8u4WikCHB8aIUal5JR5yCY+IyzdNW0h496BLiFqbTZJ7mB8rnmgMYIX9F6qzPmNeHV
+	 zxYIvyerGXBSApjvS3KPrP9GTud9cMn/oOhOhLZnzfkfvVP4LS9dovQZeG5PYZle/o
+	 iFN4mVTRQAGBO4KUP0sQTpKRIwE4ihzj5Q+xHvXB908O2gQQIcYtnk+bCUel0z4VSR
+	 xnaZLbQ8iQIDA==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id S_CcOLjJBBvj; Wed, 11 Nov 2026 10:46:35 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id 14DC420DD1E9;
+	Wed, 11 Nov 2026 10:46:34 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Vasily Khoruzhick <anarsoul@gmail.com>,
+	Alistair Francis <alistair@alistair23.me>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	linux-bluetooth@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+Subject: [PATCH v2 0/2] Bluetooth for the RTL8852BS on BPI-F3
+Date: Wed, 11 Nov 2026 10:45:55 +0100
+Message-ID: <20261111094557.443481-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -84,119 +90,40 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cXM73+j60MUUUff0"
-Content-Disposition: inline
-In-Reply-To: <DMRZGMGRLD4S.KT6VEU28902E@linux.spacemit.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-
---cXM73+j60MUUUff0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Troy,
+The BPI-F3 (SpacemiT K1) carries an RTL8852BS Wi-Fi + Bluetooth module.
+Wi-Fi (SDIO) has no upstream driver, but Bluetooth on UART works with
+the existing hci_h5/btrtl code and linux-firmware's rtl8852bs files.
 
-On 2026-11-11 01:16, Troy Mitchell wrote:
-> Hi Aurelien,
->=20
-> On Tue Nov 10, 2026 at 9:25 PM GMT, Aurelien Jarno wrote:
-> > Hi Anand,
-> >
-> > On 2026-11-10 11:44, Anand Moon wrote:
-> >> The SpacemiT P1 power-off and restart handlers use regmap_set_bits()
-> >> to access the PMIC. However, these handlers run in an atomic notifier
-> >> context (specifically within an rcu_read_lock() critical section), whi=
-le
-> >> the I2C-backed regmap uses a sleepable mutex.
-> >>=20
-> >> This triggers a "WARNING: suspicious RCU usage" warning due to an ille=
-gal
-> >> context switch in the RCU read-side critical section during shutdown o=
-n the
-> >> Banana Pi BPI-F3:
-> >>=20
-> >> [  563.803475] WARNING: suspicious RCU usage
-> >> [  563.807813] 7.3.1-ARCH-RISC-V #1 Not tainted
-> >> [  563.816614] ./include/linux/rcupdate.h:387 Illegal context switch i=
-n RCU read-side critical section!
-> >> ...
-> >> [  563.841445] locks held by shutdown/1: 2, last CPU#0:
-> >> [  563.846694]  #0: ffffffff8404fb20 (system_transition_mutex){+.+.}-{=
-4:4}, at: __do_sys_reboot+0x230/0x29e
-> >> [  563.856806]  #1: ffffffff84167860 (rcu_read_lock){....}-{1:3}, at: =
-atomic_notifier_call_chain+0x4a/0x1c2
-> >>=20
-> >> Replace the regmap operations with atomic I2C transfers to avoid sleep=
-ing
-> >> in an atomic context. Preserve unrelated register bits through
-> >> read-modify-write operations and check for atomic I2C support before
-> >> registering the handlers.
-> >>=20
-> >> Obtain the I2C client from the parent device and verify that the adapt=
-er
-> >> supports atomic transfers before registering the handlers.
-> >>=20
-> >> Tested on the Banana Pi BPI-F3 (SpacemiT K1).
-> >
-> > While the patch looks correct, I am not sure this is the correct=20
-> > approach, as opposed to the one proposed by Troy [1].
-> >
-> > Indeed bypassing regmap and using i2c atomic transfers needs to be done=
-=20
-> > by all affected drivers. For instance the VisionFive 2 board, which use=
-=20
-> > an axp15060 PMIC is also affected by this issue. And the corresponding=
-=20
-> > driver is shared between architectures, which make this kind of change=
-=20
-> > more difficult.
-> >
-> > For the BPI-F3, note that with OpenSBI 1.9, the reboot is handled=20
-> > through the SBI SRST extension, preventing this issue to happen. On the=
-=20
-> > long term, I am not sure we should keep this driver.
-> >
-> That only covers restart. The SBI restart handler is registered at
-> priority 192 and runs before the P1 one at SYS_OFF_PRIO_DEFAULT. Power
-> off is the other way around: sbi_srst_power_off() goes through
-> register_platform_power_off(), i.e. SYS_OFF_PRIO_PLATFORM, so the P1
-> power-off handler still runs first and still hits this on shutdown,
-> even with OpenSBI 1.9.
->=20
-> So until this driver goes away, BPI-F3 still needs the arch fix [1]
-> for power-off.
->=20
-> Link: https://lore.kernel.org/linux-riscv/20261104-v7-0-rc1-rv-dis-int-be=
-fore-restart-v5-1-956ec09c900d@linux.dev/ [1]
+Patch 1 documents the compatible, with rtl8822cs-bt as fallback, so no
+driver change is needed. Patch 2 enables it on the BPI-F3.
 
-We also need a more global fix for the other boards like the VisionFive=20
-2, so definitely we need the above fix instead of patching the drivers.
+GPIO usage was tested one line at a time: GPIO 63 is the power/enable
+line and GPIO 64 the device wake line. The vendor DT also drives
+GPIO 65 and GPIO 67; Bluetooth works without them (and RSSI is the
+same with GPIO 67 high or low), so they are left out.
 
-Aurelien
+Changes in v2:
+- Patch 2: set slow_uart2 to 48 MHz with assigned-clock-rates instead
+  of relying on the bootloader (Troy). Checked that a 24 MHz setting
+  is applied, then 48 MHz.
+- Patch 1: add Conor's Acked-by and Alistair's Reviewed-by.
 
+Link to v1: https://lore.kernel.org/r/20261110074607.363918-1-frederic.ma=
+he@cirad.fr
+
+Fr=C3=A9d=C3=A9ric Mah=C3=A9 (2):
+  dt-bindings: net: bluetooth: realtek: Add RTL8852BS
+  riscv: dts: spacemit: enable Bluetooth on BPI-F3
+
+ .../net/bluetooth/realtek,bluetooth.yaml        | 11 +++++++----
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 17 +++++++++++++++++
+ 2 files changed, 24 insertions(+), 4 deletions(-)
+
+
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
 --=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+2.47.3
 
---cXM73+j60MUUUff0
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEUryGlb40+QrX1Ay4E4jA+JnoM2sFAmr0NZEACgkQE4jA+Jno
-M2u3Qg//R7XKE2ZEnRyE8bC3iOSZzrxWB3pYbNEVMbzBcouE30nPamYF4V78RXNk
-kYKdevhLqbQYTgzlT7P9oIiJIGh9eKpX1k0byeO8Z0GuyO5p+tCiY5fNKjlwU3Dg
-leZKbyzfyAIs8yrm7YmjqrpDQHQauqcN1Io33GliLXUTHqQmGgV31/hm0pWchQij
-XrCXLzN9Ll+6uQ3nIAQsSto47pPyN6NkQA97YokbAFBSqcSOdzcK+l10xH0lwbav
-2X8rYHGVa8zFmGOzi4ewoShxatuvyZ2L/JvkXVOxHdgZdDUDSGmMJIVmiiTMukdG
-6aLJoW4iPlmRQrjhlKkC6QkhN0ZmBRkl6gx09mhyHlDtaWwgSZLhm/lAMogp4ene
-claRtwFpVUgjHvAgNDsixpgTSN+BPbfNGXhKfbB1X5D0bnQJMJWmZjZaQ/CUbkbF
-104ZjNjOdsTVLg/Mct42AdMebeRh9s5NeyW56G51Mbj0sihanMG5WEv1XnqHh1a2
-+3SSv2woHXIz/dtfNUQD6cvYbAoth3d4hrmOnxL3TPmM/Nha4nYaElrnS2RCfspY
-EVXYksPEw7WZxz1oPy8VykYqrX9jgyoNdfa5LS1ZOTvrowGtqfuNqbRTWNLmaz2R
-4hVeX0Rh03m9W8nwxIpBP4JwZtSoTPO4WOtELP5QAfLYjfZny4Y=
-=i3nn
------END PGP SIGNATURE-----
-
---cXM73+j60MUUUff0--
