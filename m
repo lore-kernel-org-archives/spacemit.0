@@ -1,110 +1,103 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794371195;
-	b=kaUzBJp8v+JYXuaiSi7dTOYm9qTvkRBHhwT9IQVkNdQS6Fi+RLX6v1FewSy0iC7Rp+L8
-	 HSbpNzsG0nljVq/+IVrEmL/0eizlRohevYyXHek3LsCCXzHW49FHCLOyzTTAsTSDa+CDC
-	 nFii4eBg6I9u9PkJGJ8Q4KYzzXBZcIzwpG1LNr1me0TmraqnW1UACyLfGd8tjWcZuP8+/
-	 HoVOuJnjTaM0Q7d5bbZlmiRW6cMGu9RTVDTmgJrlw8EVCxJjwXOk7Up9vNynf+EInz0yM
-	 K9HJT0sY0yO+7bez8qNplAS8i/8gOHWk2ZHuvu9zvcPXSrKFEPyb6fBbIQCBL3LWsqQ==
+	t=1794372124;
+	b=2HdrQ5b6y1d6ZIrHwomJBwbMoDFxFXWZI/Cv9qbCnF86Vt0pYNoK2RHb8NtPUMlRR0GS
+	 6nt9FpTV2MZAkJIHjX1bKHeVzg9hpEcS2ZYrlxEgK8BAI73vwm4Uwz9JGNAImtzM3E2nX
+	 /vb7QrYiwIVWJZZwh+5uYSwpHuku4o4GEN7fJjg+NLPgzPQ1GLNkaOeAtc1QEEgO+SDSM
+	 5RqL9XvjsF/KqpQgaTWCWJPF9IwDL1EWNzQEWVIdDvHnNbyIsR66xbQ89IRJ+N7Eh+0Pu
+	 aIlGtard2jX6O0A777Y9646AwDtHRLN/qAahhfJVQuY9biJE+mSR1Y3SEJunA+HqoRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794371195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794372124;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
 	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=JkuS+mUk2RH2MSK3tXztbBdwGQB9HnQXtlhnX94SlQA=;
-	b=GRaidsoEBDezpBslNimVyDJhru6D1T56+a0BB+IDy7ROSZYH3ds+gCiumu5eKe1VXt5x
-	 2EcWGugsCPlzBZi8pdYxahE3r4OUlYBBjgQpnv/pIb372je+wUskt/N1ys1Wo9G8+zRHO
-	 NBedKVpcjLmhg38rdYpSLllRIPxdNnp1EeHonImzXDusSGFOCaKpyNnTH3SCL3CW+p5HQ
-	 UoApPAXxkyyvQbybRqsTz1dix0LadOsHehzOGaQJCkzKVxlZ/0zQLFcXTnGFa4V8hUic9
-	 FtiJl1iwJsBLtFD662MuBY0hL0FCqEU+yixI+bWYqyUesuspmGw2DzaquV6/jwkZN0g==
+	bh=LBWMkcN1tef9AYjk2Bp3If0hhjn0Q863wdyvj1dL6Dg=;
+	b=MklSrOY3n+6ID7k7L8XFcQG+C4uauzuXBNu57Ng763cW+jSmAixD/BEF/PiYCXSPJGlT
+	 ty3D5+nNn8A1DwSab4MmhXMZ4Ehfmbh30eGnFgomje5C0dUJKNUdpICwy/9zCNelk9Jut
+	 c7DKjqkp0o48cQeV3s2BeznRTHNwxQW+AS876XrBNgkyeVG78xv0/C/nv/+nQ6e4jRAa/
+	 ZvGAhHkmH0pJWfVYnIz5OT3VxM7tVX3igA/QAstDvcDnrC45RmFqXV62AWozLVYPrf4Co
+	 MoNF7PnxkOR/kc6Ux5L1NvXWXVLvSRxhYqsArCnbJx0UTa5b8bbabw+DtFQYcFW772A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=enXxQnZl;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IBzfQrja;
 	arc=none smtp.remote-ip=74.125.229.9
 Received: from mail-dy2-f9.google.com (mail-dy2-f9.google.com [74.125.229.9])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95EF60A261F
-	for <spacemit@lists.linux.dev>; Wed, 11 Nov 2026 04:26:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E95EF60A261F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF06E606A321
+	for <spacemit@lists.linux.dev>; Wed, 11 Nov 2026 04:42:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF06E606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=enXxQnZl
-Received: by mail-dy2-f9.google.com with SMTP id 5a478bee46e88-3678f64d078so3312490eec.1
-        for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 20:26:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=IBzfQrja
+Received: by mail-dy2-f9.google.com with SMTP id 5a478bee46e88-377157fde7bso20934eec.0
+        for <spacemit@lists.linux.dev>; Tue, 10 Nov 2026 20:42:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794371194; x=1794975994; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794372123; x=1794976923; darn=lists.linux.dev;
         h=mime-version:content-transfer-encoding:content-type:references
          :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=JkuS+mUk2RH2MSK3tXztbBdwGQB9HnQXtlhnX94SlQA=;
-        b=enXxQnZle7j0Z7Z5svajTb3MN5Cu6uvhd+HoWg8e/5lg+4coKUy6wfx5q7CvUtxQIm
-         E3uc5kEk5fNNJpHegPX12QX3sXdD+wVeaijwNFm5nFMHiD6fGqErVbkxIV8es9U9L6WR
-         y6CzlV6LVPtbNw2uIZ0zxhwo8OotpMtVWqkjJlGIfCtx0zRXab611fpHva8BWiBtVH9r
-         ALNkSzFtkjBnr2B1f2C0hkwm46lTkspKn2X+XTxu6caHzIoU0DC31ia7ojjDOkAMv3wD
-         +Ft41bFha4SgKnWoF6SmH1Db/gW2nZlvFz7mL90dKKP4l/Vr1i5+b6KQNcxQ50gbAc3E
-         tjBQ==
+        bh=LBWMkcN1tef9AYjk2Bp3If0hhjn0Q863wdyvj1dL6Dg=;
+        b=IBzfQrjaWkGRI1LhQOPq+JGiSspdNKwMp7XEijNFESHu3TcdaMgmfZSSf1ekIoZidO
+         X64x4WPlwvJ+6qKlcOxoZggI1gCjlz3kaJ3py1mXgsE76TsPJgSaB2c/vlD5aFs2iwK7
+         9eB7GGVUnNpdPxw4igzMhjrBoFgubWBBl+QYbO9vnJVTW1aylAxJKlPqJGhfgMmgtzDq
+         41v0uLbBhdmvKxly81ga+PHWgbG8pJ3vZfHtlV9M43UrZB7xpniHxTX0421VGBNFZz53
+         HrU6HKUjBnk+P3VeXiIdZCMHg2XM5k9SQ4BZrPUzz3oN8S54JRlHZJAxy6t5++Bn+Px6
+         1W7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794371194; x=1794975994;
+        d=1e100.net; s=20260707; t=1794372123; x=1794976923;
         h=mime-version:content-transfer-encoding:content-type:references
          :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=JkuS+mUk2RH2MSK3tXztbBdwGQB9HnQXtlhnX94SlQA=;
-        b=EAdDLnQMVAZ/pK/cIs2TxU3fTm0RrYWP8AUatEQLDwQpbfBvw2Yli5WDDCwuUKf7Tq
-         Q94jwD9sPJagsTUYpyrFpM3TvtTasNKjRKwS2tVTb+yYKMDg066fV4QjoEwSGv/c8WEV
-         vPB7vnloCFmrMGs476MY07uPNcMbqPOvFQb2r92yPb/yZgRRCPTljJ88GnX2yB9M+jMY
-         iVppP4Jvdel5l3EXGTB4BY8nnKrC8rwdnkPZpSmBXq6M+KSWdx1JVn5BeC9KAfqEdAw8
-         r9fpPgaK0sfEg8SwKHWaQOGKL33VUIHBetZ0lSokBbyCBbZFAF69M2BpdqzeyZhD95fc
-         EuvQ==
-X-Forwarded-Encrypted: i=1; AL+hErGqj7//h5m5UM4DSMWnRn84oDlbDBkOcJsALp6hFu6HodiV10ShbOq6I6Bq7d/5EZfE/s01Hdt4XA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/i/Al3LviOZp9GhPgvZLlYvHch7AFBCA1SUS7diO0HFmvFb44c
-	/6GzHTFSdEJ+zSq5mFPX1rIYIGD+CqDP0KPXKPmnUqQIsNZDrSI5hvpL
-X-Gm-Gg: AYBFou1VJ7pQfJRbNVKCfP0U/214vEZYyBKNwzlKX2T0cMvC7u2nll6dDGzyMlaa7QS
-	hYjbz29kQPt+cKK/V6Dorrm/i76Yn/SrJTCL8YfS9zLM9u9p9nKR6laoEtBRY5cxnXwVEBtvkVd
-	GbHswlq1fhBrZVwnqXUbOJfiuanTWX2Gtuz+s6WVT1/KiXLM/2HFu6Cjvr5wUjXakRcf6H6ni0a
-	cmg0C7dmtZh4aMhRbFQAWoCCHF6B3NkE6LMbO1kT72To37cj/7q/Nam1scQWR3eWInWCvb9jZ2b
-	y5+O+c9QyGMBzUetVeUHGeWki4VVvc/I1k8HMMe4EecqbBIfj1l6paO/8QDXV3GCmKMV2tNqLhd
-	XQ/hnCAxum9u/78VmqM/wVnq7GI9VnP3Zhmv5qJzCLl9x4KIv7qnw2j9SfCUa9IsNz0vFVUvYaf
-	cZgtXjzGIoU4sWoDRyrVbD4IVCefQuycv9yWe0IiEmcD05rwtBHpox4mVjR6rDx/BewKdEF3wu4
-	a1D29LWdUCM6PA89qDLGUFmf2r1W97p245i8SIU1O1ss6KOdmEvabR/Yt4nLlFcqKnK67oYJv0r
-	ifU=
-X-Received: by 2002:a05:7300:c382:b0:376:bcc4:774b with SMTP id 5a478bee46e88-376bcc479abmr1028837eec.23.1794371193980;
-        Tue, 10 Nov 2026 20:26:33 -0800 (PST)
+        bh=LBWMkcN1tef9AYjk2Bp3If0hhjn0Q863wdyvj1dL6Dg=;
+        b=X961/OWvPZTzgJuoBVVyTTYi915w6LjHZwMENjOVZ5BXzvTE2cMhzX4GZyFlVP0JqE
+         ZxA46x90KBQ39rfnEcl1zc67j3QsvwGLwcJh/+QIWBwZeffBrjc+EfRDmL3AJsBGWbJ6
+         cClfZu1BGbp5nHTW9nWnwuXaJZOD4E2AJg3VR8bzar8LI+0KQdcT3Rwn84+tFPS0zDVE
+         o0ByXPe7WLiV1aPB5Op/AI8z3xiBKce6djDugy5/r2Q+XnHwWIUuaeQrYomZoR+qNgz9
+         bBSQn2OZ+658TzrU8RVLUtvIU+LClaTrwxX7DokjH/6QMgSqbRiUb0pXbjHtgG2/R4yG
+         ODfQ==
+X-Forwarded-Encrypted: i=1; AL+hErFndZobTIcv4ihf4pVK5KH664iHbm40tbh4hXRmYWhPhgnlRYXOWmLj0/APJeUJLrgNHbe0Jkh83g==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9OV5lPIJFNxnl70hZTTy+ZXj/tH/hZO7B0K1foMS7/7vEg0NKB
+	ZME15Ou4Xoqfvb1yL2sq2UXYCNbQnlK2q52dyzW/kKbcrynR3MwtYlpf
+X-Gm-Gg: AYBFou2eXeL3At9LDiSN5N10R8oCC7WXh5XjT/LPF68XYSaXYLHJ5O+66HxhGacLfeN
+	iMq4aNQNhhoZIVpnJHTi7+kdYByFEe4igpN8KA1Ze4BJUo8q+NJ0zd4mBxk7lT2pFFRDHsNObI/
+	OAWPmNgEHhQVeyVdHakUMNEvVzvjzmClG1/92aWJodmOz4rqiTaYGUhIX5W8MUHTrTgKWuukauP
+	eyQtI57uI/eCRO8OyUOLnx07VOltNo/YPXDAB/9pYR51aBwVuAGMFXhg8nnU6LdvND39/1TMezf
+	nsQQDCkAehCDrm/lRlxbp/Jl1iRxEPJx1njVrS5cHEPs48DrK6OhLvfUwOkpt+yPoFNF/y1WQMa
+	6EoKpcEEnz4OfLHzQl7VFtUzJ7+mAESOBxYyg94ciTFibyGBaAEDze2jLns60eqojctlpIAdMp3
+	bPmm/1gP/g+1SC1uJ1B3d/qeeRutK8L6K/ZlLoLyF23rk8AnsyJdtSD9oSoUNip4GpoGVUlX5vm
+	h/eziZLVUfdEkjX6IEg4qff7LkYJ8P7HzIPzlfkBMpc+c1U9T9iu9X5bdiYJXq3sm2fecJcRK29
+	iPwDvNIgxgd0O8Ux+Z7+XAGe
+X-Received: by 2002:a05:7301:4184:b0:36a:1f4f:3e9 with SMTP id 5a478bee46e88-37685d753c3mr2904495eec.20.1794372122835;
+        Tue, 10 Nov 2026 20:42:02 -0800 (PST)
 Received: from localhost ([2403:2c80:6::10d9])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520cfdfc6sm13018714eec.17.2026.11.10.20.26.32
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37520512ec1sm11023535eec.12.2026.11.10.20.42.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 20:26:33 -0800 (PST)
-Date: Wed, 11 Nov 2026 12:26:28 +0800
-Message-ID: <0d340a99e07dfba7ea1fba6d9529a1a6.codykang.hk@gmail.com>
+        Tue, 10 Nov 2026 20:42:02 -0800 (PST)
+Date: Wed, 11 Nov 2026 12:41:58 +0800
+Message-ID: <531e628a379b6733632a25d998337d77.codykang.hk@gmail.com>
 From: Cody Kang <codykang.hk@gmail.com>
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Guodong Xu <docular.xu@gmail.com>, dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 06/17] clk: spacemit: k3: parent eDP/DP pixel clock to
- the PHY PLL
-In-Reply-To: <1jwls975nh.fsf@starbuckisacylon.baylibre.com>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-6-327d7910bf71@gmail.com>
- <1jwls975nh.fsf@starbuckisacylon.baylibre.com>
+To: Sarah Emery <sarah.emery@canonical.com>
+Cc: airlied@gmail.com, alex@ghiti.fr, aou@eecs.berkeley.edu,
+ bmasney@redhat.com, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ dlan@kernel.org, docular.xu@gmail.com, dri-devel@lists.freedesktop.org,
+ heylenay@4d2.org, krzk+dt@kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-riscv@lists.infradead.org, maarten.lankhorst@linux.intel.com,
+ me@ziyao.cc, mripard@kernel.org, mturquette@baylibre.com,
+ neil.armstrong@linaro.org, p.zabel@pengutronix.de, palmer@dabbelt.com,
+ pjw@kernel.org, robh@kernel.org, sboyd@kernel.org, simona@ffwll.ch,
+ spacemit@lists.linux.dev, tzimmermann@suse.de, u.kleine-koenig@baylibre.com,
+ vkoul@kernel.org
+Subject: Re: [PATCH v2 11/17] drm/spacemit: add Saturn DPU DRM device driver
+In-Reply-To: <546efd00-ddaf-47f4-9387-2635785a1bf5@canonical.com>
+References: <20260809-k3-display-v2-11-327d7910bf71@gmail.com>
+ <546efd00-ddaf-47f4-9387-2635785a1bf5@canonical.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Mailing-List: spacemit@lists.linux.dev
@@ -117,50 +110,22 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 
-Hi Jerome,
+Hi Sarah,
 
-On Fri, 25 Sep 2026 16:43:46 +0200, Jerome Brunet wrote:
-> On dim. 09 août 2026 at 21:14, Cody Kang <codykang.hk@gmail.com> wrote:
+On Tue, 10 Nov 2026 18:02:42 +0100, Sarah Emery wrote:
 [...]
-> >  static const struct clk_parent_data edp0_pclk_parents[] = {
-> >  	CCU_PARENT_HW(lcd_pxclk),
-> > -	CCU_PARENT_NAME(external_clk),
-> > +	CCU_PARENT_NAME(edp0_pll_pxclk),
->
-> hidden behind this macro is a .fw_name. Basically these are your DT
-> input names. You can't change them at will like that because your
-> bindings are supposed to be stable.
+> I'm sending this here in the hope that it will be useful for a future 
+> revision.
+> Is there a v3 in preparation?
 
-Thanks for the review.
+Thank you for the fix, and yes, a v3 is on the way. I am working on it
+with a friend, and it may be posted by him rather than by me.
 
-> You should not use placeholder name, ever. No need to make the
-> name too specific either, from the beginning it should have been
-> something like "pixel_pll" or whatever your doc refer it with.
+I am glad you brought this up here on the list. I had already noticed
+your work: the series, with your two fixes on top, has been running in
+the Ubuntu 26.10 release on the SpacemiT K3 boards.
 
-Agreed. The new names follow the documentation: the K3 user manual
-describes these two mux inputs as "pixclk from eDP0 PLL" and "pixclk
-from eDP1 PLL" (PMU_LCD_EDP_CTRL, fields EDP0_PIXCLK_SEL and
-EDP1_PIXCLK_SEL).
-
-> "external_clk" is not declared in your bindings AFAICT, so at least it
-> should be fine to remove it.
-
-Right. It is in no binding and no device tree in the tree supplies it,
-so nothing that follows the bindings changes.
-
-> There need to be a dt-binding patch documenting the new name you need
-> and then you can start using it in the driver.
-
-Patch 04 of this series is that patch ("dt-bindings: soc: spacemit:
-allow eDP/DP PHY PLL pixel clocks on K3 APMU"). It comes before this one.
-
-I will change the commit message in v3 to better align with the logic you
-described.
-
-> In the future, please try to document all the inputs of your controller
-> in the bindings. Even if you do not use them yet, they exist.
-
-My read is that comment is more to the original commit where 'external_clk'
-being commited, which is not from me. But yes, I agree with you.
+I would be honoured to have your Tested-by once v3 is out. Thanks
+again, and thanks to the Canonical team.
 
 Cody
