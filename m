@@ -1,56 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794471318;
-	b=4uh0S8nCvJ0BeaYcZp8T4LINb0t25PT0rjmJJ/vte4uU4laETxYUNhaRcG8GoUWgnU5b
-	 RCFNip6ET0Fsv4Kz3TsMk4rZsrxDDLzg2QpNoUs/ZbsUOgDuC9dfGOsSUP0w77iVzQSrZ
-	 Art779BKb7AZ3QSBmBu+GHlHBSi54XuC2Y/1YBdLVA2BKb3J1BI5DXaZ52QFESm44WG8/
-	 rzpC38ZPP9tMM6NHLAzhzYx2/kCCQhRKz1xBOBIg/T1o1bVOKmK4zrEWcyv/f8Z5THb/e
-	 oToulifGhHHRtMSh5GkMZ58myw0aPNKQ7HesYN4914FQJiirbtk7+y0YHfcRz/WzjeA==
+	t=1794473826;
+	b=uyAeal5RG8eNzFzqH4GATUdBH2c2uTNkZq3IMBp8G2lQT4YDyeRxSWjiL5Ik8jcJC1ut
+	 B3Q07h3Xh8b/unyZrdvMSOiAhmSvEzOhQCxvchQ6UtQqlL0+jtz1c6YuAN7ynxrRu3tz6
+	 PiyHgFwBcHWnMm2b6o5ec1KIwyntX5IQP/aRpiRydUQ5mzxoiA+CapiaIL59ctJE2M++N
+	 EHhpjgASnBCA95gvz9Pz1EVOP9eHVoGZy21D1vq1Gh4OdRQpLCYkqRfCKsNBcW6825WQO
+	 YQHdBMazt//8szGkES5vk87cXgTuVLHxLC66CYnsP6lfYYSW3UtfmEYEOVPcXpWeTKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794471318;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
-	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=rf99RzV+IBte65wKj85e0v1z7kVTjzpjZAL1sO94Ifo=;
-	b=ZfZMD9/C0eTrgSDz6WMVuvd41j9EpXy74HYA8RdHZMe1Pc03vtb9S2t0R202g6SocM/v
-	 TGnCV3ec4rqc4FfxUjFKTuwmAhuuLcC50EriVzQm298fSATolqKTLzv4HeBq7mZwE9rL/
-	 mai66Da6lTYCJub1GeCOpIl5gk3p+1IQc982UG1TwDoaiudwHq2dxjOdZPnQgXxnt6dOc
-	 f7lm2MzRJpqqsMPR7u/uv8sEcksfmiwu1f1hJoXom7Dh13ldcZrNJhBLxvtN4yDpXJ4K4
-	 bTjjDqdTtg3e1oZKZNWzzDQQ/8+kXHyWnXxqL+gNQrTpEMAXY6Vd2i7xTW6Ojlu5e1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794473826;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=bLsxGg+UbntTm846AKMWGYVEPT6bUdBmF4X/znMO0vM=;
+	b=h4sZTdlqhwege7KJhRVE0n58iHq8r+vdcPJBlXsI8RorxFqGzRs8xwvLquE3Q73I30Q6
+	 hVOedfzagmhD0pesmdS9/YH6/RgMBFZaex84+xPMDi9JKmVqlQJ/Eg2oI5X0v6mkMUNeC
+	 sBvdLm8Dx1i/iUCHFyRpT1KvieJc9mi3VsVwXe3E0qqp0nA5z5U/63TiVRKgmob7uHDcP
+	 Rdn3rkG17YsQzs2IYI8197b1HK787BYuk4YPTyVki85fJw4a0fAxzkAR1fMy2u0SOXue2
+	 8XxAB9wnoS3+NYshGc6Jsojw/zUKD+UPHQSTQpZHtbbUYzEVKOruFRWUtQGdqqxDNUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=tG0nWYwv;
-	arc=none smtp.remote-ip=91.218.175.46
-Received: from mta0.migadu.com (out-46.mta0.migadu.com [91.218.175.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=VqupciBa;
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BB5606E944
-	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 08:15:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B2BB5606E944
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C6F606A332
+	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 08:57:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76C6F606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=tG0nWYwv
-X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=sOgtWAxcrlGbQSoX1V5yIO89uZD0ppP6b0dzshzQZsc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794471315; v=1; x=1795076115;
- b=tG0nWYwvLJ1o1/Hvnqff6fBaIZhaWov221DPa6cl1aXYdm8dt0izeTX1AzIcupRuKHpQLSp0
- Q8PYaljJU1wAI1cb2yI0Ov9hw8We8riW4sCpulDwbD+KSN7sCGKf9MkT5KlTMUQJglENf6jlLDY
- WySl/PfZJY3c74GjkpKRJ3tc=
-X-Envelope-To: spacemit@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id d04481d91be052fc;
-	Thu, 12 Nov 2026 08:15:15 +0000
-X-Mizu-Trace-ID: d04481d91be052fc
-X-Migadu-Flow: FLOW_OUT
-From: Troy Mitchell <troy.mitchell@linux.dev>
-Date: Thu, 12 Nov 2026 08:14:43 +0000
-Subject: [PATCH v3 2/2] irqchip/riscv-aplic: Apply pending affinity changes
- for level MSI sources
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=VqupciBa
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id 4555620D4DD5;
+	Thu, 12 Nov 2026 09:57:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id 1A9E320D4C14;
+	Thu, 12 Nov 2026 09:57:03 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 1A9E320D4C14
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794473823;
+	bh=bLsxGg+UbntTm846AKMWGYVEPT6bUdBmF4X/znMO0vM=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=VqupciBabbvQh99o8OZqmQSPXRix8ZKYFXfNMY0VarwGMbfP2D/ZWloFmC6E3rKkV
+	 lknk3uOyr+ausKBTikuzhXfo51yCLtRpXeEs+etL3HeSrA5WcD+qmP5x+uvBmTEuAY
+	 nJiVfSeGcCDRPsN+QQkDdSmpNe1S0ZdKkOaBEn/WB4o0qSRQHZTYMN2N2ZD0ZKbe1/
+	 wDfeUlHFwKRwzPxqTlWHHJxkqOiibunX5MPBqKLXdswzKQRblES5yQm/Jj0qyH+x47
+	 r1oNlfEhTo09KekvYeJI4hBQJQ4HNEEDw6Bi6G61gTHSqU5rfTRd14GNWwQdUCBsto
+	 6Ts21iaM1hfjw==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id oDmgEuZsXvji; Thu, 12 Nov 2026 09:57:03 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id E74D620D4DD5;
+	Thu, 12 Nov 2026 09:57:01 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Yixun Lan <dlan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	anarsoul@gmail.com,
+	alistair@alistair23.me,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	linux-bluetooth@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] Bluetooth for the RTL8852BS on BPI-F3
+Date: Thu, 12 Nov 2026 09:56:17 +0100
+Message-ID: <20261112085617.516945-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261112061951-GKA62271@kernel.org>
+References: <20261111094557.443481-1-frederic.mahe@cirad.fr> <179442601916.1604530.1705197925952408060.git-patchwork-notify@kernel.org> <DMSUPKS0VL8N.1RUUESQVU8FMF@linux.spacemit.com> <20261112061951-GKA62271@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -60,96 +93,17 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261112-aplic-affinity-fix-v3-2-943d25cfbfad@linux.dev>
-References: <20261112-aplic-affinity-fix-v3-0-943d25cfbfad@linux.dev>
-In-Reply-To: <20261112-aplic-affinity-fix-v3-0-943d25cfbfad@linux.dev>
-To: Anup Patel <anup@brainfault.org>, Thomas Gleixner <tglx@kernel.org>, 
- Radu Rendec <radu@rendec.net>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, 
- =?utf-8?q?Bj=C3=B6rn_T=C3=B6pel?= <bjorn@kernel.org>
-Cc: Anup Patel <apatel@ventanamicro.com>, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Troy Mitchell <troy.mitchell@linux.dev>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2666;
- i=troy.mitchell@linux.dev; h=from:subject:message-id;
- bh=sOgtWAxcrlGbQSoX1V5yIO89uZD0ppP6b0dzshzQZsc=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFlfS5vsPBxTf2U+i7f0VfvNnhT69+J0683+CR+F1ywyf
- HfYdN3ljlIWBjEuBlkxRZbuBzzbCnyibAsECn1h5rAygQxh4OIUgImcfMLI8Kz1jhDD/xhGWes0
- X9/l6tcMhCc2NLu8zWOyupC6JNFTkOGfscHKrKWLbfu4Yrd2rKs+m32xPiqqteWcpEj0O+Xg0uP
- MAA==
-X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
- fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-IMSIC rejects an affinity change with -EBUSY while a previous vector
-move is still in flight, and the IRQ core then records the new mask as
-pending. The change is applied by irq_move_irq() in the IMSIC irq_ack
-callback, but level-triggered APLIC MSI interrupts are handled by
-handle_fasteoi_irq(), which never calls irq_ack.
+Hi Luiz, Yixun,
 
-The pending change is therefore never applied. While it is pending,
-later affinity changes only update the pending mask, so the interrupt
-stays on its old CPU.
+Sorry, I should have said in the cover letter which tree each patch
+was meant for.
 
-Use handle_fasteoi_ack_irq() for level-triggered sources. It acks the
-interrupt before invoking the handler, so a pending affinity change is
-applied on the next interrupt, and the EOI retrigger then targets the
-new CPU.
+The split is fine with me: binding in bluetooth-next, DTS through
+Yixun's tree. I can resend patch 2/2 on its own, rebased on the
+SpacemiT tree, if that helps.
 
-Fixes: 58d868b67a9a ("RISC-V: Select CONFIG_GENERIC_PENDING_IRQ")
-Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
----
- drivers/irqchip/Kconfig               | 1 +
- drivers/irqchip/irq-riscv-aplic-msi.c | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 136bab41f801..a639a0c2f3d2 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -645,6 +645,7 @@ config RISCV_APLIC_MSI
- 	bool
- 	depends on RISCV_APLIC
- 	select GENERIC_MSI_IRQ
-+	select IRQ_FASTEOI_HIERARCHY_HANDLERS
- 	default RISCV_APLIC
- 
- config RISCV_IMSIC
-diff --git a/drivers/irqchip/irq-riscv-aplic-msi.c b/drivers/irqchip/irq-riscv-aplic-msi.c
-index 5aa9607fbd83..7a8e569002c1 100644
---- a/drivers/irqchip/irq-riscv-aplic-msi.c
-+++ b/drivers/irqchip/irq-riscv-aplic-msi.c
-@@ -75,13 +75,16 @@ static int aplic_msi_irq_set_type(struct irq_data *d, unsigned int type)
- 	 * acknowledged before the handler runs. The edge flow handler also
- 	 * replays an interrupt which arrives while the previous one is
- 	 * still being handled on another CPU after an affinity change.
-+	 *
-+	 * Level-triggered sources use the fasteoi flow, but still need the
-+	 * ack so that the IMSIC parent applies deferred affinity changes.
- 	 */
- 	if (type & IRQ_TYPE_EDGE_BOTH) {
- 		irq_set_chip_handler_name_locked(d, irq_data_get_irq_chip(d),
- 						 handle_edge_irq, "edge");
- 	} else {
- 		irq_set_chip_handler_name_locked(d, irq_data_get_irq_chip(d),
--						 handle_fasteoi_irq, "fasteoi");
-+						 handle_fasteoi_ack_irq, "fasteoi");
- 	}
- 
- 	/*
-@@ -182,7 +185,7 @@ static const struct msi_domain_template aplic_msi_template = {
- 	.info = {
- 		.bus_token		= DOMAIN_BUS_WIRED_TO_MSI,
- 		.flags			= MSI_FLAG_USE_DEV_FWNODE,
--		.handler		= handle_fasteoi_irq,
-+		.handler		= handle_fasteoi_ack_irq,
- 		.handler_name		= "fasteoi",
- 	},
- };
-
--- 
-2.56.0
-
+Thanks,
+Fr=C3=A9d=C3=A9ric
