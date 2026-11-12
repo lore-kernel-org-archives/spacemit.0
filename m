@@ -1,49 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794426020;
-	b=C91gUNppQakLgegyfX1c7y0Qkg+AqwhViWfrGC5nQAknq0ItsdBa5zH12ERZGkxpO1bX
-	 +SqEubr/A11XKQTz+ttsNsMgo9vcua+rQ9A/1Vs9LTTGhWCFaO+WH0hgWSjSRs5r3nAON
-	 YwASF4lVd8TSY91GLPW779SeBfWeMMF5pIaJDXIVnx8aCcp1JJ0ROkAGGJ+mDdoAeklJO
-	 b/wi8KSoJcMnF8RzJZPM0GfNdEuw/EANq+fMDbIdQxo/5bBsn9UQbEGQaxB8Lrw0dqPW7
-	 fWRyOBdRl7cfbpWMx0TYX586P/nP+Z6CZZr3lu9U7ioaP7qBxDC/ucdSKQZHlY4jJPw==
+	t=1794447986;
+	b=Gds1bhMTIjIJ8M0f2Unpgny+acJIqlcFT39eZsdJ93/xlRRL6GYL/wyuJ1wjHRvFDMak
+	 noaTwlXbV6/R4JfNSjq3vwBVG87GwwRnIkHCRCiofdss+r3UAzatHq+H2HGAHo5T4FSQ/
+	 +mo/zxisLfYZB6JMpBHFDBnZO0KZG04Yo5yhZ66GfEwcLQ18VmNiZeDkApB/0dDugPDgQ
+	 PGHx7h60W+DzDWipK5MDjb979RoWmaCHvzCmD+zbTyfQBZRterxsNoUmkBK6cf/SKNG3A
+	 Vs6oZhXTMZNUfNcPgRR2T7UBX/Y/cIVGSqBD+aRvlUOZizDndHMBFXiBnKPJKRkNy7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794426020;
-	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
-	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc;
-	bh=6HWQUpM3PjW8+BhL116w3GjQjvGNhoMy2Dx/tVTVrDk=;
-	b=jik8pD5v6IqACAsopJihP+TejXYTbn0PlPDeN6x8c0fpb4agiltB0LjF8fYk5OdEjCGm
-	 mGLdUoRFP/VlMOSqtQhlz+RowtU6wpzL/H8UYi0UCTvyUz/IoYqITuCYSOizRSw4DKqY7
-	 jZ13xxbL6rUoSqQnYp4HciGUy+3VveulGOu3SdHWh29BWwcmg3IlcR1E5Vj2CC2BeixDd
-	 7S9hWQ7tpKKFJrio7j8rGlO1ZGrU+M/Zn1TfllcvaSH0JTPP706lbkI/lDduNZrLjX9O/
-	 wQ/LAIJNWXwW9Ol8+2Ff498PXR0OtbL3mU3EFhNB67fuqvdRBCa8uHh8kgwcd0Bddpw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794447986;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
+	 References:Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=o9qbUelCx5fzvjlP9T4Xcmeuzs4IG3zEIHU3OITHRHo=;
+	b=Tf0DB6THDLq7O5QXDo8mhRvQQNhF9CwtyrM9ChmIWVF0EQDDq+er4GBiyi94Bkz4hbmB
+	 L2yFf9fXrDSIAxoadasY/U6c3XXnO6orUaJ5FcVmT3ODp/1ckaOBAB9YzdVxDQ2tqChGZ
+	 MSHS7td+0c/9mG6raEmit9hJThefioPS9l2KMCJDCvbMwBNb7BJ1NalyslIEOrGifd2gm
+	 m39nczYgOeaBohRmGJ2iN7eGoA2cn6fguKCXXZAyKzkcjFN2C2JGu0+ftkNQESj0S4tPH
+	 zrunKMPNsz5zO8Sj5NAXa4lfRoFj5qCyCt64iopSAx/788Y3e+d/McvfG21f9IWsEWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="hJPq/ZFh";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=piyJX+OD;
+	arc=none smtp.remote-ip=54.254.200.128
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9F5606A334;
-	Wed, 11 Nov 2026 19:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758E8606A323
+	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 01:46:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 758E8606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hJPq/ZFh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63E01F00A05;
-	Wed, 11 Nov 2026 19:40:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794426020;
-	bh=6HWQUpM3PjW8+BhL116w3GjQjvGNhoMy2Dx/tVTVrDk=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=hJPq/ZFhM5A2mQhaliriYcks2OFyKkFI3KDY17+DL4ys/X3o6mEx8JuSxcsg8g/VB
-	 FxnoAIUWchI9BGiaChl89VpQTW/NXpTOxkUIwu4LSZ/THK46BTxbjDfwSVVnrpMDYR
-	 rGzLqMS2jgjJWzGfU48dbeSp/O1CgXkzNHOGaxX9Uv6g7QYnyq7q6W5siHEBzOoPiw
-	 /XliB9j5i+3fTwujeLL8CLlfXZ3EOUEHB2kBVCIdTpVszdz1Qg6HY7KMot3UO/lCzS
-	 tDOTI8iuTL2eZwHpTCmdZlKPxx7CLfkfH/DeknfbR1d/GiQRJzi/+wIZeGdLyUTo5B
-	 U4Io/xBcrKAFQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 9B26838003BF;
-	Wed, 11 Nov 2026 19:40:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=piyJX+OD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794447957;
+	bh=o9qbUelCx5fzvjlP9T4Xcmeuzs4IG3zEIHU3OITHRHo=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=piyJX+ODZSYYaVvjlTI2Eq9fElkjSsMxECUYYfK7ObaUBsg5PgSevcsupPAxywNUG
+	 M1V8o33I51bLUw7HNWTBkWtgIrCpBX6XsgTznpCjUmm4GjvzDmmTNdnXfXcOulnxIU
+	 W9hxC8AC0AIVB0KOWtwu9w9G0OOccXGgnGlv+qEE=
+X-QQ-mid: esmtpsz17t1794447955t84c88b44
+X-QQ-Originating-IP: nAMxank+hAidb3QvsKnH0QjBdmBkxc00yYWvW0b9tzA=
+Received: from = ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 12 Nov 2026 09:45:53 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6514529535114007816
+EX-QQ-RecipientCnt: 20
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -52,48 +58,87 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=d400da5dd7a138166c54bfc43864faed746c419ff16dffcffaf97ceb07d3;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 12 Nov 2026 01:45:52 +0000
+Message-Id: <DMSUPKS0VL8N.1RUUESQVU8FMF@linux.spacemit.com>
+Cc: =?utf-8?q?Fr=C3=A9d=C3=A9ric_Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+ <marcel@holtmann.org>, <luiz.dentz@gmail.com>, <robh@kernel.org>,
+ <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <dlan@kernel.org>,
+ <anarsoul@gmail.com>, <alistair@alistair23.me>, <pjw@kernel.org>,
+ <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <alex@ghiti.fr>,
+ <troy.mitchell@linux.spacemit.com>, <linux-bluetooth@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
 Subject: Re: [PATCH v2 0/2] Bluetooth for the RTL8852BS on BPI-F3
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <179442601916.1604530.1705197925952408060.git-patchwork-notify@kernel.org>
-Date: Wed, 11 Nov 2026 19:40:19 +0000
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Luiz Augusto von Dentz" <luiz.von.dentz@intel.com>
+In-Reply-To: <179442601916.1604530.1705197925952408060.git-patchwork-notify@kernel.org>
 References: <20261111094557.443481-1-frederic.mahe@cirad.fr>
-In-Reply-To: <20261111094557.443481-1-frederic.mahe@cirad.fr>
-To: =?utf-8?b?RnLDqWTDqXJpYyBNYWjDqSA8ZnJlZGVyaWMubWFoZUBjaXJhZC5mcj4=?=@aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, dlan@kernel.org, anarsoul@gmail.com,
- alistair@alistair23.me, pjw@kernel.org, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, troy.mitchell@linux.spacemit.com,
- linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-kernel@vger.kernel.org
+	<179442601916.1604530.1705197925952408060.git-patchwork-notify@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OD73vtqOAFgqQdl8kVxlaorlGh6ZaUM7MaaEhliCvStV/AKYXHEQMwXv
+	mE8cjPXzZoSMzDP5rS79pEFkS9v0Cuth3c55LR7M61G2e8XnCAOlpEjrxoh8bqs8GEKMTfm
+	GTyWl/QZL70ACCCVQ6uj8Tlyf3KkE2JcX10i0FHHOsrnfmi5q+Ehkn3K7RXY3bZvU2FID2H
+	UvN7y9rKiw77FT7s6GhJ4fx1S1RlRbt7n6OsPhwPZHVivwHdgz9O3mYH3bj7sr9CPzEsPiZ
+	anYDNKhJiC+hgVRO+VxFCm7clKBTCO1/dpbNR1ml5GvrpEDfhV/2pIFyykr+YGZpQHxfY3p
+	TJc9QYLV1u0QXALxLj4Val5hsZE7/CthI+Qownvjkph5L1F+EXqwyrq4eoP0YcK/ilmDAho
+	ZvCFlYhVaBcsc2VU89cwcIOEQgZEehRzQdL+SJw7373sgvVEJE1Y4vyw/ms45GOTC2Q21Id
+	OMUuGZ3QjPuQHbb8B7XixuiYzs7iprF3xJjXo0jmeKrNhDIZGvuaDAh4bySOqW6kLnAbV56
+	RA+Y600SEiXKQWXcLbRFeMx6ywBNGCxG5a+UJRDhGRum8DpjlhmVG+CuhQ2RMmjgc4wr2TD
+	d9jJ3pfBFkZ94W/W+gOn3AIKoBSv2bAM+/8wb+QQJ5FJNFooxGq+YiWh3LAhoLGuVsbgV+D
+	cGyRNvuebtQHbocavAoJSFzS4BmjFe3dwxdXk0kd1Zcow1gxUfTvCHCmx0tZuh3HzTl/1bD
+	l1/6KffMQMTv7+AgDGYqGXZ/mf93hOH0+JeQSGtCJb9BHs+QrqmdnYhQb8uRxyx+kBYUNNl
+	06viwZorpHpExLypIKCmxYCnoJKmZprZWkCQBHUR8BYD7VkRJkGTe7sPXHBZu8AsEKY/jew
+	aZH2f1ovWzm8emaBcAGSmMYWkhghxdY3HkVZc6ExcZXgl8mK7/cUEWu2d5kcUwGmCbG4Qji
+	rdB4VW/J2kmthTdNN2Yl5OqyEXyWpT820kPtJaT3gkQUxcw6IWwrGWQL2IF+aHUev6hHd1F
+	5OEfl/viYZ1xVcnkitMrNIqckdq/L55vhD+jfzXnkrJegcbhzOxEi1uwRca08Usj47dp6VX
+	f8qGllmeqmKimpUt5M9OSQQo1cVnn7Swg2kYjxjGMTh
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-Hello:
+--d400da5dd7a138166c54bfc43864faed746c419ff16dffcffaf97ceb07d3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Hi Luiz,
 
-On Wed, 11 Nov 2026 10:45:55 +0100 you wrote:
-> The BPI-F3 (SpacemiT K1) carries an RTL8852BS Wi-Fi + Bluetooth module.
-> Wi-Fi (SDIO) has no upstream driver, but Bluetooth on UART works with
-> the existing hci_h5/btrtl code and linux-firmware's rtl8852bs files.
-> 
-> Patch 1 documents the compatible, with rtl8822cs-bt as fallback, so no
-> driver change is needed. Patch 2 enables it on the BPI-F3.
-> 
-> [...]
+On Wed, 11 Nov 2026 19:40:19 +0000, patchwork-bot+bluetooth@kernel.org wrot=
+e:
+> This series was applied to bluetooth/bluetooth-next.git (master)
+> by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Here is the summary with links:
-  - [v2,1/2] dt-bindings: net: bluetooth: realtek: Add RTL8852BS
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c21f8cff7503
-  - [v2,2/2] riscv: dts: spacemit: enable Bluetooth on BPI-F3
-    https://git.kernel.org/bluetooth/bluetooth-next/c/df348a0d065c
+[...]
+> Here is the summary with links:
+>   - [v2,1/2] dt-bindings: net: bluetooth: realtek: Add RTL8852BS
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/c21f8cff7503
+>   - [v2,2/2] riscv: dts: spacemit: enable Bluetooth on BPI-F3
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/df348a0d065c
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+SpacemiT DTS changes normally go through Yixun's tree to the SoC tree,
+and Yixun hasn't acked this one yet. The binding patch is fine in
+bluetooth-next.
 
+Yixun, what do you think? Should Luiz drop the DTS patch and you pick it
+up?
 
+--=20
+Troy Mitchell
+
+--d400da5dd7a138166c54bfc43864faed746c419ff16dffcffaf97ceb07d3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavUaUCEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9TDAD/fhHvVXqOkUxo
+4u6rg6LrG/txpGkWipkP94X2k5PSn9EBAIezttdQYAric2H/Pw+q38b/NEdLHI/i
+7Au69q7vwYkA
+=ms2x
+-----END PGP SIGNATURE-----
+
+--d400da5dd7a138166c54bfc43864faed746c419ff16dffcffaf97ceb07d3--
