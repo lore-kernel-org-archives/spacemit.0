@@ -1,57 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.32
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.69
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794471307;
-	b=DXxeE2YjBrRD7gQ4KX4vu8xwSPAxs6IipV7gT+jBg9nsuWuf/oGySdqx6BhRpXJGSSVz
-	 CU67JgfY6NV4SRFLBp9C+BW5oS3L1zguuGY6YgTxe7hWPTshGs3U9NXnFA452JYnjg8ad
-	 z6LJcYaWiL22pJ2hg06HmQ+HL3fUn2KbU1WiAMWC8SmxKvuig7Ikx+KiVnVjmxxCGlXOM
-	 PAihGsVAxN3jZKCKIDNqQFfp7pJ/19/Ywshc6cRMkWB1uUyrBKjQtgAGjbExhfNa5YsqC
-	 4je5UspFzy2BN0vFylqN0357fuAtIUU8QQugwtKV7N2EiAsj0pikPdnzucP/Z6iztlA==
+	t=1794471314;
+	b=2B11pNeJQqlGdqqXTS8/HBqV8g1Oft2Q0DDGObWSw8rMx5tbBLUpDq7dKeDu5X5rC8+p
+	 FapvR7ekm1xJwXdlPRBar0+5qlMRFwQyxtK9/pyVDwrN1zO8PalhNsHjlLTxsJV/n0cmB
+	 0Zd3KZpjShBvesnEDZhNU3eWGlDmbb0pY9f1y8Ka6yHEcT/S8DrWvfBbQcR5cjgQhZ9Wk
+	 svx2xK/ZFEy37REn61GzpyfgD5lJFKHLEAiYmVQ5iA2JiLHmBpcej1ny6/JyvCwNxRbSR
+	 LrA8LGhMzZK7bCQCfD0uuid5Qa11ktQhsGfupn0m7wGKsDADhomiqH2CEfAT+87yGog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794471307;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794471314;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=5LrhcM08sLorKQVpwZjpNM1KLr7mAptthBEY0BzD/1w=;
-	b=d8wHXsEAzyM+v2pm7gZAhlOOvkPI4X/PfYFWLM31TiBzxzxfPAgU52zsothHswCtSMhN
-	 he52vsB3/OruRZB7v8Kba8NpmwJ9t1ee7ol98cJMReu8K/7JDF6sppNA7IbnqT0oEMBLm
-	 vnnhi7zjQlV7GDOQbeOlJbsrVfUzDjj2O99XK4Tz0PHzd7Z0rvuSnK3v2DqbFSxIZDtES
-	 NiW/ycp1ev6WIbP0WRDFIzaD0q7zRAvdqg351vFLJC37l0ddMYq5iRfveEqXJ6tJAMuJh
-	 zplbSlU4p+VYptTHz4zP2DwKbyvkMzJZWzzwS9jiDxLCkbSltA7Jqcg7vXm/LTBI1oA==
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:Date:Subject:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
+	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=fzZmTmGh6zxrlmuOofdQSMLS/zE4pvLqaLe8jBYsJAM=;
+	b=GD7Vp39Kd/H21mle2HbG0WhdPdIjHmBN3yO0hOCf85CVBUzf0kJR6NNtzk3riQwjmQ2t
+	 pzkPiq5Y8qTgyX1K5JgYFms9OUSo2Ki29xJtbV72Xek2muI4UVwgcQcYLc1pmCGXDjwxp
+	 JWrPcgXlHD5H2MtqjFBDlb+MLKrAlVL36HB6mrh+N+NLdBWpycY7gtrDeAaRfE16eCWNo
+	 mnmM5ZF1LM2CZ7JGxbzLboPEn0Nf0BoIHKQXrlyHXSgxJ6ZwpEs1H81QFc+QDS2jgXvj2
+	 F+w9FjMGqLqZ7wTPVdqBZyJbZvcNLF+zmfLkqkzyjnIn/rap2nW4KGV1Gn/PjGYUB8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=kN5Riccv;
-	arc=none smtp.remote-ip=91.218.175.32
-Received: from mta0.migadu.com (out-32.mta0.migadu.com [91.218.175.32])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=gXLagkCU;
+	arc=none smtp.remote-ip=95.215.58.69
+Received: from mta1.migadu.com (out-69.mta1.migadu.com [95.215.58.69])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44230606A333
-	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 08:15:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 44230606A333
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DCE606A8A6
+	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 08:15:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14DCE606A8A6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=kN5Riccv
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=gXLagkCU
 X-Envelope-To: spacemit@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=h4GvArQMrEiTRwfEHf4rZ5pF+aKj8NBbvpgZjU0P818=;
+DKIM-Signature: a=rsa-sha256; bh=ZSMnWkJIamVO8pDMKRsa4dzIAxKB5tL43vgFe5Xu4T8=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1794471304; v=1; x=1795076104;
- b=kN5RiccvttyQa8sBP/UNxvNsXewbaL8IL8SaGD3jUHt5YkfE9KChXdqo/XkmWK+33HyX2O6L
- iSSpCk2T/MuzWWWNVOxCyJStnQbe9pJ4rWcw2N3BSylh1ubnHs0PpFjUWat/ciYPr0YD7w5HbCt
- 6D/UezCfNSvnhTvc6TO62nO0=
+ t=1794471311; v=1; x=1795076111;
+ b=gXLagkCUGSsqCj2xUVLmqydxY5ns028U1OGGU9MscR6wI0DnnJfZ+fpMXLf7UHblEP1VqfgF
+ 8FpXrPydqt/AKoCOhGQm3qoK6qlQNkQEmOQ12mviH5kTAH29HP03rJDr3Iduhup934W3FunAO9/
+ +uYCmtMk76KB0+jXHbNmt2l8=
 X-Envelope-To: spacemit@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id bf7d0b889862177b;
-	Thu, 12 Nov 2026 08:15:03 +0000
-X-Mizu-Trace-ID: bf7d0b889862177b
+Received: by mta12.migadu.com with ESMTPS id a198511cfc691750;
+	Thu, 12 Nov 2026 08:15:11 +0000
+X-Mizu-Trace-ID: a198511cfc691750
 X-Migadu-Flow: FLOW_OUT
 From: Troy Mitchell <troy.mitchell@linux.dev>
-Subject: [PATCH v3 0/2] irqchip/riscv-aplic: Use trigger specific flow
- handlers in MSI mode
-Date: Thu, 12 Nov 2026 08:14:41 +0000
-Message-Id: <20261112-aplic-affinity-fix-v3-0-943d25cfbfad@linux.dev>
+Date: Thu, 12 Nov 2026 08:14:42 +0000
+Subject: [PATCH v3 1/2] irqchip/riscv-aplic: Use handle_edge_irq() for
+ edge-triggered MSI sources
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -63,11 +62,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NMQ6DMAxFr1JlriuHAIVOvUfVIQmmuEKACEQgx
- N1L6MLA+Kzv9xbhqGdy4nFZRE+eHbfNBup6EbbSzYeAi41FhFGKOeagu5ot6LLkhocZSp4gQx0
- bhaZARWJ77Hrazrv09f6zG82X7BBMYVGxG9p+3qteht0ekBLjs4CXIIESldninlKSqmfNzTjdC
- vIiBHx0UEg8VUSAkFoZK5OZmDJ7VKzr+gPrNSPzCQEAAA==
-X-Change-ID: 20260909-aplic-affinity-fix-80a4b30bd03e
+Message-Id: <20261112-aplic-affinity-fix-v3-1-943d25cfbfad@linux.dev>
+References: <20261112-aplic-affinity-fix-v3-0-943d25cfbfad@linux.dev>
+In-Reply-To: <20261112-aplic-affinity-fix-v3-0-943d25cfbfad@linux.dev>
 To: Anup Patel <anup@brainfault.org>, Thomas Gleixner <tglx@kernel.org>, 
  Radu Rendec <radu@rendec.net>, Paul Walmsley <pjw@kernel.org>, 
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
@@ -77,53 +74,67 @@ Cc: Anup Patel <apatel@ventanamicro.com>, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Troy Mitchell <troy.mitchell@linux.dev>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1642;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2248;
  i=troy.mitchell@linux.dev; h=from:subject:message-id;
- bh=h4GvArQMrEiTRwfEHf4rZ5pF+aKj8NBbvpgZjU0P818=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFlfSxs/BR22lmAruvCvSXB7t6/YlkVKESsbXl5+fIYry
- eeCyKwDHaUsDGJcDLJiiizdD3i2FfhE2RYIFPrCzGFlAhnCwMUpABN5ysrwV1AtZskZ5zdOM0R1
- ssOaJI9pPxY5ezSmJkDiFe85NvZ7/IwMr3l+/5mwYkHTeoYJH20lJyae6YtIsf/ENFHHZ97EtX+
- TWQE=
+ bh=ZSMnWkJIamVO8pDMKRsa4dzIAxKB5tL43vgFe5Xu4T8=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFlfSxu/JzzXca81PZ95Pr3nqqx429eG2vKfMX//Oe/ft
+ KyUvTi6o5SFQYyLQVZMkaX7Ac+2Ap8o2wKBQl+YOaxMIEMYuDgFYCLzEhgZNm0vqZZoDBeVjy29
+ /fKm8ybDZwUH7cQenH2mX1d5l0niIsMfjheLa5T29b5Y+f9n3tTWH6ecbp8Kjf69KCWmRM/QQEq
+ PEQA=
 X-Developer-Key: i=troy.mitchell@linux.dev; a=openpgp;
  fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 
-In MSI mode the APLIC handles all sources with handle_fasteoi_irq().
-For edge-triggered sources this loses an interrupt which arrives on
-the new CPU while the previous one is still being handled after an
-affinity change. The fasteoi flow also never calls irq_ack(), where
-IMSIC applies an affinity change deferred while a previous vector move
-was in flight. Such a change stays pending, and later affinity changes
-of the interrupt only update the pending mask.
+In MSI mode, all APLIC interrupts are handled by handle_fasteoi_irq().
+For an edge-triggered source the APLIC forwards each edge as an MSI and
+keeps no state after that, so an edge which the CPU side drops is lost.
+After an affinity change, the next MSI can arrive on the new CPU while
+the previous one is still being handled on the old CPU, and
+handle_fasteoi_irq() then drops it.
 
-Use handle_edge_irq() for edge-triggered sources and
-handle_fasteoi_ack_irq() for level-triggered sources.
+The fasteoi flow also never calls irq_ack(), which is where IMSIC applies
+an affinity change that was deferred while a previous vector move was in
+flight. Such a change stays pending, and later affinity changes of the
+interrupt only update the pending mask.
 
+Use handle_edge_irq() for edge-triggered sources. It acknowledges the
+interrupt before invoking the handler. If the interrupt is still in
+progress on the previous target CPU, it either waits for it to complete
+or marks it pending so that the handler runs again.
+
+Fixes: ca8df97fe679 ("irqchip/riscv-aplic: Add support for MSI-mode")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
 ---
-Changes in v3:
-- Add Suggested-by: Thomas Gleixner to patch 1
-- Add braces around the multi-line if/else branches
-- Link to v2: https://patch.msgid.link/20261110-aplic-affinity-fix-v2-0-6c143b8b4e8c@linux.dev
+ drivers/irqchip/irq-riscv-aplic-msi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Changes in v2:
-- Use handle_edge_irq() for edge-triggered sources instead of calling
-  the parent ack from the EOI callback
-- Use handle_fasteoi_ack_irq() for level-triggered sources
-- Split into two patches
-- Link to v1: https://patch.msgid.link/20261104-aplic-affinity-fix-v1-1-e538cd76e563@linux.dev
+diff --git a/drivers/irqchip/irq-riscv-aplic-msi.c b/drivers/irqchip/irq-riscv-aplic-msi.c
+index fb8d1838609f..5aa9607fbd83 100644
+--- a/drivers/irqchip/irq-riscv-aplic-msi.c
++++ b/drivers/irqchip/irq-riscv-aplic-msi.c
+@@ -69,6 +69,21 @@ static int aplic_msi_irq_set_type(struct irq_data *d, unsigned int type)
+ 
+ 	if (rc)
+ 		return rc;
++
++	/*
++	 * Edge-triggered sources are fire and forget, so they must be
++	 * acknowledged before the handler runs. The edge flow handler also
++	 * replays an interrupt which arrives while the previous one is
++	 * still being handled on another CPU after an affinity change.
++	 */
++	if (type & IRQ_TYPE_EDGE_BOTH) {
++		irq_set_chip_handler_name_locked(d, irq_data_get_irq_chip(d),
++						 handle_edge_irq, "edge");
++	} else {
++		irq_set_chip_handler_name_locked(d, irq_data_get_irq_chip(d),
++						 handle_fasteoi_irq, "fasteoi");
++	}
++
+ 	/*
+ 	 * Updating sourcecfg register for level-triggered interrupts
+ 	 * requires interrupt retriggering when APLIC is in MSI mode.
 
----
-Troy Mitchell (2):
-      irqchip/riscv-aplic: Use handle_edge_irq() for edge-triggered MSI sources
-      irqchip/riscv-aplic: Apply pending affinity changes for level MSI sources
-
- drivers/irqchip/Kconfig               |  1 +
- drivers/irqchip/irq-riscv-aplic-msi.c | 20 +++++++++++++++++++-
- 2 files changed, 20 insertions(+), 1 deletion(-)
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20260909-aplic-affinity-fix-80a4b30bd03e
-
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.dev>
+-- 
+2.56.0
 
