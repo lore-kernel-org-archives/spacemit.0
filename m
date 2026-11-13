@@ -1,110 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.138
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794576529;
-	b=hyq/BPW6uks/ohQkk3krJkMo6X1U9TG4h8MwrVzNA8bnjF2UwgUvMHg6STU5hS0UFacX
-	 oi1q2uPsMBVEhLt+LlV3MuGYo2QJHeOGl9PKhYkoXYH3GOiyjpheR4avt/7R2v+Ynlzi/
-	 GVIUHJxvaKYPJlkvCSa5ydMle0niacAI/qWhvD6kQGvm5Cwwzbl5ajz3U5H+MoRs1HDgj
-	 SkhOZWwerPiAkCN0kzg8mSvD+1K6hFuI4yXEuXAgxcLfACsvlzzpHCilVsySt+timi0Og
-	 e+SXfJzvQIWAAqCBhKNeYvxeygjBv+rzBmlB3uGVTqNMM57rKthzsZUIgam+BkaueUg==
+	t=1794577758;
+	b=UzfrGF5xqzQyNjeK54XQWQqnvupRCe39FMODr5cu+4877xwJ/gPyoEkqaqh5nGDMdwB2
+	 f7LVb4wUoDuVCyOyDSJsH4c266t4bC6Xan6KaQx2fFBnXvBcF9/ZSvgbpHdUai98Q+4hv
+	 slz699vjCz0QIfMdIqJ/k6t4cJjcsNsU/OGLxewUlGwpK3g2IldwO/n2bdaLSdScKk4Vr
+	 l++D9WYDkxIpo3/Dbn/lK+6uHKv+xyPAv2/PXv96IXOUAbD20HXtqp4zK+1Cz6x+Jm2LD
+	 kxJjQZcdqGtowGOw/YJ7yNH3CP4hZ7NzxtsFrA2o86v3KVzSFtb5L9rjhM4Wg98iDbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794576529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794577758;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=MRo7HIV8yZ/AJq7Hb5Yi36jH8E/ybOv5u/YJ01l5Ztw=;
-	b=vMnokBowjlhISNSZCmiR8HrSUFrihDFy45IUpC6AQhs16rNLn/IHVdtn6/owzSmZgnSV
-	 6p70yPwJQEGotZ2bhk3F55u1s60lD7Hsqi1HhzK9qlVQYUPBna4wlT980BP9Nbs73iUAr
-	 Zr8CBe1WYiBg3QmD7fWplXMgy62xZGoNMzmGGVzvGoY7p23J6t1njLWJCt+4HFwPx2A10
-	 GzURFwMyDpN5Yych2pINk+VFXOxlf4pPzg1V5w6I6q6sfFM4pGkExfdIRx24Ftx8jINg6
-	 za0Vq+uqOvjIwImOwWRV0U/htlHXKiT0ZibOcXBEzJntjlhcY5/xtJdE+5/d5tNN8Hw==
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
+	b=EY9U3H7rQUHoleMhq2yzcDvAoJqJojQeDZTARv38elfwYzn/wUdJzPpLhfDQJ+ewNqyM
+	 CadTFw2EyomE10EvM47m0kUVcQxGW1ZbzMJt2gjsIaBTPWJQg//D6Clp/BXwYfZCVo3jT
+	 VJKXSUAICLOuMqviD1Z27W5NC1Ui44M4tE37ErmFWnFeEDTi6XBrBZ2lnxs5xQPijBIbH
+	 j7E1YXxPfqLS/sK8fm/xZ9wHw8CurKyvRYjBwEZyVx/wS/DGnz6nFiUoaVBdMUpOIBqME
+	 biEvrmOc/NCJNoNDop4o94WXRRYl7O8v/nLKVmC4tbyaxe0EXEzMkvpOp+oQbs8o5gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="Fw9c83+/";
-	arc=none smtp.remote-ip=74.125.225.138
-Received: from mail-wm2-f10.google.com (mail-wm2-f10.google.com [74.125.225.138])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1TiRp0c;
+	arc=none smtp.remote-ip=74.125.82.178
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09C7606B57D
-	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 13:28:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D09C7606B57D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87801606A32E
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 13:49:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87801606A32E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Fw9c83+/
-Received: by mail-wm2-f10.google.com with SMTP id 5b1f17b1804b1-4b80834ce1aso1478625e9.1
-        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 05:28:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1TiRp0c
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-3712b6d9843so926081eec.1
+        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 05:49:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794576527; x=1795181327; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=MRo7HIV8yZ/AJq7Hb5Yi36jH8E/ybOv5u/YJ01l5Ztw=;
-        b=Fw9c83+/aE3Mfod3a1irP9PUQCCaqcalatwyuqBidrDPro2J6VXALIlCccym2N6val
-         Vcqez5UFkThlici/bP3HJqC+JZaG7S6nmD0LdnDO1V0y3NDUGPm9rsjGfrPKIP46CIHa
-         E3DHWPTSAKVX1rJ4bo7YgfQ1cOCnHPLhsXMex3nYL432uczdOq/Ld7CSfzs+MYrvrpBY
-         BeDtHpHj4AZMp8M/ld1E+ZCEWxDF82VsrrUwg5Z1NtUYASdY0HjxjeFw5Ckygm56bJWt
-         XeNWQUYswAdTKV8MlUQ4HgMtfuCJaske9WcXT5C3GIX8yyV+AF5TIlXUhis3ha8VoM+E
-         7ujQ==
+        d=gmail.com; s=20260707; t=1794577758; x=1795182558; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
+        b=L1TiRp0ccqL+FRymNmpPfYw9GaF1bbXJpWJZ9OIGqSlm9HYhdNHWR4zLp30edvN7C/
+         1bjcuvqf6+0d58WPPl1aPtdYCfU3YgbMC97LU2SmON1VVM0QAB12IclCaz7XhN5bw58b
+         1zPOcz7NkS8bf/pTY0K5MD8fz8evsZMGgqlVaETysKhLo+FQEYtGEJljJvqXJ97MudsN
+         6Qk64NYKOnjArmDZTz7S61E/9odO0kX+F1+pheReKY745YIO5ERoyS2QDqvTLoZjPfOQ
+         63GW6U01oKE7xcVLh5V3hxcij8CIXB1ETlUrGOE0mlwfdEm/1f4zMvk94PNB45IwJ6Ry
+         g9nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794576527; x=1795181327;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=MRo7HIV8yZ/AJq7Hb5Yi36jH8E/ybOv5u/YJ01l5Ztw=;
-        b=zsDdoo7vYN1TcNgSHR0vM8RXW/ndfi01RAuPigOfpREBjmvKCHEtN0Rewv4lv9CuoJ
-         lCU2Gkytk4Pmshfp7RatGHlLlAABkRcnGQeTHr1qclkklTuRqAz40kcvF0sWHDmSYVNi
-         tJxuclhxS5VlWM6YMxYXiAsiSfhjiSvv/OFfskn7TXUkPSOCRtg8PnpgvGIo9sKMqU3l
-         404iWi4yRvJw/3CbLki14XYw/SnbxyRbBAA8LkpGSV3HTAfqVXwCGYn1bPZkgqwWr/lQ
-         eJcR0CYqFljkmKEWX39QlE8XUUAYfO7AnjySuaf8krK6uPjy9HdMzXZsThBTnbtSWb29
-         aZAg==
-X-Forwarded-Encrypted: i=1; AL+hErGNlRWGvmuw0xsaCSsz3WYlKKRaMYwTnVzzYfbxVhMP++1YxWtR9FrM3mVk3LHF1y0FahoMtjfP/g==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8jl52pzAsPgRDDhq1QoNaGJ+0ozWlaMpDLBcmtUEg0lxM2OEYB
-	kRYEPzylfRxOkjSPBGJJhz86O28bNtPA3gYO9UHHj60PdrfB5xl4zKzr
-X-Gm-Gg: AYBFou2yuInPi3pgVqM+zpNJzDqq5ftxnYj5aqxKE82acX2Jui8ZqkJwEAPn30NsEv4
-	zwmh/QXwdegVbzbj15ufNgUMf9Ua5jjR23bLKkrvE6VA/ZEXe4AcHxwW/vyBS1sWG3DP/7Rj446
-	mhGKmXlCKLNgV7IFJR9qc5T1mwzmS0uVKptQNa68KwXIM5DrximhIEhoaGXVcdip+nWSkbP1FYA
-	FbAwFa2mLBmr+FuhwTuyJb0orQkytJXgEWxIPESZQYKvoy0/Nb21ppouT2fkj4QCAkqzvfLT15U
-	1U/9UZh2370uMI96MqvEdtj/aNDVB0/Vb3UH/scy4cLmmJTbCrupJywMcAV5CkfIUD2RP3roxg5
-	LAxSHPbyW/FqkjnAaV8zSmy9colJS68ZKImRgX+ozFpIICz5Mjp1ys+zT+VjwVPfsx6/gd0tyEc
-	IVNuoLDDyqTnTivSXaLWxSZwha4PCffbD56F5R1MvDWQj9U2Up1ZGnNFoKT5ipaiYd5TYLt7cvj
-	HV3JYwOWXf395pG+ZGv1NwmzfLtd1TlGRhsIXPlTxaawTeSoz4AWflEnDCL4NXKKJt6fjNf2agQ
-	bipBmjBKOEb3VW2kbbYVYceRmgEQSV3g
-X-Received: by 2002:a05:600c:e557:20b0:4b2:61e5:b2f4 with SMTP id 5b1f17b1804b1-4bb55a583bbmr34500945e9.11.1794576527138;
-        Fri, 13 Nov 2026 05:28:47 -0800 (PST)
-Received: from workstation.. ([45.249.9.114])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c5fe370f8sm4802673f8f.27.2026.11.13.05.28.41
+        d=1e100.net; s=20260707; t=1794577758; x=1795182558;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
+        b=ejl0V1GyUM2JZyZ+bNjlPdaovK+lV1d6Ov1tUrjeoZmHBxHpznem2GtAuqKYLx+feY
+         qD4BwP7mzsMiiLC0tAQougWseYVdMB+kQkfObhLFy8bcs0sQ+appIhPHKDI0VjzsS7MK
+         VlXF1vOXkwAr/j55Og8NR8OEjFYjaRW6/w9Q5IkROa97+rqoxbrSS8wELuVvOx+EWo2X
+         +P6XazG47M0V1tcOvTCDpq/K2DZ1OrUzivMYbcb/IQNMFLLN7ArrJARL7NLl7NJhstZG
+         yJPXHI204WpsYwj+s5uJbM+D6kSbfThCcS1B8/N8gkXr5JVx9NsRDRG/s1DdNeLr2IDK
+         xaMA==
+X-Forwarded-Encrypted: i=1; AL+hErFsn1c0JBBGOjodkxAt6eB02HU6Pnjf4HQdul106xONBtGSuioC2Gm5xHvHXPebr3IgMGfdcjV9zQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8hou1QDhaEoB/E7ryDe4Qecn1jdZhE27KM2xCbFjcgWwqdjcQY
+	TOcNLkRVgP4Z7CmWYTsD2YzZAyw6h2FFi5PXMqFk5lriQevi7GvtO+G5
+X-Gm-Gg: AYBFou0WjkyXy2veRJ+nZYoVOw2OtBL3jLxY6i/zTFvkUa9F9p1NEVAYorfVzTdlRHT
+	H5yUGMPnkVgmVHAcixbe/ruTdQoO77b7VdyyNFTMgJD405XQB7CLtpjLmtoupEkHJIT2c7QX6fo
+	MjStbqLBHgzm8rEG1aRLINijPAW1CnyHgLxwOsxbb5/6llnV9A+dit45z25D0JhTXwFbnm1pS03
+	say3EWW1qHbSfiA4EAHfok1iPq/7yDdN+MQQIJDwgPfahaIq5IgiyweJxNzngzX9z/X5JQbkCR+
+	rd7OH/LYPV44p6pI40yRd33thEUgoZY/8lfgHR3jNI8dmlfMCbEaxOv1x7aw3cxDotsjnZW+CPz
+	jUijUOeDjPRodIj6bHE1074T5/vikPpbk9R6tqYG4gIsbhlsJbWd3UEzP1mOljgTr9AFR08EEjE
+	KyJbSEauY6ISVwOjHnb7bxLo/ya9/kbR1tZ+/anIGa+oaa4f8Ietg+RGDdeuzoJuvKEwP8EQarl
+	+j1rH/jT9fHev7cjU46e3fqgFjtIqahkB4hlP9gfbfYknWGrK+YItqNhsvdN60UvKbIIQ9cpmXB
+	V3qqv9+xXuYPsH+h3YK9ENoZiJI5dQ==
+X-Received: by 2002:a05:693c:88db:20b0:36a:1e9e:ae61 with SMTP id 5a478bee46e88-379684ae78cmr2170730eec.38.1794577757517;
+        Fri, 13 Nov 2026 05:49:17 -0800 (PST)
+Received: from duge-G3-3500 ([183.192.220.187])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3795533170csm8381252eec.7.2026.11.13.05.49.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 05:28:45 -0800 (PST)
-From: Ali Tariq <alitariq45892@gmail.com>
-To: netdev@vger.kernel.org
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Ali Tariq <alitariq45892@gmail.com>,
-	Tomas Hlavacek <tmshlvck@gmail.com>,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	leitao@debian.org
-Subject: [PATCH net v2 2/2] net: spacemit: Hold RTNL lock in emac_resume() and emac_suspend()
-Date: Fri, 13 Nov 2026 18:24:35 +0500
-Message-Id: <20261113132435.434615-3-alitariq45892@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261113132435.434615-1-alitariq45892@gmail.com>
-References: <20261113132435.434615-1-alitariq45892@gmail.com>
+        Fri, 13 Nov 2026 05:49:17 -0800 (PST)
+Date: Fri, 13 Nov 2026 21:49:04 +0800
+From: Jiayu Du <duge1256@gmail.com>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, dlan@kernel.org, pjw@kernel.org, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+Message-ID: <7xzpzkw5qmt3xb3ezo2sii6tnfraetwooh2l6dl4svclvbn43o@uvm7uyhz4bck>
+References: <20261106060525.346873-1-duge1256@gmail.com>
+ <20261106060525.346873-3-duge1256@gmail.com>
+ <DMO4CP89Q1AA.17HKYA50DLY8L@linux.spacemit.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -114,82 +101,102 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DMO4CP89Q1AA.17HKYA50DLY8L@linux.spacemit.com>
 
-The emac_resume() calls the emac_open() and emac_suspend() calls
-emac_stop() functions directly without holding the lock through
-rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
-with rtnl_dereference(). But since no lock is being held,
-rtnl_dereference throws a suspicious RCU usage on
-Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
+On Fri, Nov 06, 2026 at 12:15:54PM +0000, Troy Mitchell wrote:
+> On Fri, 6 Nov 2026 14:05:24 +0800, Jiayu Du wrote:
+> > Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3
+> > eFuse controller. These banks contain temperature calibration
+> > parameters and other configuration data.
+> The rest of the window holds the root key and the SSK, which is why
+> only these two banks are exposed. Please say so here and in a comment
+> above k3_efuse_keepouts.
 
-WARNING: suspicious RCU usage
-drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() usage!
-Call Trace:
-phy_detach_internal+0x490/0x5f2
-phy_disconnect+0x90/0xc0
-emac_stop+0x114/0x626
-emac_suspend+0xac/0x126
-platform_pm_suspend+0x72/0xe4
+I will add this explanation to the commit message and above
+k3_efuse_keepouts.
 
-Take RTNL in emac_suspend() and emac_resume() before the netif_running()
-checks, so the interface can't be opened or closed between the check and
-emac_stop() or emac_open().
+> 
+> > Snapshot the shadow registers with aligned 32-bit reads and expose the
+> > data in little-endian order at controller-relative offsets. Serve
+> > reads from the snapshot and use keepouts for the remaining register
+> > ranges. Keep the AES_WTM clock enabled and its shared reset deasserted
+> > while the provider is registered.
+> Why keep the clock on? Reads are served from the snapshot and nothing
+> touches the hardware after probe.
+> 
+> Tested on CoM260:
+> - clock on only around the snapshot: probe and unbind/bind work, the
+>   clock stays off (AES_CLK_RES_CTRL 0x00c30050), same bank 0/7 data.
+> - this patch: unbind gates the clock and asserts the reset
+>   (0x00c30070 -> 0x00c30040), rebind reads the same data.
+> - this patch: 3s of WTM_RST or of clock gating leaves the shadow
+>   values and FUSE_READY unchanged.
 
-Found by CI suspend tests on Orange Pi RV2 (SpacemiT K1). Tested on the
-same board with lockdep enabled: 12 suspend/resume cycles without the
-warning, and kselftest with no new failures.
+I will disable the clock after taking the snapshot, before registering
+NVMEM. It only needs to be enabled while accessing the hardware in probe.
 
-Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
----
-Changes in v2:
-- Moved the rtnl_lock() before the 'running' flag check
-Warning Log: https://kernelci.cloud-v.co/scheduler/job/549#L2168
-Fixed Log: https://kernelci.cloud-v.co/scheduler/job/589
----
- drivers/net/ethernet/spacemit/k1_emac.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> [...]
+> >
+> > +	depends on COMMON_CLK && RESET_CONTROLLER
+> Not needed, both APIs have stubs.
 
-diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
-index 51edc95f54c8..d07d8a1aa5ee 100644
---- a/drivers/net/ethernet/spacemit/k1_emac.c
-+++ b/drivers/net/ethernet/spacemit/k1_emac.c
-@@ -2031,11 +2031,16 @@ static int emac_resume(struct device *dev)
- 		dev_err(dev, "Failed to enable bus clock: %d\n", ret);
- 		return ret;
- 	}
-+	rtnl_lock();
- 
--	if (!netif_running(ndev))
-+	if (!netif_running(ndev)) {
-+		rtnl_unlock();
- 		return 0;
-+	}
- 
- 	ret = emac_open(ndev);
-+	rtnl_unlock();
-+
- 	if (ret) {
- 		clk_disable_unprepare(priv->bus_clk);
- 		return ret;
-@@ -2055,12 +2060,16 @@ static int emac_suspend(struct device *dev)
- 
- 	disable_work_sync(&priv->tx_timeout_task);
- 
-+	rtnl_lock();
-+
- 	if (!ndev || !netif_running(ndev)) {
-+		rtnl_unlock();
- 		clk_disable_unprepare(priv->bus_clk);
- 		return 0;
- 	}
- 
- 	emac_stop(ndev);
-+	rtnl_unlock();
- 
- 	clk_disable_unprepare(priv->bus_clk);
- 	netif_device_detach(ndev);
--- 
-2.34.1
+I will remove these dependencies.
+
+> 
+> [...]
+> >
+> > +#define K3_EFUSE_REG_SIZE		0x400
+> > +#define K3_EFUSE_BANK_SIZE		0x20
+> > +#define K3_EFUSE_BANK0_OFFSET	0x104
+> > +#define K3_EFUSE_BANK7_OFFSET	0x190
+> Nit: the last two are not aligned with the others.
+
+I will align them with the other definitions.
+
+> 
+> [...]
+> >
+> > +	if (resource_size(res) != K3_EFUSE_REG_SIZE ||
+> > +	    res->start % sizeof(u32))
+> No need to validate DT here. Drop it and use
+> devm_platform_ioremap_resource().
+
+I will drop the resource checks and use devm_platform_ioremap_resource().
+
+> 
+> [...]
+> >
+> > +	reset = devm_reset_control_get_shared_deasserted(dev, NULL);
+> This asserts the reset on unbind, rmmod and probe failure. The fuse
+> data survives, but WTM_RST resets the whole GEU (FUSE_SCLK_DIV_CNTR
+> went back to its boot value). The driver does not need the block after
+> the snapshot, so use devm_reset_control_get_shared() and only
+> deassert it.
+
+I will use devm_reset_control_get_shared() followed by an explicit
+reset_control_deassert(), leaving the shared reset deasserted on teardown.
+
+> 
+> [...]
+> >
+> > +		for (i = 0; i < K3_EFUSE_BANK_SIZE; i += sizeof(u32)) {
+> [...]
+> > +			put_unaligned_le32(val, efuse->data[bank] + i);
+> Please poll FUSE_READY (GEU_FUSE_STATUS bit 1, offset 0x184) before
+> taking the snapshot, and fail the probe if it never sets.
+
+As you clarified, the automatic shadow load at power-on does not set
+FUSE_READY; it is only set after a software-triggered reload. I will
+trigger a reload through GEU_CONFIG bit 22 before polling READY, and
+fail probe if the poll times out.
+
+I tested this sequence on my COM260 Kit: probe succeeds and both banks
+match the data read with v1.
+
+Thanks,
+Jiayu Du
+
 
