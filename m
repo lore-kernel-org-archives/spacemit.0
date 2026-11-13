@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.194.254.142
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794557275;
-	b=WthJirlfivoBRyu9OfKCcbHoJAkH7RHQxwhgLf6NspM8aS9Et9IHKobNfjyP59g/37Ow
-	 rkkqDcLeFhHLywFH6iilBr0R2sAhVErByAecQRQ3ks0o9YmCLyE38Km3M7ejRCUe8Tpdr
-	 xsDMNqp6c5LM+smDjMdQ+LZ0PJVgVGYsBCBnLBWfkB1xdsi7/a31NEj+H0VcCPz5nl/mW
-	 XtpLuj848mgzYGTf434naoEFws6UXYR1B0BYS5QW2SXyX/8Y5ZiIORemabwdRPhPMyeLL
-	 reDtKl8SvkmQcuaWij3m2koaigKmpkIOk1CUQzyLqreiXNiDOFEMbspBaTG9ugPOz0g==
+	t=1794559235;
+	b=t1aMyHleqp3C02CxmWwYQqGl3wIw/Kq7TqPfptDx36DRxWLbpXDM0N4ueSqlzhpiKILL
+	 hZMENJjSQ8NUHkxoTFflVrQbgxbJLwNlrQAJAbI2Ms9ZYbhHn5/MdXGTtM/+DlTRZ9YLs
+	 rUnpkQBhMhtVdlhEXwuv3kbAJ0UPe4oR/0IgiPJNWq3r+94q9uBE1HMsBL+jso3jbhrh6
+	 X1lx4lwSrDdeS82q6W4nG4EjtiMYVzbVUB/EPu3sMztNJn2AFaKTMAzL9ctWl/cbjuE4L
+	 DYikfT3DDVPUyP09ApUwMSW3PXMXe73XM2E64y7xvZ77BBv8T7bCVqH//GILkryKubg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794557275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794559235;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 Content-Type:Date:Message-Id:From:To:Cc:Subject:
 	 Content-Transfer-Encoding:In-Reply-To:References:X-QQ-SENDSIZE:
 	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=4hU5uldfxHAYDoQxeLuo91xKme7lL3iEklihd2gkQEM=;
-	b=zZhg9JeqZ/A846YU6x45yRM9XF62Ek97dSzloT+Ai3L14Mu88BBoM/ei2JxCsdDit72f
-	 YMRC+dKSRUKGoH55uJBHFU+77z9LtcGjrx7eSXLMseaP31POrMPTsAwTcf/DgpCaJ9ZoM
-	 NlTnqPH6iY3I054yKkcACn9NbbzmB0vRWvubjrY6Beb1H/ts7eW1Wpm0rTds1v4D3UAwh
-	 6o/YDd3YFMfGedymhSKzLPH3zcuylthuNIwRSpgW7ih9HK4VUCIK2o436ZIsXYY+rSCVt
-	 IyaxuP0yQbgfTNAUQ94e2f8gIrj4sG+Ifc2BtchW/st6+wBs4KD7skJxkqFW/LDduNA==
+	bh=6WNAQRBi98h2rRNmIF3+dEJhZIMUbBlpuSNyCZ2B0FQ=;
+	b=MqFc83F7aZ3Ujk0Z8jdC8EOIyqVW9Uwvm7Tne1NfN3jEMPuUao1KTxIM2uBc4wdIVlDu
+	 J+sY4cZBiOgpro8EKQhI2xxKGzzwP/LVNHoF5L4ESK+8o192r6qkrCLCp5p19uBgfzenT
+	 CcceUIqVzqR+2BHm0J5nhz4oQ/JnScU3EYNamr7y9UvGdeaPtggVN/tttX+OldpungfCk
+	 7L0kMVP2VyzSbYsDHtTfIr0/EsznhHFaC8hzfYn3X1lYycNCQu707y0r1nrHKM7mfUK25
+	 cIHdGNcSYvpPtajKo4jaVMasOXNYbDO5JTqiJJkzea4FruKXYsQuKP7CVYyRfQm/XxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b="wxXP4u/S";
-	arc=none smtp.remote-ip=54.254.200.92
-Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=ZFErvSkU;
+	arc=none smtp.remote-ip=18.194.254.142
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0323606A331
-	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 08:07:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E0323606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBFC606A8A3
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 08:40:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBBFC606A8A3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=wxXP4u/S
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=ZFErvSkU
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794557255;
-	bh=4hU5uldfxHAYDoQxeLuo91xKme7lL3iEklihd2gkQEM=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=wxXP4u/SOHkkTVCbN0JxSi3W0+e6cE6K7IVz6X56g7rE/nObaFm/FQuOlC6jP8VBv
-	 Qxd/bovAsV05sMy4xJuX1jJx/laJ2sXm1wx5cJnmHNqyJa1Gyq0L9/8IneGjG8P5v5
-	 X/aOBSvwgil1Sa8CMsNiL/hQ4GHWsN9t73XK5HdI=
-X-QQ-mid: zesmtpgz5t1794557253tbc5d26c9
-X-QQ-Originating-IP: FjNqnou82m/a4LkyUcHcc9Tuhz5TiqOdNLxcrb8zkf0=
+	s=mxsw2412; t=1794559203;
+	bh=6WNAQRBi98h2rRNmIF3+dEJhZIMUbBlpuSNyCZ2B0FQ=;
+	h=Mime-Version:Date:Message-Id:From:To:Subject;
+	b=ZFErvSkUbS3LmhGaWhpJdq1IjdBCSR/6zPNUAC3l+L0tLTKOqLVM6BDnx39jwwaXY
+	 yb18dmnqL8hPJ38VzHXpPWhQde0QBNGpQGkUQ0OIoAEqZcctjHcsEFVUPh2BuQ5aav
+	 bP2CX4hsWCB6zMe9UQMKazg4kRB+RCBkG9QzX2Fw=
+X-QQ-mid: zesmtpgz9t1794559202t4bdadd69
+X-QQ-Originating-IP: Ipks7jxgs1sprA9x/MuqmIpTxP//z84Adf3qIwSonO0=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 13 Nov 2026 16:07:31 +0800 (CST)
+	id ; Fri, 13 Nov 2026 16:39:59 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13851320892259870204
+X-BIZMAIL-ID: 7073859681775993480
 EX-QQ-RecipientCnt: 16
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,83 +60,97 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=55ddbb8033dcf0d44c3f2031ef165224813818d398fd0f2c0b9d3848268d;
+ boundary=75fec2531929259e420737857d2eefd1ef8c8ecf6776076da3f66f382a1e;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 13 Nov 2026 08:07:29 +0000
-Message-Id: <DMTXGBJLGVER.1WG847Y2M9AJM@linux.spacemit.com>
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Guodong
- Xu" <docular.xu@gmail.com>, "Yangyu Chen" <cyy@cyyself.name>,
+Date: Fri, 13 Nov 2026 08:39:58 +0000
+Message-Id: <DMTY56PU7CP2.JGIZ9XDXII9E@linux.spacemit.com>
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Sarah Emery" <sarah.emery@canonical.com>
+Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley"
+ <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
+ <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Yixun Lan"
+ <dlan@kernel.org>, "Guodong Xu" <docular.xu@gmail.com>, "Yangyu Chen"
+ <cyy@cyyself.name>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>,
  <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
  <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 BS01DCMA support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Emil Renner Berthing" <emil.renner.berthing@canonical.com>
+Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 CoM260 IFX TQ support
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAJM55Z_HOuvxNmAi2m3kjtQ3tuYEDNtfyvrcb=F-Z1p6K1VSCQ@mail.gmail.com>
-References: <20261104-k3-bs01dcma-v1-0-794025247e4a@linux.spacemit.com>
- <20261104-k3-bs01dcma-v1-2-794025247e4a@linux.spacemit.com>
- <CAJM55Z9Yj87hqwMugqRsf_RL9np=KqzCj-J9RyutuWKd-w-n+g@mail.gmail.com>
- <CAJM55Z9nuO3MneQqBm3K2V2SjOXqXsZcDx9pMzVhxMJJ73xc9Q@mail.gmail.com>
- <DMNTD3S9CNW1.1H4CMNHDJM69D@linux.spacemit.com>
- <CAJM55Z_HOuvxNmAi2m3kjtQ3tuYEDNtfyvrcb=F-Z1p6K1VSCQ@mail.gmail.com>
+In-Reply-To: <fcd2fc41-5af8-4256-8296-a5435fdf41db@canonical.com>
+References: <20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com>
+ <20261105-k3-tq-dts-based-on-com260-v1-2-aa0b7714aed0@linux.spacemit.com>
+ <fcd2fc41-5af8-4256-8296-a5435fdf41db@canonical.com>
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: NFQMG86uACrUzvxdUHdia0jpfQuv8DhlfyGHUK4MPHJi2fy17q/BQejn
-	EWOCs9NMotANKU2R0YSiV823QZbFi8NoGrQG298mAySMsdyP03gmwH+BlYJQvGtQgyzfBrc
-	9VXHBiiU6Oq+xJvussGMeymBhZj3lVvZWS1FQnmGipK6n40zh/kdfaMWJRhO92oAeJOLe6t
-	arZBIIOP34gsjOxZtjFDQ30QvRmeD3Ublwxm25f7dEpoUP+uB5Stask4T/ph51lU0NICchr
-	md20Qz33GOIB4lWHo8n7rjimUnwphH3cKMWUCca9k/KgJ+IDx/DO7sHR9opIkN9rjXgN6bz
-	x12AbgKpFugeb7vFzZzAaWY2MVEbo7SgezdIYbt2X0lKYRMdF6+XHf2I3E6BzMcU32VTZUh
-	00MB3JW+rvZw89XV1EJjTo50vgB4w9bJPY69HoOaPjBlI2BhJZwScgyVAZGY+ncPKnp+6wU
-	THOoWoZRywiOjzmP8Svu0+L4U4XgBF1XWQS4xvWXD2OvNBUmjDExb8uClTfSwjJ3OwILUle
-	B8BKVRUHqXXoambzfB4pTLg9GtsoZXytGlY/ZtwX0y7zSBCzL7uF3K2lTfMFdsd83qU6Hpn
-	HGY3ErRoHSrh/EIW7bka5cfIxOQj8zalUOOig5+RNS5exySwdLYPlEVf6d0VTIrzGZhArTE
-	DR8Qz5xqvOkx3tihRf7jOiQrm5qXfPD1+8N3Afargof2gop3HIwV8wmgPeDbR4Fzn6tSEVe
-	zh609XhqxUr8LtwSRv5wSQZ9aUhyJ3vR8vipCi48dXWzWYRO48/FrqJf5EEuMAeUHF1FMoV
-	nMg7dwyTcH9IhcfPQJtuxwL58QL/E3EZn/lrd/MaFsa8Vpr1KWXEyHTWA2pHBgvc1lGfZlq
-	teOCsPdRb5myym1W0KWBKzWzTg2FGdEcvTIlEmOyQN65RoFxCH+Xro7TiPswCaskouFSI1L
-	kGUk7p+ptustxSyZjf2vChf8TycNHz+fIGrOb9G1IgZFjnFOs5f0WlRj+u3CfmKSQD6A1qc
-	UQsEKVlLf++O92trg1lcAzxCryy3wbIlWF+CQdAxX1A4ElU0bdr4iTQvbLxHos3rqElc41A
-	w==
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-XMAILINFO: Mrv4zYML0Tu4yumLMt0nupP/qBAqfxMj8/Fw8NU3nD+/lmX5NHUiHtFo
+	38UkHWXQGKC+7IZix+ESGTLRL+14d0shIfwLfjCZ3QBWC4yjmRSEVYpJGtUIsyvJXvUQgzw
+	EJ6tDA4zoc0jss7bo30jkHEkl0f4XO4kAvKxNg+cO6M4m1084C64NLTg0RprcQ+1lmRxBx5
+	6jc8TDnMCrNK7hV0DW9WCEY7sLh7EBRTnnfXLzHVGACHHsW7f0iHW0botrE2nA8R5gzi1Yc
+	31OjCN2TEyDHU8QiciuvTmXoRJESz3JOACkHE+jluCG3EK6X7JwQ5d3OKRxduRvgytujNmb
+	nko1nlRCZiAubc2c6Q7H1VvQyMKIkPLTuSCDxE+XI3xfVZUqnCMXGfmgTb08uU7DHDrsHV/
+	U5d8x2R/wF9h4/7bOEUEo2CePCOrHI5ET2l9gDDTe1CLhkMzwgK1VWyxpC501FtK0Mh8DZs
+	Remhb9HwZMfnqQwxiIz/r+TG9S7nbyQDpfSmvz02GjyCBA8eBsjWkCFNlaern0CCAYvw3qb
+	OgTZ1Dd81nixqOXb0lp6kSErVx04qoOqjWYFdS3KpI6yy22tqxdlelmRC6J5UWdBCLRI4aK
+	z9pmP2/EyGkXLe1+lzYyjWJS1ApzCg0I40fW32r2bW3WoTI/vURah7orc7j4Jt5tDucAdxW
+	tu+smF3Tdrn7SKG0A4ijHK+SOgrIH0COn/VXwzEhJgrhFpiACVaxiHBySPMkVCNXKjYN5AU
+	ZIbiWseOxqILhL+ClVKyod1ogvgJLiS8lDSEQfuABC7jJhxUjhaQcH5JJmnmtp9njQq+05d
+	VIMmDToBcDOKpfQlVI62hnEjs7EVj+0/mA6qIwBcILn5MXJPFE1MH9FEMhnCV8MwMcaCKNf
+	OXdUjryQxU7ipzeeGjBzsxK53Z2NmNOK95xCUGC0LXuUm9ovqE3ehfMi0ArBbeeIBZb3bso
+	14xrOrq0xwg2FgS8IypoFxiwhetl4wrhfccIXNiXWK57eTW5kE008g80Cn1JzyPM0e26Laz
+	h+N2+BcrCrXyjiXKpeaZYlgNTQb8k+IQFqlZ3cgG+lovDvooVLxyQmtSPlm9IXd3uVs/N+a
+	4fiEtxPbQ0mzXVMx76Vm4dRzdXEGvVSi86wXVrZXLh4
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 X-QQ-RECHKSPAM: 0
 
---55ddbb8033dcf0d44c3f2031ef165224813818d398fd0f2c0b9d3848268d
+--75fec2531929259e420737857d2eefd1ef8c8ecf6776076da3f66f382a1e
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-On Mon, 9 Nov 2026 12:10:10 +0100, Emil Renner Berthing wrote:
-> Honestly I'd still rather have the k3-bs01dcma-rv2768.dts. It's hard
-> to predict the future and I think having the extra file is a very
-> small price to pay compared to the confusion of having
-> 'spacemit,k3-bs01dcma' describe the RV2768 server and then something
-> else to describe the module, that's actually called just BS01DCMA if
-> someone ever makes a different carrier for the module. Also it makes
-> the physical reality of the RV2768 being a server of multiple BS01DCMA
-> modules more obvious from just reading the device trees.
+On Tue, Nov 10, 2026 at 01:46:28PM +0100, Sarah Emery wrote:
+> My understanding is that the nodes from CSB1-N10SPK3, the "K3 CoM260 TQ"
+> and the "K3 CoM260 IFX TQ" are all the same: a "K3 CoM260" module on a
+> "TQ" or "IFX TQ" carrier board.
+>
+> Is there two different carrier boards name "TQ" and "IFX TQ"? Or is it
+> just the same thing, called differently in this patch and in the EEPROM?
 
-Fair enough, I'll split it in v2: k3-bs01dcma.dtsi for the module and
-k3-bs01dcma-rv2768.dts for the RV2768, with
-"spacemit,k3-bs01dcma-rv2768", "spacemit,k3-bs01dcma", "spacemit,k3"
-as the compatible.
+They are the same carrier board. The only difference is the power scheme
+of the CPU clusters. The bootloader programs those regulators at boot,
+and upstream Linux currently keeps the voltages it leaves. Support for
+the regulators is not upstream yet, so the two boards cannot be told
+apart in the device tree for now.
+
+> I'm not sure how devices out there are referencing themselves. But if it
+> is in fact one device and the EEPROM calls it "k3-com260-tq", this patch
+> will not work for device-tree matching.
+>
+> What do you think? Can you clarify the situation?
+
+You are right, thanks for pointing this out. I only had an IFX TQ board
+when I sent the series, so I did not notice that the TQ nodes identify
+themselves as k3_com260_tq in the EEPROM.
+
+I will restructure the series as k3-com260-tq.dtsi holding the shared
+carrier description, with k3-com260-tq.dts and k3-com260-ifx-tq.dts on
+top of it that only set model and compatible. I will add
+k3-com260-tq-power.dtsi and k3-com260-ifx-tq-power.dtsi for the two
+power schemes later.
+
+Yixun, what do you think?
 
 --=20
 Troy Mitchell
 
---55ddbb8033dcf0d44c3f2031ef165224813818d398fd0f2c0b9d3848268d
+--75fec2531929259e420737857d2eefd1ef8c8ecf6776076da3f66f382a1e
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavbFQSEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+bJwD/cTWK4yfvLKek
-iKSpvbRgeuw9ugOpMKbp6SIUnby8dr0A/35wZ+z92YfzDXXxb6U2HKJ4nANco/5l
-wL8UcakcR7wB
-=1j0q
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavbM3iEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+OFAD8DkzKg77z108s
+t6A5affx343Q8qDBLdDgmzx1/Gg82koBAP6j03pnTUgvYXaOreMfsh84OOdsFZp4
+i2lB8WgqVg0B
+=mVsV
 -----END PGP SIGNATURE-----
 
---55ddbb8033dcf0d44c3f2031ef165224813818d398fd0f2c0b9d3848268d--
+--75fec2531929259e420737857d2eefd1ef8c8ecf6776076da3f66f382a1e--
