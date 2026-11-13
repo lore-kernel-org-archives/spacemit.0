@@ -1,55 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.204.34.129
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794494928;
-	b=AIogwRt6Xbz0yK56fov/e6UfWFC5XHkwu/YJCfEQgg1WVbGK8joQ8e20j39kAxlkwOdL
-	 j9z75tTa4mXi8SH+T2lBbOuHq8p2ezPrlWqHwuNSk3vQ+evZp2W6KgL5HFFp2GBABjJUG
-	 ElodBTay9SoinErQtAB/aO6SjeQj8ZuG1D1UOfOQgq6vTkn4GQt0LswbwfI7BSEXEWdUC
-	 4dfwN2nskhx2n/sPN2toeNqpXjJaA06WtwX6TCmuVFtqvKl5MgjmUy4r88ifRUpbw/ubK
-	 x28EGe8CujVnOl3fyL+GDa5AxvduCxV1QlOxCAYF8HTt2i7mMfTlWddNojNAmdHqC9g==
+	t=1794537134;
+	b=Ch7KovENsECy+UirNhCQUbLYmOaLCJv244dDgEC4DsSpEHInTRBOvGdTDMsM9iB4imtS
+	 q+Yawt3F275j2RLNGJouxpbVDMnakYDOmy6UaeppQJmi+awCgleT3HWIPRrRdi3QWdkul
+	 TId/s8BxQvk5ubkcs877bGV9JLV5dRUBDQkKrOTXnYFCTRksSbVykCkOUA8pA5KH3a6ef
+	 qiAw9caAxm/2fpkwxGQTTa5lwxq2fFH/a4uVGmj+JhKMWCFLFvD+iFHa6PaKsqpLLSM/5
+	 GTxetXDEWfWkxNBso3nGCbx1SmOjK+z85ifw30YJVPWUnYyysAPum6BjN3HmBKmZ3pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794494928;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Subject:From:To:Cc:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=zjGNu9iJUY6tRHH5ZIf6zaOe5ITdcxUbrHIdm2i7RUM=;
-	b=4oDvDfqn3Ji7bkHr7yApMQOjJiluz0UnLc6RjaM1zdoMhuXUQcar77Arfb9lt5A5Z0pq
-	 O7BY/TrCoTkoYjwPHoWv3NXWUGcW7H/L9Y7n0vH22Nak15ZEKzEzSN4BecOe+ogqGS+9K
-	 ti4rMaqJbU7X8J92nkG6ZiFG3RcZar1vI44jdagoLhwpW7hATyVQQogfleGDZTME8WjNw
-	 djJJYAUKXGh92TUiNdNR/m/YJ4Zoejcc9QzP2BX57hTh6GLem6hcdHZyReIgBtpXp9x2R
-	 oXcJ3Jq4ohIDiQKys18kjazpvL8QVC9D2ibtmRzwapSijm+x4QGIpXxwhv6pZ3q7rgg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794537134;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=nMxjreD4y0QHP2JtQOEuC4CITCprzlNYUq02BXC432Y=;
+	b=Fj4eprUp9dYtHfQLu84nBSXpZufGQAdnIomaH/g0Lp4i2jS/xowrENIIg/TY5/wHWgD5
+	 7TMholb48f2KR8jCOJ2CMZ369eTONuA0L0+ilYhGlB0MFxR2bp4/2rDOXoVoWED/rbBvx
+	 cp+fzwD5UAA7dqO4pgMwz+gaBhxYQjqTCp7WTrg2l5H0Pd0lRzyDvEAjubaqPw8w9QD8e
+	 Qz/NyST9yP9HBRtVmBJSwU8hGhlu2o5w+BIMmFXMw4pIVurxihQuoA/sr2Yc0YTpWDGIe
+	 MwweIJlehEGHgUewM+7FyOtF45QMuGp+mxanBredU5uD+14tg3MtrYcrT8lO2fJjo3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bPzMatk7;
-	arc=none smtp.remote-ip=54.204.34.129
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Cq2Vvt1+;
+	arc=none smtp.remote-ip=209.85.160.176
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69462606A886
-	for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 14:48:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69462606A886
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C616606A32A
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 02:32:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C616606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bPzMatk7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794494915;
-	bh=zjGNu9iJUY6tRHH5ZIf6zaOe5ITdcxUbrHIdm2i7RUM=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=bPzMatk7qpExuK/54DlD1AYIsJFWlH7UOaEsiiTsoJRqPkBhOLgzmYW2YFV+1U+mh
-	 ItFD3t74wMuNAITiwMdNZK85jl1D25N/6sTvc5hfVOVFKwHAPy7sjgxBDDybH75GTD
-	 CjUSKckealMdIw0+3UxM1MIO5mvgMc4zdEHLZAf0=
-X-QQ-mid: zesmtpgz6t1794494909t187aaf4b
-X-QQ-Originating-IP: Js536/AgtVk23vBPAsP9wENuhTH6rx7T9W8Qieg91IY=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 12 Nov 2026 22:48:27 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5432486051573447005
-EX-QQ-RecipientCnt: 20
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Cq2Vvt1+
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-53512cd2f85so8355691cf.1
+        for <spacemit@lists.linux.dev>; Thu, 12 Nov 2026 18:32:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794537133; x=1795141933; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=nMxjreD4y0QHP2JtQOEuC4CITCprzlNYUq02BXC432Y=;
+        b=Cq2Vvt1+IoooFXEVlkDSpPGgzXdLRsJgiIF+YG32NVgvTEdihiUQXfsodz/dx/gVwk
+         HOx0s9w4aM4Fch/e2acDUBssENij54cozFsKLBGslZYIoQt/cZFHlcFqQ9f/sUzNEDHO
+         mIr0fIHHT3xnVBkb0c6MuiFEgRyCG2iv3A7EcKA6/8qcWgmtBRfJDdm4P2pfrtknYvqc
+         lCg2dsFVYUqiYcUHzhFkRKeUtHKBQV4mLybvsiH6gReKQsYU8uXSkxgw0f9RjhJMFQCO
+         aWHzT1VJhOihwWe84Kn8T66wUQqOsv5MknR5tVQBKB22+egvkXsdI6YN51wdIlMJ9xVm
+         UbYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794537133; x=1795141933;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=nMxjreD4y0QHP2JtQOEuC4CITCprzlNYUq02BXC432Y=;
+        b=OcctncNzWGxFDyDdVBxU7+QaJCdFJSeG+3cAaWp9YfWGd5C0cgVKnMx84sn7/L6QUl
+         Mdy8OIbcRraNqe7tPPs8SAAHGQtH2s5uehbJb6i2Le3lotjJmz3PPqeGSWDa/H4I48JM
+         kibQ15S72Tzxb2TZJMPlpIyRcjdztXm+qINOOKiWWKJnsbwf5lDcNgjdXxQga5pRj0Oz
+         QcpP5CtnCFjxw/7g1MP2a6rtBWN/10NLVIv9sSKnhPIAl0XAdPtirVcdnMjwpu+ZCWRB
+         RENezfrT6EXMx7o5LqzbRF5jQzlkFo/DLS3KMeOlWP7JSlTT4H8jB5ofua3fuSCC06pF
+         x7Eg==
+X-Forwarded-Encrypted: i=1; AL+hErEzeb2R636hE44QDAHtBm+LefT1oHD+VgcRkgUeghg3fnX6EpnFXskA24QDAlY2HRlEAHINC3F10Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+YqsN3O+m1vv5ameEhvfzhKUCyHrS207Rk6cRpGmLFQkCculRS
+	SdjVu5egBaIXyNBvP9DmcjvntuvJCPbPYvJA29yYS8Ni59Pmb1lN2C0=
+X-Gm-Gg: AYBFou0+sluvLrZ1WhRQGOppBG11QazdcSYBoD+arMNUKyEpvtigQbTclbbvRw2J54k
+	s0dbMwDo3TbPaqUslAfSZkdVaDkLBTg1GtoSAewe3FBGdE1ucEMtEXsonyCyfSeYUzx1/sp1Hg+
+	Qg3GL3QzpRymSAOtzg5IhBMqjAuIRfq/ivRsDMykMGVCXvsmm8EEn2oc3dhx06jF+AQHGaePtR7
+	LEEBrUP7DoIOne555o4AHDm4fSI945DxHojRcLsKkDCEpBKZXdT258BM/x5PTJ7R8sN3rjoO2hs
+	7xNDeiX9O8sg85teD0+tPqyqMtqFhDvNuZJR7Vs/HnnjxHg0jPSqVdtBTLaS+vtJqO0vqeS3HRz
+	Ol73+hK9QR4UhHMlHsoAHBAi6oXttJ4/F+cTQI2QasWjGfn6nThv+DLzGTnI0j37/9pToJilv6s
+	++MQoFpQ2wGzRiuKyaZ4OZBlWoOb+WR594KhAx4XtrO6g6BHg1qGVnoAoew7HqlPOClVxD9+l9A
+	jLObstLjkfPRf3hiFn77l0umgW6aqRgLGdo2eIr/4p7U3RVPL53KYtA1y+rszMFOgueRTQ5MM12
+	AA3mfsWjqpdx7wDxONlEXdJlRdu7
+X-Received: by 2002:a05:622a:180b:b0:535:87c3:79e5 with SMTP id d75a77b69052e-55ac7568907mr20793741cf.39.1794537133164;
+        Thu, 12 Nov 2026 18:32:13 -0800 (PST)
+Received: from Ixchel.lan ([70.49.63.180])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23dbf30dsm9688926d6.44.2026.11.12.18.32.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2026 18:32:12 -0800 (PST)
+From: Vlad Banea <montrealtango@gmail.com>
+To: Yixun Lan <dlan@kernel.org>
+Cc: troy.mitchell@linux.spacemit.com,
+	wangruikang@iscas.ac.cn,
+	guodong.xu@oss.qualcomm.com,
+	jyc0019@gmail.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] riscv: dts: spacemit: k1: give each PCIe port its own DMA window
+Date: Thu, 12 Nov 2026 21:31:58 -0500
+Message-ID: <20261113023158.2872492-1-montrealtango@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,164 +106,96 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=4b60170ac85986e157bd72089ccd51b2afc8a5789b706b54e2b49f94448f;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 12 Nov 2026 14:48:26 +0000
-Message-Id: <DMTBCR706MJ6.23YJ33SOJOGV2@linux.spacemit.com>
-Subject: Re: [PATCH net] net: spacemit: Hold RTNL lock in emac_resume() and
- emac_suspend()
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Ali Tariq" <alitariq45892@gmail.com>, "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>, "Vivian Wang"
- <wangruikang@iscas.ac.cn>, "Andrew Lunn" <andrew@lunn.ch>
-Cc: "Vadim Fedorenko" <vadim.fedorenko@linux.dev>, <netdev@vger.kernel.org>,
- "Andrew Lunn" <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, "Eric Dumazet" <edumazet@kernel.org>, "Jakub
- Kicinski" <kuba@kernel.org>, "Paolo Abeni" <pabeni@redhat.com>, "Yixun Lan"
- <dlan@kernel.org>, "Chukun Pan" <amadeus@jmu.edu.cn>, "Siddharth Vadapalli"
- <s-vadapalli@ti.com>, "Tomas Hlavacek" <tmshlvck@gmail.com>, "Muhammad
- Bilal" <meatuni001@gmail.com>, "Maxime Chevallier"
- <maxime.chevallier@bootlin.com>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261105123441.2524171-1-alitariq45892@gmail.com>
- <DMO13SWAGZAN.NYISGLGI7Y5A@linux.spacemit.com>
- <c55c5878-d9c1-4863-bc55-99d334ba2ede@gmail.com>
- <12a95b3a-9c8b-4a2d-9b81-12b3839e64a9@lunn.ch>
- <DMPNAPNEGQ5I.XYUIB7Y8HDCA@linux.spacemit.com>
- <ee3f414c-fffa-41e6-8bec-6af7ce676c4b@iscas.ac.cn>
- <DMQJ0R4QTE6R.2I492KA9N85CB@linux.spacemit.com>
- <e11f1ba6-6e56-4bac-a0cb-f9258a53f34e@gmail.com>
-In-Reply-To: <e11f1ba6-6e56-4bac-a0cb-f9258a53f34e@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OLeWdWTN7s9ArBRVgLcndy27MEg8aF14b3t/uiBeUwp6rZK7b9N9IMyB
-	qCwQrKkpCcvizFM58KhJi8zeIpnezLhIjdKpcPQh+fwBpSxjsbavSUKoB6VUH3SVqpCBJXy
-	qM3C4NtpmnqMmOlGNvc2f6vu5LZmZxmiqb6ZMHP0LmCpQx0wdt4CxPXAsULXUQytaNmdM5a
-	oBafatLrX/+bk+Fi7o1mxUQwf95iITdpeZ0+dz+AocmJMpuI/xRUaDcUXwfy9/Cr6lAV3zZ
-	ualxUEGChTslHzsNJN5X9n5fVwzwtyVEUCm1hssCjEPPp1LOCqpKzpme+WDPFksuE5RTQtY
-	SmzuVbf0hfsVsiqnC6za9jxwf2VftW/6RivqISpGbn8jGoarRCYCS4oZnWJnWqoVTqMtK0/
-	pXA7M+9Ft0RywFvZH0qEokBR4YAx8PEdAWesacbwr04T0JqEdL9iwr90xWawLkgb/F67RfS
-	XcYRCWZokE3kQOFrCo9L8O/QOQK8nFyfrjbVDw66EjwBJXGCAZvqRtPYayx5KiDYRGZUaEn
-	oy3LQM0Y6zdu9oZTlxXNCqdFIpuTTPbE04D/O1OQpeBjfPooODxsKGwcFfPr5DaDm7t9aTf
-	S/aY375/gM7Q/t14KmaRViearykkoenKi5qqZqWYR3CRSrqd4YIGzEHEqOt1ncycNg2D2GK
-	Qi+2crYOCFTh3BLBP7Pvt2ijYZdeNrVhIBv4FK1RjuNSi5jooek+SbTyKqzFZl66yh8W/zi
-	HtX2Ad5vHFj9UDVdcjzXDaYbo2+mvQ4i8egiFCiNp2Ap4fCmc6mL2LxsACeJwn9BAPa/NMp
-	oXzIaMAtk2wDyQ7iBrraKjelwOdoRNugZWwsQI0wmqF/aqc11WG9t05uP6SU/v4rLu6zH1Y
-	p4hAStSVOfeEd34dosOCyC8KLMhzXoWCJzONOM4JD2QvFWyysUfG8klaSxflcOpuB/R94Ot
-	s1uiHGeovlshR2Tc97vhhVXp/Y0pG92enn2QPMQ7bkQgxqSJzswrQyohq3xLMIz99toQM3e
-	xOfDIohi3x1owk6Hf/8XhgwA8vp5VDqP7362kWjGxpSGfAvctnb9PW8whb4IdfLlHrRzks8
-	JYLjz3tc8bxK2WdVAMozlBilohuUdVyJDY1ovFTByC9+RmqOh7pM/8=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
---4b60170ac85986e157bd72089ccd51b2afc8a5789b706b54e2b49f94448f
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+On K1 a PCIe master only sees DDR: bus addresses 0-2 GB map to CPU
+0-2 GB and bus 2-16 GB to CPU 4-18 GB. A root port does not forward
+upstream an inbound access that falls inside its own memory window, so
+dma-ranges must skip each port's own outbound window; the other ports'
+windows reach memory.
 
-Hi Ali,
+The shared pcie-bus skips all three windows, bus 0x8000_0000-0xb7ff_ffff,
+which leaves CPU addresses 0x1_0000_0000-0x1_37ff_ffff unreachable from
+every port. Give each port its own bus that skips only its own window.
+On boards with more than 2 GB of RAM, each port can then reach another
+512-640 MB without SWIOTLB bouncing.
 
-On Thu Nov 12, 2026 at 1:33 PM GMT, Ali Tariq wrote:
->
->
-> On 11/9/26 1:10 PM, Troy Mitchell wrote:
->> On Mon Nov 9, 2026 at 7:59 AM GMT, Vivian Wang wrote:
->>> On 11/8/26 15:19, Troy Mitchell wrote:
->>>
->>>> On Sat Nov 7, 2026 at 5:32 PM GMT, Andrew Lunn wrote:
->>>>> On Fri, Nov 06, 2026 at 03:44:50PM +0500, Ali Tariq wrote:
->>>>>>
->>>>>> On 11/6/26 2:43 PM, Troy Mitchell wrote:
->>>>>>> On Thu,  5 Nov 2026 17:34:37 +0500, Ali Tariq wrote:
->>>>>>>> @@ -2056,7 +2059,9 @@ static int emac_suspend(struct device *dev)
->>>>>>>>    		return 0;
->>>>>>>>    	}
->>>>>>>> +	rtnl_lock();
->>>>>>>>    	emac_stop(ndev);
->>>>>>>> +	rtnl_unlock();
->>>>>>>>    	clk_disable_unprepare(priv->bus_clk);
->>>>>>>>    	netif_device_detach(ndev);
->>>>>>> This can deadlock. emac_stop() -> emac_down() calls
->>>>>>> cancel_work_sync(&priv->tx_timeout_task) with RTNL now held, while
->>>>>>> emac_tx_timeout_task() starts with rtnl_lock().
->>>>>>>
->>>>>> Thanks Troy, that makes sense.
->>>>>>
->>>>>> For the deadlock, I think the correct function to call is rtnl_trylo=
-ck()
->>>>>> inside the emac_tx_timeout_task(), which would return if the lock is=
- already
->>>>>> held and will hold the lock if it is not.
->>>>> rtnl_trylock() is generally a workaround needed for badly written
->>>>> code. Please try to avoid it.
->>>> Agreed. If the reset is done in place, the work does not need RTNL at =
-all,
->>>> so .ndo_stop can keep cancel_work_sync() as is.
->>>>
->>> Thanks for the diagnosis and suggestions.
->>>
->>> Although, maybe we could simply avoid cancel_work_sync() in emac_down()=
-?
->>> emac_tx_timeout_task() checks for !netif_running and does nothing if
->>> already down so it should be safe. The task cancel_work_sync() in
->>> emac_remove() does cleanup on unbind so the task is not leaked.
->>>
->>> This seems to be the pattern in other drivers as well. What do you thin=
-k?
->> That was my first thought too, but I'm not sure netif_running() is
->> enough here. emac_suspend() calls emac_stop() directly, so
->> netif_running() is still true and a pending work would stop the device
->> a second time. And since the netdev is devm-registered, emac_remove()
->> runs before unregister_netdev(), so the work could be requeued after
->> the cancel there.
->>=20
->> So we'd still need to cancel it in suspend and remove, and at that
->> point resetting in place looks simpler to me. What do you think?
->>=20
->>=20
->
-> Thanks Troy, Vivian and Andrew. I'll drop rtnl_trylock().
->
-> I think a simpler approach here will be to go with Vivian's suggestion
-> of dropping cancel_work_sync() from emac_down(), and handle Troy's two
-> cases by disabling the work where the device is stopped without the core:
->
-> 1. Suspend: emac_suspend() calls disable_work_sync() before stopping
->     the device, and emac_resume() calls enable_work(). So the work
->     can't run while the device is suspended.
->
-> 2. Remove: emac_remove() uses disable_work_sync() instead of
->     cancel_work_sync(), so the work can't be queued again before the
->     devm unregister_netdev().
->
-> For a normal close, the work's existing netif_running() check is
-> enough, because the core clears it before calling .ndo_stop.
->
-> With this, nothing waits for the work while holding RTNL, and the
-> work doesn't wait for itself.
->
-> v2 will have two patches. First the TX timeout fix (reported by Troy)=20
-> then the suspend/resume patch, which will take
-> RTNL after disable_work_sync() and before the netif_running() checks.
-Sounds good :)
+Signed-off-by: Vlad Banea <montrealtango@gmail.com>
+---
 
+Notes:
+    Changes in v2:
+    - describe the K1 PCIe address map instead of citing the vendor DT (Troy)
+    - "more than 2 GB" instead of 4 GB (Troy)
+    - drop the RFC tag
+    - RFC: https://lore.kernel.org/all/20261112015148.3911178-1-montrealtango@gmail.com/
+    
+    Tested on an OrangePi R2S (8 GB, RTL8125B on pcie1 and pcie2): SWIOTLB
+    use under load went from up to 87 slots to none.
 
---=20
-Troy Mitchell
+ arch/riscv/boot/dts/spacemit/k1.dtsi | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
+diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
+index 3fabfd34114b..949843bb7789 100644
+--- a/arch/riscv/boot/dts/spacemit/k1.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
+@@ -1152,13 +1152,14 @@ eth1: ethernet@cac81000 {
+ 			};
+ 		};
+ 
+-		pcie-bus {
++		pcie0-bus {
+ 			compatible = "simple-bus";
+ 			ranges;
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
++			/* skips pcie0's own window, bus 0x8000_0000-0x8fff_ffff */
+ 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
+-				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
++				     <0x0 0x90000000 0x1 0x10000000 0x3 0x70000000>;
+ 
+ 			pcie0: pcie@ca000000 {
+ 				device_type = "pci";
+@@ -1203,6 +1204,17 @@ pcie0_port: pcie@0 {
+ 					ranges;
+ 				};
+ 			};
++		};
++
++		pcie1-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			/* skips pcie1's own window, bus 0x9000_0000-0x9fff_ffff */
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0x80000000 0x1 0x00000000 0x0 0x10000000>,
++				     <0x0 0xa0000000 0x1 0x20000000 0x3 0x60000000>;
+ 
+ 			pcie1: pcie@ca400000 {
+ 				device_type = "pci";
+@@ -1247,6 +1259,17 @@ pcie1_port: pcie@0 {
+ 					ranges;
+ 				};
+ 			};
++		};
++
++		pcie2-bus {
++			compatible = "simple-bus";
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			/* skips pcie2's own window, bus 0xa000_0000-0xb7ff_ffff */
++			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>,
++				     <0x0 0x80000000 0x1 0x00000000 0x0 0x20000000>,
++				     <0x0 0xb8000000 0x1 0x38000000 0x3 0x48000000>;
+ 
+ 			pcie2: pcie@ca800000 {
+ 				device_type = "pci";
 
---4b60170ac85986e157bd72089ccd51b2afc8a5789b706b54e2b49f94448f
-Content-Type: application/pgp-signature; name="signature.asc"
+base-commit: d05c6236496071916e19012cda7149465f15e66e
+-- 
+2.53.0
 
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavXRuiEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/PdwD8DO7z3cbgb16T
-doImdDC4h5bI5kgpf0udTdwgsfv+jDgA/iBx0Shg3fNGZonovHhDnPSigl1PzAZx
-DoQpm0TbFXIC
-=2L/5
------END PGP SIGNATURE-----
-
---4b60170ac85986e157bd72089ccd51b2afc8a5789b706b54e2b49f94448f--
