@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794559282;
-	b=37Zfzi7wEMbrjSxDT5VDj4zY+fSgJSs/mhhPtMA46aGTGPAZXt+fbSrhJaGPjYHvDJLk
-	 uYKPz3Y9DGm/ZquHhOtLL0pXiEMkNiQdYtsjffd5mLQ+IJChP/TE0RPou1e26FbSwdXj1
-	 8KkWGoZuMewvyCEzUv2WO1kca9YOFvLT+Gij1Piexlg14XU2njaVTSZaSh2s4HQNWJDhL
-	 3abD2omroudIe/2faJN6wQMS8ZCiS+W7yNio+spyiQVqm15xO9jWYt/DoNZxifkz+5ihO
-	 lAST7QiZzxsCZYE4JV93JnxWZaStj4fYOSG0FUZDzsA6isP+hwHDrFaDUO/C8LwZ9YA==
+	t=1794566898;
+	b=DwTCU0/nbHLeqxNbPP0nq949uDIR7xj+8GzvNvKfas9MVYQUw8WjK11wW/kUiPL9OB6b
+	 lP1Ritf+5GZWcK1sjBG4OIjDYLWZOLufPjFIQaK/3DTMPtyekEm+P0SPeWF29qrfuR1kQ
+	 zo7jS5MYPZ8SP5T1svPbbmtw4IeM8rfMHWMTQd1AzrkaC4w9MUvOHfPsyw8C7CxYp1jwx
+	 hX9XRtYyyXtjJnfme1i07qmMTOkbPTaLZdcdmc5MDim8z1nZ53Phswf9t5S/hq7C+67RN
+	 nT8trPnt3oc1t4MBfyi6l/LJyeGB0q7I6j+NyIW+8QBNN3GGcTauN41Ct4USs5CfWpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794559282;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=V7eTuFZjA4PWQbmvW7OqH4LWvNJaPry6cfmPeAjXhow=;
-	b=UpgQLsd0dUEsXQMhrzeqn2k0pauWGHAQdn3N6j/UQPK5CY6nSgEx5hploVAkPxPsAjms
-	 KhjzfPJSyk2wsatXkAvfdXwbQI6ZKx/eX1RCPZEgArGrmBwQRb/Y9RmXloAxYzUvvhubB
-	 +Nb+c3v+Idh4Ai4C8KVSqwX+RGxunZAg3CDtkZWr06yV0IxaeEAb4M7tlgwH7pj2rcjH5
-	 62451XQdZ+mc06eyIKwgnbm4wR6lQfBXcIMwbidKd9hjm+dFXs+IYA/tSkGt4AzAdrCRW
-	 ElUiyoKCJy948UC+faKl1pnEd0cV26Wst1+d5ZWwS7Z4n1sBp5ElEShwhmxWy09FmTA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794566898;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
+	b=b4ap0MReJxvaNeJXj5VKYodgosHEjt6HhycA3PpnWDp5vygcuf6LrsjNZl8tdQirwDmW
+	 MmPXX1T30Qi/i1d1J0vdN3UoIMwrV+sLS+EvOOk6oNSctR/E/fYFv9R5obT/fubd956e7
+	 gnkeIVP4InOIhye7KJj2r8YmeXSMsClj9WxrKca9wwM8e0T+xi5dU3GJcVn5Gqv2cCqzx
+	 jI3m+HTdzQ6p2hxVdDtyve2bEh+lGErnuvbmMyvUfCubpAYaj8IquMYk+XMvoru0mVNQe
+	 7EiIo1CHOQy/VsjCeG0ebdmTeqKkl0NFqiN063R22hJdFK0FzgF7Ui1eAoXM1g5NOQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=GDD+UBy8;
-	arc=none smtp.remote-ip=54.207.19.206
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72707606A321
-	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 08:41:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72707606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849BA606A31C;
+	Fri, 13 Nov 2026 10:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=GDD+UBy8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794559258;
-	bh=V7eTuFZjA4PWQbmvW7OqH4LWvNJaPry6cfmPeAjXhow=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=GDD+UBy890+t1OqxUqT6aVPC/Eci7C0ywc2RKPpo4OTJstzH9v8qRTqrT9cOeu0x7
-	 ibnZKScrB9qkkDHT/h1JJ5BbpaQJxwRWrzhF/YqIlbJ7gHWvQ6BFJQFWihVGLJp6z6
-	 Dqi3cadrQ/iUNosJjPmtz8EgESVp1Kj6/31ana0w=
-X-QQ-mid: esmtpsz16t1794559257t5d9dba59
-X-QQ-Originating-IP: wBSvX1BtCBZPqne4sQMbScd0WRDo3uqiRi+rcmrw9o0=
-Received: from = ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 13 Nov 2026 16:40:54 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 8217629100914442193
-EX-QQ-RecipientCnt: 17
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254F1F000C4;
+	Fri, 13 Nov 2026 10:48:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794566898;
+	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=S543vWSvlhe1976ESvDx0Sh8BK29rzjm9wRA/T4CDpA0WLlHO8848X+WcfQS63iOi
+	 Nhz3JLybLhmz93t2GNNQ6NCUV8JbmlWh4gQ7c2QkLyZdVXIjgvZA7pyBnYZw39HMb6
+	 ZfHWNZOWsAjUs1G307mf40Rri7lATqBoGvUAWMYq1wG+zsrSHgokWCOhnRXBd1vRBf
+	 Rn40AGWVJ0/DQRhVlOJdULOcYE76LwTWqE0pZlm6Upf1nesfauMThvJob+pd2QvqL7
+	 +qGxqYsDaYTsXaVgQp7sG2IvhW49f74sc/ngcEyoG4zmS2toEumlD3Diz4g5gF4T5v
+	 EIDdH4WTzsWCw==
+Date: Fri, 13 Nov 2026 10:48:15 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Ulf Hansson <ulfh@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	spacemit@lists.linux.dev, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] pmdomain: spacemit: Add power domain driver
+Message-ID: <20261113104815-GKB73509@kernel.org>
+References: <20261112-04-k3-pm-support-v4-0-de3931aa5153@kernel.org>
+ <20261112-04-k3-pm-support-v4-2-de3931aa5153@kernel.org>
+ <sashiko-outbox-210694@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,83 +58,183 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=d13001a16f081259898c54cd2d9bc8d1c58a841de8fa9c26a1bf406aef65;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 13 Nov 2026 08:40:53 +0000
-Message-Id: <DMTY5W1EG9R9.2OG78EAK5J7UG@linux.spacemit.com>
-Cc: <troy.mitchell@linux.spacemit.com>, <wangruikang@iscas.ac.cn>,
- <guodong.xu@oss.qualcomm.com>, <jyc0019@gmail.com>, <robh@kernel.org>,
- <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <pjw@kernel.org>,
- <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>, <alex@ghiti.fr>,
- <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: give each PCIe port its
- own DMA window
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Vlad Banea" <montrealtango@gmail.com>, "Yixun Lan" <dlan@kernel.org>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261113023158.2872492-1-montrealtango@gmail.com>
-In-Reply-To: <20261113023158.2872492-1-montrealtango@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Ndw/mc8X39Obev2zZ1A5EG8IHfjrQAbdcWNAb46z087/j3yzHaV7SbzF
-	jhVGS0YYDZVdVCfwhWzkbt1u02/C8DmUqeVuRmMgWMwVc4nqrJQR+QtmV3keTlMDWbTFyPM
-	1ySSydmiptj5afB+a8//jmcOOYUIEkaRpMSFnt41KFb0E3HsuWvS8Qo7kRgEXyZsFlU6WZL
-	My5FdLl/QNpCjlmRfB1KR52ZPP6hrxvBdk1WKerky2pDgPj6kyesbDEmwJxkfBeaHCVAF/P
-	p2wD4UXGEHH2Ze+x7HnbJGPSRa2MxOQSNx5Edkt7DdM/ab8wr+mRzVKxvAqkBhjy0Ze5mrL
-	zI7PjgKQlBxStYyOWVPdR8yOxi/dL3aTrNGGuwFkdmY/oGPoNju5kyIZQNWxbfVBmjOHX0b
-	iz168pmwVCOdvoNystu3xV+rkp3RI88PX7fGzbrdN2YDjk5cC7+cwbC/g4MGVuHnMNLJFhU
-	/VIlBtNS/NqNNBL45MSUqzB0ePIwZWIna4UoYzUJVIy/OVoGgfWhtmjqAG7r8u3ekK7U1FH
-	z6LWlkkfAATLtEX9iY6AaGi0qzotMykgslEqeZ2VlbE62PPuxS/HVreDo1t6jCE6tlmuFSo
-	TYAWDRE7xUwxdOss6KHs+W9ebeAEsPNq7WxYin7tu13UpxFj2xdifO5A8SOtz+INB+bNcNt
-	AO7GDyg7p+v+t0uIu2rQk32TByjMcUNsHVIUVLV03CbRUC360/+8kryKnUotK00SwQcCWMY
-	IqQ0vczCGaStTn/ivUJuPwYOGRN6/+2G1SYbSHYTsqLC9g0kyepezluwqm7rTSK6i7mCRwr
-	1JTrNOIJPqK9/ueeu+/tG/gFBrqRv26teMY+4i0lnzGkw/ZxkFF6qgjetpXThcs6LsEMjWK
-	NQITjADyLn+r88GATcCM7f5Wei8zOuoBumNYIt9EcPb/Fb6UeABkJwYJVw7hU0fdMsThuy7
-	fRJTiavsbW6gK1lFpcFvMQc/dKjPj59fIb1ucouqXHCvZKGVRAEJ1Nf93vb+QEc5HiIG9li
-	wqqQhJ523Afj5oVO0QkVpSYPXRw6ajzQP9VC+6ZYdJKf7eOdlw0uklv3f4lC40ZtqRKrJl1
-	g==
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-210694@kernel.org>
 
---d13001a16f081259898c54cd2d9bc8d1c58a841de8fa9c26a1bf406aef65
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Ulf,
 
-On Fri Nov 13, 2026 at 2:31 AM GMT, Vlad Banea wrote:
-> On K1 a PCIe master only sees DDR: bus addresses 0-2 GB map to CPU
-> 0-2 GB and bus 2-16 GB to CPU 4-18 GB. A root port does not forward
-> upstream an inbound access that falls inside its own memory window, so
-> dma-ranges must skip each port's own outbound window; the other ports'
-> windows reach memory.
->
-> The shared pcie-bus skips all three windows, bus 0x8000_0000-0xb7ff_ffff,
-> which leaves CPU addresses 0x1_0000_0000-0x1_37ff_ffff unreachable from
-> every port. Give each port its own bus that skips only its own window.
-> On boards with more than 2 GB of RAM, each port can then reach another
-> 512-640 MB without SWIOTLB bouncing.
->
-> Signed-off-by: Vlad Banea <montrealtango@gmail.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+I'm seeking help for last review comment from sashiko, see my reply
+at end of this mail..
 
 
---=20
-Troy Mitchell
+On 08:22 Thu 12 Nov     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] pmdomain: spacemit: devres frees active domains when
+>   pm_genpd_remove() fails
+> - [Low] pmdomain: spacemit: log ret instead of pm_index on power
+>   transition error
+> --
+> 
+> commit 1bedd4d63c29dbe88ab766b2b331bdd5d01ee76c
+> Author: Yixun Lan <dlan@kernel.org>
+> 
+> pmdomain: spacemit: Add power domain driver
+> 
+> This commit adds a generic power domain driver for SpacemiT K1 and K3 SoCs
+> as an auxiliary bus driver supporting both software and hardware power
+> sequencing modes.
+> 
+> > diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > new file mode 100644
+> > index 0000000000000..dd0613c1912a0
+> > --- /dev/null
+> > +++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > @@ -0,0 +1,424 @@
+> 
+> [ ... ]
+> 
+..
+> > +
+> > +static int spacemit_pd_power_on(struct generic_pm_domain *domain)
+> > +{
+> > +	struct spacemit_pm_domain *pd = to_spacemit_pd(domain);
+> > +	struct spacemit_pmu *pmu = pd->pmu;
+> > +	const struct spacemit_pm_domain_param *p = pd->param;
+> > +	unsigned int val;
+> > +	int ret = 0;
+> > +
+> > +	if (!p->use_hw) {
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_sleep1));
+> > +		fsleep(20);
+> > +
+> > +		val = BIT(p->bit_sleep2) | BIT(p->bit_sleep1);
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
+> > +		fsleep(20);
+> > +
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_isolation));
+> > +		fsleep(15);
+> > +
+> > +		ret = regmap_read_poll_timeout(pmu->regmap,
+> > +					       APMU_POWER_STATUS_REG,
+> > +					       val,
+> > +					       (val & BIT(p->bit_pwr_stat)),
+> > +					       5,
+> > +					       APMU_POWER_TIMEOUT_US);
+> > +	} else {
+> > +		val = BIT(p->bit_auto_pwr_on) | BIT(p->bit_hw_mode);
+> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
+> > +		fsleep(300);
+> > +
+> > +		ret = regmap_read_poll_timeout(pmu->regmap,
+> > +					       APMU_POWER_STATUS_REG,
+> > +					       val,
+> > +					       (val & BIT(p->bit_hw_pwr_stat)),
+> > +					       5,
+> > +					       APMU_POWER_TIMEOUT_US);
+> > +	}
+> > +
+> > +	if (ret)
+> > +		dev_err(&domain->dev, "failed to power on domain %s: %d\n",
+> > +			p->name, pd->pm_index);
+> > +
+> > +	return ret;
+> > +}
+> 
+> [Severity: Low]
+> As reported by Troy Mitchell on v3 [1], should these dev_err() calls in
+> spacemit_pd_power_off() and spacemit_pd_power_on() pass ret instead of
+> pd->pm_index so that the error code is logged rather than the 0-based
+> domain index?  With that changed, pd->pm_index can also be dropped.
+> 
+Ok, I see the point..
+I was initially trying to log the id (pm_index) of power domain, but
+with p->name, it's not necessary, I will fix it in next version.
 
+I would completely remove member pm_index from struct which not useful..
 
---d13001a16f081259898c54cd2d9bc8d1c58a841de8fa9c26a1bf406aef65
-Content-Type: application/pgp-signature; name="signature.asc"
+> [ ... ]
+> 
+> > +static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
+> > +				      const struct spacemit_pm_domain_param *param)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int ret;
+> > +
+> > +	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
+> > +	if (!pd)
+> > +		return -ENOMEM;
+> > +
+> > +	pd->pm_index        = id;
+> > +	pd->param           = param;
+> > +	pd->pmu             = pmu;
+> > +	pd->genpd.name      = param->name;
+> > +	pd->genpd.flags     = param->flags;
+> > +	pd->genpd.power_off = spacemit_pd_power_off;
+> > +	pd->genpd.power_on  = spacemit_pd_power_on;
+> > +
+> > +	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	pmu->domains[id] = &pd->genpd;
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
+> > +		if (!pmu->domains[i])
+> > +			continue;
+> > +
+> > +		pd = to_spacemit_pd(pmu->domains[i]);
+> > +		ret = pm_genpd_remove(pmu->domains[i]);
+> > +		if (ret)
+> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
+> > +				pd->param->name, ret);
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
+> > +{
+> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
+> > +	struct device *dev = &adev->dev;
+> > +
+> > +	of_genpd_del_provider(dev->of_node);
+> > +	spacemit_pm_domain_cleanup(pmu);
+> > +}
+> 
+> [Severity: High]
+> As reported by Troy Mitchell on v3 [1], can unbinding this driver or
+> unloading the module while a consumer device is attached cause a
+> use-after-free on pd->genpd?
+> 
+This is an alter solution.. but just workaround the problem
 
------BEGIN PGP SIGNATURE-----
+> Because the auxiliary device shares its parent CCU platform device's
+> of_node, fw_devlink links consumer devices to the parent CCU device rather
+> than to adev->dev, so consumer devices are not detached when
+> spacemit_pm_domain_remove() runs.  pm_genpd_remove() then fails with
+> -EBUSY because genpd->device_count > 0, leaving pd->genpd linked in the
+> global gpd_list and referenced by consumers' dev->pm_domain pointers right
+> before devres frees the devm_kzalloc()-allocated struct
+> spacemit_pm_domain.
+> 
+> [1] https://lore.kernel.org/r/DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com
+> 
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavbNFSEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/H2AD/ZBD7XI22R1Ie
-I6EnaBMP4TJ3LTUz+Sq1k4mPe76lNf4BAKulU+P4zOed+4ID8p+GEHDcy/ynwbZX
-Ra6R4TzswjoJ
-=nCa0
------END PGP SIGNATURE-----
+I've attempted to submit a patch to fix this issue, Ulf, can
+you give an early comment on this? I'd like to see if it's a
+right direction before I go further.. see below
+https://lore.kernel.org/all/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org/
 
---d13001a16f081259898c54cd2d9bc8d1c58a841de8fa9c26a1bf406aef65--
-
+-- 
+Yixun Lan (dlan)
