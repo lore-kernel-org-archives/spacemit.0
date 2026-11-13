@@ -1,97 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.22.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794577758;
-	b=UzfrGF5xqzQyNjeK54XQWQqnvupRCe39FMODr5cu+4877xwJ/gPyoEkqaqh5nGDMdwB2
-	 f7LVb4wUoDuVCyOyDSJsH4c266t4bC6Xan6KaQx2fFBnXvBcF9/ZSvgbpHdUai98Q+4hv
-	 slz699vjCz0QIfMdIqJ/k6t4cJjcsNsU/OGLxewUlGwpK3g2IldwO/n2bdaLSdScKk4Vr
-	 l++D9WYDkxIpo3/Dbn/lK+6uHKv+xyPAv2/PXv96IXOUAbD20HXtqp4zK+1Cz6x+Jm2LD
-	 kxJjQZcdqGtowGOw/YJ7yNH3CP4hZ7NzxtsFrA2o86v3KVzSFtb5L9rjhM4Wg98iDbA==
+	t=1794580125;
+	b=gvQ5W3dhWXq4CBbhFtgqFJtxbNPOtdAzKPOTVNhVdq49bmqy7OyIHq6yGz24XIKxVuQb
+	 PeEP/QlYnbEZmAR3tvaIZ5r4gs6hsyte7aYwM2UGowmmEHA5pxyHmbnG22Brq0tj/rBBO
+	 Wu3Gvtho2zTnbyKgJVkzZ1bp721Tfwg11yRIzp8DAqFR9c5v+GY6cDs69/tI8OKT3dBnK
+	 EznHDPEoEWd37enEVQEcyYLTKvvsAML1DEe1VPtHnbkAps0s6SN9VqHOJ5a5ZZmvWROCq
+	 FaFTEIJiS52S1Hr90dz7FAYIjim+6EUnHS6O1cWsse9kdGDPAps4K4/Av26WfOxp//g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794577758;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
-	b=EY9U3H7rQUHoleMhq2yzcDvAoJqJojQeDZTARv38elfwYzn/wUdJzPpLhfDQJ+ewNqyM
-	 CadTFw2EyomE10EvM47m0kUVcQxGW1ZbzMJt2gjsIaBTPWJQg//D6Clp/BXwYfZCVo3jT
-	 VJKXSUAICLOuMqviD1Z27W5NC1Ui44M4tE37ErmFWnFeEDTi6XBrBZ2lnxs5xQPijBIbH
-	 j7E1YXxPfqLS/sK8fm/xZ9wHw8CurKyvRYjBwEZyVx/wS/DGnz6nFiUoaVBdMUpOIBqME
-	 biEvrmOc/NCJNoNDop4o94WXRRYl7O8v/nLKVmC4tbyaxe0EXEzMkvpOp+oQbs8o5gw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794580125;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=8q1dLdGBdAfkIvfenu2Vg5xpuwfd5kL9Ag8F1LUDLpY=;
+	b=vjhbqRSpkwBgW+64wj4sYdC39Zg3T3YGzpBZF2tSBzgqx8Ph+DA9vooIeXdJCCjOm2Zj
+	 tUM+IC3QNJu0HSYagZB/JVtPafPl+JFH5MF5IdfqPz+Mv/4OY9UvHjlrnMOdYxS29IveF
+	 Oj/5rjKOcHmZSZLv4csPoVkHYGGG8nydbAReD+855vxm59vjcuPk3ZH4HInmMpCz2hpfm
+	 v2OgJUDAXvGM7ZNnbVopqi3VMjMHGYE/jba96QuK870WpSo0aWynk9jz/F+ZhSfc/oF2Q
+	 xxQ3Phmu39eQR6cUuANMgZqKsn0qmbCaZnrtyvIdXR00gSBeEaiOX/PJlwjwMkr5ZbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1TiRp0c;
-	arc=none smtp.remote-ip=74.125.82.178
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=EoPMM+vC;
+	arc=none smtp.remote-ip=54.207.22.56
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87801606A32E
-	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 13:49:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87801606A32E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6067606A327
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 14:28:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D6067606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1TiRp0c
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-3712b6d9843so926081eec.1
-        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 05:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794577758; x=1795182558; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
-        b=L1TiRp0ccqL+FRymNmpPfYw9GaF1bbXJpWJZ9OIGqSlm9HYhdNHWR4zLp30edvN7C/
-         1bjcuvqf6+0d58WPPl1aPtdYCfU3YgbMC97LU2SmON1VVM0QAB12IclCaz7XhN5bw58b
-         1zPOcz7NkS8bf/pTY0K5MD8fz8evsZMGgqlVaETysKhLo+FQEYtGEJljJvqXJ97MudsN
-         6Qk64NYKOnjArmDZTz7S61E/9odO0kX+F1+pheReKY745YIO5ERoyS2QDqvTLoZjPfOQ
-         63GW6U01oKE7xcVLh5V3hxcij8CIXB1ETlUrGOE0mlwfdEm/1f4zMvk94PNB45IwJ6Ry
-         g9nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794577758; x=1795182558;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Puay+wpYVMEbOLRsus5utO7vcdPRYNMhn4l2tkGm58A=;
-        b=ejl0V1GyUM2JZyZ+bNjlPdaovK+lV1d6Ov1tUrjeoZmHBxHpznem2GtAuqKYLx+feY
-         qD4BwP7mzsMiiLC0tAQougWseYVdMB+kQkfObhLFy8bcs0sQ+appIhPHKDI0VjzsS7MK
-         VlXF1vOXkwAr/j55Og8NR8OEjFYjaRW6/w9Q5IkROa97+rqoxbrSS8wELuVvOx+EWo2X
-         +P6XazG47M0V1tcOvTCDpq/K2DZ1OrUzivMYbcb/IQNMFLLN7ArrJARL7NLl7NJhstZG
-         yJPXHI204WpsYwj+s5uJbM+D6kSbfThCcS1B8/N8gkXr5JVx9NsRDRG/s1DdNeLr2IDK
-         xaMA==
-X-Forwarded-Encrypted: i=1; AL+hErFsn1c0JBBGOjodkxAt6eB02HU6Pnjf4HQdul106xONBtGSuioC2Gm5xHvHXPebr3IgMGfdcjV9zQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8hou1QDhaEoB/E7ryDe4Qecn1jdZhE27KM2xCbFjcgWwqdjcQY
-	TOcNLkRVgP4Z7CmWYTsD2YzZAyw6h2FFi5PXMqFk5lriQevi7GvtO+G5
-X-Gm-Gg: AYBFou0WjkyXy2veRJ+nZYoVOw2OtBL3jLxY6i/zTFvkUa9F9p1NEVAYorfVzTdlRHT
-	H5yUGMPnkVgmVHAcixbe/ruTdQoO77b7VdyyNFTMgJD405XQB7CLtpjLmtoupEkHJIT2c7QX6fo
-	MjStbqLBHgzm8rEG1aRLINijPAW1CnyHgLxwOsxbb5/6llnV9A+dit45z25D0JhTXwFbnm1pS03
-	say3EWW1qHbSfiA4EAHfok1iPq/7yDdN+MQQIJDwgPfahaIq5IgiyweJxNzngzX9z/X5JQbkCR+
-	rd7OH/LYPV44p6pI40yRd33thEUgoZY/8lfgHR3jNI8dmlfMCbEaxOv1x7aw3cxDotsjnZW+CPz
-	jUijUOeDjPRodIj6bHE1074T5/vikPpbk9R6tqYG4gIsbhlsJbWd3UEzP1mOljgTr9AFR08EEjE
-	KyJbSEauY6ISVwOjHnb7bxLo/ya9/kbR1tZ+/anIGa+oaa4f8Ietg+RGDdeuzoJuvKEwP8EQarl
-	+j1rH/jT9fHev7cjU46e3fqgFjtIqahkB4hlP9gfbfYknWGrK+YItqNhsvdN60UvKbIIQ9cpmXB
-	V3qqv9+xXuYPsH+h3YK9ENoZiJI5dQ==
-X-Received: by 2002:a05:693c:88db:20b0:36a:1e9e:ae61 with SMTP id 5a478bee46e88-379684ae78cmr2170730eec.38.1794577757517;
-        Fri, 13 Nov 2026 05:49:17 -0800 (PST)
-Received: from duge-G3-3500 ([183.192.220.187])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3795533170csm8381252eec.7.2026.11.13.05.49.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 05:49:17 -0800 (PST)
-Date: Fri, 13 Nov 2026 21:49:04 +0800
-From: Jiayu Du <duge1256@gmail.com>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, dlan@kernel.org, pjw@kernel.org, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, alex@ghiti.fr, p.zabel@pengutronix.de, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
-Message-ID: <7xzpzkw5qmt3xb3ezo2sii6tnfraetwooh2l6dl4svclvbn43o@uvm7uyhz4bck>
-References: <20261106060525.346873-1-duge1256@gmail.com>
- <20261106060525.346873-3-duge1256@gmail.com>
- <DMO4CP89Q1AA.17HKYA50DLY8L@linux.spacemit.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=EoPMM+vC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794580111;
+	bh=8q1dLdGBdAfkIvfenu2Vg5xpuwfd5kL9Ag8F1LUDLpY=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=EoPMM+vCrYwMrgMiUMeDBezIqRCLk1RCfvi7H2g9vJB4qEwuCm93rdCi0t+JIx7+N
+	 CIP2hqBBc35N4+u0+6SmTRsMTYlhisI2gOMXC32Kf5yUvRkIxmbf8qNW21QDLrAhNT
+	 XaYsFrYNCuG+FdYRYOeOnVZhihzgz8DbkSVdiuPY=
+X-QQ-mid: zesmtpsz6t1794580110tec0edc50
+X-QQ-Originating-IP: fm2reiAJdB/qKeHxN8b5HNcE21EWPuyjAf9GRpjPJT8=
+Received: from = ( [183.48.247.191])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 13 Nov 2026 22:28:27 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12388474241626902925
+EX-QQ-RecipientCnt: 15
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Date: Fri, 13 Nov 2026 14:28:18 +0000
+Subject: [PATCH v2 2/2] riscv: dts: spacemit: Add K3 BS01DCMA RV2768
+ support
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -101,102 +64,382 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DMO4CP89Q1AA.17HKYA50DLY8L@linux.spacemit.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261113-k3-bs01dcma-v2-2-3f0de4a3e1ca@linux.spacemit.com>
+References: <20261113-k3-bs01dcma-v2-0-3f0de4a3e1ca@linux.spacemit.com>
+In-Reply-To: <20261113-k3-bs01dcma-v2-0-3f0de4a3e1ca@linux.spacemit.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Guodong Xu <docular.xu@gmail.com>, Yangyu Chen <cyy@cyyself.name>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8322;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=nCCoCoekgN3BBRerDuOB9sOLgeAx7z94qOfQTO91zLc=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFnf5ZrFEmYmpvx+INE992XMy5jwO98dUnlidEX/htaoV
+ Z49Vvezo5SFQYyLQVZMkaX7Ac+2Ap8o2wKBQl+YOaxMIEMYuDgFYCKdlxl+s11m9GYsbmNmmuNz
+ UMux42vt7A+2Zk+u27xlfmpTI3wwguGv+PWSx2ue3YliKP0v8meS7K/nN0Xc/n21+b7zn/3Ce6e
+ qWQE=
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Mo3PYuu8Roc7jnafzJxQyvm65/KJeDhMgQjhs5Qvlq69171mbzHwsXEm
+	n0v6yzQAeqzSUlKVIQ5ZtBJ0AnXIf3vXK/xoT+0XY8YyXdR431+OudmONVuroCJMs+vKdsg
+	KE6YbOdfJHwyxaLFClZkw90eCl8qnhcKZgjsvLy6LcnqUHiffYxq1dyG8yPyU5zuYNNRnRi
+	OnBc0vqw8F/vROiN3wKErnTzZqAu6O6lzmiP+jhyQryMGp6qwOpLp7VGA2/7KEqukS5iUDZ
+	arZ3KpMN34lpnNwwAszvPS8pHPF19yGm8CvS/yb0vscz+ZRuHENGiNfKhEzd/owu/9YfpkT
+	/uSMA30CFbGRXFkHvh28QVGvG/xEbJ52vF3841uwdHDZRuqix/ITIbEk8QwA/5WqqLmf7mm
+	hedWlioDLlfEXMCSS5xHGRlFtpF7C+6FZBExjvjSjof9QDLh2nGzIAL8X3mrs7V5LDRIlZA
+	RNDp42fJFDpbcd+J6w4WlmPetxf7zMTbTLMGPTUf2nKw+fdfjPkPLCO/f+bMkDYjekruYJG
+	Jju/wlegVriW1oJ2k72navSpNWr4r2gFvv8MzlbUtl0Pac0u3KVfsTcrsY1Rl8upJRxlEiW
+	3D9aTtRDm5c77b+S1x29ufOoaLySzeqG4JBbPFvGuDN4NuTmXTMc5E5B0lFF9Vo42uhj/PT
+	UHwlg3TzSEkPaRli2c/+s7S0bbukqlbpqLtcC6IGl/VAdUhtuuArA/Is+SvEAsZsH0pXoGu
+	Oc4ZfcuL9sVXijwEcpFY2D6u/sprJpKxGnrOi9yMUonNqtQt8A0TKnXpmaRX3Hv5HqETqBM
+	j22dN7vbmF8QJBPxhz3CUfuUWJxFYDD9tbtPcwE+a8GuM2DmgNBWijfzLtnG8qsdCjJ8L3L
+	HZEcYLlKdLvsYPHwo9WebQEeQwI96wtcGYdV+NACwQsHpbPjL4mubU2eAfYmc8o+TRwSkVo
+	0zmNY7+os5GJmt/DOH+LE9mz9npMKErAX06Ha6HaYx5vRV1fSCXxNUm30gUMl8Ryk9RYZf7
+	Q+lm5UbVrO3tYaWB74guc4IzK7XoguQWWe4QCRy49CNl2dd9xdC51qOee4fq2lHCtUvXQ52
+	AznS/gB+gPzxXQJYRw6s44YjRJuK8rWWC1I7YJeC0OCfHrS04i9s5Y=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
 
-On Fri, Nov 06, 2026 at 12:15:54PM +0000, Troy Mitchell wrote:
-> On Fri, 6 Nov 2026 14:05:24 +0800, Jiayu Du wrote:
-> > Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3
-> > eFuse controller. These banks contain temperature calibration
-> > parameters and other configuration data.
-> The rest of the window holds the root key and the SSK, which is why
-> only these two banks are exposed. Please say so here and in a comment
-> above k3_efuse_keepouts.
+BS01DCMA is a compute module carrying two independent K3 nodes. Each
+node has a SpacemiT K3 SoC, 16 GiB of LPDDR5 memory, a P1 PMIC, an
+EEPROM and QSPI NOR flash. The SpacemiT Cluster Server RV2768 hosts
+several BS01DCMA modules; its carrier only connects them to PCIe
+network cards.
 
-I will add this explanation to the commit message and above
-k3_efuse_keepouts.
+Add a dtsi for the module with the serial console, EEPROM, PMIC and
+QSPI NOR flash, and a dts for a K3 node in the RV2768.
 
-> 
-> > Snapshot the shadow registers with aligned 32-bit reads and expose the
-> > data in little-endian order at controller-relative offsets. Serve
-> > reads from the snapshot and use keepouts for the remaining register
-> > ranges. Keep the AES_WTM clock enabled and its shared reset deasserted
-> > while the provider is registered.
-> Why keep the clock on? Reads are served from the snapshot and nothing
-> touches the hardware after probe.
-> 
-> Tested on CoM260:
-> - clock on only around the snapshot: probe and unbind/bind work, the
->   clock stays off (AES_CLK_RES_CTRL 0x00c30050), same bank 0/7 data.
-> - this patch: unbind gates the clock and asserts the reset
->   (0x00c30070 -> 0x00c30040), rebind reads the same data.
-> - this patch: 3s of WTM_RST or of clock gating leaves the shadow
->   values and FUSE_READY unchanged.
+The NOR flash is a 1.8 V part powered from the PMIC_VCC1V8_QSPI rail,
+which is ALDO2 of the P1 PMIC. Its partitions follow the layout of the
+SpacemiT boot firmware. U-Boot and EDK2 both go into the partition at
+0x210000; EDK2 keeps its UEFI variable store at the fixed offset
+0x700000, so that partition ends below it and the store is described
+as a separate read-only partition.
 
-I will disable the clock after taking the snapshot, before registering
-NVMEM. It only needs to be enabled while accessing the hardware in probe.
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+---
+ arch/riscv/boot/dts/spacemit/Makefile              |   1 +
+ .../riscv/boot/dts/spacemit/k3-bs01dcma-rv2768.dts |  19 ++
+ arch/riscv/boot/dts/spacemit/k3-bs01dcma.dtsi      | 264 +++++++++++++++++++++
+ 3 files changed, 284 insertions(+)
 
-> 
-> [...]
-> >
-> > +	depends on COMMON_CLK && RESET_CONTROLLER
-> Not needed, both APIs have stubs.
+diff --git a/arch/riscv/boot/dts/spacemit/Makefile b/arch/riscv/boot/dts/spacemit/Makefile
+index 851b701e5da4..a00c31a2c3e6 100644
+--- a/arch/riscv/boot/dts/spacemit/Makefile
++++ b/arch/riscv/boot/dts/spacemit/Makefile
+@@ -5,6 +5,7 @@ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-milkv-jupiter.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-musepi-pro.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-r2s.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k1-orangepi-rv2.dtb
++dtb-$(CONFIG_ARCH_SPACEMIT) += k3-bs01dcma-rv2768.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k3-com260-ifx.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k3-deepcomputing-fml13v05.dtb
+ dtb-$(CONFIG_ARCH_SPACEMIT) += k3-pico-itx.dtb
+diff --git a/arch/riscv/boot/dts/spacemit/k3-bs01dcma-rv2768.dts b/arch/riscv/boot/dts/spacemit/k3-bs01dcma-rv2768.dts
+new file mode 100644
+index 000000000000..5b0449314d64
+--- /dev/null
++++ b/arch/riscv/boot/dts/spacemit/k3-bs01dcma-rv2768.dts
+@@ -0,0 +1,19 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (c) 2026 SpacemiT (Hangzhou) Technology Co. Ltd
++ */
++
++#include "k3-bs01dcma.dtsi"
++
++/ {
++	model = "SpacemiT K3 RV2768 Cluster Server";
++	compatible = "spacemit,k3-bs01dcma-rv2768", "spacemit,k3-bs01dcma", "spacemit,k3";
++
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++};
+diff --git a/arch/riscv/boot/dts/spacemit/k3-bs01dcma.dtsi b/arch/riscv/boot/dts/spacemit/k3-bs01dcma.dtsi
+new file mode 100644
+index 000000000000..0f9375c38e40
+--- /dev/null
++++ b/arch/riscv/boot/dts/spacemit/k3-bs01dcma.dtsi
+@@ -0,0 +1,264 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++/*
++ * Copyright (c) 2026 SpacemiT (Hangzhou) Technology Co. Ltd
++ */
++
++#include "k3.dtsi"
++#include "k3-pinctrl.dtsi"
++
++/ {
++	model = "SpacemiT K3 BS01DCMA Module";
++	compatible = "spacemit,k3-bs01dcma", "spacemit,k3";
++
++	memory@100000000 {
++		device_type = "memory";
++		reg = <0x1 0x00000000 0x4 0x00000000>;
++	};
++
++	reg_5v_sys: regulator-5v-sys {
++		compatible = "regulator-fixed";
++		regulator-name = "P5V0_SYS";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
++	};
++};
++
++&i2c2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c2_1_cfg>;
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c02";
++		reg = <0x50>;
++		pagesize = <8>;
++		read-only;
++		size = <256>;
++		status = "okay";
++
++		nvmem-layout {
++			compatible = "onie,tlv-layout";
++
++			mac-address {
++				#nvmem-cell-cells = <1>;
++			};
++
++			num-macs {
++			};
++
++			product-name {
++			};
++
++			serial-number {
++			};
++		};
++	};
++};
++
++&i2c8 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c8_cfg>;
++	status = "okay";
++
++	pmic@41 {
++		compatible = "spacemit,p1";
++		reg = <0x41>;
++		interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
++		vin1-supply = <&reg_5v_sys>;
++		vin2-supply = <&reg_5v_sys>;
++		vin3-supply = <&reg_5v_sys>;
++		vin4-supply = <&reg_5v_sys>;
++		vin5-supply = <&reg_5v_sys>;
++		vin6-supply = <&reg_5v_sys>;
++		aldoin-supply = <&reg_5v_sys>;
++		dldoin1-supply = <&buck4>;
++		dldoin2-supply = <&buck4>;
++
++		regulators {
++			buck1: buck1 {
++				regulator-min-microvolt = <1050000>;
++				regulator-max-microvolt = <1050000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck2: buck2 {
++				regulator-min-microvolt = <1050000>;
++				regulator-max-microvolt = <1050000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck3: buck3 {
++				regulator-min-microvolt = <800000>;
++				regulator-max-microvolt = <800000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck4: buck4 {
++				regulator-min-microvolt = <2100000>;
++				regulator-max-microvolt = <2100000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck5: buck5 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			buck6: buck6 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <500000>;
++				regulator-ramp-delay = <5000>;
++				regulator-always-on;
++			};
++
++			aldo1: aldo1 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			aldo2: aldo2 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			aldo3: aldo3 {
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <3400000>;
++			};
++
++			aldo4: aldo4 {
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo1: dldo1 {
++				regulator-min-microvolt = <1200000>;
++				regulator-max-microvolt = <1200000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo2: dldo2 {
++				regulator-min-microvolt = <900000>;
++				regulator-max-microvolt = <900000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo3: dldo3 {
++				regulator-min-microvolt = <800000>;
++				regulator-max-microvolt = <800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo4: dldo4 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo5: dldo5 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo6: dldo6 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++
++			dldo7: dldo7 {
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-always-on;
++				regulator-boot-on;
++			};
++		};
++	};
++};
++
++&qspi {
++	pinctrl-names = "default";
++	pinctrl-0 = <&qspi_cfg>;
++	status = "okay";
++
++	flash@0 {
++		compatible = "jedec,spi-nor";
++		reg = <0>;
++		spi-max-frequency = <26500000>;
++		spi-rx-bus-width = <4>;
++		spi-tx-bus-width = <4>;
++		vcc-supply = <&aldo2>; /* PMIC_VCC1V8_QSPI */
++		m25p,fast-read;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			bootinfo@0 {
++				reg = <0x0 0x20000>;
++			};
++
++			fsbl@20000 {
++				reg = <0x20000 0x80000>;
++			};
++
++			env@a0000 {
++				reg = <0xa0000 0x10000>;
++			};
++
++			esos@b0000 {
++				reg = <0xb0000 0x100000>;
++			};
++
++			opensbi@1b0000 {
++				reg = <0x1b0000 0x60000>;
++			};
++
++			uboot@210000 {
++				reg = <0x210000 0x4f0000>;
++			};
++
++			var@700000 {
++				reg = <0x700000 0xc0000>;
++				read-only;
++			};
++		};
++	};
++};
++
++&qspi_cfg {
++	qspi-pins {
++		power-source = <1800>;
++	};
++
++	qspi-cs0-pins {
++		power-source = <1800>;
++	};
++};
++
++&uart0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart0_0_cfg>;
++	status = "okay";
++};
 
-I will remove these dependencies.
-
-> 
-> [...]
-> >
-> > +#define K3_EFUSE_REG_SIZE		0x400
-> > +#define K3_EFUSE_BANK_SIZE		0x20
-> > +#define K3_EFUSE_BANK0_OFFSET	0x104
-> > +#define K3_EFUSE_BANK7_OFFSET	0x190
-> Nit: the last two are not aligned with the others.
-
-I will align them with the other definitions.
-
-> 
-> [...]
-> >
-> > +	if (resource_size(res) != K3_EFUSE_REG_SIZE ||
-> > +	    res->start % sizeof(u32))
-> No need to validate DT here. Drop it and use
-> devm_platform_ioremap_resource().
-
-I will drop the resource checks and use devm_platform_ioremap_resource().
-
-> 
-> [...]
-> >
-> > +	reset = devm_reset_control_get_shared_deasserted(dev, NULL);
-> This asserts the reset on unbind, rmmod and probe failure. The fuse
-> data survives, but WTM_RST resets the whole GEU (FUSE_SCLK_DIV_CNTR
-> went back to its boot value). The driver does not need the block after
-> the snapshot, so use devm_reset_control_get_shared() and only
-> deassert it.
-
-I will use devm_reset_control_get_shared() followed by an explicit
-reset_control_deassert(), leaving the shared reset deasserted on teardown.
-
-> 
-> [...]
-> >
-> > +		for (i = 0; i < K3_EFUSE_BANK_SIZE; i += sizeof(u32)) {
-> [...]
-> > +			put_unaligned_le32(val, efuse->data[bank] + i);
-> Please poll FUSE_READY (GEU_FUSE_STATUS bit 1, offset 0x184) before
-> taking the snapshot, and fail the probe if it never sets.
-
-As you clarified, the automatic shadow load at power-on does not set
-FUSE_READY; it is only set after a software-triggered reload. I will
-trigger a reload through GEU_CONFIG bit 22 before polling READY, and
-fail probe if the poll times out.
-
-I tested this sequence on my COM260 Kit: probe succeeds and both banks
-match the data read with v1.
-
-Thanks,
-Jiayu Du
-
+-- 
+2.56.0
 
