@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794592125;
-	b=DRpF75AwnERDdmvtKJiPTfCZTXXsLa1eYQZ8xOE+xY8bQgM274TpdYe7d4pVQuWcxyvi
-	 zW4cXJHH5L504FQB+d3oHkSxuK0xsyEiqCd6nYyU+4El0Ue5CqAeRbKBNTy6xH5QUqInr
-	 GxuUUtqSjme7t7cCaqZ8OAeAp4UG8LQZNGEtDZJebfrs1DoN0QU73Jh6g0lVCIH05hTwP
-	 UgbgSSluzCRVVbp93HVpR87u95gG6feP2F5Zvsb+jsJqhj8Q0aGS/Dm/tYl1nURfcwWk2
-	 Zo2c1DAMjoM8hwBZL6Z1jztUxBc2p9VAZNiu05s4xxddgMxz1QeV/6SIbVbpUce4Uww==
+	t=1794592167;
+	b=QaTSOej2iDIq7JlxnIoqERPeLPAZc4BaMGQcPLauKjHAy9v3UXc7ggljWVaL2FwPdtl6
+	 arwAlQBeDLm0O9q/hIZU1rgVLXItzRxs/WBZVBlf8h/BnShRonb7INFHX3J/JWCELpIBM
+	 Lft38T4tEK0je5zp08RNeNPfF8kl+eOfM9kNA2CncC7WQ1iBlOQl6O5m2kJfaVvHjgfAA
+	 p/B7xsLrw3KMx3O/KPPa6kAeGO+acl56hcWvxYFg0gXUK54MyoDYgNbsU5P/dahOaNjdV
+	 PhJzI2TDkA4CM66PxblgCYUWXWKYEN9jCUkwBdbG1fDdmEgLUZ8kw61+1DgmzKuyGXg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794592125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794592167;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=oNynPIYr0dE3TxyMaeHySnLJJrKQN/vNpl2l1SdArA4=;
-	b=OOlW/sdUnmLGc6VH35FRcbTVatLKYXOz99mDzGmaeEvjbAxwBy1IcVyrJ/v36zVxgUE0
-	 dzkzHmnDvC2Bfrr/Kdnw5egMQMvu49gbDS4qAe+F6gjp52UvzWpFE4brkmSyw+6y9v4QB
-	 dpz5Bk3rmzjHdAfWqKBvfkOagMVg3reVMYqM8yZDPTAddf9XOsTNXk/xzgLlxG2j2fCCV
-	 Inz597rnm6W1e6/IotMRFPTLg/XfRVr6apWKeg8/jW8rMpEOr+3I1BDVzgEyg3lIiJRbe
-	 /yt8C5bADP+mb5+IC8p0Uax+cP2D9Ae7TXAyl9pFf9K8ADShKTE97CyMyEvF9Y9MI2Q==
+	bh=1qoAEFZuoRKNKj+7J8hCXBIt3RIFn5aoPyFdLTSqWQ4=;
+	b=x2OsaeSWQX1pzE4OP0h/R8BbgxD4bWenbWzo/NJiNq0Ru8flWcn2SD26YZe1H8QM5ZlZ
+	 xubQJvAB5JGSh51S32h3V2o+caRA1Hep9wlNsr5nBFTOnlCUV3B8M8ivBkKcLpppZ+zTB
+	 s4vsWD3aPXmqnrEvH65XIIJft7GABS/qjXPvbVapLJ5TzjspxDrobko8UiuT8gltWvjFh
+	 UBYMiHfx+R8DJw0EuJowCMUFnZ/QDDL0pVUIgOaDXp3eEuOFiWFTnLsU+w1OvJ/yt236F
+	 Yc9bxjJ7BTvhamD3qRoPCd/huyfgIskNzYV0bB9nARj3Ap32+EuSHAobHk+v1P0DARw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jAF4S1ac;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lSjcvu84;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.54
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE89606B23A
-	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 17:48:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BBE89606B23A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37026079D6A
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 17:49:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E37026079D6A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=jAF4S1ac
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c50933bdf4bso325638066b.1
-        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 09:48:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794592123; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lSjcvu84
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-c5067a2411bso241729366b.2
+        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 09:49:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794592165; cv=none;
         d=google.com; s=arc-20260327;
-        b=UIhMQ3xgYCl5DB3Oug/dYZ5KHHkP6mwb/kro7r7/ZF/vlqwsgffO7fnWKIoBc/lxZ6
-         bQ6KJpM9v4tCvrp3vxhjfw8KdNLdNttEzslOZfilU0O+pv+Xh7m+K6oVzPzHtQm46c9a
-         dBhzocXyx+7N7epteZP7gnpRXgrtn5rm4L3ElwEJ9hMEB4F4lo8qrCBmXw8uqeh6o1sP
-         /9P/yut7iwiknKM7DHmgpRy7uKl5tPxEHl7t2QNGoxhJGAhVANKDj4fkh/CuBgRtoOQu
-         vl0D4RHTB1yD8U4/HpuuNhI2ibozE24ch82F8cMlwiVVLRfHgTVFCk+vcK1nAodB2HQl
-         WKJA==
+        b=g7/zpf9oj3blH5Fv3cptw9oXoBrRBOiewgANUIHrhGuz3dJrvrA2NgRFxM6kruj2Zc
+         O9yjH3K8CLpL7NyWWa3rbktYXpZb+eIzeywqBOv98Ef6YLOsYn2hoj882uHY0pAdTODd
+         neTroRjK4MqCyoD3D4Whnb8WksnSGXhH1ZvEI+6H8Hlw2peA9XkxXG/CZUKh6fOm65hV
+         z3fq21Immfh1lRpSSwefb/01AuIx76Y/An7raN2CHhgVEpY3df7HltvtmgpRZtXX7Dso
+         QK1rJU2H2CK5TlhBTyRWJ1C/ap8PGznp8AK2yl5EWAFhK6GdcWV2xbeePWqOR9WAT150
+         aIMQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=oNynPIYr0dE3TxyMaeHySnLJJrKQN/vNpl2l1SdArA4=;
-        fh=N73YUEpAX//4xJRZ2xfOaMYyvT5oThqZB9l+FqDA8Yo=;
-        b=G/Z9qP5y3OTkAo1xY/+43F1rtG3S0ySk/aGKuFbV64ba6W72LCNtwMOTeZeIGVnc8F
-         oWt1YE0ovAZYVyyoPBhclPlmiICZ00wh8IR1U6zL0SVmhc5d5fsfehcvh2WTwg3YWX/c
-         b/7Hvoi2Km7xFhwPvwqxXNhcgCfsEV8IvgmHIQ5LMuYGWJ0nYDUgZ+90qa0mytzsi0dc
-         OBdAEqEK8sXhuvTaAKBVJQnL297ErgeWg+yDbdAUecyv8DmkX/tfPguE05PsErUS0msy
-         GOGaZNcTD08/Gw4JUrViyN3QcYw7yS7bZSNogKhb9entHgx8vmxD2cEuDjYnlvcFvn1y
-         DI/g==;
+        bh=1qoAEFZuoRKNKj+7J8hCXBIt3RIFn5aoPyFdLTSqWQ4=;
+        fh=K8i/6zZ2AZd6ycMqU5kZ6scvAUBuL3ljmNniHyHKsa4=;
+        b=END0Rza6ymUdFoorZBWFAsv+ynsl5+t9+1NQV4tF9luY2ef2QRbl/JumMQyFKfrair
+         UiMT6CwJVW1podwMg0zIavVpG/qMHy8j9AUyWTfnIbPOWGCRVprslXcHyq6hNkk0Px07
+         zsboXlWyQAPRv4nosIPLn4K/8ZVZ0uLIla1iV4++li9wbAcmYa49ihUuRuXc5JjVKcC2
+         YhlWrrMSSLV/bgnhm33q3Vcx9KFqINfqBfPj+9LQY6od4oFBnBBuWgeBhEJoBNpeA7ZJ
+         ip3qf/Z1tk2QLWkI6bygJeyO7qvk4AcG7/dlfoDbW+3OYraGqbI9W0xly5f5kQoLKrbT
+         8biw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794592123; x=1795196923; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794592165; x=1795196965; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=oNynPIYr0dE3TxyMaeHySnLJJrKQN/vNpl2l1SdArA4=;
-        b=jAF4S1acp/PNP3yqNiapu2Cabt1o7Ekbe6Tl0pS6ORuitHLEIFfP4ig5DpZ6I5Q4a6
-         K6EQNO/YqnfR9nevAZQEkgnw2RSQU+6eQ47FOum/fJGJVfOIs5xjiZOZ9PhQSczTpcTX
-         S0bizAOcGbzNWVHnhmxutb01TurfteZ3vEZdVX7T9W43/g1rXciUmGp/6K+XyN4d6UJi
-         b+pvfejq0S+Weo6U+0frOpxyelVWgzGPL4H8aL0TQCZ8X9qOzclaFjItSGaxIKZ25Fmw
-         4CzHw+p9Pjgm9h0EGysplTHfQTrZBQn7RUsJkKF1wyGjhnLMbDSMeng8Epmrc3+rpYKE
-         lVlA==
+        bh=1qoAEFZuoRKNKj+7J8hCXBIt3RIFn5aoPyFdLTSqWQ4=;
+        b=lSjcvu841kGtsqU4pMdBGaeorR52ND0dNfkp4roLfWiDhqUPWk/gO/r1VYhEVzFS3j
+         PJzSzvdTeDXcOAsZxoOGa5tVXHNtjvmett67adOOOMrck9m3uguDB0hrakJ6huJwIEPw
+         UbsVRRZ9N3iIMFEbbY/T/Kqrcm0GIIqJgLHrMRdKDKKTrZdqYa+ERJfaKB8aXnLQQWEg
+         i0IqNXfqT/tbwI2nt5hrR9WyTKZn//BDJUHjkw8VMWrk1BSywajxTRJT8B4O3vECmdUv
+         AR1Ae3R0jMl1cdKghbvC9NVUeUK0UtnOzNBaB2F0zDtrYL86bdZQPkC3ZZCBisIwHFx2
+         EDEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794592123; x=1795196923;
+        d=1e100.net; s=20260707; t=1794592165; x=1795196965;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=oNynPIYr0dE3TxyMaeHySnLJJrKQN/vNpl2l1SdArA4=;
-        b=eYAxa65lqtMiEKj0saeZBx1qTmLkuJtSigboz0mjKNLCjY0FW8kLxpCTrW2D0nunUW
-         lJA2DRs4cK9boKLfU1kAZWllwCK5wDVFBx7BCjAJl8CPHX7ObtbPSQlpQTp4C38rRzYo
-         rpciz+kMD6cn485BwwKlYyPQ+eGGTUmhzqXrCpv+kr5l/mSRZvfL7MUsnS6L9AYOlkPo
-         FKmSGwIQS3e61GF05Njj4kUv0+M55dBbzBqXUgJneFyOsc4goIkw1AA6F2v2ZG6kO9ky
-         E7pQvhE06T/cHXeTKKSrV3vuweElAwSO5TQuWVQfSxQOmKnvNG8WwxZNc1PkmfTuojmt
-         ix8A==
-X-Forwarded-Encrypted: i=1; AL+hErFkettPUagyBgAeXs7Vp8QPMDYiN1eX8mCihC/MNQUUn3iAwSxw4DPV6ooYWbqai+ecC2iXSHa1AQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/Nox5cOPnBOurF2Sf14NL3OyOiYxjQPE0cnPoSO3bOwFZJ6IJ+
-	9e+OmVp31z8y5ZF9cD2DgD8dJ6/y20uT1ejjN+Zqv+WdWzr2RmsYu331GGjrszS/ZuWgMsRkbsl
-	tNvKt5ebY61xuSLkwdmPb887NFNtCgrw=
-X-Gm-Gg: AYBFou2FxPPBA15jy4cqarvYbuDRnY4j+UScdvXdJBy2Kc27UZeuCnYN3GpQnXaqmaX
-	yHRbb2UgJE/LPtaefHJN/7bRKFLot4PTCIP27U5JitJN3x/X/jtXfx9CShlEkwiOfD7eWExtyVV
-	M+0xoMmDqa6xZeDXoKZ0CdokSOGEcftmJITckuLLWjbdMmNyBSfmvndMvlXjwA9X7c4E1cCXhnm
-	vaaeQLRXmVvUU65QNIRjE/halmYDBNwVuH5KeG9zETe54NfENe0GMADoHoN9GK2lcY9dre41aAt
-	Bdd2w0KA6T4IH0DpU3WlIbyYfK+Yx3+vSQMyGqMN5ZF80J/ujigMvzilCRCGdfg204nN+mhoUxk
-	1pvBZxF4R2LgZIrMPc1FRu64p9VT7DPrQHxbiyCcy4bPfRap3U/P6J9pGOOrrgscTp5hRe5MBfY
-	7v22S1gXg1b32rI4HGBBC9dg==
-X-Received: by 2002:a17:907:d01:b0:c2d:d4dd:8d0 with SMTP id
- a640c23a62f3a-c507c3c72b7mr625099266b.16.1794592123102; Fri, 13 Nov 2026
- 09:48:43 -0800 (PST)
+        bh=1qoAEFZuoRKNKj+7J8hCXBIt3RIFn5aoPyFdLTSqWQ4=;
+        b=JG+ZUESmZYnqJUuYQTX6L523thdn4iZoMT6+5IHAJtGt0QpCVwTs9EioD3h5jf/oOo
+         29S61sCpUMAGchNQciv+xo+QDfh3EbI7AtRJZf8ag2kE19io8ube5KUbjHincH9UIumy
+         cz/TXhiLxRNT9NNq/lddV4Agmb8FvnakeWHAd0MzN7AHL2DY5HbzW9kRT6JPF3LPwahS
+         aKK6+6wO88GVT/64nAcUa6SAnkTT+KgoFfaa+7BE0jXuPbDtm1CIi+i12WN6E8XCuMtW
+         H3b7ksCgcoCoVT/9+oSgIc0WNvHLsfsa2w6t0l4q8pifEc6rtd/w8BW8Un6GlFe96Isd
+         dY8A==
+X-Forwarded-Encrypted: i=1; AL+hErGTpUDyRyiuOX+e1KwYtOBta7d3yzeAU8/ZrtwOUrM+FTEZAzMiW+HKAlkrRhV9njkY9oWAGwKY6w==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9DW1ifFFHMBqG6ESb+dL19krtaKHblafAerRANvWX3C5mUXX5E
+	vvd+0Kf5abaAThj76imNlsX80tI6OaDXIAsJ8B0AIpoWG4S3WhrykMBIUNyMgdVXsasYnFA58X3
+	P1jjND44lS/82+lmXTHd49hchMiomAtw=
+X-Gm-Gg: AYBFou1QcXIn+n2zFWGhDucF2QoaWZzPbBnFEgWaw/xCIGyPmQKiPcaxLlIqoQGLd4R
+	Tu1B5JkRZBq5x5QDlYEMKrI3A49bhAErifcqElzZrLEOxh3O8NPSdhkoEXh0tKb5ydk3EywdRDa
+	VzPoUnTEs3YFPLeke75ZrQ/qTtKJZ87fzuvLNGKFReTxMwX6Mjy03gPLdDdDfhxryJDqRw0DGxR
+	llyoUNrUcN9R6lN1RrczK9JGhlRyWzArOSDT2fz2VGttBVkUIOzQKa/OyMZ7CocA3ftcL0R+KYy
+	qQSC0BgawBbyJCBeHFLe0LtSzgVnPGsqX9HM/MKVToUcRPRVzh+nUB2wsrN03N2e99kdddsfAn+
+	GA29gWe+bTgwriTTJXLxmR8xGMGlF4j5uZKSwRTy+5tNpPDXvCPhqOsONbxniTggXrac7a8mH8r
+	5YnBDJqQWmO3HlTnbU11AaMQ==
+X-Received: by 2002:a17:907:ea8e:b0:c50:9439:bffe with SMTP id
+ a640c23a62f3a-c509684d717mr313677166b.47.1794592165236; Fri, 13 Nov 2026
+ 09:49:25 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -105,14 +105,14 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261113132435.434615-1-alitariq45892@gmail.com> <20261113132435.434615-2-alitariq45892@gmail.com>
-In-Reply-To: <20261113132435.434615-2-alitariq45892@gmail.com>
+References: <20261113132435.434615-1-alitariq45892@gmail.com> <20261113132435.434615-3-alitariq45892@gmail.com>
+In-Reply-To: <20261113132435.434615-3-alitariq45892@gmail.com>
 From: Muhammad Bilal <meatuni001@gmail.com>
-Date: Fri, 13 Nov 2026 22:48:29 +0500
-X-Gm-Features: AclHuK8Pe1ThNtetEqiSLcWfitdjibDvU0d4btaBsFE8aUM2ODczptrv0nOcYxs
-Message-ID: <CADqcGBk==F5ncuWFCec5NKfgqpO1O2sSWVeHY1h-F9MjdbouQQ@mail.gmail.com>
-Subject: Re: [PATCH net v2 1/2] net: spacemit: Fix TX timeout work deadlocking
- on itself
+Date: Fri, 13 Nov 2026 22:49:13 +0500
+X-Gm-Features: AclHuK9vLFuFj8StJfQb0gQfm2zMdlEC8vjTlUvEUXwD7gdAHCOcMYM38gGZrFA
+Message-ID: <CADqcGBmdLC9jaK4HSECeSO=DtyZ3t-aoaBRUYV2cEQRBPOwuow@mail.gmail.com>
+Subject: Re: [PATCH net v2 2/2] net: spacemit: Hold RTNL lock in emac_resume()
+ and emac_suspend()
 To: Ali Tariq <alitariq45892@gmail.com>
 Cc: netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>, 
 	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@kernel.org>, 
@@ -125,94 +125,91 @@ Cc: netdev@vger.kernel.org, Andrew Lunn <andrew+netdev@lunn.ch>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Traced the paths: the work and every emac_stop() caller serialize on
-RTNL, the stale-work case is covered by the !netif_running() check,
-and disable_work_sync() before rtnl_lock() in suspend avoids waiting
-on the work while holding the lock. Looks correct to me.
-
-Nit: please add "Cc: stable@vger.kernel.org", the Fixes: commit is
-already released.
+Taking RTNL before the netif_running() checks is the important part
+of v2, otherwise the check would race with a concurrent close.
+Depends on patch 1, as noted.
 
 Reviewed-by: Muhammad Bilal <meatuni001@gmail.com>
 
 On Fri, Nov 13, 2026 at 6:28=E2=80=AFPM Ali Tariq <alitariq45892@gmail.com>=
  wrote:
 >
-> emac_tx_timeout_task() takes RTNL and calls dev_close(), which ends up
-> waiting for the work itself. The function call hierarchy is as follows
+> The emac_resume() calls the emac_open() and emac_suspend() calls
+> emac_stop() functions directly without holding the lock through
+> rtnl_lock(). These functions rely on phy_disconnect() which reads pointer
+> with rtnl_dereference(). But since no lock is being held,
+> rtnl_dereference throws a suspicious RCU usage on
+> Orange Pi RV2 (SpacemiT K1) warning when lockdep is enabled.
 >
-> emac_tx_timeout_task()
->     dev_close()
->       emac_stop()
->         emac_down()
->           cancel_work_sync(&priv->tx_timeout_task)
+> WARNING: suspicious RCU usage
+> drivers/net/phy/phy_device.c:1831 suspicious rcu_dereference_protected() =
+usage!
+> Call Trace:
+> phy_detach_internal+0x490/0x5f2
+> phy_disconnect+0x90/0xc0
+> emac_stop+0x114/0x626
+> emac_suspend+0xac/0x126
+> platform_pm_suspend+0x72/0xe4
 >
-> The work never finishes and keeps RTNL held, so after a TX timeout
-> everything that needs RTNL hangs.
+> Take RTNL in emac_suspend() and emac_resume() before the netif_running()
+> checks, so the interface can't be opened or closed between the check and
+> emac_stop() or emac_open().
 >
-> Remove cancel_work_sync() from emac_down(). Disable the work in
-> emac_suspend() instead, and enable it again in emac_resume(). emac_remove=
-()
-> runs before the devm-managed unregister_netdev(), so use
-> disable_work_sync() there to stop the work from being queued again.
->
-> Found by code inspection. Not reproduced on hardware. Tested on Orange
-> Pi RV2 (SpacemiT K1) with suspend/resume cycles and kselftest, with
-> lockdep enabled.
+> Found by CI suspend tests on Orange Pi RV2 (SpacemiT K1). Tested on the
+> same board with lockdep enabled: 12 suspend/resume cycles without the
+> warning, and kselftest with no new failures.
 >
 > Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
-> Reported-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Closes: https://lore.kernel.org/all/DMO74K2MG3D7.15UUOU1O66K6N@linux.spac=
-emit.com/
-> Suggested-by: Vivian Wang <wangruikang@iscas.ac.cn>
 > Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
 > ---
->  drivers/net/ethernet/spacemit/k1_emac.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+> Changes in v2:
+> - Moved the rtnl_lock() before the 'running' flag check
+> Warning Log: https://kernelci.cloud-v.co/scheduler/job/549#L2168
+> Fixed Log: https://kernelci.cloud-v.co/scheduler/job/589
+> ---
+>  drivers/net/ethernet/spacemit/k1_emac.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 >
 > diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethern=
 et/spacemit/k1_emac.c
-> index 71a80838bffd..51edc95f54c8 100644
+> index 51edc95f54c8..d07d8a1aa5ee 100644
 > --- a/drivers/net/ethernet/spacemit/k1_emac.c
 > +++ b/drivers/net/ethernet/spacemit/k1_emac.c
-> @@ -1732,7 +1732,6 @@ static int emac_down(struct emac_priv *priv)
->         napi_disable(&priv->napi);
->
->         timer_delete_sync(&priv->txtimer);
-> -       cancel_work_sync(&priv->tx_timeout_task);
->
->         timer_delete_sync(&priv->stats_timer);
->
-> @@ -2010,8 +2009,9 @@ static void emac_remove(struct platform_device *pde=
-v)
->  {
->         struct emac_priv *priv =3D platform_get_drvdata(pdev);
->
-> +       disable_work_sync(&priv->tx_timeout_task);
-> +
->         timer_shutdown_sync(&priv->txtimer);
-> -       cancel_work_sync(&priv->tx_timeout_task);
->
->         timer_shutdown_sync(&priv->stats_timer);
->
-> @@ -2024,6 +2024,8 @@ static int emac_resume(struct device *dev)
->         struct net_device *ndev =3D priv->ndev;
->         int ret;
->
-> +       enable_work(&priv->tx_timeout_task);
-> +
->         ret =3D clk_prepare_enable(priv->bus_clk);
->         if (ret < 0) {
+> @@ -2031,11 +2031,16 @@ static int emac_resume(struct device *dev)
 >                 dev_err(dev, "Failed to enable bus clock: %d\n", ret);
-> @@ -2051,6 +2053,8 @@ static int emac_suspend(struct device *dev)
->         struct emac_priv *priv =3D dev_get_drvdata(dev);
->         struct net_device *ndev =3D priv->ndev;
+>                 return ret;
+>         }
+> +       rtnl_lock();
 >
-> +       disable_work_sync(&priv->tx_timeout_task);
+> -       if (!netif_running(ndev))
+> +       if (!netif_running(ndev)) {
+> +               rtnl_unlock();
+>                 return 0;
+> +       }
+>
+>         ret =3D emac_open(ndev);
+> +       rtnl_unlock();
+> +
+>         if (ret) {
+>                 clk_disable_unprepare(priv->bus_clk);
+>                 return ret;
+> @@ -2055,12 +2060,16 @@ static int emac_suspend(struct device *dev)
+>
+>         disable_work_sync(&priv->tx_timeout_task);
+>
+> +       rtnl_lock();
 > +
 >         if (!ndev || !netif_running(ndev)) {
+> +               rtnl_unlock();
 >                 clk_disable_unprepare(priv->bus_clk);
 >                 return 0;
+>         }
+>
+>         emac_stop(ndev);
+> +       rtnl_unlock();
+>
+>         clk_disable_unprepare(priv->bus_clk);
+>         netif_device_detach(ndev);
 > --
 > 2.34.1
 >
