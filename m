@@ -1,55 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794566898;
-	b=DwTCU0/nbHLeqxNbPP0nq949uDIR7xj+8GzvNvKfas9MVYQUw8WjK11wW/kUiPL9OB6b
-	 lP1Ritf+5GZWcK1sjBG4OIjDYLWZOLufPjFIQaK/3DTMPtyekEm+P0SPeWF29qrfuR1kQ
-	 zo7jS5MYPZ8SP5T1svPbbmtw4IeM8rfMHWMTQd1AzrkaC4w9MUvOHfPsyw8C7CxYp1jwx
-	 hX9XRtYyyXtjJnfme1i07qmMTOkbPTaLZdcdmc5MDim8z1nZ53Phswf9t5S/hq7C+67RN
-	 nT8trPnt3oc1t4MBfyi6l/LJyeGB0q7I6j+NyIW+8QBNN3GGcTauN41Ct4USs5CfWpg==
+	t=1794572658;
+	b=WY/oT6n5eRbw9orZTULLtbaT6+YPRScBRCr4XbaUcElR7xZMS5fqVqOxGZTRTc/NPI3y
+	 QND2O6ohpL2SliQk/NG+1CiMVf0m6rWck5TYzmg15DDW+N2DqFJUx5PKeA8gK4sGPZnEB
+	 GUkHRuEip53tVZzYPExUoa5+AYEbyx23rtZQ8boXH5A0vFS4EcKlx9OSMn6uwFXanYwQX
+	 ZNjWHPt+1Nns0VIMJ4E31+Spj8PYJP+gOJTmdhMttULXb9tkDKGpXLBt8Pegy8GPMHkMD
+	 i7h5Z6KWDNu52FXCpBVn9Ki1xLeB0QOWWae7F4BWYXhdqyWDum8k1woW2O07d8MymDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794566898;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
-	b=b4ap0MReJxvaNeJXj5VKYodgosHEjt6HhycA3PpnWDp5vygcuf6LrsjNZl8tdQirwDmW
-	 MmPXX1T30Qi/i1d1J0vdN3UoIMwrV+sLS+EvOOk6oNSctR/E/fYFv9R5obT/fubd956e7
-	 gnkeIVP4InOIhye7KJj2r8YmeXSMsClj9WxrKca9wwM8e0T+xi5dU3GJcVn5Gqv2cCqzx
-	 jI3m+HTdzQ6p2hxVdDtyve2bEh+lGErnuvbmMyvUfCubpAYaj8IquMYk+XMvoru0mVNQe
-	 7EiIo1CHOQy/VsjCeG0ebdmTeqKkl0NFqiN063R22hJdFK0FzgF7Ui1eAoXM1g5NOQA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794572658;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=C/5+MwiGBhrvcZh2GunvS7SNbgc10mz9WWPVXOV6bJw=;
+	b=4YQIr+THIWC/mMNHY5p65RdF71WnbOKsTpXpqIDIq1kSaw9hwZGgPBpwrU3hvo4N0uZ4
+	 Fp6+VTN8rhTZLuGm91QftlUhr937+mn5PIav81/anY5Gx6Q8pd9cXEv78nnBFxSBlfVIv
+	 tQNYzW/uY2uAjo0hgcLtrD950DatlUQoqCEdNuz+00ECItYj0wDbRCYaE6mYfFEHuaUU1
+	 m3qapTk+6e3rlSEhejLcrpn86vzvde30k9ulCmL+sSrirqLPupcEdIv77gdzRv96UXgqN
+	 J2QGT9PH4cUnX+Ctsz/UgYaYGO2j3lQknnb2hJcOUN7b/Or0m96KssddOh0Bl1oxHLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q+39W7e4;
+	arc=none smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849BA606A31C;
-	Fri, 13 Nov 2026 10:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EC606A33A
+	for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 12:24:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CE6EC606A33A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S543vWSv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A254F1F000C4;
-	Fri, 13 Nov 2026 10:48:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794566898;
-	bh=33cVRKk3YgstXddql5txx0xbzf1mHptz6aS9wSjcTFw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=S543vWSvlhe1976ESvDx0Sh8BK29rzjm9wRA/T4CDpA0WLlHO8848X+WcfQS63iOi
-	 Nhz3JLybLhmz93t2GNNQ6NCUV8JbmlWh4gQ7c2QkLyZdVXIjgvZA7pyBnYZw39HMb6
-	 ZfHWNZOWsAjUs1G307mf40Rri7lATqBoGvUAWMYq1wG+zsrSHgokWCOhnRXBd1vRBf
-	 Rn40AGWVJ0/DQRhVlOJdULOcYE76LwTWqE0pZlm6Upf1nesfauMThvJob+pd2QvqL7
-	 +qGxqYsDaYTsXaVgQp7sG2IvhW49f74sc/ngcEyoG4zmS2toEumlD3Diz4g5gF4T5v
-	 EIDdH4WTzsWCw==
-Date: Fri, 13 Nov 2026 10:48:15 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Ulf Hansson <ulfh@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	spacemit@lists.linux.dev, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] pmdomain: spacemit: Add power domain driver
-Message-ID: <20261113104815-GKB73509@kernel.org>
-References: <20261112-04-k3-pm-support-v4-0-de3931aa5153@kernel.org>
- <20261112-04-k3-pm-support-v4-2-de3931aa5153@kernel.org>
- <sashiko-outbox-210694@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q+39W7e4
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-3704d30b84fso1165340eec.1
+        for <spacemit@lists.linux.dev>; Fri, 13 Nov 2026 04:24:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794572657; x=1795177457; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=C/5+MwiGBhrvcZh2GunvS7SNbgc10mz9WWPVXOV6bJw=;
+        b=q+39W7e4qiIjWq+ckoBxOfWzLrlgJN+BZotY2dVbW3t5WaQDJ9+LnAt3GJ8fZw68UF
+         G5jPNhauey2dLE/QsoiQHutO9ZbcvYIFhqYS3ENH0CjfdDwVQcnZLfOCZX0id8+wa3Z/
+         rFKiQ8WvEBzDunQPbYNrSD74ebro6kMCKoW1SJ802rhVNEHLkRAphDZOk8Hqnn9wLtSI
+         i6Frp3TJie2ICDCHbSujmrXy1b3K5Bo4zrmZ5JDWGto34XrilzfAbQqbsTef+f/xMsWi
+         jZHkKWHgGQIs54rtJgOxENgBxjKGWpP3wxng9+XkYCuPMIX87zr+q7etm6QmZSM3HBkm
+         OxpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794572657; x=1795177457;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=C/5+MwiGBhrvcZh2GunvS7SNbgc10mz9WWPVXOV6bJw=;
+        b=WNtvp/Y6FgjUSLMIv82bIEbESKC9+2TonF6YQTZkovVIj7rCxia/aMx2SuK919rcBI
+         K4OrhtpLubJSn9ZiYUPuWnwi0p4Lq+mcy2hr6iZK+VqqtcaHfsnnCDp2BlqySmg09Pkq
+         G15myJq5sxh2Wgwu9xFQ/VnC9JdThp7BPBE2haEhy5peWDD4Ue/Pmp1loUvXmpLHcN0g
+         +23FuGnr0+zQfD6HL5ODm8t7/SL+wGHhuP4UsBOPYZFhBpIBHcC256uikjOCRqnz76Qv
+         hVu4XfOW0swZ93PY2y/U+9jyS/pGoXSTug1mvNG6qtX2Waru90mzwJ96L6SBVC1aWD8M
+         uehw==
+X-Forwarded-Encrypted: i=1; AL+hErGZgVtU+I7HsEafjAeY6tlBM1m8M4sKSdi9tqW4/OHSOz0IKXNMnjAaLtph3jPwD7KbTUmiYT6chw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9U2ctVvDsSjbSeUQbToMpf+HeIlETNHft6AzlPgn6WG9AnWgEw
+	yuwurImhTWF54kUfCOKqenbM00MRFZJj+eKFd0vk7mrBmLIf80N/3HhH
+X-Gm-Gg: AYBFou3QsWKH79mDchVqhpN/Yj1r9yWRWHicvYu7MC0CE/tlNrp0mJkyGPxsVHR6xzu
+	sxL2T64DkYnR7p3HaWxcDSYbtNbipOK4ERWXOLMbf5hKc7RlOobWVn6nrHzy8mfzbucwXTic4xP
+	bgX4FKZTMAkvfdofyiARjtOfmeCKm8Tp2BSWBNIQ7Z4NQS2b8Fp9wO/JrFNoPlufYUb+uj9fCpp
+	b/T93pjUjwj9eld5n4tS/yPqloRvZQH2In3CsuYn6mfYcCr5w35yJe1OL7EMreC5taaM6RPb1u7
+	tU83/SIFB+Ul5d+NxHo4oBrZbdlclqi1ChliqEYQe2araQ5yUOtcvhaEaa3F+ItqWfs2r6xM4nm
+	yMFowwokS7ebfKYAsjojejwi6oHL/Yos1jd1Dkq01XEXfNzuWpidlJH3MQMeb5TcdEgjLdinL1v
+	WOnp7ai5bow9PrircWSHJJ/RxgUklqlWDHhd/ep/s40Mpw+5mgOTThrfQ9210/CJix13ETziORz
+	IVck6fTNFns7UUYjFLqqvf9Q3Xzt7gQWoTS9rLlZ+c5pj6p4t9pvZ/8K74o+CPefmrcACRB8iJc
+	YfkFjVw9UFr2Yf8XLMdm5Hz7nOsUcw==
+X-Received: by 2002:a05:7300:de01:b0:369:daea:812a with SMTP id 5a478bee46e88-379682c2053mr1692885eec.30.1794572656803;
+        Fri, 13 Nov 2026 04:24:16 -0800 (PST)
+Received: from duge-G3-3500 ([183.192.220.187])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-37955f02ff0sm7242488eec.16.2026.11.13.04.24.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2026 04:24:16 -0800 (PST)
+Date: Fri, 13 Nov 2026 20:24:05 +0800
+From: Jiayu Du <duge1256@gmail.com>
+To: Aurelien Jarno <aurelien@aurel32.net>
+Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, dlan@kernel.org, troy.mitchell@linux.spacemit.com, 
+	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	p.zabel@pengutronix.de, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: Add K3 eFuse and temperature
+ trim cells
+Message-ID: <uot2mqhilzdfngqcwpipdo5xzncyvesmw2hw6rqk7mnveer57f@6m4cqzotx53k>
+References: <20261106060525.346873-1-duge1256@gmail.com>
+ <20261106060525.346873-4-duge1256@gmail.com>
+ <au5Q9lYTUegeEglv@aurel32.net>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -59,182 +102,65 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-210694@kernel.org>
+In-Reply-To: <au5Q9lYTUegeEglv@aurel32.net>
 
-Hi Ulf,
+On Fri, Nov 06, 2026 at 11:13:10PM +0100, Aurelien Jarno wrote:
+> Hi,
+> 
+> On 2026-11-06 14:05, Jiayu Du wrote:
+> > Add the K3 eFuse controller with its AES_WTM clock and reset. Describe
+> > fixed-layout cells for the temperature calibration parameters stored in
+> > bank 0 and bank 7, using controller-relative offsets.
+> > 
+> > Leave the controller disabled for board-level enablement.
+> 
+> What is the reason for enabling it at the board-level? AFAIU, this is 
+> part of the SoC and does not require any board level hardware. Therefore 
+> I believe it should just be enabled by default.
 
-I'm seeking help for last review comment from sashiko, see my reply
-at end of this mail..
+Agreed, there is no board-specific dependency. I'll fix it.
 
+> 
+> > Signed-off-by: Jiayu Du <duge1256@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/spacemit/k3.dtsi | 25 +++++++++++++++++++++++++
+> >  1 file changed, 25 insertions(+)
 
-On 08:22 Thu 12 Nov     , sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issues to consider:
-> - [High] pmdomain: spacemit: devres frees active domains when
->   pm_genpd_remove() fails
-> - [Low] pmdomain: spacemit: log ret instead of pm_index on power
->   transition error
-> --
-> 
-> commit 1bedd4d63c29dbe88ab766b2b331bdd5d01ee76c
-> Author: Yixun Lan <dlan@kernel.org>
-> 
-> pmdomain: spacemit: Add power domain driver
-> 
-> This commit adds a generic power domain driver for SpacemiT K1 and K3 SoCs
-> as an auxiliary bus driver supporting both software and hardware power
-> sequencing modes.
-> 
-> > diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-> > new file mode 100644
-> > index 0000000000000..dd0613c1912a0
-> > --- /dev/null
-> > +++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-> > @@ -0,0 +1,424 @@
-> 
-> [ ... ]
-> 
-..
-> > +
-> > +static int spacemit_pd_power_on(struct generic_pm_domain *domain)
-> > +{
-> > +	struct spacemit_pm_domain *pd = to_spacemit_pd(domain);
-> > +	struct spacemit_pmu *pmu = pd->pmu;
-> > +	const struct spacemit_pm_domain_param *p = pd->param;
-> > +	unsigned int val;
-> > +	int ret = 0;
-> > +
-> > +	if (!p->use_hw) {
-> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_sleep1));
-> > +		fsleep(20);
-> > +
-> > +		val = BIT(p->bit_sleep2) | BIT(p->bit_sleep1);
-> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-> > +		fsleep(20);
-> > +
-> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_isolation));
-> > +		fsleep(15);
-> > +
-> > +		ret = regmap_read_poll_timeout(pmu->regmap,
-> > +					       APMU_POWER_STATUS_REG,
-> > +					       val,
-> > +					       (val & BIT(p->bit_pwr_stat)),
-> > +					       5,
-> > +					       APMU_POWER_TIMEOUT_US);
-> > +	} else {
-> > +		val = BIT(p->bit_auto_pwr_on) | BIT(p->bit_hw_mode);
-> > +		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-> > +		fsleep(300);
-> > +
-> > +		ret = regmap_read_poll_timeout(pmu->regmap,
-> > +					       APMU_POWER_STATUS_REG,
-> > +					       val,
-> > +					       (val & BIT(p->bit_hw_pwr_stat)),
-> > +					       5,
-> > +					       APMU_POWER_TIMEOUT_US);
-> > +	}
-> > +
-> > +	if (ret)
-> > +		dev_err(&domain->dev, "failed to power on domain %s: %d\n",
-> > +			p->name, pd->pm_index);
-> > +
-> > +	return ret;
-> > +}
-> 
-> [Severity: Low]
-> As reported by Troy Mitchell on v3 [1], should these dev_err() calls in
-> spacemit_pd_power_off() and spacemit_pd_power_on() pass ret instead of
-> pd->pm_index so that the error code is logged rather than the 0-based
-> domain index?  With that changed, pd->pm_index can also be dropped.
-> 
-Ok, I see the point..
-I was initially trying to log the id (pm_index) of power domain, but
-with p->name, it's not necessary, I will fix it in next version.
+...
 
-I would completely remove member pm_index from struct which not useful..
+> > +				#size-cells = <1>;
+> > +
+> > +				soc_rtemp_trim1: temperature-trim@120 {
+> > +					reg = <0x120 0x1>;
+> > +					bits = <0 8>;
+> > +				};
+> > +
+> > +				soc_rtemp_trim: temperature-trim@19a {
+> > +					reg = <0x19a 0x2>;
+> > +					bits = <4 8>;
+> > +				};
+> 
+> I have tried this patchset, and while I can see non-zero data in the 
+> /sys/bus/nvmem/devices/f0702800.efuse, both temperature calibration data 
+> appear as 0. Is that expected?
 
-> [ ... ]
-> 
-> > +static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
-> > +				      const struct spacemit_pm_domain_param *param)
-> > +{
-> > +	struct spacemit_pm_domain *pd;
-> > +	int ret;
-> > +
-> > +	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
-> > +	if (!pd)
-> > +		return -ENOMEM;
-> > +
-> > +	pd->pm_index        = id;
-> > +	pd->param           = param;
-> > +	pd->pmu             = pmu;
-> > +	pd->genpd.name      = param->name;
-> > +	pd->genpd.flags     = param->flags;
-> > +	pd->genpd.power_off = spacemit_pd_power_off;
-> > +	pd->genpd.power_on  = spacemit_pd_power_on;
-> > +
-> > +	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	pmu->domains[id] = &pd->genpd;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
-> > +{
-> > +	struct spacemit_pm_domain *pd;
-> > +	int i, ret;
-> > +
-> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
-> > +		if (!pmu->domains[i])
-> > +			continue;
-> > +
-> > +		pd = to_spacemit_pd(pmu->domains[i]);
-> > +		ret = pm_genpd_remove(pmu->domains[i]);
-> > +		if (ret)
-> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
-> > +				pd->param->name, ret);
-> > +	}
-> > +}
-> 
-> [ ... ]
-> 
-> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
-> > +{
-> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
-> > +	struct device *dev = &adev->dev;
-> > +
-> > +	of_genpd_del_provider(dev->of_node);
-> > +	spacemit_pm_domain_cleanup(pmu);
-> > +}
-> 
-> [Severity: High]
-> As reported by Troy Mitchell on v3 [1], can unbinding this driver or
-> unloading the module while a consumer device is attached cause a
-> use-after-free on pd->genpd?
-> 
-This is an alter solution.. but just workaround the problem
+I see the same on my COM260 Kit: both banks contain non-zero data, but
+the two trim fields are zero. The factory 6.18.3 kernel gives the same
+bank data and temperature calibration data. 
 
-> Because the auxiliary device shares its parent CCU platform device's
-> of_node, fw_devlink links consumer devices to the parent CCU device rather
-> than to adev->dev, so consumer devices are not detached when
-> spacemit_pm_domain_remove() runs.  pm_genpd_remove() then fails with
-> -EBUSY because genpd->device_count > 0, leaving pd->genpd linked in the
-> global gpd_list and referenced by consumers' dev->pm_domain pointers right
-> before devres frees the devm_kzalloc()-allocated struct
-> spacemit_pm_domain.
-> 
-> [1] https://lore.kernel.org/r/DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com
-> 
+The thermal driver change in [1] reads the bank 7 trim first, tries bank
+0 if it is below 8, and uses 0xd8 if both values are below 8. This handles
+the zero-value case. I don't have an explanation for the zero trim values
+themselves.
 
-I've attempted to submit a patch to fix this issue, Ulf, can
-you give an early comment on this? I'd like to see if it's a
-right direction before I go further.. see below
-https://lore.kernel.org/all/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org/
+[1] https://git.openruyi.cn/OERV-BSP/kernel-spacemit-k3/commit/334d70cf990d4e9a9899bdfb758e47732ba5d519
 
--- 
-Yixun Lan (dlan)
+Regards,
+Jiayu Du
+
+> 
+> -- 
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
