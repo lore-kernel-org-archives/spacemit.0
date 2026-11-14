@@ -1,61 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794611089;
-	b=Ere0KFcjZzAC7F+VJzbY7m2oQH8kFmz9ZqgNevPHpXq7gZxnQGPvgOdNLHteDHvaj1/D
-	 63Lg3vNpi55AXZGA1mi/5TxppDNi7o1AkIVFyNwrqJNnh3XOzzTc6r1y6K6TYI8K6+eYS
-	 XxWb+ADPK9iVZnNKyWYDOnFtr3rHPMFTPjqtTMQgSAfJ2Nv9uGumPy3sVnMsl7/iR1VnH
-	 ofgQ9zXuiKL7zkvoPzooxHga4QuubpjvfqWU4YsDBjIS6q+NGAGNNfFSQ/H2aHJmQ+THi
-	 AXX4gREZAgA7/w+o9/3/x83/fVZU7MH6dCSs0BNR3f9lldXbbjwn2vZ8exT6eclzFqA==
+	t=1794620658;
+	b=oH3E+nfqL/eSPtOukFh6LjwTry3B+GzMnHUC9/2H/pWqyPm6/ym+XL5HAqnvu8FpA5R8
+	 eptGL1dGC1T5llMeybMVtoT0dwl7libM3Wc4aAj2cyxmCEHBaF5M4f8AAMFGFO5r6qWpT
+	 +HZl2JoHX4VH4XcJ7PRImG+ZiGT/d4FVHqvS5zzIxNU7e7PhdFhXZLcmNkqky+wyIJ9zd
+	 q9q5sVi/eMuxsPLsq1T3GgAhYgacKrybAPnVKDOLxLrIv/zn9vUUN4FPd5eyszL2I+uIs
+	 BhFs1XrJ7ExhV0eWxfyKbQKltog+HOqN9zYTSvMSpN1UmkCjGI3z/iuasJXW1bp+Ckw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794611089;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794620658;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=Krx13oDhrRUsMiTIZ62Zs/3Dq6U/Cu5IlVxvdunMvxk=;
-	b=lpioSKyuWMZeMmiaXrd6l/PvuIc00XNrH6Q8o8HPV68c76EQm9qStce8J67VG3kT6bAL
-	 ++sADdgaTk6qSZ4Lm7YtJztwseY/cm5bA4PJmF4EPpHRepTPKlVJytp1ofrgcuQHb+wez
-	 /KBo7qmZ6fG9yElZgWyo3D90sp2km1Vr2d1qchI0EKmUJkC06/IlicGDe49ZllNIBiYp6
-	 eJZ6YR2zhszS0g8TS/+HpSbM5SAT3MiOZisRurbMXCYt0JtGnDFitTue9eslheGAw1QvI
-	 eplsyq47GvoHQ7o6DS3vkDNfNOKsEzI5df+apsXfUJkcANv8NA9t9PT8vYkO3NkB7zQ==
+	bh=ze++7aKWR2T/skYTjKdocWOwvTMkchcenQAZ9t6jBy8=;
+	b=N/5If2OzsINsaFOTorY1tUYUDfw+BNt5KMzw5YYnHfVnlHidC7ipZX8u9b+C/LowNXNw
+	 t6zz4rsBVEA1hcrgeHms5PMUDkcbJkmzP82aE3L6STtldlDY7xZnqifcXDdBk9pQgSGs3
+	 p5LA2XKjmSqRUuXo1X+SLw108A/Nb3KpjjmbgpHHdFtS03CJIWWUM3Fb637t3kbmyqmCF
+	 m1CFlyWcUmauD9ZGvhxM43ZZrfdBQUaNhosIT0Y923hZC3G9y8hwpiTwuC5i6ArHEJv2M
+	 nLFra4tKI5Xs4iMuA2pAyqI/lj6JFVIHN1YeKXBcjViMLbcUGY9KdXNaf+WFVf5UkqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=asub0Id8;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kY6FsRmR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95555606A335;
-	Fri, 13 Nov 2026 23:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BA0606A33A;
+	Sat, 14 Nov 2026 01:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=asub0Id8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10F31F000C4;
-	Fri, 13 Nov 2026 23:04:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kY6FsRmR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F6C1F000C5;
+	Sat, 14 Nov 2026 01:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794611089;
-	bh=Krx13oDhrRUsMiTIZ62Zs/3Dq6U/Cu5IlVxvdunMvxk=;
+	s=k20260515; t=1794620657;
+	bh=ze++7aKWR2T/skYTjKdocWOwvTMkchcenQAZ9t6jBy8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=asub0Id8uKMir4Sbcs1fqGd5cRgvs415DyEMt8ueIxeyAQm4hoQXX/auX2Tljs0Ca
-	 rvedxqjQ9YCTY0jMhe54wXZAPVQvzX8d5vhvdi+ySKZi19dLCkxBXTwDClZzGoYlQk
-	 20Z3lBw1+2z0KkLN7Kk7J9XUiYAtd/mEeKZV8gTdBJgHiou+saGr2PapavicypGw9r
-	 BrjGCZman0b8Nvk4p7Gu9rVgXs2FfrwMzxGq2bCIZU+/E3EJUjV20RxbTtbYQe+dN1
-	 X1RLNiu8XOeL9zs9/KB7ZmQrJOojCl8BEnPpp8wkl8z+LfOeIyAVISOVRbswT/y8hm
-	 AcakntsBaFm8A==
-Date: Fri, 13 Nov 2026 23:04:46 +0000
+	b=kY6FsRmRUmQrIK7GUlrIO51EsyjeDIn0PGOrBoHwzK+J5wgN0I5tTqJwZRTjE8J4/
+	 VxS/F99U8CuYVNlkUY2+Ly8M8L80ZJCWEFfig+EEsRtd6HWutqJs2WgMO8VtQfSMtG
+	 Px+/kxLRur9rBAdwyyG3Ff6Epqq5rwIL6SE8LOGjA8bN3wSsVGqhiJQO1qpHNvifc4
+	 us8C2Vv8+TI9uddSSBjSwD7xtHp4UniwK0HAG5vwSlEfsCC+EHHx2JIgJANtG0Ii8X
+	 uqGBLQeDddJspxuoO6v7OcIAc3jmchGTHaZ3zgRO0Ru7oQzgza9fswH8JvksVTWWET
+	 rxUdYCLY9hW8A==
+Date: Sat, 14 Nov 2026 01:44:14 +0000
 From: Yixun Lan <dlan@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
-	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: k1: Correct missing space
-Message-ID: <20261113230446-GKA67791@kernel.org>
-References: <20261113185214.182695-3-krzysztof.kozlowski@oss.qualcomm.com>
- <20261113185214.182695-4-krzysztof.kozlowski@oss.qualcomm.com>
+To: Vlad Banea <montrealtango@gmail.com>
+Cc: troy.mitchell@linux.spacemit.com, wangruikang@iscas.ac.cn,
+	guodong.xu@oss.qualcomm.com, jyc0019@gmail.com, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: give each PCIe port its own
+ DMA window
+Message-ID: <20261114014414-GKA99639@kernel.org>
+References: <20261113023158.2872492-1-montrealtango@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -67,31 +63,39 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261113185214.182695-4-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20261113023158.2872492-1-montrealtango@gmail.com>
 
-Hi Krzysztof,
+Hi Vlad Banea,
 
-On 19:52 Fri 13 Nov     , Krzysztof Kozlowski wrote:
-> Correct minor style issue around white-space - missing space.
+On 21:31 Thu 12 Nov     , Vlad Banea wrote:
+> On K1 a PCIe master only sees DDR: bus addresses 0-2 GB map to CPU
+> 0-2 GB and bus 2-16 GB to CPU 4-18 GB. A root port does not forward
+> upstream an inbound access that falls inside its own memory window, so
+> dma-ranges must skip each port's own outbound window; the other ports'
+> windows reach memory.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> The shared pcie-bus skips all three windows, bus 0x8000_0000-0xb7ff_ffff,
+> which leaves CPU addresses 0x1_0000_0000-0x1_37ff_ffff unreachable from
+> every port. Give each port its own bus that skips only its own window.
+> On boards with more than 2 GB of RAM, each port can then reach another
+> 512-640 MB without SWIOTLB bouncing.
+> 
+> Signed-off-by: Vlad Banea <montrealtango@gmail.com>
 > ---
->  arch/riscv/boot/dts/spacemit/k1.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> index 542bfc0d19f5..5d5f7f8a393d 100644
-> --- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-> @@ -948,7 +948,7 @@ pdma: dma-controller@d4000000 {
->  				resets = <&syscon_apmu RESET_DMA>;
->  				interrupts = <72>;
->  				dma-channels = <16>;
-> -				#dma-cells= <1>;
-> +				#dma-cells = <1>;
->  				status = "disabled";
->  			};
->  
+> Notes:
+>     Changes in v2:
+>     - describe the K1 PCIe address map instead of citing the vendor DT (Troy)
+>     - "more than 2 GB" instead of 4 GB (Troy)
+>     - drop the RFC tag
+>     - RFC: https://lore.kernel.org/all/20261112015148.3911178-1-montrealtango@gmail.com/
+>     
+>     Tested on an OrangePi R2S (8 GB, RTL8125B on pcie1 and pcie2): SWIOTLB
+>     use under load went from up to 87 slots to none.
+> 
+>  arch/riscv/boot/dts/spacemit/k1.dtsi | 27 +++++++++++++++++++++++++--
+>  1 file changed, 25 insertions(+), 2 deletions(-)
+> 
 Reviewed-by: Yixun Lan <dlan@kernel.org>
 
 -- 
