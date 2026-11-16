@@ -1,99 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794814591;
-	b=c9X/9CQdmloYzRU3lOadCEBH1Iq7boTbvp4E3yz46oIHDW2Go1MdT3a3S6ygS7d5BxKk
-	 XXaHZWEXuTVYyVNTQZzMUogsfYMplgrSJM32cszA2qreHGUnD+xAxeYzmfqkFXbARNWky
-	 Zxhn5Ko45kxg03kL/YergA2ureBgBMtM55HMfiMAhaOvBxE/RYxrkacP7nxXmyCrTMv5E
-	 gR+R1r2zYWl76vUS4pWmbEJMM4CqhD+727zQoRCQl7I2ZkZnAassDhPSEHnFmcoF+Xxi8
-	 91mu6Z2jHnLcdrU2wycVQlMk5YAkus5X9duoHiOwqKfKXwdkStrsJGhiTPjbGDOc2zg==
+	t=1794815238;
+	b=hpGTyK+KEw0nuAEHHdeSjI6IAgb4JRN8TSjK/fAMHxm19h5Scnez1add2Q0geaCgVsaE
+	 R55S5ZoEGlusM5TM2pilPTJ3Yj6Uh+wybrYtnzHlW1Tp0/LKHi7dXWh6bnY5HuZ6LtHWl
+	 6Hd67pY2ceoOuLk/Ji0UE3mUHtax9n1gsYX/1h4Hj5d5ls+1/a+g+eENnXD0Fs9xKwpHF
+	 uSz4nE5TkvsZwD1wKw/H7xKY9YGcKQzrpEwlAVRxGrEKUM/aMuH22UIEvoNA+gU47ncjE
+	 r3U7V10/C69ZllrnaFPTOEZq5xq6ec1kqB7IKL1or+xYllcWkW8Y4ooWwuh9CMS38kw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794814591;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=NuMRN9mlOmZCEKh1xHdz4U4CqJ8o4hxQExiC+l3Niro=;
-	b=Wm30/3N9RYLEyAqcl8M3KDL3eYGFp1jxRrQdcrav6RzHR2naN1+Lu7AVyPdhl6x/ge6Z
-	 Vg2lcw7EqD4d/nHncLVHOq9ABK0ZSRzY3/L2bt4um4866+yo46zt6+MLTKz9g2CPcwhOG
-	 aV+8plF3dm0OEXIWsEVLr9ksml6ZoIjzmushN+O7qHwfvdSiDHcDV+06ju6IPHtUt2kT9
-	 PciKxbX65UhNNfRNE1PbcBMzm1Z3oBmxeU56Ale7JVHQMFui4DDRARCFELCCewm/6vDwa
-	 fbHbA/uvOO3ZTyctzRCqHknki2VqndnJASkJPc9KBIv5HrB2/Lvahv9lckqdugK6MWQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794815238;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version:X-ZohoMailClient;
+	bh=OUTfZXv8x7eL7MqFjv0jmWWqCW17mS56gXHeKOmtpac=;
+	b=wOT7lo5GU6fQVBwlMdVT3s9eTZIM1GOgG2/1NC2bliyFNnCNXQzrHouci/q+nYUq0G37
+	 YfLICErYkePg2IXFqU8kqMDFw5G1DU4QOWBqAb9qQguMf2s7pq9s1Sziy0efPsKcYVH51
+	 FZX/1rHXCHQ84C9GxINdWXcIaynEvX6Vt1Cxyc0g3Ld1zZpqIQ7kWkULHATsHvtxwO8E3
+	 4s/t2Wudj3DtakUgRsNhyb3F5UCdbVrDCDCYrkJuuumyvVjQVRplOw1sQcxshDbGRi5k0
+	 Vz87MHFKYNE9Vhu3IrYSIPpG/8mn/8Hc8JBv7mjFfgwjAKRCpscPZIT6zOugX1GINcw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cK3ebaaJ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.47
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=icenowy.me;
+	spf=pass smtp.mailfrom=icenowy.me;
+	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=mIvoRN0S;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF5A606A8A7
-	for <spacemit@lists.linux.dev>; Mon, 16 Nov 2026 07:36:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CAF5A606A8A7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733F2606A31C
+	for <spacemit@lists.linux.dev>; Mon, 16 Nov 2026 07:47:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 733F2606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cK3ebaaJ
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-6b587591414so3785536a12.0
-        for <spacemit@lists.linux.dev>; Sun, 15 Nov 2026 23:36:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794814583; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AllZQl16JAFU9LkgUwPTat851UWiLzg8NMK82DO6+TNkxH4QCOyLOSK4YHetHOsaFR
-         ayZCXTIVoqqjb+sjNsPzPEIRIcqzovaqsQKxFpyNVe6pQEzZMbyU3kWvkbWDDxlMewXq
-         irtlem2m4aykcH2QyjTJFFCTzms27ZQZItMX75CULOxh7LV2BbRbSD+dAVYKH30oDTC7
-         5i95DulV2UHTDB2lrsyoYYHx08Io3yARVz6DoICuM/jihXxovafuK37aofb5T9soNNqV
-         pYy/HHKvXkbwGtV8A7hg6YdLKn8RliD5jvxMZ1XNvTSQWk8/TYDLeU0ncHVfS30ZL94y
-         YxBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=NuMRN9mlOmZCEKh1xHdz4U4CqJ8o4hxQExiC+l3Niro=;
-        fh=mQsTp+9t2H/IIM+9Q7cjS1CRy+Ny2JbZ1pm/YI6ISWg=;
-        b=NJcklKZEQAAaILdWpMMN81HMn4+1IgWcq2meqA6UOdMf1dVvH4B0VEo6g5IESrGVgi
-         gjnZx0zhsjhXDmTO8pVy+07Iesuzbp+aSsnArOx1iWuPwSWR89gugs34SMs+3avbnk+X
-         LAokiLWnqkY9LO5iZFtrWwrNmKIDsqzKUYrtHYfxU/p6KulCdd2wljeArgMdW4FXLS6o
-         DMr12LV1y6ihUow8Kwac6qvTLdpCMYEAo7xy2osG4dA0k4jscjmDTKMDiySPRV0l6yXx
-         K2pGb+umLyTKnqCFs+C1vT1uJJWfLqmYihJSx0ui8q9xvzObfSgcosZ+2LwixuZlbQHw
-         KZLw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794814583; x=1795419383; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=NuMRN9mlOmZCEKh1xHdz4U4CqJ8o4hxQExiC+l3Niro=;
-        b=cK3ebaaJsI+gerODnshGkREwB0Jb/0cSoO1c8FpogA4KjGlUOjxq6yEfRbEFpt8Ncg
-         V18bgDhDG9uykzDeI/puvKimrsJdXNbi2V0+UfO64n3D9VZxJpNZykjt9cp326wi9O9f
-         4SVNeQD3TpVePJ2k52WhtqSbJbAPhVkO8zfyE2J/4IVt6L4NPq/y+VWLEAOz87wNSdkM
-         fHYIuusCfZiv5e8lRKwTtZ1EzW6iH8mmzJuOGQhAbIOSL+o6ikJyHMoCmTlp4R6WoJVZ
-         Wk7GMOuCfJlz1zUUC4wjYJ2uCzxSz+uwjLbQKCmWpfQ98QDeAmfoFmBwPGb02PkF9gJT
-         EsVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794814583; x=1795419383;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=NuMRN9mlOmZCEKh1xHdz4U4CqJ8o4hxQExiC+l3Niro=;
-        b=iLr0YuZE/zAkQ7lSRkgEgN+WoYymuF17ugwQcEihFJIOtlmC3UIPC0RFRLZ9cV9tlm
-         owenuAofUbTCrf+MCA/0JZQtDdWi33YYwmdFi59LHwcGG+fZ1mGV/3IXE+rrEjA9r+7K
-         QY5DXebjcoUH3/n1YLNi6p8Rs5EwTVql5m6nI4SGbkh8z8q5pATScq2jFz4d5yq7HPjb
-         szdXHPRmOf3zRTsMpPTncO2t82UAT/bR3kHS/KiJAwR+djNPfBMJqKXLMK34SpSPVlTj
-         GvrVvqaqqG31TBg7A6UmpKHOUl39PLj/yGK7c1HRzZF0gIeHIg8lmdHxmjsoHtSpkB7E
-         5qZw==
-X-Forwarded-Encrypted: i=1; AL+hErEpDro7tUUP+mtHPChJjxAJU9BGmyL7jIbN05ley1G49+LsUXNiq5z92Fq78G8OgMupcMVjUPsY5g==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9kQdyIGlQO3Ec752CK0rU6bprRO5V/aCw/NidbOkmB3vdh3fwt
-	jvlOZp+JS1uG2kAdI5bN7vY8UuWKOe/4BqtT543XgeWJNNJsG5eLFEXusFRNtAe9fMDXCfgZn5o
-	iOXFWydmgAKGTTvns3OxgiHE4HWIcMQw=
-X-Gm-Gg: AYBFou08OYNNeoYM8rUw9d7eS+drDZF/MQDidr850tDxguBPYepKp0/HtHRxPW61mrc
-	M+vBYar0iDj/Qo83ucvhdpnlvoTnlWgyuNryTtY6SwATVXw2Jcgqz1v8OtKrEf2eshd1DLJppNs
-	T22SLXJ3pzkePGeLHTNJ6OyGG046uEAwtoqe4wKjywWSo/PzWidFwr41n+YXFtwMoxxO44MPQNs
-	ECpOaLp6pEJxitbcv4hnFXmmg1ikAT/VxVDFfV2+V32XJSlnzJJwkO+x97UtzblRoT/TweoO9kH
-	NyxUH9fvFwaJPEOvBr8T5YmP3eq+AE+wS0f2VnswrOC3JH2IVEf5zPWnQ3heByvMTLpmJ7GYIEw
-	6E9dFTbRw4t4/kZn1dBTaENXWANPWugk2yjh6FmVHhu8/a48qrcW8j+gs
-X-Received: by 2002:a05:6402:5d4:b0:6b5:5fc8:9ca2 with SMTP id
- 4fb4d7f45d1cf-6b7c0c7dc86mr6801231a12.34.1794814582850; Sun, 15 Nov 2026
- 23:36:22 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=mIvoRN0S
+ARC-Seal: i=1; a=rsa-sha256; t=1794815227; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=b3dX3z7c8GFLUI5FjH8mIhgOyYSA51JeUkEOFuLCLF133Gle+fjvbB+ac6keHKZeDlHSaofM0sf3vs23/gppDwsE317B4UO6N9cAEvvzp+M3wvnthvpt68p7YiFGLpALccy9LE8keCwW+sidDGtBO9WCel7jztJ2dAfBiGYH7Aw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794815227; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=OUTfZXv8x7eL7MqFjv0jmWWqCW17mS56gXHeKOmtpac=; 
+	b=dcA/+LPEvCvS2urZRT7Gh5ZEPbzq2EduvUULHDPVgosMueAZ/Xym4Kn6zQYxYcHeMm3DQ5H4zyO4Y0JRNSaXUGtJyl341MU39l1kxug0F1iN18H/coynhi0QmTGE8CBvTsgepj3H4dgN11YXTBXAnfYz4fQLrFJoeZdQv0ykZ84=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: a=rsa-sha256; b=mIvoRN0ST5AP8MT6qVavjzJyxAQ7SFGcjKnUup5BQLCsGI7ny6wSsMQLnrb9M8PwFElqyVUHsR/JaHuE2YPNvHp/n1IWkesy//TYSYp6FtgmVYBHF0hLYzraTTswWdBQIOYoSEK0ArLmw0s1YmwtChkhnf2AoQi3Iu9dEOySWJgsJxFCagsm2m5WIx6Sg4iMtEMpvA/G1YL5kc7OcAVl72hw3d2+so0zGpKapw15ZG2DgYXRboefObfWqg4jkGsqqftoOSIhBbujYFmKHuKLBIu84y6kfd90D93MUtJ3cb4MEWUfHrUXN+mIgAuEICkxsgsjMoHL2PjHWwgmT0TF6g==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=OUTfZXv8x7eL7MqFjv0jmWWqCW17mS56gXHeKOmtpac=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794815225743796.5951054994644;
+	Sun, 15 Nov 2026 23:47:05 -0800 (PST)
+Message-ID: <b7d7ac2eee0e64aa7c267def5c2a8a022c7da425.camel@icenowy.me>
+Subject: Re: [PATCH] pmdomain: core: connect consumer with supplier via
+ device link
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Yixun Lan <dlan@kernel.org>, Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Cc: Ulf Hansson <ulfh@kernel.org>, Paul Walmsley <pjw@kernel.org>, Palmer
+ Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Alexandre
+ Ghiti <alex@ghiti.fr>,  Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Date: Mon, 16 Nov 2026 15:46:59 +0800
+In-Reply-To: <20261116072442-GKA100890@kernel.org>
+References: <20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org>
+	 <CAPx+jO-37Km71oSW+zOO7BBWLj86SNCn=U=EGmBXdC5SfX4nbA@mail.gmail.com>
+	 <20261116072442-GKA100890@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -103,129 +74,44 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110061429.2036-1-linux.amoon@gmail.com> <20261110061429.2036-2-linux.amoon@gmail.com>
- <avpN-gFOvTBAMY6G@venus>
-In-Reply-To: <avpN-gFOvTBAMY6G@venus>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Mon, 16 Nov 2026 13:06:08 +0530
-X-Gm-Features: AclHuK_zi0cJ5esU4k_l4Yl1mv76j_qYKuptpaeB4AEIgcR7sleibDfPZTNW_HY
-Message-ID: <CANAwSgT_k35_waHL-+iU93f=k3fjFAPXhk=exRz-XHMm2MqREA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] power: reset: spacemit-p1: Use atomic I2C
- transfers for power-off and restart
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>, Andi Shyti <andi.shyti@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, Aurelien Jarno <aurelien@aurel32.net>, 
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>, 
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+X-ZohoMailClient: External
 
-Hi All,
+=E5=9C=A8 2026-11-16=E4=B8=80=E7=9A=84 07:24 +0000=EF=BC=8CYixun Lan=E5=86=
+=99=E9=81=93=EF=BC=9A
+> Hi Ulf,
+>=20
+> On 12:33 Sat 14 Nov=C2=A0=C2=A0=C2=A0=C2=A0 , Ulf Hansson wrote:
+> > On Thu, Nov 12, 2026 at 8:45=E2=80=AFAM Yixun Lan <dlan@kernel.org> wro=
+te:
+> > >=20
+> > > Connect downstream Power Domain consumer with the supplier
+> > > through
+> > > the device link API, So when the pmdomain driver is unloaded or
+> > > unbinded,
+> > > the consumer can be automatically notified and purged gracefully.
+> > >=20
+> > > Signed-off-by: Yixun Lan <dlan@kernel.org>
+> >=20
+> > Can you check if the below commit that sits on my fixes branch
+> > solves
+> > this problem for you?
+> >=20
+> No, I've cherry-picked below commit and it does not solve my issue,
+> =C2=A0it's a different problem.
+>=20
+> Problem here is the pm consumer side isn't aware pm driver is
+> removed.=20
+>=20
 
-On Mon, 16 Nov 2026 at 11:33, Sebastian Reichel
-<sebastian.reichel@collabora.com> wrote:
->
-> Hi,
->
-> On Tue, Nov 10, 2026 at 11:44:27AM +0530, Anand Moon wrote:
-> > The SpacemiT P1 power-off and restart handlers use regmap_set_bits()
-> > to access the PMIC. However, these handlers run in an atomic notifier
-> > context (specifically within an rcu_read_lock() critical section), while
-> > the I2C-backed regmap uses a sleepable mutex.
-> >
-> > This triggers a "WARNING: suspicious RCU usage" warning due to an illegal
-> > context switch in the RCU read-side critical section during shutdown on the
-> > Banana Pi BPI-F3:
-> >
-> > [  563.803475] WARNING: suspicious RCU usage
-> > [  563.807813] 7.3.1-ARCH-RISC-V #1 Not tainted
-> > [  563.816614] ./include/linux/rcupdate.h:387 Illegal context switch in RCU read-side critical section!
-> > ...
-> > [  563.841445] locks held by shutdown/1: 2, last CPU#0:
-> > [  563.846694]  #0: ffffffff8404fb20 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot+0x230/0x29e
-> > [  563.856806]  #1: ffffffff84167860 (rcu_read_lock){....}-{1:3}, at: atomic_notifier_call_chain+0x4a/0x1c2
-> >
-> > Replace the regmap operations with atomic I2C transfers to avoid sleeping
-> > in an atomic context. Preserve unrelated register bits through
-> > read-modify-write operations and check for atomic I2C support before
-> > registering the handlers.
-> >
-> > Obtain the I2C client from the parent device and verify that the adapter
-> > supports atomic transfers before registering the handlers.
-> >
-> > Tested on the Banana Pi BPI-F3 (SpacemiT K1).
-> >
-> > Assisted-by: LLM
-> > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > Cc: Aurelien Jarno <aurelien@aurel32.net>
-> > Fixes: 28124cc0fb8c ("driver: reset: spacemit-p1: add driver for poweroff/reboot")
-> > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> > ---
->
-> regmap runs i2c_transfer itself and thus also uses the atomic I2C
-> transfers. The problem here is regmap itself. But instead of moving
-> away from regmap, the atomic use case should be supported properly
-> in regmap.
->
+I do think it's just better to prevent PM drivers from being removed.
 
-On  RISC-V platform, poweroff and reboot are already handled by OpenSBI
-through the SBI System Reset (SRST) extension. Linux delegates these
-operations to firmware using SBI_SRST_RESET_TYPE_SHUTDOWN for poweroff
-and SBI_SRST_RESET_TYPE_COLD_REBOOT or SBI_SRST_RESET_TYPE_WARM_REBOOT
-for reboot, depending on the supported reset type.
+Thanks,
+Icenowy
 
-Therefore, there is no need for an additional Linux PMIC poweroff/reboot handler
-on this platform, as it duplicates functionality already provided by firmware.
-
-While supporting atomic operations in regmap may be useful more generally,
-it is not necessary to address this platform's shutdown and reboot requirements.
-
-I tested this on the SpacemiT K1 Banana Pi BPI-F3 after removing this PMIC
-poweroff/reboot driver.
-
-OpenSBI commit which handles this extension
-
-d9637d00bf47 ("lib: utils/reset: add SpacemiT P1 PMIC support")
-b10e18ec854a ("lib: utils/i2c: add minimal SpacemiT I2C driver")
-
-Similarly, on the StarFive VisionFive 2, poweroff is handled by
-OpenSBI through the
-AXP15060 PMIC, so there is no need to register an additional poweroff
-handler using
-devm_register_power_off_handler().
-
-OpenSBI commit which handles this extension
-
-568ea49490d9 ("platform: starfive: add PMIC power ops in JH7110
-visionfive2 board")
-
------8<----------8<----------8<------
-diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-index 50df66de24e06..069259f7d7c15 100644
---- a/drivers/mfd/axp20x.c
-+++ b/drivers/mfd/axp20x.c
-@@ -1458,8 +1458,14 @@ int axp20x_device_probe(struct axp20x_dev *axp20x)
-                return ret;
-        }
-
--       if (axp20x->variant != AXP288_ID)
--               devm_register_power_off_handler(axp20x->dev,
-axp20x_power_off, axp20x);
-+       /*
-+        * The VisionFive 2 handles AXP15060 poweroff through OpenSBI.
-+        * Avoid accessing the I2C PMIC from the atomic poweroff path.
-+        */
-+       if (axp20x->variant != AXP288_ID && !(axp20x->variant == AXP15060_ID &&
-+                               of_machine_is_compatible("starfive,jh7110")))
-+               devm_register_power_off_handler(axp20x->dev,
-+                               axp20x_power_off, axp20x);
-
-        dev_info(axp20x->dev, "AXP20X driver loaded\n");
-
-Please let me know if this works on your board?
->
-> -- Sebastian
-
-Thanks
--Anand
+>=20
+> > e279833a5362 pmdomain: core: Wait for device link removals before
+> > dropping genpd->dev
+> >=20
+> > Kind regards
+> > Uffe
+> >=20
