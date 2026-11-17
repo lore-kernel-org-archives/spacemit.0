@@ -1,78 +1,82 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794950602;
-	b=YBm7Umsu6acwjcYhmFFGcfoJvfwwJILPS7WdElaOWyrmpI7UALtlUbsZbf4S0pU1umwl
-	 afVFyV7J4JamskCUcIKSIwtGE/pWXNh/zOTdw2zeUYYm4KivgtEnQw9WgPhY8XCKgBqsO
-	 fLBXEAUeBiW+yhHskR10cPdT0K2OnmwP1di2bHxJzUtQHif1raeJVWb8LZhY3GciXM+hR
-	 qMEZo9Z1cGxT46E/qwDwTv6TVmx3wPa/mqcoGGU3dYdKzV2JRZGqx2yCvxYWgxv2Q/IjS
-	 NuM0q016OLM4aYHQIwm5aMdHlT/Jv4tog5Et9Pfh01dqnqnLwirKb1h4jeI09jEhZug==
+	t=1794951735;
+	b=IDBwixCVhV1HU+rYSQyc75vi3dOz22unD/yPiA6jikhthlD3Ehp1lqWF4qJ04wgfAtFX
+	 5I0UIyr9mCQrtsH+7D3cP5NIjVLMm4BQG0XCRZwgI6Hisa3F+UY9D5nqCn+e6hvJO3r/D
+	 049wGJ3/iGhgzSWsOttkN7ciih966y2fXCz853uJQ59Xlz5xYydopBiNAF8nKRpEecEYj
+	 3yovf3Y0Z93VcQJ+Z+pQQH001vtnE32jDDkaT/XQmqp4h0DmALsO1cIrBYzrHEA6ireG7
+	 /sMD5XfpAjIQxqWEp+kHINaW25ewflDz+r2aW2WGKe6ibgZ2fhoH/ccND9QYLcvTl0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794950602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794951735;
 	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
 	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=Przrgbdbv85cvbqLBXsL7DGaaikgzPBDFnvarr+iJb4=;
-	b=w2v60qQJgIWrsM3fgABYz6OlzhT116XIWrdTJhZNSACpOT5skG09PDr7S0T2JRbC+lFS
-	 Ryw4RQo54UnFdQ4PSiCp7jzON1hjapG+/FXX7nTw17oWG9ElcB5DMVKCUC3++UTv2cSY0
-	 UwCfydAWgljzMAzQlxccp8uu/TxQEpqILv9u4qV+dhVSKrUkOlL6mh6uuDgOyPfj+a8o6
-	 2r81CTKsIKD/xAXFsWpCASwAMscFk2HBe4ukmreGE90xUpmHWlRCBhqoElPv1WxMwdMuS
-	 wyLKh7VrDEsoDYyhzuq0ps5hanRTtUzJzykFfeYdOe1MWODupFSg/24jPS342YLo5WQ==
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:User-Agent;
+	bh=PrHvuwIuDErJm7EM/POsxG5qv1/2voyuislLca5+9uA=;
+	b=SK1n4tAee7fiqQi5qV4aS2+XWUKfvvy2wnZOywSGj2+xx0AJ9D4MHHdrapDuolDySRow
+	 xq6Y18kPClxWeojQ9kHPiu4vSwBN4gF2IYBS13Q9Lm4P32+Xyg120o4Q6w5sI2OpxeDhW
+	 6mIzCnuKADodDfLElg7GUFCmqcuhgpuYkRZiri0WgLwDlW21O4y2wbyLdSsIR8go8vK8D
+	 /sYbRd4pAmVOrgbsQ9ZiBcHIa+xt0j59b9QUEOPle++LSLQKqWCIO4ja1CVyBZo+jjR9l
+	 BeHkX/dIMjByMVsTaCNp71R21vACszjmS+awiQUCLeqdT3Gd3MnmL3dh7d85rRp793A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=aurel32.net;
 	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=T2hjufLh;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b="idd9LGL/";
 	arc=none smtp.remote-ip=195.154.119.183
 Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F00606A330;
-	Tue, 17 Nov 2026 21:23:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0F00606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB68606A31C;
+	Tue, 17 Nov 2026 21:42:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADB68606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=T2hjufLh
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=idd9LGL/
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
 	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=Przrgbdbv85cvbqLBXsL7DGaaikgzPBDFnvarr+iJb4=; b=T2hjufLh0q4o5/+0lDWEDnqhGD
-	Ah0i8IUkddvpr5lELGxNvbUY4ubRasOnxz5fq9KUXQL//6N1b2FfoDk/Xr/QCTtc+s8VJ9rfP9TRQ
-	bK710C4dGLCWVcCNhs1YG4pOF18tK0noHDDmbSP7FSk0FpF8mp4Sy5uKjTxbBaC60pRy0X5reKqEn
-	P1luZPbnd5+QSUEBCW5kOZROOvSqx2U6k2ZJmDz4EPyRxuAUDxbnEypps5W6+TAr61Iq7E26FDW7w
-	NFkrpgW6FBLEWyBDo8LZxycbEilw3sDg3Mrpclacrp2EK4+c7WZbcvTvn22fmFS621wf5jS+fj38/
-	M/hzmeiw==;
+	bh=PrHvuwIuDErJm7EM/POsxG5qv1/2voyuislLca5+9uA=; b=idd9LGL/Vro7c0VHbgDwR/u6Iv
+	E7k9Y/K/GK26hxy30CBDTzvylJ/VfXJ/vH8j3FJdIXNmiTa+MqwNYYCqVi6gnmhyGAQf9/pj4DFpB
+	sgacsAUHnnGo3SsF15tqr2RXuhtyaRJAKtTJQlNB2v0cNZNFshDIo4pyqrjazGs3ltNON3VFgRCIz
+	P0ZN6YdewWKbahdbNOTwZDl4PZK1StyHPpL/zf6qanH61ZhmxLPs+gKZw6FqJlklV0xuy/3LFjMPs
+	ZvBdbbAQwTFg1JKQ/MhB3+ikHjl5ks21pP5zzypPqCHSgQX4AsTYDSrJBRtEoG6qV1siOgOl8SL1x
+	qwebwdCQ==;
 Received: from authenticated user
 	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <aurelien@aurel32.net>)
-	id 1xTQe4-0000000GZBY-0QzT;
-	Tue, 17 Nov 2026 22:23:16 +0100
-Date: Tue, 17 Nov 2026 22:23:15 +0100
+	id 1xTQwM-0000000GaSU-2Nd8;
+	Tue, 17 Nov 2026 22:42:10 +0100
+Date: Tue, 17 Nov 2026 22:42:08 +0100
 From: Aurelien Jarno <aurelien@aurel32.net>
-To: Jiayu Du <duge1256@gmail.com>
-Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, dlan@kernel.org,
-	troy.mitchell@linux.spacemit.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] riscv: dts: spacemit: Add K3 eFuse and temperature
- trim cells
-Message-ID: <avzFw8hydMX-9G1_@aurel32.net>
-Mail-Followup-To: Jiayu Du <duge1256@gmail.com>, srini@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	dlan@kernel.org, troy.mitchell@linux.spacemit.com, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-References: <20261106060525.346873-1-duge1256@gmail.com>
- <20261106060525.346873-4-duge1256@gmail.com>
- <au5Q9lYTUegeEglv@aurel32.net>
- <uot2mqhilzdfngqcwpipdo5xzncyvesmw2hw6rqk7mnveer57f@6m4cqzotx53k>
+To: =?utf-8?B?RnLDqWTDqXJpYyBNYWjDqQ==?= <frederic.mahe@cirad.fr>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
+	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: spacemit-k1: Request the Gen2 speed change once the
+ link is up
+Message-ID: <avzKMAtDqeqHIivr@aurel32.net>
+Mail-Followup-To: =?utf-8?B?RnLDqWTDqXJpYyBNYWjDqQ==?= <frederic.mahe@cirad.fr>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
+	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20261117085508.83388-1-frederic.mahe@cirad.fr>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -82,69 +86,51 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <uot2mqhilzdfngqcwpipdo5xzncyvesmw2hw6rqk7mnveer57f@6m4cqzotx53k>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20261117085508.83388-1-frederic.mahe@cirad.fr>
 User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi,
+Hi Fr=C3=A9d=C3=A9ric,
 
-On 2026-11-13 20:24, Jiayu Du wrote:
-> On Fri, Nov 06, 2026 at 11:13:10PM +0100, Aurelien Jarno wrote:
-> > Hi,
-> > 
-> > On 2026-11-06 14:05, Jiayu Du wrote:
-> > > Add the K3 eFuse controller with its AES_WTM clock and reset. Describe
-> > > fixed-layout cells for the temperature calibration parameters stored in
-> > > bank 0 and bank 7, using controller-relative offsets.
-> > > 
-> > > Leave the controller disabled for board-level enablement.
-> > 
-> > What is the reason for enabling it at the board-level? AFAIU, this is 
-> > part of the SoC and does not require any board level hardware. Therefore 
-> > I believe it should just be enabled by default.
-> 
-> Agreed, there is no board-specific dependency. I'll fix it.
-> 
-> > 
-> > > Signed-off-by: Jiayu Du <duge1256@gmail.com>
-> > > ---
-> > >  arch/riscv/boot/dts/spacemit/k3.dtsi | 25 +++++++++++++++++++++++++
-> > >  1 file changed, 25 insertions(+)
-> 
-> ...
-> 
-> > > +				#size-cells = <1>;
-> > > +
-> > > +				soc_rtemp_trim1: temperature-trim@120 {
-> > > +					reg = <0x120 0x1>;
-> > > +					bits = <0 8>;
-> > > +				};
-> > > +
-> > > +				soc_rtemp_trim: temperature-trim@19a {
-> > > +					reg = <0x19a 0x2>;
-> > > +					bits = <4 8>;
-> > > +				};
-> > 
-> > I have tried this patchset, and while I can see non-zero data in the 
-> > /sys/bus/nvmem/devices/f0702800.efuse, both temperature calibration data 
-> > appear as 0. Is that expected?
-> 
-> I see the same on my COM260 Kit: both banks contain non-zero data, but
-> the two trim fields are zero. The factory 6.18.3 kernel gives the same
-> bank data and temperature calibration data. 
-> 
-> The thermal driver change in [1] reads the bank 7 trim first, tries bank
-> 0 if it is below 8, and uses 0xd8 if both values are below 8. This handles
-> the zero-value case. I don't have an explanation for the zero trim values
-> themselves.
+On 2026-11-17 09:55, Fr=C3=A9d=C3=A9ric Mah=C3=A9 wrote:
+> On a Banana Pi BPI-F3, an NVMe SSD in the M.2 slot (pcie1) always comes
+> up at 2.5 GT/s, although the root port and the drive both support
+> 5 GT/s. The Directed Speed Change that dw_pcie_setup_rc() requests
+> before the LTSSM is enabled has no effect on K1. Setting Retrain Link
+> in the root port's Link Control from userspace brings the link to
+> 5 GT/s, so the link itself is fine.
+>=20
+> Once the link is up, request the speed change again, wait for the
+> controller to clear SPEED_CHANGE (as pci-imx6 does), then briefly for
+> Link Status to report the new speed. A port with nothing behind it is
+> skipped after 100 ms.
+>=20
+> With an SK hynix BC511, the link now trains at 5 GT/s x2 and fio
+> sequential read goes from 397 to 575-640 MB/s. Data verified with fio
+> crc32c. The empty pcie2 port behaves as before.
+>=20
+> This change was developed with the help of Claude (Anthropic); I
+> reviewed and tested it on hardware.
+>=20
+> Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+> ---
+> The K1 PCIe cover letter says all ports run at 5 GT/s, so maybe this
+> depends on the drive or the firmware; on this board the link always came
+> up at 2.5 GT/s before this patch. Tested on top of v7.4-rc1 with "PCI:
+> spacemit: Ignore PERST# input in RC mode on K1" (applies cleanly without
+> it too).
+>=20
+>  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 48 +++++++++++++++++++
+>  1 file changed, 48 insertions(+)
 
-Thanks for the explanations, that make sense. I guess that first 
-versions of the K3 were not temperature calibrated, so the value is 0.
+Thanks, I confirming this works well and greatly improves the NVMe=20
+performance. I have just tested it for a few hours, and I'll mail back=20
+if I encountered any stability issue on the long term. In the meantime:
 
-Regards
-Aurelien
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
 
--- 
+--=20
 Aurelien Jarno                          GPG: 4096R/1DDD8C9B
 aurelien@aurel32.net                     http://aurel32.net
