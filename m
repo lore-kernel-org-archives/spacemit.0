@@ -1,112 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794952088;
-	b=RMfFeW9KkemlE3R5fJg7NDYb6GUA9fKicVREjMlKLHU+FfatlQCEJleRVYOX9mPG2w0N
-	 ZMsFostBoZAWL/6Wfa99f8ASkJURhqWV/HFHGH5NC45ZGwcI0MJMGK4rKZngpQphqEHGD
-	 JKf1lliatQ3zQLkg6aUZ5TVgfSUwb91lHFXtcTEV5QbUs85AZfr0bgEmpoTN0ebdLmMhd
-	 tbxOcq7m8jZy21zk1ywMBL4sVjM7PhS17LZyBQsYNvWI0c0KhyFA3ukFfZ9MVMeKAy2N4
-	 Yb9DYq/+yMZVM1qCc1atFiB+84utHIvZTe+FED4zl2rudTTLwlhRC32LjItvxkwbqbA==
+	t=1794954390;
+	b=QKY7GjY2fqwuA+gqJ2guohR2dY1M0TzgoKx6Bg4Ndrg/FyqzuQQ3LAn0E4Xd/ZBmC+us
+	 NtgDcYlsXJY9AnrR9IZwkUF0UPmaXv4aTiw6oyAkexC7SZyg3KD2BeKXsLx7tUaoxIxfn
+	 TBv35BsBISx3TKNZkU01TDJJ9hWj+AAfQVDvtEyrJWfIPrmBGOalIHqylNo97dLjs5dCU
+	 kKmt7otb1hHA9Ca7cxBt5f58GHJN5xglsTIjbLH2PWCV4UOHxI9lbV2V++psRJVdetkJr
+	 t2FFIasMbgQDVSH+poVyzs1xs612wwE5dCNrbp/xJ3J/vex8H9ei+gXUYuPMhJXgFyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794952088;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
-	b=bPvOrQzz8drQlhChtZ/rmyAMmAth8GUYKPb+AKmEnvhfnQVD1kgkra6n38ulNdUSB+5j
-	 psC4+KE5BfXP76oXdEbQ8uycXwHEAhcpnJBosSg3iB5TW2PTi0mNbGZu4YE3T9QuiAe0l
-	 AiseAGYKCmpaytQBG0PUo0tnvJDWy2NBEWBqKgnYPqvmHFhAVZwxdUKGrS3UvWp6CfS1i
-	 VqGZpNFyBiTD4mxM7RAVmKgFmcZOHxQolOH7FurECb3SxSG1ebk0aZZ9P40iTwoGFZMBl
-	 RxM5PeWFO8nTCarlTI7qla1VPo9DLR3Mx/0/NECRgsKWwXLh+IficpcavcmLVv3dBtQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794954390;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=r2D5y0TucYSUwiHZr4B77hB+E7SQhof22iJyDH7secY=;
+	b=4ydamyLrwWqYyWQo9Fg8yiXQyfG0LzV9db0sEE6BO60b4wYFLKuDEC2mv3T58C2JeRMT
+	 pr8I2IP4FRbhw1mUYShVrpDO4XwZJbKTZ71yQOgD6i9KX8y4aLsMKgDIlqJpQYfxOv/Fa
+	 xlGeEDynV2uWb8aBMNGboYiZOZ6MPPa0pSfRvy85i3dHDL6n6tz1172bhCBIkc84CwX8D
+	 nXHZR6pAl/OX7hmS6nCQrfqPtUL1d/uFBk9tXB2w8JYuXS/d1rE+Bdf5PJx9efcZvice6
+	 VP/nH93NHt9oXD1ccGBHSXusywG/Sb79D0t68cMUwZULo94Wf/hPFZ9St6CKVm8BKKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HOs/tYHX";
-	arc=none smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=iq9RgePl;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5A1606A32F
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:48:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC5A1606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4060C606A31C;
+	Tue, 17 Nov 2026 22:26:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4060C606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HOs/tYHX
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b4d86f5328so1923947b3.0
-        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 13:48:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794952087; x=1795556887; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
-        b=HOs/tYHXBitJy9Icx8ZpJx6Ldvx2kX5NkhOIQEKI623nRpsmuGaG+qlHJho/bbas4Z
-         rJLI63Q8wzauM01UKDadH33U6y8fSG+cb4DNv2dEqW4tq2kyySRl/ayyuz6igcYnMe45
-         s3Q8y71gZmfTYWlUU7QH4McQEuMOYdPdjZBuqTPE7iIrixRVw2IHuU+uucmNfFvwtt1+
-         jdRZPUQ3CKqtkvEN4g7ok/8nuUXft/9jWN7fYUXfnE1anl4950gVuccBBcyIHe3c8XvX
-         PugrHAUqz0VBrdhzDqQwOxjpK6qv6CSYJ6j8bp1aCkYZLABUa1aWD1NyrETeAS8BX4tA
-         e5aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794952087; x=1795556887;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
-        b=q5xCmyayRT+Ax/42YQ8FU8oDMNF/iZU4ny0JmL7NJO79d35BZw/5hg/ox9+ssXfbfR
-         a/OB3JqfYGy5RNI6M2vWdjjg+qdeO0ZZZ0H6Wq3+vi8W5bMFV/3izpiOY6mAWITtXs9U
-         Zi3bTCd6coSAk3Cl8OpLyE67+SX5R3IgVwTGq97DAd31PsbkUe5Z4gp5cvZ2DsvOz0Q8
-         egaBP5qtkIGg+3dvlm/Af9EbuXkl2HZ1d07YEob3HWYjIqi27SKVAOP47I0MkqtbOE/M
-         CwZpHnfrCceNn0mEAO9q9k8TmStM/oRqTDFtZ8d5ILfhaeqwqIF85arbFMssZ5G7aL8q
-         ROKg==
-X-Forwarded-Encrypted: i=1; AL+hErGQvUFoxipBscgn80i4BJtpGQq1NlymAR9v4TbAzl/V91ljOSCg/iBsHnMZrB8nODEaN+qIoaCebw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8hdnL9n6rtA1VcIL63PFZGNf/uY64NAsu/VCJtU6YydV2UdL0r
-	ofeGxBMOsT3bMUeP2XhIUFySRMvy4d20TURAZrStP71gVwRSPU2ee4la
-X-Gm-Gg: AZFdTZcFy7+RcutH0P/e9GnfGY00TAz2a5cDLWGYKta7L6tQEZCXD9KyCI/fJwZWk1j
-	z80KYZ1m1Nr+2qX6PDOtR1UDGfawkZOQAdWqFmS2YM69TUInddxKHRiI8uV/M8zAert+uMfpB2h
-	FK9uDpfUCCGW7BayQo/fFMyo8zUTVnfnyCq6tl0TNGernaU+AOMbjNboZASGZ+1S7GOlMkwHbgM
-	TeaxKlLUMI85kRvO31ARNyMcSTJqE2wBbDiLm8wzIzTzUQfJuV7gVsvn6PzYOQg0CY1jo9jNwuG
-	S4YW37s6CpZplJDVza/kMWfmQTAUhSVY54aJHl1C0Nq12jdLU9ntgeHujlAsbI5RDXQcUNgohsr
-	nDqyph8i7EDKi32/U9+ppPMFpoP62PP+/MWaWP+v0YQ0qekciwEO7nkG+9hPZ88fOnZ1BpnEMgq
-	NTDd+BZEvIlZ+4witdxTAPkEH8DoIgLJvLhQmP1r3jKF3SnY3T3W9iV3Mx1/MixVNDXQyGvw64E
-	rf4l+LNY0MOCrusTx3sGrLVMXcNDspwme9WhYv5kogbWN1n+MUoj8ELEbVv1Xw7iiRXKUMgM6s3
-	muuulOhWBttq3bV05v6FmoEt
-X-Received: by 2002:a05:690c:6502:b0:8b4:e2dc:3f2e with SMTP id 00721157ae682-8b4febccf0fmr3038007b3.8.1794952086607;
-        Tue, 17 Nov 2026 13:48:06 -0800 (PST)
-Received: from localhost ([120.244.9.31])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b4fe030a65sm7195267b3.15.2026.11.17.13.48.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 13:48:06 -0800 (PST)
-Date: Tue, 17 Nov 2026 16:48:02 -0500
-Message-ID: <19ceb44df3141049a955c2c30fe64766.docular.xu@gmail.com>
-From: Guodong Xu <docular.xu@gmail.com>
-To: Icenowy Zheng <uwu@icenowy.me>
-Cc: Cody Kang <codykang.hk@gmail.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 07/17] drm/spacemit: add Saturn DPU register model
-In-Reply-To: <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-7-327d7910bf71@gmail.com>
- <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=iq9RgePl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=r2D5y0TucYSUwiHZr4B77hB+E7SQhof22iJyDH7secY=; b=iq9RgePlfoRm2/Rn/figPr5cci
+	0M9Cel/iQ1ZPTKWizBnjAgnX9MT83uto5w979hbcwm/ohp4AuL/KY0Ow76i6g1svUCE3SGrcJkJBn
+	asLiX9l81U4OL9wbkiykhO57N0CSkOYItcWh9U2tqkHyNmFTahFvusQP7R4l0xivd6eCOnSp9BF9O
+	hC4x72cLSOYYs0WSv2zDqL36XqB2mGSoG1FmtEvJciqbVZuEaeWuGRWlLutMLBzyxsKJOzlczsMlB
+	2BAtE1fBoWTEU6CgcAgolkhSsFPdmaivlJxEe67JIQS91M3MNanGk1BTwj34JzqTt/38znLb8s9/Q
+	NdNc1Urg==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xTRd9-0000000GdbW-2P8h;
+	Tue, 17 Nov 2026 23:26:23 +0100
+Date: Tue, 17 Nov 2026 23:26:22 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Anand Moon <linux.amoon@gmail.com>
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH v1 2/2] power: reset: spacemit-p1: Use atomic I2C
+ transfers for power-off and restart
+Message-ID: <avzUjsZzhky4krEV@aurel32.net>
+Mail-Followup-To: Anand Moon <linux.amoon@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>,
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
+References: <20261110061429.2036-1-linux.amoon@gmail.com>
+ <20261110061429.2036-2-linux.amoon@gmail.com>
+ <avpN-gFOvTBAMY6G@venus>
+ <CANAwSgT_k35_waHL-+iU93f=k3fjFAPXhk=exRz-XHMm2MqREA@mail.gmail.com>
+ <avvnRkK9agPSdzac@aurel32.net>
+ <CANAwSgSXP1bZVVrX71jfgi1iR9AY4TpM0pk07ke+oeLvcX1fEQ@mail.gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -116,29 +87,256 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANAwSgSXP1bZVVrX71jfgi1iR9AY4TpM0pk07ke+oeLvcX1fEQ@mail.gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi Icenowy,
+Hi Anand,
 
-On Thu, 03 Sep 2026 20:08:10 +0800, Icenowy Zheng wrote:
-> 在 2026-08-09日的 21:14 +0800，Cody Kang via B4 Relay写道：
-> >  drivers/gpu/drm/spacemit/dpu/saturn_regs/dpu_int.h |  25 ++
->
-> Is the slightly different K1 Saturn DPU registers considered?
+On 2026-11-17 18:04, Anand Moon wrote:
+> Hi Aurelien,
+> 
+> On Tue, 17 Nov 2026 at 11:04, Aurelien Jarno <aurelien@aurel32.net> wrote:
+> >
+> > Hi Anand,
+> >
+> > On 2026-11-16 13:06, Anand Moon wrote:
+> > > Hi All,
+> > >
+> > > On Mon, 16 Nov 2026 at 11:33, Sebastian Reichel
+> > > <sebastian.reichel@collabora.com> wrote:
+> > > >
+> > > > Hi,
+> > > >
+> > > > On Tue, Nov 10, 2026 at 11:44:27AM +0530, Anand Moon wrote:
+> > > > > The SpacemiT P1 power-off and restart handlers use regmap_set_bits()
+> > > > > to access the PMIC. However, these handlers run in an atomic notifier
+> > > > > context (specifically within an rcu_read_lock() critical section), while
+> > > > > the I2C-backed regmap uses a sleepable mutex.
+> > > > >
+> > > > > This triggers a "WARNING: suspicious RCU usage" warning due to an illegal
+> > > > > context switch in the RCU read-side critical section during shutdown on the
+> > > > > Banana Pi BPI-F3:
+> > > > >
+> > > > > [  563.803475] WARNING: suspicious RCU usage
+> > > > > [  563.807813] 7.3.1-ARCH-RISC-V #1 Not tainted
+> > > > > [  563.816614] ./include/linux/rcupdate.h:387 Illegal context switch in RCU read-side critical section!
+> > > > > ...
+> > > > > [  563.841445] locks held by shutdown/1: 2, last CPU#0:
+> > > > > [  563.846694]  #0: ffffffff8404fb20 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot+0x230/0x29e
+> > > > > [  563.856806]  #1: ffffffff84167860 (rcu_read_lock){....}-{1:3}, at: atomic_notifier_call_chain+0x4a/0x1c2
+> > > > >
+> > > > > Replace the regmap operations with atomic I2C transfers to avoid sleeping
+> > > > > in an atomic context. Preserve unrelated register bits through
+> > > > > read-modify-write operations and check for atomic I2C support before
+> > > > > registering the handlers.
+> > > > >
+> > > > > Obtain the I2C client from the parent device and verify that the adapter
+> > > > > supports atomic transfers before registering the handlers.
+> > > > >
+> > > > > Tested on the Banana Pi BPI-F3 (SpacemiT K1).
+> > > > >
+> > > > > Assisted-by: LLM
+> > > > > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > > > > Cc: Aurelien Jarno <aurelien@aurel32.net>
+> > > > > Fixes: 28124cc0fb8c ("driver: reset: spacemit-p1: add driver for poweroff/reboot")
+> > > > > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> > > > > ---
+> > > >
+> > > > regmap runs i2c_transfer itself and thus also uses the atomic I2C
+> > > > transfers. The problem here is regmap itself. But instead of moving
+> > > > away from regmap, the atomic use case should be supported properly
+> > > > in regmap.
+> > > >
+> > >
+> > > On  RISC-V platform, poweroff and reboot are already handled by OpenSBI
+> > > through the SBI System Reset (SRST) extension. Linux delegates these
+> > > operations to firmware using SBI_SRST_RESET_TYPE_SHUTDOWN for poweroff
+> > > and SBI_SRST_RESET_TYPE_COLD_REBOOT or SBI_SRST_RESET_TYPE_WARM_REBOOT
+> > > for reboot, depending on the supported reset type.
+> > >
+> > > Therefore, there is no need for an additional Linux PMIC poweroff/reboot handler
+> > > on this platform, as it duplicates functionality already provided by firmware.
+> > >
+> > > While supporting atomic operations in regmap may be useful more generally,
+> > > it is not necessary to address this platform's shutdown and reboot requirements.
+> > >
+> > > I tested this on the SpacemiT K1 Banana Pi BPI-F3 after removing this PMIC
+> > > poweroff/reboot driver.
+> > >
+> > > OpenSBI commit which handles this extension
+> > >
+> > > d9637d00bf47 ("lib: utils/reset: add SpacemiT P1 PMIC support")
+> > > b10e18ec854a ("lib: utils/i2c: add minimal SpacemiT I2C driver")
+> > >
+> > > Similarly, on the StarFive VisionFive 2, poweroff is handled by
+> > > OpenSBI through the
+> > > AXP15060 PMIC, so there is no need to register an additional poweroff
+> > > handler using
+> > > devm_register_power_off_handler().
+> > >
+> > > OpenSBI commit which handles this extension
+> > >
+> > > 568ea49490d9 ("platform: starfive: add PMIC power ops in JH7110
+> > > visionfive2 board")
+> > >
+> > > -----8<----------8<----------8<------
+> > > diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
+> > > index 50df66de24e06..069259f7d7c15 100644
+> > > --- a/drivers/mfd/axp20x.c
+> > > +++ b/drivers/mfd/axp20x.c
+> > > @@ -1458,8 +1458,14 @@ int axp20x_device_probe(struct axp20x_dev *axp20x)
+> > >                 return ret;
+> > >         }
+> > >
+> > > -       if (axp20x->variant != AXP288_ID)
+> > > -               devm_register_power_off_handler(axp20x->dev,
+> > > axp20x_power_off, axp20x);
+> > > +       /*
+> > > +        * The VisionFive 2 handles AXP15060 poweroff through OpenSBI.
+> > > +        * Avoid accessing the I2C PMIC from the atomic poweroff path.
+> > > +        */
+> > > +       if (axp20x->variant != AXP288_ID && !(axp20x->variant == AXP15060_ID &&
+> > > +                               of_machine_is_compatible("starfive,jh7110")))
+> > > +               devm_register_power_off_handler(axp20x->dev,
+> > > +                               axp20x_power_off, axp20x);
+> > >
+> > >         dev_info(axp20x->dev, "AXP20X driver loaded\n");
+> > >
+> > > Please let me know if this works on your board?
+> >
+> > Yes, that works, but I don't think this is the correct solution to
+> > disable here. Also this won't scale for future boards which might use a
+> > different existing PMIC driver with poweroff support and that will also
+> > need to be patched.
+> >
+> No changes needed over here, reboot and power-off priority will
+> work fine.
+> > As pointed out by Troy in an earlier mail, the real problem is the
+> > priority at which the handler is registers, 192 for the reset and -256
+> > for the poweroff one. I wonder if the SBI SRST extension should also
+> > register the poweroff one at 192. It seems it's about replacing the call
+> > to register_platform_power_off() by register_sys_off_handler(), which
+> > supports using a priority value. And maybe SYS_OFF_PRIO_FIRMWARE = 224
+> > should be used there instead of 192.
+> >
+> Thanks for your input; with the changes below.
+> It works fine on Spacemit k1 and Starfive Vision 2 for reboot and power-off.
+> 
+>  arch/riscv/kernel/sbi.c | 51 +++++++++++++++++++++++++++++++----------
+>  1 file changed, 39 insertions(+), 12 deletions(-)
 
-I compared them with the K1 BSP you mentioned offline [1]. Judging by
-the block, field and interrupt macro names, I agree with you that the
-K1 and the K3 use similar IP. But there are also important
-differences between the K1 and K3 registers, which is why I would not
-propose reusing these tables.
+Thanks for this patch. It sounds good overall, and it's always good to 
+switch to the newest API.
 
-For example, the blocks sit at different addresses, and most fields
-are at a different word or bit. In dpu_int.h, CFG_RDY_CLR is bit 4 on
-the K1 and bit 5 on the K3, and the underrun bit is 9 and 8.
+I have been able to test it successfully on VisionFive 2 and Banana-Pi 
+F3. Please find a few comments below.
 
-IMHO a K1 port should add its own compatible, its own field header
-and its own backend file next to the K3 ones. What do you think?
-Hopefully you agree with me.
+> diff --git a/arch/riscv/kernel/sbi.c b/arch/riscv/kernel/sbi.c
+> index af1ccea222f1..32a3d2df9032 100644
+> --- a/arch/riscv/kernel/sbi.c
+> +++ b/arch/riscv/kernel/sbi.c
+> @@ -512,23 +512,55 @@ static void sbi_srst_reset(unsigned long type,
+> unsigned long reason)
+>                 __func__, type, reason);
+>  }
+> 
+> -static int sbi_srst_reboot(struct notifier_block *this,
+> -                          unsigned long mode, void *cmd)
+> +static int sbi_srst_reboot(struct sys_off_data *data)
+>  {
+> -       sbi_srst_reset((mode == REBOOT_WARM || mode == REBOOT_SOFT) ?
+> +       sbi_srst_reset((reboot_mode == REBOOT_WARM ||
+> +                       reboot_mode == REBOOT_SOFT) ?
+>                        SBI_SRST_RESET_TYPE_WARM_REBOOT :
+>                        SBI_SRST_RESET_TYPE_COLD_REBOOT,
+>                        SBI_SRST_RESET_REASON_NONE);
+> +
+>         return NOTIFY_DONE;
+>  }
+> 
+> -static struct notifier_block sbi_srst_reboot_nb;
+> -
+> -static void sbi_srst_power_off(void)
+> +static int sbi_srst_power_off(struct sys_off_data *data)
+>  {
+>         sbi_srst_reset(SBI_SRST_RESET_TYPE_SHUTDOWN,
+>                        SBI_SRST_RESET_REASON_NONE);
+> +
+> +       return NOTIFY_DONE;
+> +}
+> +
+> +static bool srst_power_off;
+> +static bool sbi_srst_available;
 
-[1] https://github.com/spacemit-com/linux-6.6/tree/k1-bl-v2.2.y/drivers/gpu/drm/spacemit/dpu/saturn_regs
+Not sure we want global variables for this, as they are not used anymore 
+once the initialisation is done.
+> +
+> +static int __init sbi_srst_sys_off_init(void)
+> +{
+> +       struct sys_off_handler *handler;
+> +
+> +       if (!sbi_srst_available)
+> +               return 0;
+> +
+> +       handler = register_sys_off_handler(SYS_OFF_MODE_RESTART,
+> +                                          SYS_OFF_PRIO_HIGH,
 
-Guodong
+I think you should use SYS_OFF_PRIO_FIRMWARE for both entry. It 
+corresponds to the reboot provider.
+
+> +                                          sbi_srst_reboot, NULL);
+> +       if (IS_ERR(handler))
+> +               pr_warn("Failed to register SBI SRST restart handler: %ld\n",
+> +                       PTR_ERR(handler));
+> +
+> +       handler = register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
+> +                                          SYS_OFF_PRIO_FIRMWARE,
+> +                                          sbi_srst_power_off, NULL);
+> +       if (IS_ERR(handler)) {
+> +               pr_warn("Failed to register SBI SRST poweroff handler: %ld\n",
+> +                       PTR_ERR(handler));
+> +       } else {
+> +               srst_power_off = true;
+> +       }
+> +
+> +       return 0;
+>  }
+> +device_initcall(sbi_srst_sys_off_init);
+
+Any reason to use a device_initcall as opposed to just calling the 
+fuunction from the sbi_init function below? If so, please provide the 
+reason in the commit message when submitting the final patch.
+
+>  /**
+>   * sbi_probe_extension() - Check if an SBI extension ID is supported or not.
+> @@ -643,7 +675,6 @@ int sbi_debug_console_read(char *bytes, unsigned
+> int num_bytes)
+> 
+>  void __init sbi_init(void)
+>  {
+> -       bool srst_power_off = false;
+>         int ret;
+> 
+>         ret = sbi_get_spec_version();
+> @@ -677,11 +708,7 @@ void __init sbi_init(void)
+>                 if (sbi_spec_version >= sbi_mk_version(0, 3) &&
+>                     sbi_probe_extension(SBI_EXT_SRST)) {
+>                         pr_info("SBI SRST extension detected\n");
+> -                       register_platform_power_off(sbi_srst_power_off);
+> -                       srst_power_off = true;
+> -                       sbi_srst_reboot_nb.notifier_call = sbi_srst_reboot;
+> -                       sbi_srst_reboot_nb.priority = 192;
+> -                       register_restart_handler(&sbi_srst_reboot_nb);
+> +                       sbi_srst_available = true;
+>                 }
+>                 if (sbi_spec_version >= sbi_mk_version(2, 0) &&
+>                     sbi_probe_extension(SBI_EXT_DBCN) > 0) {
+
+Regards
+Aurelien
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
