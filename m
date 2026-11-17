@@ -1,113 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794948709;
-	b=uAcCy4fcM7ThZt9BrLp6WugfWKWx7vQCIyhnjX0v59/W6jA+UcpW0tTVahkj101/lpwZ
-	 IAztHQf7RsG0xxFIJzWJqYNyhNCFVIdUNOodT/BSs5RhpT/067fx2eMecoiGqZC8zMkCC
-	 sTzE8dYwSWmFrGu0KHH5xK4S5BswPmV3jIcQEqbGpO5MLKizN/+XffUffQzx5V9HYeGOF
-	 UEEKhrfUq4xrFEkGgoKSA3sXmWmu0YGMKQhbYITZ6gRpnXffcI3JDD/uUyG3j5zBxB87/
-	 CPOWuYynbG6q7mrDI7vv4hZvfZDi6UO+8VBlyHZhjgTvvN02ksc0O2f8kkJUp4n7U1A==
+	t=1794949251;
+	b=rgRIaGmABqtJJzdecs9dNzK74c+22MYdXE4WjjTtHuzwqVaDN1fHLgbOgRNRI4lYxCpa
+	 qaM71kvLQTGICEpxduaqlAb76ahBed7L6zKyd8naYOqBXT93paKzw81h1ySqgT3HvnpH6
+	 BDjibdZHckLKkA8sZLqCL8YQVYuKyh0vo7c3g9E9S5HJCqvHarX4FjhRXmGL/F7VA1f4F
+	 9UANXbgI//075cc+QJPduw5JtzlvbQOeSruNsXH3ZxLuNHjc9IHTEC8DoJMqMYSMyg9ZO
+	 dHMva9ZJAzL4tjKfz4/823UeJK8HY8wVI5Dw7uyR55VyPwDM7aqBi3hXNonQnayRWxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794948709;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=H3h9IxdpOr+oov0x9AuL8BUQNJ9C7SGtsH7YFmYPEqA=;
-	b=Zr45O9fkxOYxp+W2VGicG9xjhtOerGoh0L+FsC5cbINeM8m/fPzG+Bo4MXdQ7irjkU+F
-	 AkGm3Q39BQWQi08LRaVZ+9XJ+0xYXdXY0p8KNpZ0C+0w75DHH7sibI2gapWTAtv1GxLTw
-	 KAqBR70cKAaLc4mXJpcxjsO7e2kztIDVJomrdf8D/ftzhNX0tgGdtRa93uu+mAB8Br/Rn
-	 J2XJzjsOnpUAGH0a1YSy6gCugYMi8ubHYF4uRl+vfhUrcUhrWy9kSRByo+/eoTGZjTIiQ
-	 HSAynnmd0WzfPAH4l97Ir1usyUuVBbY1ihI2l8DQBayhWwPJOW6tBdhDQl4vHHQh+vw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794949251;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5LgE57R3Il6gqjY4KmRL+QrcZ5QfaNmUauX8w1f2jTY=;
+	b=VEje1LMZJjLnRZzdzZgN7wNE1Kh1gk6/6LP7LBhPBHJ05YDB2xA65l6rezdZubePZyZy
+	 v59nAQF/3VUXm6qAYgdx9bPPYf3tKERMeaS79ADEGGRy1xjpu1jTjk9KsZ7sDJL/RWWcY
+	 ubaZBJR+tXCQKzbCNgkjsrWjqjYlnK9HBLa+8aP5oaSavIbKRS9EdcaNVSCbTlamFB4UH
+	 zS3jZ6Olo9CAZAqxSWj60TzzkywRN2Ktier/Qxdy2ipx8IapUFV4qzNgcIKL8cuRPXDp0
+	 UChn3ZuQDIPnI3FfmmPl8xKYgcl0geZcNwWZggr0kQ71I1p33fXNaAIRRGmp6HEs8gA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pE6T5YZq;
-	arc=none smtp.remote-ip=209.85.128.170
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=OECdgrGt;
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62A0606A32A
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 20:51:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C62A0606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58835606A31C
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:00:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58835606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pE6T5YZq
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b4e04eda5aso1792227b3.1
-        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:51:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794948708; x=1795553508; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=H3h9IxdpOr+oov0x9AuL8BUQNJ9C7SGtsH7YFmYPEqA=;
-        b=pE6T5YZq7rp8T49a4MDCmhBBZKnj/51yXUW360wylDcWgOFQ7FmfxrmVSVtUIM7bZs
-         HYQ/NVYe+TVIAR59CeD7w8FojnlcyUOgZFzzlmWnNJ9j1M9/mEz0fcyzD5z+EstxEvfz
-         BZkeZSLkjQhRTe8utiTjPL35GpP2qVmD5HQCvtIEn7wnFBrTLhvynnnmc9PCLs8fOdh0
-         kL96I2Ld4J3VpazyNBsFKVgQdrC3/ArRL8mP5HN+B5PJsKbTWGEHbdi0M0iVRQ7MOgec
-         /jLpOPCjBkfVlzPvoCVM8Co7nf4q6ZaCvdvGZMKeQvJohZhjZFX/d0q6lk18f19w8dQO
-         A15Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794948708; x=1795553508;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=H3h9IxdpOr+oov0x9AuL8BUQNJ9C7SGtsH7YFmYPEqA=;
-        b=M/vLIHjbqSheM19RWTZidOx6UAlgNHZWFcVTS4F+Gvjbc/b3itBh1CFPRZqxJ3S4wl
-         etl4g2LQJS635nOSymv8BlvmB4fAlWL4eH2FoBWsGwYTSqgxFytwSLQZ8+FQVHU1I1Cl
-         gntOrH9YdiHPEQY1EhNe2i2c9gnOyO1pBnAth0S8xP9wzxzeV3Uhv/WLA/uW3Wc6SdTD
-         EQUGSraXpMqFzqpaTzTsupOEyC4Jt89JDLgNE4E3oYYc5XikaG44SLfcSxzYzyoZbUN6
-         veLpmSSaFDWUOsAQy1mIzXDGfhl+kpkLpFg+LrkT0ikTev5XaHhBJO4N1ioRbwpO8tql
-         oKDA==
-X-Forwarded-Encrypted: i=1; AL+hErGcC7xN/u7OtJBfVQWAx0qojWdsE+kqMe6CxR6RUCXMmOkpj3zNPVX2rbcrKCsf+1b5ywDkkohqJA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9YTLAzetzNN34a3QgF1JGlywCF0Eh6ODoW+q6gAFwqexauADXH
-	AqQ+fBmT+hOIOT8RCvSWd1ao9gVgFbXur+dLG4kWMRW17nTHv87Bs/Pa
-X-Gm-Gg: AZFdTZe/EVIf2uS2EnD7vJ/qF7bWsthEJtIrljGDdDF98AGFI0e18dFNEj+CVIstcHu
-	xxwBsqvVDmu/NA01CnfPR7WNA2qV+2ZA0YfPKAZR4PAi3YaJdWpkRFXYMditRdHv5wypJOn5uuf
-	LJ9xcXfrlX+WjjGQrQWX9yeeNxT0q9+Oi00dHE9jxcs61nVKM6OCX45dShvdjGhc8q2RO7bVcUp
-	GhoJ4+9+K5V+kUX0VHLBNR8UQnyeciZ3aCUGsok5mKtIa4/VQX24d1Adtr8lqoruOjpzpM6O46V
-	hZUS2QWrZlrM/1pkYDet40VHcPYh2/0wy225F3HunHN7vHJgP7Ecllrx3b0tH3iJBFnKYm+6Ko6
-	hDPMXkOCHtSV/BU7fu3O57hyt9M4o4Ijcs+vhUC7GVXovItCGWnXWdAWApCr0qmUxpBgSpSZeOa
-	0SQMMRUT2sv3o1DBuUOyX0NQb4PojVCA6eHyww4UfjtL3IHqmvLe/MiWFDUVz81vLTLZT7BrBLX
-	Uyn/D8adCPDX5ZpYKjisd2liHNM6cf9Uh+lPGyW3VjDGgp+A97Y4g3pYQXXG3Oazl3igJEVO2C8
-	DQp6aWSTicbULixUCoxRj7Tr
-X-Received: by 2002:a05:690c:306:b0:8b0:e479:6872 with SMTP id 00721157ae682-8b4fed09583mr3173897b3.17.1794948707375;
-        Tue, 17 Nov 2026 12:51:47 -0800 (PST)
-Received: from localhost ([120.244.9.31])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b4fe057c1esm6086647b3.20.2026.11.17.12.51.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 12:51:46 -0800 (PST)
-Date: Tue, 17 Nov 2026 15:51:42 -0500
-Message-ID: <f4b8c87eb0676500661ebea67363ac27.docular.xu@gmail.com>
-From: Guodong Xu <docular.xu@gmail.com>
-To: Icenowy Zheng <uwu@icenowy.me>
-Cc: Cody Kang <codykang.hk@gmail.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 15/17] riscv: dts: spacemit: k3-pico-itx: enable the
- DisplayPort output
-In-Reply-To: <576146d4f2752c3c3f6ec6c42812cb9956406383.camel@icenowy.me>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-15-327d7910bf71@gmail.com>
- <576146d4f2752c3c3f6ec6c42812cb9956406383.camel@icenowy.me>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=OECdgrGt
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id 1BD2020D7CF8;
+	Tue, 17 Nov 2026 22:00:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id E0F2820D556E;
+	Tue, 17 Nov 2026 22:00:47 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr E0F2820D556E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794949248;
+	bh=5LgE57R3Il6gqjY4KmRL+QrcZ5QfaNmUauX8w1f2jTY=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=OECdgrGt7F/A4nEpe+uekZG4Ss0w6m4RFRWG6nb01/iTAw/id9PF1tUpQwigo3gAn
+	 LxFiv+/98H5EOAokzxAg0hfAJHs6pC/jHNwR27yQgA9ZHmTmJvYuiIKGMpPAjT+Zwc
+	 OD6bjHo4T6F2mddItcvORWwmMVPINF3sjY/1SRWf299i/aWNbwJpGTduqpWa86WjUI
+	 myDHDShTogLI2miKtPlZzCbjdoStnIJaVgApC94982uenNdWcVrG82CEmXLWVWctJi
+	 DRb7Czr5u5L6hm3KHSPSltxEXvZ+p6GjxJyQn7bFcpocP+5uqdVCQ4FHpYLefIBXaT
+	 +VC0vhyxRZU2A==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id khgeR7RBwUQf; Tue, 17 Nov 2026 22:00:47 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id 9B94C20D7CF8;
+	Tue, 17 Nov 2026 22:00:46 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Stephen Boyd <sboyd@kernel.org>,
+	Yixun Lan <dlan@kernel.org>
+Cc: Brian Masney <bmasney+clk@redhat.com>,
+	Jerome Brunet <jbrunet+clk@baylibre.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.co>,
+	Haylen Chu <heylenay@4d2.org>,
+	Hung-Chun Tseng <alan.tseng.cs@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+Subject: [PATCH 0/6] riscv: spacemit: k1: RCPU2 PWM clocks and the BPI-F3 fan
+Date: Tue, 17 Nov 2026 21:59:45 +0100
+Message-ID: <20261117205951.140146-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -117,24 +91,52 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Icenowy,
+The BPI-F3 fan header (J27) has a PWM line driven by an RCPU2 PWM
+(GPIO 79). This series adds the RCPU2 PWM clocks and DT nodes and
+enables the fan on the BPI-F3.
 
-On Thu, 03 Sep 2026 20:09:42 +0800, Icenowy Zheng wrote:
-> The connector available on the Pico-ITX mainboard isn't a DisplayPort
-> port -- it's a USB Type-C port instead.
+Patch 2 keeps pll1_aud_245p7 enabled: once clk_disable_unused() gates
+it, accesses to the RCPU2 block hang the CPU (the vendor kernel keeps
+it on through its RCPU firmware). It may be better tied to a power
+domain once the K1 power domain driver lands; comments welcome.
 
-Right, it is a Type-C receptacle, and the commit message should say
-so.
+Tested on a BPI-F3 on v7.4-rc1 (no fan with a PWM input at hand, so
+with a multimeter on J27 pin 3): 0.86, 1.76, 2.74 and 4.66 V at 25,
+50, 75 and 100% duty (0.04 V off), as with the vendor kernel, and
+the fan goes to level 1 when the package reaches 40 C under load.
 
-> I think you need to model the Type-C port and alt functions of it.
+Trees: 1-3 clk, 4-5 SpacemiT DT (4 needs the IDs from 1), 6 riscv
+defconfig. Depends on "reset: spacemit: Fix the RCPU2 PWM reset
+registers" (reset/fixes).
 
-I am not sure that can be done on this board. The redriver/mux in
-front of the receptacle and the PD controller that steers it both
-sit on the EC's own I2C bus, and their interrupt goes to the EC too.
-The SoC has no bus to either chip; all it gets from that side is the
-DP1 HPD line.
+Written with help from Claude (Anthropic); reviewed and tested on
+hardware.
 
-So a usb-c-connector node would have nothing to link to here.
+Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
 
-Guodong
+
+Fr=C3=A9d=C3=A9ric Mah=C3=A9 (6):
+  dt-bindings: clock: spacemit: k1: Add RCPU2 PWM clocks
+  clk: spacemit: k1: Keep pll1_aud_245p7 enabled
+  clk: spacemit: k1: Add RCPU2 PWM clocks
+  riscv: dts: spacemit: k1: Add RCPU2 PWM nodes
+  riscv: dts: spacemit: k1-bananapi-f3: Add PWM fan
+  riscv: defconfig: Enable PWM fan support
+
+ .../boot/dts/spacemit/k1-bananapi-f3.dts      | 63 +++++++++++++
+ arch/riscv/boot/dts/spacemit/k1-pinctrl.dtsi  |  7 ++
+ arch/riscv/boot/dts/spacemit/k1.dtsi          | 91 +++++++++++++++++++
+ arch/riscv/configs/defconfig                  |  1 +
+ drivers/clk/spacemit/ccu-k1.c                 | 45 ++++++++-
+ .../dt-bindings/clock/spacemit,k1-syscon.h    | 12 +++
+ 6 files changed, 218 insertions(+), 1 deletion(-)
+
+
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+prerequisite-patch-id: 76613a144ac2f5db5511e6f3dc8645510933c14c
+--=20
+2.47.3
+
