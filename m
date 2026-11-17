@@ -1,60 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794919203;
-	b=u4IeSdfoLmhb0dwU9pvyVIrcTclRy6qHTLapSHBq1B2E4AdtmhwVZchWnDFBXsvv+om4
-	 UiVCrpwKhvEks3L4FmD6WujNIPB5UXkYoW2mPMHzQKpi4odcabc/yahfGHq9I7VJ8FTuD
-	 413bRiN85advkKd/vaHgo3cHzlYGsCziJKT+PTZd/qKFr7jIRehZcrvTviYkoDJBlV5qv
-	 R0a98Ddr5UUqo0tY00fhsLPzbX9nvwdOKolMbZQNMMYpTczz/S5qICUMDU1rqYy7pD/lE
-	 cMlUdvXT4UNLssFxzp7RGk7q4CYwxcRYD7M+iwSfQEPbKHyaWFpuqOyeP54ChIRgmbg==
+	t=1794944712;
+	b=mfHPjcx0S6PlSCjEZLgboWUkkm0C8SWhuo1mWB3PJDa1NNHI61P9R9ef0A2fd/gT1cPN
+	 TS9Fg0/3td/EMkNcnTlNcGd3wTs1Ge7UWgiL3zsIwwUlv21cbhwJqncs9e38s2S0nLubA
+	 qf3uxW75dmfyN1z42Q78geOTd5GOeJ3TDJrl5Wn1q4aAhgynBsT3T/CIBPFLBIC1AXGWF
+	 4ApBAstqM8rik7e4MMXCX01LjxDSVUSDXv4PbN53eknWDPBWgly/n7V3MEFe7tIZZrSW8
+	 N1t8oE78MExjbrhOxNpqqI3vVMC7u8DGVpE6zYcqMzScndshFNgujXHrZpXc//J1vfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794919203;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
-	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=g3XrxVl29KacKlQRIN1gy23c2VjGF2woZUCFggJlwt0=;
-	b=hF7/HxRlszwqaqEaCgHQWMULoc6O41Wwp1kfTW1zhfV9EHWlQs6QFwiSjk17yEsuYhl5
-	 QkbCRRAsl7dagKKqEhXTeFeyh5cqWRuh/HFC625PmE/XsWfH8EATTVHBqBbyKFvSPwfom
-	 hlZbvWISx/0XVcGYIHX+44OHxAzaCpMj6mHxCKlrJPyzFIcksG5x7VhbGjpBoqOraq5vd
-	 GL51Ys++zBFgbgtbTzIQckIFXaPO6eFxKP5fRmI7Vn9qgf4pymzu2jmikChFpFfMUU0jO
-	 xdktAoLrNf96z8kD/WNBHOKppDX+rnZvDCrdlDvYvA9VY9Kn9EkeyW/Iz3FtRaYOcGw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794944712;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=xMOirzj/A0MDRFwFon6RlS9/MgqYCms83N5vsqNPifA=;
+	b=YafdUYDxTYpTPrgFmuaZVBTnxF4elJF5Ob5cl8GpgKWeyqrisJCTXrx7Yg0GlJBECus4
+	 sMC0shOiAhRYTe62dMd1ThMCXjh0256PNFFbyF1bmsUlzBrbldLIqZBKHTOwT6MfSXMqi
+	 u+dhJtfR3j3ksC0Pb8QV4wC5YESHwuAYX5GYKX1gXcpRG6Lb9JzBVoEkTydQvLllON6cH
+	 /HqWXL1bButHjKQ95ueIjiE/p72xt3xtJ5JZdY+R5a7MZPtEXneju9n5tTsLLaboloQL5
+	 66YxQQcE/1CjN/gc1jjilSjuSIyS9p89Nd1cjeYopaTNqFEkyuixDmrUTxETBUjJ8qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=sCppH1wJ;
-	arc=none smtp.remote-ip=54.206.34.216
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=VNUwz1X6;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D14360A6F46
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:40:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D14360A6F46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15A7606A331;
+	Tue, 17 Nov 2026 19:45:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D15A7606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=sCppH1wJ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794919162;
-	bh=g3XrxVl29KacKlQRIN1gy23c2VjGF2woZUCFggJlwt0=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=sCppH1wJ3liVVHPDa+8bt44Zl/b+1YP8l53ottzJVp36BP9xhmu6mgupC4zTbiaBW
-	 xLITLodET/sFEhLgvlVWojCiv6OaQcG9ZhAd/S/+4KE2z6OoLAaso+mJ99bMk2fQyL
-	 LeKoECc067JP0K/JHtA2Vp9jXBXe3WAd57bHH93c=
-X-QQ-mid: zesmtpsz6t1794919150t0231c823
-X-QQ-Originating-IP: xXPFKjlewoV7k+nvY5YMHUzCW0y+VjSdI5kYEFc/whM=
-Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 17 Nov 2026 20:39:08 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 12814507513609067506
-EX-QQ-RecipientCnt: 21
-From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Date: Tue, 17 Nov 2026 20:38:48 +0800
-Subject: [PATCH v5 6/9] riscv: dts: spacemit: add USB2.0 controller nodes
- for K1
+	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=VNUwz1X6
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=xMOirzj/A0MDRFwFon6RlS9/MgqYCms83N5vsqNPifA=; b=VNUwz1X6OZ7DPmcUaSOQOfvrHy
+	/605fcTZCt3425bBBrYXYwkMC5n+HWPcrYguLvJUdFLjajK4Wg74224g15Lw5HmYpduY5jRUY0yIN
+	A9egzJPhyiDc//nU5BzbZVTKoWAzv3j/Upmn6vsIv7Ua7a9JhwE+fMJ/1fkfGXmiAPX6V84IVuvW8
+	X/kOYUQuneMbVmxGdaKIPxYBLp8UlRt2zxQGxlGvDbRdswMVSxXjB8cjXw/m/QGDKymldDupLqb1N
+	5cfI4LMfTFSpV8D8Qzamgdpc8iXpFXnlyMejDwvvYQZQCdLo1FvMmF/Q+YisPNWI+t094tK8nWljW
+	xAQq96pA==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xTP6x-0000000GSWe-0hXU;
+	Tue, 17 Nov 2026 20:44:59 +0100
+Date: Tue, 17 Nov 2026 20:44:58 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Yixun Lan <dlan@kernel.org>
+Cc: "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <mkp@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Bean Huo <beanhuo@micron.com>,
+	Stanley Jhu <stanleyjhu@google.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>, linux-scsi@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 2/2] scsi: ufs: spacemit: k3: Add UFS Host Controller
+ driver
+Message-ID: <avyuutpzB2j1vduf@aurel32.net>
+Mail-Followup-To: Yixun Lan <dlan@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+	"Martin K. Petersen" <mkp@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>, Bean Huo <beanhuo@micron.com>,
+	Stanley Jhu <stanleyjhu@google.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+	Jennifer Berringer <jberring@redhat.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>, linux-scsi@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20261116-08-k3-ufs-support-v8-0-e3b256972dd4@kernel.org>
+ <20261116-08-k3-ufs-support-v8-2-e3b256972dd4@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -64,126 +99,38 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261117-b4-spacemit-k1-usb2-v5-6-52c3829cca69@linux.spacemit.com>
-References: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
-In-Reply-To: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
- Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>, 
- Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Junzhong Pan <panjunzhong@linux.spacemit.com>, 
- Ze Huang <huang.ze@linux.dev>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794919127; l=2186;
- i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
- bh=TE3ZmoSbwMioV1cYWrwZplLOf4/AixJgi7cmhlpJlr4=;
- b=NKUqtzmZaXjoAU8RENbPSPsPupJ4BzMvAKw2rcSWc6RVTtVRGKKe0EmJWhDTVByiKhexzvR2S
- zjUkK+eGbJqCsajwHVR4GMkszb8xSDybO8X7qUWzn5viZZH8cgrxLgn
-X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
- pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: NfGQECF1EzMaCFIGEthIjp3oc6NCoW5U9RYC1n7+M2qTGxvawEEQeicT
-	PFbC+auVWr4BtOqsRFR5cwDk6e1h0v5ktGI9SwKotyAN0YC5Xda6XWfhIECkE3Gy0ByJKFX
-	eeoZyEBQ4vsk7aVZ6uMyOfrwbxTm4AicsAR24+g2zD4GZKrd+oAB0TysJz+F+OXjfdZNEGC
-	NygI9YKXQDJwM0C5ra9h0caj/dxl22mDZIfDiN3tJDoNyjs8UoFY69Y/YxnA5sB5wFyv+Vj
-	yPnIzX9B3mANbR3s7kBz69RRmY5+hWyWhd+daabCnuox+pI2wdfnR1gPKqZGoCC8Hy8e+23
-	c4PSNGGF+GJx4WKUUpG6ztv3Hc8lScMmeHgAKiPsjbd+ofcfwPIf1RNRgtbbTyUKkSVFOcD
-	g8HHaKoGf2PWGfA8hTBuoR4Fw97cgzh9WDy5c651XxKt3NQizx0uK25kAqRkIkOowUBAQCL
-	MZc1LH9X4keBTjT/xUjURmTndpislu6PJ+co0jq6CputNwdAXAKF5GVuLHihNtf3KLLeR7p
-	Q2ztAcZIaABXowhEGucGOI5ZueuVoFkIfRMdhGqu4kfC9isWbbexI0uZB305QJx08Hvmv55
-	QgeGoDrDhcqb3B309cw+6WyXBzmYEMssYfaMz7EKR9ke14QKoEUMhtdl6gtPAlJcS1CiUBJ
-	ifKSEtO81sqKQW/RrI2WdBLNb8z8Ti7dV66qMLoQKw6MlbLaeM2kmbcL02VnxQUAMvoA4n2
-	pYzsm6m7EPKk74TobFSlj/jxU/pR3QcjD3aRkB7xrI6DIsO/WZKbTdY2Bxa34kt6FwLu65q
-	MqnlRuq3UgR+1e599ArmopAJimHDRcg41cCt/qFJlNIsnxPUEtpmHF4cJXy13Po2CHNHJt1
-	QD62piTltjKkjxR9kzzkSSLqXRXQkWlXdTE2zfLkIndkrJXkeyD5atSF9RH2RhO7gGP/i+x
-	gJ0KvlhwhR1LzA6tJtaps4qTZpqui58kT7lOqACtALFlIaHgoftkNvUf12avk/AXdiUU2ET
-	RiFXOUOYOIdFoTghLe1x4CKP97L0NJURvFE9NG2Gx0MsskcevoNlk2u2ZNrfeeYvUZ0i5hl
-	6OU5Mou1hw63Y7nXf0FP0b4FPVko/LefBPm+IT5iVPZcquBL33xQVYqhZtXEw8j5xLfYGKM
-	NeaD1dqC++dir3dtutgAMojLUHQIhNm90oSe
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261116-08-k3-ufs-support-v8-2-e3b256972dd4@kernel.org>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-The SpacemiT K1 SoC has two ChipIdea USB2.0 controllers.
-- USB2.0 Dual-Role
-- usb2.0 Host Only
+Hi Yixun,
 
-Add the controller and PHY nodes.
+On 2026-11-16 03:46, Yixun Lan wrote:
+> SpacemiT K3 SoC consist of UFS (Universal Flash Storage) Host Controller
+> which has features compatible with JEDEC UFS 2.2, MIPI UniPro v1.61 and
+> M-PHY v3.0 standard.
+> 
+> Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+> Tested-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  drivers/ufs/host/Kconfig        |  12 +
+>  drivers/ufs/host/Makefile       |   1 +
+>  drivers/ufs/host/ufs-spacemit.c | 655 ++++++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-spacemit.h |  77 +++++
+>  4 files changed, 745 insertions(+)
 
-Tested-by: Ze Huang <huang.ze@linux.dev>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
----
- arch/riscv/boot/dts/spacemit/k1.dtsi | 40 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+Thanks for this new version. I have tested it on top of 7.3.4, after 
+renaming ref into ref_clk in the dts file, and I confirm it works as 
+expected.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1.dtsi b/arch/riscv/boot/dts/spacemit/k1.dtsi
-index 542bfc0d19f5..e5c701f488ea 100644
---- a/arch/riscv/boot/dts/spacemit/k1.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k1.dtsi
-@@ -459,6 +459,22 @@ syscon_rcpu2: system-controller@c0888000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		usbphy0: phy@c0940000 {
-+			compatible = "spacemit,k1-usb2-phy";
-+			reg = <0x0 0xc0940000 0x0 0x200>;
-+			clocks = <&syscon_apmu CLK_USB_AXI>;
-+			#phy-cells = <0>;
-+			status = "disabled";
-+		};
-+
-+		usbphy1: phy@c09c0000 {
-+			compatible = "spacemit,k1-usb2-phy";
-+			reg = <0x0 0xc09c0000 0x0 0x200>;
-+			clocks = <&syscon_apmu CLK_USB_P1>;
-+			#phy-cells = <0>;
-+			status = "disabled";
-+		};
-+
- 		usbphy2: phy@c0a30000 {
- 			compatible = "spacemit,k1-usb2-phy";
- 			reg = <0x0 0xc0a30000 0x0 0x200>;
-@@ -1301,6 +1317,30 @@ storage-bus {
- 			#size-cells = <2>;
- 			dma-ranges = <0x0 0x00000000 0x0 0x00000000 0x0 0x80000000>;
- 
-+			usb2_0: usb@c0900000 {
-+				compatible = "spacemit,k1-usb2";
-+				reg = <0x0 0xc0900000 0x0 0x4100>;
-+				interrupts = <105>;
-+				clocks = <&syscon_apmu CLK_USB_AXI>;
-+				resets = <&syscon_apmu RESET_USB_AXI>;
-+				phys = <&usbphy0>;
-+				phy-names = "usb-phy";
-+				dr_mode = "otg";
-+				status = "disabled";
-+			};
-+
-+			usb2_1: usb@c0980000 {
-+				compatible = "spacemit,k1-usb2";
-+				reg = <0x0 0xc0980000 0x0 0x4100>;
-+				interrupts = <118>;
-+				clocks = <&syscon_apmu CLK_USB_P1>;
-+				resets = <&syscon_apmu RESET_USBP1_AXI>;
-+				phys = <&usbphy1>;
-+				phy-names = "usb-phy";
-+				dr_mode = "host";
-+				status = "disabled";
-+			};
-+
- 			usb_dwc3: usb@c0a00000 {
- 				compatible = "spacemit,k1-dwc3";
- 				reg = <0x0 0xc0a00000 0x0 0x10000>;
+Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+
+Regards
+Aurelien
 
 -- 
-2.34.1
-
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
