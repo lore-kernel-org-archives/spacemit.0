@@ -1,82 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.22.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794905723;
-	b=hvku3a+uo2bPLyT6dXCkbGGe7Ve8o9uFG3NRO+g+9YG6mkfcsC76bVZ6sIjlAW/AQ3OE
-	 t14wQFeQ/1vECG1PyBKxAPObpg8oueyh/IeUyTojNkJ9hv9cYmKZXp/NjezBPnC87zBz1
-	 Mxq7MMaL6wXRj04JWWFt/+8lpZgXWWbQT9plPpBIJ/oSHPIDtRewL1bKAVIiK0kd5Ksmk
-	 Nk8GzIRQwZrWqtQhbj+ViQPZ/noVbSTPnYhHWur31Cnt5uzDiYUQmg1YjZBgrq9PXhxsy
-	 uJ+kN+6Zx3r6+bZUp16laV99FaEklVNtKWt0++uHKCUI1Z02VLUgS2xvu82EFi6xT2w==
+	t=1794908754;
+	b=S7vmM2CDz5KzbT7qR7zCQQPt37Qm1HSeK9wOKNUt/aUmHHy2WHFoLa+OVVlBjZs6ZHTd
+	 acNhAw93k4jqPFDfWsGmpiXBuG2vwcBBqzZK6hRE2mDH5keH/bTdh6brH3NoEk9Uc6Cpe
+	 naAGZWrsYSDBDcVQmlQIpyKJPL/T7o92TZh67C9fynerNUx675A/4cSvWbqjTOhXZh6UO
+	 6briHfibRGXir6v8nZ16RIF5+zzzPNeBJnFxmm/DUzisyJyoFaMmLzxUP9+IGxW1Bax0L
+	 STlRBtlQkXpvoyrHQlzSO5PPqKCUgb5o7QvO/3wyhzgpqK5OtDIKTfbB7YM31ysMEvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794905723;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=YoSUKncv+j8yWkI1ZDcElbOhTKMX3MU43KfQwivUqRI=;
-	b=EADYK+Na0fM10cZSnd7OvLbppBICOKc8PmFc8xlgrOdC9z/oaR/8BAYzoQb92byRh1YJ
-	 PMIVN62K77JPReqFbijoZkYT14TpA2UD0lxxi0REyqr4WLvLO5SVV5jH25bPWabSz7QF2
-	 bqlgNldXB0hCfdDubMcWNmLRMpasP0u5JQAtJyFodLpL39hN5gOksZ0BWvmQOJfQwsUsC
-	 vSbov9liozbsm0cgytuWN6n9WVxO/gv4LtQ3wdC1zDCm9o+fJVtaXm4nM+8ZmmlZnYt3r
-	 H5wkGoj0hcfGaD4Cn1fVEVUqD76Dj1GRXTlJq7oHYGq/KB3W46ItaSsSDd8b92dHvtg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794908754;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Subject:
+	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=ZvPjwIuTAnlYX80kDgK6OqiQQQr9D8Xp6DoCGU/LXLc=;
+	b=JgS0zajoDfiSY84sowrdYHfubQDS0fACNyYIeWh4h1BOpWlTOOIC+if3Yxuf7aEdMNAD
+	 foneZ5cYr+hNgULNUpUUrCSePLsZcvNLyPxYWwWJKrfzMrIqlYWIRR//fr8dsNbwvEKth
+	 3b/qRY+ze4nduYMz6xa1QXVzziFFs/ogD4kde52tMM2sXsYK6Y+CY7UAFXw8HxCaMc9pT
+	 01xdDjAAzIwNwmttvrIgohJIXfL8GLDclweM+Wjb2r9ZbPeMI8PU7imNKSkfIDI7Xuu9f
+	 I6AEIiflET9IB9IVsvEe+MnOkf/gNEXbmSVIrBhWvvLTW1j0bhpDYuZ/2NboPj8xR5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=idZG3t6H;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Juijl62d;
+	arc=none smtp.remote-ip=54.207.22.56
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57560606A323
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 08:55:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57560606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8B0606A32A
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 09:45:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA8B0606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=idZG3t6H
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id 2F44220DC83D;
-	Tue, 17 Nov 2026 09:55:20 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id 02A2A20DC645;
-	Tue, 17 Nov 2026 09:55:20 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 02A2A20DC645
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794905720;
-	bh=YoSUKncv+j8yWkI1ZDcElbOhTKMX3MU43KfQwivUqRI=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=idZG3t6H6xRGsVi2TLW5bezCYq3xy1oVFURyzryQ9GXpQhy69wkKSzq48Cz/RSZr7
-	 7NQgoF+E6TIVPLrpq+iXLd3fgVhhZiAYA76YlzIikzYy1LxUWSSSteUlz+cTCnCJdo
-	 duOaFo+2r5cKXMliOMzbXzhfnjpxJ0oD0lDOUZawsGu/moRheKWm/F0Hc+MMyCCy/s
-	 MjNJrep/oM3R0LapuvuEZl371t/y3u9o4xTnI0B+wCuScVMulsx+14Ai6wbqJg4Cab
-	 9IJlaf8WOQv3EG7Il0I1fk+80TKSqtYUo9J1r3NVTNxooOJMvG5T0W/1Z3S2zfMlMR
-	 rWPfP6aURMzmA==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id KP3hYXsr1wK7; Tue, 17 Nov 2026 09:55:19 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 33F1520DC83D;
-	Tue, 17 Nov 2026 09:55:19 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
-	Rob Herring <robh@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>,
-	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	linux-pci@vger.kernel.org,
-	spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] PCI: spacemit-k1: Request the Gen2 speed change once the link is up
-Date: Tue, 17 Nov 2026 09:55:06 +0100
-Message-ID: <20261117085508.83388-1-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Juijl62d
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794908715;
+	bh=ZvPjwIuTAnlYX80kDgK6OqiQQQr9D8Xp6DoCGU/LXLc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=Juijl62daA2fLjQ8TKb/xYn0yQzTYr/q0H2gXOSxcWVHTaZpgYZwZWBuWEYqrxfok
+	 ZKJ6N8qYqppIenvKBf9r4O8lwRIus/Rtkhy/OMkqi4WvphsECqFW6b/76FMHiAHLLo
+	 MAKA7PpKlNyePKC/HcVg6xj43MBYGk7WJ1J8qUlw=
+X-QQ-mid: esmtpsz11t1794908714t27c88566
+X-QQ-Originating-IP: hY6HrPs5VQA5PN3p2ipRXrGUKx3WM2dlkLwykvxKZZo=
+Received: from = ( [183.48.247.191])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 17 Nov 2026 17:45:11 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7238423298183488495
+EX-QQ-RecipientCnt: 16
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v2 0/5] Add SpacemiT K1/K3 SoC timer support
+Date: Tue, 17 Nov 2026 09:45:08 +0000
+Message-Id: <20261117-spacemit-soc-timer-v2-0-9264d0ea7755@linux.spacemit.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -86,116 +64,95 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Nyw6CMBBFf4XM2pK2mIqu/A/DAtpBxgglnUIwh
+ H+XR9y5PMm598zAGAgZbskMAUdi8t0K+pSAbcruiYLcyqClNkqqq+C+tNhSFOytiNRiELZ0dSb
+ z3OncwDrsA9Y07aeP4mAeqhfauD1tRkMcffjs1VFt3hFQMvsXGJWQIjMXrc9aucrg/U3dMKU/N
+ bW+hWJZli/winKJzwAAAA==
+X-Change-ID: 20261019-spacemit-soc-timer-cadf3088d286
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Daniel Lezcano <daniel.lezcano@kernel.org>, 
+ Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1817;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=KdrZK8s43rp5HCV+9mBsmR/lHxRrd63zdxl5ZHQcqpg=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFl/lNQEdP/xRt0s3qWYNuuqLdfr8DWsqq1CPjuuvT4r6
+ v1kMmNTRykLgxgXg6yYIkv3A55tBT5RtgUChb4wc1iZQIYwcHEKwET6FRgZPiUEau/SrOk/fWF1
+ 7HPZY4bT3k413qzfdHyz/LTmF9NiUhj+14Wpd0dPY5zHMmvF2vmrXnpP79gYx7F87btdj37q6N7
+ aywQA
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Nwz8Cs33/Lpr1qnF44r9DlQT1zL5njj5OWAlpL82RFEDZahQn9SD+mnE
+	Mtp4Vo6t6EBLxFyGp4bfQW1l5Yp54KrqX8cOhuHp6ky3trspCttQYt7d5d75VOaphtQXJTv
+	D5hsYXqRAEvQrA+oaJrWD8F8KlnqI43sLp7FKR5MBJ3PGesex6vSuPAOd1uAIgV5Gtypz5x
+	3aeygNrVhjpqC1TPMr508k5uoKKVMy+1bd/Wyck1ZRyfUatcWs7Q567Hc6LJQ5y5VgepqOU
+	eXMpImNfg/uvrbtdBMcdNWUt5N5mjQ/WKk08mZjG5fFm++aINC+aVZ4rl1ux5/xARC4Jm/B
+	3pekmzZIV8OGTPRXJb4NazOhO8GxxHuXvTDZwMuYEkPcBZPn9tXvRL80tAdFVUI5AF9IFJm
+	F7eOwiJiO6eJcIoqgM4DZhDb6aL5m07zSsIgV3YJWegSd//AJUCM0q4L43Eoy/Ocx4NqQ1H
+	+Ez9hqnsIQ3reVLiNdx/Fj3ihaO3xpCxN2zRxYUrA57bNrEG9hHr4nr2Gx/VL1/ZDWdqY5O
+	6D2r1wg/GsXYS2XLKFNHx46iOH0sBDBug27FjN6K+aqdovGDx1pyPsypcMTczwrAkUg5+eS
+	Jc/MbCl/7pk86ZdSrMPU2163YF1rKk/G8y74C0lYcFYOn4oQd+a6PefLVRThBsUKle2pAiO
+	mGXcBFlZtKUosZ7GhTfib7T9xpcbq79rx8SVznpiVvcad1eacSThLs50d+v0oBfC5mRajrS
+	BQ4z6w3JYyzvMfjcwNR+6iFBlAhiI7aJ6mLrUpV6p3E+G6OKYbQ5OzVKBNW2P9RuU2QMATt
+	402Pk0jv6HhhVJTYgzO7ogCDlZm/bsKpSaXKzCccCmbvx98jQzMP5MXESxjCZrVsUDo0BF8
+	P8G0BdtpsRoNBuul15wxvgXSyo/hLVlhRPB1rsWSluToFgjlhdbgCJm7/XlAYiUtQGaM4v8
+	i/vTmoz6QvXFW/6x06+e+DMeFl125g8B+R+wSCHcVuWz1mH1STGfcKjXEv+dIUqw3PFlbio
+	S47a+WcMnE6UUcsaLrioNVvcNfqguDquZqQthxH4qMze1PWhz2Hn4pbdeOegKrY8YN4zyu9
+	qv8U1xpy8ijQ4aKrL/HlFgj/oWsuyNfyA==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-RECHKSPAM: 0
 
-On a Banana Pi BPI-F3, an NVMe SSD in the M.2 slot (pcie1) always comes
-up at 2.5 GT/s, although the root port and the drive both support
-5 GT/s. The Directed Speed Change that dw_pcie_setup_rc() requests
-before the LTSSM is enabled has no effect on K1. Setting Retrain Link
-in the root port's Link Control from userspace brings the link to
-5 GT/s, so the link itself is fine.
+The SpacemiT K1 and K3 SoCs have APB timers that run independently of
+the CPU cores. Each timer block has three 32-bit up counters, and each
+counter has three match comparators and its own interrupt. A counter
+can be clocked from the functional clock or from the 32.768 kHz clock,
+and can run in free-running or periodic mode.
 
-Once the link is up, request the speed change again, wait for the
-controller to clear SPEED_CHANGE (as pci-imx6 does), then briefly for
-Link Status to report the new speed. A port with nothing behind it is
-skipped after 100 ms.
+This series uses counter 0 as a oneshot clockevent. It is registered
+for tick broadcast, so it can wake up CPUs whose local RISC-V timer
+stops in idle.
 
-With an SK hynix BC511, the link now trains at 5 GT/s x2 and fio
-sequential read goes from 397 to 575-640 MB/s. Data verified with fio
-crc32c. The empty pcie2 port behaves as before.
+K3 uses the same register interface as K1 and falls back to the K1
+compatible. Both SoCs run the timer from a 1 MHz functional clock.
 
-This change was developed with the help of Claude (Anthropic); I
-reviewed and tested it on hardware.
-
-Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
 ---
-The K1 PCIe cover letter says all ports run at 5 GT/s, so maybe this
-depends on the drive or the firmware; on this board the link always came
-up at 2.5 GT/s before this patch. Tested on top of v7.4-rc1 with "PCI:
-spacemit: Ignore PERST# input in RC mode on K1" (applies cleanly without
-it too).
+Changes in v2:
+- Use named constants with comments for the counter sync latency and
+  the minimum clock rate (Iker)
+- Link to v1: https://patch.msgid.link/20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com
 
- drivers/pci/controller/dwc/pcie-spacemit-k1.c | 48 +++++++++++++++++++
- 1 file changed, 48 insertions(+)
+---
+Troy Mitchell (5):
+      dt-bindings: timer: Add SpacemiT K1 timer
+      clocksource/drivers/spacemit: Add K1 timer support
+      riscv: dts: spacemit: Add the K1 APB timer
+      riscv: dts: spacemit: Add the K3 APB timer
+      MAINTAINERS: Add entry for SpacemiT timer
 
-diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/=
-controller/dwc/pcie-spacemit-k1.c
-index 92a71ea90..4acc14efa 100644
---- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-+++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
-@@ -11,6 +11,7 @@
- #include <linux/device.h>
- #include <linux/err.h>
- #include <linux/gfp.h>
-+#include <linux/iopoll.h>
- #include <linux/mfd/syscon.h>
- #include <linux/of.h>
- #include <linux/phy/phy.h>
-@@ -209,6 +210,51 @@ static bool k1_pcie_link_up(struct dw_pcie *pci)
- 	return (val & RDLH_LINK_UP) && (val & SMLH_LINK_UP);
- }
-=20
-+/*
-+ * The Directed Speed Change requested by dw_pcie_setup_rc() before the
-+ * link is started does not take effect on K1, and the link stays at
-+ * 2.5 GT/s.  Request it again once the link is up.
-+ */
-+static void k1_pcie_speed_change(struct dw_pcie *pci)
-+{
-+	u8 offset =3D dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	bool up;
-+	u16 sta;
-+	u32 val;
-+	int ret;
-+
-+	if (pci->max_link_speed < 2)
-+		return;
-+
-+	/* Nothing to do if there is no device behind the port */
-+	ret =3D read_poll_timeout(k1_pcie_link_up, up, up, 1000,
-+				100 * USEC_PER_MSEC, false, pci);
-+	if (ret)
-+		return;
-+
-+	val =3D dw_pcie_readl_dbi(pci, LINK_WIDTH_SPEED_CTRL);
-+	dw_pcie_writel_dbi(pci, LINK_WIDTH_SPEED_CTRL, val & ~SPEED_CHANGE);
-+	dw_pcie_writel_dbi(pci, LINK_WIDTH_SPEED_CTRL, val | SPEED_CHANGE);
-+
-+	/* The controller clears SPEED_CHANGE when the speed change is done */
-+	ret =3D read_poll_timeout(dw_pcie_readl_dbi, val, !(val & SPEED_CHANGE)=
-,
-+				1000, 100 * USEC_PER_MSEC, false,
-+				pci, LINK_WIDTH_SPEED_CTRL);
-+	if (ret) {
-+		dev_warn(pci->dev, "link speed change timed out\n");
-+		return;
-+	}
-+
-+	/*
-+	 * LnkSta lags behind SPEED_CHANGE; wait a little for the new speed
-+	 * (stays at 2.5 GT/s if the device is Gen1 only).
-+	 */
-+	read_poll_timeout(dw_pcie_readw_dbi, sta,
-+			  FIELD_GET(PCI_EXP_LNKSTA_CLS, sta) > 1,
-+			  1000, 20 * USEC_PER_MSEC, false,
-+			  pci, offset + PCI_EXP_LNKSTA);
-+}
-+
- static int k1_pcie_start_link(struct dw_pcie *pci)
- {
- 	struct k1_pcie *k1 =3D to_k1_pcie(pci);
-@@ -226,6 +272,8 @@ static int k1_pcie_start_link(struct dw_pcie *pci)
- 	val |=3D PCIE_INTERRUPT_EN;
- 	writel_relaxed(val, k1->link + K1_PHY_AHB_IRQ_EN);
-=20
-+	k1_pcie_speed_change(pci);
-+
- 	return 0;
- }
-=20
-
+ .../bindings/timer/spacemit,k1-timer.yaml          |  71 +++++
+ MAINTAINERS                                        |   6 +
+ arch/riscv/boot/dts/spacemit/k1.dtsi               |  12 +
+ arch/riscv/boot/dts/spacemit/k3.dtsi               |  12 +
+ drivers/clocksource/Kconfig                        |  11 +
+ drivers/clocksource/Makefile                       |   1 +
+ drivers/clocksource/timer-spacemit.c               | 317 +++++++++++++++++++++
+ 7 files changed, 430 insertions(+)
+---
 base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
---=20
-2.47.3
+change-id: 20261019-spacemit-soc-timer-cadf3088d286
+
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
