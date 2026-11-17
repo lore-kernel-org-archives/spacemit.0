@@ -1,55 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.92
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794898000;
-	b=gJBzkgVOSiC4+iNpxyB3R+Ym3InqyYEm/I14NVxDHENrrpQkrT2IHvMGFAzh6+YU70Pm
-	 D+Mml7z9bMwxgEibXSRdS4BbDsVkq9PlPFspQaRqSz+ZZcI4/Bv66QoSC5v6HqcWYB99W
-	 zCzdrD2YfO+bRSvpbXKP7vyPd5CedN+FoW7UoaztoMnxVk4zW1gjFpWIsuYucAYpybj3/
-	 SNr1uRFrcHN1x4C8o48eqRXIVN8RXqrgTXkn8MRIYlPIuiMcR71aS0x4Q50xTCa2K9zw/
-	 0xx8XsrUU0ArsTlp2KtHU2XwyhorIW7BDn2/RLHJBUsaf6CEsI53/lj9WxnIvdpx0aA==
+	t=1794905346;
+	b=wSPAauaTkHTvFH+Mdm/IJvtwIyM5UyNJO5nUX9im/6i6XOHvEe11lyYEjuxdRUmBPGX0
+	 ZlrVzynNlFpsQBx5Y7yS1s4ExYSp6M229KNOz0HlnH+LAv5L4ZV6yJC+3AmcT6RzfMWmg
+	 TTO1pKmXVrzMOcbliXU5m6uOFB8Ey7/OQenT4s5KlouKcaZpl4I9B8OPmSPYe6nvc98jK
+	 27+7J5uDzy1TE2Y89WN63Cper23B+AAl/EMZ754InPohD7dzcaK1/NvR40JaetV+N86fT
+	 tgiSMiT8S1O9X/B9fI4xf78fMyZSpya/PUJnfiupjjYUnUMcUUlmBN5ByVrfR/ZcXIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794898000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794905346;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
-	 References:Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:
-	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=Q+gF1IpQxY3Ah+YgluhpyTuzIbzQciSEK4mZyW1nqNs=;
-	b=zXyYwqNTF0jllcu4C+GcPMT7hMbrPflYxxf1Lafg8flfTvhvQ645E+pLbhJ0dUG+PryB
-	 efTqqiWR79UIH5ubkhly3VQDx7Tmuy28ufUAUwfc6FCjuyTUb5St8COJ6ERT3OWhee0/I
-	 bFxxaI/+yq3SYYxO2/xEIbveuhC5X7Oo66M/+Snkhs0DqkINR35Vh4fvbkDdLuQqU/pvH
-	 KR2yyDTGJTzPuhTJz+HBDk8BbTGVSFuLEZEGcqMfBc7cpwRM8ld6oMIR1AzR1ANN1qdwI
-	 8lR5BmirnFDEJVGlRfQP86AC+nmXyZrh2gJiKIz2Sbhg3YhhLuUS7yIQNhMqrO4kkJQ==
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Subject:
+	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=zWyRURPu1OxrVx0wsF9VEbECiyatmSf1CoESfSh8E/k=;
+	b=Lb5nBuquTJgm2MZ+7r3J82sPxLQsbwJvkPDBkJrvZNbZv+hSZ/36C/fDwoLqlEjeUueU
+	 zKndkGTq1V6wwxkZLT49PQsGQIWL1OtW2K1PYiDw3hj3ave5/hU3cXKKq8CPBew+88o6x
+	 jIZufi99BGJYfOT0KtFw9wxIsiEDQMIkDgFXQ1t158526CKz0c4pd+2Jusn6UN2fhM5vQ
+	 3sK4I9iNvlEwvkuetyDOdSDHcAlfjRULlzbPE9fzp//jPIP5/02961YDzLTmcb0FlsgE4
+	 iOnG+vSiZYKhZVF4PvT+uRhJdygjTNCLrtkXYL6oxKcGMLyWGekbP71lCkrCcICMunQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=izwbJya4;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=fuuwmVdh;
 	arc=none smtp.remote-ip=54.254.200.92
 Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44195606A31C
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 06:46:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 44195606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5442606A8A1
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 08:49:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B5442606A8A1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=izwbJya4
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=fuuwmVdh
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794897969;
-	bh=Q+gF1IpQxY3Ah+YgluhpyTuzIbzQciSEK4mZyW1nqNs=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=izwbJya4Pxyd3RK3GSchVQ9kH6RHkXfc/xKaVRxklhelB363uhnKDHzgoxPW9th4r
-	 UgCFxTCvcsfff4tCipY/+pTeUDf6waKV7F/nYCBRNY0BU8SXAWphj/Zl4SBhL96VQN
-	 4k7V42p0wiwxumILpguiN09ILkeYSJVQbjevkraY=
-X-QQ-mid: esmtpgz13t1794897968t2ce933a8
-X-QQ-Originating-IP: xAtSpxecaocUxTGnDA10G8x8aHp91+CaQjY0yRXZ998=
-Received: from = ( [120.237.158.181])
+	s=mxsw2412; t=1794905338;
+	bh=zWyRURPu1OxrVx0wsF9VEbECiyatmSf1CoESfSh8E/k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=fuuwmVdhelGO1UBk6i9s39jpuo8MFOCQ4bCG3ZIwQMchyGnb3LcUlBlUpYA2OCxvb
+	 Q+OLt0uXWDZFB30twXWCTWw+6zF2Ry2B8gtIgmOaSbC7ncp1BdCDnRrUh6ljYXJJdY
+	 8hxeAGMijQEseo+v1y4FnVZH+3meugEp1zCdtarM=
+X-QQ-mid: zesmtpsz2t1794905337t89f735b3
+X-QQ-Originating-IP: R99N8wcVkiTH8aE42GHQGH77icoKGm0a84h5ayh/DHc=
+Received: from = ( [183.48.247.191])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 17 Nov 2026 14:46:05 +0800 (CST)
+	id ; Tue, 17 Nov 2026 16:48:54 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 10056131255817741553
-EX-QQ-RecipientCnt: 16
+X-BIZMAIL-ID: 195453335041648402
+EX-QQ-RecipientCnt: 15
+From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Subject: [PATCH v2 0/2] riscv: dts: spacemit: Add K3 CoM260 TQ support
+Date: Tue, 17 Nov 2026 08:48:50 +0000
+Message-Id: <20261117-k3-tq-dts-based-on-com260-v2-0-68b337bd8938@linux.spacemit.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,90 +63,106 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=7b521a11c60c864c881ef5d8eb32564a68a084993eb79986689971bdd4fd;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 17 Nov 2026 06:46:04 +0000
-Message-Id: <DMXA85POOYLH.3L9L2Q53OUJ1T@linux.spacemit.com>
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, "Sarah Emery"
- <sarah.emery@canonical.com>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
- "Guodong Xu" <docular.xu@gmail.com>, "Yangyu Chen" <cyy@cyyself.name>,
- <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] riscv: dts: spacemit: Add K3 CoM260 IFX TQ support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Yixun Lan" <dlan@kernel.org>
-In-Reply-To: <20261114082802-GKC100523@kernel.org>
-References: <20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com>
- <20261105-k3-tq-dts-based-on-com260-v1-2-aa0b7714aed0@linux.spacemit.com>
- <fcd2fc41-5af8-4256-8296-a5435fdf41db@canonical.com>
- <DMTY56PU7CP2.JGIZ9XDXII9E@linux.spacemit.com>
- <20261114082802-GKC100523@kernel.org>
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32Nyw6CMBQFf4V07SVtEQiu/A/Doo+rVKXFthAM4
+ d8tsHc5yZwzCwnoDQZyyRbicTLBOJuAnzKiOmEfCEYnJpzyilFWwquA+AEdA0gRUIOzoFzPKwp
+ FrUvdNILLRpK0Hzzezbx/39qDwyifqOJ2uBmdCdH57x6f2OYdHUb/dSYGFISgsq7ZWaCm17ex4
+ 5yHQSjsTcyTR9p1XX8R4ild3QAAAA==
+X-Change-ID: 20261015-k3-tq-dts-based-on-com260-37d5d99a2b9b
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+ Guodong Xu <docular.xu@gmail.com>, Yangyu Chen <cyy@cyyself.name>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2089;
+ i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
+ bh=cKNI6p0a2FU5oVIDwqYsIH8y/2k6zgLXOKucQO4l7mY=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFl/RL7tV15x5p3kxRs7M1/zzyuLvRLnc0rVnSNEMiHJ0
+ L21NntHRykLgxgXg6yYIkv3A55tBT5RtgUChb4wc1iZQIYwcHEKwETSBRl+Mv6c3C5UknuDvfT8
+ uaLQJ+/PmCVPtVxzPqgh7P/es/aJ9xgZenaLx6bWKC9qWC74sd4w/1jXk+ITgitE9/FUsqwKtbH
+ gAwA=
+X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
+ fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: M49ymMyQ5YfuZg6AHji/LxP0UDNTO7r2jo98+M0qvUX4dif67OklTrti
-	6woR+EJMu/y5pS6acK8mM6gXVqd6TEVKgyiGUEzYSV6397JK+J3EtEAyZOGiInLruUkmviS
-	sVjVrcNqvU1DlJxspttEshw62Iuv6HJN6DJ3iMwHeXwvqcTcEvHwcrPi3gOfya7x//uJTcz
-	xLJNBDpM9Q2SbwQrYfar5BwWsquhJUIqtLFtK1co7fK7hx0RnaWpGEKETDY2HDIG4KaaoqB
-	Za9tJrDpxzdGHsHiJgXlJWBbsjybGyku6fE9zTdAtn6CXriUReGAgjav1TXE1tfeJGZ+2MO
-	7DMXvphl6+nWBITujelevxOLpRYXdpUOjzkGfbM7xTgp/va9EUmVdREED5vrpLrZ96Z9xl6
-	J3fp477KVkKq1ukC+Y25FpkfHJ3jWeUZ32g7aVperHtcvYOu/yijnFtChQY2tj6Ykb6Xbqn
-	98xtt0E4ADM2CQ0ZvO5Rd69BF7q/kVOz+GRkwMJ7u5JnJmFOAa+NkOq7Ko4DymuVrhNQ0/x
-	HzmoZ5U7rRlmx85VWQqaeBr4Bi+7QqIdZt/+AHDR1VZ9Q5aHbAyVQcGXTahmleaRhy2WI7R
-	Ha8TxNhMibgihLs8DIbGotj+f34/VYR32C4EEs0dsK6PSyj9vbiChQSADJx5asY3w8yFWbb
-	VT7Rr/QLjjRIOWSHX/Rb6kFCn+nsRdCjnENV3saFnYgo3pdyY3PGFiLz59nw5BaKJD4Lawg
-	+IApcur6J/oCW1bKIcrFy8bYiwKr/YII2Xy1vrKuPiuAbJty3+vsQCnNZ14DSF/JGgBz+v6
-	mHTLcFVKkjz1zYhhNIS1vuWwPPGQKLwgxjg3X56S9EmpjILCYPTtScgGjx5GJjfWPJzBzuE
-	6np4hkGGQpi+1MNt8K5VsLgUtEzJjxZ/yjIBSRBP0CnXnht1JwMI2cLGRodXw1/Qh++2uaX
-	wuVstoJ42krnZFBYFsYnCgAvL0hsD/KVwsteeJg9c6R/GAKkF8bbbTcIZc+W4PdEYDsA8pm
-	C526P5oG8r22tVTq+AhryMMdbEoGqtB+dZIbGI6XPdhwoRs5gVznhpguflHUhZzEPN1Tcgr
-	yF8ORU5FLmn
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NdC04oDZj+f2IKe70051Ci0qG8BpBvvmKMTPIcLphf+rKCAnRa8LGcV6
+	2rfenz2kMIu8qYQqNs/Y5Lx8NTLqxKJqYrFCQOIrylCFYhi1Br2P89GjLP41VEuB3PyOeT0
+	Zu+op8rk73g8slqjCSz4ohMoJ+Mb8Na6xJjzk7mqfXm0ex93CeYyq7mJh92V7OeZMNSg8oR
+	FAo0qN69JBg/FPTNz4uWZZVYKav1m7RBDdxcq32s2B/FEZrCTG/5+e12A0wlo+Y9nOiHpKk
+	J15NuyUDiIJhwrM8JcWX8d/pxtdfX+FMSbOoz+SkHKS0FP3tzjHkfVf0OCbjrVTmmiIR/uL
+	S8akvAYhJxZmaGWvzHw6/nwODSpH09MazC42W/urFEGNtvfWZKraLyR2xCx/uFgqeieEY4W
+	RC76mp6+GGNnSDnjq3BJV7qgkQk8poCZ5KXfCUird2I6RhReCqOSGF3VqX/tdRCQJ9TPh/X
+	ts7czFfXYw7TOtplknTDWBuBR5JdG6/v+xJ9zc2+a+5qHBIOq79qLV+/yq6Q2Wa951ogMLg
+	6feSs3h2bYvQ8wLWWRmRBCf+ecVyTtmJyPH2yko0sHiDTAH/lgb9WkGaukueeqf90NoEzWF
+	0SYXu9bsLya3APxKY8tKqYySAegchq7OaCExn/xUle5/Nfc6Hv3eitP+845txW+2Ev+6Y2f
+	hyEIssWhiUvTT4WrNzowFHa7kvbEt6ecPWIORwWKHfil7r/uiu9j4du21P5D67QHrQIlUxF
+	L+awozUX+AKD8P6FcLb+zZ6X0cCmPNxOkheEXkMY2Din03aJ6CBRSbwGscBsEgfrZj6KZ+m
+	uwmzR6VnQtfNBml8bGLnCwX/zWqCwzXc22JPyEqLHkzw1g/FAMnOeRm2JHC4vACEkOIkcHE
+	8riNmPE77/y0Cx/dkcmQnp+thCJSDumSOUgZ5cJzR/Jvc5LFIO6WriDfG1zVh/LmQrHbqRk
+	kn5Y/YcjItwYJnCXl0BRAUjwms82filJYHUi2B0zAwr26coD39H2pNPHUteyJ/IXmYR8cmB
+	3kDfoIHL27Q5w+6oFbNZuXIEtZvr5YMJd9cOGfgifTUoK+gjje6bHq+2lz50B7TUM8H3jof
+	gu3D6eYJ9uUocJC/ziN+B710t1ayWMO1Gant+ug0flUuRzGJjUIHrg3vyryZDJ5mFsYrvMm
+	2oVULVvDfWaE3eI=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
---7b521a11c60c864c881ef5d8eb32564a68a084993eb79986689971bdd4fd
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+This series adds device tree support for the K3 CoM260 TQ board, a
+K3 CoM260 module on the TQ carrier board.
 
-On Sat, Nov 14, 2026 at 08:28:02AM +0000, Yixun Lan wrote:
-> On 08:39 Fri 13 Nov     , Troy Mitchell wrote:
-> > They are the same carrier board. The only difference is the power schem=
-e
-> > of the CPU clusters. The bootloader programs those regulators at boot,
->
-> If they are physically same carrier board with same CoM260 module, but on=
-ly
-> the power setup configuration is different? then no reason to introduce t=
-wo
-> different compatible strings, if still need to differentiant, please find
-> other way out?
+The board uses the CoM260 module description for the UART console,
+Ethernet, module EEPROM and PMIC, and describes the carrier's Ethernet
+PHY LEDs.
 
-Agreed. v2 will only add spacemit,k3-com260-tq and k3-com260-tq.dts.
+The TQ carrier board comes with one of two power schemes for the CPU
+clusters. Both are the same hardware otherwise, and the system currently
+relies on the bootloader to set up the power scheme, so a single
+compatible and device tree cover both variants. Once the regulators are
+supported, the power schemes can be described as overlays applied to
+this device tree at build time.
 
-Once the regulators are supported, I plan to describe each power scheme
-as an overlay and build the other variant as a composite DTB, i.e.
-k3-com260-tq.dtb plus its power overlay, so it keeps the same
-compatible.
+---
+Changes in v2:
+- Rename the board to K3 CoM260 TQ, which covers both the TQ and the
+  IFX TQ power schemes.
+- Use a single compatible for both power schemes of the TQ carrier.
+- Link to v1: https://patch.msgid.link/20261105-k3-tq-dts-based-on-com260-v1-0-aa0b7714aed0@linux.spacemit.com
 
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Paul Walmsley <pjw@kernel.org>
+To: Palmer Dabbelt <palmer@dabbelt.com>
+To: Albert Ou <aou@eecs.berkeley.edu>
+To: Alexandre Ghiti <alex@ghiti.fr>
+To: Yixun Lan <dlan@kernel.org>
+To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+To: Guodong Xu <docular.xu@gmail.com>
+To: Yangyu Chen <cyy@cyyself.name>
+Cc: devicetree@vger.kernel.org
+Cc: linux-riscv@lists.infradead.org
+Cc: spacemit@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org
 
---=20
-Troy Mitchell
+---
+Troy Mitchell (2):
+      dt-bindings: riscv: spacemit: Add K3 CoM260 TQ
+      riscv: dts: spacemit: Add K3 CoM260 TQ support
 
---7b521a11c60c864c881ef5d8eb32564a68a084993eb79986689971bdd4fd
-Content-Type: application/pgp-signature; name="signature.asc"
+ .../devicetree/bindings/riscv/spacemit.yaml        |  1 +
+ arch/riscv/boot/dts/spacemit/Makefile              |  1 +
+ arch/riscv/boot/dts/spacemit/k3-com260-tq.dts      | 44 ++++++++++++++++++++++
+ 3 files changed, 46 insertions(+)
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20261015-k3-tq-dts-based-on-com260-37d5d99a2b9b
 
------BEGIN PGP SIGNATURE-----
+Best regards,
+--  
+Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCavv4LCEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+fyAEA32fW5Y/DoYv2
-3Cu2McB1vRv5wspPyKSABjOcL99SY0cA/1W5fQ8Axd/DB/a+Y7vunNMxiHzELf2l
-tN8+CTlqC5QL
-=RSI3
------END PGP SIGNATURE-----
-
---7b521a11c60c864c881ef5d8eb32564a68a084993eb79986689971bdd4fd--
