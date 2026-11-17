@@ -1,60 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794908754;
-	b=S7vmM2CDz5KzbT7qR7zCQQPt37Qm1HSeK9wOKNUt/aUmHHy2WHFoLa+OVVlBjZs6ZHTd
-	 acNhAw93k4jqPFDfWsGmpiXBuG2vwcBBqzZK6hRE2mDH5keH/bTdh6brH3NoEk9Uc6Cpe
-	 naAGZWrsYSDBDcVQmlQIpyKJPL/T7o92TZh67C9fynerNUx675A/4cSvWbqjTOhXZh6UO
-	 6briHfibRGXir6v8nZ16RIF5+zzzPNeBJnFxmm/DUzisyJyoFaMmLzxUP9+IGxW1Bax0L
-	 STlRBtlQkXpvoyrHQlzSO5PPqKCUgb5o7QvO/3wyhzgpqK5OtDIKTfbB7YM31ysMEvA==
+	t=1794908758;
+	b=SzhV8aX3btlnKRo+DxksidztH4ZQ8PA2f0RQTrTJrgfDYA6giZIEoeIieTW2RRei3lAL
+	 Ppd53Z2gzvdUirWa1a1hZ8ko1c7/31Gt/vckMws716ezRvkNywjB2wd3N0P5a/lPJJTmO
+	 uFHZnIb7DeyRoImFlNqZ7z34DinQpTrtk9TT/Uzb8oyT9qaePiC+1s1W1Y/QNNCmfQ2lE
+	 yQ/CimXvhmv3CEZftwbrJoxydBvaD5zTkgukWgFSRd1ghcDU9LORQrtZub2rZ4rRKytFe
+	 nMVCa+hdGpEwo5yrxEqGU6sjaAhUCrOzzczJ4y8Zql60DHAIMNOO/94suGVGeV3lGTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794908754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794908758;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Subject:
-	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
-	 X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=ZvPjwIuTAnlYX80kDgK6OqiQQQr9D8Xp6DoCGU/LXLc=;
-	b=JgS0zajoDfiSY84sowrdYHfubQDS0fACNyYIeWh4h1BOpWlTOOIC+if3Yxuf7aEdMNAD
-	 foneZ5cYr+hNgULNUpUUrCSePLsZcvNLyPxYWwWJKrfzMrIqlYWIRR//fr8dsNbwvEKth
-	 3b/qRY+ze4nduYMz6xa1QXVzziFFs/ogD4kde52tMM2sXsYK6Y+CY7UAFXw8HxCaMc9pT
-	 01xdDjAAzIwNwmttvrIgohJIXfL8GLDclweM+Wjb2r9ZbPeMI8PU7imNKSkfIDI7Xuu9f
-	 I6AEIiflET9IB9IVsvEe+MnOkf/gNEXbmSVIrBhWvvLTW1j0bhpDYuZ/2NboPj8xR5A==
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
+	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=5FN8m7PE/nm8LadW/EpmCHNTSgvk1Y0b2hsF8AG+DuU=;
+	b=a9YQ0PUOiepL1lSDGxwbO/fQRIjEuoDKNRqCzxprM3rtsKKMDJ0IsEJuUYWReSm+f5Yz
+	 jkFlCc8MWL9ug7ueYovYaf+fHRXG1eMeNOdEnGeSIrRyPihbkD9z670uxPuF7s8yDO3D3
+	 bqEMgrhjFRHVDthg9C2RSYNmYmO97T0I9Q0L7QYNnT2CrZH7DI3ZccK2/UZ2HZig35NCr
+	 95SEPQhG1X3KRSAsEHm6fdMX+EauktF+56jkcdlWKU8Cnk/4plmfrLjqEFBn1ZlYGrS1y
+	 67XQAeZSijoLg8Bkxhb7KSeYIffTFg3Cfcol2/mEmeBo2sK9/sRcCuvCNAtmA56Rk0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Juijl62d;
-	arc=none smtp.remote-ip=54.207.22.56
-Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=nOf4rD6S;
+	arc=none smtp.remote-ip=54.254.200.128
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8B0606A32A
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 09:45:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BA8B0606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F36606A32F
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 09:45:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7F36606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=Juijl62d
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=nOf4rD6S
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794908715;
-	bh=ZvPjwIuTAnlYX80kDgK6OqiQQQr9D8Xp6DoCGU/LXLc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:To;
-	b=Juijl62daA2fLjQ8TKb/xYn0yQzTYr/q0H2gXOSxcWVHTaZpgYZwZWBuWEYqrxfok
-	 ZKJ6N8qYqppIenvKBf9r4O8lwRIus/Rtkhy/OMkqi4WvphsECqFW6b/76FMHiAHLLo
-	 MAKA7PpKlNyePKC/HcVg6xj43MBYGk7WJ1J8qUlw=
-X-QQ-mid: esmtpsz11t1794908714t27c88566
-X-QQ-Originating-IP: hY6HrPs5VQA5PN3p2ipRXrGUKx3WM2dlkLwykvxKZZo=
-Received: from = ( [183.48.247.191])
+	s=mxsw2412; t=1794908720;
+	bh=5FN8m7PE/nm8LadW/EpmCHNTSgvk1Y0b2hsF8AG+DuU=;
+	h=From:Date:Subject:MIME-Version:Message-Id:To;
+	b=nOf4rD6SCMAveB7+WoFEy/+q/YeEgWxnM8achCEKzTDKHzVVVgdstOr9JcYwBjKLm
+	 El+GuLlJBSj32lsSTUY0XlDKsvJZuV8c1KWLHJVMFWRmlwp+rIo44SM95wPJPly05H
+	 rm1wBDKaYcYsMXqICLPjM4qVHPiqXo3hh1YQopnE=
+X-QQ-mid: esmtpgz11t1794908718tdb303e4a
+X-QQ-Originating-IP: dtrLbmaYt2sv6eJsGfDy4TFsZIMUiZQaDfHcfljLNQo=
+Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 17 Nov 2026 17:45:11 +0800 (CST)
+	id ; Tue, 17 Nov 2026 17:45:15 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7238423298183488495
+X-BIZMAIL-ID: 2333346560292728604
 EX-QQ-RecipientCnt: 16
 From: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Subject: [PATCH v2 0/5] Add SpacemiT K1/K3 SoC timer support
-Date: Tue, 17 Nov 2026 09:45:08 +0000
-Message-Id: <20261117-spacemit-soc-timer-v2-0-9264d0ea7755@linux.spacemit.com>
+Date: Tue, 17 Nov 2026 09:45:09 +0000
+Subject: [PATCH v2 1/5] dt-bindings: timer: Add SpacemiT K1 timer
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -66,11 +65,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Nyw6CMBBFf4XM2pK2mIqu/A/DAtpBxgglnUIwh
- H+XR9y5PMm598zAGAgZbskMAUdi8t0K+pSAbcruiYLcyqClNkqqq+C+tNhSFOytiNRiELZ0dSb
- z3OncwDrsA9Y07aeP4mAeqhfauD1tRkMcffjs1VFt3hFQMvsXGJWQIjMXrc9aucrg/U3dMKU/N
- bW+hWJZli/winKJzwAAAA==
-X-Change-ID: 20261019-spacemit-soc-timer-cadf3088d286
+Message-Id: <20261117-spacemit-soc-timer-v2-1-9264d0ea7755@linux.spacemit.com>
+References: <20261117-spacemit-soc-timer-v2-0-9264d0ea7755@linux.spacemit.com>
+In-Reply-To: <20261117-spacemit-soc-timer-v2-0-9264d0ea7755@linux.spacemit.com>
 To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
  Daniel Lezcano <daniel.lezcano@kernel.org>, 
  Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -82,77 +79,127 @@ To: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1817;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2545;
  i=troy.mitchell@linux.spacemit.com; h=from:subject:message-id;
- bh=KdrZK8s43rp5HCV+9mBsmR/lHxRrd63zdxl5ZHQcqpg=;
- b=owGbwMvMwCU2g/N9w09jE33G02pJDFl/lNQEdP/xRt0s3qWYNuuqLdfr8DWsqq1CPjuuvT4r6
- v1kMmNTRykLgxgXg6yYIkv3A55tBT5RtgUChb4wc1iZQIYwcHEKwET6FRgZPiUEau/SrOk/fWF1
- 7HPZY4bT3k413qzfdHyz/LTmF9NiUhj+14Wpd0dPY5zHMmvF2vmrXnpP79gYx7F87btdj37q6N7
- aywQA
+ bh=YTzIYqz5yG8XkouJ9NazRxZn63OsQlQGGOsumRdwLmQ=;
+ b=owGbwMvMwCU2g/N9w09jE33G02pJDFl/lNQab02RmSZvduK88eHMd8/fpc542pm32e/YRgMZp
+ XNXovlVOkpZGMS4GGTFFFm6H/BsK/CJsi0QKPSFmcPKBDKEgYtTACYy/wHD/6BDoVdKXoTOVrVV
+ 7PeuMT2cxK7CWtPO9F1g8imOxxvD9jL8j1w9+fP2OZpnT62eOY9FRFX1pHzg0cpLO5Id9t47vMw
+ 2hQEA
 X-Developer-Key: i=troy.mitchell@linux.spacemit.com; a=openpgp;
  fpr=3FE5535CF1B0E658E57DB59BAE1C2FBEA7DB42E1
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Nwz8Cs33/Lpr1qnF44r9DlQT1zL5njj5OWAlpL82RFEDZahQn9SD+mnE
-	Mtp4Vo6t6EBLxFyGp4bfQW1l5Yp54KrqX8cOhuHp6ky3trspCttQYt7d5d75VOaphtQXJTv
-	D5hsYXqRAEvQrA+oaJrWD8F8KlnqI43sLp7FKR5MBJ3PGesex6vSuPAOd1uAIgV5Gtypz5x
-	3aeygNrVhjpqC1TPMr508k5uoKKVMy+1bd/Wyck1ZRyfUatcWs7Q567Hc6LJQ5y5VgepqOU
-	eXMpImNfg/uvrbtdBMcdNWUt5N5mjQ/WKk08mZjG5fFm++aINC+aVZ4rl1ux5/xARC4Jm/B
-	3pekmzZIV8OGTPRXJb4NazOhO8GxxHuXvTDZwMuYEkPcBZPn9tXvRL80tAdFVUI5AF9IFJm
-	F7eOwiJiO6eJcIoqgM4DZhDb6aL5m07zSsIgV3YJWegSd//AJUCM0q4L43Eoy/Ocx4NqQ1H
-	+Ez9hqnsIQ3reVLiNdx/Fj3ihaO3xpCxN2zRxYUrA57bNrEG9hHr4nr2Gx/VL1/ZDWdqY5O
-	6D2r1wg/GsXYS2XLKFNHx46iOH0sBDBug27FjN6K+aqdovGDx1pyPsypcMTczwrAkUg5+eS
-	Jc/MbCl/7pk86ZdSrMPU2163YF1rKk/G8y74C0lYcFYOn4oQd+a6PefLVRThBsUKle2pAiO
-	mGXcBFlZtKUosZ7GhTfib7T9xpcbq79rx8SVznpiVvcad1eacSThLs50d+v0oBfC5mRajrS
-	BQ4z6w3JYyzvMfjcwNR+6iFBlAhiI7aJ6mLrUpV6p3E+G6OKYbQ5OzVKBNW2P9RuU2QMATt
-	402Pk0jv6HhhVJTYgzO7ogCDlZm/bsKpSaXKzCccCmbvx98jQzMP5MXESxjCZrVsUDo0BF8
-	P8G0BdtpsRoNBuul15wxvgXSyo/hLVlhRPB1rsWSluToFgjlhdbgCJm7/XlAYiUtQGaM4v8
-	i/vTmoz6QvXFW/6x06+e+DMeFl125g8B+R+wSCHcVuWz1mH1STGfcKjXEv+dIUqw3PFlbio
-	S47a+WcMnE6UUcsaLrioNVvcNfqguDquZqQthxH4qMze1PWhz2Hn4pbdeOegKrY8YN4zyu9
-	qv8U1xpy8ijQ4aKrL/HlFgj/oWsuyNfyA==
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OYjaY80FOgjav1vHGpRTOq+RDPewvR0uvLEDeFAY2Mr5WKiCpxS3S8aZ
+	TK9oPHN0Yf/sOk1g/YywkOVUK86BRNxGJZl4bl4C+AzmQkSbfVHtaj8C63Y784sC7IzW97I
+	vw3TuJ4Oe0vja8BCgf3ECs7l3cKupqbp2t4zxmTjW7TOcT4TPOEh66Fz5xLMXwC4iUrr/kR
+	1lO6UjWRAhauKJlxb4LU8EnCRjN1PqQH3wDQSGE8KsZ91VxqYfcTjHN9XNLd/VLtXdMsPKx
+	La1+v2h2N734XbELYrZa1TGlf8SAvha9cbUlh2GwnqqkxxtTW4ZkV2M3d9i4SO76wC9Mt9g
+	Ey+7yICBypP3deZEKlMQhPsxtElQRqmcU9BD+pPmUA/JCUlR7Xi2L8v2X5SB+588aiIAuQ3
+	/9L3NxMmE6d3OsidtetQVWzemA9zDqXBaFrwc1zw8MIuEjUa5La2bS0MtUFcOVoUZyUGsI0
+	UjiZJTXk8YuZVVkWlwLcmND6uSvidK+JN9FJjsXQ+nRiIhD4QNOqSxYFWOYqvxtipAwV7Da
+	uAaRPBVag9s19EXwNu9BsecjQx8KuWAS86+tVJpfjfP1v6L4NGXGQAhcuvNEqL3HEdEEdrD
+	GsIhumwFmVvbyAYq0Jdt86YlYWCRI1jXLsM1sGqIHVNE4M91RlOwslDZzTMDgl9cop9Hqfi
+	zx8OMlgqmSMng25qrsXEQgt5qwqK0wgF7RbCsxnXypJAosENl2/TyXIqRaqXs8ODavCUOcQ
+	870VKmE3aF1jnLqBQN5npCsVEHUgYqYPn8CotxbUtM1YYPf7ZXZzMqyftMLaI2So3rcvjsF
+	sI5OOOjjes/CwJo1J/0AByN6OnyDv/Cru5c03xJoz2EZF5+uNRj4JrY5DSvIb2+6A/aYfuN
+	CC/bGqfdVtkjOgaU1k/kaiKxdcJSsLoDu6M3NmvSM6kOHw1jaiw7xmwpDP68R7s9AvvIndr
+	nD9GeAxauyExek+j9j6/dsaBqr7OSzHWzmb1mcm/XYQpJYuj/o6/gKXZ6FRnzXXjNvK3mzP
+	D7eDEirCq1ESxQyy5/OK3jIRVLhj5dYJUps7+Z3CrEkj/gDyclWuVecsKSbWNSYxcjUl1sm
+	2hFuW6Uhzts3fwz/mdWB7A=
+X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
 X-QQ-RECHKSPAM: 0
 
-The SpacemiT K1 and K3 SoCs have APB timers that run independently of
-the CPU cores. Each timer block has three 32-bit up counters, and each
-counter has three match comparators and its own interrupt. A counter
-can be clocked from the functional clock or from the 32.768 kHz clock,
-and can run in free-running or periodic mode.
+The SpacemiT timer block provides three 32-bit counters, each with three
+match comparators and an interrupt output. Describe its register range,
+interrupts, functional and bus clocks, and reset.
 
-This series uses counter 0 as a oneshot clockevent. It is registered
-for tick broadcast, so it can wake up CPUs whose local RISC-V timer
-stops in idle.
+K3 uses the same register interface, so describe its timer with a
+SoC-specific compatible followed by the K1 fallback.
 
-K3 uses the same register interface as K1 and falls back to the K1
-compatible. Both SoCs run the timer from a 1 MHz functional clock.
-
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 ---
-Changes in v2:
-- Use named constants with comments for the counter sync latency and
-  the minimum clock rate (Iker)
-- Link to v1: https://patch.msgid.link/20261103-spacemit-soc-timer-v1-0-36722421db6e@linux.spacemit.com
+ .../bindings/timer/spacemit,k1-timer.yaml          | 71 ++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
----
-Troy Mitchell (5):
-      dt-bindings: timer: Add SpacemiT K1 timer
-      clocksource/drivers/spacemit: Add K1 timer support
-      riscv: dts: spacemit: Add the K1 APB timer
-      riscv: dts: spacemit: Add the K3 APB timer
-      MAINTAINERS: Add entry for SpacemiT timer
+diff --git a/Documentation/devicetree/bindings/timer/spacemit,k1-timer.yaml b/Documentation/devicetree/bindings/timer/spacemit,k1-timer.yaml
+new file mode 100644
+index 000000000000..b71785b8aa94
+--- /dev/null
++++ b/Documentation/devicetree/bindings/timer/spacemit,k1-timer.yaml
+@@ -0,0 +1,71 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/timer/spacemit,k1-timer.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: SpacemiT K1 timer
++
++maintainers:
++  - Troy Mitchell <troy.mitchell@linux.spacemit.com>
++
++description:
++  The timer block contains three 32-bit up counters, each with three match
++  comparators and an interrupt output. Each counter can use the functional
++  clock or the internal 32.768 kHz clock and supports free-running and
++  periodic operation.
++
++properties:
++  compatible:
++    oneOf:
++      - const: spacemit,k1-timer
++      - items:
++          - const: spacemit,k3-timer
++          - const: spacemit,k1-timer
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    minItems: 1
++    items:
++      - description: Counter 0 interrupt
++      - description: Counter 1 interrupt
++      - description: Counter 2 interrupt
++
++  clocks:
++    items:
++      - description: Functional clock
++      - description: APB bus clock
++
++  clock-names:
++    items:
++      - const: func
++      - const: bus
++
++  resets:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - clocks
++  - clock-names
++  - resets
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/spacemit,k1-syscon.h>
++
++    timer@d4014000 {
++        compatible = "spacemit,k1-timer";
++        reg = <0xd4014000 0x100>;
++        interrupts = <23>;
++        clocks = <&syscon_apbc CLK_TIMERS1>,
++                 <&syscon_apbc CLK_TIMERS1_BUS>;
++        clock-names = "func", "bus";
++        resets = <&syscon_apbc RESET_TIMERS1>;
++    };
 
- .../bindings/timer/spacemit,k1-timer.yaml          |  71 +++++
- MAINTAINERS                                        |   6 +
- arch/riscv/boot/dts/spacemit/k1.dtsi               |  12 +
- arch/riscv/boot/dts/spacemit/k3.dtsi               |  12 +
- drivers/clocksource/Kconfig                        |  11 +
- drivers/clocksource/Makefile                       |   1 +
- drivers/clocksource/timer-spacemit.c               | 317 +++++++++++++++++++++
- 7 files changed, 430 insertions(+)
----
-base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-change-id: 20261019-spacemit-soc-timer-cadf3088d286
-
-Best regards,
---  
-Troy Mitchell <troy.mitchell@linux.spacemit.com>
+-- 
+2.56.0
 
