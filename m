@@ -1,60 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794919192;
-	b=FrY7o+P+zy8ZeINdJDc40ws2ypEnm9KLV5dkUhJBWUpdhTXwKxiMim7dzBlLvk5f/CvJ
-	 9j1mgWVtbIntmO+LjwYHXQWOQ9MivH2tPPB1S4bxkHPvWL2rK9DjSBXccZmLGUeg3SCV/
-	 kjaWUQ7T162LQLzECOT7akJsix42JFecKmfZfGLqMhrstNCRoyWU+y2eIu3mXjWkXGC7R
-	 GN6vB3XLwanCy5LDoXXkYizmFX5HkYRYjq/IUUmTWHzlsoWmcjbNnTmuIh1LEBG0rKz7e
-	 hC37Gq65Na9K9O7kKPfJTJCgrf6vcXmFlndYdTwSBEBraM/65D0vmiibwYmvcEJtC0w==
+	t=1794919196;
+	b=YPgGO3aN8nOjPS0ksmw4IkxUei7p1Ec6RX3Quti8r33I0n7bw+62ACHU9otnaP6ztUYv
+	 b0Wa4V+RcY3iHi52Iow1tV4bl01rChb5YQcag+qET6C0DM8s14N5BQZgikvqxyqelsuUc
+	 88zJd0N/bzlTCGuy6culnp1kxX9KRk0bJz9uKXUThfMrIAt/FmOBWeGPh+nrl5HAIqKOu
+	 vfO2zf5nUyAVfOyeC2HOTFaJe/dHNBnUAvRhCSAsnRDjqtlP+caYrt3TqezMNSUvKE9oc
+	 WfJ3aBtMpw4gnLA8fixYOHArP6Dx84kzmTuX5NESol9EDIxaERf2waUdtNIdvz+SgzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794919192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794919196;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
 	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
 	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=7p7Pb+f3+26BR0KMgF8tnopJHqF0TPOrtCKj4Okhm9o=;
-	b=1qHWj9Frr7Bsx/QWaDP8D/uXz+JSB6fCD220hgfPV/fKsFK1MVjdv3EAfsQtRI3ogU/1
-	 +4K6bWFzuL3xiW7QtuAKA3EEdgQQhbuLwF554fLVnrR7hTAg+64jTiJmx5BKwvXthvISQ
-	 yzZUhhaNNJ65yUoAvgfnrtvB4TFJzxB9bLdjZLaYIS1m7vyKmG3w6ZCHCHgXvD38GHUpE
-	 bz3PGNyA0CpV5PExltCCtPy7OHQiVPlcrXyxj6QxxPZtP0hFwBR59ExM8qim7sqs7YM1L
-	 KcJ1kN/bN9YAf00cWDRDp5noXRbQEmfxWZdQ4sVT6WH5bgvp25KIu7NZCHe1r+aNG0g==
+	bh=BTTytBE65GMAQnAyZgxBxzfZcQGL9CDRbYMYFK08kdY=;
+	b=CbCEOHGCFd6YDgPrCQa0sZ6dhfyq3oWpucMiqkkdJIQCT5l7N8QBFDpEzdax7MOzUl58
+	 cEevfBZMAlh3Eu+p06fVUeanSxpZzknjS8tDYYwFc5I0ShqN1KLRwOz1kCBNBcZR4TRIy
+	 5EhUgk//jkLxMCVwUjxPOA0MX0K7/yNIUESPfG6rjh3JguJslSTiIZP3lXZbUbMgqKrgt
+	 ppgcUR9JEue/uZ6iOL+C5QC8uDmOf3blrK3akz3yq+SWho48ztJFjv/QlDJ374C/Prp0d
+	 x1HV95T3dXfIu6kmhzoRtNDWKZDrTsd4mtDsPCMY2MC3jAj2HhCxLX5Y1Eq1XRsI4Mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=e9BT7v3M;
-	arc=none smtp.remote-ip=52.59.177.22
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BPXwFWLX;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28510606A32A
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:39:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28510606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B623606A88E
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:39:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1B623606A88E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=e9BT7v3M
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=BPXwFWLX
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1794919165;
-	bh=7p7Pb+f3+26BR0KMgF8tnopJHqF0TPOrtCKj4Okhm9o=;
+	s=mxsw2412; t=1794919143;
+	bh=BTTytBE65GMAQnAyZgxBxzfZcQGL9CDRbYMYFK08kdY=;
 	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=e9BT7v3MsC99gVDnGgFKIj2oKhloAVvbVZhOxSLC+CprTQhf0x8aKYZmuVa+tcnmI
-	 KW0vz91ZuLabqgHamCmmM+w71ftCWnRn+qfRnzkM8ncHw+vuCJ3ro0T2x/8cqtxiYh
-	 svOKYG08K6+bMUI9IqjgStCrQMUg/gFuUJneABHY=
-X-QQ-mid: zesmtpsz6t1794919160t47160cb6
-X-QQ-Originating-IP: G3YnxjTqmHWEqOVoZbVi8fJCVpijP52i68C9QpO6E78=
+	b=BPXwFWLXguwODW87s4LLybHUimd0/ewSvVOFm1CUSyl3i174S9u5Bwj1YusJMLQ68
+	 5kyz5Gft4Qv4WnUX/8yIRDmptfXXj0POPi94WzkNqCMXMqcFXqrigEJ9ZYn14Wj/o6
+	 /eQA8AhV5PFYLYDaYGkFbt4DyQQqw/DRmNLJzp8A=
+X-QQ-mid: zesmtpsz6t1794919136t7060d14b
+X-QQ-Originating-IP: 8m8ta1vulOOip0/FP6MymXUvN78gB7sACsH87H7D1jY=
 Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 17 Nov 2026 20:39:18 +0800 (CST)
+	id ; Tue, 17 Nov 2026 20:38:54 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6784433204915299541
-EX-QQ-RecipientCnt: 20
+X-BIZMAIL-ID: 13246902958322791925
+EX-QQ-RecipientCnt: 21
 From: Junzhong Pan <panjunzhong@linux.spacemit.com>
-Date: Tue, 17 Nov 2026 20:38:51 +0800
-Subject: [PATCH v5 9/9] riscv: defconfig: enable ChipIdea USB controller
- support
+Date: Tue, 17 Nov 2026 20:38:44 +0800
+Subject: [PATCH v5 2/9] usb: chipidea: usb2: use
+ devm_clk_get_optional_enabled()
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -66,7 +66,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261117-b4-spacemit-k1-usb2-v5-9-52c3829cca69@linux.spacemit.com>
+Message-Id: <20261117-b4-spacemit-k1-usb2-v5-2-52c3829cca69@linux.spacemit.com>
 References: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
 In-Reply-To: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
@@ -79,71 +79,117 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, Junzhong Pan <panjunzhong@linux.spacemit.com>
+ spacemit@lists.linux.dev, Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ Ze Huang <huang.ze@linux.dev>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1794919127; l=1116;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794919127; l=2413;
  i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
- bh=NhXTB+6LQeBDPdlKhQEBituQTc95+pqg5YH7EZfmLUo=;
- b=QUdPN24BuQF+95BXzm+DDCfCJghmFtjy08DbMyYzrC5QXvJaRgxzicO2wk0+SFr0RhcoCv8HF
- N7P6gcMHU11DRH1PQLTWyjeQimu4VYukjVqUfl0dhepleG1IxbaNp/7
+ bh=OfqdgN+EK6uGKpSrBUmKzW0x/Oxgl2tVTFzRku5jsSE=;
+ b=3ArzyvxM7dDKylh3j1f1J00O+MGlfVuw2DcuO44mPlJUGpPvmZi3bmQkH3WMS8d+6Iq2wGq/4
+ S8ZTM/IyE+UBlekP7IRF2DvNhueJKUV7ceZGKBJ5/xLu0RDz/REeTvV
 X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
  pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: OKhy7fcgXWEZOKCbU3ZbOYj9HEMXxZS4/TuaLaWrHOZn/sScxJVbURq1
-	LSeSIEuKR/w/Tu6o+7+tgvi0rbDYw50oVoCQh8KrSQ40TAMtqa7tp5X0efwwiFtfsAtc9ha
-	b5eWJMcDEWz81Y8sVRJKjT09DG2qSdVIbm1kD/9xJ5J7nnyo/E5wGwBkBfo/XT5JA/+k7If
-	qymfXY9yezSpyODUZA4SR1tnlDDQTGMO2a6eHpfAhhwrPEZ+zhtwdmRNsITMLmXPdXWSkHb
-	nxKynTm47BDjVCyZ5nurqNuemTwGRfd2p1pr5s02vmJT+iSaWnyl2mPY0Cx02KBroR9CsFP
-	iDC/T7bxBXq5e9trThucKkupPvJ+pcdgMuSC8FMwP9XRabkEhsiqKi3NVJdEr1ImKYDz9Vr
-	0v9FlBunxq9Ig0yPIoqgKygr30eS3j4dlmngKCMdrz0BkiESdFEzWxu+QdwWDRbZO/yJfio
-	W6AYDuo14R11+x3jybXDl71XZlSnsft8W9cLiOGM3FyI0MN3o1/3fDHlAWg6jPbAKyimZnv
-	n0fvhmXFtb50HOidPJJnVHQNHHVE8G8rEScA2F7ttrWFjwnGg3wxUyHYQWt4noLPEiDF04h
-	pHeC6adjcROGs4mQCE7F1M3eol3baenx8T5Hnv/+zkAsKQZeCEKKz4MUb2WJ4HrqUH2Ko5e
-	4lqYFjTsueVuCUEBhUdDJ+kbC4RqolUwsFODBvam+MVG0D3d+JOUNBqrp1NzLu7IzI5VbkT
-	DWRRPloyHrlhDOlkiJkBR7TFWl0PcqUTkyYIifxDDHmOW0AWrhtMT56SIyTiQ0S3PjeQQ4F
-	gaoar0WcjJ+w6VZGdN11fM0NSkHGukdS3CtOEbVxNzAMBeZQVyrQNZ1uKteu6zorzk+Q6QT
-	rvQr5li3a/yt5ABqnWgtzjT7sjBimhEX4SNGp9x7SMHMzSWoLgeR1up+26+gCrtqW9F/i9y
-	1X5RIsHpqUiJxRxguVtL0dRL/XvbJyQR7JcMhbotV91OHT5v4T9Zo+ETtzJIb9jkqAQbP8J
-	CHq8MxDsCwsUuuHXSz9GdpkT6DgJD7gMODka8/vYAaTIbZUsN0RflBOU71QV4VDhtT5/t56
-	9SkS9C2q5S95Dbls8Q8JIJGd3ykD2/wMU/f3MDqlTEcp828x0RHWaIHNrCYPdOO8co8U5rm
-	SRIKlkGhE3czjlXs/231dHBmjBB1u/F24kL7WBQpnv5eS5E=
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-XMAILINFO: NE2OwXxkCGATXMeVuOuU46NUxLggEdijvxtQz/hIChBGyahx4XUA/THB
+	o99XrST77u1WJX02PJ3sLaNnnwvCV3vayI52gRmCQkDJEDCdmrfMQhsXJNykK+1wEQW2pRs
+	iAh52uuW1+eBUP75QsdoYX4YEF0yQdHeWbI1iUPDMgBpbluXoXugenrBsRh8W26nnFji+EO
+	V08Tfvhnhw8ZDfQhszGgc5Mfj4SPYALwilfC+YJDLvdQ9actTWQU8NelcgeQHR0zctUiNLo
+	jPJYBhLVdTbEZNbmEyR6CbE6uwWvGwk/UvmZ6ekOXN3IXcAhoSGbmp3cKDU+VGtiE0CnA/v
+	YrYZsgSpPnawCSMLOVI1PF4UvDkcPLiAtraGm6lxqDijACFGw5EGPxUcnQksch9/M3RstTW
+	9vmJtl4cUwYMS3tnoMK/+tSIb28SIp9EIUoqDuRio4kOyRS5Z1PqxTiRSSNJsRU67+s2m5f
+	j0VE8uNu+yXDdJJWQsdgbQfIPGK0k++TSMvaY4Jh+hB+NDEMaT1lNT0+xRFJ3eW0O7G4JX5
+	yUhWoBtZc4i2i7lRpLaY6fayWxvxSDdEW2uxAiEpC+O22Y908/07yOD9hREQYTkTDXPIfLG
+	Tdw/5hmN9xuy457tNBe3bg+rbbmUZP4bN1CWLEF7DpZtOXNldLRiyIGI6HFeg3HGJ4zatOa
+	eEtEytxfbf21MGKbauCS3l16kG3K4XAXVqeo3JccNE/bJE4CfocGD8SymLmiDgE028N8iYZ
+	669GMsIzF+FyVFDXlT1gdjZwynvyJVDyrznp8PZdTR0wf6ITB9ZtE3X05jYpRnE6gpXOVzE
+	vlYFJtC1p0tU6wfMcEpXxTQCn8SVJYKo/2D/439xHZSVOSCx3vFZyWonjChHBQMORGtTBZ2
+	DrU6xOoYiky2QUk3p7J1kcAv+F73Clp2qAxmvjsSvYRf3vhIuMtXaEaQAiRovnQNHOChnd4
+	vk71ueaD9B9zTp9MfEnnUr5NwTb1zhycYAmwZJfXgsiw/cWE/OaxmKnh9l6qCko/R0qgGcc
+	4I3i70qj++eBvm8Z9aTAIrXZN3VAP9A4ve0Qy/20V+cNHz23jGx32GPyj7OTNRIK41JsE/v
+	tvd0lCmIHdRvjYCvNS0JVQ6GfS+/8EbbMXvrikNYEOrEC/VptvrHqHRlWZENj5Z4ynobiEw
+	4qBss2GIhMCfId0taMmf3Qb1QA==
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
 X-QQ-RECHKSPAM: 0
 
-Enable the ChipIdea USB2 controller and SpacemiT K1 USB2 PHY
-as module to support USB2.0 controllers on the SpacemiT K1
-SoC. The _UDC and _HOST are bools that decide which roles are
-support.
+Convert devm_clk_get_optional() and clk_prepare_enable() into a single
+call devm_clk_get_optional_enabled().
 
 Reviewed-by: Yixun Lan <dlan@kernel.org>
+Tested-by: Ze Huang <huang.ze@linux.dev>
 Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
 ---
- arch/riscv/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/chipidea/ci_hdrc_usb2.c | 22 ++++++----------------
+ 1 file changed, 6 insertions(+), 16 deletions(-)
 
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 04ae305d5511..9a0b3847ff43 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -222,6 +222,9 @@ CONFIG_USB_CDNS3_HOST=y
- CONFIG_USB_CDNS3_STARFIVE=m
- CONFIG_USB_MUSB_HDRC=m
- CONFIG_USB_MUSB_SUNXI=m
-+CONFIG_USB_CHIPIDEA=m
-+CONFIG_USB_CHIPIDEA_UDC=y
-+CONFIG_USB_CHIPIDEA_HOST=y
- CONFIG_NOP_USB_XCEIV=m
- CONFIG_USB_GADGET=y
- CONFIG_USB_CONFIGFS=m
-@@ -272,6 +275,7 @@ CONFIG_PWM=y
- CONFIG_PWM_PXA=m
- CONFIG_THEAD_C900_ACLINT_SSWI=y
- CONFIG_PHY_SUN4I_USB=m
-+CONFIG_PHY_SPACEMIT_K1_USB2=m
- CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
- CONFIG_PHY_STARFIVE_JH7110_PCIE=m
- CONFIG_PHY_STARFIVE_JH7110_USB=m
+diff --git a/drivers/usb/chipidea/ci_hdrc_usb2.c b/drivers/usb/chipidea/ci_hdrc_usb2.c
+index 8ffa1e95d8e86..9cef902f36b37 100644
+--- a/drivers/usb/chipidea/ci_hdrc_usb2.c
++++ b/drivers/usb/chipidea/ci_hdrc_usb2.c
+@@ -20,7 +20,6 @@
+ 
+ struct ci_hdrc_usb2_priv {
+ 	struct platform_device	*ci_pdev;
+-	struct clk		*clk;
+ };
+ 
+ static const struct ci_hdrc_platform_data ci_default_pdata = {
+@@ -52,6 +51,7 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
+ 	struct ci_hdrc_usb2_priv *priv;
+ 	struct ci_hdrc_platform_data *ci_pdata = dev_get_platdata(dev);
+ 	const struct ci_hdrc_platform_data *data;
++	struct clk *clk;
+ 	int ret;
+ 
+ 	if (!ci_pdata) {
+@@ -70,15 +70,10 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
+-	priv->clk = devm_clk_get_optional(dev, NULL);
+-	if (IS_ERR(priv->clk))
+-		return PTR_ERR(priv->clk);
+-
+-	ret = clk_prepare_enable(priv->clk);
+-	if (ret) {
+-		dev_err(dev, "failed to enable the clock: %d\n", ret);
+-		return ret;
+-	}
++	clk = devm_clk_get_optional_enabled(dev, NULL);
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk),
++				     "failed to get or enable the clock\n");
+ 
+ 	ci_pdata->name = dev_name(dev);
+ 
+@@ -90,7 +85,7 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
+ 			dev_err(dev,
+ 				"failed to register ci_hdrc platform device: %d\n",
+ 				ret);
+-		goto clk_err;
++		return ret;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, priv);
+@@ -99,10 +94,6 @@ static int ci_hdrc_usb2_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 
+ 	return 0;
+-
+-clk_err:
+-	clk_disable_unprepare(priv->clk);
+-	return ret;
+ }
+ 
+ static void ci_hdrc_usb2_remove(struct platform_device *pdev)
+@@ -111,7 +102,6 @@ static void ci_hdrc_usb2_remove(struct platform_device *pdev)
+ 
+ 	pm_runtime_disable(&pdev->dev);
+ 	ci_hdrc_remove_device(priv->ci_pdev);
+-	clk_disable_unprepare(priv->clk);
+ }
+ 
+ static struct platform_driver ci_hdrc_usb2_driver = {
 
 -- 
 2.34.1
