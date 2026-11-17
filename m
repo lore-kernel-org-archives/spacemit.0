@@ -1,96 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794909150;
-	b=CleeM+rccuAKhnLbJoj31Vi4TO/K/3MsrqR7hGorZaIj5soHOIMYWr8wnJM9/THKGdZe
-	 RPGm9i2zuE5Kn/58MskReeelYnUxAAOeRtpgjgiXqrnHybH8x/S9yMlJjUTZyT03InWAc
-	 YDALQnxMKM9OeY6VoSSqKqH7AtgtfCGt4xKmQIpgRYA+8m7co3BjZdioaYwyvQoT3Mhv/
-	 b+NoBdTFdPzt9AF+Hwy4Gb1VGhoeoFppSBHtHHdR9QB7EiYnNkF5RosQF5H4A7sx9zQgt
-	 qXbXcq7h2Ku/Kk/AHWBnDkR15TzJ/wYtTDrgQgpFphyCFDl1dmBe1h04ofTvYPqL/zw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794909150;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version;
-	bh=bYyhq2g9GW6Daj57foPe9lZBcRmom318RZsPjUOH7DM=;
-	b=nGMgElWMT578FGTCfSaI1ntcWAiIbBCX9YyXIkpq27d7P5baCtT6d8dNklkilHayun13
-	 OoGAGmy13n/isMDL+sneQxPq8sNlltIefK4IFqpTAeItPKBbLKJ05EI3ayg53hOUEhlHj
-	 uokRnEfqTqj1x/cTZoqDaVmVQ6tz1Ukmx6z83amSQrFxH2fBrxfrZza0fDB6NF/laJ8OS
-	 9oYMkNmTVNkpCZvSMVHcAz9cRt3Vn+vC4BS4byPWvsNitSrgAyPFLrMQa0NcpHNHvWFVG
-	 bCg5agbKr54Z1uQnLhP2RzPt8yRPGj1K0idjkmPUGT3xxaK/IBLp1ibNhZCJWCZPGIg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=pengutronix.de;
-	spf=pass smtp.mailfrom=pengutronix.de;
-	dkim=pass header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=JceQ8P1Y;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=185.203.200.13
-Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.51
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794913603;
+	b=ADrqx+F3u/6Tb55KA0klMixhEobrIb0sWRE6tk8BGdcV8zFgUzJdLmt/HMmMt/F36AyC
+	 UjoKPIhE4G8BRn16BfqkNWVWHTqbA9tuuaa03MkvD7jMPQi0tXhVL4CJczOBpw+cYZQLJ
+	 Kd/5eAaojQ98DCAz+26KHFuceWUvZ7hcIrcGLhMQRNnMkLWl9hHNdhht7rhCUO4RMYjCe
+	 vCL8iprH64o20AZ7AzHHeqiJ8caDrKCk4M7VbBZcznxWOnGPo9ZDYqVtDyfVUp15T9KSY
+	 wb2FMkvptZXW7ZU42We/bKTBNzFgHKN5ORJg7t7DQBxPaHUnx9lP2d6kZ3gJGQT98wA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794913603;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
+	b=WvXbwxy6TqyZcXnM6y7QPC3ZELaVuZAZpGpG/ddSDFxKbKvEPQrbOlnPKR4+i3t3i/5+
+	 xdcvczv8x6c9h+SPgU+Dbup83h6GnNk6jjrdtAXEk4EM2VHaG9WRtq7KD6BRluBmEkOkD
+	 raVn6wHy5BZ+SAFJvaItsFchngXGwyMGWF1b19sF7xfn/nTbbzyKRE0WjS+SouGsuvceP
+	 7yIZz8HiCTwm2LUAfA/KeI5y2bXDswkhMRQuVgx4BgFINRcNUxb/cYjoc+9k/gZuV+ICj
+	 +2TBXWJdcLx68qH3zKGdmqNaeKv2ttmkcS5ttpxxOfwkALtsSYosm4Eze4YpFYI6JHQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linaro.org;
+	spf=pass smtp.mailfrom=linaro.org;
+	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GgtKX7jk;
+	arc=none smtp.remote-ip=74.125.82.51
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D326E606A31C
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 09:52:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D326E606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B70C606A329
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 11:06:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B70C606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.a=rsa-sha256 header.s=20260414 header.b=JceQ8P1Y
-Received: from [IPv6:2a0a:edc0:0:900:1d::4e] (lupine.office.stw.pengutronix.de [IPv6:2a0a:edc0:0:900:1d::4e])
-	(Authenticated sender: pza@pengutronix.de)
-	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 28C8B2010F9;
-	Tue, 17 Nov 2026 10:52:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
-	s=20260414; t=1794909147;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bYyhq2g9GW6Daj57foPe9lZBcRmom318RZsPjUOH7DM=;
-	b=JceQ8P1YvvcAgYJe7ihzL79J+o4hSD5fBVrWZec7zdzGh1s8i2AJYtx2p/QzoWU6WjWaGL
-	CwMgoajk/LFSC7yH8AzOb0z/1a9httn+J/kidbA0a1kD6ZW6hDpv6poXE2c0dMcPy4tbOe
-	jaqfCFUWF8ydzcI+P3vpTb7ykPVuMEaw9OPraptgxdevsX4LE1U2qok29FkfiJB63DJyeD
-	fiUAQPST64VUtQIqWMVlMx+93pwz7yPMc/LqXTn2BbzQmRnxCAQcuqShzS604eS+fKd6S4
-	+BJuFZ+guxMflFI4PQOro7TUcQvJHm13dsWP2bAitTG+E0EU92y6Smx3ayJqLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
-	s=20260414; t=1794909147;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bYyhq2g9GW6Daj57foPe9lZBcRmom318RZsPjUOH7DM=;
-	b=XZQvq75YBL1+uEU3EaDlT52RCB43Byu8CLLP6R90nJivPase/iN90zEHO40pYvO/andz+j
-	Jf7SMB2C1GqahaNNM4X7WkMcTCQZX2nJND0IAR1YkiSdJFIInKOvl+sdATPT64reO0s0Vl
-	pH1xSG31jRUFcj9npZV3Hz6ZgILKQ3dgZIymtTFgRNSSWw2Dt12QHKQ74YrXA7zPzIq/+4
-	0/NGs2rr8+Pto1MaF1qF7BEfTZY4eHu30ww+pCsw6wnhhRqYLMhOGb8I3epoGLtHFMnD/b
-	AKVsAAPbpw+5P3FDLavMqxnZL3KjCs2HKe0bg2bNctrlSLFkNyuvKv24XeaRFQ==
-ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1794909147; a=rsa-sha256;
-	cv=none;
-	b=VV9LGLlnv/oGiiBz0WfRrETpok+uxCmmgd+unQ0oAcBTjK4dailFv0RYDYI6hSYmbec1MR
-	B7zP79noqz793nU12SNN+qYk4Tiy6OCdDlYcSG42TDQLGZCDhIuULZJGnKN0qVQBrkYbVv
-	4+Ag2GICR7TlFXAcbtMWl1/KC0fJJNaRDM2TOy0hRby5QvRcWwWmcuADQVMw91BjQr1ZAt
-	LN62xLqZxRpaFtidn6LVi9+FFBXKpL5t+ht+jFRmbsOmpNCNqzOXvwtKqabt/2MBtZpYpN
-	uWgRydYQNROvPA/trSv+oidm5VlCrGeLSUBi8rbbPVbD/9rjEYrNdi9G/c05eA==
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pza@pengutronix.de smtp.mailfrom=p.zabel@pengutronix.de
-Message-ID: <8b5be415e255b5387099d9f8a9b8f5f05d4cb038.camel@pengutronix.de>
-Subject: Re: [PATCH v2 2/5] clocksource/drivers/spacemit: Add K1 timer
- support
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>, Daniel Lezcano	
- <daniel.lezcano@kernel.org>, Thomas Gleixner <tglx@kernel.org>, Rob Herring
-	 <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley	
- <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Paul Walmsley
- <pjw@kernel.org>,  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
- <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Date: Tue, 17 Nov 2026 10:52:27 +0100
-In-Reply-To: <20261117-spacemit-soc-timer-v2-2-9264d0ea7755@linux.spacemit.com>
-References: 
-	<20261117-spacemit-soc-timer-v2-0-9264d0ea7755@linux.spacemit.com>
-	 <20261117-spacemit-soc-timer-v2-2-9264d0ea7755@linux.spacemit.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GgtKX7jk
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1ae58d17cd9so3655938c88.1
+        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 03:06:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1794913602; x=1795518402; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
+        b=GgtKX7jkXEeGNTsdiF8O9HazFzj5ySXYVSIkqoHADYnUtyJfbTE0MwvapZa/B/ilhd
+         qiONjET472x35ET/Lxddupu6eSdjqLKC+NbU6R/Mhr3urmbsrqOKF3owPeK2JFZKjK+o
+         cV1VQ6eddV6dEXH5Z8WokwxYMZdBtGeV5tsc+9JWI3a6Vxu3nft8dBNluFoQmD0zUqmM
+         gFUGAlR6H2w/Er/jxRS9iYz23sPaDqpvmFajBWUicsuMveeSNC/6lwgywaOr2dTYgjNk
+         6LECrYbSCcOv85LriE8w64BDQHVN46luFtmscmqihfKI21RTVx6kVU6Whrdr5r4eIVyP
+         zFuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794913602; x=1795518402;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
+        b=uNcMdK/gsAMe8Yj4HWJXbyxinRCfevAG0G1hqD3HL20UgKtcN9Ce1jYjlY9wYxggad
+         ZKzhhie4V49hTG8Ttx0LoIGJmdujE8SNM0kMDuQDu4gA+UofK00j1eRM9AC/RRLJkI+i
+         SruoSVihvDXWIiqZpOPUtDFgEvJEfimufUzkpv+crBDP5GkQ88r8RrE4uG9OIeowRfgq
+         MDM00gVPMoTenDPjvzq+e4ShLT8OBwov6raji1iiWxc1tKGUoeMN200JLzKonaugrlul
+         Bf3vLYYJowROblsi/ZcHZDPpwn6E7XwxBbCp1KbTIVxhbHUyGYX6Ej5D07TN/iebL96z
+         Ozrg==
+X-Forwarded-Encrypted: i=1; AL+hErGHm6UATUnRhMrgRIyLF1piid+pRqSn2rkbYSrUpTiY/3mug6S8GycsBHnmhG6N+Rptcme+WmRc+Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8X2QUCUnOcuXpHsyckMRjsBYdq4ToamkdhjgQCiO+fHIPKnrFd
+	A3JaBACyjseaYTv8SO1XvoTpf6WopfrUJA1+PbsBdsbGdYdTCVAk/gfCU2qeBDagcNo=
+X-Gm-Gg: AYBFou1J11GV2yRnHhhFxM2QYQs9feFhMdvsizqz3kUKQyHUhvtSEXgxp2gVjmSRLXW
+	lA/V40qBDd0tFe9pfGJuouG8r3Bb59dZo0U1+fWl3goriLwY2AKm09dkjkdWQytkqUEE/m0iHte
+	bxRtdJoa6XQ5SOqtdUJTZV2THrUdE6lnSUPJENYo48FLuOnedYZ9FG1cYmTYmxmAy0gLhfl514u
+	g49Cr32jfYyXLX0JB5ZCl1iPetNUWSCbvWomM1WjkoKlbNOBcKC70EGOZwfUAXqG1tOdLEy5AKf
+	ka7OMyyHVIeNZGnOdLS4nyP0+F+JAkVGBBgtKdVq5dTYL3WQ82BJOSVw4WmiqGUT0vTE5vJKW4p
+	sWiHpT4OPmEZE1Ja1/qfhsmzfoHWzJeFx0WSAVia87++eEjZg6bb+EIjFF1QzfSnQeKjp57L8Fz
+	ufGaoj6efLp8+PWp1dXc7FOLjvMVeIzn0fz7e8QVMfU37gIN7rvx7ycYPS0+OARP63XXKWe8Ety
+	QGPdgiihoOa27D+UaBdi9i0EDsI3sZVwW+husLZuLZPMR82L4CXBdw9n0T2Io0L64jJSutjuhZC
+	SvJ/9Fw8K1mGRzt3ytAnOOcrCaBzdQ==
+X-Received: by 2002:a05:701b:4188:10b0:154:fa0b:6df1 with SMTP id a92af1059eb24-1b5030fb7f2mr12989338c88.37.1794913602124;
+        Tue, 17 Nov 2026 03:06:42 -0800 (PST)
+Received: from localhost ([122.172.83.36])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b50309b27dsm39194951c88.2.2026.11.17.03.06.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 03:06:41 -0800 (PST)
+Date: Tue, 17 Nov 2026 16:36:38 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Natanael Copa <ncopa@alpinelinux.org>
+Cc: "Rafael J . Wysocki" <rafael@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Milan P =?utf-8?B?LiBTdGFuacSH?= <mps@arvanta.net>,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Shuwei Wu <shuwei.wu@mailbox.org>,
+	Aurelien Jarno <aurelien@aurel32.net>, spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org, stable@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: dt: Set the initial OPP to apply its voltage
+ constraints
+Message-ID: <avw1Pos5Je8piwvU@vireshk-B250M-D3H>
+References: <20261111130430.10359-1-ncopa@alpinelinux.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -100,47 +104,51 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261111130430.10359-1-ncopa@alpinelinux.org>
 
-On Di, 2026-11-17 at 09:45 +0000, Troy Mitchell wrote:
-> SpacemiT K1 and K3 have APB timers that can provide a shared clockevent
-> alongside the per-CPU RISC-V timer. Use counter 0 and its first match
-> comparator as a oneshot device available to the tick broadcast framework.
->=20
-> Counter enable changes cross clock domains. Wait for the synchronized
-> counter value to stop changing before reprogramming the match register,
-> and check interrupt acknowledgment through the status register rather
-> than reading the write-only clear register. Bound all synchronization
-> waits and propagate programming failures to the clockevent core.
->=20
-> Obtain the counter rate from the functional clock and protect it against
-> rate changes. Keep the clocks enabled for the clockevent lifetime and
-> restore counter configuration through the tick resume callback without
-> sleeping clock operations. Use a platform driver so clock and reset
-> providers can probe before the timer is registered.
->=20
-> Signed-off-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> ---
->  drivers/clocksource/Kconfig          |  11 ++
->  drivers/clocksource/Makefile         |   1 +
->  drivers/clocksource/timer-spacemit.c | 317 +++++++++++++++++++++++++++++=
-++++++
->  3 files changed, 329 insertions(+)
->=20
-> diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
-> index da83483296d5..3e7dd5d628cd 100644
-> --- a/drivers/clocksource/Kconfig
-> +++ b/drivers/clocksource/Kconfig
-> @@ -163,6 +163,17 @@ config RZN1_TIMER
->  	    - 2 32-bit timers
->  	  Two timers blocks are available in RZ/N1 SoCs.
-> =20
-> +config SPACEMIT_TIMER
-> +	bool "SpacemiT K1/K3 timer"
-> +	depends on ARCH_SPACEMIT || COMPILE_TEST
-> +	depends on OF && COMMON_CLK && RESET_CONTROLLER && HAS_IOMEM
+On 11-11-26, 14:04, Natanael Copa wrote:
+> diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
+> index eb15650f99bf..2646dda10aac 100644
+> --- a/drivers/cpufreq/cpufreq-dt.c
+> +++ b/drivers/cpufreq/cpufreq-dt.c
+> @@ -153,6 +153,30 @@ static struct cpufreq_driver dt_cpufreq_driver = {
+>  	.suspend = cpufreq_generic_suspend,
+>  };
+>  
+> +/*
+> + * Set the OPP for the current clock rate, so that its voltage constraints
+> + * apply before any policy can change frequency. Otherwise another policy
+> + * sharing the supply could lower the voltage below what this one needs.
+> + */
 
-Drop the unnecessary RESET_CONTROLLER dependency,=C2=A0the reset controller
-API has stubs for consumers.
+I think the problem is valid and must be solved somewhere.
 
-regards
-Philipp
+> +static void dt_cpufreq_set_initial_opp(struct device *cpu_dev)
+> +{
+> +	struct clk *clk = clk_get(cpu_dev, NULL);
+> +	unsigned long rate;
+> +	int ret;
+> +
+> +	if (IS_ERR(clk))
+> +		return;
+> +
+> +	rate = clk_get_rate(clk);
+> +	clk_put(clk);
+> +	if (!rate)
+> +		return;
+> +
+> +	ret = dev_pm_opp_set_rate(cpu_dev, rate);
+
+I think this works accidentally for now as OPP core could have
+rejected a switch to the same OPP in this case too.
+
+- We should add a new flag to `struct cpufreq_dt_platform_data` to run
+  this code only for the affected platforms and not everyone.
+
+- Perhaps we need a new OPP API, which configures the hardware,
+  forcefully, to the current OPP.
+
+-- 
+viresh
