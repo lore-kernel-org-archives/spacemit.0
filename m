@@ -1,100 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794913603;
-	b=ADrqx+F3u/6Tb55KA0klMixhEobrIb0sWRE6tk8BGdcV8zFgUzJdLmt/HMmMt/F36AyC
-	 UjoKPIhE4G8BRn16BfqkNWVWHTqbA9tuuaa03MkvD7jMPQi0tXhVL4CJczOBpw+cYZQLJ
-	 Kd/5eAaojQ98DCAz+26KHFuceWUvZ7hcIrcGLhMQRNnMkLWl9hHNdhht7rhCUO4RMYjCe
-	 vCL8iprH64o20AZ7AzHHeqiJ8caDrKCk4M7VbBZcznxWOnGPo9ZDYqVtDyfVUp15T9KSY
-	 wb2FMkvptZXW7ZU42We/bKTBNzFgHKN5ORJg7t7DQBxPaHUnx9lP2d6kZ3gJGQT98wA==
+	t=1794918144;
+	b=zbLVk2xEHiC6nzsNbAkvGZjJJ0PCwO84vRbwuLf5k2Eb+FyMgf4PAuM4Wszju1w7vQ5e
+	 Ha8fDo+MkweScKeIMf1FalavYQR6zAJ10rTVcCauCrwH8Z68jXdA187h4tqKph+qftGoH
+	 VjNHqLwpgGkjzPHguxT7rAktzkF+I8r3KTBWbBse2feb+Y1MhsnaZDUdqqG0/KfhtXCV0
+	 qr76LFpmYxN6BXKPoj2T4PXGIUk3w4KESoRd9mRc1p1hNiBYUkpQ37Dye6OsvCKQ4C1Qc
+	 dKK5AHQ++wMdZw3BHNkr/gXUTIfcq2awjk5sjE3P4kaat29OMK9ZV3IS4LIy2wtrNOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794913603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794918144;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
-	b=WvXbwxy6TqyZcXnM6y7QPC3ZELaVuZAZpGpG/ddSDFxKbKvEPQrbOlnPKR4+i3t3i/5+
-	 xdcvczv8x6c9h+SPgU+Dbup83h6GnNk6jjrdtAXEk4EM2VHaG9WRtq7KD6BRluBmEkOkD
-	 raVn6wHy5BZ+SAFJvaItsFchngXGwyMGWF1b19sF7xfn/nTbbzyKRE0WjS+SouGsuvceP
-	 7yIZz8HiCTwm2LUAfA/KeI5y2bXDswkhMRQuVgx4BgFINRcNUxb/cYjoc+9k/gZuV+ICj
-	 +2TBXWJdcLx68qH3zKGdmqNaeKv2ttmkcS5ttpxxOfwkALtsSYosm4Eze4YpFYI6JHQ==
+	bh=mntxBemduMZ5IAPGeXV9h5oyYqbo1gfqzxaQ3yOHoUY=;
+	b=gx933xmLBNTjKAROuivVPHfhJu8/XvjTZnoj5k/8t+DcYAwVIaZdSWU8MQwXSQj68tmq
+	 biRZLeLOKStSbyE/tM6e4V6ph2zKXZb2CyGFo6coHEja+wEPufbB653wCUwO1WlVmvDEh
+	 lEEw4Gw6uvMOzj4UGjNTmn8iWie8/i7wHE5h2gD6Ez4WkM7EgYfxbBShXu/tX+AdccgOM
+	 mRLF5zwme5I8ueQrMUreTdzXtf6fmKEJYcOocr/tiRpYRVpIEy+QPoMpwzQtqzEk0PaVv
+	 thQT4XiD1wKe6PYCMulaUPnelADTfUx5h1BoWFqmiosvW2L6AZWYQJwHTFuglWafGFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GgtKX7jk;
-	arc=none smtp.remote-ip=74.125.82.51
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EPOvoTLo;
+	arc=none smtp.remote-ip=209.85.214.177
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B70C606A329
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 11:06:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B70C606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238A3606A329
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:22:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 238A3606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GgtKX7jk
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1ae58d17cd9so3655938c88.1
-        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 03:06:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EPOvoTLo
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2e9d7791b00so45720165ad.0
+        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 04:22:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1794913602; x=1795518402; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794918143; x=1795522943; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
-        b=GgtKX7jkXEeGNTsdiF8O9HazFzj5ySXYVSIkqoHADYnUtyJfbTE0MwvapZa/B/ilhd
-         qiONjET472x35ET/Lxddupu6eSdjqLKC+NbU6R/Mhr3urmbsrqOKF3owPeK2JFZKjK+o
-         cV1VQ6eddV6dEXH5Z8WokwxYMZdBtGeV5tsc+9JWI3a6Vxu3nft8dBNluFoQmD0zUqmM
-         gFUGAlR6H2w/Er/jxRS9iYz23sPaDqpvmFajBWUicsuMveeSNC/6lwgywaOr2dTYgjNk
-         6LECrYbSCcOv85LriE8w64BDQHVN46luFtmscmqihfKI21RTVx6kVU6Whrdr5r4eIVyP
-         zFuw==
+        bh=mntxBemduMZ5IAPGeXV9h5oyYqbo1gfqzxaQ3yOHoUY=;
+        b=EPOvoTLomESwBRmwLTPSjnEH5Qawwg50wmOn3yB6WRBRcWUTGXjZZ057r5+uPGjmtt
+         A43Kg6tie/ZyvsWzUtvTNI7A1dgNEW9LD6w6AIDGrRYNWqiFu2I/UzIrSb6bzrNgAtwV
+         TunYKsM3l6QEl3GaikuIdKpzjC/prkVahhDBO+B37WFYqj9Xcm4WdMJtkcHymRJpNQNA
+         fLyOPmbDYOvcdpNjBjjFo8FkhkedtRyTSsomPFRhCpGjrWc2PStMSoxvASQShwZkW75T
+         gqd8ZBkuKcTZ5lsZfsVJ94AfXFALZa9zHV8KCy/BUQ40MgHo96lvcipPRBk1tkHQskti
+         1GgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794913602; x=1795518402;
+        d=1e100.net; s=20260707; t=1794918143; x=1795522943;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=n4s7yJbpQX8syBD03XjGhRC32jwUYZoWTRv+UwUgeKs=;
-        b=uNcMdK/gsAMe8Yj4HWJXbyxinRCfevAG0G1hqD3HL20UgKtcN9Ce1jYjlY9wYxggad
-         ZKzhhie4V49hTG8Ttx0LoIGJmdujE8SNM0kMDuQDu4gA+UofK00j1eRM9AC/RRLJkI+i
-         SruoSVihvDXWIiqZpOPUtDFgEvJEfimufUzkpv+crBDP5GkQ88r8RrE4uG9OIeowRfgq
-         MDM00gVPMoTenDPjvzq+e4ShLT8OBwov6raji1iiWxc1tKGUoeMN200JLzKonaugrlul
-         Bf3vLYYJowROblsi/ZcHZDPpwn6E7XwxBbCp1KbTIVxhbHUyGYX6Ej5D07TN/iebL96z
-         Ozrg==
-X-Forwarded-Encrypted: i=1; AL+hErGHm6UATUnRhMrgRIyLF1piid+pRqSn2rkbYSrUpTiY/3mug6S8GycsBHnmhG6N+Rptcme+WmRc+Q==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8X2QUCUnOcuXpHsyckMRjsBYdq4ToamkdhjgQCiO+fHIPKnrFd
-	A3JaBACyjseaYTv8SO1XvoTpf6WopfrUJA1+PbsBdsbGdYdTCVAk/gfCU2qeBDagcNo=
-X-Gm-Gg: AYBFou1J11GV2yRnHhhFxM2QYQs9feFhMdvsizqz3kUKQyHUhvtSEXgxp2gVjmSRLXW
-	lA/V40qBDd0tFe9pfGJuouG8r3Bb59dZo0U1+fWl3goriLwY2AKm09dkjkdWQytkqUEE/m0iHte
-	bxRtdJoa6XQ5SOqtdUJTZV2THrUdE6lnSUPJENYo48FLuOnedYZ9FG1cYmTYmxmAy0gLhfl514u
-	g49Cr32jfYyXLX0JB5ZCl1iPetNUWSCbvWomM1WjkoKlbNOBcKC70EGOZwfUAXqG1tOdLEy5AKf
-	ka7OMyyHVIeNZGnOdLS4nyP0+F+JAkVGBBgtKdVq5dTYL3WQ82BJOSVw4WmiqGUT0vTE5vJKW4p
-	sWiHpT4OPmEZE1Ja1/qfhsmzfoHWzJeFx0WSAVia87++eEjZg6bb+EIjFF1QzfSnQeKjp57L8Fz
-	ufGaoj6efLp8+PWp1dXc7FOLjvMVeIzn0fz7e8QVMfU37gIN7rvx7ycYPS0+OARP63XXKWe8Ety
-	QGPdgiihoOa27D+UaBdi9i0EDsI3sZVwW+husLZuLZPMR82L4CXBdw9n0T2Io0L64jJSutjuhZC
-	SvJ/9Fw8K1mGRzt3ytAnOOcrCaBzdQ==
-X-Received: by 2002:a05:701b:4188:10b0:154:fa0b:6df1 with SMTP id a92af1059eb24-1b5030fb7f2mr12989338c88.37.1794913602124;
-        Tue, 17 Nov 2026 03:06:42 -0800 (PST)
-Received: from localhost ([122.172.83.36])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b50309b27dsm39194951c88.2.2026.11.17.03.06.40
+        bh=mntxBemduMZ5IAPGeXV9h5oyYqbo1gfqzxaQ3yOHoUY=;
+        b=QHyHzGH0N8byvN2NvrB6f5/FF4JBprQByu0TDJxJxz0DSMla4h7oCF0Rs9RnQDk7jT
+         MMV5aHfeybgKVMQl3UWb9UynJ+UX6PVGW+dLidnu37tQgloOtdbBlvbAkbs1wHMHM0WU
+         GDchduL9HIm9ADqnYqHdEFuKi3gt9qFoS4xq7HnzOjr+pjnuenan5ShE6icoF/U0lg4x
+         +jKH4x6D1BsPoV02RRxisv6BeJKA/X1vtdLaY1+mCvT1O9YZdjfxfqojKj1qVjuwmiW4
+         RpzJWdeTev8GT0c7omEH2oII5Ks5Np45l9zsbFrUx9VDHbboXfx8o0HfNXoctVtis2vG
+         OBPQ==
+X-Forwarded-Encrypted: i=1; AL+hErFUsTe172WywGhFx1Oa6kPEhSYx4cVnxQZaeMrwR6thkodByWqHE/PyA6xq7YFVm19PHmLRAukr2g==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/W8wlrnmvXWp3PToKe7IkVagetSnW3F0F236tzG1z76f5dRUZe
+	drVs98F55YSB5Jo8YVTAUFneNXoTk6Gw97+KFYrd4SFr0+RRzVfJjTIr
+X-Gm-Gg: AZFdTZef1ngERXCN71T0BcZJr3zJQzVrcw5ZaSTZQHPxekodTgBVblkUxODBkfbfmDE
+	9wkt9DMFLiMXJ1N/oajKmdgDHe8i38R3Fpnta4wLNKdkeKNx8kyX2yvDr7qQ9MkStRt6SX03TUu
+	M7m1NYQ2Hjyweh2trqvIb5cl2LcJxzylSduLj7Rg1ZulvLFUk4zlBDOPv8y0BHmC/PkEzdeMI50
+	fq0tyfqZduePPRVgTBZobauL9DeIBm00bzXqAr+hq/3bPfttJIjxa0+UE11FLOSEHQQLIr5A4B6
+	bRG4EQylurcaKWW6UARkaUnDcXEA7vK+RPAyi55VcTXV8KT+CaU/ODwuyo8BKvUA+IDNxDx51z8
+	b/1ep6habJIEZp9Zdem3HZjJWIRTsy+cUSpG5+vGTiajJuv6c1XEjCX64GahrBmhLWjwVgpJOaF
+	7KYmnpgrQ4dztAK6FMPugOqFFKe02b8chXv+9+1yOCCPU5nMYfj3OuYXVpRM26jOxBdFud5qwpT
+	a7lh+wCFWV4rWg2T0eBpdwLCxulKWUhxqtri2ZZ/YC396j2H2X2F0W9U6QUqoAG+9nKJrGjjAFU
+	4i3rndhhYsljj8U9ZIE7LMJqukRl
+X-Received: by 2002:a17:902:c40a:b0:2e9:5059:4468 with SMTP id d9443c01a7336-2ee0d664b4emr129370335ad.7.1794918143343;
+        Tue, 17 Nov 2026 04:22:23 -0800 (PST)
+Received: from duge-G3-3500 ([183.192.223.84])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2efd76d86a1sm14701045ad.8.2026.11.17.04.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 03:06:41 -0800 (PST)
-Date: Tue, 17 Nov 2026 16:36:38 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Natanael Copa <ncopa@alpinelinux.org>
-Cc: "Rafael J . Wysocki" <rafael@kernel.org>, Nishanth Menon <nm@ti.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Milan P =?utf-8?B?LiBTdGFuacSH?= <mps@arvanta.net>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Shuwei Wu <shuwei.wu@mailbox.org>,
-	Aurelien Jarno <aurelien@aurel32.net>, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, stable@vger.kernel.org
-Subject: Re: [PATCH] cpufreq: dt: Set the initial OPP to apply its voltage
- constraints
-Message-ID: <avw1Pos5Je8piwvU@vireshk-B250M-D3H>
-References: <20261111130430.10359-1-ncopa@alpinelinux.org>
+        Tue, 17 Nov 2026 04:22:22 -0800 (PST)
+Date: Tue, 17 Nov 2026 20:22:15 +0800
+From: Jiayu Du <duge1256@gmail.com>
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, dlan@kernel.org, troy.mitchell@linux.spacemit.com, me@ziyao.cc, 
+	aurelien@aurel32.net, pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
+	alex@ghiti.fr, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+Message-ID: <gwtbssramb3rnp7dgqxm5fu6ywkn2h2jigdh5dvj5fvtv7rktk@upytexvwkjaq>
+References: <20261116075423.1519438-1-duge1256@gmail.com>
+ <20261116075423.1519438-3-duge1256@gmail.com>
+ <65f843b0a46f14df575d998acceb40b68fe64a62.camel@pengutronix.de>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -106,49 +103,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261111130430.10359-1-ncopa@alpinelinux.org>
+In-Reply-To: <65f843b0a46f14df575d998acceb40b68fe64a62.camel@pengutronix.de>
 
-On 11-11-26, 14:04, Natanael Copa wrote:
-> diff --git a/drivers/cpufreq/cpufreq-dt.c b/drivers/cpufreq/cpufreq-dt.c
-> index eb15650f99bf..2646dda10aac 100644
-> --- a/drivers/cpufreq/cpufreq-dt.c
-> +++ b/drivers/cpufreq/cpufreq-dt.c
-> @@ -153,6 +153,30 @@ static struct cpufreq_driver dt_cpufreq_driver = {
->  	.suspend = cpufreq_generic_suspend,
->  };
->  
-> +/*
-> + * Set the OPP for the current clock rate, so that its voltage constraints
-> + * apply before any policy can change frequency. Otherwise another policy
-> + * sharing the supply could lower the voltage below what this one needs.
-> + */
+On Mon, Nov 16, 2026 at 12:54:42PM +0100, Philipp Zabel wrote:
+> On Mo, 2026-11-16 at 15:54 +0800, Jiayu Du wrote:
+> > Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3 eFuse
+> > controller. These banks contain temperature calibration parameters and
+> > other configuration data.
+> > 
+> > Keep the root key and SSK registers outside the exposed bank ranges.
+> > 
+> > FUSE_READY reports completion of a software-triggered reload. Trigger a
+> > reload through GEU_CONFIG bit 22 with a 1 us reset pulse, then poll
+> > FUSE_READY at a 1 us interval with a 10 ms timeout before taking the
+> > snapshot. Fail probe if the reload times out.
+> > 
+> > Snapshot the shadow registers with aligned 32-bit reads and expose the
+> > data in little-endian order at controller-relative offsets. Serve reads
+> > from the snapshot and use keepouts for the remaining register ranges.
+> > 
+> > Enable the AES_WTM clock only while accessing the hardware. Leave its
+> > shared reset deasserted on teardown because WTM_RST resets the entire GEU.
+> 
+> I don't understand this, possibly because I don't know what GEU is.
+> 
+> What is this reset shared with, and why exactly does the reset need to
+> stay deasserted?
 
-I think the problem is valid and must be solved somewhere.
+GEU stands for Generic Encryption and Fuse Unit. This reset is not
+shared with another consumer and only resets the controller state.
+My explanation about needing to keep it deasserted was incorrect.
 
-> +static void dt_cpufreq_set_initial_opp(struct device *cpu_dev)
-> +{
-> +	struct clk *clk = clk_get(cpu_dev, NULL);
-> +	unsigned long rate;
-> +	int ret;
-> +
-> +	if (IS_ERR(clk))
-> +		return;
-> +
-> +	rate = clk_get_rate(clk);
-> +	clk_put(clk);
-> +	if (!rate)
-> +		return;
-> +
-> +	ret = dev_pm_opp_set_rate(cpu_dev, rate);
+For v3, I've switched to devm_reset_control_get_exclusive_deasserted()
+and removed that explanation. The reset is now asserted on driver
+detach or a subsequent probe failure.
 
-I think this works accidentally for now as OPP core could have
-rejected a switch to the same OPP in this case too.
+Best regards
+Jiayu Du
 
-- We should add a new flag to `struct cpufreq_dt_platform_data` to run
-  this code only for the affected platforms and not everyone.
-
-- Perhaps we need a new OPP API, which configures the hardware,
-  forcefully, to the current OPP.
-
--- 
-viresh
+> 
+> regards
+> Philipp
