@@ -1,61 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794852214;
-	b=iFygvnvfjD5wFm/qCcBl5qeOHmA9/nxpkjGUWWjssZ2DyaWfdir32Lt2l04YHTXIGVHA
-	 8aCqUI6m1/G/VMm0/cYLHGq9u+ZM1BWKHh671R95Y9yLPJCyV5RrgU4DjVB5xGEkfhhUc
-	 CbaImaUAsJBrg6oGSzOnvYzfdaRyaMIiWu1h1N938MdRiyzVqu9PyBtjyiR8SiDCSQnpa
-	 UPa2JiikJHw/UvkVE98oXmdFrtAa6hk3TWl87f1H6c/6J1uOPddVGLg9fCEoBLwaop1L7
-	 IxGtRwauI38ZvR9VXgGKgrPYA2cL7Dvm+2r5UT+lwKEO7IwXfxFhyOAXT4bb9UEz7lA==
+	t=1794877078;
+	b=oeemGeRxiuhlsZKqoqD6u7Efx0A2tyf1R3XUF9yZSx/9yE3WmqbceH1w8Dm5hzXNHepQ
+	 KtMJb8VTi3Vab9DEJOIZmiaGnmWpOmjUdXoN5KbUrSfAS++NyMNPF+EK/8KzBJhYet7/o
+	 q1WT3K1cC/ZWwiUBvNzYV0s2E5Gf4oD6J+xb51TebzSDFpwPVouwj03j+D/1bMn0GZGfk
+	 ivVnxr6+EPCCmKhW+0iLPCN5q2lOXXuWTJI2S0cRDLsNS0tpoi5LBLxGlBfnq6jJ8QkG6
+	 NlbcbD/3edims/XEgtEQkp5Q9bnbFtg9uWVfXZhi9mVKsOQFaEoMrga+vsoW/NddDjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794852214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794877078;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=WFKF8TJjLvFYAaPjC2YxhZShngdw1jZ6Mlp+B+lilQ4=;
-	b=CdkHBkzuGe+dTtPgbJy7FPunDMEaICyUA/kCQSe0nKUcg3MJTmWAaUyMyz6pYMXjNBUi
-	 YvAGv/V9WjOrLIRgEvhAzmDm1uSXL72d/hUhv11MJAJ3V4a060FezrAfDiliqWq6f2mL+
-	 VwPPDOWXbM+zVsw6oaX+fgY3xATHDmo9fQmFZRuslqNH5/NHD9SdsnJL4OB4sMRQ/GMht
-	 uxJhro8KNhN1XISThBRBZPIGF1KWAiiHCJgERg40I3HZk3Wxw6Rd1+QaubobiSRuJLBCc
-	 L0Vy2aP8FOE8K+l8mMzUqu+E/othXYM44pxdBEdlxYHncUQmb7qZKudvY7+FspLvtuw==
+	bh=KgDSpxzJb3bAALuMtGoPjTr7eQ9Jv9niChI7HXsF3Z4=;
+	b=heIKjjviB3Gybwzx/2JNWYxM/uNvD500auXOfALDSaEIyXmpQOYtAmL9tUm0k2omzS+v
+	 uLUyKPtGaIOZLwPOpijYRGk1oa8wOYdlW8wkOL0ZFhB1bBVJFvKuqiLrw7bdhR3E1j9vg
+	 9AgzjA0I+BfPXLurknRDAVw1xdKbpxknS75bZwiWiKHtZFT8nyZoK1RtwdX/GzTejc45y
+	 J30vVq7MPby754NUtoQlwT+Rls5k5r6zDIT8/ag4rnu2fxnm2zbaL9RXKfeRRxQd30qBC
+	 fc76e0YGC6mfthnhz+va2ajZlm7qqvWqfwpSAKMmw0QNPt00tPmEyfwvXFsFJreI9KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lBwdMtiP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=epJ76Q5N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04CB606A32F;
-	Mon, 16 Nov 2026 18:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEFA606A31C;
+	Tue, 17 Nov 2026 00:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lBwdMtiP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCC61F000C9;
-	Mon, 16 Nov 2026 18:03:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=epJ76Q5N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74971F000C4;
+	Tue, 17 Nov 2026 00:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794852214;
-	bh=WFKF8TJjLvFYAaPjC2YxhZShngdw1jZ6Mlp+B+lilQ4=;
+	s=k20260515; t=1794877078;
+	bh=KgDSpxzJb3bAALuMtGoPjTr7eQ9Jv9niChI7HXsF3Z4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lBwdMtiPQ6HAFV7uxQPyLzZgj+HUBCr9yvaX16XdLnUVxWLsNJX46V9J9h3ryEmJP
-	 OsrfDTbOXhXYgMJuqcVR9XHuAdjRWp330pSj9YTQBsJPdLm8POiJCZRDeHip8eqXRB
-	 OfnG8XxVbjU32Bl82wRQ3spbBLxsusYxo17una/YDzzfVUQwnt7uS8d6m5n4vN9vvL
-	 nnv77br/EkPkaTzwBVdSEaJ3XEFyOC/0FOA5al7pGxmm9Mp7tRTFOQXDeb8Q25rdhR
-	 yTv4rAE5MXTY+YQa5hijrMyjMjJL//Bo6pj64j77Zw4eoDbAD3JsEuPtM8ZpAyCp1Q
-	 E4dQzWRPOnMAg==
-Date: Mon, 16 Nov 2026 18:03:29 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Conor Dooley <conor.dooley@microchip.com>,
-	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	b=epJ76Q5NwE05ch2nHZjELnmbx2glge7NHXjaE2gHfeTw43Gp+kfzoNCgilb9C+DsC
+	 eqaGWYfMSCv19UUGWTyP55mgIipVnYtbXVEr3jUx4W0csz5AF/xXx7cUgTQef0U6WD
+	 Jw/VLhGoxb/1++54nSFdEZeDZ7kklgfhCvvIftnOdyuPuliWMKUap3zpJlTLJSdcTp
+	 rQ5yQOOCziYFiJ0BM0lDSy5CRhF1amTipv4C6RkeqvXyw4VPeV0Yz8bpeeRJDJuJmg
+	 OiyPiNZeDYB4Xj0+e6Qpy9qgIvdq5VUFjxtPDK6sjH9/PM/4PCibmRWS/jFERSsFuZ
+	 2vwlQALqlYjxA==
+Date: Tue, 17 Nov 2026 00:57:55 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: E Shattow <e@freeshell.de>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
 	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH 1/2] riscv: dts: microchip: Correct missing space
-Message-ID: <20261116-renewal-freefall-49f4293903c0@spud>
-References: <20261113185214.182695-3-krzysztof.kozlowski@oss.qualcomm.com>
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] riscv: dts: spacemit: k3: use com260 8gb memory
+ configuration
+Message-ID: <20261117005755-GKD100890@kernel.org>
+References: <20261115195112.32120-1-e@freeshell.de>
+ <20261115195112.32120-2-e@freeshell.de>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -65,32 +63,44 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6d0eNxJMD7Efv/LA"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261113185214.182695-3-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20261115195112.32120-2-e@freeshell.de>
 
---6d0eNxJMD7Efv/LA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi E Shattow,
 
-On Fri, Nov 13, 2026 at 07:52:15PM +0100, Krzysztof Kozlowski wrote:
-> Correct minor style issue around white-space - missing space.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+On 11:50 Sun 15 Nov     , E Shattow wrote:
+> The boot loader may override this configuration based on stored ID value
+> in EEPROM TLV and if it does not then the smallest common sold
+I think bootloader will detect memory size during DDR initiliazation phase,
+and then update the DT configuration, I haven't checked vendor code, but
+plan to implement this in mainline u-boot..
 
-Applied, thanks.
+While the change itself looks good, to have always smallest valid default..
 
---6d0eNxJMD7Efv/LA
-Content-Type: application/pgp-signature; name=signature.asc
+> configuration of 8gb is the most compatible option.
+> 
+> Signed-off-by: E Shattow <e@freeshell.de>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> index 054bfff7413a..c18680b963a4 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> @@ -14,7 +14,7 @@ / {
+>  
+>  	memory@100000000 {
+>  		device_type = "memory";
+> -		reg = <0x1 0x00000000 0x4 0x00000000>;
+> +		reg = <0x1 0x00000000 0x2 0x00000000>;
+>  	};
+>  
+>  	reg_5v_sys: regulator-5v-sys {
+> -- 
+> 2.53.0
+> 
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCavtFcQAKCRB4tDGHoIJi
-0oJzAQD7hEupl2KpNFe/m14Et5KQQJiFvG7NFJaYnD3zS3gt0gEA/HZL9OtWtfSf
-x6oKb0UDrB38UcUYIyLXW9rekLgjQQc=
-=nK4E
------END PGP SIGNATURE-----
-
---6d0eNxJMD7Efv/LA--
+-- 
+Yixun Lan (dlan)
