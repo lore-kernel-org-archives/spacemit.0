@@ -1,99 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.53
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794918870;
-	b=EAPDtwEthieCMIm4SVWJDtl4xnqZIepgy3/1R7SrctlB6FV9IEzrX8eYb6Yqsg+AcFdR
-	 WOUvbDyGdI5ZUeBMd8Af3+CX9nYejfHEZkjUoNZYddPFPKpHCnOMx1/Moa4y3msYfb/Xp
-	 Q31IuIdBIIZor5JD8yb8m4eISaF0FPwsu9mSogpdCiPmMULpT0PjrPfzCi0lNYZbEFfov
-	 uim2xngdyhITN01LE6W8KoqDp+awfiA3cEf/keH83+/Uwa5FAdgyBX6BA4SI0+0vb3FIp
-	 dwlj/XAXmGQ0Gn+mn6WTWmZ4nAIxwPuqJS+Ec/6uhL6I/NmmNGpA03Y+nNJdfBRMTvA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794918870;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=R0C1suA4SxiusRHiawiUCOcPgTxU2RpEnv1XCXIekfM=;
-	b=NDmfvxOqOb1MhdvBcz/4h9BxcF33j44PWy2MI3Rh2i59mI+h0QpmIcUUBrz+41/15Y4r
-	 LiLrRR9rQMg1u6OvUMt7lbZzLsw79pjonk6ifCXq9Ka9VDD042R5FyXXdKZ2/I/HX51ID
-	 iVZ3l7BDyIE1GruK4MXN3HN/4hK8uAipbH7TlV0IbkduYJwCWE0C5O4h+oDnDf+vL264t
-	 0henbu/ccdDoIEsV2cqJE4Vt+8GM+qy51i18P2s+XMFE4/EWQIlYFYguw/ZgaSdmcuqaC
-	 r5Y4wfSx5CWOQ04HNES2vRJ0Ym4C/5sB4F6pPVbLU9s6lCia8SBu4VEIh05bcj5rPEA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xzAqoBVi;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.53
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.204.34.129
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794919162;
+	b=nLlPUWBWJ71RvBSoUPx9sWcYPEut9K4ZMSAomYv07WlJ/+7DP7VlC6A97/eZlqX12WRD
+	 fdfvkr5npBhcoibneinKIoGwITwCVsObst/JLy9ZWMsQtKQ+sLpEy1oxmToUQf0mKRFOt
+	 VmRVgpzbW+QUjqEeAHAUR4+npJbPrPzxmT7UpwQ0W9xkDToqfoFs4VwvBeVs1zloe/+Pv
+	 uYlcDYg5X2WpU0aHBCFLbzSr8ufmxzXuSI/WqCJl3yVqL+B+gd/01WRHNKlyuNEQyp9yv
+	 hK9lKUPg+8zZbKnhgXoN0CzylNnk4J/p3zUWP8H/DprugVYgLSk7PcZfzE1FO12Uf1g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794919162;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Subject:
+	 Date:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:
+	 X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=FS+EihS5oMWVSmj9NW9KnSqRNWrO4SL+ZQGc/pMQ5vE=;
+	b=AFr2XiO8xJA/A63xHRtGhwecAx2EBZuMBRsJQo3NGH5eSTZSTz5JRvFxKFpJV5M0q36c
+	 9C+P9+yTgRoYskF3d+mT2Sxd0elAcXj+9uclIXw1/GBM+2dgGV8dBR39Ia0uAC/ULfZNs
+	 aV5eJ6k2HIPd1QCUItx9wIEaG8tnT6aQ9jGgSOS8a84y0FabZrWScwKJA5VBR0E4M1vvN
+	 5dYhbniA/MV6PH4QFtDwlH8J9PSPtssOQKNduBKoERiCIXf2FAb4e0+/C0LHNGWGtsUQ5
+	 x0APnyxU9N1aOKd/Al9Pu1DoG1zbsa6Ec/DFM3TSjnsJ2uz68Thb0xJnlMxDHehsZ7Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=IerAi1aa;
+	arc=none smtp.remote-ip=54.204.34.129
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEE1606A884
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:34:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FEE1606A884
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00BD606A323
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 12:39:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D00BD606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xzAqoBVi
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6b8627e0eb2so871417a12.2
-        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 04:34:29 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794918867; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Qu9mX7UyHQGd18I3242ZurgZI30w7LIhveTNYkpliv0riQ5m4OMfP9Enj1a7r1noeX
-         n7K5LfPODcfNR2STAA9fEHreKEoA2c98ZQKaR8adN/UL9Qp3+Oi8Cz1Q7JxIygE3W9rN
-         yOxrcKwA5VZrSU73Ngf2nFsLjPYB8CYLKwLwj6pQ2NPkGfV/woyM0/P0bA/jpkCRrZCf
-         6+Dj9vyM68akORG/kEcGkAEyAgUU3nlpUL69P/h3cZpiF9+MtNnBnSpjvngnfTdX1pMv
-         t3TCbTgQfFNwHdAgnmau7iG/O2ZW+gggH8wnMMNTFk+nJcVChtKY2d5NLnaMf17vODJQ
-         7efg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=R0C1suA4SxiusRHiawiUCOcPgTxU2RpEnv1XCXIekfM=;
-        fh=mD6cjiTSYdzWqjix0sAG7mTj7NcKPkn/xbNUeNCfVho=;
-        b=nEHkNxt0I5G2db3y72m9Oy89hr24Dtk2IYiof1VDxOfduDDjHqoscI6ak5aa8wsepF
-         0fx4nYBvwjP/UoL2Vf8VK2UA3BPcy/cLHVFYiDlNvC0LtqatG+4rxvuqgGIJVqTun6jD
-         Cuw1oWqW2OcfjTExJ71fYDaqzh3Nr8qYGk2q0WXa0C6irufP7D/Gq+H12Fe8ddh/72lM
-         LYMqZzwvyBR7Tx9P2ck4+pU3r/A9nucxPwnA8baYdSxzl4k27hOvmdxvMKJ1c36b3/85
-         APEZmoG/iYt1s95K08pPyy3ntfx3sQsjzDVFvxuvZGYsgVVvG4fObeWgr/xgqHZ4lG3Y
-         j4mg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794918867; x=1795523667; darn=lists.linux.dev;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=R0C1suA4SxiusRHiawiUCOcPgTxU2RpEnv1XCXIekfM=;
-        b=xzAqoBViK8RsdNOOHfWFg5vhJzZfTBAxcDF0GYSvOmIrOTT5NXXlB/yRLHBwXHqm/N
-         eZOxGZhInZXwZvrnTGZgyG+RfLg7XbDXArHdc+77YW82mi8p33sf+Cvcy0NFe56oSD6/
-         cUlmpY3KmOFtxCcLzv5r8QZ6oSTdi9yoFQEQU2+DVp9fRjV7NAyDwXaizhEfV9zlRkS5
-         yobVKJEOb5u3GwS4ChMAPRD+JN692+95889w4NJJUuT0ewhIrqXnJULz6cfOkJH7B6Gp
-         AFviw1B+usuaxCWDaDpYXYm3k4zCWucuHcAfZ/tt1o3dEWRjD5O/Rs/mbzjtFmzrlz4g
-         js6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794918867; x=1795523667;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=R0C1suA4SxiusRHiawiUCOcPgTxU2RpEnv1XCXIekfM=;
-        b=lujepJyG9vKDJqu+fZXD2izhphyldUnC0fs6o20QGI+bazMLW5J961E+yFUSlM06Qr
-         LhO3pIb5ikwXvEl/khbyYo8nn1OyvHEyLeRHmKz5SLb72PIwsC1UaL17hr2yqlZSJ7i0
-         4LiAtRYbLq83gKYzaW0J0Bgg/YH41WrpsBXgepbixja4muuqF/a7xmr0AordWmZomdpF
-         vstCypioaGvsvSKeFjEhe/WCxvFmTYvHN18polpS0D1hStizoRZHFQt6gpeUEucQ/pAJ
-         02+XMfNr1elUg02ArGmisPjxfOvielSjw/83NfYhjnz4W9HIyFUPoXS1SRuTRqdvCmgl
-         zXVw==
-X-Forwarded-Encrypted: i=1; AL+hErHqQvUI1sdMrkegVLd0C5MQdOPdooYjuDnRgyz2VdoMyX11QjmDlYHWKQsTIAbjv1WRzvLIWgNzZA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9MotRJ4utk1CO3WPO5ZnpXfMDsBxm2OPBJQxjMpgdr9Iwiw+dL
-	pB5SQ+z4NTTYOOsJCDV38wSGH0L42xiKEb/YZGx8l8vBGMT9dMT1BBu2bbSsIzWQBsSF8CEALlU
-	Cf1yRWO+T3JyPQUpVph1PR+pO0It8tmA=
-X-Gm-Gg: AYBFou2g688/VO0jF6KHT777axybeeUIcAcliXQPuC6YsslhfDdzNX6GHHXMnoHYxpO
-	S0JFrk4xgJ7VFRlj0ipA75+ZdsNKXbfLVe4hQa45vyh1PklBSyyyEsGSuWitcDLJuBJYuQwjEig
-	5WlhM+7BAacDI789hXJCfAQWqeCw1lYVXydY/BkYf4QOoFH9SrrnvfhpX9gArPsqVNEmNyzDFMl
-	MTG8OJOepUrALBI9FF9xNpUXJIuZLHO2remijSLahOa8j3HBOQYSkxgYg/sfm0u2MA1EtZ8fKg6
-	Xcokz4HpRzjs3UZ+7FZwtkToosgrJjOkLpBcrYXh1fIIJK4B/nAtK0ISc0Lr6FaLl/IVSsxZD2L
-	QuVe071yf8gambveA01Ak9n7C4/H/JnwEroI=
-X-Received: by 2002:aa7:d14a:0:b0:6b7:b872:2799 with SMTP id
- 4fb4d7f45d1cf-6b7c0998ba4mr7830416a12.19.1794918867146; Tue, 17 Nov 2026
- 04:34:27 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=IerAi1aa
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794919131;
+	bh=FS+EihS5oMWVSmj9NW9KnSqRNWrO4SL+ZQGc/pMQ5vE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To;
+	b=IerAi1aaJJ2RKSoRSkoWIDbHKO1e7ijhidYhqGpL1aPWx0j7VvarPDrrWtpaRMhmo
+	 UrO40ovFT+Tlr7+53mBBOgmsz6oWDJ7oBr3E6YEbPNfVIP4k28IVknG6ik/ozxc/3/
+	 iGwVObOjYbfZMvp2HWAqzlC3bwIpVt/16twhc7n8=
+X-QQ-mid: zesmtpsz6t1794919129ta284ade7
+X-QQ-Originating-IP: p3/539OhKh9+bQjjuJIrZ9dd41hjblu/Bwz6rSK74Tg=
+Received: from LT-PANJUNZHONG.dc.com ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 17 Nov 2026 20:38:46 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 16629148470618131347
+EX-QQ-RecipientCnt: 22
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Subject: [PATCH v5 0/9] Add SpacemiT K1 USB2.0 controllers support
+Date: Tue, 17 Nov 2026 20:38:42 +0800
+Message-Id: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -103,256 +64,122 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261110061429.2036-1-linux.amoon@gmail.com> <20261110061429.2036-2-linux.amoon@gmail.com>
- <avpN-gFOvTBAMY6G@venus> <CANAwSgT_k35_waHL-+iU93f=k3fjFAPXhk=exRz-XHMm2MqREA@mail.gmail.com>
- <avvnRkK9agPSdzac@aurel32.net>
-In-Reply-To: <avvnRkK9agPSdzac@aurel32.net>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Tue, 17 Nov 2026 18:04:12 +0530
-X-Gm-Features: AclHuK_kx8zawYGaheU3obBfG0RSjShsNOB5FZzf0Hf2ULzVFDROSleg0QHq__c
-Message-ID: <CANAwSgSXP1bZVVrX71jfgi1iR9AY4TpM0pk07ke+oeLvcX1fEQ@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] power: reset: spacemit-p1: Use atomic I2C
- transfers for power-off and restart
-To: Anand Moon <linux.amoon@gmail.com>, 
-	Sebastian Reichel <sebastian.reichel@collabora.com>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Andi Shyti <andi.shyti@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, 
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>, 
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANJK/GoC/33NzW7CMAzA8VdBOS/IcRIac+I90A5p4oyI0aIGK
+ ibUd1+KtI9D4fi37J/vovCQuYjt6i4GHnPJfVfDvq1EOPjug2WOtQUCbsAplK2R5ewDn/JFHpW
+ 8lhYlNT6mgE5H60S9PA+c8u2h7t9rH3K59MPX48mo5ulrb1QSZEIXEhJbxHb3mbvrbf2zuA79S
+ czwiH8YgVvGcMag0QZT8mDVU0z/w7BZxnTFAjdA1tEGND3FzC+mAGgZMxXDSI6tRhPJL2LTNH0
+ DbC4WOaYBAAA=
+X-Change-ID: 20260812-b4-spacemit-k1-usb2-97adfc283d58
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+ Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>, 
+ Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, Junzhong Pan <panjunzhong@linux.spacemit.com>, 
+ Conor Dooley <conor.dooley@microchip.com>, Ze Huang <huang.ze@linux.dev>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1794919127; l=3040;
+ i=panjunzhong@linux.spacemit.com; s=20260306; h=from:subject:message-id;
+ bh=E55E0nnm+Grkoyc8TNb+aUvmcwj7oA3qlcosKlhHWJI=;
+ b=kDKBWBOqAVGp5dMZMRKINevvRO8lPjXA3IIjwf4SqmbJXPTYGTCl/559ykoj2lEHi9czu1hxY
+ dcqSoFI/UC1BiO9f4ZqbuaDpQpZ+vHD0nnZTL3HpcT9uGsh/CsJ97Az
+X-Developer-Key: i=panjunzhong@linux.spacemit.com; a=ed25519;
+ pk=bY08BOg2T9H93/jG8fEE/tVmdXoQQMp9M2rtzPFoyJg=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: MgEbn4EBW630GD1qABmjaKgk/1xw8nV+BIMT2mN0axLVf7gsNjaJp7vj
+	x2ECLBAgJpzbbctgA/JvsvK9pLiv7NN6HzQoWl262ChU2teag6apwSH4xFPIQhL6cOe3JMv
+	wgh28hOkrVRlZ76GrPnqgOe5ySrxLoQubaneQay5fSDa2Kv5Q2x7HWj25biFZbUvpJeUqvi
+	kmQiNm1JNJTOyCbpvrYfQJFM3flH630JVcKUEHqA1nbhy99lmxhOI5uF+xXBo1PjskyuGIV
+	wEBwD/tD6av/az2EE5Ux1M45AN2Y31zMxE8pAP8ZUwfPCOsc/qCYLtVywlWl7tITXSCYrRn
+	8ORcbcGy6PMSS05KjsQlevf6/jmFTXYhuFqn39TZ0c5SpZZNS7R0S2ETzD+sgAZKeUxjboy
+	1RtnJB9oFb/F6BoO8r/L271O83sRMxKhPFnaDGUM1x5//rrs4a3SpCRQHeSm8Uye6BwnlRP
+	3uJyJF9T+3Z5HzS7AxcKXaFWbYkx7ihccbqflKYUrHJs03Yy6eNXyxKeViGDOi9yhO3zu4W
+	Fd+NOa0OFVpzf7ntR5iZs84w+qNyoeLtqz5DWCB7pMqMqYWbsvGGOVZytQeNsqnJD7LBgQK
+	gG0hU6tUOzbcW7cfPvnDbaS2NH8W0oJVLVwqI8mSaWWJtcg6+1loRiuge+6z5z6wLIjHkOi
+	htqEn6q7Tuej590PgqOmH23jJxD0L9FR7Pjhl5E9Aa3sPmi4PvMlTOSJfIYeGDhHa/2tl0s
+	wjBlc74tAkEhPMKm+m9giSBheofInot0CPhOofxVV3EM4FQXWTYsyjyH3QzWwwiVXocA9a2
+	ZfVU14ugg82NOmvSIAtV0XcsQMJWHE6NGdwDXKGUVZZnRz/mRdW6zenHoHWdV2X0rRKG9/g
+	LFlaOtR5Z8gOODnAeq59hngQ/j5x+Dl1Enb00WwRrxN1gQTtQpK/V7O1cqPC1Ewqxpbf8vD
+	M9l438QKpPO72Nd6EFgU3CTMdT/fbg2+kC3INxrWL+gmzVdHMdHbueqktsAmKIPUy3b0vxR
+	Hp75oWjJgEN74zSc+ZeI3SbST0udv05Eo6xENits49sRx+DqRbxC0mdpyylzI3ZhLw2pedg
+	7VBT7sU7KSszWCwbd2bzwpttEj76+TTrxzUfHrZIOme2BPHp0OuJBsATzAKASqSSD1HO8hK
+	II0GWaz0TN7KEPh5NBiOv4qDnR21bk8lXg5GXsyINJUVTbo=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-RECHKSPAM: 0
 
-Hi Aurelien,
+The SpacemiT K1 SoC has two USB2.0 controllers, one has Dual-Role
+support, but the hardware has no internal OTG registers, the other is
+Host only. These controllers are compatible with Chipidea USB2 driver
+with some flags set and reset control support.
 
-On Tue, 17 Nov 2026 at 11:04, Aurelien Jarno <aurelien@aurel32.net> wrote:
->
-> Hi Anand,
->
-> On 2026-11-16 13:06, Anand Moon wrote:
-> > Hi All,
-> >
-> > On Mon, 16 Nov 2026 at 11:33, Sebastian Reichel
-> > <sebastian.reichel@collabora.com> wrote:
-> > >
-> > > Hi,
-> > >
-> > > On Tue, Nov 10, 2026 at 11:44:27AM +0530, Anand Moon wrote:
-> > > > The SpacemiT P1 power-off and restart handlers use regmap_set_bits()
-> > > > to access the PMIC. However, these handlers run in an atomic notifier
-> > > > context (specifically within an rcu_read_lock() critical section), while
-> > > > the I2C-backed regmap uses a sleepable mutex.
-> > > >
-> > > > This triggers a "WARNING: suspicious RCU usage" warning due to an illegal
-> > > > context switch in the RCU read-side critical section during shutdown on the
-> > > > Banana Pi BPI-F3:
-> > > >
-> > > > [  563.803475] WARNING: suspicious RCU usage
-> > > > [  563.807813] 7.3.1-ARCH-RISC-V #1 Not tainted
-> > > > [  563.816614] ./include/linux/rcupdate.h:387 Illegal context switch in RCU read-side critical section!
-> > > > ...
-> > > > [  563.841445] locks held by shutdown/1: 2, last CPU#0:
-> > > > [  563.846694]  #0: ffffffff8404fb20 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot+0x230/0x29e
-> > > > [  563.856806]  #1: ffffffff84167860 (rcu_read_lock){....}-{1:3}, at: atomic_notifier_call_chain+0x4a/0x1c2
-> > > >
-> > > > Replace the regmap operations with atomic I2C transfers to avoid sleeping
-> > > > in an atomic context. Preserve unrelated register bits through
-> > > > read-modify-write operations and check for atomic I2C support before
-> > > > registering the handlers.
-> > > >
-> > > > Obtain the I2C client from the parent device and verify that the adapter
-> > > > supports atomic transfers before registering the handlers.
-> > > >
-> > > > Tested on the Banana Pi BPI-F3 (SpacemiT K1).
-> > > >
-> > > > Assisted-by: LLM
-> > > > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > > > Cc: Aurelien Jarno <aurelien@aurel32.net>
-> > > > Fixes: 28124cc0fb8c ("driver: reset: spacemit-p1: add driver for poweroff/reboot")
-> > > > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> > > > ---
-> > >
-> > > regmap runs i2c_transfer itself and thus also uses the atomic I2C
-> > > transfers. The problem here is regmap itself. But instead of moving
-> > > away from regmap, the atomic use case should be supported properly
-> > > in regmap.
-> > >
-> >
-> > On  RISC-V platform, poweroff and reboot are already handled by OpenSBI
-> > through the SBI System Reset (SRST) extension. Linux delegates these
-> > operations to firmware using SBI_SRST_RESET_TYPE_SHUTDOWN for poweroff
-> > and SBI_SRST_RESET_TYPE_COLD_REBOOT or SBI_SRST_RESET_TYPE_WARM_REBOOT
-> > for reboot, depending on the supported reset type.
-> >
-> > Therefore, there is no need for an additional Linux PMIC poweroff/reboot handler
-> > on this platform, as it duplicates functionality already provided by firmware.
-> >
-> > While supporting atomic operations in regmap may be useful more generally,
-> > it is not necessary to address this platform's shutdown and reboot requirements.
-> >
-> > I tested this on the SpacemiT K1 Banana Pi BPI-F3 after removing this PMIC
-> > poweroff/reboot driver.
-> >
-> > OpenSBI commit which handles this extension
-> >
-> > d9637d00bf47 ("lib: utils/reset: add SpacemiT P1 PMIC support")
-> > b10e18ec854a ("lib: utils/i2c: add minimal SpacemiT I2C driver")
-> >
-> > Similarly, on the StarFive VisionFive 2, poweroff is handled by
-> > OpenSBI through the
-> > AXP15060 PMIC, so there is no need to register an additional poweroff
-> > handler using
-> > devm_register_power_off_handler().
-> >
-> > OpenSBI commit which handles this extension
-> >
-> > 568ea49490d9 ("platform: starfive: add PMIC power ops in JH7110
-> > visionfive2 board")
-> >
-> > -----8<----------8<----------8<------
-> > diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-> > index 50df66de24e06..069259f7d7c15 100644
-> > --- a/drivers/mfd/axp20x.c
-> > +++ b/drivers/mfd/axp20x.c
-> > @@ -1458,8 +1458,14 @@ int axp20x_device_probe(struct axp20x_dev *axp20x)
-> >                 return ret;
-> >         }
-> >
-> > -       if (axp20x->variant != AXP288_ID)
-> > -               devm_register_power_off_handler(axp20x->dev,
-> > axp20x_power_off, axp20x);
-> > +       /*
-> > +        * The VisionFive 2 handles AXP15060 poweroff through OpenSBI.
-> > +        * Avoid accessing the I2C PMIC from the atomic poweroff path.
-> > +        */
-> > +       if (axp20x->variant != AXP288_ID && !(axp20x->variant == AXP15060_ID &&
-> > +                               of_machine_is_compatible("starfive,jh7110")))
-> > +               devm_register_power_off_handler(axp20x->dev,
-> > +                               axp20x_power_off, axp20x);
-> >
-> >         dev_info(axp20x->dev, "AXP20X driver loaded\n");
-> >
-> > Please let me know if this works on your board?
->
-> Yes, that works, but I don't think this is the correct solution to
-> disable here. Also this won't scale for future boards which might use a
-> different existing PMIC driver with poweroff support and that will also
-> need to be patched.
->
-No changes needed over here, reboot and power-off priority will
-work fine.
-> As pointed out by Troy in an earlier mail, the real problem is the
-> priority at which the handler is registers, 192 for the reset and -256
-> for the poweroff one. I wonder if the SBI SRST extension should also
-> register the poweroff one at 192. It seems it's about replacing the call
-> to register_platform_power_off() by register_sys_off_handler(), which
-> supports using a priority value. And maybe SYS_OFF_PRIO_FIRMWARE = 224
-> should be used there instead of 192.
->
-Thanks for your input; with the changes below.
-It works fine on Spacemit k1 and Starfive Vision 2 for reboot and power-off.
+This series is based on 7.4-rc1 and has been tested on Banana Pi F3
+development board.
 
- arch/riscv/kernel/sbi.c | 51 +++++++++++++++++++++++++++++++----------
- 1 file changed, 39 insertions(+), 12 deletions(-)
+A self-powered USB device/hub is needed to test the host function of the
+dual-role controller on Banana Pi F3, a MINI-PCIe USB2.0 module (a
+cellular module e.g.) is needed to test the host only controller.
 
-diff --git a/arch/riscv/kernel/sbi.c b/arch/riscv/kernel/sbi.c
-index af1ccea222f1..32a3d2df9032 100644
---- a/arch/riscv/kernel/sbi.c
-+++ b/arch/riscv/kernel/sbi.c
-@@ -512,23 +512,55 @@ static void sbi_srst_reset(unsigned long type,
-unsigned long reason)
-                __func__, type, reason);
- }
+---
+Changes in v5:
+- rebase on 7.4-rc1
+- drop the ci_hdrc_usb2_priv struct as sashiko suggested
+- Link to v4: https://lore.kernel.org/r/20261009-b4-spacemit-k1-usb2-v4-0-2d98e5324d9a@linux.spacemit.com
 
--static int sbi_srst_reboot(struct notifier_block *this,
--                          unsigned long mode, void *cmd)
-+static int sbi_srst_reboot(struct sys_off_data *data)
- {
--       sbi_srst_reset((mode == REBOOT_WARM || mode == REBOOT_SOFT) ?
-+       sbi_srst_reset((reboot_mode == REBOOT_WARM ||
-+                       reboot_mode == REBOOT_SOFT) ?
-                       SBI_SRST_RESET_TYPE_WARM_REBOOT :
-                       SBI_SRST_RESET_TYPE_COLD_REBOOT,
-                       SBI_SRST_RESET_REASON_NONE);
-+
-        return NOTIFY_DONE;
- }
+Changes in v4:
+- drop irrelevant Tested-by tags collected by b4
+- collect Reviewd-by from Yixun
+- Link to v3: https://lore.kernel.org/r/20260927-b4-spacemit-k1-usb2-v3-0-ce7095896039@linux.spacemit.com
 
--static struct notifier_block sbi_srst_reboot_nb;
--
--static void sbi_srst_power_off(void)
-+static int sbi_srst_power_off(struct sys_off_data *data)
- {
-        sbi_srst_reset(SBI_SRST_RESET_TYPE_SHUTDOWN,
-                       SBI_SRST_RESET_REASON_NONE);
-+
-+       return NOTIFY_DONE;
-+}
-+
-+static bool srst_power_off;
-+static bool sbi_srst_available;
-+
-+static int __init sbi_srst_sys_off_init(void)
-+{
-+       struct sys_off_handler *handler;
-+
-+       if (!sbi_srst_available)
-+               return 0;
-+
-+       handler = register_sys_off_handler(SYS_OFF_MODE_RESTART,
-+                                          SYS_OFF_PRIO_HIGH,
-+                                          sbi_srst_reboot, NULL);
-+       if (IS_ERR(handler))
-+               pr_warn("Failed to register SBI SRST restart handler: %ld\n",
-+                       PTR_ERR(handler));
-+
-+       handler = register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
-+                                          SYS_OFF_PRIO_FIRMWARE,
-+                                          sbi_srst_power_off, NULL);
-+       if (IS_ERR(handler)) {
-+               pr_warn("Failed to register SBI SRST poweroff handler: %ld\n",
-+                       PTR_ERR(handler));
-+       } else {
-+               srst_power_off = true;
-+       }
-+
-+       return 0;
- }
-+device_initcall(sbi_srst_sys_off_init);
+Changes in v3:
+- collect tags
+- merge the two dt-binding commits
+- use local variables when acquiring devm managed clock/reset
+- drop manual clk_disable_unprepare() from the remove path
+- enable related drivers as modules in defconfig
+- Link to v2: https://lore.kernel.org/r/20260908-b4-spacemit-k1-usb2-v2-0-f07342ffa051@linux.spacemit.com
 
- /**
-  * sbi_probe_extension() - Check if an SBI extension ID is supported or not.
-@@ -643,7 +675,6 @@ int sbi_debug_console_read(char *bytes, unsigned
-int num_bytes)
+Changes in v2:
+- rebase on 7.3-rc1 and collect tags
+- reorder the usbphy and usb nodes in k1-bananapi-f3
+- add constraint for spacemit,k1-usb2 in dt-binding
+- add OrangePi RV2 device-tree change
+- use devm_clk_get_optional_enabled() for driver according to sashiko's advice
+- Link to v1: https://lore.kernel.org/r/20260812-b4-spacemit-k1-usb2-v1-0-f28cf29e522b@linux.spacemit.com
 
- void __init sbi_init(void)
- {
--       bool srst_power_off = false;
-        int ret;
+Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
 
-        ret = sbi_get_spec_version();
-@@ -677,11 +708,7 @@ void __init sbi_init(void)
-                if (sbi_spec_version >= sbi_mk_version(0, 3) &&
-                    sbi_probe_extension(SBI_EXT_SRST)) {
-                        pr_info("SBI SRST extension detected\n");
--                       register_platform_power_off(sbi_srst_power_off);
--                       srst_power_off = true;
--                       sbi_srst_reboot_nb.notifier_call = sbi_srst_reboot;
--                       sbi_srst_reboot_nb.priority = 192;
--                       register_restart_handler(&sbi_srst_reboot_nb);
-+                       sbi_srst_available = true;
-                }
-                if (sbi_spec_version >= sbi_mk_version(2, 0) &&
-                    sbi_probe_extension(SBI_EXT_DBCN) > 0) {
---
-2.56.0
+---
+Junzhong Pan (9):
+      dt-bindings: usb: ci-hdrc-usb2: add spacemit,k1-usb2 compatible
+      usb: chipidea: usb2: use devm_clk_get_optional_enabled()
+      usb: chipidea: usb2: drop the ci_hdrc_usb2_priv wrapper struct
+      usb: chipidea: usb2: add optional reset support
+      usb: chipidea: usb2: add SpacemiT K1 support
+      riscv: dts: spacemit: add USB2.0 controller nodes for K1
+      riscv: dts: spacemit: enable USB2.0 controllers on BananaPi F3
+      riscv: dts: spacemit: enable USB2.0 controllers on OrangePi RV2
+      riscv: defconfig: enable ChipIdea USB controller support
 
-> Regards
-> Aurelien
->
-> --
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
+ .../devicetree/bindings/usb/ci-hdrc-usb2.yaml      | 15 ++++++
+ arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts    | 16 ++++++
+ arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts   | 28 ++++++++++
+ arch/riscv/boot/dts/spacemit/k1.dtsi               | 40 +++++++++++++++
+ arch/riscv/configs/defconfig                       |  4 ++
+ drivers/usb/chipidea/ci_hdrc_usb2.c                | 59 ++++++++++------------
+ 6 files changed, 131 insertions(+), 31 deletions(-)
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20260812-b4-spacemit-k1-usb2-97adfc283d58
 
-Thanks
--Anand
+Best regards,
+-- 
+Junzhong Pan <panjunzhong@linux.spacemit.com>
+
