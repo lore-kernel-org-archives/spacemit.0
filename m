@@ -1,81 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.36
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794893654;
-	b=gAY2UyMj2/h9hNnA+UW7gDtLcUeukjzu5Ua+9260d8VgYTBDyoZj2qE4O1QcUWfI8bpI
-	 1uo7inzYZMFMyuZd1CbHMrQXNSm4lq8on6d65OFrW3B8gpULBHjoXuBZhg3Z4iFqptQPS
-	 Ts/J3AyU/5vawsXLadkzk18Jj09umbWn8YyMgggQej4gjSD4PQczZP6OmxZ1RVQsFxx8F
-	 H0KwkSvSYCWPxseK7Urtm9Shm1HpP2PEgT86qk7fpk68kyacBRNMfajgl7HI/R45JAwU/
-	 TRTEMMfCsInUb+ZzYQUqqsfF3gHIXVVyJxZBqd9wc8kxDnnLHwiH8JGy1dzMtyFvs2Q==
+	t=1794894237;
+	b=Fpg1h2/eSx9xIgJ6l0ZoUIETGEBKI2r0D5xsZ9pP3Uh+uJhDA+jshtB09uoeucgUV5BJ
+	 8DvHTrs8CBNndcN6xOpOqJsrfi1xltj1sCeTbpT/3ztm8j5eymdsrN9+0Qg4PkqwEHtzS
+	 ibYck7oncsSIY3TLLEVcg6dw8PB5SOKbnRn//rvnh14hdzU+15aF8MZiqYegOU+oghOFM
+	 XCufAXTyeXOvF9qsMehvY4jVkU/deUCmHNAo042rKer/nA9mHloymIMZNQG3oqiWKPdvt
+	 AA/++F89XONtms89dC5IPRKPj7FADoLZusfDHsIiEBBTEfo6G+/y9dpqpPmM8mffSnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794893654;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=uv0Ajg/ZOj9nmloBlqc5KvujqzinojKoKdNon67mJq8=;
-	b=LHEKA6DKGHA7dW1OB/6AYUD0evtu/3jy0UhVbBsUQ8P39gOVjddi5Z7g8b2mnRt2vSuL
-	 dCPQaj3NR973IWpORY37MAXsH9mPkdYfuy2whxZ5ivv4gAG8jJilD1klYZQRcHDFDwvaF
-	 iBDQUc3wJirvn4qLWJNbEzx/NFAptMX1a45AQdgDZdMnxfgqE9m6RVrgJxa5AIL6MekzC
-	 yTtJL3g3uaGXTyG0itmRrM3J5lu4Ov5VFja1FuJ9qWQeBROAQ9gsyy/OnRqi2QkLdw7IV
-	 SX2mHStYEnPeGNdRj+JByL/YSlLGnguzyMuQ9apwQH+5tQC9/LMlEmBSFNMr25FbwJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794894237;
+	h=DMARC-Filter:DKIM-Signature:X-Lms-Return-Path:X-Mailer:From:Subject:
+	 Mime-Version:Received:Content-Type:Cc:Date:Message-Id:
+	 Content-Transfer-Encoding:To:X-Original-From;
+	bh=DsGLFo3Ah3ZqBE0pL0mtcci+TztznhZ6bWOpznuGZd8=;
+	b=PXMXBRjhEJG0ro1MlpQLszb/ixfrw1XGMQsIYbggJnM7HZFHxpTESB9Hn/Zx7QI600J2
+	 TDUINY0ZEw6vL6liquZz3K/Xkn9y+RxLQPLJWdqnsobGh+1hboE23eheja7ie2Ox1rpmf
+	 Jfg/EGvtKqookL5cGK6s+qLVBJIOe3LAIwKbb5LqI6Egj2pVo/SwQLfQPHErlhHG9zIKp
+	 WGLF2VohQ3oMxdER/Ir5w95KNnV3pXXx6ZHgK5BvRzWF/ZV1QEipM3L7DItuJZOK8ZCb4
+	 byOZlW9yhUyE4wmtBm4+/w5twvajcMQt3e+mgvWtHehY0cdVWYHknb7TVDpPzkGawKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b="t4oNpCg/";
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=deepcomputing.io;
+	spf=pass smtp.mailfrom=deepcomputing.io;
+	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=JDC579OF;
+	arc=none smtp.remote-ip=209.127.231.36
+Received: from va-2-36.ptr.blmpb.com (va-2-36.ptr.blmpb.com [209.127.231.36])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9A606A32A;
-	Tue, 17 Nov 2026 05:34:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90D9A606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D58F606A330
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 05:43:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D58F606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=t4oNpCg/
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=uv0Ajg/ZOj9nmloBlqc5KvujqzinojKoKdNon67mJq8=; b=t4oNpCg/JzIcewr8iMyCEB9uvi
-	XGHUBmQTtxLRh//FgdVeDyVTrvME8RoKx9VfvZF+mAhD6XaxooBF5HYvQfPSxTHzECKUCnrprzbS4
-	diWHSaaPoU8mBzBUhKznCEIM1j5j2HPOvK+PfkEBn33c4JNmrVP070WSHpo72X3hFNa5dzkrOOC3h
-	eq6uXsEXc+UIi0AuBn9QvpSmy4v0G80+EJoU1XSVwxkDqIAv9vYIxT9JhvTV6mNQl4ZYKylDXlyxH
-	jdBKYTH4meTdq1WYPQTCMI8TDIc34WB9ctzotxxawmtORvDzVgAIZ09P5Y/wYkto6FVYNVAa73iT1
-	87qYJCkg==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xTBpP-0000000Fa7M-0bSc;
-	Tue, 17 Nov 2026 06:33:59 +0100
-Date: Tue, 17 Nov 2026 06:33:58 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Anand Moon <linux.amoon@gmail.com>
-Cc: Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v1 2/2] power: reset: spacemit-p1: Use atomic I2C
- transfers for power-off and restart
-Message-ID: <avvnRkK9agPSdzac@aurel32.net>
-Mail-Followup-To: Anand Moon <linux.amoon@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Andi Shyti <andi.shyti@kernel.org>, Yixun Lan <dlan@kernel.org>,
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <linux-riscv@lists.infradead.org>,
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-References: <20261110061429.2036-1-linux.amoon@gmail.com>
- <20261110061429.2036-2-linux.amoon@gmail.com>
- <avpN-gFOvTBAMY6G@venus>
- <CANAwSgT_k35_waHL-+iU93f=k3fjFAPXhk=exRz-XHMm2MqREA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=JDC579OF
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1794894226;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=DsGLFo3Ah3ZqBE0pL0mtcci+TztznhZ6bWOpznuGZd8=;
+ b=JDC579OFQHDMJLEY8/2cDuh+6kxCeH6CAuDCtZG/kNMcXsZG92uOASeqvqHvaNE0lR2ewi
+ qSGfFaqDIGqA4vAioanyMjnCwyapoUDQzuJIOQU7RAtOfUrnAz2xbmCkd6/u5g6B+vfcIn
+ dH9iLKb4DVF3iQmCjoBPnPSKBrgjlfSqT6NuHb2cNHmTeQEWVAvd4/zIIrT+GUun09Fte3
+ dang5QLOaX8hNW+DDNYvJVhEgP8s4yF7C99+0Rm3p7sH6lDciMNg5BAtz8FM5DaY/rkw/a
+ N0uNmxTGm4Qy9SU1E/M3O1tu9IoB704+dRQow/zwXLDwz7P+/qfmUGJ2nXpqAQ==
+X-Lms-Return-Path: <lba+26afbe990+a80216+lists.linux.dev+sandie.cao@deepcomputing.io>
+X-Mailer: git-send-email 2.43.0
+From: "Sandie Cao" <sandie.cao@deepcomputing.io>
+Subject: [PATCH v5 0/3] Enable USB and SD for Deepcomputing FML13V05 board
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -84,135 +55,79 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANAwSgT_k35_waHL-+iU93f=k3fjFAPXhk=exRz-XHMm2MqREA@mail.gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Mime-Version: 1.0
+Received: from roma-Laptop-12th-Gen-Intel-Core.. ([183.23.101.74]) by smtp.feishu.cn with ESMTPS; Tue, 17 Nov 2026 13:43:43 +0800
+Content-Type: text/plain; charset=UTF-8
+Cc: "Alexandre Ghiti" <alex@ghiti.fr>, <devicetree@vger.kernel.org>, 
+	<linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>, 
+	<linux-kernel@vger.kernel.org>, 
+	"Sandie Cao" <sandie.cao@deepcomputing.io>
+Date: Tue, 17 Nov 2026 13:43:24 +0800
+Message-Id: <20261117054324.1048767-1-sandie.cao@deepcomputing.io>
+Content-Transfer-Encoding: 7bit
+To: "Yixun Lan" <dlan@kernel.org>, 
+	"Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
+	"Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>
+X-Original-From: Sandie Cao <sandie.cao@deepcomputing.io>
 
-Hi Anand,
+This series updates Deepcomputing FML13V05 Device Tree: Add P1 PMIC 
+regulator tree, add USB controller and USB phy, Enable SD card.
 
-On 2026-11-16 13:06, Anand Moon wrote:
-> Hi All,
-> 
-> On Mon, 16 Nov 2026 at 11:33, Sebastian Reichel
-> <sebastian.reichel@collabora.com> wrote:
-> >
-> > Hi,
-> >
-> > On Tue, Nov 10, 2026 at 11:44:27AM +0530, Anand Moon wrote:
-> > > The SpacemiT P1 power-off and restart handlers use regmap_set_bits()
-> > > to access the PMIC. However, these handlers run in an atomic notifier
-> > > context (specifically within an rcu_read_lock() critical section), while
-> > > the I2C-backed regmap uses a sleepable mutex.
-> > >
-> > > This triggers a "WARNING: suspicious RCU usage" warning due to an illegal
-> > > context switch in the RCU read-side critical section during shutdown on the
-> > > Banana Pi BPI-F3:
-> > >
-> > > [  563.803475] WARNING: suspicious RCU usage
-> > > [  563.807813] 7.3.1-ARCH-RISC-V #1 Not tainted
-> > > [  563.816614] ./include/linux/rcupdate.h:387 Illegal context switch in RCU read-side critical section!
-> > > ...
-> > > [  563.841445] locks held by shutdown/1: 2, last CPU#0:
-> > > [  563.846694]  #0: ffffffff8404fb20 (system_transition_mutex){+.+.}-{4:4}, at: __do_sys_reboot+0x230/0x29e
-> > > [  563.856806]  #1: ffffffff84167860 (rcu_read_lock){....}-{1:3}, at: atomic_notifier_call_chain+0x4a/0x1c2
-> > >
-> > > Replace the regmap operations with atomic I2C transfers to avoid sleeping
-> > > in an atomic context. Preserve unrelated register bits through
-> > > read-modify-write operations and check for atomic I2C support before
-> > > registering the handlers.
-> > >
-> > > Obtain the I2C client from the parent device and verify that the adapter
-> > > supports atomic transfers before registering the handlers.
-> > >
-> > > Tested on the Banana Pi BPI-F3 (SpacemiT K1).
-> > >
-> > > Assisted-by: LLM
-> > > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > > Cc: Aurelien Jarno <aurelien@aurel32.net>
-> > > Fixes: 28124cc0fb8c ("driver: reset: spacemit-p1: add driver for poweroff/reboot")
-> > > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> > > ---
-> >
-> > regmap runs i2c_transfer itself and thus also uses the atomic I2C
-> > transfers. The problem here is regmap itself. But instead of moving
-> > away from regmap, the atomic use case should be supported properly
-> > in regmap.
-> >
-> 
-> On  RISC-V platform, poweroff and reboot are already handled by OpenSBI
-> through the SBI System Reset (SRST) extension. Linux delegates these
-> operations to firmware using SBI_SRST_RESET_TYPE_SHUTDOWN for poweroff
-> and SBI_SRST_RESET_TYPE_COLD_REBOOT or SBI_SRST_RESET_TYPE_WARM_REBOOT
-> for reboot, depending on the supported reset type.
-> 
-> Therefore, there is no need for an additional Linux PMIC poweroff/reboot handler
-> on this platform, as it duplicates functionality already provided by firmware.
-> 
-> While supporting atomic operations in regmap may be useful more generally,
-> it is not necessary to address this platform's shutdown and reboot requirements.
-> 
-> I tested this on the SpacemiT K1 Banana Pi BPI-F3 after removing this PMIC
-> poweroff/reboot driver.
-> 
-> OpenSBI commit which handles this extension
-> 
-> d9637d00bf47 ("lib: utils/reset: add SpacemiT P1 PMIC support")
-> b10e18ec854a ("lib: utils/i2c: add minimal SpacemiT I2C driver")
-> 
-> Similarly, on the StarFive VisionFive 2, poweroff is handled by
-> OpenSBI through the
-> AXP15060 PMIC, so there is no need to register an additional poweroff
-> handler using
-> devm_register_power_off_handler().
-> 
-> OpenSBI commit which handles this extension
-> 
-> 568ea49490d9 ("platform: starfive: add PMIC power ops in JH7110
-> visionfive2 board")
-> 
-> -----8<----------8<----------8<------
-> diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-> index 50df66de24e06..069259f7d7c15 100644
-> --- a/drivers/mfd/axp20x.c
-> +++ b/drivers/mfd/axp20x.c
-> @@ -1458,8 +1458,14 @@ int axp20x_device_probe(struct axp20x_dev *axp20x)
->                 return ret;
->         }
-> 
-> -       if (axp20x->variant != AXP288_ID)
-> -               devm_register_power_off_handler(axp20x->dev,
-> axp20x_power_off, axp20x);
-> +       /*
-> +        * The VisionFive 2 handles AXP15060 poweroff through OpenSBI.
-> +        * Avoid accessing the I2C PMIC from the atomic poweroff path.
-> +        */
-> +       if (axp20x->variant != AXP288_ID && !(axp20x->variant == AXP15060_ID &&
-> +                               of_machine_is_compatible("starfive,jh7110")))
-> +               devm_register_power_off_handler(axp20x->dev,
-> +                               axp20x_power_off, axp20x);
-> 
->         dev_info(axp20x->dev, "AXP20X driver loaded\n");
-> 
-> Please let me know if this works on your board?
+This series is rebased on next-20261116.
 
-Yes, that works, but I don't think this is the correct solution to 
-disable here. Also this won't scale for future boards which might use a 
-different existing PMIC driver with poweroff support and that will also 
-need to be patched.
+---
+Changes in v5:
+- [patch2]
+  - Correct commit message.
+- [patch3]
+  - Remove Onboard SD Card comment.
+  - Change non-removable to broken-cd.
+- Link to v4: https://lore.kernel.org/all/20261109033154.361399-1-
+sandie.cao@deepcomputing.io/
 
-As pointed out by Troy in an earlier mail, the real problem is the 
-priority at which the handler is registers, 192 for the reset and -256 
-for the poweroff one. I wonder if the SBI SRST extension should also 
-register the poweroff one at 192. It seems it's about replacing the call 
-to register_platform_power_off() by register_sys_off_handler(), which 
-supports using a priority value. And maybe SYS_OFF_PRIO_FIRMWARE = 224 
-should be used there instead of 192.
+Changes in v4:
+- [patch1]
+  - Remove unused reg_aux_vcc3v3.
+  - Rename p1@41 to pmic@41.
+  - Add regulator-always-on for dldo4.
+- [patch3]
+  - Correct Onboard SD Card comment.
+- Link to v3: https://lore.kernel.org/all/20261102060012.100623-1-
+sandie.cao@deepcomputing.io/
 
-Regards
-Aurelien
+Changes in v3:
+- Remove useless gpio header.
+- Add Onboard SD Card comment.
+- Link to v2: https://lore.kernel.org/all/20261020081633.3673704-1-
+sandie.cao@deepcomputing.io/
 
+Changes in v2:
+- Remove usb3b, usb3c node define in k3.dtsi, it's already uploaded by 
+other patch.
+- Add phys and phys-name define for usb3b, usb3c, usb3d in 
+k3-deepcomputing-fml13v05.
+- Remove cd-gpios, use non-removable for sdhci0. 
+- Remove vmmc-supply for sdhci0.
+- Link to v1: https://lore.kernel.org/all/20260922110231.3426011-1-
+sandie.cao@deepcomputing.io/
+
+---
+
+Sandie Cao (3):
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add P1 PMIC regulator
+    tree
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: add USB controller
+    and USB phy support
+  riscv: dts: spacemit: k3-deepcomputing-fml13v05: Enable SD card
+    support
+
+ .../spacemit/k3-deepcomputing-fml13v05.dts    | 215 ++++++++++++++++++
+ 1 file changed, 215 insertions(+)
+
+
+base-commit: 749a4de370409464cf8501ec5b2451df45c84eb4
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+2.43.0
