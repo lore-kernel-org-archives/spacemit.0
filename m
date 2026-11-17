@@ -1,90 +1,78 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794950202;
-	b=NwYEH6zkk9/6J/hmpncpyvVMhAO5/x0XyfgjbqFStDzSQfh9/zSfKpXmxqvn4Fd4x2Lr
-	 dOIkuWGeJSk5OP7Z5h3E5dccWTmynzrXM/2TeKhtLZsVhfYnU6XhzoimA0GiZ0ouY7rzb
-	 +iRbyvkPAuE/aIf2IeD09kShNbAS9mfpv32EYQNH1gmRrmx01Zft5doEE0/DkW5yezZIH
-	 qCfc5iObP4N04usADpgXGUpaEqX+AAH/4RCml9RyEZXxyj4s6y4mV338+jcVwZGCtQZeO
-	 dZq8y8Fz4ZcRldj00gp1XYd4NZnOGYtk8aea0vbm1sac2c0ncx3LHq6WoEkUo0l5JSQ==
+	t=1794950602;
+	b=YBm7Umsu6acwjcYhmFFGcfoJvfwwJILPS7WdElaOWyrmpI7UALtlUbsZbf4S0pU1umwl
+	 afVFyV7J4JamskCUcIKSIwtGE/pWXNh/zOTdw2zeUYYm4KivgtEnQw9WgPhY8XCKgBqsO
+	 fLBXEAUeBiW+yhHskR10cPdT0K2OnmwP1di2bHxJzUtQHif1raeJVWb8LZhY3GciXM+hR
+	 qMEZo9Z1cGxT46E/qwDwTv6TVmx3wPa/mqcoGGU3dYdKzV2JRZGqx2yCvxYWgxv2Q/IjS
+	 NuM0q016OLM4aYHQIwm5aMdHlT/Jv4tog5Et9Pfh01dqnqnLwirKb1h4jeI09jEhZug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794950202;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=nRqTMJzShimxvHzfTCPPnMzUFgDsbxOw3020xqbA690=;
-	b=TmMV3fW7pvLune4DeF9SB/6vJBv6eDGXshDJci1K36tUjtLP7k4M+TFIvIgqDpGlB72e
-	 n0vkP184J3hB743HfKfeeTQ63wYl433ix5rBBdhPWxfN9EXBC727HwAVXEsKeX5C1iKKA
-	 7s1AmfHOQAxqD5OWnRcQkSoNewV56lWmaUNdaO65UJPkVz0WS4l+aEXfDWWe1+Hr9pm67
-	 JN9Pmnbk7RWtXv48HMaYLF5ORhRNhEpTQV8IpK9BeUZxuoOKvaBlXh/7/E31huQBeSNl2
-	 iZJY3A/UEIqcAlmlrEbAyH+ziG7jNtDVvI1V3p4BKK4OkRQKOw0Mh0PD7AGo0gKL9WA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794950602;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=Przrgbdbv85cvbqLBXsL7DGaaikgzPBDFnvarr+iJb4=;
+	b=w2v60qQJgIWrsM3fgABYz6OlzhT116XIWrdTJhZNSACpOT5skG09PDr7S0T2JRbC+lFS
+	 Ryw4RQo54UnFdQ4PSiCp7jzON1hjapG+/FXX7nTw17oWG9ElcB5DMVKCUC3++UTv2cSY0
+	 UwCfydAWgljzMAzQlxccp8uu/TxQEpqILv9u4qV+dhVSKrUkOlL6mh6uuDgOyPfj+a8o6
+	 2r81CTKsIKD/xAXFsWpCASwAMscFk2HBe4ukmreGE90xUpmHWlRCBhqoElPv1WxMwdMuS
+	 wyLKh7VrDEsoDYyhzuq0ps5hanRTtUzJzykFfeYdOe1MWODupFSg/24jPS342YLo5WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=Gud2wEmi;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=T2hjufLh;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E48606A32A
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:16:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53E48606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F00606A330;
+	Tue, 17 Nov 2026 21:23:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0F00606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=Gud2wEmi
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id A586E20DC134;
-	Tue, 17 Nov 2026 22:16:39 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id 7BC4B20D5578;
-	Tue, 17 Nov 2026 22:16:39 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 7BC4B20D5578
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794950199;
-	bh=nRqTMJzShimxvHzfTCPPnMzUFgDsbxOw3020xqbA690=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=Gud2wEmiaIQS+G9oDe+ppbi8YJDwz3F5MYC0RXhiJXIjVG2uZgEeHopbDxXr/dlfS
-	 xHP9aurbGcSRBxJLXOJNqTJMYidrOqwxdLKUbzWi14nS90jSWEJ5xtxg8a/x5bztRL
-	 W6PooeL3SZuYaRhzb0ROSZUucanEKf5W7rgicRYBgQ53WSc+6KODHdg6COXrPpYOy3
-	 +jeaLMGWl6CfUt7R5ntrIULj4rOPdlSGAl4rVr51xcmuvaBN4YU/1AnG57ttuBqA3s
-	 ierLl20iJ/xbOJRGXK9nhseC2PthgpWeHVGkOvpiLNBVgHlHST9wazquJXMXBsjS2p
-	 H0JiGtDE7ne0Q==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id a40u_yxKLD6u; Tue, 17 Nov 2026 22:16:39 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id BE8FB20DC134;
-	Tue, 17 Nov 2026 22:16:37 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Stephen Boyd <sboyd@kernel.org>,
-	Yixun Lan <dlan@kernel.org>
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Haylen Chu <heylenay@4d2.org>,
-	Hung-Chun Tseng <alan.tseng.cs@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=T2hjufLh
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=Przrgbdbv85cvbqLBXsL7DGaaikgzPBDFnvarr+iJb4=; b=T2hjufLh0q4o5/+0lDWEDnqhGD
+	Ah0i8IUkddvpr5lELGxNvbUY4ubRasOnxz5fq9KUXQL//6N1b2FfoDk/Xr/QCTtc+s8VJ9rfP9TRQ
+	bK710C4dGLCWVcCNhs1YG4pOF18tK0noHDDmbSP7FSk0FpF8mp4Sy5uKjTxbBaC60pRy0X5reKqEn
+	P1luZPbnd5+QSUEBCW5kOZROOvSqx2U6k2ZJmDz4EPyRxuAUDxbnEypps5W6+TAr61Iq7E26FDW7w
+	NFkrpgW6FBLEWyBDo8LZxycbEilw3sDg3Mrpclacrp2EK4+c7WZbcvTvn22fmFS621wf5jS+fj38/
+	M/hzmeiw==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xTQe4-0000000GZBY-0QzT;
+	Tue, 17 Nov 2026 22:23:16 +0100
+Date: Tue, 17 Nov 2026 22:23:15 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Jiayu Du <duge1256@gmail.com>
+Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, dlan@kernel.org,
+	troy.mitchell@linux.spacemit.com, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/6] riscv: spacemit: k1: RCPU2 PWM clocks and the BPI-F3 fan
-Date: Tue, 17 Nov 2026 22:16:23 +0100
-Message-ID: <20261117211626.141105-1-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117205951.140146-1-frederic.mahe@cirad.fr>
-References: <20261117205951.140146-1-frederic.mahe@cirad.fr>
+Subject: Re: [PATCH 3/3] riscv: dts: spacemit: Add K3 eFuse and temperature
+ trim cells
+Message-ID: <avzFw8hydMX-9G1_@aurel32.net>
+Mail-Followup-To: Jiayu Du <duge1256@gmail.com>, srini@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	dlan@kernel.org, troy.mitchell@linux.spacemit.com, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+References: <20261106060525.346873-1-duge1256@gmail.com>
+ <20261106060525.346873-4-duge1256@gmail.com>
+ <au5Q9lYTUegeEglv@aurel32.net>
+ <uot2mqhilzdfngqcwpipdo5xzncyvesmw2hw6rqk7mnveer57f@6m4cqzotx53k>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -94,10 +82,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <uot2mqhilzdfngqcwpipdo5xzncyvesmw2hw6rqk7mnveer57f@6m4cqzotx53k>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Adding Troy, whose address I mistyped in the series (sorry). When
-replying, please drop troy.mitchell@linux.spacemit.co.
+Hi,
 
-Fr=C3=A9d=C3=A9ric
+On 2026-11-13 20:24, Jiayu Du wrote:
+> On Fri, Nov 06, 2026 at 11:13:10PM +0100, Aurelien Jarno wrote:
+> > Hi,
+> > 
+> > On 2026-11-06 14:05, Jiayu Du wrote:
+> > > Add the K3 eFuse controller with its AES_WTM clock and reset. Describe
+> > > fixed-layout cells for the temperature calibration parameters stored in
+> > > bank 0 and bank 7, using controller-relative offsets.
+> > > 
+> > > Leave the controller disabled for board-level enablement.
+> > 
+> > What is the reason for enabling it at the board-level? AFAIU, this is 
+> > part of the SoC and does not require any board level hardware. Therefore 
+> > I believe it should just be enabled by default.
+> 
+> Agreed, there is no board-specific dependency. I'll fix it.
+> 
+> > 
+> > > Signed-off-by: Jiayu Du <duge1256@gmail.com>
+> > > ---
+> > >  arch/riscv/boot/dts/spacemit/k3.dtsi | 25 +++++++++++++++++++++++++
+> > >  1 file changed, 25 insertions(+)
+> 
+> ...
+> 
+> > > +				#size-cells = <1>;
+> > > +
+> > > +				soc_rtemp_trim1: temperature-trim@120 {
+> > > +					reg = <0x120 0x1>;
+> > > +					bits = <0 8>;
+> > > +				};
+> > > +
+> > > +				soc_rtemp_trim: temperature-trim@19a {
+> > > +					reg = <0x19a 0x2>;
+> > > +					bits = <4 8>;
+> > > +				};
+> > 
+> > I have tried this patchset, and while I can see non-zero data in the 
+> > /sys/bus/nvmem/devices/f0702800.efuse, both temperature calibration data 
+> > appear as 0. Is that expected?
+> 
+> I see the same on my COM260 Kit: both banks contain non-zero data, but
+> the two trim fields are zero. The factory 6.18.3 kernel gives the same
+> bank data and temperature calibration data. 
+> 
+> The thermal driver change in [1] reads the bank 7 trim first, tries bank
+> 0 if it is below 8, and uses 0xd8 if both values are below 8. This handles
+> the zero-value case. I don't have an explanation for the zero trim values
+> themselves.
+
+Thanks for the explanations, that make sense. I guess that first 
+versions of the K3 were not temperature calibrated, so the value is 0.
+
+Regards
+Aurelien
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
