@@ -1,90 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794949263;
-	b=AC+JnaYMoMGHfdGr3LGJwD7W9s+M9zHemb5UtyxehUfbtnhfp8cacpJFlDIffyJ9TU6L
-	 l/L/AR9cDxdgRHGmBYRsUhQpIE+Kcn+fHhb/9crTH2Y0FydlZc3lfLS6k6cf9zJHDmWJL
-	 VrU1+jHC1b6W5HaU6Lkl+9luNKjvRK87t8MJZ1Fv5cY6XhbyM1H9/ufCuVfh1HVxA/x9I
-	 OfubknfZr6CxjmfFSpAsvQtImeT5LX8PWfX7JdCrHvLq9Zc3QWeUzolYWh6QOiPbbsIeJ
-	 ktmDqaD0W8Fd6huaSba64b+CKtBb6Q1vcQOocHAiAiM6S+nlysibv//YB4B+uZV0s6w==
+	t=1794949795;
+	b=Vf7T0DW0+5+u+bjdrclbrl+YYngAaxjvMbAGBiyO5kNn90QlIpQRwfTAlNxHRgSHdyrz
+	 Pj7XDGRU09z+2ETsNL2FDBU6PNAf7zStc8L+7jgWIV4P0dIzbGUh6/VamufZMdyJWSIgd
+	 06uJMfnfAVRo85271fWhVwk1IIHdbWv4pf8x9mwjhoaDHqqf+b2iC1+TMCpCckaroMxtD
+	 9bD+nQTYSBJLZUOLpT6GZTHyZGI7PTmT7xULiVUZkaGuucxSpCosDv+Ftj7Bfcoo0QNwk
+	 BlWq5YMRVm/Rx7jUrav6yQOv7q7v++wHl/bOGlnMVbqbSaaZ9CVsLYjyAa3Y4u1045Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794949263;
-	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
-	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=4G4OsBpiP4ESq1H97D1AsDisbDduik4VQ3HIzmTyFjc=;
-	b=rBJutXbi/MwW5YkHW8aL/lcMCc7rTuIbmDxaHQ8Eqf+OgwjwcwxXak3/R7mqPocGjkkg
-	 KSLlZKPBcuGTncHcCYwNW6NYo4eXXiXP9GpU1n67VcGn+PEhYgR1XTzZH+yT/hv8E/YbG
-	 b88i28wHkKc3cfCIasycVV28A0z3FdlHWEy/ROL8ue0LWa62E7x+SxWOitYhutiC0/zJW
-	 BUbn5kNBVsDlSX8DYMYbE0V8qN9Dwigw1fRhlL8MfizJ3Ut6ulO3fonC0ZhGa0OECZiT9
-	 lDB/LjFSfJpVNnUyAllkgs6iwV1D49BSQLaNOVLSWpL9I1uhLf4/kCx03B6dInRUMRg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794949795;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=EtVhHyW7aHGIibxC4T0ib9PS9njKICVdDDhJxL38oGw=;
+	b=zCiZ7kHyJ1acVLs9sbYGVKNxS/k0Is6wQ3OF66JCmBsTVG+odHCLctz/4yiiFgOq0oEk
+	 fmsp2U5gKtn/ZJiZR81fEMs6QImYPgA0BuVpBvJhonLgYh6fH3iIp73Uqa/gVd4WZsCwH
+	 MLWeaWca+Jah0w+ionDb595TbszRor1AMhjcXItdmhaKSyh6YZkuwOlYspRCTms58OKb3
+	 oVt3ij7dn3wYLhkGJQByHr+3FvRlsb2aG40zaweLEM2e6WzZWtN2hAsEfLya/qqmkpYzy
+	 uhj9b1W5pvc5gy2wyV67AO7oD0UbiJ2s+kKrltxmg3eA49iMbjr7CnoX4SI9Vq6VwGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=cirad.fr;
-	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=L1hcJN3x;
-	arc=none smtp.remote-ip=194.199.235.221
-Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=Vlnj07HE;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2210A606A889
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:01:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2210A606A889
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEED606A31C;
+	Tue, 17 Nov 2026 21:09:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABEED606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=L1hcJN3x
-Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id A77C220D4EBD;
-	Tue, 17 Nov 2026 22:01:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id 8684D20D4D62;
-	Tue, 17 Nov 2026 22:01:00 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 8684D20D4D62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794949260;
-	bh=4G4OsBpiP4ESq1H97D1AsDisbDduik4VQ3HIzmTyFjc=;
-	h=From:To:Date:Message-ID:MIME-Version;
-	b=L1hcJN3xIte0izs4ee+2ObDPkGJIxTFTV1AMtVdEOqHoc3XmPfGcRA6z05YXVjEpi
-	 eTBvRjVOWM2AVvt829Z1G7Q8NlDzDRQx+Igd7/h9DsGOwdkUCnKDe17t0b299qvS5C
-	 6CApAEDNhkpvedT3VhIXvhV7WCkrPBMjQipsyqA3VO4R09vC51moPajad5kRToScY/
-	 YTv9lEkMtLLFQMDNkhjjnfXIRuMAd+5wFKekdwrXJ0+ww7ZhurrOW17lZppAPh96a8
-	 mW3M++c63XLWloL90qGL5m2l8QXQ2aYIrj3uhX3lwdjxizkLVGuVpfuuVz71Iyyt0W
-	 92QSz5LRaIX3w==
-X-Virus-Scanned: amavis at retz.cirad.fr
-Received: from retz.cirad.fr ([127.0.0.1])
- by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id bGhBTA95vChK; Tue, 17 Nov 2026 22:01:00 +0100 (CET)
-Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 3FE5020D4EBD;
-	Tue, 17 Nov 2026 22:00:59 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Stephen Boyd <sboyd@kernel.org>,
-	Yixun Lan <dlan@kernel.org>
-Cc: Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.co>,
-	Haylen Chu <heylenay@4d2.org>,
-	Hung-Chun Tseng <alan.tseng.cs@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-Subject: [PATCH 6/6] riscv: defconfig: Enable PWM fan support
-Date: Tue, 17 Nov 2026 21:59:51 +0100
-Message-ID: <20261117205951.140146-7-frederic.mahe@cirad.fr>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117205951.140146-1-frederic.mahe@cirad.fr>
-References: <20261117205951.140146-1-frederic.mahe@cirad.fr>
+	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=Vlnj07HE
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=EtVhHyW7aHGIibxC4T0ib9PS9njKICVdDDhJxL38oGw=; b=Vlnj07HEQZhfE7IRgLQCX9skMn
+	aJo6gXGLWOXucwKVPXL+859PoLGmk3foGjFfxnO8DOsJwUwibVcHvztSN8qlaLX+FpcxO5D6b/2r1
+	lLmGmArVKunrLHuTyPyWMRe4h4Bg3L1llAajMlW189OED1+K7IZxsZ3NqnjDW1mXfg8eeOVtwPj7z
+	0T8S1UCkvWiix5HCGozpHyQr2GgmGHbkJhieCNuv5wA2bCZdfFNUCuUwO+8SyrU4esccjciDyGrsS
+	geSAbwPnRIFdSiXnOD+f5PwYrKmV2o/w4EqZ3621bXuUK1FWVYWBTSL5s4kAtNz1no4482vu+ybVd
+	n9WnZ2YQ==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xTQQz-0000000GYFB-3DTt;
+	Tue, 17 Nov 2026 22:09:45 +0100
+Date: Tue, 17 Nov 2026 22:09:45 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Jiayu Du <duge1256@gmail.com>
+Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, dlan@kernel.org,
+	troy.mitchell@linux.spacemit.com, me@ziyao.cc, pjw@kernel.org,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+Message-ID: <avzCmVhf8tl6hi_B@aurel32.net>
+Mail-Followup-To: Jiayu Du <duge1256@gmail.com>, srini@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	dlan@kernel.org, troy.mitchell@linux.spacemit.com, me@ziyao.cc,
+	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+References: <20261116075423.1519438-1-duge1256@gmail.com>
+ <20261116075423.1519438-3-duge1256@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -94,31 +79,57 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261116075423.1519438-3-duge1256@gmail.com>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Build pwm-fan as a module, used by the Banana Pi BPI-F3 fan.
+Hi,
 
-Written with help from Claude (Anthropic); reviewed and tested on hardwar=
-e.
+On 2026-11-16 15:54, Jiayu Du wrote:
+> Add read-only NVMEM access to bank 0 and bank 7 of the SpacemiT K3 eFuse
+> controller. These banks contain temperature calibration parameters and
+> other configuration data.
+> 
+> Keep the root key and SSK registers outside the exposed bank ranges.
+> 
+> FUSE_READY reports completion of a software-triggered reload. Trigger a
+> reload through GEU_CONFIG bit 22 with a 1 us reset pulse, then poll
+> FUSE_READY at a 1 us interval with a 10 ms timeout before taking the
+> snapshot. Fail probe if the reload times out.
+> 
+> Snapshot the shadow registers with aligned 32-bit reads and expose the
+> data in little-endian order at controller-relative offsets. Serve reads
+> from the snapshot and use keepouts for the remaining register ranges.
+> 
+> Enable the AES_WTM clock only while accessing the hardware. Leave its
+> shared reset deasserted on teardown because WTM_RST resets the entire GEU.
+> 
+> Signed-off-by: Jiayu Du <duge1256@gmail.com>
+> ---
+>  MAINTAINERS                       |   1 +
+>  drivers/nvmem/Kconfig             |  11 ++
+>  drivers/nvmem/Makefile            |   1 +
+>  drivers/nvmem/spacemit-k3-efuse.c | 199 ++++++++++++++++++++++++++++++
+>  4 files changed, 212 insertions(+)
+>  create mode 100644 drivers/nvmem/spacemit-k3-efuse.c
 
-Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
----
- arch/riscv/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+I have been looking at the code with more details. Is there any reason 
+to "expose" the whole 1024-byte efuse address space in the nvmem layout 
+(of course with some masking) as opposed to the 16 banks x 32 bytes = 
+4096 bits only (still with masking)?
 
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 04ae305d5..d244e806f 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -178,6 +178,7 @@ CONFIG_GPIO_SPACEMIT_K1=3Dy
- CONFIG_GPIO_PCA953X=3Dm
- CONFIG_GPIO_PCA953X_IRQ=3Dy
- CONFIG_POWER_RESET_GPIO_RESTART=3Dy
-+CONFIG_SENSORS_PWM_FAN=3Dm
- CONFIG_SENSORS_SFCTEMP=3Dm
- CONFIG_CPU_THERMAL=3Dy
- CONFIG_DEVFREQ_THERMAL=3Dy
---=20
-2.47.3
+I find strange that user space has to know the address of bank 0 or bank 
+7 instead of just looking respectively at addresses 0x000 and 0x0e0.
 
+As the layout exposed to user space also includes status or control 
+registers (although masked), this might makes difficult to support a 
+newer version of the efuse controller which have a similar data layout, 
+but slightly different registers colliding with the bank data.
+
+Regards
+Aurelien
+
+-- 
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
