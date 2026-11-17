@@ -1,63 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794949253;
-	b=lojQBS/u/10ym/rZ3AY2iGq9KHHO+TJZimaXWrUXN1N516N4IdX8Pxh1+7HXpy3krj1e
-	 xaGd2fE/M5SEZU/vsLT4PKUg2mL5y7+RLCBjQtRsWDFOpIkFWFjPbcHQ8fND9V+E4wyez
-	 8eXCVPkyvPKr3maMevbZqNL5v+DMJ8m3WzS13lR7bfqspoOrGODFWKmoteFeACzwzC94g
-	 NlW5ArqPSiDH3+M2VfooQ9dcQR2i6DPQrjbtdSBlVi7oBm+cvTSqCTAA1QExyOy7gox0j
-	 5YlY0I1BOMr6LSCptEoFJ99V4+prsF6R+xTKDEBPNQ4xkMhaGHeQvagxWRk6zZyr8WA==
+	t=1794949255;
+	b=keUKUOX8LBDAEC22xFHBmbvzRWoc9XaHdsHcDtX/ks8N+LufakIHSDkfUtVD2wOURvBz
+	 WIY080nFSPcrwq9lND/eAiXxw1OARwG7ObU20zko/T40cR+XNc383aGVuINrFYufybIBP
+	 uXGKTUkaGVpKNc1YpCtGF2++dnCTO7UJaYltzyzq+Xr6AD+8QL8LJ0f+O9Cg6AYaorSUx
+	 LtpxgkxgVSl175YtONXqJ0zKMPxpkCTDGMHKsfEKq5GodB3UqkvFyrP6Ixf9M8Sv4obAa
+	 fFZcqdPCOL2Y4CDxm66X+x32a6grkr+AUt3AruWBOGFxn/DawTp42c+8+T4/5ZDtxlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794949253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794949255;
 	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
 	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=cBPXI6LEpLwntDX1+2Poix+I2lZgirJA88Apc29UVrM=;
-	b=PiTRVu2KSiIuuZuo++9WzkMNcPgpK9pG753YtDhUFxeSN2IhPZ1FHBHsWn+z1/TXv4D7
-	 WLMKCPGt7XzP66E/vNFWznCnlVzGcsmEsuUPldYe/Gd+zL09MmXfV3MQHcqtD5mPK/IHJ
-	 Uk12XkQ/0I3bLHcP5+wI+c87kICzUPapSHHnwVsgOQAk4tjGX6KgHAl66uoGLl/w4LFBL
-	 97SeFnEYWSAwmi3Mei6RJKNIXOVo2TXsmYbOxlOz/o9ElEcNiJt47lQMzRFRp6cfpztDD
-	 fnNSnU7nkZOaJ80UaeW0zCmhSIVj278y80Ei2QmVGffeBqqZPDl9kIu/ckr1zVPuRRA==
+	bh=zKE7LOjuE8R61pXnC7DCd6CJseLuy7O1djF3vybCZY4=;
+	b=S1pllBCSsFVVr1uvCHbjfivNnZCd1P4bOccuuVmPdIw0IhZi/yvea/eUUER5lKRmrn2E
+	 AJC1DNr1GI2gNkFkOFZxrQoIit8SullwYv9GWcLMHPotT30guWXhwh0ohpCKrz/t+ULOl
+	 6FxGJxmaned4RJQ03yt1764mUKwG0V6ny0QB87klkAwk0jF/juMoy3TcTB4sScxdtxREa
+	 BQ6wbDy99+z2GMzhfgen2Ti9dWLd2VWzi9qsz2qrQhjUJdEV+65U7LXxqXdNtm6VOEl6+
+	 kScAB/AG81ccLrdVaa2MIytBTPB4kQckPaTQNebEsQ1KeXH6gp35eg7Gm/QwmrFyEyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=cirad.fr;
 	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=lT5yxuwr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=Q2UhN0Bq;
 	arc=none smtp.remote-ip=194.199.235.221
 Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED28A606A32F
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:00:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ED28A606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C52606A31C
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:00:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1C52606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=lT5yxuwr
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=Q2UhN0Bq
 Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id 765FD20D78CF;
-	Tue, 17 Nov 2026 22:00:51 +0100 (CET)
+	by retz.cirad.fr (Postfix) with ESMTPS id 8625820D4EBC;
+	Tue, 17 Nov 2026 22:00:53 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id 4406020D556E;
-	Tue, 17 Nov 2026 22:00:51 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 4406020D556E
+	by retz.cirad.fr (Postfix) with ESMTP id 61AC420D531A;
+	Tue, 17 Nov 2026 22:00:53 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 61AC420D531A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794949251;
-	bh=cBPXI6LEpLwntDX1+2Poix+I2lZgirJA88Apc29UVrM=;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794949253;
+	bh=zKE7LOjuE8R61pXnC7DCd6CJseLuy7O1djF3vybCZY4=;
 	h=From:To:Date:Message-ID:MIME-Version;
-	b=lT5yxuwrxJSF+u0qlWNXw7HkIMVGehZzeU/Jk3cOgjdxghmXkuOTXmJHD3IZdcQcW
-	 JctVOJ72lWTC99ZgGAwQ3MXz3GDK9H0Ez41d/SNfgmfaZAab7RunQZ+F1fffneuh/X
-	 Fd4Y6vPGiGM++r4bOqkoTct8GTNW1nU6PBwfMpfaeEhjdn9KgKlCY9FJJH/x6Ndjnr
-	 eQQgURlRdpsu6x2R57nRrokhG0tRXComZw/Fm2WfexFuIrHNuX8yjbsZIXP35Cipra
-	 6edrQtRmcb1vYhrEupifRPaKitc/vuGR+/M/7JeD3pWI/V3OFicNKuClpciN5vl2cz
-	 cgpV8KVFHJu6A==
+	b=Q2UhN0BqMcskmlPAPwUW+MBaw+AzXNVySTnUvQ6oBTmeMf+VmYOmzxb0XJMICz2rK
+	 rjFthN+4l4sfENBkOB68QY3x9t7dkKrcjh31UF0A6vV73Ah8gDOLmeGxkfLVnDzQvB
+	 nqlYDgTd00YTs8i39JN1Nbg3R7kPkdQXDBhgZtQw8cgiyNZiJhgysckjfwBmxzvMFt
+	 KvrKLkgDhxhSVR2zKsVqadwSct859IhhQzhF/phsRPdrY0lAKYw/0qb6qrgmv7g/kG
+	 jaH/qz4shX0a2nvntmAb0QH6bMvGyauTCSRj4KVEk6wdy+MFg6OaMgE6QdCrgI3YdH
+	 F9zSCvK6AWzPg==
 X-Virus-Scanned: amavis at retz.cirad.fr
 Received: from retz.cirad.fr ([127.0.0.1])
  by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id b--yicO4KfRK; Tue, 17 Nov 2026 22:00:51 +0100 (CET)
+ id NVrKEnwF_wLb; Tue, 17 Nov 2026 22:00:53 +0100 (CET)
 Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id D80D720D78CF;
-	Tue, 17 Nov 2026 22:00:49 +0100 (CET)
+	by retz.cirad.fr (Postfix) with ESMTPSA id 3FD6A20D5578;
+	Tue, 17 Nov 2026 22:00:52 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
 To: Stephen Boyd <sboyd@kernel.org>,
 	Yixun Lan <dlan@kernel.org>
@@ -79,9 +79,9 @@ Cc: Brian Masney <bmasney+clk@redhat.com>,
 	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-Subject: [PATCH 1/6] dt-bindings: clock: spacemit: k1: Add RCPU2 PWM clocks
-Date: Tue, 17 Nov 2026 21:59:46 +0100
-Message-ID: <20261117205951.140146-2-frederic.mahe@cirad.fr>
+Subject: [PATCH 2/6] clk: spacemit: k1: Keep pll1_aud_245p7 enabled
+Date: Tue, 17 Nov 2026 21:59:47 +0100
+Message-ID: <20261117205951.140146-3-frederic.mahe@cirad.fr>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261117205951.140146-1-frederic.mahe@cirad.fr>
 References: <20261117205951.140146-1-frederic.mahe@cirad.fr>
@@ -97,40 +97,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Add IDs for the ten PWM clocks of the K1 RCPU2 system controller.
+Accesses to the RCPU2 block (0xc0888000) hang once pll1_aud_245p7 is
+gated: the CPU stops responding, even to NMIs. Nothing claims this
+clock in mainline, so clk_disable_unused() turns it off at boot, and
+probing an RCPU2 PWM afterwards hangs the board. The RCPU2 clock and
+reset registers live in the same block.
+
+Mark it critical, as was done for the K3 RCPU clock.
+
+Tested on a BPI-F3: without this, probing an RCPU2 PWM hangs the
+board; with it, no hang, also with no PWM in use.
 
 Written with help from Claude (Anthropic); reviewed and tested on hardwar=
 e.
 
 Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
 ---
- include/dt-bindings/clock/spacemit,k1-syscon.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/clk/spacemit/ccu-k1.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/clock/spacemit,k1-syscon.h b/include/dt-=
-bindings/clock/spacemit,k1-syscon.h
-index 0f8b59d67..29d478774 100644
---- a/include/dt-bindings/clock/spacemit,k1-syscon.h
-+++ b/include/dt-bindings/clock/spacemit,k1-syscon.h
-@@ -370,6 +370,18 @@
- #define RESET_RCPU_UART0	5
- #define RESET_RCPU_HDMI_AUDIO	6
+diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.=
+c
+index dee14d25f..364388ff8 100644
+--- a/drivers/clk/spacemit/ccu-k1.c
++++ b/drivers/clk/spacemit/ccu-k1.c
+@@ -60,7 +60,8 @@ CCU_FACTOR_GATE_DEFINE(pll1_d11_223p4, CCU_PARENT_HW(pl=
+l1), APBS_PLL1_SWCR2, BIT
+ CCU_FACTOR_GATE_DEFINE(pll1_d13_189, CCU_PARENT_HW(pll1), APBS_PLL1_SWCR=
+2, BIT(16), 13, 1);
+ CCU_FACTOR_GATE_DEFINE(pll1_d23_106p8, CCU_PARENT_HW(pll1), APBS_PLL1_SW=
+CR2, BIT(20), 23, 1);
+ CCU_FACTOR_GATE_DEFINE(pll1_d64_38p4, CCU_PARENT_HW(pll1), APBS_PLL1_SWC=
+R2, BIT(0), 64, 1);
+-CCU_FACTOR_GATE_DEFINE(pll1_aud_245p7, CCU_PARENT_HW(pll1), APBS_PLL1_SW=
+CR2, BIT(10), 10, 1);
++CCU_FACTOR_GATE_FLAGS_DEFINE(pll1_aud_245p7, CCU_PARENT_HW(pll1), APBS_P=
+LL1_SWCR2, BIT(10), 10, 1,
++			     CLK_IS_CRITICAL);
+ CCU_FACTOR_GATE_DEFINE(pll1_aud_24p5, CCU_PARENT_HW(pll1), APBS_PLL1_SWC=
+R2, BIT(11), 100, 1);
 =20
-+/*	RCPU2 clocks	*/
-+#define CLK_RCPU2_PWM0		0
-+#define CLK_RCPU2_PWM1		1
-+#define CLK_RCPU2_PWM2		2
-+#define CLK_RCPU2_PWM3		3
-+#define CLK_RCPU2_PWM4		4
-+#define CLK_RCPU2_PWM5		5
-+#define CLK_RCPU2_PWM6		6
-+#define CLK_RCPU2_PWM7		7
-+#define CLK_RCPU2_PWM8		8
-+#define CLK_RCPU2_PWM9		9
-+
- /*	RCPU2 resets	*/
- #define RESET_RCPU2_PWM0	0
- #define RESET_RCPU2_PWM1	1
+ CCU_FACTOR_GATE_DEFINE(pll2_d1, CCU_PARENT_HW(pll2), APBS_PLL2_SWCR2, BI=
+T(0), 1, 1);
 --=20
 2.47.3
 
