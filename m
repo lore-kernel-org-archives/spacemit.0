@@ -1,82 +1,112 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794951735;
-	b=IDBwixCVhV1HU+rYSQyc75vi3dOz22unD/yPiA6jikhthlD3Ehp1lqWF4qJ04wgfAtFX
-	 5I0UIyr9mCQrtsH+7D3cP5NIjVLMm4BQG0XCRZwgI6Hisa3F+UY9D5nqCn+e6hvJO3r/D
-	 049wGJ3/iGhgzSWsOttkN7ciih966y2fXCz853uJQ59Xlz5xYydopBiNAF8nKRpEecEYj
-	 3yovf3Y0Z93VcQJ+Z+pQQH001vtnE32jDDkaT/XQmqp4h0DmALsO1cIrBYzrHEA6ireG7
-	 /sMD5XfpAjIQxqWEp+kHINaW25ewflDz+r2aW2WGKe6ibgZ2fhoH/ccND9QYLcvTl0g==
+	t=1794952088;
+	b=RMfFeW9KkemlE3R5fJg7NDYb6GUA9fKicVREjMlKLHU+FfatlQCEJleRVYOX9mPG2w0N
+	 ZMsFostBoZAWL/6Wfa99f8ASkJURhqWV/HFHGH5NC45ZGwcI0MJMGK4rKZngpQphqEHGD
+	 JKf1lliatQ3zQLkg6aUZ5TVgfSUwb91lHFXtcTEV5QbUs85AZfr0bgEmpoTN0ebdLmMhd
+	 tbxOcq7m8jZy21zk1ywMBL4sVjM7PhS17LZyBQsYNvWI0c0KhyFA3ukFfZ9MVMeKAy2N4
+	 Yb9DYq/+yMZVM1qCc1atFiB+84utHIvZTe+FED4zl2rudTTLwlhRC32LjItvxkwbqbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794951735;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:User-Agent;
-	bh=PrHvuwIuDErJm7EM/POsxG5qv1/2voyuislLca5+9uA=;
-	b=SK1n4tAee7fiqQi5qV4aS2+XWUKfvvy2wnZOywSGj2+xx0AJ9D4MHHdrapDuolDySRow
-	 xq6Y18kPClxWeojQ9kHPiu4vSwBN4gF2IYBS13Q9Lm4P32+Xyg120o4Q6w5sI2OpxeDhW
-	 6mIzCnuKADodDfLElg7GUFCmqcuhgpuYkRZiri0WgLwDlW21O4y2wbyLdSsIR8go8vK8D
-	 /sYbRd4pAmVOrgbsQ9ZiBcHIa+xt0j59b9QUEOPle++LSLQKqWCIO4ja1CVyBZo+jjR9l
-	 BeHkX/dIMjByMVsTaCNp71R21vACszjmS+awiQUCLeqdT3Gd3MnmL3dh7d85rRp793A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794952088;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
+	b=bPvOrQzz8drQlhChtZ/rmyAMmAth8GUYKPb+AKmEnvhfnQVD1kgkra6n38ulNdUSB+5j
+	 psC4+KE5BfXP76oXdEbQ8uycXwHEAhcpnJBosSg3iB5TW2PTi0mNbGZu4YE3T9QuiAe0l
+	 AiseAGYKCmpaytQBG0PUo0tnvJDWy2NBEWBqKgnYPqvmHFhAVZwxdUKGrS3UvWp6CfS1i
+	 VqGZpNFyBiTD4mxM7RAVmKgFmcZOHxQolOH7FurECb3SxSG1ebk0aZZ9P40iTwoGFZMBl
+	 RxM5PeWFO8nTCarlTI7qla1VPo9DLR3Mx/0/NECRgsKWwXLh+IficpcavcmLVv3dBtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b="idd9LGL/";
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HOs/tYHX";
+	arc=none smtp.remote-ip=209.85.128.170
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB68606A31C;
-	Tue, 17 Nov 2026 21:42:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADB68606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5A1606A32F
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 21:48:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC5A1606A32F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=idd9LGL/
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=PrHvuwIuDErJm7EM/POsxG5qv1/2voyuislLca5+9uA=; b=idd9LGL/Vro7c0VHbgDwR/u6Iv
-	E7k9Y/K/GK26hxy30CBDTzvylJ/VfXJ/vH8j3FJdIXNmiTa+MqwNYYCqVi6gnmhyGAQf9/pj4DFpB
-	sgacsAUHnnGo3SsF15tqr2RXuhtyaRJAKtTJQlNB2v0cNZNFshDIo4pyqrjazGs3ltNON3VFgRCIz
-	P0ZN6YdewWKbahdbNOTwZDl4PZK1StyHPpL/zf6qanH61ZhmxLPs+gKZw6FqJlklV0xuy/3LFjMPs
-	ZvBdbbAQwTFg1JKQ/MhB3+ikHjl5ks21pP5zzypPqCHSgQX4AsTYDSrJBRtEoG6qV1siOgOl8SL1x
-	qwebwdCQ==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xTQwM-0000000GaSU-2Nd8;
-	Tue, 17 Nov 2026 22:42:10 +0100
-Date: Tue, 17 Nov 2026 22:42:08 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: =?utf-8?B?RnLDqWTDqXJpYyBNYWjDqQ==?= <frederic.mahe@cirad.fr>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>,
-	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: spacemit-k1: Request the Gen2 speed change once the
- link is up
-Message-ID: <avzKMAtDqeqHIivr@aurel32.net>
-Mail-Followup-To: =?utf-8?B?RnLDqWTDqXJpYyBNYWjDqQ==?= <frederic.mahe@cirad.fr>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Rob Herring <robh@kernel.org>,
-	Yixun Lan <dlan@kernel.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Alex Elder <elder@riscstar.com>,
-	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
-	linux-pci@vger.kernel.org, spacemit@lists.linux.dev,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20261117085508.83388-1-frederic.mahe@cirad.fr>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HOs/tYHX
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-8b4d86f5328so1923947b3.0
+        for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 13:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794952087; x=1795556887; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
+        b=HOs/tYHXBitJy9Icx8ZpJx6Ldvx2kX5NkhOIQEKI623nRpsmuGaG+qlHJho/bbas4Z
+         rJLI63Q8wzauM01UKDadH33U6y8fSG+cb4DNv2dEqW4tq2kyySRl/ayyuz6igcYnMe45
+         s3Q8y71gZmfTYWlUU7QH4McQEuMOYdPdjZBuqTPE7iIrixRVw2IHuU+uucmNfFvwtt1+
+         jdRZPUQ3CKqtkvEN4g7ok/8nuUXft/9jWN7fYUXfnE1anl4950gVuccBBcyIHe3c8XvX
+         PugrHAUqz0VBrdhzDqQwOxjpK6qv6CSYJ6j8bp1aCkYZLABUa1aWD1NyrETeAS8BX4tA
+         e5aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794952087; x=1795556887;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gWhTP+MsEZH11Xk/IKOvm1ABoNQtFuyWT71ie9/W1Ho=;
+        b=q5xCmyayRT+Ax/42YQ8FU8oDMNF/iZU4ny0JmL7NJO79d35BZw/5hg/ox9+ssXfbfR
+         a/OB3JqfYGy5RNI6M2vWdjjg+qdeO0ZZZ0H6Wq3+vi8W5bMFV/3izpiOY6mAWITtXs9U
+         Zi3bTCd6coSAk3Cl8OpLyE67+SX5R3IgVwTGq97DAd31PsbkUe5Z4gp5cvZ2DsvOz0Q8
+         egaBP5qtkIGg+3dvlm/Af9EbuXkl2HZ1d07YEob3HWYjIqi27SKVAOP47I0MkqtbOE/M
+         CwZpHnfrCceNn0mEAO9q9k8TmStM/oRqTDFtZ8d5ILfhaeqwqIF85arbFMssZ5G7aL8q
+         ROKg==
+X-Forwarded-Encrypted: i=1; AL+hErGQvUFoxipBscgn80i4BJtpGQq1NlymAR9v4TbAzl/V91ljOSCg/iBsHnMZrB8nODEaN+qIoaCebw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8hdnL9n6rtA1VcIL63PFZGNf/uY64NAsu/VCJtU6YydV2UdL0r
+	ofeGxBMOsT3bMUeP2XhIUFySRMvy4d20TURAZrStP71gVwRSPU2ee4la
+X-Gm-Gg: AZFdTZcFy7+RcutH0P/e9GnfGY00TAz2a5cDLWGYKta7L6tQEZCXD9KyCI/fJwZWk1j
+	z80KYZ1m1Nr+2qX6PDOtR1UDGfawkZOQAdWqFmS2YM69TUInddxKHRiI8uV/M8zAert+uMfpB2h
+	FK9uDpfUCCGW7BayQo/fFMyo8zUTVnfnyCq6tl0TNGernaU+AOMbjNboZASGZ+1S7GOlMkwHbgM
+	TeaxKlLUMI85kRvO31ARNyMcSTJqE2wBbDiLm8wzIzTzUQfJuV7gVsvn6PzYOQg0CY1jo9jNwuG
+	S4YW37s6CpZplJDVza/kMWfmQTAUhSVY54aJHl1C0Nq12jdLU9ntgeHujlAsbI5RDXQcUNgohsr
+	nDqyph8i7EDKi32/U9+ppPMFpoP62PP+/MWaWP+v0YQ0qekciwEO7nkG+9hPZ88fOnZ1BpnEMgq
+	NTDd+BZEvIlZ+4witdxTAPkEH8DoIgLJvLhQmP1r3jKF3SnY3T3W9iV3Mx1/MixVNDXQyGvw64E
+	rf4l+LNY0MOCrusTx3sGrLVMXcNDspwme9WhYv5kogbWN1n+MUoj8ELEbVv1Xw7iiRXKUMgM6s3
+	muuulOhWBttq3bV05v6FmoEt
+X-Received: by 2002:a05:690c:6502:b0:8b4:e2dc:3f2e with SMTP id 00721157ae682-8b4febccf0fmr3038007b3.8.1794952086607;
+        Tue, 17 Nov 2026 13:48:06 -0800 (PST)
+Received: from localhost ([120.244.9.31])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b4fe030a65sm7195267b3.15.2026.11.17.13.48.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 13:48:06 -0800 (PST)
+Date: Tue, 17 Nov 2026 16:48:02 -0500
+Message-ID: <19ceb44df3141049a955c2c30fe64766.docular.xu@gmail.com>
+From: Guodong Xu <docular.xu@gmail.com>
+To: Icenowy Zheng <uwu@icenowy.me>
+Cc: Cody Kang <codykang.hk@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
+ Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ dri-devel@lists.freedesktop.org,
+ linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 07/17] drm/spacemit: add Saturn DPU register model
+In-Reply-To: <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
+References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
+ <20260809-k3-display-v2-7-327d7910bf71@gmail.com>
+ <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -86,51 +116,29 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20261117085508.83388-1-frederic.mahe@cirad.fr>
-User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi Fr=C3=A9d=C3=A9ric,
+Hi Icenowy,
 
-On 2026-11-17 09:55, Fr=C3=A9d=C3=A9ric Mah=C3=A9 wrote:
-> On a Banana Pi BPI-F3, an NVMe SSD in the M.2 slot (pcie1) always comes
-> up at 2.5 GT/s, although the root port and the drive both support
-> 5 GT/s. The Directed Speed Change that dw_pcie_setup_rc() requests
-> before the LTSSM is enabled has no effect on K1. Setting Retrain Link
-> in the root port's Link Control from userspace brings the link to
-> 5 GT/s, so the link itself is fine.
->=20
-> Once the link is up, request the speed change again, wait for the
-> controller to clear SPEED_CHANGE (as pci-imx6 does), then briefly for
-> Link Status to report the new speed. A port with nothing behind it is
-> skipped after 100 ms.
->=20
-> With an SK hynix BC511, the link now trains at 5 GT/s x2 and fio
-> sequential read goes from 397 to 575-640 MB/s. Data verified with fio
-> crc32c. The empty pcie2 port behaves as before.
->=20
-> This change was developed with the help of Claude (Anthropic); I
-> reviewed and tested it on hardware.
->=20
-> Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
-> ---
-> The K1 PCIe cover letter says all ports run at 5 GT/s, so maybe this
-> depends on the drive or the firmware; on this board the link always came
-> up at 2.5 GT/s before this patch. Tested on top of v7.4-rc1 with "PCI:
-> spacemit: Ignore PERST# input in RC mode on K1" (applies cleanly without
-> it too).
->=20
->  drivers/pci/controller/dwc/pcie-spacemit-k1.c | 48 +++++++++++++++++++
->  1 file changed, 48 insertions(+)
+On Thu, 03 Sep 2026 20:08:10 +0800, Icenowy Zheng wrote:
+> 在 2026-08-09日的 21:14 +0800，Cody Kang via B4 Relay写道：
+> >  drivers/gpu/drm/spacemit/dpu/saturn_regs/dpu_int.h |  25 ++
+>
+> Is the slightly different K1 Saturn DPU registers considered?
 
-Thanks, I confirming this works well and greatly improves the NVMe=20
-performance. I have just tested it for a few hours, and I'll mail back=20
-if I encountered any stability issue on the long term. In the meantime:
+I compared them with the K1 BSP you mentioned offline [1]. Judging by
+the block, field and interrupt macro names, I agree with you that the
+K1 and the K3 use similar IP. But there are also important
+differences between the K1 and K3 registers, which is why I would not
+propose reusing these tables.
 
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
+For example, the blocks sit at different addresses, and most fields
+are at a different word or bit. In dpu_int.h, CFG_RDY_CLR is bit 4 on
+the K1 and bit 5 on the K3, and the underrun bit is 9 and 8.
 
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+IMHO a K1 port should add its own compatible, its own field header
+and its own backend file next to the K3 ones. What do you think?
+Hopefully you agree with me.
+
+[1] https://github.com/spacemit-com/linux-6.6/tree/k1-bl-v2.2.y/drivers/gpu/drm/spacemit/dpu/saturn_regs
+
+Guodong
