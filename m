@@ -1,88 +1,82 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794905420;
-	b=FxgotdGC5ick9niQsPElhBIASEXQTjkWEXfrSK133hrbdJG47JHQdsEHdqeEB7ZjGsoe
-	 oUOd9IFUy05PRGr7sa3jC2q4xZ2mxRPwHt/7OoLDOT9stNv5+yteveIj3QLiMPjy6RPcb
-	 M3aGBLwThwGL2yg13I+78ncSoN1b0zWa8II1PiECfRGLJA5NmTIMi9PuTkp4J1WPYeNPE
-	 IAIUXOvuzSax6W6XfKSsoDHK5TM/RwyHt01ncqvSQWTXyrF7Y2D1Yax0KAChR2lOsUl2x
-	 kM+enYNiWXucmsKZpWPPUXREhneEWupqf/c3lRulIQFYRHGf8VkTR5Ge7P0RV4lwnjQ==
+	t=1794905723;
+	b=hvku3a+uo2bPLyT6dXCkbGGe7Ve8o9uFG3NRO+g+9YG6mkfcsC76bVZ6sIjlAW/AQ3OE
+	 t14wQFeQ/1vECG1PyBKxAPObpg8oueyh/IeUyTojNkJ9hv9cYmKZXp/NjezBPnC87zBz1
+	 Mxq7MMaL6wXRj04JWWFt/+8lpZgXWWbQT9plPpBIJ/oSHPIDtRewL1bKAVIiK0kd5Ksmk
+	 Nk8GzIRQwZrWqtQhbj+ViQPZ/noVbSTPnYhHWur31Cnt5uzDiYUQmg1YjZBgrq9PXhxsy
+	 uJ+kN+6Zx3r6+bZUp16laV99FaEklVNtKWt0++uHKCUI1Z02VLUgS2xvu82EFi6xT2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794905420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794905723;
 	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
 	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=cFk1IC1N2ZxUgPOBN14J0ec3RFhEdGYuQcICO+AAQGg=;
-	b=fCEnOsSz2g0bz53jSKQJbVDZk6xWWTYdLhkpWNKONIzTb/DzybStfKOCW82c8loxoLf1
-	 DJfilIdWLwYIqPhWPGuNFlOY/Gp7jTzSGGxzN6T4pSdaTNUY8WVLXNFm8Eugqlcht3hw1
-	 vd1xtbsYlJYAqMW7hNPOdmq1AFr3kalW3obTucy5rloA+XpaYBVPj7I1iCxxug9dbu2y4
-	 ppT0h9ujhdc1xPkkNPMgW0pP0ZYgQA+vhkVKdg9Uuac7b+zlZnTrIi600reg08JtqBvEP
-	 MSPT7Ea3L1Hjc5O1www6bTn8q692LASQZ8AVkiPKuxIcd1l8dl8EZpD7JbnZvImrSyA==
+	 X-Mailer:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=YoSUKncv+j8yWkI1ZDcElbOhTKMX3MU43KfQwivUqRI=;
+	b=EADYK+Na0fM10cZSnd7OvLbppBICOKc8PmFc8xlgrOdC9z/oaR/8BAYzoQb92byRh1YJ
+	 PMIVN62K77JPReqFbijoZkYT14TpA2UD0lxxi0REyqr4WLvLO5SVV5jH25bPWabSz7QF2
+	 bqlgNldXB0hCfdDubMcWNmLRMpasP0u5JQAtJyFodLpL39hN5gOksZ0BWvmQOJfQwsUsC
+	 vSbov9liozbsm0cgytuWN6n9WVxO/gv4LtQ3wdC1zDCm9o+fJVtaXm4nM+8ZmmlZnYt3r
+	 H5wkGoj0hcfGaD4Cn1fVEVUqD76Dj1GRXTlJq7oHYGq/KB3W46ItaSsSDd8b92dHvtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=cirad.fr;
 	spf=pass smtp.mailfrom=cirad.fr;
-	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b="lX5Joh4/";
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=idZG3t6H;
 	arc=none smtp.remote-ip=194.199.235.221
 Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB28606A31C
-	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 08:50:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DBB28606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57560606A323
+	for <spacemit@lists.linux.dev>; Tue, 17 Nov 2026 08:55:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57560606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=lX5Joh4/
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=idZG3t6H
 Received: from retz.cirad.fr (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTPS id 7193C20DC645;
-	Tue, 17 Nov 2026 09:50:11 +0100 (CET)
+	by retz.cirad.fr (Postfix) with ESMTPS id 2F44220DC83D;
+	Tue, 17 Nov 2026 09:55:20 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by retz.cirad.fr (Postfix) with ESMTP id 4866720D7CCE;
-	Tue, 17 Nov 2026 09:50:11 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 4866720D7CCE
+	by retz.cirad.fr (Postfix) with ESMTP id 02A2A20DC645;
+	Tue, 17 Nov 2026 09:55:20 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 02A2A20DC645
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
-	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794905411;
-	bh=cFk1IC1N2ZxUgPOBN14J0ec3RFhEdGYuQcICO+AAQGg=;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1794905720;
+	bh=YoSUKncv+j8yWkI1ZDcElbOhTKMX3MU43KfQwivUqRI=;
 	h=From:To:Date:Message-ID:MIME-Version;
-	b=lX5Joh4/2q/HFpT9S7gUsWxhLdRTkgkbSKIDtJM4vHUc6hC8xnM3LcmqYItxlmY42
-	 Bt4pkPYgO6DenbyTxcWgAc8VKn6BDyjxF0OziEuWSY/hBx3y1vldJ3X4fIIki6Edof
-	 LnMTAg46hFwU/jq7ptIj82f8Cc+L5O0Efi7urudl+VQVbsGfHZelKqrKXPLb03qINa
-	 13fwAZW5aDrGrjPB4jLzJE6jdXhUFNjhIV3dkgSolKLQSxnXWy/wEw/S4ibuGfXCp/
-	 pZAI6z4LZlwxEBlpQSfc9TbZEl5zfhjJRzLWubVCwKDA0UV2kFB9R0KBLh/MzfEvEa
-	 kaJtkayVMZmUQ==
+	b=idZG3t6H6xRGsVi2TLW5bezCYq3xy1oVFURyzryQ9GXpQhy69wkKSzq48Cz/RSZr7
+	 7NQgoF+E6TIVPLrpq+iXLd3fgVhhZiAYA76YlzIikzYy1LxUWSSSteUlz+cTCnCJdo
+	 duOaFo+2r5cKXMliOMzbXzhfnjpxJ0oD0lDOUZawsGu/moRheKWm/F0Hc+MMyCCy/s
+	 MjNJrep/oM3R0LapuvuEZl371t/y3u9o4xTnI0B+wCuScVMulsx+14Ai6wbqJg4Cab
+	 9IJlaf8WOQv3EG7Il0I1fk+80TKSqtYUo9J1r3NVTNxooOJMvG5T0W/1Z3S2zfMlMR
+	 rWPfP6aURMzmA==
 X-Virus-Scanned: amavis at retz.cirad.fr
 Received: from retz.cirad.fr ([127.0.0.1])
  by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
- id 1n70Yc3tCfZi; Tue, 17 Nov 2026 09:50:11 +0100 (CET)
+ id KP3hYXsr1wK7; Tue, 17 Nov 2026 09:55:19 +0100 (CET)
 Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
-	by retz.cirad.fr (Postfix) with ESMTPSA id 35E1E20DC645;
-	Tue, 17 Nov 2026 09:50:10 +0100 (CET)
+	by retz.cirad.fr (Postfix) with ESMTPSA id 33F1520DC83D;
+	Tue, 17 Nov 2026 09:55:19 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
-To: Vlad Banea <montrealtango@gmail.com>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
 Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+	Rob Herring <robh@kernel.org>,
 	Yixun Lan <dlan@kernel.org>,
-	troy.mitchell@linux.spacemit.com,
-	wangruikang@iscas.ac.cn,
-	guodong.xu@oss.qualcomm.com,
-	jyc0019@gmail.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	Encrow Thorne <encrow.thorne@linux.spacemit.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	linux-pci@vger.kernel.org,
 	spacemit@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: give each PCIe port its own DMA window
-Date: Tue, 17 Nov 2026 09:49:36 +0100
-Message-ID: <20261117084938.82968-1-frederic.mahe@cirad.fr>
+Subject: [PATCH] PCI: spacemit-k1: Request the Gen2 speed change once the link is up
+Date: Tue, 17 Nov 2026 09:55:06 +0100
+Message-ID: <20261117085508.83388-1-frederic.mahe@cirad.fr>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261113023158.2872492-1-montrealtango@gmail.com>
-References: <20261113023158.2872492-1-montrealtango@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -95,26 +89,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 12, 2026 at 09:31:58PM -0500, Vlad Banea wrote:
-> The shared pcie-bus skips all three windows, bus 0x8000_0000-0xb7ff_fff=
-f,
-> which leaves CPU addresses 0x1_0000_0000-0x1_37ff_ffff unreachable from
-> every port. Give each port its own bus that skips only its own window.
+On a Banana Pi BPI-F3, an NVMe SSD in the M.2 slot (pcie1) always comes
+up at 2.5 GT/s, although the root port and the drive both support
+5 GT/s. The Directed Speed Change that dw_pcie_setup_rc() requests
+before the LTSSM is enabled has no effect on K1. Setting Retrain Link
+in the root port's Link Control from userspace brings the link to
+5 GT/s, so the link itself is fine.
 
-Tested on a Banana Pi BPI-F3 (16 GB) with an NVMe SSD on pcie1, on
-v7.4-rc1 plus "PCI: spacemit: Ignore PERST# input in RC mode on K1".
+Once the link is up, request the speed change again, wait for the
+controller to clear SPEED_CHANGE (as pci-imx6 does), then briefly for
+Link Status to report the new speed. A port with nothing behind it is
+skipped after 100 ms.
 
-For pages at known physical addresses (from /proc/self/pagemap), I did
-one 4 KiB O_DIRECT write and read per page and counted swiotlb_bounced
-events:
+With an SK hynix BC511, the link now trains at 5 GT/s x2 and fio
+sequential read goes from 397 to 575-640 MB/s. Data verified with fio
+crc32c. The empty pcie2 port behaves as before.
 
-  CPU range                    without        with this patch
-  0x1_0000_0000-0x1_0fff_ffff  1439/1439 bounced  0/864 bounced
-  0x1_1000_0000-0x1_1fff_ffff  all bounced        all bounced (pcie1's ow=
-n window)
+This change was developed with the help of Claude (Anthropic); I
+reviewed and tested it on hardware.
 
-Every page read back correctly in both cases, so DMA through bus
-0x8000_0000 works. fio with crc32c verify (16 GiB direct, 8 GiB
-buffered) also passed with both DTs.
+Signed-off-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+---
+The K1 PCIe cover letter says all ports run at 5 GT/s, so maybe this
+depends on the drive or the firmware; on this board the link always came
+up at 2.5 GT/s before this patch. Tested on top of v7.4-rc1 with "PCI:
+spacemit: Ignore PERST# input in RC mode on K1" (applies cleanly without
+it too).
 
-Tested-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr>
+ drivers/pci/controller/dwc/pcie-spacemit-k1.c | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-spacemit-k1.c b/drivers/pci/=
+controller/dwc/pcie-spacemit-k1.c
+index 92a71ea90..4acc14efa 100644
+--- a/drivers/pci/controller/dwc/pcie-spacemit-k1.c
++++ b/drivers/pci/controller/dwc/pcie-spacemit-k1.c
+@@ -11,6 +11,7 @@
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/gfp.h>
++#include <linux/iopoll.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/of.h>
+ #include <linux/phy/phy.h>
+@@ -209,6 +210,51 @@ static bool k1_pcie_link_up(struct dw_pcie *pci)
+ 	return (val & RDLH_LINK_UP) && (val & SMLH_LINK_UP);
+ }
+=20
++/*
++ * The Directed Speed Change requested by dw_pcie_setup_rc() before the
++ * link is started does not take effect on K1, and the link stays at
++ * 2.5 GT/s.  Request it again once the link is up.
++ */
++static void k1_pcie_speed_change(struct dw_pcie *pci)
++{
++	u8 offset =3D dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
++	bool up;
++	u16 sta;
++	u32 val;
++	int ret;
++
++	if (pci->max_link_speed < 2)
++		return;
++
++	/* Nothing to do if there is no device behind the port */
++	ret =3D read_poll_timeout(k1_pcie_link_up, up, up, 1000,
++				100 * USEC_PER_MSEC, false, pci);
++	if (ret)
++		return;
++
++	val =3D dw_pcie_readl_dbi(pci, LINK_WIDTH_SPEED_CTRL);
++	dw_pcie_writel_dbi(pci, LINK_WIDTH_SPEED_CTRL, val & ~SPEED_CHANGE);
++	dw_pcie_writel_dbi(pci, LINK_WIDTH_SPEED_CTRL, val | SPEED_CHANGE);
++
++	/* The controller clears SPEED_CHANGE when the speed change is done */
++	ret =3D read_poll_timeout(dw_pcie_readl_dbi, val, !(val & SPEED_CHANGE)=
+,
++				1000, 100 * USEC_PER_MSEC, false,
++				pci, LINK_WIDTH_SPEED_CTRL);
++	if (ret) {
++		dev_warn(pci->dev, "link speed change timed out\n");
++		return;
++	}
++
++	/*
++	 * LnkSta lags behind SPEED_CHANGE; wait a little for the new speed
++	 * (stays at 2.5 GT/s if the device is Gen1 only).
++	 */
++	read_poll_timeout(dw_pcie_readw_dbi, sta,
++			  FIELD_GET(PCI_EXP_LNKSTA_CLS, sta) > 1,
++			  1000, 20 * USEC_PER_MSEC, false,
++			  pci, offset + PCI_EXP_LNKSTA);
++}
++
+ static int k1_pcie_start_link(struct dw_pcie *pci)
+ {
+ 	struct k1_pcie *k1 =3D to_k1_pcie(pci);
+@@ -226,6 +272,8 @@ static int k1_pcie_start_link(struct dw_pcie *pci)
+ 	val |=3D PCIE_INTERRUPT_EN;
+ 	writel_relaxed(val, k1->link + K1_PHY_AHB_IRQ_EN);
+=20
++	k1_pcie_speed_change(pci);
++
+ 	return 0;
+ }
+=20
+
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+--=20
+2.47.3
+
