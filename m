@@ -1,111 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.128
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017028;
-	b=HLD6q1LYu8Bo6Q0+8T+v/3VTN3CRQKUoWFkTtapZlZBPKiaMMgoTh5JQtcrCTubofyMS
-	 d05Y0stKKjGq9OAR/2QG93KqKkyStL+N7RbiCanO8OoCS1k90HpCj/hUQ2reTrQbTnbG0
-	 xhH3GPq3nxV95mdX/5PJKAErtP4ddf4SXkuAK2BO7AFKScp+8952Yt8b8xGLja8BbNL/h
-	 Up5vw2+HfrpUa6N4jR7GU6I7hIGaSKjsruMKShOaFD0G7JqesUUV5YB+oyI5Rtp5UYihu
-	 OAyeIdCM+8fyl6o0Hh19d20JOGGMc0ckg/rUVH1mW8Dc7a9gfPK8jDAeqSvp0HCHV6A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017028;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=4lLupD4z98CK9UrD3eQfsjdZUJgyZTecsH4A98HzZRA=;
-	b=VyGBZEFKatcvq3lHzvlVApu5mi6l203gIMQsly6ezMlXmr6X3mDSAa9U8KS8aP7MQ9i8
-	 4NCuRREN9J2CMl1DfkMlhSb87tMjr24WDouDuZWHxyTTS9S3TK2X/P/naZEi0BQdFrGXW
-	 DEr19p/MFh4h9Mm+YuhzbmckPdcSmCYvruOOaQWiJsnCky3KaNGOKHShyjt52WYh1X+Te
-	 +U3/pbJhLZtKksYXxp5OA6LLehdi9Qik8SOl3qZJiLrtORCGA0NNHSNrs5KA1FARDtmo8
-	 E0oYgIR8tQ43VkryQP+LR2LyRHEjHeeAXt17bSg64N64q2R9G+UYrGAbTOtWDkdQ6ww==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1m9M+Xj;
-	arc=none smtp.remote-ip=74.125.227.128
-Received: from mail-pj2-f0.google.com (mail-pj2-f0.google.com [74.125.227.128])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=165.173.182.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1795017495;
+	b=qGOWiFvyfjYgaL3iPaJdUOdMC71fdxW5XzD4b3mkXiyMyv9fwqnRJTOGlbYRUDDlZIcD
+	 jGmugLZlTdTkcXpDVQ/AxFww68TY+i4MDCPGv8nr7DtV7vix3fQ4y2zoyoR1Ve0Mhgke7
+	 voCigUldxbzF6rVDiqQngcqjfn95zJWVJeSvoyyef1BkWbJa7QPN26ym5ucYtmMA/cXRq
+	 5b2rbBbuUKN3aiLTDchmiSFn5Rg+fTp7t/qFpPid4nJ/qFmokm926C8DI7q11NdNCGzBZ
+	 3zLecpEPpQMyx8XAH95THyMt2qwqpyA9JmAMwu4JayOzOh5HYRCXVV6qebSesazCV8A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017495;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-Zoho-Virus-Status:
+	 X-Zoho-AV-Stamp:X-ZohoMailClient;
+	bh=Usg8X43Ws7OPUhBE58OKMyvzlPQGZ0CY7Z/mpX0bURc=;
+	b=OCQMbtdiPjvz9RuVSSor5H9pwqmCpB4GUyD07aL6qnqWuGjxftmo43KO75LX1p+v1uyu
+	 o0evM1jDWUjquiO1LCpb7x3Gp5lQVBV5p1c1uh9WrKT1DMMpK/r7fSx9Tj9EQ/qFgw1as
+	 25IlKA9jT3+NvK+MTyrKf+0tJbQ9LuDRb/NXgcJ+ubGpYQKB/hfyBNF6ozqRM9dAkneyz
+	 bBYMX+1xkTBjdq8Wtp2OKVKAxnTGxKycsGA/NbQOn/DaPgGJ7GAeK6ia8U+Fdox90p//+
+	 ToITu/wx8jOAA0iA47NPrncZ2KcEQsU8HR2rblk4rDfaWGRMU/JLzvZySwZ3Xarrm/Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=ziyao.cc;
+	spf=pass smtp.mailfrom=ziyao.cc;
+	dkim=pass header.d=ziyao.cc header.i=@ziyao.cc header.a=rsa-sha256 header.s=zmail header.b=mXGxqpWZ;
+	arc=fail smtp.remote-ip=165.173.182.15
+Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB3606A32F
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 15:50:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8BAB3606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98524606A335
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 15:58:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 98524606A335
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ziyao.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziyao.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L1m9M+Xj
-Received: by mail-pj2-f0.google.com with SMTP id 98e67ed59e1d1-3b094d5f1b4so228982a91.0
-        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 07:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795017028; x=1795621828; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4lLupD4z98CK9UrD3eQfsjdZUJgyZTecsH4A98HzZRA=;
-        b=L1m9M+XjnLb0AbI0lDB7AQ1HVkMwyViMklFigzvY1vWVr+LigdR11UQD2jybZwAQV/
-         Hbmpgufet45e3PfSzYw/5W7QrCh5CbwsOEBSiIIkrU1S7ox99K2HzS0UABdJNbv6Rkjk
-         td4hKOeEddtoBx29D7x/lxt42IQd4cUhlsVR+ZwB1eSrWQjHjj5dcunBROZrZEURhv/8
-         CmRxHZsVMd6LroFkn2jgKWxthPwB27E4gQmAEUPEVfa7gsSsEX4aLFLajSpaksqNtx+f
-         FpnsEesamVYM4HA76TD32lWuHSO0wsOWF9pwt8jtMN16UPkEABgNFIx+DvUYGZLg4uIE
-         Rs1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795017028; x=1795621828;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4lLupD4z98CK9UrD3eQfsjdZUJgyZTecsH4A98HzZRA=;
-        b=YskUTjeZ1OC6Z2ZHvaXAC84MpeCCjiFfImgd6yTJq4SxSTJVMGpnL8pDtpnpXl8a6h
-         d4rzsbxFJeXT2DHNmh6onQQ62IbQJq687doP6Vfny0GRo1wtl7N920173tzhWVeCvdi2
-         qNAAHK0u3GTOb7+Rt2SiGbpZHbxgydE5xGwyTyOHXCAvqrFTUXACVp25+lpfQVQrUI8R
-         rhnXSBvq49j1jkuRsWjLUvTlfquwytMKqvHb/cID6qmqm/qJSb8HVYc6Nq55CxcduKRB
-         j98dNjVcOhTtJs7RvrOs2UVBP4daxN/2OZ9c11PIXk/SBx4bTRyr+I4Nwy4mbD15czuu
-         YNGQ==
-X-Forwarded-Encrypted: i=1; AL+hErHTgLTLiRn2xYerT63hoNKg8LOo4pSMILjtF32VyjuIwNmdgAEbCpIqP3+ytA9pomuk81axAyZtvg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/5h7Ziu9lK+H9tRH66/HORD0JH3SvR6zr8vTDvsC5HhxkqK1+u
-	XPRGzw9h03uhofgRUvBKzr+BRV4NXiNJxEgy4++gS+UgCvIxOI9ik+qG
-X-Gm-Gg: AZFdTZemhV3KHixJtaXbAP9Ciaa6MgxZ++YYxjyM5XEUj0cS0CbqP1+ybluC9jMR5rc
-	dtJgkfF9zzsE6TrcmScVheKsARN7W6IU/UPlS12Z75tY7vuXfqJweqLfWuzc+x+CdtrAPYf8BZV
-	2RmNmLePygQXJOrGwpHNT1R68YjCu6NCMvtL0SsxnRwyOaqykMBvnqczOZStbolOX1oAu/+JzxB
-	o609TWesEcuKgnp+QjLiQStSSHBG2HYkhbelVbAdpjeJOPxt+3OuH+lGoKiO26Vu/NM8LIz1wi4
-	pkAao3ckazKR7GxS68moxTt7XeAAeBrooZ4wZjsh6Eo2S2l5xLJbYEByUPcE/W9llMB7w6osk/z
-	5jn/LibNDILnF9JCjvJNOGAZvPbMLrNlsaUA5+TeQfqHsvcUju6OCZiBaxnaPvoEbm0G7VzcE55
-	kvdysrCB2089NBQjSCegalEmK4RawotsqmGsgd+Syo+cdUHalL3dBM0IGmU+X6uI1jRpNNrKdQi
-	XKfAKVmSW7F/MU53pqg7hIwd5xFJkIYHoOCAAvcNsFrY5xf5dA6o0+vwq76jK0qFBqTZZW0emr1
-	pFY=
-X-Received: by 2002:a17:90a:dfcf:b0:3ac:9d14:feb1 with SMTP id 98e67ed59e1d1-3b3d07c9ca5mr3201351a91.43.1795017027692;
-        Wed, 18 Nov 2026 07:50:27 -0800 (PST)
-Received: from localhost ([2403:2c80:6::107b])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde534ae0edsm193214a12.21.2026.11.18.07.50.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 07:50:27 -0800 (PST)
-Date: Wed, 18 Nov 2026 23:50:21 +0800
-Message-ID: <aee275aa2ebf093d8518e53c5d264064.codykang.hk@gmail.com>
-From: Cody Kang <codykang.hk@gmail.com>
-To: Icenowy Zheng <uwu@icenowy.me>
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Guodong Xu <docular.xu@gmail.com>, dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 11/17] drm/spacemit: add Saturn DPU DRM device driver
-In-Reply-To: <e492222feabaa5c72229c93ce75f9500e4346da1.camel@icenowy.me>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-11-327d7910bf71@gmail.com>
- <e492222feabaa5c72229c93ce75f9500e4346da1.camel@icenowy.me>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=ziyao.cc header.i=@ziyao.cc header.a=rsa-sha256 header.s=zmail header.b=mXGxqpWZ
+ARC-Seal: i=1; a=rsa-sha256; t=1795017478; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=aKZyVK/iul+awmkjrZ4kuKN+OjodgmfQHc1HR5F/rOku5wpVcBcGoNgE6xS6qEYjmpalvWBkcRTs6nHxmVTHCt7QU7A1xazObShsDMcV3AG2rifwZ/4KVqKwal8wx9TRNx2wQJvc3rQfpnEgm4boXPeyh2XZ52Wd43uFWjIIJoE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1795017478; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=jz/3H3A3oChBMYXVW8k3ME6DCqxX/fivj94e4R405A8=; 
+	b=Gksh+Ce5o5nrckoOiOmG43DdjBFNHTT8gI4YnDCHhmIFxgkVLuStLR/Lz+XsPcxIkgCqTlzcQhETZEp/TJ0RAP5tefuMrsaUZmKoIqA13CVVd3UyS1+u9JPzeHE4fJFXiuxljjXYhAfJ3NcThvKRfVLS7CpkFWLSRlSddHVb6Go=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=ziyao.cc;
+	spf=pass  smtp.mailfrom=me@ziyao.cc;
+	dmarc=pass header.from=<me@ziyao.cc>
+DKIM-Signature: a=rsa-sha256; b=mXGxqpWZsXT6I8C5aBcHiUxgAzoAL9pA3MtLq4B/joxYe8Bl4z8ZJlHLifcX0H3KKu8mEv0fwDQTJzPMHMTTLjzv61m/Y95MATStaMAcf4A5Oz/dxCNXNr9e5qZhCzsWqXAJ2mN7L5ag++9GRahDBCLdceN/1O4zuAh+q6+rIdI=; c=relaxed/relaxed; s=zmail; d=ziyao.cc; v=1; bh=Usg8X43Ws7OPUhBE58OKMyvzlPQGZ0CY7Z/mpX0bURc=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 17950174745448.173778142830997;
+	Wed, 18 Nov 2026 07:57:54 -0800 (PST)
+Date: Wed, 18 Nov 2026 15:57:44 +0000
+From: Yao Zi <me@ziyao.cc>
+To: Yixun Lan <dlan@kernel.org>,
+	=?iso-8859-1?Q?Fr=E9d=E9ric_Mah=E9?= <frederic.mahe@cirad.fr>
+Cc: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>,
+	Jerome Brunet <jbrunet+clk@baylibre.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.co>,
+	Haylen Chu <heylenay@4d2.org>,
+	Hung-Chun Tseng <alan.tseng.cs@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH 2/6] clk: spacemit: k1: Keep pll1_aud_245p7 enabled
+Message-ID: <av3K-MIfagKY1CcV@pie>
+References: <20261117205951.140146-1-frederic.mahe@cirad.fr>
+ <20261117205951.140146-3-frederic.mahe@cirad.fr>
+ <20261118111528-GKD156369@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -115,32 +79,52 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261118111528-GKD156369@kernel.org>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-0.2.13.1.5.4/294.994.34
+X-ZohoMailClient: External
 
-Hi Icenowy,
+On Wed, Nov 18, 2026 at 11:15:28AM +0000, Yixun Lan wrote:
+> Hi Frédéric,
+> 
+> I will forward to SpacemiT people, and ask them to clarify..
+> 
+> On 21:59 Tue 17 Nov     , Frédéric Mahé wrote:
+> > Accesses to the RCPU2 block (0xc0888000) hang once pll1_aud_245p7 is
+> Access which register? is the PWM register in RCPU2?
+> 
+> > gated: the CPU stops responding, even to NMIs. Nothing claims this
+> > clock in mainline, so clk_disable_unused() turns it off at boot, and
+> > probing an RCPU2 PWM afterwards hangs the board. The RCPU2 clock and
+> > reset registers live in the same block.
+> > 
+> Usually access IP block with clock gated off will cause system bus hang,
+> exactly the same scenario as you see here..
+> 
+> > Mark it critical, as was done for the K3 RCPU clock.
+> > 
+> It just happen to fix the issue, but doesn't sound like a correct fix,
+> usually, it can be fixed with correct clock topology 
+> 
+> > Tested on a BPI-F3: without this, probing an RCPU2 PWM hangs the
+> > board; with it, no hang, also with no PWM in use.
+> > 
+> ..
+> > Written with help from Claude (Anthropic); reviewed and tested on hardware.
+> > 
+> maybe just "Assisted-by: LLM"
 
-On Thu, 03 Sep 2026 20:07:32 +0800, Icenowy Zheng wrote:
-> åœ¨ 2026-08-09æ—¥çš„ 21:14 +0800ï¼ŒCody Kang via B4 Relayå†™é“ï¼š
-> > From: Cody Kang <codykang.hk@gmail.com>
-[...]
-> > +	drm->mode_config.min_width = 1;
-> > +	drm->mode_config.min_height = 1;
-> > +	/* K3 user manual: each DPU scans out at most 3840x2160@60
-> > */
-> > +	drm->mode_config.max_width = 3840;
-> > +	drm->mode_config.max_height = 2160;
->
-> This is for the biggest possible framebuffer instead of the possible
-> scanout pixel count.
->
-> The width here should be based on the maximum allowed pitch of the
-> display controller instead of the single-GPU maximum size, otherwise it
-> won't be able to drive two 3840x2160 screens in a side-by-side
-> configuration because this will create a 7680x2160 framebuffer.
+I think this tag has been deprecated in commit 1e035297ffda ("docs:
+remove Assisted-by references"), but mentioning code origin is still
+required by process/generated-content.rst.
 
-Thanks for the review. Agreed; will fix in v3.
+The notice could indeed be moved to the cover letter instead.
 
-v3 will take max_width/max_height from what the RDMA registers can
-address (a 16-bit byte stride and 16-bit image dimensions), and move
-the 3840x2160 limit into the CRTC's mode_valid.
+-- 
+Thanks,
+Yao Zi
 
-Cody
+Meow-mrrp-mrow, I'm a cat.
