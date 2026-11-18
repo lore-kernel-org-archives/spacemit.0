@@ -1,82 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794998988;
-	b=0L4uKCvrN3L7je2HqKctycr/9re162WzAHKM6Pb+PJSHuJoCJjV8SGNH1KjojYDKm76F
-	 V19mz7XDT+EsAAWdZmnQgbz9gVs3ylyDTfjjaa20PQzm0PJBEAj9GBYWrJoBlp7QWsPGc
-	 QmMVzIuxIpPVLV+odYNjFNPRo9m5PWd9HnGxX9r4/bOrXGdwKIB3tdSR5ZkKWx5H1LaOA
-	 y7Jv8n4wQ5AzqOm0U7WQJGnvkHup2+dD6xNYHPJz0mROwpobtigUsSonL0drQ3B5z8gzT
-	 EcpQZM9Wu1SJhVmF0/iJkja9sEwH3SUAYR7Ks1dF4xRYzMROKIZqK6eOHDtfJi742Sw==
+	t=1794998999;
+	b=XKpXaVEtprtmg+1XeSK0go+rf2PfrlseSt65LefPz3cocV5XT1DGrrEoPhnY4hjIKYYH
+	 JaoIBKH5IvPws5HrCHYXdH3DkwSje5JsG63EAb6Bv8+a34u4COrEvxsVNbYOOIP3Y2BF3
+	 9Znh6AtS4v8NMxVf8nZkQq5II9aXRr0/GWsS5nvL/dMw3+cMROASCGhSvIDvpLzkT4NgG
+	 1cIxfxxhx8FqrTbMDrM4cfJFtxa+FD0fXTnvUYwcjOYbbCQOJj+zU1rAv+lf1Hd/jB8UO
+	 GRo2q7a9yVz/t42NWz9BDEpSBLBGft6XSgoB/49IhYPHo0+/AH//OUFYY5PDOarP1OQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794998988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794998999;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=LIcWmceFZYgQietyQnWOcEmUtfnOG0g7rm/baVCxi6w=;
-	b=lDr5bgXif8AUPVMu7uC/PkMh50l+V9YdWXGKKYRSQ4web6+cYKulbEuDGo1UHzuMR3LZ
-	 qRASHJaMYEA7XHuctZ4abpOxQWW8ueDUboy7D5RYPcBsLe4/NKZcUvqzmvWeqSjHhRh6I
-	 KREsvrAOzv0n/6e1FskYak2RqbzpY1+eteBfAD25rLM+rbasNXk8oCyzajnPWt1Dd7fRh
-	 5EOjKLpMmyBDrpCJrJsAKz3sutVSzHYCopIIQMq2CBcVyxTtv4LmJu0Suo5fnKYCaQb1r
-	 nLGri9TjJSf93njEeKaQuu07jzhS8JmjphHTelD5MLcQiO1glseYYIXF0oAeouK3D9Q==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
+	b=jI94WFCx4IhVX1uQTR5ZYQOzKxFrkkPgXVMzCjRV8pAbDh3VrMQu26G6YJC7xemtyZyw
+	 /C/b29UpMNIph09gyJTBe2ImqnpZJSXeW2MCEM+8umtLda05KtobCwXVuZm7hifr70ZfJ
+	 qQtI2PuCmWQ3UBH2VhQq0cOOP9HuC4mpjWZtGmv9qInO7FnD55ulow87MkGXlAoEul06L
+	 Obh7B2iah0CLbrNjFlEUlj+39nxLOIQ2Ltqiheou/bTlVI/dLVM5pYWoY7t8G8rb6eqiq
+	 QFqo4yP/1QMkpg0mkD17+RX1mLiCUrRbhOd1jvzSfaZ/TscHPUD2P80NAM0cyxC5VnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F7uA2SHY;
-	arc=none smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="C/LKW4Lu";
+	arc=none smtp.remote-ip=74.125.82.170
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6C7606A33E
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:49:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A6C7606A33E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C0606A32F
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:49:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 363C0606A32F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F7uA2SHY
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-381d542bc29so1610268eec.1
-        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 02:49:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C/LKW4Lu
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-38318d69173so199374eec.0
+        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 02:49:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794998987; x=1795603787; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LIcWmceFZYgQietyQnWOcEmUtfnOG0g7rm/baVCxi6w=;
-        b=F7uA2SHYWTnMQM/c2RxVbHhDUxWlH4KHbanjnazncYU8i3tb7ieEQIrooNCCjT6n4X
-         DyhSMSOKiyxsWe16w6XvrBfovo29jL3i3yuY84sLb8gSYDGuEulkh45JEs9Pg+pS1QbZ
-         X2b6c7yakjQoUR4tCOIcixCnQnTswc3QJHLT9sLcodcYsllpZ5OudNnixdp9gAbN6uT1
-         nuamq2JGN8usp34Ni2eXEqluXrY4fzfdbEe1NSgX4KzTYJTtp1mL+insFw+qmQisIFgF
-         RSVpjgFrzfU82LxGQ8UXkz41wjcwLPqq7eJfPQNHLIJWyAMiIy7i5utKfN6YIGYrF5kG
-         oogw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794998987; x=1795603787;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20260707; t=1794998998; x=1795603798; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LIcWmceFZYgQietyQnWOcEmUtfnOG0g7rm/baVCxi6w=;
-        b=mgV3t93q3MYZAZIMauA//hdMctSqCnivyqB+eI2vTKOaUhhdaWGzEv90/jumdfIAYW
-         DVJEJmjVSaODBNiVWH0b+iv6AqxVVlF4STCnzeKxezkrhTeoy90Vb1UUWhD2Qwo5wB56
-         QzfbaJ6kJ66Dsa//tDr4rL47MI48P2MiRqPU7L46FCRb9EL8F1t44/7vh/6QPzxwChAI
-         LEZPgGgdwiBxWIeNoZl2RNwZxFJM1vqqBFbkOIAVyYXZWhFz5wb7AyxxkOCFsd4wtqLx
-         lp0UAVBmvYVAHk1TY0Mgyh4pZNjGb57WYQg43h1ZCqKam+wwvV64r0kNEZe4wwRPJw8T
-         aO6g==
-X-Forwarded-Encrypted: i=1; AL+hErENP4jvVYBHzno94WQC8URfPAUAkhugRNEfFed952SMv4tOHQRbZ+SMnuQL1cbGZbUAsn0cxnF8Tw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+ntU0BRGHuWxgy0GretNnVHZgDANGr+agQaOSfF9h7TiQYaevk
-	heSsx1FbJa8SRNgCdBT1PwdtG+TJ+AZHvIqYMcV7t5cTld2ROU4wi/0r
-X-Gm-Gg: AZFdTZcdPnBCacVVTnSVSi87coB9FcSyRW18ENmJt7sez4nPGS1m/zgKv5h/OzWP88I
-	BOETCfr5EvCVggqfiYL7Y3CV0lGO/WoYrjYkPdwhJIc+ffXs8r9VEE41WLc+CbgED0Ypkln5FVk
-	ThpIY+sN2RiA+XI/Q8ojS49wfkcbXsS6KV01OHWl1iOfvvPXkVLiFeFR6Bzj+qS2fdPe+M0M64e
-	ekU1yfDx7RmdAFVG4mst2ApxaQl/tzo2gbZ+wobnMeDkioOjhMFb5QL1X9InNiWo+CQaz0P4Br2
-	9OBBRcQono2q53AL3g83NM8R1QhSZT10UIr7zN9YxogQR284zoDHb4YyMQiOv+6SHMGUjlVP2jn
-	ExCSketoayd1z7A3txBs51NZY9PBA3wQ5Hax7DmEoEZ8170Ez6/gx1uy49Q+WrYj0WrgkotFtF8
-	HTZ4Kiymzy7/Gq1kOvKEGsyF53p6XWWrBZRKeOkHt1WQ4HFWTJJbrHVODifwZ4+rsbBiWgCXEy4
-	3iPmbik13K56adieO6LQ7qyt49KA9v8U7ZblXtOLL1BHT5qZGpMWvT4EbvpHoMx5mEKkmD/EhS+
-	hFQsx4q9l34u7BGCrWSDDJLrj33eySf6
-X-Received: by 2002:a05:7301:fc13:b0:369:f70e:bd40 with SMTP id 5a478bee46e88-38280377e84mr2164257eec.16.1794998986480;
-        Wed, 18 Nov 2026 02:49:46 -0800 (PST)
+        bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
+        b=C/LKW4LuMjSzb/lMdHjTt3vew+zvg6vncn2QetmVh2So+C65eeQuoay0oIfC6MmjJj
+         utTmjcNKtD6ggRa539X+3lXEiyKdwq/Zz184Ar4oBYUp6wqkaSFnlgDLRwihhlPrpzVv
+         fRIml4xGteP8R90dUMy/tubhZK8UlKBtORmiOjyT5q1CS9IPqNkbS3Rc8AFRqvv4cO6P
+         MlgvclssBKc7jE0ESABUp8DuhYFYrVBuLFQb1Vo3cbA36iHUlVg8akBDU49IXwaUq0k4
+         HjVV3bC2itqzYPw8uEdvZPPkm9TCmsg+SDhmJq9ZQPZhHrvdgssokvAOREteOLCcvTIr
+         EE4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794998998; x=1795603798;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
+        b=pdmJN1LyJI7vha1nmG9tEIphDCXefLVqRMdYp5GueHCk6BV0h+wYwiNAe6g/yxSzlP
+         +YvbgUGpCT0CM/DAsPm1wRxMn6Xeiu2VhKyG3FmIf06dSHb8mv8YkZFteII22cukPeqU
+         h/Nyi+vfmfFbsnR3Gn3V/Jgbtkg0Xy3NPtbAuWxG05fEeP2MoeYBqKAE84NNq1PwLHvL
+         WkjvZ0xHN7iT46TdxxedEE6pPqvs/AvR041jJI4vrol+TRoZYiV2fzxvJ1gu/egNJYOj
+         GxDd5ZGxHiDSwqFXrkMzZDkE+Aui3mKqVayZemipTZdvNHiP7K+GmB120MZ3Yh4+AHuN
+         S0HQ==
+X-Forwarded-Encrypted: i=1; AL+hErHMMpXcdq5nLbkNNL2bhni7F19tC9q5KsAUffGP10wmia7R4d08fPh9W6V+ID5wOC8tnIHdQvbM8g==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9LbTxion7+Bqdj9CXAmMOTJR/eah9Naf24ghCvwPXTBEyk+NJW
+	SI7lvZy4ov1qkkcJccGvOKNtIPAZNSOYgsCyM4YzqIABy+00X+e+Wm4t
+X-Gm-Gg: AZFdTZeJWtee4KopSKlLrJX6qeSF1evrUkxUCJHCJvaOqQ2ctW4rkv6UMrzo3+k9ju6
+	rQuCevyFOeKN4BTo/NxCgbkipGtSF1z0j5/oHsa2vx82LIL6B5oleXdQxz/JWm4ppQZTg2eFY3Q
+	3bODUOd5eCCaPN9jzHGasgk45UYE45KlKite45V/dsJnVXCwJZoerNJ5pjghzRM3znpPjfG0Fzj
+	GeBAD+Qc6tvEcpIDPWagdCTNxLv/wfX4apQct8O/dfGsNiL08Xd8EUjQgJSGjfTgRpYJSbs/bmT
+	yHqukwYVHc4QQcRzw62WvPRLCgUvnJIfWQaqQuX0Pytk6U+9p4FNDoWdzneH1fMd6ejx7mETdO1
+	CKMZJmhq2QgsLgIE75V15oMMpttIIFY1jR7v0NCS+Xitul0ba3kGXtmTJ2Q1qNBNs8WC9uurYCC
+	4sfMUMURFPjanPLc8vruOR5IMwUsvrZxDIEo4stRywu9QIXxNH0foJ3iMWsH/QZ1xBob1rtZxj/
+	1IHe9tEJ9eCls1Lvn6OhghkBKePz7e2QzMryCE4O0I8cEz66XRWtOXUS3mY0EQVTMNJt2E2YWzx
+	FCDsdCNsyAQOte1Pa67XabdpczrNVCBX
+X-Received: by 2002:a05:7300:d088:b0:381:a911:1772 with SMTP id 5a478bee46e88-38281215ba2mr2333979eec.22.1794998998227;
+        Wed, 18 Nov 2026 02:49:58 -0800 (PST)
 Received: from archl-rock5b ([45.112.0.182])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a45260a8sm11729913eec.3.2026.11.18.02.49.40
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a45260a8sm11729913eec.3.2026.11.18.02.49.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 02:49:45 -0800 (PST)
+        Wed, 18 Nov 2026 02:49:56 -0800 (PST)
 From: Anand Moon <linux.amoon@gmail.com>
 To: Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
@@ -93,12 +94,13 @@ To: Paul Walmsley <pjw@kernel.org>,
 	linux-i2c@vger.kernel.org (open list:I2C SUBSYSTEM HOST DRIVERS),
 	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
 	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
-Cc: Anand Moon <linux.amoon@gmail.com>,
-	Alex Elder <elder@riscstar.com>
-Subject: [PATCH v2 1/3] i2c: spacemit: Avoid sleeping during bus reset in atomic context
-Date: Wed, 18 Nov 2026 16:19:13 +0530
-Message-ID: <20261118104935.1716-1-linux.amoon@gmail.com>
+Cc: Anand Moon <linux.amoon@gmail.com>
+Subject: [PATCH v2 2/3] riscv: sbi: Register SRST handlers with firmware priority
+Date: Wed, 18 Nov 2026 16:19:14 +0530
+Message-ID: <20261118104935.1716-2-linux.amoon@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118104935.1716-1-linux.amoon@gmail.com>
+References: <20261118104935.1716-1-linux.amoon@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -110,44 +112,110 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The spacemit_i2c_conditionally_reset_bus() function uses usleep_range()
-to wait after triggering a bus reset request. However, this function can
-be invoked during atomic I2C transfers (such as power-off or restart
-handlers running in atomic notifier chains), where sleeping is illegal.
+The SBI System Reset (SRST) extension currently registers its poweroff
+handler using register_platform_power_off(), which assigns it a lower
+priority than the default PMIC poweroff handlers.
 
-Replace the sleep operation with the driver's internal helper,
-spacemit_i2c_delay(), which conditionally uses udelay() when running in
-an atomic context, avoiding "scheduling while atomic" bugs.
+On platforms where OpenSBI handles system poweroff, a PMIC handler may
+run first and perform I2C-backed regmap operations in atomic context,
+triggering invalid wait context and scheduling-while-atomic warnings.
 
-Fixes: 5dd75dac1b35 ("i2c: spacemit: introduce pio for k1")
+Register both SBI SRST restart and poweroff handlers using
+register_sys_off_handler() with SYS_OFF_PRIO_FIRMWARE. This gives firmware
+handlers precedence over default-priority PMIC handlers and avoids
+board-specific workarounds in individual PMIC drivers.
+
+Defer handler registration to a device initcall because sbi_init() runs
+during early architecture initialization, before dynamic memory
+allocation required by register_sys_off_handler() is available.
+
+Preserve warm and cold reboot selection, retain the existing legacy
+poweroff fallback, and report handler registration failures.
+
 Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Alex Elder <elder@riscstar.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: Aurelien Jarno <aurelien@aurel32.net>
+Suggested-by: Aurelien Jarno <aurelien@aurel32.net>
 Signed-off-by: Anand Moon <linux.amoon@gmail.com>
 ---
-v1: https://lore.kernel.org/all/20261110061429.2036-1-linux.amoon@gmail.com/
-	collected all te reviewed-by
+New patch:
+   Link: https://lore.kernel.org/all/20261110061429.2036-2-linux.amoon@gmail.com/
 ---
- drivers/i2c/busses/i2c-k1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/sbi.c | 43 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-k1.c b/drivers/i2c/busses/i2c-k1.c
-index ff32876e24d3..f4b21d7efaaf 100644
---- a/drivers/i2c/busses/i2c-k1.c
-+++ b/drivers/i2c/busses/i2c-k1.c
-@@ -332,7 +332,7 @@ static void spacemit_i2c_conditionally_reset_bus(struct spacemit_i2c_dev *i2c)
- 		writel(FIELD_PREP(SPACEMIT_RCR_FIELD_RST_CYC, 1),
- 		       i2c->base + SPACEMIT_IRCR);
- 		writel(SPACEMIT_CR_RSTREQ, i2c->base + SPACEMIT_ICR);
--		usleep_range(20, 30);
-+		spacemit_i2c_delay(i2c, 20);
- 	}
+diff --git a/arch/riscv/kernel/sbi.c b/arch/riscv/kernel/sbi.c
+index af1ccea222f1..ab6e5bf25411 100644
+--- a/arch/riscv/kernel/sbi.c
++++ b/arch/riscv/kernel/sbi.c
+@@ -512,23 +512,50 @@ static void sbi_srst_reset(unsigned long type, unsigned long reason)
+ 		__func__, type, reason);
+ }
  
- 	/* check sda again here */
-
-base-commit: 20eef29b7c8465ac98d7dd6d6f2ac07a8d8056ca
+-static int sbi_srst_reboot(struct notifier_block *this,
+-			   unsigned long mode, void *cmd)
++static int sbi_srst_reboot(struct sys_off_data *data)
+ {
+-	sbi_srst_reset((mode == REBOOT_WARM || mode == REBOOT_SOFT) ?
++	sbi_srst_reset((reboot_mode == REBOOT_WARM ||
++			reboot_mode == REBOOT_SOFT) ?
+ 		       SBI_SRST_RESET_TYPE_WARM_REBOOT :
+ 		       SBI_SRST_RESET_TYPE_COLD_REBOOT,
+ 		       SBI_SRST_RESET_REASON_NONE);
++
+ 	return NOTIFY_DONE;
+ }
+ 
+-static struct notifier_block sbi_srst_reboot_nb;
+-
+-static void sbi_srst_power_off(void)
++static int sbi_srst_power_off(struct sys_off_data *data)
+ {
+ 	sbi_srst_reset(SBI_SRST_RESET_TYPE_SHUTDOWN,
+ 		       SBI_SRST_RESET_REASON_NONE);
++
++	return NOTIFY_DONE;
++}
++
++static int __init sbi_srst_sys_off_init(void)
++{
++	struct sys_off_handler *handler;
++
++	if (sbi_spec_version < sbi_mk_version(0, 3) ||
++	    !sbi_probe_extension(SBI_EXT_SRST))
++		return 0;
++
++	handler = register_sys_off_handler(SYS_OFF_MODE_RESTART,
++					   SYS_OFF_PRIO_FIRMWARE,
++					   sbi_srst_reboot, NULL);
++	if (IS_ERR(handler))
++		pr_warn("Failed to register SBI SRST restart handler: %ld\n",
++			PTR_ERR(handler));
++
++	handler = register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
++					   SYS_OFF_PRIO_FIRMWARE,
++					   sbi_srst_power_off, NULL);
++	if (IS_ERR(handler))
++		pr_warn("Failed to register SBI SRST poweroff handler: %ld\n",
++			PTR_ERR(handler));
++
++	return 0;
+ }
++device_initcall(sbi_srst_sys_off_init);
+ 
+ /**
+  * sbi_probe_extension() - Check if an SBI extension ID is supported or not.
+@@ -677,11 +704,7 @@ void __init sbi_init(void)
+ 		if (sbi_spec_version >= sbi_mk_version(0, 3) &&
+ 		    sbi_probe_extension(SBI_EXT_SRST)) {
+ 			pr_info("SBI SRST extension detected\n");
+-			register_platform_power_off(sbi_srst_power_off);
+ 			srst_power_off = true;
+-			sbi_srst_reboot_nb.notifier_call = sbi_srst_reboot;
+-			sbi_srst_reboot_nb.priority = 192;
+-			register_restart_handler(&sbi_srst_reboot_nb);
+ 		}
+ 		if (sbi_spec_version >= sbi_mk_version(2, 0) &&
+ 		    sbi_probe_extension(SBI_EXT_DBCN) > 0) {
 -- 
 2.56.0
 
