@@ -1,83 +1,83 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794998999;
-	b=XKpXaVEtprtmg+1XeSK0go+rf2PfrlseSt65LefPz3cocV5XT1DGrrEoPhnY4hjIKYYH
-	 JaoIBKH5IvPws5HrCHYXdH3DkwSje5JsG63EAb6Bv8+a34u4COrEvxsVNbYOOIP3Y2BF3
-	 9Znh6AtS4v8NMxVf8nZkQq5II9aXRr0/GWsS5nvL/dMw3+cMROASCGhSvIDvpLzkT4NgG
-	 1cIxfxxhx8FqrTbMDrM4cfJFtxa+FD0fXTnvUYwcjOYbbCQOJj+zU1rAv+lf1Hd/jB8UO
-	 GRo2q7a9yVz/t42NWz9BDEpSBLBGft6XSgoB/49IhYPHo0+/AH//OUFYY5PDOarP1OQ==
+	t=1794999010;
+	b=fg8ku5LxvNDTPrXLhjJylhu7uBxwHbzFf2tDEcl2EJ00As10TBS17qrknARfj99wwyV9
+	 SerxBK1KAzEo7LQoGwSWqxOqFdNEeq0/dQnpOwW1404u4ftjzkBhxJcZBGeVmcpjm5+w3
+	 AZIgsUer5vrBBmdbYV0VbAy0Pxa0dkFYVj+zVMqh8NH161BR3Qr38TFF0opuN5SB5iTHl
+	 wK4WVe4Lm5ycCPqmE/Kw+sPoVmnvYU0s1DxNsggbcgkoO27HmmNtmPD8I1/WDWCEcIZ+p
+	 qI6jYDXIsAU3KLuG+7YuXEuZJlqfZptrkzuxIPzg5VPP3x5DyQksDZIxZAErg93XjpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794998999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794999010;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
-	b=jI94WFCx4IhVX1uQTR5ZYQOzKxFrkkPgXVMzCjRV8pAbDh3VrMQu26G6YJC7xemtyZyw
-	 /C/b29UpMNIph09gyJTBe2ImqnpZJSXeW2MCEM+8umtLda05KtobCwXVuZm7hifr70ZfJ
-	 qQtI2PuCmWQ3UBH2VhQq0cOOP9HuC4mpjWZtGmv9qInO7FnD55ulow87MkGXlAoEul06L
-	 Obh7B2iah0CLbrNjFlEUlj+39nxLOIQ2Ltqiheou/bTlVI/dLVM5pYWoY7t8G8rb6eqiq
-	 QFqo4yP/1QMkpg0mkD17+RX1mLiCUrRbhOd1jvzSfaZ/TscHPUD2P80NAM0cyxC5VnQ==
+	bh=pcrm3vnLSGimQb5rCI5RJTtZbp3UKYK7ig1rjNTiXnM=;
+	b=fFiNTxIFHv61OOPj9loKRs/h/JBcJs6VkpRyyRClKKVS8eOtXllG5H9fagxEe6Gguv0A
+	 eq/aYZcvg/bVlEMAUEgprHpn1z7in+r/kOWGSk9TGHxfqpYz+tuNC6IAgbTeLC5Lc952U
+	 ENlvyuC2SMGb4wVD8+i7sZAFHHy7Uedxy/5MuAMP0Ood0tL3pZn6/aY+spGh/tDdeF+6E
+	 c8btoOYUdBgBbXEKp/2e/o0hbBH4nMKGkdKE/N21lRxE1McLHfaAmy98D2ZaRxaO2bvVi
+	 jdCAUCJSuD4aPakIT6hufJs3WM6IKYBT8uB015JFP2qMU7OpbXDFgTJt/lkAcrD7c4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="C/LKW4Lu";
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gXWW839u;
 	arc=none smtp.remote-ip=74.125.82.170
 Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363C0606A32F
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:49:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 363C0606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC970606A32C
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:50:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC970606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C/LKW4Lu
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-38318d69173so199374eec.0
-        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 02:49:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gXWW839u
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-38318d69173so199641eec.0
+        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 02:50:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794998998; x=1795603798; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794999009; x=1795603809; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
-        b=C/LKW4LuMjSzb/lMdHjTt3vew+zvg6vncn2QetmVh2So+C65eeQuoay0oIfC6MmjJj
-         utTmjcNKtD6ggRa539X+3lXEiyKdwq/Zz184Ar4oBYUp6wqkaSFnlgDLRwihhlPrpzVv
-         fRIml4xGteP8R90dUMy/tubhZK8UlKBtORmiOjyT5q1CS9IPqNkbS3Rc8AFRqvv4cO6P
-         MlgvclssBKc7jE0ESABUp8DuhYFYrVBuLFQb1Vo3cbA36iHUlVg8akBDU49IXwaUq0k4
-         HjVV3bC2itqzYPw8uEdvZPPkm9TCmsg+SDhmJq9ZQPZhHrvdgssokvAOREteOLCcvTIr
-         EE4A==
+        bh=pcrm3vnLSGimQb5rCI5RJTtZbp3UKYK7ig1rjNTiXnM=;
+        b=gXWW839unK1I0CzvQQ4Nvgivcn6ccBLJH4na46qysA5uDf3SRJofwDfvUyHepgYliC
+         S8Ze6QXtmSPHb+onMzWigzz2xX4AC/59Ak6iTfyqwO4pIC4PZRf77/VW8OZaapwwKKV+
+         BpzoPLN/lYbTS53SUFqXzJbHiOUA+A/msoHw9TPcAgAtJ8MNNaZWLOwxBWc7JzKzJFae
+         bGxtQJoZqRH4SrUGYOCyXvVntF8Vk/I2TxOXf2zqHYIawggEmGFIcMj3wvgQEZBp4gI3
+         BjDg/cOHyPgNFF9HNga8ZkwyvuGa782SCGm/eiPZY5unhRWUpSgZ7paTDhfEFOBns+1o
+         9NmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794998998; x=1795603798;
+        d=1e100.net; s=20260707; t=1794999009; x=1795603809;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=fimuKL704+w6i+p1mK714enmZrR4sYS+1W8BVN4RDvI=;
-        b=pdmJN1LyJI7vha1nmG9tEIphDCXefLVqRMdYp5GueHCk6BV0h+wYwiNAe6g/yxSzlP
-         +YvbgUGpCT0CM/DAsPm1wRxMn6Xeiu2VhKyG3FmIf06dSHb8mv8YkZFteII22cukPeqU
-         h/Nyi+vfmfFbsnR3Gn3V/Jgbtkg0Xy3NPtbAuWxG05fEeP2MoeYBqKAE84NNq1PwLHvL
-         WkjvZ0xHN7iT46TdxxedEE6pPqvs/AvR041jJI4vrol+TRoZYiV2fzxvJ1gu/egNJYOj
-         GxDd5ZGxHiDSwqFXrkMzZDkE+Aui3mKqVayZemipTZdvNHiP7K+GmB120MZ3Yh4+AHuN
-         S0HQ==
-X-Forwarded-Encrypted: i=1; AL+hErHMMpXcdq5nLbkNNL2bhni7F19tC9q5KsAUffGP10wmia7R4d08fPh9W6V+ID5wOC8tnIHdQvbM8g==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9LbTxion7+Bqdj9CXAmMOTJR/eah9Naf24ghCvwPXTBEyk+NJW
-	SI7lvZy4ov1qkkcJccGvOKNtIPAZNSOYgsCyM4YzqIABy+00X+e+Wm4t
-X-Gm-Gg: AZFdTZeJWtee4KopSKlLrJX6qeSF1evrUkxUCJHCJvaOqQ2ctW4rkv6UMrzo3+k9ju6
-	rQuCevyFOeKN4BTo/NxCgbkipGtSF1z0j5/oHsa2vx82LIL6B5oleXdQxz/JWm4ppQZTg2eFY3Q
-	3bODUOd5eCCaPN9jzHGasgk45UYE45KlKite45V/dsJnVXCwJZoerNJ5pjghzRM3znpPjfG0Fzj
-	GeBAD+Qc6tvEcpIDPWagdCTNxLv/wfX4apQct8O/dfGsNiL08Xd8EUjQgJSGjfTgRpYJSbs/bmT
-	yHqukwYVHc4QQcRzw62WvPRLCgUvnJIfWQaqQuX0Pytk6U+9p4FNDoWdzneH1fMd6ejx7mETdO1
-	CKMZJmhq2QgsLgIE75V15oMMpttIIFY1jR7v0NCS+Xitul0ba3kGXtmTJ2Q1qNBNs8WC9uurYCC
-	4sfMUMURFPjanPLc8vruOR5IMwUsvrZxDIEo4stRywu9QIXxNH0foJ3iMWsH/QZ1xBob1rtZxj/
-	1IHe9tEJ9eCls1Lvn6OhghkBKePz7e2QzMryCE4O0I8cEz66XRWtOXUS3mY0EQVTMNJt2E2YWzx
-	FCDsdCNsyAQOte1Pa67XabdpczrNVCBX
-X-Received: by 2002:a05:7300:d088:b0:381:a911:1772 with SMTP id 5a478bee46e88-38281215ba2mr2333979eec.22.1794998998227;
-        Wed, 18 Nov 2026 02:49:58 -0800 (PST)
+        bh=pcrm3vnLSGimQb5rCI5RJTtZbp3UKYK7ig1rjNTiXnM=;
+        b=oiNk3wvSfwNPNy8x7f0MlfnbQmnIitOMeK/jqJGPYy/p1Cm7dqv1HgAXg+IK19z/df
+         pFniXcMpau27U+DgpsdxOVYEobUxzERRtNwk1KUCjyr18rT+yXeskx3HycyJUvXJPlMa
+         VjwAJbJWXK3aWbihfj4syy2ojqSVjzHI3loqPtPnndh0PZhnL905/Hy2wJp17oNdKHlA
+         7ymjugeVfCJ0w91Zw950xujbIV1SK32uksOVtZc0HnZCLCvLCN46sz1psxsANCZ6mFoX
+         oD9cq3lfL41dB9ECjSbnu9rvSv5zQqmy4gfC9C3ZRlNKK+sK9816wOPHN2LcSSXkJmsQ
+         seIw==
+X-Forwarded-Encrypted: i=1; AL+hErFbuT6LhHMajs54M/KQd3PDf0RRtsLh7kxR7vJ/SDYG5fI+S5k7RYVmY2BCfwKMtz/aho8qpio4Qw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/CnCZh9lgXmAwwTdgQbVmzONJZG1TQ9GrM2Fhk+TejqXVxCd05
+	h3pcPsb1hsMep6hle1RHqOl67YQOidGzSBWriJcjfYmY2z4CEtga2Hyd
+X-Gm-Gg: AZFdTZdVffpEOWnB9eAmG/sO3x+mhvIUeZbWjPA/Incp5BafB7oHaaawQY6ivOyP+Ok
+	lkXnj1X9kLD0Rm2YJZ4Ai/kWDzXq6Dm0qWAZmkLZdxluOl6wQUAOdp7Ry4GP6EkESfmqR4f6u75
+	KWyPV/WfUqUUnI3POrZxdfxwydCDUPkKUZYQyu5tu7IgascbagrDzsSYBj2gTy1c12gFMNCDsGA
+	UIN3HeChvLwcryBqeOQoVhBtl3uR6ki2zUe0K4/Xm+RQVbZRJEMN7uPiKOZxkVIuZoZfy3FlA9M
+	SYBHayrRN+8W+BY8wppoWU9N2d/K9tVMqCog/Xa1hgqCWifW66w8AYvNyJVs+A/nBKAhdZUVrGG
+	elc1kfq7MSbJkbBzdXLgsZsG2qAmkFhRI89tGl4VIBDcXQsyE0C8JXwhO3DlrRP5dJGhtf8pOkG
+	CtpqIGutevA11PeZpWkgl7y0oZ13f03ZfOwXgwh1B6n0daGvsFE00LTe9UuKI+RSNP1nx2pl0Pf
+	kMSAdnliJpZop3qrx2KGQGFYcqpgyktEsyzfvIwQDTdXK04SpWXfG4G32RNsYIm8ygnGjRIjsOe
+	v016/KlzqMInpWmW3QdXuynfTZsyAHxl
+X-Received: by 2002:a05:693c:2113:b0:37a:a9db:6bd2 with SMTP id 5a478bee46e88-3828026960bmr2342283eec.11.1794999008833;
+        Wed, 18 Nov 2026 02:50:08 -0800 (PST)
 Received: from archl-rock5b ([45.112.0.182])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a45260a8sm11729913eec.3.2026.11.18.02.49.51
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-382a45260a8sm11729913eec.3.2026.11.18.02.50.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 02:49:56 -0800 (PST)
+        Wed, 18 Nov 2026 02:50:08 -0800 (PST)
 From: Anand Moon <linux.amoon@gmail.com>
 To: Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
@@ -95,9 +95,9 @@ To: Paul Walmsley <pjw@kernel.org>,
 	linux-pm@vger.kernel.org (open list:SYSTEM RESET/SHUTDOWN DRIVERS),
 	spacemit@lists.linux.dev (open list:RISC-V SPACEMIT SoC Support)
 Cc: Anand Moon <linux.amoon@gmail.com>
-Subject: [PATCH v2 2/3] riscv: sbi: Register SRST handlers with firmware priority
-Date: Wed, 18 Nov 2026 16:19:14 +0530
-Message-ID: <20261118104935.1716-2-linux.amoon@gmail.com>
+Subject: [PATCH v2 3/3] power: reset: Remove SpacemiT P1 reboot driver
+Date: Wed, 18 Nov 2026 16:19:15 +0530
+Message-ID: <20261118104935.1716-3-linux.amoon@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118104935.1716-1-linux.amoon@gmail.com>
 References: <20261118104935.1716-1-linux.amoon@gmail.com>
@@ -112,110 +112,158 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The SBI System Reset (SRST) extension currently registers its poweroff
-handler using register_platform_power_off(), which assigns it a lower
-priority than the default PMIC poweroff handlers.
+The SpacemiT P1 reboot driver uses I2C-backed regmap operations to
+request system shutdown and restart through the PMIC.
 
-On platforms where OpenSBI handles system poweroff, a PMIC handler may
-run first and perform I2C-backed regmap operations in atomic context,
-triggering invalid wait context and scheduling-while-atomic warnings.
+The system-off handlers run in atomic context, where regmap operations
+may sleep. This can trigger invalid wait context and
+scheduling-while-atomic warnings during shutdown or restart.
 
-Register both SBI SRST restart and poweroff handlers using
-register_sys_off_handler() with SYS_OFF_PRIO_FIRMWARE. This gives firmware
-handlers precedence over default-priority PMIC handlers and avoids
-board-specific workarounds in individual PMIC drivers.
+On SpacemiT K1 platforms, system poweroff and restart are handled by
+OpenSBI through the SBI System Reset (SRST) extension. The Linux PMIC
+reboot driver duplicates this firmware functionality and is no longer
+needed.
 
-Defer handler registration to a device initcall because sbi_init() runs
-during early architecture initialization, before dynamic memory
-allocation required by register_sys_off_handler() is available.
-
-Preserve warm and cold reboot selection, retain the existing legacy
-poweroff fallback, and report handler registration failures.
+Remove the driver along with its Kconfig and Makefile entries.
+The P1 MFD driver and its other functionality remain unaffected.
 
 Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Cc: Aurelien Jarno <aurelien@aurel32.net>
-Suggested-by: Aurelien Jarno <aurelien@aurel32.net>
 Signed-off-by: Anand Moon <linux.amoon@gmail.com>
 ---
-New patch:
-   Link: https://lore.kernel.org/all/20261110061429.2036-2-linux.amoon@gmail.com/
+New patch
 ---
- arch/riscv/kernel/sbi.c | 43 +++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ drivers/power/reset/Kconfig              |  9 ---
+ drivers/power/reset/Makefile             |  1 -
+ drivers/power/reset/spacemit-p1-reboot.c | 87 ------------------------
+ 3 files changed, 97 deletions(-)
+ delete mode 100644 drivers/power/reset/spacemit-p1-reboot.c
 
-diff --git a/arch/riscv/kernel/sbi.c b/arch/riscv/kernel/sbi.c
-index af1ccea222f1..ab6e5bf25411 100644
---- a/arch/riscv/kernel/sbi.c
-+++ b/arch/riscv/kernel/sbi.c
-@@ -512,23 +512,50 @@ static void sbi_srst_reset(unsigned long type, unsigned long reason)
- 		__func__, type, reason);
- }
+diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
+index bce996bbef28..9e997d58fcc6 100644
+--- a/drivers/power/reset/Kconfig
++++ b/drivers/power/reset/Kconfig
+@@ -295,15 +295,6 @@ config POWER_RESET_KEYSTONE
+ 	help
+ 	  Reboot support for the KEYSTONE SoCs.
  
--static int sbi_srst_reboot(struct notifier_block *this,
--			   unsigned long mode, void *cmd)
-+static int sbi_srst_reboot(struct sys_off_data *data)
- {
--	sbi_srst_reset((mode == REBOOT_WARM || mode == REBOOT_SOFT) ?
-+	sbi_srst_reset((reboot_mode == REBOOT_WARM ||
-+			reboot_mode == REBOOT_SOFT) ?
- 		       SBI_SRST_RESET_TYPE_WARM_REBOOT :
- 		       SBI_SRST_RESET_TYPE_COLD_REBOOT,
- 		       SBI_SRST_RESET_REASON_NONE);
-+
- 	return NOTIFY_DONE;
- }
- 
--static struct notifier_block sbi_srst_reboot_nb;
+-config POWER_RESET_SPACEMIT_P1
+-	tristate "SpacemiT P1 poweroff and reset driver"
+-	depends on ARCH_SPACEMIT || COMPILE_TEST
+-	depends on MFD_SPACEMIT_P1
+-	default MFD_SPACEMIT_P1
+-	help
+-	  This driver supports power-off and reset operations for the SpacemiT
+-	  P1 PMIC.
 -
--static void sbi_srst_power_off(void)
-+static int sbi_srst_power_off(struct sys_off_data *data)
- {
- 	sbi_srst_reset(SBI_SRST_RESET_TYPE_SHUTDOWN,
- 		       SBI_SRST_RESET_REASON_NONE);
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int __init sbi_srst_sys_off_init(void)
-+{
-+	struct sys_off_handler *handler;
-+
-+	if (sbi_spec_version < sbi_mk_version(0, 3) ||
-+	    !sbi_probe_extension(SBI_EXT_SRST))
-+		return 0;
-+
-+	handler = register_sys_off_handler(SYS_OFF_MODE_RESTART,
-+					   SYS_OFF_PRIO_FIRMWARE,
-+					   sbi_srst_reboot, NULL);
-+	if (IS_ERR(handler))
-+		pr_warn("Failed to register SBI SRST restart handler: %ld\n",
-+			PTR_ERR(handler));
-+
-+	handler = register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
-+					   SYS_OFF_PRIO_FIRMWARE,
-+					   sbi_srst_power_off, NULL);
-+	if (IS_ERR(handler))
-+		pr_warn("Failed to register SBI SRST poweroff handler: %ld\n",
-+			PTR_ERR(handler));
-+
-+	return 0;
- }
-+device_initcall(sbi_srst_sys_off_init);
- 
- /**
-  * sbi_probe_extension() - Check if an SBI extension ID is supported or not.
-@@ -677,11 +704,7 @@ void __init sbi_init(void)
- 		if (sbi_spec_version >= sbi_mk_version(0, 3) &&
- 		    sbi_probe_extension(SBI_EXT_SRST)) {
- 			pr_info("SBI SRST extension detected\n");
--			register_platform_power_off(sbi_srst_power_off);
- 			srst_power_off = true;
--			sbi_srst_reboot_nb.notifier_call = sbi_srst_reboot;
--			sbi_srst_reboot_nb.priority = 192;
--			register_restart_handler(&sbi_srst_reboot_nb);
- 		}
- 		if (sbi_spec_version >= sbi_mk_version(2, 0) &&
- 		    sbi_probe_extension(SBI_EXT_DBCN) > 0) {
+ config POWER_RESET_SYSCON
+ 	bool "Generic SYSCON regmap reset driver"
+ 	depends on OF
+diff --git a/drivers/power/reset/Makefile b/drivers/power/reset/Makefile
+index e31cab4ba78e..2d5bdd1584cc 100644
+--- a/drivers/power/reset/Makefile
++++ b/drivers/power/reset/Makefile
+@@ -25,7 +25,6 @@ obj-$(CONFIG_POWER_RESET_LTC2952) += ltc2952-poweroff.o
+ obj-$(CONFIG_POWER_RESET_QNAP) += qnap-poweroff.o
+ obj-$(CONFIG_POWER_RESET_REGULATOR) += regulator-poweroff.o
+ obj-$(CONFIG_POWER_RESET_RESTART) += restart-poweroff.o
+-obj-$(CONFIG_POWER_RESET_SPACEMIT_P1) += spacemit-p1-reboot.o
+ obj-$(CONFIG_POWER_RESET_ST) += st-poweroff.o
+ obj-$(CONFIG_POWER_RESET_TH1520_AON) += th1520-aon-reboot.o
+ obj-$(CONFIG_POWER_RESET_TORADEX_EC) += tdx-ec-poweroff.o
+diff --git a/drivers/power/reset/spacemit-p1-reboot.c b/drivers/power/reset/spacemit-p1-reboot.c
+deleted file mode 100644
+index c0454b547718..000000000000
+--- a/drivers/power/reset/spacemit-p1-reboot.c
++++ /dev/null
+@@ -1,87 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-/*
+- * Copyright (C) 2025 by Aurelien Jarno
+- */
+-
+-#include <linux/bits.h>
+-#include <linux/platform_device.h>
+-#include <linux/regmap.h>
+-#include <linux/reboot.h>
+-
+-/* Power Control Register 2 */
+-#define PWR_CTRL2		0x7e
+-#define PWR_CTRL2_SHUTDOWN	BIT(2)	/* Shutdown request */
+-#define PWR_CTRL2_RST		BIT(1)	/* Reset request */
+-
+-static int spacemit_p1_pwroff_handler(struct sys_off_data *data)
+-{
+-	struct regmap *regmap = data->cb_data;
+-	int ret;
+-
+-	/* Put the PMIC into shutdown state */
+-	ret = regmap_set_bits(regmap, PWR_CTRL2, PWR_CTRL2_SHUTDOWN);
+-	if (ret) {
+-		dev_err(data->dev, "shutdown failed: %d\n", ret);
+-		return notifier_from_errno(ret);
+-	}
+-
+-	return NOTIFY_DONE;
+-}
+-
+-static int spacemit_p1_restart_handler(struct sys_off_data *data)
+-{
+-	struct regmap *regmap = data->cb_data;
+-	int ret;
+-
+-	/* Put the PMIC into reset state */
+-	ret = regmap_set_bits(regmap, PWR_CTRL2, PWR_CTRL2_RST);
+-	if (ret) {
+-		dev_err(data->dev, "restart failed: %d\n", ret);
+-		return notifier_from_errno(ret);
+-	}
+-
+-	return NOTIFY_DONE;
+-}
+-
+-static int spacemit_p1_reboot_probe(struct platform_device *pdev)
+-{
+-	struct device *dev = &pdev->dev;
+-	struct regmap *regmap;
+-	int ret;
+-
+-	regmap = dev_get_regmap(dev->parent, NULL);
+-	if (!regmap)
+-		return -ENODEV;
+-
+-	ret = devm_register_power_off_handler(dev, &spacemit_p1_pwroff_handler,
+-					      regmap);
+-	if (ret)
+-		return dev_err_probe(dev, ret,
+-				     "Failed to register power off handler\n");
+-
+-	ret = devm_register_restart_handler(dev, spacemit_p1_restart_handler,
+-					    regmap);
+-	if (ret)
+-		return dev_err_probe(dev, ret,
+-				     "Failed to register restart handler\n");
+-
+-	return 0;
+-}
+-
+-static const struct platform_device_id spacemit_p1_reboot_id_table[] = {
+-	{ .name = "spacemit-p1-reboot" },
+-	{ /* sentinel */ }
+-};
+-MODULE_DEVICE_TABLE(platform, spacemit_p1_reboot_id_table);
+-
+-static struct platform_driver spacemit_p1_reboot_driver = {
+-	.driver = {
+-		.name = "spacemit-p1-reboot",
+-	},
+-	.probe = spacemit_p1_reboot_probe,
+-	.id_table = spacemit_p1_reboot_id_table,
+-};
+-module_platform_driver(spacemit_p1_reboot_driver);
+-
+-MODULE_DESCRIPTION("SpacemiT P1 reboot/poweroff driver");
+-MODULE_LICENSE("GPL");
 -- 
 2.56.0
 
