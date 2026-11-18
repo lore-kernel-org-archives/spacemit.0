@@ -1,47 +1,65 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794989952;
-	b=YyFB8gEJ17JxQRZryb+rBJEwEF6Uc03tUxUYx8rFPmeJeCbFy4j5lVzfawqgrDGgv8Mi
-	 7ZJ4CWK/vHHqk/vomqRO7Q5+tcNJui9O7tW7qhb7B1NQ9XMHml1uKHJdlQUBKW25AhzJR
-	 G/ip+AaCviWyl1tZlcHWWJqcCTsUK8tlPDrX7lwkKphD6uTm6dgtRAW57KDNZ5vpbB2JX
-	 nPXed2YPApOSbgjPPd5zZfPbDhpf3vIvHmqfzFAO3vdpYfCumDRR+3OyvyDqmlEqDywHs
-	 /ac51On87YxvkjZYxPt66UBvsxHPgi837nDtWs72MCxS+FUIi/zkaQ6c/QVTRQsnCyA==
+	t=1794992279;
+	b=kv665m8FfQcHQDUGVcohhjgefr+8GL9FZ3y/yBPas+Kg6e4s8cuFqsuEHrd5Bmz2jVoD
+	 kypyMb9bxwvsD1z5Ha6uEyF62Bs9QwhI3L9oi4SgMNOLDEG/kSHghmqkMbTB75Wme0mJJ
+	 3YyRwMIf9vYBW8RDCfYoZRgAtRor+bSKFV4d5C7r8qKIC5Wmdl0fJd5OJ1yNQx/vRHW2A
+	 jvlj2Ud2YhDba2Bm7gaRYfCokoyhB6F2QcCV+6/Bo5lrl2vW8dZUiW7nmacn/j4zPoR0Q
+	 kcmZfaUyhcPhGuDluWosULepTMtZLiOfnk4YGt+Wr7W2pBXTpdlxmG6bUYEEmz8wGcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794989952;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=i0h58FryovOYkLTWxhYK2J95YEoNHW/FFrzIBIQ3ikg=;
-	b=DV9Ko6JMa6OXNIzoGXEGWtPiV3PdNtb/yO1UYPj/76Tho0pvzDnmLHEkuxxlABxszLgO
-	 tcXgPfDJEDHaxSYfOuI8UpucDn0C07UZ8MpzKAw6hkeL0keu/ZKFq+lW5XRp2ZoVq0WPg
-	 x4WWuvHcvaCV7cKLSAJbReOAhLHm9peXqAu9AgT/K2Qwj/suKULJmTwksdSEc+zxBnwvb
-	 Hk+ddhOCET/fxIquIeJyc9LztDEUvdR+1yBCZjP63uvz+SIafd5RmY7uI91gad0NYJRi+
-	 i0H6QcVf7WMncRtH7mKmOjZOwICMJlYGYd9UgdDHvqFjde9Q1TdYFrdiKFrz3zhR/MA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794992279;
+	h=DMARC-Filter:DKIM-Signature:From:Subject:Message-Id:Received:
+	 X-Mailer:Content-Transfer-Encoding:To:Cc:Mime-Version:X-Original-From:
+	 Date:X-Lms-Return-Path:Content-Type;
+	bh=yOxzqLseFUYhYdIECMH6Pr89r6ogqLgHYA2LaD6ZQPI=;
+	b=pBt6Am/MGhrB1eQ+8QIC6o8AN90N9dUF2orUKwwBh4FgHVMm6z/kbMYhO9zItwCbdHjb
+	 fuxPzXR+JY+n5QE3oKVT6MgfOcv+QMguJs9ZeETuvIh4szNGgAwXluTRSOt0BaWLMvn8W
+	 hQN06b2FauUBE9AYa8EPNzwWAiGB9RsZGcmm2n9BHFL157GcARs0cr9BIVjBg2ELq+hO6
+	 9c9EarfvqMdemJnnSIGH+Gvwwaa0LhZd2cfO9Rq28HHN+jAsYPrcf/Q0H/bZoZpk7fdGw
+	 Y0dmZxwWTfNED/yYgiWGA+9rpRwLcZA5soq0runJ/6iUJaNbG5dV9hZxvXpIEvY2Jjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gpvaxBtF;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=deepcomputing.io;
+	spf=pass smtp.mailfrom=deepcomputing.io;
+	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=S1bK5FtW;
+	arc=none smtp.remote-ip=209.127.231.48
+Received: from va-2-48.ptr.blmpb.com (va-2-48.ptr.blmpb.com [209.127.231.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED357606A31C;
-	Wed, 18 Nov 2026 08:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78680606A32C
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 08:57:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78680606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gpvaxBtF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688421F000C4;
-	Wed, 18 Nov 2026 08:19:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794989951;
-	bh=i0h58FryovOYkLTWxhYK2J95YEoNHW/FFrzIBIQ3ikg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=gpvaxBtF7PPky8Iwh7/K9lBt8oqrF57ETJEKDP1/3T6oEXeQtEXX1PZpctwC54kZ3
-	 r42ydpMRVWdp5AdZdMgxhV+Zb0v1D8ZSH6P5zEnlzNeGQWHPik0lRHm6JZAP5cS04/
-	 gR4napakEVudT7GAhI+K1ZY0+NAoX+U+YlgCIXFuuhMwh4Ljc6t0ZyyM8FPR41evJQ
-	 DQnjSTTuQXywWay8SZpZjK/m+79wWrK7LQRsxQY2ix9YQDzguQQmedFiE22UxlPQ8w
-	 G0mS/C5pEMJB/YhWeP9XZ/4lpdZ29Dc9K6Jt/v8ydgPTxq5xPjzo1InjfDfmrP6Wnf
-	 XdmJHdFV/kwYA==
-Message-ID: <18756bf6-3eef-4de8-a091-c5218458fd99@kernel.org>
-Date: Wed, 18 Nov 2026 09:18:58 +0100
+	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=S1bK5FtW
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1794992272;
+  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=yOxzqLseFUYhYdIECMH6Pr89r6ogqLgHYA2LaD6ZQPI=;
+ b=S1bK5FtWYNSZHZNX0NmS/qx575+gxqKr0uU0DGZ6KoNSLjWC8AdMWE8i+M6rPVG5OVY2Bg
+ woP7owbnzdPKbrNZS1k0pIIYhfMFmaZR0yIdt9QXNJ1bUTTvQ2PXEd1avjQ8KYRW6xqtSt
+ fGJKjiKuOcw8rbFd+4bnXMJDTtQa+RRFMT9cty2VFkwYf0AK4u5AoMW5KNd0e++v/TJmJd
+ rHBM5Xg1oD1tdN3SpFanaXyF9YhOjhxHv1NlToTGKjesIjFEJk50LtLG9chwM/LDM2DRi3
+ 0kNVlBv2/SlBhmBr4qFtx0QYDhknD1bWZQEjV8JhRJgn3qGJ6LpSp1Ij6PjS0w==
+From: "Wang Yang" <yang.wang@deepcomputing.io>
+Subject: [PATCH 0/9] Add SpacemiT K3 FML13V05 EC keyboard support
+Message-Id: <20261118085742.1817536-1-yang.wang@deepcomputing.io>
+Received: from ubuntu.. ([183.23.101.74]) by smtp.feishu.cn with ESMTPS; Wed, 18 Nov 2026 16:57:49 +0800
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 7bit
+To: "Yixun Lan" <dlan@kernel.org>, "Benson Leung" <bleung@chromium.org>
+Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
+	"Tzung-Bi Shih" <tzungbi@kernel.org>, 
+	"Guenter Roeck" <groeck@chromium.org>, "Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, 
+	"Palmer Dabbelt" <palmer@dabbelt.com>, 
+	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
+	"Sandie Cao" <sandie.cao@deepcomputing.io>, <devicetree@vger.kernel.org>, 
+	<chrome-platform@lists.linux.dev>, <linux-riscv@lists.infradead.org>, 
+	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -50,91 +68,103 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/9] riscv: dts: spacemit: enable USB2.0 controllers on
- BananaPi F3
-To: Junzhong Pan <panjunzhong@linux.spacemit.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
- Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
-References: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
- <20261117-b4-spacemit-k1-usb2-v5-7-52c3829cca69@linux.spacemit.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20261117-b4-spacemit-k1-usb2-v5-7-52c3829cca69@linux.spacemit.com>
+Mime-Version: 1.0
+X-Original-From: Wang Yang <yang.wang@deepcomputing.io>
+Date: Wed, 18 Nov 2026 16:57:33 +0800
+X-Lms-Return-Path: <lba+26afd688e+c7d6b8+lists.linux.dev+yang.wang@deepcomputing.io>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 17/11/2026 13:38, Junzhong Pan wrote:
-> On BananaPi F3, usb2_0 is connected to a Type-C connector at device
-> mode by default. This port have no VBUS supply capability, thus host
-> mode only works with self-powered device or hub. User could switch the
-> role in sysfs.
-> 
-> And the usb2_1 is connected to the USB2.0 pins of the Mini PCIe slot to
-> support cellular modules.
-> 
-> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> Reviewed-by: Yixun Lan <dlan@kernel.org>
-> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+The DeepComputing FML13V05 uses a ChromeOS-compatible embedded controller
+connected through the SpacemiT K3 eSPI peripheral channel. Its internal
+keyboard is not available on linux-next without the controller and EC
+transport support described in this series.
 
-DTS cannot be combined in this patchset and must be split. Don't mix
-patches from independent subsystems when you send something explicitly
-targeting only one subsystem.
-See also: Documentation/devicetree/bindings/submitting-patches.rst
+The EC host command registers are exposed through a memory-mapped,
+non-linear peripheral window. This interface cannot use the ordinary
+cros_ec_spi message transport directly. Add a K3-specific controller and
+EC transport, and reuse the existing ChromeOS EC protocol, MFD and
+keyboard drivers. Existing EC core, LPC, SPI, protocol and keyboard C
+files and the google,cros-ec binding are unchanged.
+
+The series is based on next-20261116. Patches 1-2 document the controller
+and EC bindings; patch 3 adds the controller; patches 4-5 enable Chrome
+platform support on RISC-V and add the EC transport; patches 6-8 describe
+the pins, controller and board keyboard; patch 9 enables the drivers in
+riscv defconfig, with the EC transport and keyboard built as modules.
+
+The controller implementation is ported from the SpacemiT vendor BSP
+(revision 29b78afb484b, originally authored by goumin
+<min.gou@spacemit.com>). Controller programming and recovery remain
+separate from the EC client. The EC transport and compatible are scoped
+to K3 because the window layout and controller recovery API are specific
+to this hardware. Feedback on the transport split and recovery interface
+is welcome.
+
+Validation on an FML13V05 with its internal keyboard, 2026-11-18:
+- W=1 cross-build of Image, modules and the board DTB completed. No new
+  warnings came from the added drivers.
+- Both new bindings and their compiled examples passed schema validation;
+  the new examples passed strict DT style checks. The new EC, controller
+  and keyboard nodes in the board DTB also passed validation.
+- Cold boot and module autoload passed all 20 automatic checks.
+- 153 read-only EC queries and three EC module unload/reload cycles
+  succeeded. EC firmware was FML13V05-V01.06.
+- A/B/C/1/2/Enter, all four arrows and Fn+F1/F2/F7/F8 produced the expected
+  28 paired press/release events, with no dropped or held keys and no
+  new EC/eSPI errors in the kernel log.
+
+The running test kernel was
+7.4.0-rc3-next-20261116-fml13v05-k3-espi+.
+Booting the test system required a separate K3 PCIe test module and
+USB/NVMe DT additions, which are outside this EC series. Suspend/resume,
+EC restart fault injection, full-keymap coverage and long-duration
+stability were not tested. A previously observed UEFI reset_system()
+failure was not addressed or retested by this series.
+
+Checkpatch reports no errors or CHECK findings. Its four new-file
+MAINTAINERS reminders were reviewed: the existing SpacemiT N: pattern
+and Chrome EC/DT entries already cover the new paths, so no MAINTAINERS
+change is included.
+
+OpenAI Codex assisted the port, patch preparation, review analysis and
+test tooling. The work was developed through an iterative session to
+port the existing DC-linux/BSP support, keep the common EC implementation
+unchanged, use K3-specific naming and bindings, and verify the result on
+hardware. Human review was completed before submission; the numbered
+patches retain the submitter's existing DCO sign-offs.
+
+Wang Yang (9):
+  dt-bindings: bus: Add SpacemiT K3 eSPI controller
+  dt-bindings: embedded-controller: Add SpacemiT K3 EC window
+  bus: Add SpacemiT K3 eSPI controller support
+  platform/chrome: Allow ChromeOS platform support on RISC-V
+  platform/chrome: Add SpacemiT K3 eSPI EC transport
+  riscv: dts: spacemit: Add K3 eSPI pin group
+  riscv: dts: spacemit: Describe the K3 eSPI controller
+  riscv: dts: spacemit: Enable the FML13V05 EC keyboard
+  riscv: defconfig: Enable the FML13V05 EC keyboard modules
+
+ .../bindings/bus/spacemit,k3-espi.yaml        | 146 ++++
+ .../spacemit,k3-cros-ec.yaml                  |  58 ++
+ .../spacemit/k3-deepcomputing-fml13v05.dts    | 137 +++
+ arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi  |  24 +
+ arch/riscv/boot/dts/spacemit/k3.dtsi          |  31 +
+ arch/riscv/configs/defconfig                  |   5 +
+ drivers/bus/Kconfig                           |  10 +
+ drivers/bus/Makefile                          |   1 +
+ drivers/bus/spacemit-k3-espi.c                | 804 ++++++++++++++++++
+ drivers/platform/chrome/Kconfig               |  13 +-
+ drivers/platform/chrome/Makefile              |   1 +
+ drivers/platform/chrome/cros_ec_spacemit_k3.c | 739 ++++++++++++++++
+ include/linux/spacemit-k3-espi.h              |  20 +
+ 13 files changed, 1988 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/bus/spacemit,k3-espi.yaml
+ create mode 100644 Documentation/devicetree/bindings/embedded-controller/spacemit,k3-cros-ec.yaml
+ create mode 100644 drivers/bus/spacemit-k3-espi.c
+ create mode 100644 drivers/platform/chrome/cros_ec_spacemit_k3.c
+ create mode 100644 include/linux/spacemit-k3-espi.h
 
 
-Best regards,
-Krzysztof
+base-commit: 749a4de370409464cf8501ec5b2451df45c84eb4
+-- 
+2.43.0
