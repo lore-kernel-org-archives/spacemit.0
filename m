@@ -1,55 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794996456;
-	b=hgGa3DmmVSdai7jGGLUMd2NuUUnSTOzdubJoJ++j304cnFzceWDkEJHwSTL5c+McKOjn
-	 jBD8JuIO5JOhGHHkIYwHGXB8xTc10sQX1xjzISDrY619jMyn9Bmbc+TWHiyBccg1+6vuR
-	 AQ96jx7P2L1nsgKlcRuUMkLBv9M0UF0zVBHEWmvRIJWsGmeNWJzIc6V869cHIUDi4Xtzd
-	 IC7yh3CwHnHGGhmy5key/UpwziNFADutkDNoSoB22lA7Ud4sLXnsNKS984+BLqXzejAZY
-	 XW1h4XwOaX0a6gFPnrvtvrx6JuDuIyi9kjd714OfhcWTCSNMjNvQ7f90JpL33wdcV/g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794996456;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=Sf2ef/DZzsnK1sMDSaxmFCha0DAq5bCsGRzR7EIIXpE=;
-	b=qgS1qhaDeyWakC29wF8tw7tH6nDN1GpbnIvwB5PNwWm/uYr4Oxqf5r82J7Ay98+EoaC6
-	 FZLXiBYYgSoRPt2YEr7Kj7bZBSzSyHWrNrH8vpiWtqUzcQ5ZlK8y9EaFDmwHEoBKEB3Y6
-	 lWFq0DcNeaEOkazPMX3+uYaC4C5LcixhppM3/0zRVKIZhuHxfQLGsc10luTfEAmwrHem8
-	 h/DJd8KLdgQLnIHy+VNtK0Az31Lxom+Qegt3EE4C2QzEXrswcAl+0+H+wNE+VNzcbqhXZ
-	 EQEET9bAC4pM0kC9TK+aOaRbfwdf2s8xwUy9KwuijBtgBO492Ymz1LDFPKaFtp22bqQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d2QzbFoJ;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1794997148;
+	b=TxlaUOJT9sPlJrvwC9tDvM7swirpnHpfM00GCAZgYiEv20N931XkrSm/dJ+fOo+9Vcst
+	 ckdMr0CfnKTAxLR31186t2B1/foP7iYXewTvDiFHXtJ0tnIRkm+n9Z3fUrH4DtHBG6m9q
+	 5vYLSZxF2pJ8w0oWhez/Ky4u6FnT+1EOCf5h06RD5alkIqvoNurp9heTas/zYeuhEBtkb
+	 dfLYuRih70tZWB0eLl2il+aq41IcYVdT4Z+9DORIRq3VVpj1RIPBuW/Gy/DpJkYH+rbVo
+	 eqnHnpOydrT3O0/31pj42XGGgPS/Yb6muMaJGfXNcYGjtb+m3ZMAimiexiEK5JT6I/w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794997148;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version:X-ZohoMailClient;
+	bh=mkIlP/VFkdFXEzDXzF49yA7qSDhA59GiLbzlhR/mvdk=;
+	b=ZyGY/n7LYOhPEGKw2rkN2Zx3fo6PS19RPb7vKJD3jS/yeCZEp1hOeSuWRlhmQ4nr7nxJ
+	 MoucAlmNbyCzjRTDfboHUH4R4suj4McvbYRgiNDPeHanKYY1TS2csnYKUbhPzFTCaFcfG
+	 amYXWY2SHAQsZJ8WdFBtkElbHmgZuBleAzXAlu8BTsZnIEbfdauZVa87CQwYFldvlepuA
+	 5ZWbziDn2cMjRMZv4RHtT+1Jd9jfj0hH1bhff2guuZ14Ny/wTykoOzeUEIzr/YCxC3UnW
+	 8xaaacboWNxQJNO3oPNZxCqondnXVAHZK8WMu9sZRzRNwy7UgSLqB3v6W+Pd4K1UJ2w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=icenowy.me;
+	spf=pass smtp.mailfrom=icenowy.me;
+	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=Oi4ByOSX;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.180.15
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693F5606A337
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C39606A31C
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:19:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C4C39606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d2QzbFoJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BCD1F0089E
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 10:07:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794996456;
-	bh=Sf2ef/DZzsnK1sMDSaxmFCha0DAq5bCsGRzR7EIIXpE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=d2QzbFoJFY+k8q9V/CGKaMctSrm9z6TSBfBrEjsKosoFas19a+BaErySppE4Ncgt2
-	 +YSdxqUGJKw5Ow6BHQmZ0I0Ug7mKId8Hr0d34Dtn/ism8hNDrU1dMb81zn2rGg4keB
-	 1Z5QdzO6tUdStZVyDbBk+gjvk1yWL0KOISnTmx5EVdT9jZSZut4WkMBxY2JsPLJUNg
-	 dvrkhrUmgKESSnXvjOZUlz1jSYIsuRpL5f/yC03cqwDmO9+V6HuTUlWi+hVrWihCWx
-	 9WNv7YMnr1sf7TR58+2c1ubP35MTMNjuajhXEep1RUviGWq5QuxI5Yx/X+Yl5d6r3G
-	 XdrDIOXkQ1+oQ==
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-491846221ffso605199f8f.3
-        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 02:07:36 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErFKNIqh+wAPEwLxnq7v7gKoZwn5FNQzJKkRrjAIB5g3ED6lnKqo5oQyhmkQXINuBWzgXvxGrHaCrw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/TgM81eOFbuSusvCiEpXzSN4HBAG9SkKQIjYMYk07/ZDfYDoJg
-	9QagJ6jYAWcwOOr1KOiDmDJpJOZmJj/ueJVlzCCfLfFPKKm9M05ETUKVJB58uwYNMBap7pf92P/
-	W1AKmI0PYU+/0stv5q3QDrhXw3H3Yx+Q=
-X-Received: by 2002:a05:6000:4812:b0:48d:ff06:c626 with SMTP id
- ffacd0b85a97d-4a63b6fc6d5mr4531220f8f.35.1794996454710; Wed, 18 Nov 2026
- 02:07:34 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=Oi4ByOSX
+ARC-Seal: i=1; a=rsa-sha256; t=1794997111; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=duM/gO9A/sLm4uIjFeWEgFv+8mgswwB0RU3N1Ifzp2Ah6TAeu968wyO74dJF0VYXVz3aleUMsIbdB2IRen5xWjvuSf4dT/68uWQL6NGtg1MUmRz+LM6V78k2Atf1PqxZyXV1JL94kL36cHlI9zB0YQQTY7hS5dZt8UeeHoPlkjQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1794997111; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=mkIlP/VFkdFXEzDXzF49yA7qSDhA59GiLbzlhR/mvdk=; 
+	b=UxNUkRRwALdBIqd+u0/1SRXfSlX+uHGECmIwZzaX1DuSs2pa10TpsUGZHRPbOovb+wmYPA5elYCOsL/zzhj7Ja/70TCDe9GHaSKebPGQ1xW8xDVoRQHqVqjrMJ5ZyDw58na/G9/5HF6c3A/XsCDs6iAkC4ALddga4NTtRLnIVwc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=icenowy.me;
+	spf=pass  smtp.mailfrom=uwu@icenowy.me;
+	dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: a=rsa-sha256; b=Oi4ByOSXHxLX391vOuMr/ZKJCm3wX0/iKuyFiAVU8SQ65OQFej2WozQWNQhfeuQDKv6l7/BbgNydDlEIBiQg74Tb/vXKn31Guesh8GqcgI2stI6Kq1Kb9Ig8qZSjrw/TeDA8bfWI/eUtCnU+lwOcCAVfvSKix2fhpltCrtBzzXj8pu2W1CpFQNXcijLLQgLIu1Mi5Dd8eR4esbk0nYSsFbI3URs5BaQVssiEjjdppL6Y7FWiQSiOc1epm8U5ye3iBb58oenDahc2hdDesBKYIoXQUCPxxSsBJff/KGn94iCE0+QT20jdhbxNSL5wAsi+0SpyMebfRQt8RwGtWvHQrw==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=mkIlP/VFkdFXEzDXzF49yA7qSDhA59GiLbzlhR/mvdk=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
+Received: by smtp.zohomail.com with SMTPS id 1794997109359888.2617794708957;
+	Wed, 18 Nov 2026 02:18:29 -0800 (PST)
+Message-ID: <bffbf989f2c99aa8c463719347930aca44962615.camel@icenowy.me>
+Subject: Re: [PATCH v2 07/17] drm/spacemit: add Saturn DPU register model
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Cody Kang <codykang.hk@gmail.com>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard	 <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring	 <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley	
+ <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Vinod Koul
+ <vkoul@kernel.org>,  Neil Armstrong <neil.armstrong@linaro.org>, Haylen Chu
+ <heylenay@4d2.org>, Michael Turquette	 <mturquette@baylibre.com>, Stephen
+ Boyd <sboyd@kernel.org>, Brian Masney	 <bmasney@redhat.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>, Paul Walmsley	 <pjw@kernel.org>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou	 <aou@eecs.berkeley.edu>, Alexandre Ghiti
+ <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,  Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
+	 <u.kleine-koenig@baylibre.com>, dri-devel@lists.freedesktop.org, 
+	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org, 
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
+Date: Wed, 18 Nov 2026 18:18:11 +0800
+In-Reply-To: <19ceb44df3141049a955c2c30fe64766.docular.xu@gmail.com>
+References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
+	 <20260809-k3-display-v2-7-327d7910bf71@gmail.com>
+	 <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
+	 <19ceb44df3141049a955c2c30fe64766.docular.xu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -59,86 +85,51 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261118-riscv-marchid-fix-v1-1-6d677fcd5461@linux.spacemit.com>
-In-Reply-To: <20261118-riscv-marchid-fix-v1-1-6d677fcd5461@linux.spacemit.com>
-From: Guo Ren <guoren@kernel.org>
-Date: Wed, 18 Nov 2026 18:07:22 +0800
-X-Gmail-Original-Message-ID: <CAJF2gTQ+86jtp3Dw9pw8xf7zK=bU_txdGYjaJp+85H7WE_iKLA@mail.gmail.com>
-X-Gm-Features: Aa3M54rjZmx21x9qbdtBeJSZpO91ThMWIbqg7YbcJXk95cJ0eYpg24g2amLowHU
-Message-ID: <CAJF2gTQ+86jtp3Dw9pw8xf7zK=bU_txdGYjaJp+85H7WE_iKLA@mail.gmail.com>
-Subject: Re: [PATCH] riscv: cpu: Fix incorrect cached machine IDs on secondary harts
-To: Peixin Xie <peixin.xie@linux.spacemit.com>
-Cc: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Conor Dooley <conor.dooley@microchip.com>, Charlie Jenkins <thecharlesjenkins@gmail.com>, 
-	Palmer Dabbelt <palmer@rivosinc.com>, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, spacemit@lists.linux.dev, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-On Wed, Nov 18, 2026 at 11:05=E2=80=AFAM Peixin Xie
-<peixin.xie@linux.spacemit.com> wrote:
->
-> During early ISA-string parsing, the boot hart stores its mvendorid
-> and marchid in riscv_cpuinfo. This happens before setup_per_cpu_areas(),
-> which copies the static per-CPU data to each CPU's allocated area.
->
-> When riscv_cpuinfo_starting() runs on the other harts, the copied IDs
-> are already nonzero, so it skips reading their own IDs. As a result,
-> secondary harts can retain the boot hart's IDs.
->
-> Read mvendorid and marchid unconditionally on each hart, as already
-> done for mimpid.
->
-> Fixes: e482eab4d1eb ("riscv: cpufeature: Fix thead vector hwcap removal")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Peixin Xie <peixin.xie@linux.spacemit.com>
-> ---
->  arch/riscv/kernel/cpu.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
->
-> diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
-> index af84b97af3a1..64c0c83eff76 100644
-> --- a/arch/riscv/kernel/cpu.c
-> +++ b/arch/riscv/kernel/cpu.c
-> @@ -197,16 +197,12 @@ static int riscv_cpuinfo_starting(unsigned int cpu)
->         struct riscv_cpuinfo *ci =3D this_cpu_ptr(&riscv_cpuinfo);
->
->  #if IS_ENABLED(CONFIG_RISCV_SBI)
-> -       if (!ci->mvendorid)
-> -               ci->mvendorid =3D sbi_spec_is_0_1() ? 0 : sbi_get_mvendor=
-id();
-> -       if (!ci->marchid)
-> -               ci->marchid =3D sbi_spec_is_0_1() ? 0 : sbi_get_marchid()=
-;
-> +       ci->mvendorid =3D sbi_spec_is_0_1() ? 0 : sbi_get_mvendorid();
-> +       ci->marchid =3D sbi_spec_is_0_1() ? 0 : sbi_get_marchid();
->         ci->mimpid =3D sbi_spec_is_0_1() ? 0 : sbi_get_mimpid();
->  #elif IS_ENABLED(CONFIG_RISCV_M_MODE)
-> -       if (!ci->mvendorid)
-> -               ci->mvendorid =3D csr_read(CSR_MVENDORID);
-> -       if (!ci->marchid)
-> -               ci->marchid =3D csr_read(CSR_MARCHID);
-> +       ci->mvendorid =3D csr_read(CSR_MVENDORID);
-> +       ci->marchid =3D csr_read(CSR_MARCHID);
->         ci->mimpid =3D csr_read(CSR_MIMPID);
->  #else
->         ci->mvendorid =3D 0;
->
-> ---
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-> change-id: 20261118-riscv-marchid-fix-3ea3672d1e0e
->
-> Best regards,
-> --
-> Peixin Xie <peixin.xie@linux.spacemit.com>
->
-Hmm, it solved the problem on Big-little cores' SoC.
+=E5=9C=A8 2026-11-17=E4=BA=8C=E7=9A=84 16:48 -0500=EF=BC=8CGuodong Xu=E5=86=
+=99=E9=81=93=EF=BC=9A
+> Hi Icenowy,
+>=20
+> On Thu, 03 Sep 2026 20:08:10 +0800, Icenowy Zheng wrote:
+> > =E5=9C=A8 2026-08-09=E6=97=A5=E7=9A=84 21:14 +0800=EF=BC=8CCody Kang vi=
+a B4 Relay=E5=86=99=E9=81=93=EF=BC=9A
+> > > =C2=A0drivers/gpu/drm/spacemit/dpu/saturn_regs/dpu_int.h |=C2=A0 25 +=
++
+> >=20
+> > Is the slightly different K1 Saturn DPU registers considered?
+>=20
+> I compared them with the K1 BSP you mentioned offline [1]. Judging by
+> the block, field and interrupt macro names, I agree with you that the
+> K1 and the K3 use similar IP. But there are also important
+> differences between the K1 and K3 registers, which is why I would not
+> propose reusing these tables.
+>=20
+> For example, the blocks sit at different addresses, and most fields
+> are at a different word or bit. In dpu_int.h, CFG_RDY_CLR is bit 4 on
+> the K1 and bit 5 on the K3, and the underrun bit is 9 and 8.
 
-Reviewed-by: GUO Ren (XuanTie) <guoren@kernel.org>
+Yes, this IP weirdly doesn't consider register map compatiblity at all.
 
---=20
-Best Regards
- Guo Ren
+>=20
+> IMHO a K1 port should add its own compatible, its own field header
+
+Well I don't think field headers would work for a mainlined driver;
+maybe things like regmap_field could be used to mitigate the
+difference.
+
+Surely a compatible string for K1 would be needed, and it might then
+set a device info structure as match data, containing the device
+capability and regmap_field list.
+
+Thanks,
+Icenowy
+
+> and its own backend file next to the K3 ones. What do you think?
+> Hopefully you agree with me.
+>=20
+> [1]
+> https://github.com/spacemit-com/linux-6.6/tree/k1-bl-v2.2.y/drivers/gpu/d=
+rm/spacemit/dpu/saturn_regs
+>=20
+> Guodong
