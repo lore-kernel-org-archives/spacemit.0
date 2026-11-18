@@ -1,91 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039842;
-	b=wlWZaS/7vPwQrKMAHnSH7Jf5kI6YkwPjlwgP0L3t2wK4ixwsUY9WzenWyB5JmrGpkeDF
-	 iA532JhTP4aYAefSrXF4VGWx81UlZAX3MUQxHuas7CsSNZBWny632H64cYCCwFB4vlMSh
-	 VORy17isqMJN3NjVcQ7p0gHzpxq3YAJMvIubJmIKhfa/86MjbNCYKTM8wuGBVmpQLbSUT
-	 K3F/+iuM3c06KiYLZvP9Yh8wOs+C09LD2F7H4YFnEms1Z1qO3qCgswwJ/uAZ7Fek5r0eH
-	 A27458xshQr+d+Ent6Yr14kvglg9Kp8YnJl6jSkjwEeiA7h7E598w2B+cQ8q35YbJsw==
+	t=1795043618;
+	b=D3jzkFARj6EtYY7XJ2aXIczBE/setRoIrku3fqS2m3IagTmJHnJcIr2zQdfrjnw6zEIN
+	 zf1qIJFoaBAKFMSwxaQrHxkDeIIQH+T1sbENAMIC2h9j5dHLaT/5xQ2ImuTvmLCegLyoa
+	 z/b9pU3fApuFZ3KJq1Cc/n2bC98OLAvY/vsJCJKXXaTqpYk4lTbxjpvpGPdyAEQn5udWt
+	 e/88quA6dxkujLnRebTj1rD3pSyv6CvFH43Usp18zxUS9hlKkUYqbwfooiqr/hTDwKaqQ
+	 5GNQKr/qvioY84hrP5HDXi8/qHjiVQnml22c1R+ZMes9mGm2CSi2hlk0V10KPzCQpPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039842;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=aqSyYu+jA7QD7ixyq7XtysEQBlg5TZeCmD7JGK41Hzk=;
-	b=qbGME4IwOODBXjSFNyFXLDdo7EN4563eSMbkCtusV5ITen3Fwe1nUr5WqXQoo4LVKCwp
-	 WLpElDfjgcM6RGr4xNyPevr/VfAg7hN/COb2tNvFS8n3ADfI3F+Rabx6qkDQj0K8eoheZ
-	 ehzCQNERp9wvtaQNRo1FOXN+rC9NLJHdH2mnsQ1zyAX/TMP02XDEXIF3RYGGaR6fnApAA
-	 A2TzdxWfqQpP2b/4D+8yyxp+N8nEa8vQTwrDnaWWAK/PGOH7zWVnIyjQ1u8ysSHExiw36
-	 Ms71/Sg4qRKhh+RQ9et31Hj8PGtOzXrFzQX+7Qnrcf8GNeZZuphkr41goAg0AM90S1g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043618;
+	h=Received:DKIM-Signature:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=uthXM6AxMh++BZoRfLANxhung5bsXeyFFnHLnIx3PQ8=;
+	b=kowT4KYhHdq+OwoTqVmNQDBfrRypfDItt8zq7A8CgbgbhVBIKkECVwoq6nrLeqrtVCG/
+	 2Ll7qZ1zoaId+oHZDdyS2JZ6WawAg/u4lB3UZrgUYMKOn66lY8H1ut85XbeT7UJhKIbjP
+	 6aTtk7gU8YONjCQVsGkSRHiDK6OtHq6kylKxOfkJA4haCh6TdSJpFxBZ/2cmp/iFFcejm
+	 BOD8XPY8TNs3KWQ7Vb7iBt0qKrXSk5RCe6SZ+c55KbJgWa0lwB1ulyUNNtS0A65LquX8y
+	 RJO5nnul1827z49QqQrgyqw/7++Ia4r2eTLAklvH1mWmiH9+LuOgNzLXixL+gOUqvMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=C9u7IwL8;
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lwzriDw7;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B14606A32A;
-	Wed, 18 Nov 2026 22:10:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31B14606A32A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22B1606A31C;
+	Wed, 18 Nov 2026 23:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=C9u7IwL8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=aqSyYu+jA7QD7ixyq7XtysEQBlg5TZeCmD7JGK41Hzk=; b=C9u7IwL8od2s/LBGaU8QBaFgtF
-	DM6GLz3c9mQoYwQZxEP+O+Bv8F6Y2PrcaxPQH+W57zzrmLY5QvOIi24gIc+rkk7DZZmQCxuWPYFr4
-	B/AcjfrN+p4/g7CXSJeARwkW2Zz8L5Wc7unydDrAfty77UOX6cszWUnVt8zWzL0R56JIyiY2EhZ2x
-	EH0Vzkp/bxuSgz8hTfiXEdcB3P187nbXY8zOe5zU/d5pBgGRi8eUz4SNShRAnE2SaI4e2ksq3WYjD
-	Ik1HaiDqyW8A5wr9um58k/k9CO3jP84L3Z9aH2An9j8FXFZ9Bbs0G7GtO+OOQfDysywhne4wGDYw0
-	EApEcm5Q==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xTnrQ-00000000XZ4-32WB;
-	Wed, 18 Nov 2026 23:10:36 +0100
-Date: Wed, 18 Nov 2026 23:10:35 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Conor Dooley <conor@kernel.org>
-Cc: Wang Yang <yang.wang@deepcomputing.io>, Yixun Lan <dlan@kernel.org>,
-	Benson Leung <bleung@chromium.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Sandie Cao <sandie.cao@deepcomputing.io>,
-	devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-	broonie@kernel.org
-Subject: Re: [PATCH 1/9] dt-bindings: bus: Add SpacemiT K3 eSPI controller
-Message-ID: <av4iWQb33bya48G1@aurel32.net>
-Mail-Followup-To: Conor Dooley <conor@kernel.org>,
-	Wang Yang <yang.wang@deepcomputing.io>, Yixun Lan <dlan@kernel.org>,
-	Benson Leung <bleung@chromium.org>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Sandie Cao <sandie.cao@deepcomputing.io>,
-	devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
-	broonie@kernel.org
-References: <20261118085742.1817536-1-yang.wang@deepcomputing.io>
- <20261118085742.1817536-2-yang.wang@deepcomputing.io>
- <20261118-backdrop-scrap-1bee34e06336@spud>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lwzriDw7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836111F000C8;
+	Wed, 18 Nov 2026 23:13:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795043618;
+	bh=uthXM6AxMh++BZoRfLANxhung5bsXeyFFnHLnIx3PQ8=;
+	h=From:Subject:Date:To:Cc;
+	b=lwzriDw74S3uh8xf6HvVI61QO1ZnRSHG5266D3U4SHz2fo5h244CXqvX8w1CFky78
+	 /xDQr0MAX1G8fVl0IiMLoqcnj/JOefW7P7ln9LOs+o5RxUEq9+noEHvIqsWAoc8303
+	 6BDXeAcrByKocXYUWxnRShiT++I/e8NjQL3P+SjQ5hjCbnRmC8fpaMgmhoXbgWI02N
+	 jzelGx/zG+/8/qCi9o9UBoaxZlDzz7HD0WGc5Axm0V3nlkBFKsCxwGJB2up2MYjiMx
+	 faPzHE8yZiyqm0RHWRtS7H7vfCG/fNQ35zgdH4h3ZWndzt+b1/BQKlVz8OZOrJO/tC
+	 p6FNGwvCcKj7g==
+From: Yixun Lan <dlan@kernel.org>
+Subject: [PATCH v5 0/2] PM: spacemit: Add power domain support
+Date: Wed, 18 Nov 2026 23:13:08 +0000
+Message-Id: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -95,89 +53,123 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uwS4iCT+BxiI+7D2"
-Content-Disposition: inline
-In-Reply-To: <20261118-backdrop-scrap-1bee34e06336@spud>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23NTQ6CMBCG4auYrq2ZtpRSV97DuAA6QP2hpAWiI
+ dzdggs1unyTb56ZSEBvMZD9ZiIeRxusa2PI7YaUTd7WSK2JTTjwFDRoCgm9CNrdaBi6zvmeQoF
+ VApipyigSzzqPlb2v5PH06jAUZyz7xVkWjQ2984/158iX3cozgOyXHzkFmlZKZbkUxnBzuKBv8
+ bpzviaLP4q3wP4KIgqFNiVkUoHQxY+QfAiM/xGSKBgUWrA8l0yKL2Ge5ycoKxcpRwEAAA==
+X-Change-ID: 20260909-04-k3-pm-support-0bef40e87fd7
+To: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: Icenowy Zheng <uwu@icenowy.me>, Iker Pedrosa <ikerpedrosam@gmail.com>, 
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>, 
+ Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3463; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=dIcn4UKroERxmS7Nu963yNp5RWL56ReaEAU4lVs9RqI=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBq/jEVPiq46KOXgLjax5SPnS3Plqx47MmZgpwVV
+ MAPRHk7dZuJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCav4xFRsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
+ maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
+ QACgkQMarqR1lNu+0Dhw//dGZeYB0SmyPcVLPgv5mSKL7/6pSsnmsLioEXbGrdiYa8ZrAJ1CcU7
+ QlJvtryqTGJVXmpmadynV+MNKqbwreVUWcU+6nGleJ4cj6U6bxkD8Qh5OoekrcBgXXSShxSc511
+ zltESptRs+5dkT5xniFsCarrRiMF00AFt0NmCglcG6CBrdK9/gWkOc0wJKmXgxUqyzLpcYi49Lg
+ beFejV39AnaxJ8/DWDa0KxU4oY4ZKiifAq5fxFdDkLbDT/MxWAi4LTYaAOjG0BMlYB5UQ1X6vNr
+ DMLzLj8DrwXy/xi71yr5Hn5Mb0qyGwmwWQgK0P1Ou4g9ocuTU6KEO3KladDBtqUI1HuzgBsWRkj
+ /GXbQwmKEfjZAfSMbLmknQGSiBIv48/qi3xszquBqqXbjrNtk2X+cQIfzAVmi2tVcQttSOmkohU
+ LaeL9bqdzb4sEYdu6Ep56DY5TfUgAPukoJt8kTKsNckcMDY2MFqYvY93TLVBGNBjdBWXcqBsL4W
+ 34VIp8NotgBrQrHCr8XpHcQRy0dNNWo/m4+67p873WCXZ4AmJ4/2b8Wj2b+niJ9ynLsPM/+j1CP
+ +4Jkic171ygwA+sHtlY78bmsbrNA1h1wGqR1T0k1iBVL8yMdVq2gsfmM+LPvmU8jr7P2s3bQSG5
+ HJPoN74Ngn+FLQFbEzwt9wTlLSQSp8=
+X-Developer-Key: i=dlan@kernel.org; a=openpgp;
+ fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
---uwS4iCT+BxiI+7D2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In this series, we try to add a Power Domain driver support for SpacemiT
+K1/K3 SoCs, the driver implement the power-switch functionaly which support
+power on/off, and it's based on Linux Generic PM Domain framework and
+similiar to vendor K1's implementation, but unlike the K3's vendor
+version which is more complicated.
 
-Hi Conor,
+  The DT documentation for Power Domain already exist in below file,
+and APMU already has #power-domain-cells property.
+Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
 
-On 2026-11-18 17:51, Conor Dooley wrote:
-> +CC Mark, spi,
->=20
-> On Wed, Nov 18, 2026 at 04:57:34PM +0800, Wang Yang wrote:
-> > window, clocks, resets and link configuration. The EC uses this memory
-> > window rather than the ordinary SPI transfer interface.
-> >=20
-> > The controller implementation is carried as a separate prerequisite so
-> > that the hardware vendor can review it independently.
-> >=20
-> > Prepared with Codex assistance from the existing DC-linux EC support.
-> >=20
-> > Signed-off-by: Wang Yang <yang.wang@deepcomputing.io>
-> > ---
-> >  .../bindings/bus/spacemit,k3-espi.yaml        | 146 ++++++++++++++++++
-> >  1 file changed, 146 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/bus/spacemit,k3-e=
-spi.yaml
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yam=
-l b/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yaml
-> > new file mode 100644
-> > index 000000000..30985ee0a
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yaml
-> > @@ -0,0 +1,146 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/bus/spacemit,k3-espi.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: SpacemiT K3 eSPI controller
->=20
-> How is this "eSPI" different to the eSPI described in fsl,espi.yaml and
-> implemented by a driver in drivers/spi?
+  The previous DTS patch is obsolete, so I dropped it. For devices required
+PM feature, it need to add a "power-domains" property, and should send in
+a separate patch.
 
-eSPI in fsl,espi.yaml is a Freescale (now NXP) SPI controller, it=20
-implements a SPI bus.
+  In order to test this series, a prerequisite CCU patches are needed,
+which can be found here [1].
 
-Here eSPI is a bus, replacing the LPC bus, as defined by Intel:
-https://www.intel.com/content/www/us/en/content-details/841685/enhanced-ser=
-ial-peripheral-interface-espi-interface-base-specification-for-client-and-s=
-erver-platforms.html
+Hi Ulf,
+ Would you be ok to take this version? only minor change updated.
+I think the sudden removal of pmdomain supplier is kind of an
+independent common issue (exist in other platfroms too), I do not
+want to addresse it in this series, see a possible solution in separate
+patch here [2], or Icenowy's preference in comment[3], or whatever
+way to take. Just let me know what you think..
 
-Regards
-Aurelien
+Link: https://lore.kernel.org/spacemit/20261008-04-k3-clk-pm-aux-v1-0-8372d7307694@kernel.org/ [1]
+Link: https://lore.kernel.org/spacemit/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org/ [2]
+Link: https://lore.kernel.org/spacemit/b7d7ac2eee0e64aa7c267def5c2a8a022c7da425.camel@icenowy.me [3]
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+---
+Changes in v5:
+- drop pm_index
+- fix dev_err() to return error code
+- Link to v4: https://patch.msgid.link/20261112-04-k3-pm-support-v4-0-de3931aa5153@kernel.org
 
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Changes in v4:
+- adjust Kconfig help message
+- drop unused include header 
+- propagate regmap_read_x() error code
+- simplify spacemit_pm_is_off_state()
+- Link to v3: https://patch.msgid.link/20261108-04-k3-pm-support-v3-0-b9dc0857039b@kernel.org
 
---uwS4iCT+BxiI+7D2
-Content-Type: application/pgp-signature; name=signature.asc
+Changes in v3:
+- collect tags
+- rename spacemit_pm_is_off_state()
+- implement a remove() function
+- use proper type in struct spacemit_pm_domain_param
+- refactor struct spacemit_pmu
+- Link to v2: https://patch.msgid.link/20261008-04-k3-pm-support-v2-0-6f778a53dd2d@kernel.org
 
------BEGIN PGP SIGNATURE-----
+Changes in v2:
+- convert to auxilary driver
+- no need dt-binding doc, drop it
+- drop dts patch
+- support to build as module
+- set always on for K3 audio pm 
+- no global variable for struct spacemit_pmu
+- no force to do power-off in spacemit_pd_power_on()
+- check return value of pm_genpd_init()
+- adjust license header format
+- Link to v1: https://patch.msgid.link/20260918-04-k3-pm-support-v1-0-0acd2b36b96f@kernel.org
 
-iQIzBAEBCgAdFiEEUryGlb40+QrX1Ay4E4jA+JnoM2sFAmr+IlkACgkQE4jA+Jno
-M2u7Pw//e3NQMW5zCgglmLHZ41Ne5HfOAqECutIMDry7Tiignz2Wv4A1BCM3BV/q
-xlsE+HEjYrQiJ/ruU93iQ1DvXgvvsXp+nL5vOnPw+XCUlwiSaR93jCWkKWkYJpN3
-ZytuPUk1kN06MRND2NakKtSw8ExyLklo3MvDMFtS0Y4Pc5dmG8E47DYADH8sZRZ7
-Iw7MTh/ZnGl56ydGt7BE1A3IIa+hrCgQnv7hN7ApM5SOeF+XhelLWoLA0flqq021
-lp1bxIHANUiJOCIIyTn6L69GkfUDGXRCLZyPm0WhBLf9RQD17lX5COGmEjCzdeiK
-ZHuzdFDK0YYCKXq9fvUE1aDL9fe8bSjtz7sRnCBXWvH/Wb39vhQbuq0mvOK5e265
-4xdDRBeFVX0dsuBy/0gIQ0i1zG9MayaML0QvqCjET2L9oNGRmuzyCorINFijJtM4
-yKg/bDEq8EtnhWmyblVm9HgmKZ92euYYyUxTZS5iA7NrbrFXWqui9HtAcy3dVXa9
-WmB6is/oHXKtSQ8WAHYzjd3Q/k753uf0hijQLFpLRg1lLiFEm/qenRh/9R8/+XVc
-77g3nlWVQ2RAj675ydet7gpOF1ccrsQbTg3CraPRJsfs2JasEYz0wlFH4kmWTAcj
-zX+UNgiclADpqKIquiydOEGBRkra3TcbMlJ0ZLtIdYUo0V8rYto=
-=bfSu
------END PGP SIGNATURE-----
+---
+Yixun Lan (2):
+      dt-bindings: power: spacemit: Add power domain controller IDs
+      pmdomain: spacemit: Add power domain driver
 
---uwS4iCT+BxiI+7D2--
+ drivers/pmdomain/Kconfig                        |   1 +
+ drivers/pmdomain/Makefile                       |   1 +
+ drivers/pmdomain/spacemit/Kconfig               |  21 ++
+ drivers/pmdomain/spacemit/Makefile              |   1 +
+ drivers/pmdomain/spacemit/spacemit-pm-domains.c | 422 ++++++++++++++++++++++++
+ include/dt-bindings/power/spacemit,k1-power.h   |  14 +
+ include/dt-bindings/power/spacemit,k3-power.h   |  12 +
+ 7 files changed, 472 insertions(+)
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20260909-04-k3-pm-support-0bef40e87fd7
+
+Best regards,
+--  
+Yixun Lan <dlan@kernel.org>
+
