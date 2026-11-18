@@ -1,111 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.138
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039718;
-	b=ON6VM9rGznuL87dkd74RoB43PG8xOvqudvo7ULhhmRcRWNFDR3Mu0NHP6rl9xvofpsST
-	 YZrKIyohb//rrkB6J0rLQLc7F8aEiFlJ+2X3FlH2Imw+B0iYBFdfU8bzTDZ8e5tpjSQAb
-	 nZkzGQSsv82v6CconEu9/T84WQB92WwEiJvuFPuzqO0VhmIgYvn+S7VHSoMB2VuUnrU8j
-	 vzAKqHdJU1K6u/2nVWGaQbKIWH4zmqhtsuiw5bkc0EX1huXoYu+6+Gq/KJS7tnVX8079q
-	 WvfMcCPDrx8i40E9+ZdHe0H2aDLwetuk9IpXxTEF4F8XpT6ZTPhHJ5OQXZ3pM7Bv7eg==
+	t=1795039842;
+	b=wlWZaS/7vPwQrKMAHnSH7Jf5kI6YkwPjlwgP0L3t2wK4ixwsUY9WzenWyB5JmrGpkeDF
+	 iA532JhTP4aYAefSrXF4VGWx81UlZAX3MUQxHuas7CsSNZBWny632H64cYCCwFB4vlMSh
+	 VORy17isqMJN3NjVcQ7p0gHzpxq3YAJMvIubJmIKhfa/86MjbNCYKTM8wuGBVmpQLbSUT
+	 K3F/+iuM3c06KiYLZvP9Yh8wOs+C09LD2F7H4YFnEms1Z1qO3qCgswwJ/uAZ7Fek5r0eH
+	 A27458xshQr+d+Ent6Yr14kvglg9Kp8YnJl6jSkjwEeiA7h7E598w2B+cQ8q35YbJsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039718;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=48GpV2tL7XVTAarQnrcMPM8Usr/dY/fptCTJVKAYBQY=;
-	b=L/AckyUOJke+S1z509xOyM3lX/LwOoa3/P+lsK2+QuD5QstW/ce29CkvO1+CA+mC6qWs
-	 z7uOl8LnfZe+/GH6wQxQevRwoH+F9RKpAu2aKqchB1mo9PVc08rPGhUgEeTwHKiiewvR1
-	 wBhtTsLkCU/x+3YCqYyOY9FGBZ6yctYn/8WRFoN/z4Djdrpxx66an7aOh5/8cfem5mwwh
-	 Wcze6ctex54JlLAC4Su3kFNYDlYooVMINv2rmJ7Gyc7wJMOA7WyJp7lB6qxf01Y4ycgqF
-	 1hxIH6DdKa4XLef68AliaqkgKc22P713wzeYGe1EMqZpZmIO6fq2WZYetJkKuDjSXSA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039842;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent;
+	bh=aqSyYu+jA7QD7ixyq7XtysEQBlg5TZeCmD7JGK41Hzk=;
+	b=qbGME4IwOODBXjSFNyFXLDdo7EN4563eSMbkCtusV5ITen3Fwe1nUr5WqXQoo4LVKCwp
+	 WLpElDfjgcM6RGr4xNyPevr/VfAg7hN/COb2tNvFS8n3ADfI3F+Rabx6qkDQj0K8eoheZ
+	 ehzCQNERp9wvtaQNRo1FOXN+rC9NLJHdH2mnsQ1zyAX/TMP02XDEXIF3RYGGaR6fnApAA
+	 A2TzdxWfqQpP2b/4D+8yyxp+N8nEa8vQTwrDnaWWAK/PGOH7zWVnIyjQ1u8ysSHExiw36
+	 Ms71/Sg4qRKhh+RQ9et31Hj8PGtOzXrFzQX+7Qnrcf8GNeZZuphkr41goAg0AM90S1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uOkFkkKK;
-	arc=none smtp.remote-ip=74.125.227.138
-Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=aurel32.net;
+	spf=pass smtp.mailfrom=aurel32.net;
+	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=C9u7IwL8;
+	arc=none smtp.remote-ip=195.154.119.183
+Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18DD606A325
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 22:08:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E18DD606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B14606A32A;
+	Wed, 18 Nov 2026 22:10:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31B14606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=uOkFkkKK
-Received: by mail-pj2-f10.google.com with SMTP id 98e67ed59e1d1-3b3f3ac0f88so91096a91.0
-        for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 14:08:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795039717; x=1795644517; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=48GpV2tL7XVTAarQnrcMPM8Usr/dY/fptCTJVKAYBQY=;
-        b=uOkFkkKK+S77Fb7hXmvu0W3un48YQn4Yazp38niz+JRVZO83DlV9tmu7WaEVRPNznN
-         Z2DG1s6U2/KEFkOLs7NTvnJQ8VW7K+eY8fHOckD/60ES+dAB9cWkRWRW+WWAbf7On+V+
-         eS8NZ7RUqwctSfrvr7db2uUbXOjX+y0k8RnECy5Htqn36CMTt4S4/FNSaepDZhLqqutA
-         F31nX8zB1BVATdzbuebeQ5G4VCN9VhYCY3T+348P43xS99DZstUYPy1u4Cematrm7Vf/
-         Wz3VXbmzEheN0Llk4mEEfc+uHyE3haWaGMmXD+mI2HrfONWVVjpTBzdVAJx1J2sC96OC
-         WJFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795039717; x=1795644517;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=48GpV2tL7XVTAarQnrcMPM8Usr/dY/fptCTJVKAYBQY=;
-        b=KOPEKnK7C0cvu+THtrsLbuWL6GyifgzNqdTKVQBPEE6teSWt1TZJzf0a1qQJZlX4D/
-         n+VGXZQpfkqHjZrPclX+Dkq8Q0HoFXYBqZ8N9KXTuvEhZx/vo0RfAEjwxlXCVgKb0LDk
-         gJ5yp6TghPjbPUMsHRiU3Auzj76L9Bq1qObCmrg2yL5hDU7u3uiIVFpf1cWVy9U3fiYz
-         xIjFNIEBGsl5WYR4Gu8BDk/juK6Bc7sYFKsS13rgQdA2U8uzP+LhwvebXEGj4N2C0+kr
-         Bagn327OTwI7QcvVoSyELEw5yAWc1uN2o+/8G/GwrcUMgvDcAu/rhi6U9Y0w2DOcaA6K
-         zwhw==
-X-Forwarded-Encrypted: i=1; AL+hErEPSi8/mGdQa/ogNhKq5micoPi/2caU1+IDDH+T/ND/U4CbKn0uzhLMvaOcpFGujfAM+5UiTV2Pqw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+o3nKu1p97NEjiC7B4TWbVp6t5QhDuXxUd8ozNaUapqu+6xt6R
-	2fa6WMluGm67R0lmgkvQIjlnnhm3zgsgy8enqiKEyEJo+47LkDd+3hgY
-X-Gm-Gg: AZFdTZcxETDa4L6Xa5i2aSAGQn81npwypMGH4rT5FvXJtGufP/GG6EJ83JfdHkD3UEB
-	JYRMPGTEsZRZYxSD9OHzHSuva1yJS+0mKS2FhDuvd1N8BSjYpgB/qWPriBCEuk8R8y4UYtMtjvk
-	hy2wU+4DLN5aa1/GGi2WEKEFggHkHm+Zi2BLBxhIQVPAWTiooFTrM7sHCqWYGZVG19IlUOADwSW
-	YW6PN3f1TioAQs7GZk+/qQINFADpIN98nTpxKyjNM7/uyyzREPuIEJplw+q/+wOj4Z5fut1jbSp
-	cYTEW/214UFonPpY0tTgLtxcFtjGPIgMZJXkf6QZw3zY8T4oRUoekVDxe5JvsL/coFkI5EqvlqA
-	xwoBPX67+bpG8A+0nHe0PU0cub/aENl9jDmDcSyAAfy7dpYCEORdJN6OmbFFyoyEZpYVdm2Nx9l
-	7sZgKctwgZPgW+BP+xTwlpSLz9Yk8iVYjyMcZp1f3KiT+wp0rIKDpTUWdRxKbvX/UYB16kjGLGp
-	/51P1luv1b5CWF4fGoZM5kMZ5JQ6aTLOHNHMYccjqE/2xsnGdLMhWb6a5+PsepkR3Rh8SFCyK4m
-	YhA=
-X-Received: by 2002:a17:90b:2ccf:b0:3b3:cb22:72d0 with SMTP id 98e67ed59e1d1-3b3d07656e8mr4366165a91.29.1795039717105;
-        Wed, 18 Nov 2026 14:08:37 -0800 (PST)
-Received: from localhost ([2403:2c80:6::107b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3fe09df73sm93624a91.9.2026.11.18.14.08.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 14:08:35 -0800 (PST)
-Date: Thu, 19 Nov 2026 06:08:29 +0800
-Message-ID: <aef6553f89eba87f753b048a87e3080e.codykang.hk@gmail.com>
-From: Cody Kang <codykang.hk@gmail.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Yixun Lan <dlan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Haylen Chu <heylenay@4d2.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
- Brian Masney <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Guodong Xu <docular.xu@gmail.com>, dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 10/17] drm/spacemit: add Saturn DPU KMS pipeline
-In-Reply-To: <f0b2beb9-d0ad-4870-812a-fef530a964c3@suse.de>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-10-327d7910bf71@gmail.com>
- <f0b2beb9-d0ad-4870-812a-fef530a964c3@suse.de>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=C9u7IwL8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
+	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
+	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
+	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
+	bh=aqSyYu+jA7QD7ixyq7XtysEQBlg5TZeCmD7JGK41Hzk=; b=C9u7IwL8od2s/LBGaU8QBaFgtF
+	DM6GLz3c9mQoYwQZxEP+O+Bv8F6Y2PrcaxPQH+W57zzrmLY5QvOIi24gIc+rkk7DZZmQCxuWPYFr4
+	B/AcjfrN+p4/g7CXSJeARwkW2Zz8L5Wc7unydDrAfty77UOX6cszWUnVt8zWzL0R56JIyiY2EhZ2x
+	EH0Vzkp/bxuSgz8hTfiXEdcB3P187nbXY8zOe5zU/d5pBgGRi8eUz4SNShRAnE2SaI4e2ksq3WYjD
+	Ik1HaiDqyW8A5wr9um58k/k9CO3jP84L3Z9aH2An9j8FXFZ9Bbs0G7GtO+OOQfDysywhne4wGDYw0
+	EApEcm5Q==;
+Received: from authenticated user
+	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <aurelien@aurel32.net>)
+	id 1xTnrQ-00000000XZ4-32WB;
+	Wed, 18 Nov 2026 23:10:36 +0100
+Date: Wed, 18 Nov 2026 23:10:35 +0100
+From: Aurelien Jarno <aurelien@aurel32.net>
+To: Conor Dooley <conor@kernel.org>
+Cc: Wang Yang <yang.wang@deepcomputing.io>, Yixun Lan <dlan@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Sandie Cao <sandie.cao@deepcomputing.io>,
+	devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+	broonie@kernel.org
+Subject: Re: [PATCH 1/9] dt-bindings: bus: Add SpacemiT K3 eSPI controller
+Message-ID: <av4iWQb33bya48G1@aurel32.net>
+Mail-Followup-To: Conor Dooley <conor@kernel.org>,
+	Wang Yang <yang.wang@deepcomputing.io>, Yixun Lan <dlan@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Sandie Cao <sandie.cao@deepcomputing.io>,
+	devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org,
+	broonie@kernel.org
+References: <20261118085742.1817536-1-yang.wang@deepcomputing.io>
+ <20261118085742.1817536-2-yang.wang@deepcomputing.io>
+ <20261118-backdrop-scrap-1bee34e06336@spud>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -115,235 +95,89 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uwS4iCT+BxiI+7D2"
+Content-Disposition: inline
+In-Reply-To: <20261118-backdrop-scrap-1bee34e06336@spud>
+User-Agent: Mutt/2.4.1 (2026-07-04)
 
-Hi Thomas,
+--uwS4iCT+BxiI+7D2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 14 Sep 2026 15:58:39 +0200, Thomas Zimmermann wrote:
-> Hi,
->
-> please find a review below.  I've only mentioned most issues once, they 
-> are usually throughout the code. Please fix all instances then.
+Hi Conor,
 
-Thanks for the review. Will fix all instances.
-
-> Am 09.08.26 um 15:14 schrieb Cody Kang via B4 Relay:
-[...]
-> > +	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
-> > +		u32 rdma_id = to_spacemit_plane_state(pstate)->rdma_id;
-> > +		u32 layer_fbcmem_size =
-> > +				to_spacemit_plane_state(pstate)->fbcmem_size;
->
-> If you need to check plane state, please do this in the plane's 
-> atomic_check. For atomic commits that only change plane state, the 
-> CRTC's atomic_check might not run, I think.
-
-Will do; the check moves into the plane's atomic_check.
-
-> It looks like this code allocates memory. This is is something that 
-> should be done globally.
-
-It does not allocate memory: it partitions the on-chip line buffer.
-With one plane per CRTC nothing is shared between planes, so the
-plane's own check is enough.
-
-[...]
-> > +	if (!drm_dev_enter(crtc->dev, &idx))
-> > +		return;
->
-> drm_dev_enter() and drm_dev_exit() protect hardware access. Given hat 
-> you have a tracepoint below, you certainly don't want to return here. 
-> It's is better to write code like this
->
-> atomic_enable() {
->
->    if (drm_dev_enter()) {
->
->        // do HW access
->        drm_dev_exit()
->    }
->
-> }
->
-> although not many drivers do this.
-
-Will do.
-
+On 2026-11-18 17:51, Conor Dooley wrote:
+> +CC Mark, spi,
+>=20
+> On Wed, Nov 18, 2026 at 04:57:34PM +0800, Wang Yang wrote:
+> > window, clocks, resets and link configuration. The EC uses this memory
+> > window rather than the ordinary SPI transfer interface.
+> >=20
+> > The controller implementation is carried as a separate prerequisite so
+> > that the hardware vendor can review it independently.
+> >=20
+> > Prepared with Codex assistance from the existing DC-linux EC support.
+> >=20
+> > Signed-off-by: Wang Yang <yang.wang@deepcomputing.io>
+> > ---
+> >  .../bindings/bus/spacemit,k3-espi.yaml        | 146 ++++++++++++++++++
+> >  1 file changed, 146 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/bus/spacemit,k3-e=
+spi.yaml
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yam=
+l b/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yaml
+> > new file mode 100644
+> > index 000000000..30985ee0a
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/bus/spacemit,k3-espi.yaml
+> > @@ -0,0 +1,146 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/bus/spacemit,k3-espi.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > > +
-> > +	trace_spacemit_crtc_atomic_enable(a_crtc->dev_id);
->
-> Why is your modesetting code is filled with tracepoints? Most other 
-> drivers don't need them. There is debugging infrastructure available in DRM.
+> > +title: SpacemiT K3 eSPI controller
+>=20
+> How is this "eSPI" different to the eSPI described in fsl,espi.yaml and
+> implemented by a driver in drivers/spi?
 
-Will drop them.
+eSPI in fsl,espi.yaml is a Freescale (now NXP) SPI controller, it=20
+implements a SPI bus.
 
-[...]
-> > +		ret = reset_control_bulk_assert(ARRAY_SIZE(priv->pipe_resets),
-> > +						priv->pipe_resets);
-> > +		if (ret)
-> > +			dev_warn(a_crtc->dev,
-> > +				 "failed to assert resets: %d\n", ret);
-> > +		usleep_range(10000, 20000);
-> > +		a_crtc->first_modeset = false;
-> > +	}
->
-> Just no. This code belongs into driver or platform init. It is 
-> definitely not for mode setting.
+Here eSPI is a bus, replacing the LPC bus, as defined by Intel:
+https://www.intel.com/content/www/us/en/content-details/841685/enhanced-ser=
+ial-peripheral-interface-espi-interface-base-specification-for-client-and-s=
+erver-platforms.html
 
-Will do; it moves to probe.
+Regards
+Aurelien
 
-[...]
-> > +		usleep_range(10000, 20000);
-> > +	}
-> > +
-> > +	drm_crtc_vblank_on(&a_crtc->crtc);
->
-> I'd say you want to enable vblanking after programming the display mode. (?)
+--=20
+Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+aurelien@aurel32.net                     http://aurel32.net
 
-Will do.
+--uwS4iCT+BxiI+7D2
+Content-Type: application/pgp-signature; name=signature.asc
 
-> > +
-> > +	spacemit_crtc_init(a_crtc);
->
-> The code is full of these tiny helpers. Please inline them. And please 
-> also avoid the callbacks that these tiny helpers invoke.  The DRM 
-> interfaces are your abstraction interface. Please don't introduce 
-> another one.
+-----BEGIN PGP SIGNATURE-----
 
-Will do.
+iQIzBAEBCgAdFiEEUryGlb40+QrX1Ay4E4jA+JnoM2sFAmr+IlkACgkQE4jA+Jno
+M2u7Pw//e3NQMW5zCgglmLHZ41Ne5HfOAqECutIMDry7Tiignz2Wv4A1BCM3BV/q
+xlsE+HEjYrQiJ/ruU93iQ1DvXgvvsXp+nL5vOnPw+XCUlwiSaR93jCWkKWkYJpN3
+ZytuPUk1kN06MRND2NakKtSw8ExyLklo3MvDMFtS0Y4Pc5dmG8E47DYADH8sZRZ7
+Iw7MTh/ZnGl56ydGt7BE1A3IIa+hrCgQnv7hN7ApM5SOeF+XhelLWoLA0flqq021
+lp1bxIHANUiJOCIIyTn6L69GkfUDGXRCLZyPm0WhBLf9RQD17lX5COGmEjCzdeiK
+ZHuzdFDK0YYCKXq9fvUE1aDL9fe8bSjtz7sRnCBXWvH/Wb39vhQbuq0mvOK5e265
+4xdDRBeFVX0dsuBy/0gIQ0i1zG9MayaML0QvqCjET2L9oNGRmuzyCorINFijJtM4
+yKg/bDEq8EtnhWmyblVm9HgmKZ92euYYyUxTZS5iA7NrbrFXWqui9HtAcy3dVXa9
+WmB6is/oHXKtSQ8WAHYzjd3Q/k753uf0hijQLFpLRg1lLiFEm/qenRh/9R8/+XVc
+77g3nlWVQ2RAj675ydet7gpOF1ccrsQbTg3CraPRJsfs2JasEYz0wlFH4kmWTAcj
+zX+UNgiclADpqKIquiydOEGBRkra3TcbMlJ0ZLtIdYUo0V8rYto=
+=bfSu
+-----END PGP SIGNATURE-----
 
-[...]
-> > +	/*
-> > +	 * MMIO on a clock-gated DPU stalls the bus, so an in-flight handler
-> > +	 * must finish its status reads before dpu_pm_suspend() gates the
-> > +	 * clocks.
-> > +	 */
-> > +	if (a_crtc->irq_online > 0)
-> > +		synchronize_irq(a_crtc->irq_online);
->
-> This irq is unrelated to vblanking, I presume?
-
-It is the vblank interrupt as well: the one line carries the DPU's
-vsync, config-ready and underrun status. The synchronize_irq() is not
-about vblank, though. A register read on a clock-gated DPU stalls the
-bus, so a handler that is already running has to finish before the
-clocks stop. With the move to runtime PM (next point) the call will
-sit in the runtime suspend callback, ahead of the clock gating.
-
-> > +	timer_delete_sync(&a_crtc->cfg_rdy_timer);
-> > +
-> > +	/* Close the ISR's MMIO gate before the clocks actually stop. */
-> > +	a_crtc->clocks_on = false;
-> > +	dpu_pm_suspend(a_crtc->dev);
->
-> This whole DPU PM stuff doesn't seem to belong here.  There's are 
-> device-PM ops for controlling power management.  It might happen that 
-> compositors disable the CRTC for simple mode setting. This should not 
-> suspend the whole device.
-
-Will do; it moves to runtime PM.
-
-> > +	spin_lock_irq(&drm->event_lock);
-> > +	if (crtc->state->event) {
-> > +		drm_crtc_send_vblank_event(crtc, crtc->state->event);
-> > +		crtc->state->event = NULL;
-> > +	}
-> > +	spin_unlock_irq(&drm->event_lock);
->
-> You need set up the vblank machinery to send the event on the next 
-> vblank irq. See [1] for a simple example.
->
-> [1] 
-> https://elixir.bootlin.com/linux/v7.2.5/source/drivers/gpu/drm/drm_vblank_helper.c#L51
-
-Will do. The event will be armed from the config-ready interrupt
-rather than in atomic_flush, since the next commit must not start
-before the hardware has taken the current command lists.
-
-[...]
-> > +	trace_spacemit_crtc_atomic_check(a_crtc->dev_id);
->
-> Please don't add your own tracepoints.
-
-Will do.
-
-> > +	ret = spacemit_crtc_atomic_check_fbmem(crtc, state);
-> > +	if (ret) {
-> > +		drm_dbg_kms(crtc->dev,
-> > +			    "failed to satisfy fbcmem size for all rdmas\n");
->
-> Drivers should only use drm_dbg().  drm_dbg_kms() et al are for DRM core 
-> and helpers.
-
-Will do.
-
-[...]
-> > +	if (WARN_ON(!crtc->state))
->
-> There are helpers like drm_WARN_ON() et al. Please prefer them over 
-> WARN_ON() and other non-DRM counterparts.
-
-Will do.
-
-[...]
-> > +	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to initialize vblank\n");
-> > +		goto err_unbind_all;
-> > +	}
->
-> Better do this after running drm_mode_config_reset().
-
-Will do.
-
-[...]
-> > +	/* The programming paths use the raw rectangles, so refuse to clip. */
-> > +	if ((state->src.x1 >> 16) != src_x || (state->src.y1 >> 16) != src_y ||
-> > +	    (drm_rect_width(&state->src) >> 16) != src_w ||
-> > +	    (drm_rect_height(&state->src) >> 16) != src_h ||
-> > +	    state->dst.x1 != state->crtc_x || state->dst.y1 != state->crtc_y ||
-> > +	    drm_rect_width(&state->dst) != crtc_w ||
-> > +	    drm_rect_height(&state->dst) != crtc_h) {
-> > +		drm_dbg_kms(plane->dev,
-> > +			    "clipped plane rectangles not supported\n");
-> > +		return -EINVAL;
-> > +	}
->
-> What's the matter with this code?
->
-> Allocated buffers can be larger than the display mode. If the hardware 
-> cannot handle this, it might become a problem in some setups.
-
-It worked around the driver programming the unclipped rectangles.
-Will fix.
-
-> > +	/* One-dimensional sources are invalid (only 0x0 = constant fill) */
-> > +	if ((src_w == 0) != (src_h == 0)) {
-> > +		drm_dbg_kms(plane->dev, "unsupported src_w %d src_h %d\n",
-> > +			    src_w, src_h);
-> > +		return -EINVAL;
-> > +	}
->
-> I'm not aware of any driver testing this. The above calculation of 
-> state->visible should have detected this case.
-
-Will do.
-
-[...]
-> > +		cur_state->mmu_tbl.size =
-> > +			((PAGE_ALIGN(fb->obj[0]->size) >> PAGE_SHIFT) +
-> > +			 HW_ALIGN_TTB_NUM) * 4;
-> > +		cur_state->mmu_tbl.va =
-> > +			dma_alloc_coherent(a_crtc->dev, cur_state->mmu_tbl.size,
-> > +					   &cur_state->mmu_tbl.pa,
-> > +					   GFP_KERNEL | __GFP_ZERO);
-> > +		if (!cur_state->mmu_tbl.va)
-> > +			return -ENOMEM;
->
-> Resource allocation/deallocation like this should better be done in 
-> begin_fb_access/end_fb_access when you need them for the commit. 
-> User-space compositors might send in a large number of states only for 
-> atomic_check'ing. There's no point in allocating actual memory then.
-
-Will move the allocation to prepare_fb.
-
-Cody
+--uwS4iCT+BxiI+7D2--
