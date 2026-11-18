@@ -1,82 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794983201;
-	b=GDyIuuCChsfB3c00zhgAIlR9B0fknD5vQgfKzMOWg79894o66TScU27cPzs9+Xi1CxtG
-	 WG02MXVL7gCMRQTqwkjo1OXPvEseDHJT4J6xkUQmhhPJbEN3XUCgj/gDxOsCAgPF8Vvnr
-	 VfYFcRoy8xUYkmTkOL855TIXT06C34TZ5+/zrtyWmclGxxY25CPtsMM4wWtqp2ykf7q3q
-	 ypfDO1vQ+Mc3fXMj+AgvKNoNCTU2pFF1nnkfxYDlJYuO/bsSSqJiMqxhEqpYV6OpDRJvq
-	 k+P2JU+IGTGolv5iS7zD1Tu5GwYo9isGixfHOox9p/NfBMvzAwdmXbYf3DOFWc+ophg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794983201;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version:X-ZohoMailClient;
-	bh=wChTs17w/kPirEcR5u/gSY+8kUIHSjZ+Ainq8hP8/TU=;
-	b=Jz7sbWwG098MM+lD4UeQDvMqtSFHhc43JwZAaRNpyN5DjkPBBN1nKyjyG80v8tQacdlw
-	 Szn6IiDtBgxctWEIpFuOAwxAJsK3jlh88NKPaqYbGSv29jNOlE5vvpfu2o9IXQiEfiFb6
-	 uUZCEV72vwD7gHzuOIKkg3o3AyGeKMdrOwHJUAnXu+ZEMvGUSsQvSXWR7oB2bE3Aks6LA
-	 LnxlL3sGRHwL/9pgLypQfzW6mnpyqXX29/PKT2v3l4JOh4xpVV25XCbbHf3dutifZ9tFy
-	 9qf5Cqj4CFCnNuDwrQ0CKAy+PKAo7Vu3bvuRK71S/Cdw0lISjOq9C1XI8IocVX+VxkA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=icenowy.me;
-	spf=pass smtp.mailfrom=icenowy.me;
-	dkim=pass header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=VVy59VhX;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.15
-Received: from sender5-op-o15.zoho.com (sender5-op-o15.zoho.com [165.173.182.15])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794983667;
+	b=Pyzy88CExMvTGWJ0mdwft4tX6DFlgdN3rgdTwY/E7+L5GP7TgRQoIYk5XideN9jlkQD5
+	 gwUk2m32/fJz0kW9S2M5TbQs6M+QbG+WY7gID1m4liph2bPGcYiTF8rtxpqFH8EUJT1rO
+	 aX3nOaQI9aFUOQRY5kY0pcZzCfuOd9eSGqFHF//pSyA2Zb8/wSjyR5GRCNhfXK+HDcNSS
+	 AbN41np9c2/wepERqhOhYAYbhx9dvP5Me/uoTqE9+iQzk4xBrW6OPOTyR86BERi70hQmY
+	 YmDBgxZXWJTICJy0C7NVg+I9DAoANL2byR5uYQ1Yrq0HhEWZIfmBuxa6x5gpNU5XNpw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794983667;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=2fdla1NYjjCieel0GDgyV2h5zcu99JPKuhUzM+in2nI=;
+	b=U3qVpluuPBV3dQ3AMpNXq/rArWrB83jH4S92f6IollyCAuQC+1GmH0cpAgPOD+2uB+3e
+	 aRDHKC1oVkRBf657JzMIPsRPv5h8y4/yakEgbEYpnoKl1HOe3duN7K9XwOj765BfOQIKv
+	 yV32zhOLDfjzeKVeOoUI/IXlsz487eQTPL9Jv/HBTPxSPE0O4Y1o95yZWqTmE4B18Wh5Q
+	 hNFs1vu7z+GJ+xqruY/h+ik9KPk660WU0abcQ66iTFfzUHqc/0fsY5jkAM2JQCwB8JG30
+	 F/hDFYjimTmtDdeGy9ph66XpCq7AuB7pPAC12oZkCIwq6L8ye9dS9ibjcslJE0jOvCw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E3CqjKIz;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E470606A332
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 06:26:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E470606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=icenowy.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icenowy.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8C0606A325;
+	Wed, 18 Nov 2026 06:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icenowy.me header.i=@icenowy.me header.a=rsa-sha256 header.s=zmail2 header.b=VVy59VhX
-ARC-Seal: i=1; a=rsa-sha256; t=1794983169; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=II/905t/7s1Bx2boCuHu/7QbYxEz+LgQLzRgga2Y2iNyT2iRlg8cYn/Sh9TeD5z/IL90wCBleYcN4uCdvRRdJWYm0Pe9kseSvuF+VxCLh/PiQIJ2Sop7S61eseKeZAFVwM45ji40cwP5T6E+zjOxc0L0Is0EmgpbeOK80P6RxF8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1794983169; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=wChTs17w/kPirEcR5u/gSY+8kUIHSjZ+Ainq8hP8/TU=; 
-	b=JHhEy+7gRq7N9dwaoUeNiKRqY0KJCJLsbz8t6/Pe733vDBJY95QQy2YA4pEObW2cVV+hem/rSgnNqxoQREvZkpFCldM9ywDm55k+ifV9oZGcLcKN2B4KTyCnE0vsaJmkZvroWUEUeWnH3UCK6H7cQRIPt3RI4uotr2mnhSuw9+w=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=icenowy.me;
-	spf=pass  smtp.mailfrom=uwu@icenowy.me;
-	dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: a=rsa-sha256; b=VVy59VhXnd3NmcMyl4P+5fUkpk/NxP74/38dN0hJ+TQz/hJRSel3AlhuVs3d/fK1E2tFmbhkQDSBM1TV4GVn2/7pfJA/9XwedNA79MvxorYEBvSwPUQRCt0ycWmlie/UDgtBmQo33Fen2oDdQlfLCFqZ7AR/7o9x0LVKLGajmZ5aLlMvq6LptGs0TFjZL059B/PhrEN0uOvchMxc4njgNPo79UEfQjr2XHNv2Xk8VOyFVCxGWDWy3iZly+wsvucrZp8+Y43R8s3mVJ8BTti0VsnU+F99NOR7xxRYC7RDwQ85J1Qz/dp0axDxmlGdwmeMTkquFlKPQ1+8/JUes9R34w==; c=relaxed/relaxed; s=zmail2; d=icenowy.me; v=1; bh=wChTs17w/kPirEcR5u/gSY+8kUIHSjZ+Ainq8hP8/TU=; h=Content-Description:Content-ID:Content-Type:Content-Transfer-Encoding:Cc:Date:From:In-Reply-To:List-Subscribe:List-Post:List-Owner:List-Id:List-Archive:List-Help:List-Unsubscribe:MIME-Version:Message-ID:Resent-Sender:Resent-Cc:Resent-Date:Resent-To:Reply-To:Resent-Message-ID:Resent-From:Sender:Subject:To:Date:From:Message-Id:Reply-To:Subject:To:Cc;
-Received: by smtp.zohomail.com with SMTPS id 1794983165898478.8118549869997;
-	Tue, 17 Nov 2026 22:26:05 -0800 (PST)
-Message-ID: <9d97d5dbcc619a9c52904ff8c6704a91fe8351e7.camel@icenowy.me>
-Subject: Re: [PATCH v2 15/17] riscv: dts: spacemit: k3-pico-itx: enable the
- DisplayPort output
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Guodong Xu <docular.xu@gmail.com>
-Cc: Cody Kang <codykang.hk@gmail.com>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard	 <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring	 <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley	
- <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Vinod Koul
- <vkoul@kernel.org>,  Neil Armstrong <neil.armstrong@linaro.org>, Haylen Chu
- <heylenay@4d2.org>, Michael Turquette	 <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>, Brian Masney	 <bmasney@redhat.com>, Philipp Zabel
- <p.zabel@pengutronix.de>, Paul Walmsley	 <pjw@kernel.org>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou	 <aou@eecs.berkeley.edu>, Alexandre Ghiti
- <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,  Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
-	 <u.kleine-koenig@baylibre.com>, dri-devel@lists.freedesktop.org, 
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org, 
-	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Date: Wed, 18 Nov 2026 14:25:38 +0800
-In-Reply-To: <f4b8c87eb0676500661ebea67363ac27.docular.xu@gmail.com>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
-	 <20260809-k3-display-v2-15-327d7910bf71@gmail.com>
-	 <576146d4f2752c3c3f6ec6c42812cb9956406383.camel@icenowy.me>
-	 <f4b8c87eb0676500661ebea67363ac27.docular.xu@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E3CqjKIz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEEE1F000C8;
+	Wed, 18 Nov 2026 06:34:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794983666;
+	bh=2fdla1NYjjCieel0GDgyV2h5zcu99JPKuhUzM+in2nI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=E3CqjKIz0iYatvK2Lmib4agpv8+7BNEEwdvY5jjKdnRn+vKgGa/P/jB2QQzQobRZY
+	 sk0NHrJWfxHUdPi1N2vdcZZXq6GakntsC1Uxk1N+zQsYIHoz9FmSNdvLlRWlaCVoWP
+	 TmCz4lq7ZPlwDt1jgzI8ubci12UNc2SkwuKmS5r6v4IvH9skvfJ3wx41C0tVF4aV3F
+	 X6vYOYo/SRFFxDUtfL6fMYFeV0vzhq+oif3UFMHxjJBt38QfjO2gPzNLe7LbhEGL4w
+	 IjW3+dlL3MsMNEXFT7BPrm8q2MKPem3pR4yeuotPmzmCjmCOdno6lHdsf7zoHi5B/8
+	 gPleBnCF0merQ==
+Date: Wed, 18 Nov 2026 06:34:24 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Sandie Cao <sandie.cao@deepcomputing.io>
+Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Enable USB and SD for Deepcomputing FML13V05 board
+Message-ID: <20261118063424-GKA155714@kernel.org>
+References: <20261117054324.1048767-1-sandie.cao@deepcomputing.io>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -86,39 +61,19 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261117054324.1048767-1-sandie.cao@deepcomputing.io>
 
-=E5=9C=A8 2026-11-17=E4=BA=8C=E7=9A=84 15:51 -0500=EF=BC=8CGuodong Xu=E5=86=
-=99=E9=81=93=EF=BC=9A
-> Hi Icenowy,
->=20
-> On Thu, 03 Sep 2026 20:09:42 +0800, Icenowy Zheng wrote:
-> > The connector available on the Pico-ITX mainboard isn't a
-> > DisplayPort
-> > port -- it's a USB Type-C port instead.
->=20
-> Right, it is a Type-C receptacle, and the commit message should say
-> so.
->=20
-> > I think you need to model the Type-C port and alt functions of it.
->=20
-> I am not sure that can be done on this board. The redriver/mux in
-> front of the receptacle and the PD controller that steers it both
-> sit on the EC's own I2C bus, and their interrupt goes to the EC too.
-> The SoC has no bus to either chip; all it gets from that side is the
-> DP1 HPD line.
+On 13:43 Tue 17 Nov     , Sandie Cao wrote:
+> This series updates Deepcomputing FML13V05 Device Tree: Add P1 PMIC 
+> regulator tree, add USB controller and USB phy, Enable SD card.
+> 
+> This series is rebased on next-20261116.
+> 
+For the series, with
 
-The ChromeOS EC firmware exposes some control for a Type-C port, you
-can search for `google,cros-ec-typec` and `google,extcon-usbc-cros-ec`
-compatible string in arch/arm64/boot/dts for more details.
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-Although the K3 Pico ITX hardware connects the EC to the SoC with some
-not-so-embedded interface (eSPI), which needs to be handled first.
-
-Thanks,
-Icenowy
-
->=20
-> So a usb-c-connector node would have nothing to link to here.
->=20
-> Guodong
+-- 
+Yixun Lan (dlan)
