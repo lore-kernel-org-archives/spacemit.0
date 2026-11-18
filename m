@@ -1,53 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.127.231.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.194.254.142
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794992307;
-	b=qXIdxkvQy2h2Qsaytor/OYAPhiAcOzHNIqTY1qtBi8sMdls0lvgDgZcuP7hnBy73+Kbq
-	 A6CkI0dy6eQZyjxlrSNVvT9L/tRqzUhIv9GMwt9uWGXFkzzXEiHdq2C/YrXnaRSLOwIQy
-	 4CqLWFERZBpE5y2G1Yrk703JffpfwlTtTYTGD8mwOa5ePQH+99FqpZQJy6NEzsq87nID0
-	 XhkutSn/AJiLSBTgFYYUQH7mvEttV4PYUP59ZplUd94Nt/5DAcDBq1+9lnu7xUkPI2Krk
-	 9r5JaYbGEDOZrNl76l9XUxUBMMGRTY4IWGCxoVGlFYdB2JZ7JJL2aWAy1XEDw7/l4rw==
+	t=1794996002;
+	b=MX7IuP9JL7xPszikgYbLwJ4J5oo4GZcbmhp2aXkDI1f8ttk31iB6QBJ8taBbmlkLcJWx
+	 YZlyGFkkkHAx3SR1osllXX7sY0+RLeO4m8QvLuYfnf6I0lH9nlPO5zGdfs+1V+dR2CoJY
+	 rzipt5nolD6cTv983rD4jbFL5KiHzrrbVypB9bdMx9G9x25/STGeAYE8p4c5fHnmVsJaC
+	 hpKc0tPHImSYMSbpCPtsAGYWDfULSKoMAbGKJ0lNr6HkSR3lTf6uOB/FmTNFDatavCm8b
+	 Rie0k0GHO3ROhcgRi6yFahOJvpeofQuc4wR3frmn+eGbV3w6tH4nQDe9SVnnzUcqU0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794992307;
-	h=DMARC-Filter:DKIM-Signature:X-Original-From:In-Reply-To:Subject:
-	 X-Lms-Return-Path:Message-Id:Mime-Version:Received:To:Date:References:
-	 X-Mailer:Cc:From:Content-Transfer-Encoding:Content-Type;
-	bh=kEr9Wg+aGMoays9Uh761p22Cq/vcC6/mglbKhWQGwFU=;
-	b=h98zmu9Ong4Sx8x78VlRb0lGZwbrrpDkCweqnplADu1QTVH/MZyf5aj9iwJEs3Ltlp8E
-	 2x68VrLclVwWplLJoVi1upbsSXjW6+jJdF6IkkrcGgMw91nSU3X6isMI/YU0TNnNpS5Ym
-	 MtxJkWvwF7Xuzw+oJzobvunaMOuY7ALTDkc9Ys4h7UQFEE8+CJouEoVOEde8A78XOIviE
-	 sf6+QV5gWzXNqvfLYiiEY6F6V/rJ5hUU7pE9z9D0uaftlYvl8r3/iQXFc/MRHlWTAlgI0
-	 8Zwxa4ZBYfRxLGWCfCUqn/ZdPVz5QSztpDG7dnflbzWDQmz55X5AJwkBXUsETPhHixQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794996002;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-QQ-SENDSIZE:
+	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=gE+8GEkhiQjCVNt58Aswex/BStQyLxbPhNALcBXdKZU=;
+	b=nZzq9cblhq9RkTAe/3dK0F/EJ1kwXGQA+ipDc1Cuu6ISOVrLux4v8+OLAvPIneGN59Mv
+	 CMH0ip1iH6862pbonMFDgxezRx50eZQ2ArKv3WqRQUJMZOdqZQdOSGbCi+z+P1nY6SnPZ
+	 /ig3nPd04bI4KHRlKd2KA+PkRArw2ZKgytPjmhyzoRDymao/bQKfSgje68DVs8IZ3E8Jp
+	 axbn+MJ7NaCPZe8+WdtdtC1ZZLCSgVwzwHVmIohjPuHqcRMK4cba+nlF8/9JpKJnX1C+F
+	 1nnu3YSWc0QeSoUO9R4UGD3tuLrZsNAVg20LQa1TwOzLVOovrgxNzTua4olV5OfHwyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=deepcomputing.io;
-	spf=pass smtp.mailfrom=deepcomputing.io;
-	dkim=pass header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=NT7Fwi35;
-	arc=none smtp.remote-ip=209.127.231.50
-Received: from va-2-50.ptr.blmpb.com (va-2-50.ptr.blmpb.com [209.127.231.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=so8kePXX;
+	arc=none smtp.remote-ip=18.194.254.142
+Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B6C606A33B
-	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 08:58:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33B6C606A33B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=deepcomputing.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepcomputing.io
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D03606A325
+	for <spacemit@lists.linux.dev>; Wed, 18 Nov 2026 09:59:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57D03606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=deepcomputing-io.20200927.dkim.feishu.cn header.i=@deepcomputing-io.20200927.dkim.feishu.cn header.a=rsa-sha256 header.s=s1 header.b=NT7Fwi35
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=deepcomputing-io.20200927.dkim.feishu.cn; t=1794992302;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=kEr9Wg+aGMoays9Uh761p22Cq/vcC6/mglbKhWQGwFU=;
- b=NT7Fwi35WYG8eyjqbJshaEWz596512Btcq5FAovqfyWG4z9R3fBynpDhhAUJVSYkJSFWYq
- tQfxvAG1xUe0H1C5pq1f7J1TlzavnFd19gXQZZrdzx9CHyH1WjAG2CmlFfyUmlb+xiAIyP
- hPBj+7fSEoa0scvO1ZWCj/lnTqI4CJGEilYo9zxiL/EvWmhb/Z54+Ae67io5GkQpBCzY9f
- l+1WV5zGH6Cc0TxxPeqcY2y2xNpDUMxkuQVZWc0wJH0ztU+ruWrPb+MEqN3iLQSZEDGt4a
- 8eEjgu80RzNAwWigtK+Kh4CeJDIZv7Gt5q1m4dPgX0UEERrhV9Smu9qQaWfzhA==
-X-Original-From: Wang Yang <yang.wang@deepcomputing.io>
-In-Reply-To: <20261118085742.1817536-1-yang.wang@deepcomputing.io>
-Subject: [PATCH 9/9] riscv: defconfig: Enable the FML13V05 EC keyboard modules
-X-Lms-Return-Path: <lba+26afd68ac+57a195+lists.linux.dev+yang.wang@deepcomputing.io>
-Message-Id: <20261118085742.1817536-10-yang.wang@deepcomputing.io>
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=so8kePXX
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1794995962;
+	bh=gE+8GEkhiQjCVNt58Aswex/BStQyLxbPhNALcBXdKZU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:From;
+	b=so8kePXXHRypKZVceMcjV/jbHYViLPMhOi8gOs8BP86Dvle/bVthdnNPQYDQvWCgJ
+	 yVCwbiag3L9tLWVH3QBiL2dEfUL124spgbA7QWl0DJpa517ZbsaDpDHOJyGk8r8V4d
+	 dMOCVHUchYnzRtk3IF3mrtJ99MQabf32zqclAi8s=
+X-QQ-mid: esmtpgz13t1794995955t2c2fa096
+X-QQ-Originating-IP: kXND7tW+yULMcxeWAiHy4oMknukShfEgdiMgPHresxI=
+Received: from [192.168.1.100] ( [120.237.158.181])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 18 Nov 2026 17:59:12 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5513837278433707905
+EX-QQ-RecipientCnt: 20
+Message-ID: <361218E417AE4AE5+e47a92b4-850d-4a36-9e4b-6f5f62c8b379@linux.spacemit.com>
+Date: Wed, 18 Nov 2026 17:59:12 +0800
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -56,62 +60,77 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Received: from ubuntu.. ([183.23.101.74]) by smtp.feishu.cn with ESMTPS; Wed, 18 Nov 2026 16:58:19 +0800
-To: "Yixun Lan" <dlan@kernel.org>, "Benson Leung" <bleung@chromium.org>
-Date: Wed, 18 Nov 2026 16:57:42 +0800
-References: <20261118085742.1817536-1-yang.wang@deepcomputing.io>
-X-Mailer: git-send-email 2.43.0
-Cc: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>, 
-	"Tzung-Bi Shih" <tzungbi@kernel.org>, 
-	"Guenter Roeck" <groeck@chromium.org>, "Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
-	"Sandie Cao" <sandie.cao@deepcomputing.io>, <devicetree@vger.kernel.org>, 
-	<chrome-platform@lists.linux.dev>, <linux-riscv@lists.infradead.org>, 
-	<spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-From: "Wang Yang" <yang.wang@deepcomputing.io>
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 7/9] riscv: dts: spacemit: enable USB2.0 controllers on
+ BananaPi F3
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
+ Peter Chen <peter.chen@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev
+References: <20261117-b4-spacemit-k1-usb2-v5-0-52c3829cca69@linux.spacemit.com>
+ <20261117-b4-spacemit-k1-usb2-v5-7-52c3829cca69@linux.spacemit.com>
+ <18756bf6-3eef-4de8-a091-c5218458fd99@kernel.org>
+Content-Language: en-US
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
+In-Reply-To: <18756bf6-3eef-4de8-a091-c5218458fd99@kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
+X-QQ-XMAILINFO: NcfXIs+Ms1qH7EEllHGrSeSohN7d2J/lmg6HBn1lBNC5NV7ipzSmg3GQ
+	y0Gsm0/8d/cddtTuzcQzDeXwy6pAc5wBVP0xMX4gsRaI3twHCCKu96QeudpRjGfQXOTFQlb
+	tQIeObuo8zWsNB5OJq49Wu4At06FsGUCLdKHaepuSwjDiez6GNBrTL6KdupU4WcgBGizYIc
+	8pp8DhKTc6llXfr/LZTxf0y0CxM1+v+ARQyKaZJqd+NsDJgoewjAgeEylj/Z3sMw0jb81Ez
+	YW1/Db8heU5HW7MzWhr7a+aea9Pr4Bqx6P7d5NJowTDPv011zN84Lw/HVrGrF7mOh925WZp
+	nuCjUA1RKpNSsVyvyhsBsHunp142JJ5QcnxZo64m3e30SNoWAFun1zW5wUdZgqUJ+Fg37QT
+	Yu2IjOTiryeXYmyJN536MALpzW8eS6EwB7Vnfqbcu/Ssjhtcc6TcuRh0c7VYob9oZyyTfKT
+	9K2kvDTR7gZ/8CKU3xLw+OqZGuVihuKSgEQcUzjKEUmzNcP/bCHOKNnOabrb7XmV8uuEk6D
+	9vwfluEtPc7grLOxuyBAY0YmWDcme8mW9XZQzYxz8DijuVV5fWJct5XIwjmruFYu7qISFSP
+	zj/V5dGdqHsiz50PHKHyKW3UsrsjElvZ8xr4D2oZnO1t4tc53nxTQJl5gP/FekVDLqn6uTc
+	J6EaXUKrRD8om+pWeRkW8L55JcE6OvU93isRBMDHuEezBiS2UpGDUAO0ahZOTIYqk408wjS
+	h81AHht1sOlB+dGKH3AyR6tezvlANIamR9pEdXEoNIPkYzSoI33Tk5yO3gPMuzmAoQ2IvKp
+	O0N5Vz8PT8EwCbCuCYKk5sghnKZjc20TDfYJ0kM77lRECdke3z0rfZIFWluVYz1OZWFUByo
+	Lut+tQz/i7chQxEh2iPRC+eaS2Y4fOgvLRFnkTJtIS1zgQ4NXuSytO0AOGhQvcjzWQ19FHA
+	xmctMS2bozsmRoO0A1D1pEFJnhtyUF5ibfIatgN3bRZjQBTg7lwQrIOLgiNQNgb6PDsn38J
+	TFbyNbhvaPAxQ+UPeUXo/tg3olhGsKCK7uuhEBJ/NLtaiHEU+ah3eG9eHFdgE=
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
 
-Enable the eSPI controller and Chrome platform configuration menu. Build
-the EC core, memory transport and keyboard driver as modules so OF
-modaliases can load them on boards that describe this hardware.
+On 11/18/2026 4:18 PM, Krzysztof Kozlowski wrote:
+> On 17/11/2026 13:38, Junzhong Pan wrote:
+>> On BananaPi F3, usb2_0 is connected to a Type-C connector at device
+>> mode by default. This port have no VBUS supply capability, thus host
+>> mode only works with self-powered device or hub. User could switch the
+>> role in sysfs.
+>>
+>> And the usb2_1 is connected to the USB2.0 pins of the Mini PCIe slot to
+>> support cellular modules.
+>>
+>> Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+>> Reviewed-by: Yixun Lan <dlan@kernel.org>
+>> Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+> 
+> DTS cannot be combined in this patchset and must be split. Don't mix
+> patches from independent subsystems when you send something explicitly
+> targeting only one subsystem.
+> See also: Documentation/devicetree/bindings/submitting-patches.rst
+> 
 
-Keep all configuration choices in this final standalone patch.
+Thanks for pointing this out! I'll split them in the next revision.
 
-Prepared with Codex assistance from the existing DC-linux EC support.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Signed-off-by: Wang Yang <yang.wang@deepcomputing.io>
----
- arch/riscv/configs/defconfig | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/arch/riscv/configs/defconfig b/arch/riscv/configs/defconfig
-index 383fdd07a..1ddb8cd5f 100644
---- a/arch/riscv/configs/defconfig
-+++ b/arch/riscv/configs/defconfig
-@@ -145,7 +145,9 @@ CONFIG_MICREL_PHY=y
- CONFIG_MICROSEMI_PHY=y
- CONFIG_MOTORCOMM_PHY=y
- CONFIG_INPUT_MOUSEDEV=y
-+CONFIG_SPACEMIT_ESPI_BUS=y
- CONFIG_INPUT_EVDEV=y
-+CONFIG_KEYBOARD_CROS_EC=m
- CONFIG_KEYBOARD_GPIO=y
- CONFIG_KEYBOARD_SUN4I_LRADC=m
- CONFIG_SERIAL_8250=y
-@@ -277,6 +279,9 @@ CONFIG_PHY_SUN4I_USB=m
- CONFIG_PHY_STARFIVE_JH7110_DPHY_RX=m
- CONFIG_PHY_STARFIVE_JH7110_PCIE=m
- CONFIG_PHY_STARFIVE_JH7110_USB=m
-+CONFIG_CHROME_PLATFORMS=y
-+CONFIG_CROS_EC=m
-+CONFIG_CROS_EC_SPACEMIT_K3=m
- CONFIG_LIBNVDIMM=y
- CONFIG_NVMEM_SUNXI_SID=y
- CONFIG_EXT4_FS=y
--- 
-2.43.0
+Best regards,
+Junzhong Pan
