@@ -1,48 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=116.202.128.144
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043625;
-	b=FDu9wnasA9YUFB8HvK3AObiKXVoJUseW3JiygtiK1iBxlasfDMMoPCJlIYPZSbov7Zvq
-	 E7X9n6jdUTfZK6JzSh1r2cm/B9wWHOPZTTUnOBRdgx4BN9XaBaP4QyGXlkIxvvh4vlSP3
-	 YtUGVLhsUL0gFF/p8PBqiFVBZ8FS2GR2ubP29iOQZ4pJajzgOsfMN/LvTQ3UFem6MfHCn
-	 tHD9DY0hmdt/ZCjVU/j0hHVk2vre8qu4FE2WqwtL7Dm9NQIj3Z6S0mK6CJAvMDyQen1lY
-	 b8mYAh9roLLtXBneuhmcDR5H3LRxzL4Cd6RblZpqqjnlWv5JGDbyPWBkng8QNAA4KsA==
+	t=1795073953;
+	b=rpeauO49jrz9kWimaAqJFL/ns9wjf69TONl56fDOJyrsaI7vTMIbElNPgU5idTfm3GtL
+	 MBDlEvsSIKdbkgVpjIxLbyMw/df2Ocp/PxiGPdmbhf0eo6fXEsTn9PVgmTHtxZawmjvEE
+	 vPlcAFW1XLtTeRCu3oQXJu8cietH9pJzmHHWwusFdTmxLYNtCoKNiHUik/w9c6KICyQjj
+	 UI31Lw1+PWWqKrv5qs+/MI/BwKadQ0zamJTbUatsJ47QdxcEHTi5oLPTX/CeyDUoG06Bq
+	 fenvlDOjfMVTgN5YN9YDMY1Wpc/YC2LPKJ4IYb8ijNjbOBUy4Q0oBH7YD1qK/qHP92Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043625;
-	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=dQr8XwXR7m0qxbyXrJ5j+jZmA4RXmXwWBQdSH2URNgY=;
-	b=NW7OHBUVoLY9Pmk/zzg7afA1E+e5wPpjpnfpA/evRHC1gpapfeGv9UNw8SIqJCLHEhW4
-	 pAEW6aM5xs3I+AEkefapAraVgBss5Y4P2WJxDmTeaaIK824qWu3PlF/8JyMNzCOyJ/bRO
-	 9e2JwG6uH7RRrq2FIH1BeWmaiTTSAgW9UmRKphioGdxKu7dWhbB9J2xnd8YQmsEEanKvx
-	 9aQTvAnXgqHjUZKISTCjN6zMuZM3jsQrw0d59q0eO8UfvLS7pnMuA6bCWH8JVkWdYwn9E
-	 h9KOFaOkSKEhSlHW2ykE/iAV1ufXRBaEifmbfjtezyxFeDJOS+e2KCuKYflBgZ9HtTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795073953;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=akDNbQx5FRb9gHPUZNIVSoupLqofkytxxol6XFlCraQ=;
+	b=zG0jTGkkRu/1qX53lMqCflpShC4U3v1eLJ57Npte09xqPUxhHJr6p089Mn30UB26tBbm
+	 dOROufKElhs7w6E6hB3CMKsTG+FFUyMAcaS1Rr4FO40gxOYmR39FDy+ILp0qzAw4+uN2O
+	 aa92wLc6to64hCyRn/DCr8IDzLtO72Wy6q5ROCRBwpKNBo2cvWGk3wzZ7rUnYfsORvkxv
+	 EMDuoqMdEIal3+wxOmr9kM/WCpnQjJv/azRRd3hF7bZkBdLPbiFOq8DzEj9S8ZCDOGeqA
+	 ai58GaAoCJl5GMaLJ2l5EdkvJYk9sgAewKq4b8qp+VIH+rIZb+mShJ4nUXJLcD3qtBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Wwt/vb+L";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=freeshell.de;
+	spf=pass smtp.mailfrom=freeshell.de;
+	dkim=pass header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=fHHIVyEp;
+	arc=none smtp.remote-ip=116.202.128.144
+Received: from freeshell.de (freeshell.de [116.202.128.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD42606A325;
-	Wed, 18 Nov 2026 23:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D0A606A320
+	for <spacemit@lists.linux.dev>; Thu, 19 Nov 2026 07:39:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76D0A606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=freeshell.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freeshell.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wwt/vb+L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532141F000C8;
-	Wed, 18 Nov 2026 23:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795043625;
-	bh=dQr8XwXR7m0qxbyXrJ5j+jZmA4RXmXwWBQdSH2URNgY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Wwt/vb+LD7m06w2ubrPiGBebpGU57JsNY1lLpplQWBezfjQxkGN0XYRV6oVx01tIf
-	 BV63sfEQPkFt8IySyjtHpfaDcHeRKZnIbdn+LJ6a+aXNDI2MjLHa8n+BIoF8CvzH4D
-	 u1lTPGMzVOSktmHYg1jJHrx526NKNddilXDIuN/RZFjRZtnONhw7ZvqGRv4D72LxeQ
-	 dPhqiuRrR69EUW7gVwB1rCV11EeFBfceebfW/dnHbNIS1pcDLZFlsOf5Jq1cUbxm9L
-	 2UDrruehhMtyXuZ830EDYm1thj6rL/UuP0Z0U9dp4tEcgf6Uezu20j1li/AMJW1jia
-	 NF8RTXxuPQYaQ==
-From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 18 Nov 2026 23:13:10 +0000
-Subject: [PATCH v5 2/2] pmdomain: spacemit: Add power domain driver
+	dkim=pass (2048-bit key) header.d=freeshell.de header.i=@freeshell.de header.a=rsa-sha256 header.s=s2025 header.b=fHHIVyEp
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freeshell.de;
+	s=s2025; t=1795073892;
+	bh=akDNbQx5FRb9gHPUZNIVSoupLqofkytxxol6XFlCraQ=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=fHHIVyEpCDHKo0PtvTQl3Yh0SV0eE/U/kDhsGZJCrnU6gviFNi8GCwUkY5bRxkdT3
+	 22Zbt/QrIvbe6xaERzHMPKDbDWWqOSMfCJ6HIbSWoQar3xGG1eTYmKtuZWYzF7zNWW
+	 agc2cJUhka/b6lPE0UnHbMP90TAGTFAJm5JruUbF/nytvhhnm2TgjxTBQk4EnA7ONH
+	 hYnD+yNTyNP3+g/u4DNYIqOhqgeDqoabZp4K5ahgfY4+CTxTrCDWYB3BL+IBGiAGQi
+	 qKSKqqaPUYnfGDEUc3sKzEh81Jt0KSkWDhjNqVbC4eBox0+lIOwV8Equh4cck4QbMZ
+	 s3xaVTJyAttfw==
+Received: from [IPV6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc] (unknown [IPv6:2605:59ca:364f:d400:1b91:6b30:22c2:fffc])
+	(Authenticated sender: e)
+	by freeshell.de (Postfix) with ESMTPSA id D69FFB221F5A;
+	Thu, 19 Nov 2026 08:38:07 +0100 (CET)
+Message-ID: <053b55fe-47d0-4cc7-ba53-c560fc9c1d1b@freeshell.de>
+Date: Wed, 18 Nov 2026 23:38:01 -0800
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -52,549 +58,274 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/2] Add UFS Host driver support for SpacemiT K3 SoC
+To: Yixun Lan <dlan@kernel.org>,
+ "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+ "Martin K. Petersen" <mkp@kernel.org>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Avri Altman <avri.altman@sandisk.com>,
+ Bart Van Assche <bvanassche@acm.org>, Bean Huo <beanhuo@micron.com>,
+ Stanley Jhu <stanleyjhu@google.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Jennifer Berringer <jberring@redhat.com>,
+ Trevor Gamblin <tgamblin@baylibre.com>, linux-scsi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+References: <20261116-08-k3-ufs-support-v8-0-e3b256972dd4@kernel.org>
+ <8462a0d9-e9b7-467d-b2e1-7870c78e2691@freeshell.de>
+ <avyusx36U534Bpu9@aurel32.net>
+Content-Language: en-US
+From: E Shattow <e@freeshell.de>
+In-Reply-To: <avyusx36U534Bpu9@aurel32.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261118-04-k3-pm-support-v5-2-42394acdf3e3@kernel.org>
-References: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
-In-Reply-To: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
-To: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Icenowy Zheng <uwu@icenowy.me>, Iker Pedrosa <ikerpedrosam@gmail.com>, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14424; i=dlan@kernel.org;
- h=from:subject:message-id; bh=CcwdDfyWe7xxhc1dHRNOEvqujnUzEKS3Juwt4KgVDvQ=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBq/jEczr27doHBuhfTaWraR1H2Ywlm61Z8GCGS6
- KLLQ2eoZJiJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCav4xHBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+0jYQ/9HWG1YEjh25AcHaLkbmkDI+iq5tY1H3ljz45OoqPbKzJd5ZCLP4+I9
- otiD4olqVv21I4s7sRyMn2L4ox8HnM1pmbBPPQI0EubrW7pdbWvCThJzBc5KIeZzqV5ZCl0GyAa
- PiH+X2dXujIRrKimQy3ZtSbv8g/2IndSNDbP4UiHNginbpvA2FbEKKF4e8xmog1ruC83jOFU2dz
- 5ByE9VQjuKlbWwfBGJluKaL89Dni3q9UAKl57wsPS/WYsc5nSayxyU9MY7Ybe/Nee/MpCGNGi82
- JNikkr4XmtaMz3x+2xiPYiV/wLkgyS3LAV3EzPIxtOqda7ISAd1YpqcNFhr0NI6ObItMpZKFgrs
- 7A+USKMMFFEGmybP/sWFaCXRBugVW459xjYbv2+D2ggSoHgHCJ8S8KI1QsVjraC1sPltlnOyC/u
- osNg3c/OGx/ONBhvHgt03DZlFiNivX4mw9pxzl2mvtbaO562YwcUlJJKkG+u5hBo21LssBrvxyA
- OsxssqZO1DwVU9XaVBXRLZzOAAs9q/RBQV6uFjpAeGL4k1hJXVXOilSDONURIfR4ECFffHt2l3x
- gIhXUBc8atwQR6LA/tcNRgj7PrAl1LOwU4dzJ8+q8xsWaRaKb3askrud/vxMDPQYJtp/Pdqaukw
- ZcUw8/fxzvBPH6cf6X9a/OZEOoPz7Y=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-  SpacemiT's PMU (Power Management Unit) consist of several power domains
-which can be managed independently, depending on different application
-scenario, each domain can be powered on/off for saving power.
+Hi Yixun, and Aurelien,
 
-  The driver is implemented based on Linux Generic PM Domain framework.
-From a hardware perspective, either of two distinct power-on sequences
-are supported, in software mode (SW mode), the driver is responsible for
-controlling the states of bits such as sleep1, sleep2, isolation and
-pwr_state, while in hardware mode (HW mode), the PMU hardware will complete
-the sequence automatically without requiring software intervention.
+On 11/17/26 11:44, Aurelien Jarno wrote:
+> Hi,
+> 
+> On 2026-11-16 17:15, E Shattow wrote:
+>> Hi Yixun,
+>>
+>> On 11/15/26 19:46, Yixun Lan wrote:
+>>> This series try to add UFS support for SpacemiT K3 SoC, the controller
+>>> components consists of System Bus Interface Unit, UFS Host Controller
+>>> Interface, UFS Transport Protocol Layer, UFS Host Registers, Device
+>>> Management Entity (DME), Transport Layer, Network Layer, Data Link
+>>> Layer, PHY Adapter Layer, and M-PHY Interface. A more detail functional
+>>> block diagram can be found in SpacemiT website, chapter 9.7.3 [1]
+>>>
+>>> The DTS patch has been dropped in this series [2], and will send
+>>> in separate series once this patch accepted. For people who want to
+>>> test UFS driver, please grab the DT patch from version v5 [3].
+>>>
+>>> Enable UFSHCD_CAP_KEEP_AUTO_BKOPS_ENABLED_EXCEPT_SUSPEND,
+>>> This allows the device auto-bkops to be always enabled except
+>>> during suspend (both runtime and suspend), with this feature,
+>>> the BKOPS interrupt (log below) isn't reported anymore.
+>>>
+>>> [  806.710763] ufshcd-spacemit c0e00000.ufshc: ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 1
+>>>
+>>> Link: https://spacemit.com/community/document/info?nodepath=hardware/key_stone/k3/k3_docs/k3_usermanual/09_memory_storage.md&lang=en [1]
+>>> Link: https://lore.kernel.org/all/20260918-belligerent-succinct-kraken-7fa592@quoll/ [2]
+>>> Link: https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-3-1f5d71f1027d@kernel.org/ [3]
+>>> Signed-off-by: Yixun Lan <dlan@kernel.org>
+>>> ---
+>>> Changes in v8:
+>>> - enable UFSHCD_CAP_KEEP_AUTO_BKOPS_ENABLED_EXCEPT_SUSPEND
+>>> - rename to "ref_clk", see explanation in patch
+>>> - add delay between enable clk & deassert reset
+>>> - respect bRefClkGatingWaitTime, add wait delay
+>>> - drop comment of ufs_hba_spacemit_vops, which got CI complaint
+>>> - rebase to v7.4-rc1
+>>> - Link to v7: https://patch.msgid.link/20261002-08-k3-ufs-support-v7-0-bb39007ff9ae@kernel.org
+>>>
+>>> Changes in v7:
+>>> - check err return value of ufs_spacemit_quirk_host_pa_saveconfigtime()
+>>> - Link to v6: https://patch.msgid.link/20260921-08-k3-ufs-support-v6-0-3479768a2299@kernel.org
+>>>
+>>> Changes in v6:
+>>> - drop unused macro and dev_req_params
+>>> - use global PX_xx macros
+>>> - fix axi clock name
+>>> - drop dts patch
+>>> - collect tags
+>>> - Link to v5: https://patch.msgid.link/20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org
+>>>
+>>> Changes in v5:
+>>> - adjust clock names
+>>> - add runtime power support
+>>> - collect tags
+>>> - Link to v4: https://patch.msgid.link/20260908-08-k3-ufs-support-v4-0-22aa2bd97d3b@kernel.org
+>>>
+>>> Changes in v4:
+>>> - fix clock and reset settings
+>>> - drop function which retrieve value of tx_lanes
+>>> - propagate return error of ufs_spacemit_dme_set()
+>>> - check return value ufs_spacemit_check_hibern8()
+>>> - drop call to ufshcd_vops_phy_initialization()
+>>> - handle compiling warning if CONFIG_OF not enabled
+>>>  add __maybe_unused to ufs_spacemit_of_match
+>>> - Link to v3: https://patch.msgid.link/20260806-08-k3-ufs-support-v3-0-037fb322acdb@kernel.org
+>>>
+>>> Changes in v3:
+>>> - collect tags
+>>> - fix dt-binding warning reported-by sashiko
+>>> - fix low freq in opp-2 table
+>>> - fix err checking in check_hibern8()
+>>> - propagate err code in link_startup_notify()
+>>> - update documents for event_notify()
+>>> - ufs clock driver is merged into v7.3-rc1, update cover letter
+>>> - Link to v2: https://patch.msgid.link/20260725-08-k3-ufs-support-v2-0-45036a2a2418@kernel.org
+>>>
+>>> Changes in v2:
+>>> - fix missing interrupts property
+>>> - move ufs node to k3-com260.dtsi
+>>> - convert freq-table-hz to operating-points-v2
+>>> - rework reset_control, fix header and drop global variable
+>>> - drop dump_host_regs() debug interface
+>>> - converge and refactor dme_set() operations
+>>> - massive reduce of busy delay() loops
+>>> - drop vendor specific hce_enable_notify(), fallback to default
+>>> - drop unused member from struct ufs_spacemit_host
+>>> - add COMPILE_TEST support to Kconfig
+>>> - comment style fix
+>>> - Link to v1: https://patch.msgid.link/20260702-08-k3-ufs-support-v1-0-1a64a3ab128f@kernel.org
+>>>
+>>> ---
+>>> Yixun Lan (2):
+>>>       scsi: ufs: spacemit: dt-bindings: Add UFS controller for K3 SoC
+>>>       scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+>>>
+>>>  .../devicetree/bindings/ufs/spacemit,k3-ufshc.yaml |  56 ++
+>>>  drivers/ufs/host/Kconfig                           |  12 +
+>>>  drivers/ufs/host/Makefile                          |   1 +
+>>>  drivers/ufs/host/ufs-spacemit.c                    | 655 +++++++++++++++++++++
+>>>  drivers/ufs/host/ufs-spacemit.h                    |  77 +++
+>>>  5 files changed, 801 insertions(+)
+>>> ---
+>>> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+>>> change-id: 20260605-08-k3-ufs-support-c8b308e415e2
+>>>
+>>> Best regards,
+>>> --  
+>>> Yixun Lan <dlan@kernel.org>
+>>>
+>>>
+>>> _______________________________________________
+>>> linux-riscv mailing list
+>>> linux-riscv@lists.infradead.org
+>>> http://lists.infradead.org/mailman/listinfo/linux-riscv
+>>
+>> Tested v7 and v8 successfully on Sipeed K3 Pico-ITX (32GiB DRAM / 128GiB
+>> UFS model). Build and test methodology:
+>>
+>> ### build chimera debian-installer with patched mainline kernel
+>> ### assume fresh Debian testing "forky" build environment
+>>
+>> apt update
+>> apt install -y b4 bc bison ca-certificates cpio \
+>>  crossbuild-essential-riscv64 curl debhelper fakeroot flex kmod \
+>>  libdw-dev libssl-dev libssl-dev:riscv64 linux-config-7.2:riscv64 \
+>>  python3 rsync
+>>
+>> curl -L \
+>>  https://git.kernel.org/torvalds/t/linux-7.4-rc3.tar.gz \
+>>  | tar xz
+>>
+>> pushd linux-7.4-rc3
+>> b4 am -v1 -o- \
+>>  https://lore.kernel.org/all/20261115195112.32120-1-e@freeshell.de/ \
+>>  | patch -p1
+>> b4 am -v5 -P3 -o- \
+>>  https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org/ \
+>>  | patch -p1
+> 
+> After applying that patch, you also need to change:
+>   clock-names = "axi", "ref";
+> into
+>   clock-names = "axi", "ref_clk";
+> to match the change done in the code in v8.
+> 
+> [...]
+>
 
-Tested-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-Reviewed-by: Iker Pedrosa <ikerpedrosam@gmail.com>
-Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- drivers/pmdomain/Kconfig                        |   1 +
- drivers/pmdomain/Makefile                       |   1 +
- drivers/pmdomain/spacemit/Kconfig               |  21 ++
- drivers/pmdomain/spacemit/Makefile              |   1 +
- drivers/pmdomain/spacemit/spacemit-pm-domains.c | 422 ++++++++++++++++++++++++
- 5 files changed, 446 insertions(+)
+I was missing this detail previously. For testing again of v8 I have now
+inserted a sed pipe to change this as suggested for the dts application
+step of the build procedure:
 
-diff --git a/drivers/pmdomain/Kconfig b/drivers/pmdomain/Kconfig
-index 5341dff669be..20aea5fe94b2 100644
---- a/drivers/pmdomain/Kconfig
-+++ b/drivers/pmdomain/Kconfig
-@@ -14,6 +14,7 @@ source "drivers/pmdomain/renesas/Kconfig"
- source "drivers/pmdomain/riscv/Kconfig"
- source "drivers/pmdomain/rockchip/Kconfig"
- source "drivers/pmdomain/samsung/Kconfig"
-+source "drivers/pmdomain/spacemit/Kconfig"
- source "drivers/pmdomain/st/Kconfig"
- source "drivers/pmdomain/starfive/Kconfig"
- source "drivers/pmdomain/sunxi/Kconfig"
-diff --git a/drivers/pmdomain/Makefile b/drivers/pmdomain/Makefile
-index d7aee13ae571..25238576f8a3 100644
---- a/drivers/pmdomain/Makefile
-+++ b/drivers/pmdomain/Makefile
-@@ -12,6 +12,7 @@ obj-y					+= renesas/
- obj-y					+= riscv/
- obj-y					+= rockchip/
- obj-y					+= samsung/
-+obj-y					+= spacemit/
- obj-y					+= st/
- obj-y					+= starfive/
- obj-y					+= sunxi/
-diff --git a/drivers/pmdomain/spacemit/Kconfig b/drivers/pmdomain/spacemit/Kconfig
-new file mode 100644
-index 000000000000..8e2808e92be3
---- /dev/null
-+++ b/drivers/pmdomain/spacemit/Kconfig
-@@ -0,0 +1,21 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+
-+menu "SpacemiT PM Domains"
-+
-+config SPACEMIT_PM_DOMAINS
-+	tristate "PM Domain driver for SpacemiT SoC"
-+	depends on ARCH_SPACEMIT || COMPILE_TEST
-+	depends on PM && OF
-+	select PM_GENERIC_DOMAINS
-+	select PM_GENERIC_DOMAINS_OF
-+	select AUXILIARY_BUS
-+	help
-+	  This driver enables power domain management for the SpacemiT
-+	  SoC. On the SoC there are number of power domains available,
-+	  which can be managed independently. For example VPU, GPU, LCD,
-+	  and Audio reside in their own power domains which can be
-+	  turned on/off.
-+
-+	  Say Y or M to enable device power management through PM domains.
-+
-+endmenu
-diff --git a/drivers/pmdomain/spacemit/Makefile b/drivers/pmdomain/spacemit/Makefile
-new file mode 100644
-index 000000000000..d0bd77a520c0
---- /dev/null
-+++ b/drivers/pmdomain/spacemit/Makefile
-@@ -0,0 +1 @@
-+obj-$(CONFIG_SPACEMIT_PM_DOMAINS)	+= spacemit-pm-domains.o
-diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-new file mode 100644
-index 000000000000..9d77d3f4c182
---- /dev/null
-+++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
-@@ -0,0 +1,422 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Spacemit Generic power domain support.
-+ *
-+ * Copyright (c) 2026 SpacemiT Technology Co. Ltd
-+ */
-+
-+#include <linux/pm_domain.h>
-+#include <linux/regmap.h>
-+#include <linux/auxiliary_bus.h>
-+#include <dt-bindings/power/spacemit,k1-power.h>
-+#include <dt-bindings/power/spacemit,k3-power.h>
-+#include <soc/spacemit/ccu.h>
-+
-+#define APMU_POWER_STATUS_REG	0xf0
-+#define APMU_POWER_TIMEOUT_US	10000
-+
-+struct spacemit_pm_domain_param {
-+	unsigned int reg_pwr_ctrl;
-+	u8 bit_hw_mode;
-+	u8 bit_sleep2;
-+	u8 bit_sleep1;
-+	u8 bit_isolation;
-+	u8 bit_auto_pwr_on;
-+	u8 bit_hw_pwr_stat;
-+	u8 bit_pwr_stat;
-+	bool use_hw;
-+	unsigned int flags;
-+	const char *name;
-+};
-+
-+struct spacemit_pm_domain {
-+	struct generic_pm_domain genpd;
-+	struct spacemit_pmu *pmu;
-+	const struct spacemit_pm_domain_param *param;
-+};
-+
-+struct spacemit_pmu {
-+	struct device *dev;
-+	struct regmap *regmap;
-+	struct genpd_onecell_data genpd_data;
-+	struct generic_pm_domain *domains[];
-+};
-+
-+struct spacemit_pm_aux_data {
-+	int num_domains;
-+	const struct spacemit_pm_domain_param *param;
-+};
-+
-+#define to_spacemit_pd(gpd) container_of(gpd, struct spacemit_pm_domain, genpd)
-+
-+static int spacemit_pd_power_off(struct generic_pm_domain *domain)
-+{
-+	struct spacemit_pm_domain *pd = to_spacemit_pd(domain);
-+	struct spacemit_pmu *pmu = pd->pmu;
-+	const struct spacemit_pm_domain_param *p = pd->param;
-+	unsigned int val;
-+	int ret;
-+
-+	if (!pd->param->use_hw) {
-+		regmap_clear_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_isolation));
-+		fsleep(15);
-+
-+		val = BIT(p->bit_sleep1) | BIT(p->bit_sleep2);
-+		regmap_clear_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-+		fsleep(15);
-+
-+		ret = regmap_read_poll_timeout(pmu->regmap,
-+					       APMU_POWER_STATUS_REG,
-+					       val,
-+					       !(val & BIT(p->bit_pwr_stat)),
-+					       5,
-+					       APMU_POWER_TIMEOUT_US);
-+	} else {
-+		val = BIT(p->bit_auto_pwr_on) | BIT(p->bit_hw_mode);
-+		regmap_clear_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-+		fsleep(15);
-+
-+		ret = regmap_read_poll_timeout(pmu->regmap,
-+					       APMU_POWER_STATUS_REG,
-+					       val,
-+					       !(val & BIT(p->bit_hw_pwr_stat)),
-+					       5,
-+					       APMU_POWER_TIMEOUT_US);
-+	}
-+
-+	if (ret)
-+		dev_err(&domain->dev, "failed to power off domain %s: %d\n",
-+			p->name, ret);
-+
-+	return ret;
-+}
-+
-+static int spacemit_pd_power_on(struct generic_pm_domain *domain)
-+{
-+	struct spacemit_pm_domain *pd = to_spacemit_pd(domain);
-+	struct spacemit_pmu *pmu = pd->pmu;
-+	const struct spacemit_pm_domain_param *p = pd->param;
-+	unsigned int val;
-+	int ret = 0;
-+
-+	if (!p->use_hw) {
-+		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_sleep1));
-+		fsleep(20);
-+
-+		val = BIT(p->bit_sleep2) | BIT(p->bit_sleep1);
-+		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-+		fsleep(20);
-+
-+		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, BIT(p->bit_isolation));
-+		fsleep(15);
-+
-+		ret = regmap_read_poll_timeout(pmu->regmap,
-+					       APMU_POWER_STATUS_REG,
-+					       val,
-+					       (val & BIT(p->bit_pwr_stat)),
-+					       5,
-+					       APMU_POWER_TIMEOUT_US);
-+	} else {
-+		val = BIT(p->bit_auto_pwr_on) | BIT(p->bit_hw_mode);
-+		regmap_set_bits(pmu->regmap, p->reg_pwr_ctrl, val);
-+		fsleep(300);
-+
-+		ret = regmap_read_poll_timeout(pmu->regmap,
-+					       APMU_POWER_STATUS_REG,
-+					       val,
-+					       (val & BIT(p->bit_hw_pwr_stat)),
-+					       5,
-+					       APMU_POWER_TIMEOUT_US);
-+	}
-+
-+	if (ret)
-+		dev_err(&domain->dev, "failed to power on domain %s: %d\n",
-+			p->name, ret);
-+
-+	return ret;
-+}
-+
-+static bool spacemit_pm_is_off_state(struct spacemit_pmu *pmu,
-+				     struct spacemit_pm_domain *pd)
-+{
-+	const struct spacemit_pm_domain_param *p = pd->param;
-+	u32 reg = 0, bit;
-+
-+	regmap_read(pmu->regmap, APMU_POWER_STATUS_REG, &reg);
-+
-+	bit = p->use_hw ? BIT(p->bit_hw_pwr_stat) : BIT(p->bit_pwr_stat);
-+
-+	return !(reg & bit);
-+}
-+
-+static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
-+				      const struct spacemit_pm_domain_param *param)
-+{
-+	struct spacemit_pm_domain *pd;
-+	int ret;
-+
-+	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
-+	if (!pd)
-+		return -ENOMEM;
-+
-+	pd->param           = param;
-+	pd->pmu             = pmu;
-+	pd->genpd.name      = param->name;
-+	pd->genpd.flags     = param->flags;
-+	pd->genpd.power_off = spacemit_pd_power_off;
-+	pd->genpd.power_on  = spacemit_pd_power_on;
-+
-+	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
-+	if (ret)
-+		return ret;
-+
-+	pmu->domains[id] = &pd->genpd;
-+
-+	return 0;
-+}
-+
-+static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
-+{
-+	struct spacemit_pm_domain *pd;
-+	int i, ret;
-+
-+	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
-+		if (!pmu->domains[i])
-+			continue;
-+
-+		pd = to_spacemit_pd(pmu->domains[i]);
-+		ret = pm_genpd_remove(pmu->domains[i]);
-+		if (ret)
-+			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
-+				pd->param->name, ret);
-+	}
-+}
-+
-+static int spacemit_pm_domain_probe(struct auxiliary_device *adev,
-+				    const struct auxiliary_device_id *id)
-+{
-+	struct spacemit_ccu_adev *spdev = to_spacemit_ccu_adev(adev);
-+	const struct spacemit_pm_domain_param *p;
-+	const struct spacemit_pm_aux_data *data;
-+	struct device *dev = &adev->dev;
-+	struct spacemit_pmu *pmu;
-+	int err, i;
-+
-+	data = (const struct spacemit_pm_aux_data *)id->driver_data;
-+
-+	pmu = devm_kzalloc(dev,
-+			   struct_size(pmu, domains, data->num_domains),
-+			   GFP_KERNEL);
-+	if (!pmu)
-+		return -ENOMEM;
-+
-+	auxiliary_set_drvdata(adev, pmu);
-+
-+	pmu->dev = dev;
-+	pmu->regmap = spdev->regmap;
-+	pmu->genpd_data.num_domains = data->num_domains;
-+	pmu->genpd_data.domains     = pmu->domains;
-+
-+	for (i = 0; i < data->num_domains; i++) {
-+		p = &data->param[i];
-+		err = spacemit_pm_add_one_domain(pmu, i, p);
-+		if (err) {
-+			dev_err(dev, "failed to add domain %s: %d\n", p->name, err);
-+			goto err_out;
-+		}
-+	}
-+
-+	err = of_genpd_add_provider_onecell(dev->of_node, &pmu->genpd_data);
-+	if (err) {
-+		dev_err(dev, "failed to add provider: %d\n", err);
-+		goto err_out;
-+	}
-+
-+	return 0;
-+
-+err_out:
-+	spacemit_pm_domain_cleanup(pmu);
-+	return err;
-+}
-+
-+static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
-+{
-+	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
-+	struct device *dev = &adev->dev;
-+
-+	of_genpd_del_provider(dev->of_node);
-+	spacemit_pm_domain_cleanup(pmu);
-+}
-+
-+static const struct spacemit_pm_domain_param k1_domain_params[] = {
-+	[K1_PMDOMAIN_VPU] = {
-+		.reg_pwr_ctrl		= 0xa8,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_pwr_stat		= 1,
-+		.bit_hw_pwr_stat	= 9,
-+		.name			= "vpu",
-+	},
-+	[K1_PMDOMAIN_GPU] = {
-+		.reg_pwr_ctrl		= 0xd0,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_pwr_stat		= 0,
-+		.name			= "gpu",
-+	},
-+	[K1_PMDOMAIN_LCD] = {
-+		.reg_pwr_ctrl		= 0x380,
-+		.bit_hw_mode		= 4,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_auto_pwr_on	= 0,
-+		.bit_pwr_stat		= 4,
-+		.bit_hw_pwr_stat	= 12,
-+		.use_hw			= true,
-+		.name			= "lcd",
-+	},
-+	[K1_PMDOMAIN_ISP] = {
-+		.reg_pwr_ctrl		= 0x37c,
-+		.bit_hw_mode		= 4,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_auto_pwr_on	= 0,
-+		.bit_pwr_stat		= 2,
-+		.bit_hw_pwr_stat	= 10,
-+		.name			= "isp",
-+	},
-+	[K1_PMDOMAIN_AUDIO] = {
-+		.reg_pwr_ctrl		= 0x378,
-+		.bit_hw_mode		= 4,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_auto_pwr_on	= 0,
-+		.bit_pwr_stat		= 3,
-+		.bit_hw_pwr_stat	= 11,
-+		.use_hw			= true,
-+		.name			= "audio",
-+	},
-+	[K1_PMDOMAIN_GNSS] = {
-+		.reg_pwr_ctrl		= 0x13c,
-+		.bit_hw_mode		= 4,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_auto_pwr_on	= 0,
-+		.bit_pwr_stat		= 6,
-+		.bit_hw_pwr_stat	= 14,
-+		.name			= "gnss",
-+	},
-+	[K1_PMDOMAIN_HDMI] = {
-+		.reg_pwr_ctrl		= 0x3f4,
-+		.bit_hw_mode		= 4,
-+		.bit_sleep2		= 3,
-+		.bit_sleep1		= 2,
-+		.bit_isolation		= 1,
-+		.bit_auto_pwr_on	= 0,
-+		.bit_pwr_stat		= 7,
-+		.bit_hw_pwr_stat	= 15,
-+		.use_hw			= true,
-+		.name			= "hdmi",
-+	},
-+};
-+
-+static const struct spacemit_pm_domain_param k3_domain_params[] = {
-+	[K3_PMDOMAIN_VPU] = {
-+		.bit_auto_pwr_on	= 0,
-+		.bit_isolation		= 1,
-+		.bit_sleep1		= 2,
-+		.bit_sleep2		= 3,
-+		.bit_hw_mode		= 4,
-+		.bit_pwr_stat		= 2,
-+		.bit_hw_pwr_stat	= 9,
-+		.use_hw			= true,
-+		.reg_pwr_ctrl		= 0xa8,
-+		.name			= "vpu",
-+	},
-+	[K3_PMDOMAIN_GPU] = {
-+		.bit_auto_pwr_on	= 0,
-+		.bit_isolation		= 1,
-+		.bit_sleep1		= 2,
-+		.bit_sleep2		= 3,
-+		.bit_hw_mode		= 4,
-+		.bit_pwr_stat		= 0,
-+		.bit_hw_pwr_stat	= 8,
-+		.use_hw			= true,
-+		.reg_pwr_ctrl		= 0xd0,
-+		.name			= "gpu",
-+	},
-+	[K3_PMDOMAIN_AUDIO] = {
-+		.bit_auto_pwr_on	= 0,
-+		.bit_isolation		= 1,
-+		.bit_sleep1		= 2,
-+		.bit_sleep2		= 3,
-+		.bit_hw_mode		= 4,
-+		.bit_pwr_stat		= 3,
-+		.reg_pwr_ctrl		= 0x378,
-+		.flags			= GENPD_FLAG_ALWAYS_ON,
-+		.name			= "audio",
-+	},
-+	[K3_PMDOMAIN_LCD0] = {
-+		.bit_auto_pwr_on	= 0,
-+		.bit_isolation		= 1,
-+		.bit_sleep1		= 2,
-+		.bit_sleep2		= 3,
-+		.bit_hw_mode		= 4,
-+		.bit_pwr_stat		= 4,
-+		.bit_hw_pwr_stat	= 12,
-+		.use_hw			= true,
-+		.reg_pwr_ctrl		= 0x380,
-+		.name			= "lcd0",
-+	},
-+	[K3_PMDOMAIN_LCD1] = {
-+		.bit_auto_pwr_on	= 0,
-+		.bit_isolation		= 1,
-+		.bit_sleep1		= 2,
-+		.bit_sleep2		= 3,
-+		.bit_hw_mode		= 4,
-+		.bit_pwr_stat		= 5,
-+		.bit_hw_pwr_stat	= 15,
-+		.use_hw			= true,
-+		.reg_pwr_ctrl		= 0x3f4,
-+		.name			= "lcd1",
-+	},
-+};
-+
-+static const struct spacemit_pm_aux_data k1_of_data = {
-+	.num_domains	= ARRAY_SIZE(k1_domain_params),
-+	.param		= k1_domain_params,
-+};
-+
-+static const struct spacemit_pm_aux_data k3_of_data = {
-+	.num_domains	= ARRAY_SIZE(k3_domain_params),
-+	.param		= k3_domain_params,
-+};
-+
-+static const struct auxiliary_device_id spacemit_pm_domain_ids[] = {
-+	{
-+		.name = "spacemit_ccu.k1-apmu-pmdomain",
-+		.driver_data = (kernel_ulong_t)&k1_of_data,
-+	},
-+	{
-+		.name = "spacemit_ccu.k3-apmu-pmdomain",
-+		.driver_data = (kernel_ulong_t)&k3_of_data,
-+	},
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(auxiliary, spacemit_pm_domain_ids);
-+
-+static struct auxiliary_driver spacemit_pm_domain_driver = {
-+	.probe          = spacemit_pm_domain_probe,
-+	.remove         = spacemit_pm_domain_remove,
-+	.id_table       = spacemit_pm_domain_ids,
-+};
-+module_auxiliary_driver(spacemit_pm_domain_driver);
-+
-+MODULE_DESCRIPTION("SpacemiT Generic Power Domains driver");
-+MODULE_LICENSE("GPL");
+b4 am -v5 -P3 -o- \
+ https://lore.kernel.org/all/20260916-08-k3-ufs-support-v5-0-1f5d71f1027d@kernel.org/ \
+ | sed -z 's%\(clock-names = "axi", "\)ref\(";\)%\1ref_clk\2%' \
+ | patch -p1
 
--- 
-2.56.0
+Additionally to the build procedure, since Debian testing now features
+linux-config-7.3 and no longer linux-config-7.2, I now substitute
+accordingly from linux-config-7.2 to linux-config-7.3
 
+>> I do notice some UFS-related warnings and errors in dmesg:
+>>
+>> journalctl --dmesg | grep ufshcd
+>> ufshcd-spacemit c0e00000.ufshc: freq-table-hz property not specified
+>> ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+>> vdd-hba-supply regulator, assuming enabled
+>> ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+>> vcc-supply regulator, assuming enabled
+>> ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+>> vccq-supply regulator, assuming enabled
+>> ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+>> vccq2-supply regulator, assuming enabled
+>> scsi host0: ufshcd
+>> ufshcd-spacemit c0e00000.ufshc: ufshcd_scsi_add_wlus: BOOT WLUN not found
+> 
+> I do have all those messages, I think they are just harmless.
+> 
+>> ufshcd-spacemit c0e00000.ufshc: DL error event, INT errors:0x4,
+>> DL_ERR:0x80000020
+> 
+> This one looks more worrying. I do not have it when testing. Does it 
+> happens immediately or after a while? under load?
+> 
+> Regards
+> Aurelien
+> 
+
+$ journalctl --dmesg | grep ufshcd
+ufshcd-spacemit c0e00000.ufshc: freq-table-hz property not specified
+ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+vdd-hba-supply regulator, assuming enabled
+ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+vcc-supply regulator, assuming enabled
+ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+vccq-supply regulator, assuming enabled
+ufshcd-spacemit c0e00000.ufshc: ufshcd_populate_vreg: Unable to find
+vccq2-supply regulator, assuming enabled
+scsi host0: ufshcd
+ufshcd-spacemit c0e00000.ufshc: ufshcd_scsi_add_wlus: BOOT WLUN not found
+
+I did not again see the DL error event. However, the first attempt to
+build Linux does fail:
+
+make[7]: *** [scripts/Makefile.build:572: drivers/gpu/drm] Error 2
+make[6]: *** [scripts/Makefile.build:572: drivers/gpu] Error 2
+...
+make[5]: *** [scripts/Makefile.build:572: drivers] Error 2
+make[4]: *** [Makefile:2244: .] Error 2
+make[3]: *** [debian/rules:80: build-arch] Error 2
+dpkg-buildpackage: error: make -f debian/rules binary subprocess failed
+with exit status 2
+make[2]: *** [scripts/Makefile.package:126: bindeb-pkg] Error 2
+make[1]: *** [/home/es/linux-7.4-rc3/Makefile:1852: bindeb-pkg] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+real    188m48.844s
+user    1415m17.363s
+sys     66m11.932s
+
+Linux is running on the K3 SoC here without clocks preparation from the
+bootloader; it is quite slow by comparison to a Linux kernel that
+follows clock preparations by the vendor BSP bootloader. Simply
+re-running the same "make ..." build command is successful in the same
+system without any changes:
+
+  DEPMOD  debian/linux-image-7.4.0-rc3-k3ufs/lib/modules/7.4.0-rc3-k3ufs
+...
+dpkg-deb: building package 'linux-image-7.4.0-rc3-k3ufs' in
+'../linux-image-7.4.0-rc3-k3ufs_7.4.0~rc3-2_riscv64.deb'.
+...
+real    34m56.794s
+user    241m15.511s
+sys     18m4.532s
+
+Similar build failures occasionally happen when the root filesystem is
+on USB microSD adapter-connected microSD storage. I assume the build
+failures with default clocks configuration are not constrained to just
+the UFS support series here.
+
+-E
