@@ -1,114 +1,42 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=159.226.251.81
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795124338;
-	b=L86yNyV2rYjSYVC0CKyQ90bvlEXJHQ46o/SHT5HPq6vxSbU+yB0OVixvptIbiTsRd1yV
-	 uoHNsE2mrDXetqApdU8lBrESoCdYeaNr6zsatmnTe5y54wXXzUTU7egxaFzSNx8OuJgWm
-	 2fSIckn2HfnpzdBlkIn+baqAYylUsqzua8whdxLp5jBTjeJUIlL/UJOzTxHTnt0e0syBG
-	 u809+ehKdyQDNZLfvVpnEEhi37IxmHP6U1wIACLdFeRr7epX5reD8fgPbqmlqabxwbnan
-	 VK3YMQ9ezcWRQTHEqqswJcmAQpVP3alPSQ9bgEQ+JuT9p+oomMMEyZiWC4MrjWVO3Kg==
+	t=1795164626;
+	b=wpnvc56CQyaAP4UwJYhBm3wnnygIaVxanTcEAUbNxX+XxWJ4HOrE2e4FALePhN1F3IEd
+	 tVgnzRg/Op7FHmKkk4CTt/20u2hu0J5Fzo/P3COnUKrSlmPh92w6wh1uN+s9ahTBFAO8+
+	 2//8a3YSDkrquI2WkbIYq1c1IvQWbriOVrN5RxFDgrFB3dj5Frv2wID67IcCKTTsq8Xoy
+	 cMv2Tv9CqdNY6JxHkB57UU9TaSmAFjflqjZcl8VdSEzhdwKmJhS3Kuwg4WiQKB49KkdPk
+	 QdoiFUIRuLOOLOZ8fzIXq+qiqsZKCr1MhRpYAPl/JC6GEP4ZPlsUFQpYEOQ2/m0u6kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795124338;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=kZCnjg9SNOEIBkstvPO0BHnnQE09Drv6532P18ADAkU=;
-	b=joB1CHl+jaYDJyr6tn4Xz6/cLyvRslpFJmdOVrBolAzgfl0v+XmD0sECDUHn06aVjXOl
-	 8N322lMCdFka/QnLQA4i2i/iGyr4wRiwzWh1tWzI8xg9kSHLbWAwxxb0NwIJuN9/MgMgn
-	 9jTEptlmNNsbf9Zvof57s93HntOpfhGT0A3yBejlvjru3c9aQNm269QN8pAE4m4B+3SFI
-	 FB5lcltd24YNy7x/z+ePKih8tdlsMLgZ91AQbDWXkJ9CmxtztDqucJVHKkE/PvOmr4Gpm
-	 kToqooEHBREV/bLm+GROjGwbv5Q58WgsZORFlBpDAmS3haaLLmvQpLJfo/J+NuK0TFQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795164626;
+	h=DMARC-Filter:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
+	 X-Mailer:X-CM-TRANSID:X-Coremail-Antispam:X-Originating-IP:
+	 X-CM-SenderInfo;
+	bh=3W4UX72q3nL7QnYTdyMxZRoIYC/nbsvY/bEqG/17nyE=;
+	b=DUXjasqQa5oNnWqmeRUwd3YHJY8sOKQrqBeZWtLrkbAsgkISCdCFaJTghHoLYxppL/TS
+	 OWQAs/m9h9rYpQWprfOniXw0yQ3SObWsLBJ2c5lCCm0/a+ovykkZKlaAEa1pxoDWNi3eo
+	 oj7sCRaDFkFGPdMDr3Lrkt18uk/Nh56ZA4UbfRJ5Z9EGoigOV18UI+VFWd0tzaW0pxwD4
+	 Gggcs5e21yGo4qMyOZ8/w05Az4zVVVMULWv+r7AF6yk63ji3kL8DwwTH4dP869sAP1hza
+	 iBOi1zoYjfvLSq8U9Wa1wJDW61QWg/ffK9cgiJxFfbLox08PK+BGKSCC/EMDVzMqjdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ealZ1J7P;
-	arc=none smtp.remote-ip=209.85.128.178
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=iscas.ac.cn;
+	spf=pass smtp.mailfrom=iscas.ac.cn;
+	arc=none smtp.remote-ip=159.226.251.81
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78E60A260A
-	for <spacemit@lists.linux.dev>; Thu, 19 Nov 2026 21:38:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3B78E60A260A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ealZ1J7P
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8b4e2fcc300so2158577b3.2
-        for <spacemit@lists.linux.dev>; Thu, 19 Nov 2026 13:38:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795124337; x=1795729137; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=kZCnjg9SNOEIBkstvPO0BHnnQE09Drv6532P18ADAkU=;
-        b=ealZ1J7Ph1lA4T1ZAx75mGtpAz+tc2kp7twBNBeIT7xDBDmHt5Ks9nRZWU2LLc+B/V
-         1HITszgatGoXQcqlQO1QoATyzRcuNiHwYuXqO6ajg6P7dpA6i50xmCT7U5kk/Ys7TqDa
-         +mQWUaX+7Rkb1TlmLvMZebXrgG5qmlceQ1VK20ZOGYWY5ijJqn1LG0j3GevM0XUnW7lR
-         3E5h6k7WEPImTvXJV23TSBGmj6fgZTtyk5R+0KDbM2tEYshF9sBVMIhYMOW1Rdo1sKrs
-         CmcCr4eASPKu/crgdiNhskYUSDjucv2xp8X3NiwMI5Lcf495fHJQq6+K6v3fjRp4G5OA
-         cAyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795124337; x=1795729137;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kZCnjg9SNOEIBkstvPO0BHnnQE09Drv6532P18ADAkU=;
-        b=xqC5lk+0sx9jQTF2H+d9Soaf07643F69nsrx9t6jFomdOzvYPgncqrCMNfx3SOo0I5
-         7CxNXU2wafcI6nO5GK8JWVc8r1uBlTafWML+znWfJBUS2hrqhQNf4enU7IngYTquElVz
-         EPkvHwxSdA2e37oHNVyQjvlFNzwvybejrtgP8VKRCYfDK8W0u/WJqQOe2W9qt5AQAtTh
-         sPoxMq0Zsoc7PKET90EUJCLJaB/PbdnBm44y9zxpjzCcr8YH0W4lGk5C2NRZ5h+StnCQ
-         cEY1UoDdU96eIZB40CpFrXbFUZlUHdHSVznQXg0kCC5GP8uYhZ6YWQw8dhWteHOoMvwv
-         jo9g==
-X-Forwarded-Encrypted: i=1; AL+hErHsW+s9Q3ic5C+iwwm7agdf7lmWijE9Ubx9Y9drYfW6dpOwVoAhx7Xvj6Toggl5aui8ZS7oZFPhJg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9kOFeCobaejLd9AN94r98E+u7UeVw/8IVfit13m2e/T4CoftJ8
-	lZk202DAxmYFhO/HgYJSTYY+L+dBMzhj+xpT0uiPxXsT4lzNMCiHcDkd
-X-Gm-Gg: AZFdTZcC2hho4r1K9U1+j0Y3GaG7+Z+8cXxV0sBI2YmTljFgFdCnwODOCRgJnGXSTAU
-	F1ooFMCASvHtQdJ085h5E5M4p1KOCoUZydsr5vO4TKz6NmMRjxOJMgXUjgTHfm59FCqVfBadbeG
-	ZRfY+FrhRZI9frPmhmC+uzGQNKJ4tF3bR8hOTEGJkCaOLTLg6N70ZS623uMrdAoeuCfllIqDvs5
-	Qo2akjUFjzBoAMPklcPvGXbXQDN0UPrRTPnwmlsMcoF81sGFs5skLv1FjsymU108oNiP7Mfezju
-	iOfv2zuETJM5VValgodGSGfNOTXTWFP7cXRzXOvitm0X5Z2g4YP6SYNtBVck7J/NLNDNOgpzwMW
-	bxfwCYZvIRkHJuT9uIRM6M9sjUfhpKs7d4ZcY5zhj5vW/OIHAoZjZ41F/d8sLkWGDl0Pwv2JGdz
-	h37ZLZdwYYfKCw3j/88oAJ+12gxonLYSEk8Y58QAE9cEYFtNSEJ8Nd1aFK3+KErE/6XP1fddqT6
-	/t9T+iG7ac+LH5M3+A0ZGTBR+tvZRk+4bEZFiw3i5vQuj9n+KJqHiw5n/D0dKWI8hZA/uqvhK64
-	vhIohzCJiKhCkKXPGITWHX8G
-X-Received: by 2002:a05:690c:c9e:b0:8b0:95a7:37e2 with SMTP id 00721157ae682-8b5204ebe00mr4585427b3.80.1795124336861;
-        Thu, 19 Nov 2026 13:38:56 -0800 (PST)
-Received: from localhost ([120.244.9.31])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df33b7502sm663093d50.20.2026.11.19.13.38.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2026 13:38:56 -0800 (PST)
-Date: Thu, 19 Nov 2026 16:38:52 -0500
-Message-ID: <7072ab495239e6bd28e2e9ed75244e24.docular.xu@gmail.com>
-From: Guodong Xu <docular.xu@gmail.com>
-To: Icenowy Zheng <uwu@icenowy.me>
-Cc: Cody Kang <codykang.hk@gmail.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 07/17] drm/spacemit: add Saturn DPU register model
-In-Reply-To: <bffbf989f2c99aa8c463719347930aca44962615.camel@icenowy.me>
-References: <20260809-k3-display-v2-0-327d7910bf71@gmail.com>
- <20260809-k3-display-v2-7-327d7910bf71@gmail.com>
- <edd7ae1b38ebc687d0b2bfb2509c40fb8a45e625.camel@icenowy.me>
- <19ceb44df3141049a955c2c30fe64766.docular.xu@gmail.com>
- <bffbf989f2c99aa8c463719347930aca44962615.camel@icenowy.me>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C1F606A338
+	for <spacemit@lists.linux.dev>; Fri, 20 Nov 2026 08:50:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0C1F606A338
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [123.116.51.226])
+	by APP-03 (Coremail) with SMTP id rQCowACHkpPFCQBrNdxnAQ--.12681S2;
+	Fri, 20 Nov 2026 16:50:15 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Date: Fri, 20 Nov 2026 16:47:44 +0800
+Subject: [PATCH] mailmap: Update Vivian Wang's email address
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -118,27 +46,61 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261120-update-email-v1-1-b7e080827c7c@iscas.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2N2wrCMBAFfyXss5EkXir9lVIhSbe6YtqaSxFC/
+ t1ofRyYMydDQE8YoGUZPK4UaJ4qyB0De9fTDTkNlUEJdZZSCZ6WQUfk6DQ9uWnEAS9WnUYroE4
+ WjyO9f7mu3zgk80Abv42/4fGV6k/cNDA6ILezcxRbtjb7I/dWXnOBvpQPDL3BPJ8AAAA=
+X-Change-ID: 20261120-update-email-b703e8c25fc0
+To: linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-kernel@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>
+Cc: Vivian Wang <dram+linux@dram.page>
+X-Mailer: b4 0.15.2
+X-CM-TRANSID:rQCowACHkpPFCQBrNdxnAQ--.12681S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrtF1kZF1UtryxJw4fGFWfZrb_yoWDtrg_K3
+	WrtrykurWkAFn8KrnxXFs3Cr1F93s7tr1jgwn8Jr9xZFy3KFn3CrWkCFWa9a4DXrykWr9r
+	Gr1avFZYvFn3ZjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb2kYjsxI4VWxJwAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF
+	04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r
+	18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vI
+	r41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr
+	1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvE
+	x4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8mXdUUUUUU==
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-Hi Icenowy,
+I am leaving ISCAS in December of 2026. Redirect future mail to my
+personal address.
 
-On Wed, 18 Nov 2026 18:18:11 +0800, Icenowy Zheng wrote:
-> 在 2026-11-17二的 16:48 -0500，Guodong Xu写道：
-> > For example, the blocks sit at different addresses, and most fields
-> > are at a different word or bit. In dpu_int.h, CFG_RDY_CLR is bit 4 on
-> > the K1 and bit 5 on the K3, and the underrun bit is 9 and 8.
->
-> Yes, this IP weirdly doesn't consider register map compatiblity at all.
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+---
+ .mailmap | 1 +
+ 1 file changed, 1 insertion(+)
 
-Exactly.
+diff --git a/.mailmap b/.mailmap
+index 0d05be949eff..1e518c12123c 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -993,6 +993,7 @@ Viresh Kumar <vireshk@kernel.org> <viresh.linux@gmail.com>
+ Viresh Kumar <viresh.kumar@linaro.org> <viresh.kumar@linaro.com>
+ Vishnu Dasa <vishnu.dasa@broadcom.com> <vdasa@vmware.com>
+ Vivek Aknurwar <quic_viveka@quicinc.com> <viveka@codeaurora.org>
++Vivian Wang <dram+linux@dram.page> <wangruikang@iscas.ac.cn>
+ Vivien Didelot <vivien.didelot@gmail.com> <vivien.didelot@savoirfairelinux.com>
+ Vlad Dogaru <ddvlad@gmail.com> <vlad.dogaru@intel.com>
+ Vladimir Davydov <vdavydov.dev@gmail.com> <vdavydov@parallels.com>
 
-> > IMHO a K1 port should add its own compatible, its own field header
->
-> Well I don't think field headers would work for a mainlined driver;
-> maybe things like regmap_field could be used to mitigate the
-> difference.
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20261120-update-email-b703e8c25fc0
 
-Fair point, but maybe that can be done when the K1 is added. For now,
-in this series, let's make sure the field header and its users are
-self-contained, so that K1 support is easier to add later.
+Best regards,
+--  
+Vivian "dramforever" Wang
 
-Guodong
