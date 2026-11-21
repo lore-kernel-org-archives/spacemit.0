@@ -1,78 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795246864;
-	b=SA803NBz5U5inaHaoHsf43xcpKdy9BxqX2BEwzHP8NmLiwooFCqhlmzZcUEA9DziAydT
-	 FcjAxO931yDa4kZ6W/9uH3HmWcVZlREDEgzgJa+X3gMtbyo8vIpKMBX9Vp6qLyfOFH2S8
-	 lS9Yd9AvFjyUGfcORVrEdqkX3K1+yNnKSh1P5LviR43Kbj9cl5Dnk0gIz6FTRevaqPlFs
-	 KUBXnh9gAqItHZhECksLz2AtG9pslyJIT/gejZ9y2A26q1/6lYppqVzkYMtcXM9jLsaoT
-	 T+o3kieeUAAl4hUU5pc1CsQEwH3hP/JV8umoBHzn6hxYVuG9aYcebC4vchfgLwiOoUQ==
+	t=1795246865;
+	b=XGeuIRsyOkrPJjuo/WDoA6k69azhdj2uL9G3U1d83d24+djAsMlp1mAQNHj7LuJpKQj5
+	 hE1GTITuZG0DqScVBTXtXrG1FydHnzEtaFpLmcJug/GNSfFtdlujUXt9urZp4Z5nHX+a/
+	 r9W6aOCeE9vg63iST2BzpqXX9jN2nqKD2hVe7nlfNO47jb7YJlpqTrDz0Ilf3XrKs3qaA
+	 QW1Zck2WV1CKnzIR9/jyFrfwjSse4gMpdACeamCISh1IIZV++X70GWOLo1AMA0ssRC0Z/
+	 lLvNJNSbBGdYDHYUT1WRAnm4PMnjyHFySCZkbQhMoFYFuuA6TedX+0IeyEMnKQbDBhQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795246864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795246865;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Content-Transfer-Encoding:Message-Id:References:
 	 In-Reply-To:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
 	 X-Endpoint-Received:X-Original-From:Reply-To;
-	bh=ux0zPvkqFLKE6+XKDuI20TNOdQtEfqAWBmDCiR6ptSk=;
-	b=l678Q5W2F1S2OIFaoo1Id27O/ynuCCK+aRuIjeSu7mL4rwH1lD9J5I6syp64l7y8eYRU
-	 xwLXh37SHaFDbmqFv7VONvinndgirZ9n+t7HpOsMTRmsQOxRwuEp2aw95MANhjRjQloRo
-	 DYxWjRMLWX8Nx89snbisMtCBDyevT1H/C2ht2hF1kcnWNeGNhGQ9MUGpKvVkQRZwiFzKs
-	 j5iCO25a7hwUQxKlpoSjDSIwGjV4UBZ62lzTdXf9NcrxmK93eDFYpyEp9XB8at/n/HMGX
-	 w0cqDjDFFD5oTC4Iiir6m2uVmyHt9vl1zhsK0hJtQCywyKja2+sAFKgupiCwBdp03ag==
+	bh=t8gxKnDJu2i42tzOjA2povaCGnxk5Q2G9Ar7VHj/emc=;
+	b=dQ3FCdJtetPiCXBt8pmSHUNspf1n989E1OwyD5Hqy5/t6TQUD/67JruXGgIDNEMJ5hPv
+	 hDGW6w7k2bVU77+BjCbIg7i0BbpJS0T3Y6f+7Mi5WqkZN+rjJ3TsUKS74Da5VjXY8SxVU
+	 RnRUbVxCyPrxRk/2DXbWGOqf8iY1ivrus/qM0AmAUQaro9c0olVsTA6cJz/A7T7sShAP0
+	 QNnTNboi0f5pZ0GwF5SuUyatpLrj8EARlgpQCxLb0UbpqPROITkCshI2P5X8OjFdlc3+e
+	 WeXW6U7yJTlA9pHBv4sb9gIxDN/jL87uTdUroQNB7FYYFDcWqGa/5EiPNUeZ9oNfyXA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h9kd5JR0;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=drq0CLYN;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C5760A3807;
-	Sat, 21 Nov 2026 07:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9173660A3818;
+	Sat, 21 Nov 2026 07:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h9kd5JR0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=drq0CLYN
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795246864;
-	b=Puk2ZWh6JPKOX1wWihr4uOkISA61fxW17y1KVAdzytjyDpxYiLOY9JaU/eIXOekCM8aL
-	 43Cb/OG+3p1M0PCtPZ9+p9vkGCniUOQzRNd4LSXX2Wa1+ZUjx2ZO7g8n26nNLIA0zj3h1
-	 1LcQXqYo7j+c34141nDxyLN1Dprr4plCBY6PRylJxQKOi8L87hQhkeVDk09xrTZJ4MNjs
-	 ZBLyAJEp0tCw9JsFoM7P43sl4WHTptqkdL+Cwu3uNWmfsFjngQAZJs8ASDcR/93SLeqvD
-	 XjiIdedb/9M9BLUYOG0IYpipHcNH00r5YZLXhUGHjoDvenODPAHIbRmVAcKIVumJnjg==
+	t=1795246865;
+	b=leJz3AA38sQqjap/sqqW7bTQ4ARNa6Dq1uxi/nSlAMunvXvffr1aeL4F/fFEIPoSpnwk
+	 Y16Q19rmYufYx741at2qP6rL4a+1hZ8Nx4yEvhuKjsYeaTYGd1BhHM5TQF2iz3zGdsqWC
+	 Tp3RIdMgSWvk0/f3lH1nQNWwU/bl1Jcadt2MSb6IEeRrbIIgZUEae6L5mUzwbWWmh4KSp
+	 y1jSSCyozA8tCQzrPipgaHXe16qAWsHuV+2R1TxejG8/RovDS/B/b/N2DwqFCvycbriw/
+	 OLezWmb7ibUT5AXBkC2RAca2jdOGdR54mSBTqe54ntZ7sizdhLXQ5qdnzFy6YlPVWNQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795246864;
+	c=relaxed/relaxed; t=1795246865;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To;
-	bh=ux0zPvkqFLKE6+XKDuI20TNOdQtEfqAWBmDCiR6ptSk=;
-	b=qnogIMjrlEuQiMGKdlfrtCnIju+Q4NyVUiQBeXQI1Tw2WoozSMcnEkQaWCOtzfUhyiw/
-	 SXY4rLKRXUEjHUJIrPtgU8BPv5SB/aQV1vgREe4JplH+NqzTp+YzNeNQEEByalYeJWmO/
-	 +xjHQgZUX6e1SPV2WWZqsd6b8O0g8g3BIm6yyARMv1hjZNKCrO2z6EhdRjxhzdS05IQbC
-	 gYmTLAuggZXOzX5L3WkkqtF5Gj+dcr9PTI2x12QpQkOXUblSSMAcDt17feHS30zGOVcT6
-	 8RGYepl5B69YZhMZH/Wi8lGjiTEthhO/rgrQLmpAWLW0ExVPyl4mPwgPGX5STLwyDLg==
+	bh=t8gxKnDJu2i42tzOjA2povaCGnxk5Q2G9Ar7VHj/emc=;
+	b=ih3ALuYkJT40xy055Uv21YkO8peLSzcRdrLupqs7sTkZolM8JznciahJL+n6Vgnr/Oqz
+	 L8Rj7BNeFgm9wASM9NIlKxIHNVcRJWouS9tlpxCbRaxeOf0vzWMFAtuy98aWNEjLRkpeL
+	 Xeu7IC//in9InKW8jQwacEQQvuYont/q6700XQsbWqZoC9bPVXyf3M17RdGi9JGBpxEsH
+	 zPmFHuH+WwGzF02DM2t4oKMvOU7vk0dy0LwUuro4X76bnhYxZBxkbB1BaIqvdb/7O3GIW
+	 9I0229z8rbqTMgO6ytzGVneU070Xr2G6IAFqc+iRG8ao8unw+gi7leJQXMOs/6OSniQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 515A41F000C0;
+	by smtp.kernel.org (Postfix) with ESMTPS id 054321F000E1;
 	Sat, 21 Nov 2026 07:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795246864;
-	bh=ux0zPvkqFLKE6+XKDuI20TNOdQtEfqAWBmDCiR6ptSk=;
+	s=k20260515; t=1795246865;
+	bh=t8gxKnDJu2i42tzOjA2povaCGnxk5Q2G9Ar7VHj/emc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=h9kd5JR0iVCYZIT2ZOQb0Yj40MJe86JWpGWR7A8AwRQJmLK48arVjy+9H8MoUnWcU
-	 4aiIU+kgRjOYXgQXt9MI09PJ6/cNgKqKO0lbZM1RRMQVGbOhz4tWENFLsP75CmqEwk
-	 NMb13HdTEQLa/sPHwQdAe7px9n4Zs8uwA5Fw+Xa+HfhHITjVMbuoN0RPH+H9s4xcUa
-	 iYrYmDnfcfHXC8JYdMhUL07AAS12utgVaadTJogyqKD8afBh1MUhNXA5OtDKfawVRg
-	 72hAzaIgsFtOuHnhw/+Q82a8IRpff57bYVrDeYiXdGaF0OxldovMbFjXhZ9Ai5p9zh
-	 WlKUys7cwSBmA==
+	b=drq0CLYNtzkotaD1dgNxIl5X8VEvLeW0bkbucZGXSmcKMjHaGDt1gthksbykP2EM/
+	 DzZAw1AVZ+uw4gjjjxdVI/roV27Ubfe6LjKInNXbZAVJjTynSjpN0otaZuGh2MtMSH
+	 VX8eE7ti/owKU6D0RnHCwk7ixvzlHymn7dDg2SBe2GKHxbVrszDZjrgzUFzdg0Rrlx
+	 Uv7m/5R62W/llvlT1ihnUZkJbP3PcRSu1oQ2P1y9zm7XQHEJseHnlEayJRXiUBZ4aP
+	 XqNv9sPaBGwAIYxtW1jw9Mb0ULUZtRKi9nHnGu55eqjz5mRZXvgrBL2EY7b7PCNzki
+	 dwQIWL/6n+xLQ==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 729594BB70;
+	by lkml.kernel.org (Postfix) with ESMTP id 310114BB68;
 	Sat, 21 Nov 2026 07:40:51 +0000 (UTC)
 From: Cody Kang via B4 Relay <devnull+codykang.hk.gmail.com@kernel.org>
-Date: Sat, 21 Nov 2026 15:40:49 +0800
-Subject: [PATCH v3 10/17] drm/spacemit: add Saturn DPU KMS pipeline
+Date: Sat, 21 Nov 2026 15:40:47 +0800
+Subject: [PATCH v3 08/17] drm/spacemit: add Saturn DPU core types, cmdlist
+ and display MMU
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -84,7 +85,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261121-k3-display-v3-10-ec419e8e96b8@gmail.com>
+Message-Id: <20261121-k3-display-v3-8-ec419e8e96b8@gmail.com>
 References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
 In-Reply-To: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
 To: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
@@ -110,11 +111,11 @@ Cc: Cody Kang <codykang@vsit.ai>, dri-devel@lists.freedesktop.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795246844; l=30546;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795246844; l=31097;
  i=codykang.hk@gmail.com; s=codykang; h=from:subject:message-id;
- bh=vx0FZl2po1JRzj3iXmprIz2HfmNRRWV6cIxuhufnpIc=;
- b=elPrfgnZaZqovHuQqI6vg46oZWQGPvtxJgTcKpmCARSoeO4psP9pgAKCGwA7JW3143hCdrV10
- wRKsimkJ8k6BLGa1cHBIvViFtzTFXJr47WtRzC1SBkaOBhXojXeVkxz
+ bh=gPCBG+QZ8eEWdXQgArafv65Uzxe/uhMusMeo6twZHQ0=;
+ b=4KvXN1wTDtZmT5aUkPEVDmBxZzeHi8J4PRJy6S0N4GIyfKe5kUCehETjAOhqLNOivTdoNwqXJ
+ CUDYg8226UtA8mBSeRR8YV6K4uEjH1xAG65EkPWqDlogtlAi2bCA6VO
 X-Developer-Key: i=codykang.hk@gmail.com; a=ed25519;
  pk=Osn6/cs9Su/mHHw4P19cmVc3v2FMQfiWahjsN0vEkuk=
 X-Endpoint-Received: by B4 Relay for codykang.hk@gmail.com/codykang with
@@ -124,995 +125,960 @@ Reply-To: codykang.hk@gmail.com
 
 From: Cody Kang <codykang@vsit.ai>
 
-Add the atomic KMS implementation on top of the hardware backend: one
-CRTC and one primary plane per DPU instance. The plane's atomic_check
-sizes its share of the RDMA line buffer and prepare_fb builds the
-framebuffer's DMMU table; atomic commit fills the per-channel command
-lists and arms the CFG_RDY handshake, and the commit's event is
-delivered at the vblank after the engine has taken the lists. The DPU
-is powered through runtime PM.
+Register programming of the Saturn DPU is batched: the driver builds
+per-module register lists in memory and the hardware command-list
+engine replays them once the driver raises config-ready (CFG_RDY),
+while scanout buffers are mapped through the DPU's private address
+translation unit (DMMU) rather than scanned out by physical address.
+
+Add the shared driver types, the MMIO field accessors, the
+command-list builder and the DMMU table code. Some DPU
+configuration registers are write-only, so a read-modify-write would
+corrupt neighbouring fields; byte- and halfword-aligned fields are
+therefore written at their native width instead.
 
 Signed-off-by: Cody Kang <codykang@vsit.ai>
 
 ---
 v3:
-- use atomic_create_state; .reset is gone from the CRTC and plane funcs
-  in v7.4-rc1
-- drop the ops table between the KMS code and the DPU backend (Thomas
-  Zimmermann)
-- drop the tracepoints; use drm_dbg() and drm_WARN_ON() (Thomas
-  Zimmermann)
-- wrap only the hardware access in drm_dev_enter() (Thomas Zimmermann)
-- enable vblank after programming the mode, and initialise vblank after
-  drm_mode_config_reset() (Thomas Zimmermann)
-- program the plane from the clipped rectangles; drop the 1:1 and
-  zero-size source checks (Thomas Zimmermann)
-- submit the plane's command list from its atomic_update, and turn its
-  channel off when the plane is disabled (Thomas Zimmermann)
-- size the line buffer in the plane's atomic_check; no allocation in
-  atomic_check (Thomas Zimmermann)
-- add prepare_fb: build the display MMU table there and wait for the
-  buffer's fences (Thomas Zimmermann)
-- stop the boot loader's pipeline at probe instead of at the first
-  modeset, and request the interrupt after it (Thomas Zimmermann)
-- power the DPU through runtime PM instead of from atomic_disable
-  (Thomas Zimmermann)
-- release the drm_device when the aggregate unbinds, and stop output
-  polling before its components unbind; take the mode and the plane
-  state from the commit
-- reject a framebuffer with an offset, a src_x beyond the DMMU table
-  padding, or a buffer larger than one TBU can map
-- reject modes above 3840x2160 in the CRTC's mode_valid (Icenowy Zheng)
-- do not advertise a gamma table (Guodong Xu)
+- drop the tracepoints and dpu_trace.h (Thomas Zimmermann)
+- drop the hardware callback table; the Saturn register code is called
+  directly (Thomas Zimmermann)
+- one command list per channel, allocated once; the grouping, sorting
+  and chaining of lists is gone (Thomas Zimmermann)
+- build the display MMU table once per GEM object (Thomas Zimmermann)
+- use drm_WARN_ON_ONCE() in the DMMU table fill (Thomas Zimmermann)
+- keep the clock handles and the power state in the device data
+- commit message: the engine replays the lists on config-ready, not at
+  frame boundaries
 v2:
-- put all five DPU reset lines behind one reset_control_bulk_* pair
-  (Philipp Zabel, Guodong Xu)
-- keep the online IRQ alive across drm_dev_unregister() and
-  drm_atomic_helper_shutdown() in unbind (Sashiko)
-- free the per-state DMA buffers in the plane .reset path instead of
-  bypassing the custom state destructor (Sashiko)
-- release the duplicated state's references on the rdmas allocation
-  failure path in crtc duplicate_state (Sashiko)
-- set clocks_on only after dpu_pm_resume() has enabled the clocks
-  (Sashiko)
+- hold the DPU reset lines as one reset_control_bulk_data
+  pipe_resets[5] array in spacemit_drm_private and drop the pointers
+  duplicated into struct spacemit_crtc (Philipp Zabel)
+- drop the INT_VSYNC_UPDATE enum member; it never had an irq_list[]
+  mapping and the register model has no such status bit (Sashiko)
+- drop the unreachable multi-planar arms in spacemit_dmmu_map(); every
+  advertised format is single-planar (Sashiko)
+- drop the unused cmdlist parameter from the crtc_cmdlist op (Sashiko)
 ---
- drivers/gpu/drm/spacemit/spacemit_crtc.c   | 589 +++++++++++++++++++++++++++++
- drivers/gpu/drm/spacemit/spacemit_planes.c | 332 ++++++++++++++++
- 2 files changed, 921 insertions(+)
+ drivers/gpu/drm/spacemit/dpu/dpu_saturn.h   |  36 +++++
+ drivers/gpu/drm/spacemit/spacemit_cmdlist.c | 198 ++++++++++++++++++++++++++++
+ drivers/gpu/drm/spacemit/spacemit_cmdlist.h | 133 +++++++++++++++++++
+ drivers/gpu/drm/spacemit/spacemit_crtc.h    | 133 +++++++++++++++++++
+ drivers/gpu/drm/spacemit/spacemit_dmmu.c    | 119 +++++++++++++++++
+ drivers/gpu/drm/spacemit/spacemit_dmmu.h    |  80 +++++++++++
+ drivers/gpu/drm/spacemit/spacemit_dpu_reg.h |  99 ++++++++++++++
+ drivers/gpu/drm/spacemit/spacemit_drm.h     |  62 +++++++++
+ 8 files changed, 860 insertions(+)
 
-diff --git a/drivers/gpu/drm/spacemit/spacemit_crtc.c b/drivers/gpu/drm/spacemit/spacemit_crtc.c
+diff --git a/drivers/gpu/drm/spacemit/dpu/dpu_saturn.h b/drivers/gpu/drm/spacemit/dpu/dpu_saturn.h
 new file mode 100644
-index 0000000000000..c1257444dd150
+index 0000000000000..9f3c58166273c
 --- /dev/null
-+++ b/drivers/gpu/drm/spacemit/spacemit_crtc.c
-@@ -0,0 +1,589 @@
++++ b/drivers/gpu/drm/spacemit/dpu/dpu_saturn.h
+@@ -0,0 +1,36 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#ifndef _DPU_SATURN_H_
++#define _DPU_SATURN_H_
++
++#include "../spacemit_crtc.h"
++
++struct dpu_format_id {
++	u32 format;		/* DRM fourcc */
++	u8 id;
++	u8 bpp;			/* bits per pixel */
++};
++
++#define SPACEMIT_DPU_INVALID_FORMAT_ID	0xff
++
++int spacemit_dpu_parse_clocks(struct device *dev, struct dpu_clk_context *clk_ctx);
++int spacemit_dpu_enable_clocks(struct spacemit_drm_private *priv);
++void spacemit_dpu_disable_clocks(struct spacemit_drm_private *priv);
++void spacemit_dpu_init(struct spacemit_crtc *a_crtc,
++		       const struct drm_display_mode *mode);
++void spacemit_dpu_uninit(struct spacemit_crtc *a_crtc);
++void spacemit_dpu_run(struct drm_crtc *crtc, struct drm_atomic_commit *state);
++bool spacemit_dpu_online_isr(struct spacemit_crtc *a_crtc);
++u8 spacemit_plane_hw_get_format_id(u32 format);
++u32 saturn_conf_dpuctrl_rdma(struct drm_atomic_commit *state,
++			     const struct drm_crtc_state *crtc_state);
++extern const struct spacemit_hw_device spacemit_k3_saturn_dpu;
++void saturn_enable_irq_mask(struct spacemit_crtc *a_crtc, bool enable,
++			    u32 offset, u32 mask);
++void spacemit_cfg_rdy_timer_handler(struct timer_list *t);
++void spacemit_dpu_complete_event(struct spacemit_crtc *a_crtc);
++#endif
+diff --git a/drivers/gpu/drm/spacemit/spacemit_cmdlist.c b/drivers/gpu/drm/spacemit/spacemit_cmdlist.c
+new file mode 100644
+index 0000000000000..fbd5c2d85eaa2
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_cmdlist.c
+@@ -0,0 +1,198 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
 + *
 + */
 +
-+#include <linux/aperture.h>
-+#include <linux/component.h>
-+#include <linux/delay.h>
 +#include <linux/dma-mapping.h>
-+#include <linux/interrupt.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_graph.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/property.h>
-+#include <linux/regmap.h>
-+#include <linux/reset.h>
-+#include <linux/timer.h>
++#include <linux/string.h>
 +
-+#include <drm/clients/drm_client_setup.h>
-+#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_drv.h>
++#include <drm/drm_atomic.h>
 +#include <drm/drm_managed.h>
++#include <drm/drm_print.h>
++
++#include "dpu/dpu_saturn.h"
++#include "dpu/saturn_regs/ops_hee.h"
++#include "spacemit_cmdlist.h"
++#include "spacemit_crtc.h"
++#include "spacemit_dpu_reg.h"
++#include "spacemit_drm.h"
++
++struct cmdlist *spacemit_plane_to_cl(struct drm_plane *plane)
++{
++	struct spacemit_plane *p = to_spacemit_plane(plane);
++
++	return &p->cl[p->cl_cur];
++}
++
++struct cmdlist *spacemit_crtc_to_cl(struct drm_crtc *crtc)
++{
++	struct spacemit_crtc *a_crtc = to_spacemit_crtc(crtc);
++
++	return &a_crtc->cl[a_crtc->cl_cur];
++}
++
++static void spacemit_cmdlist_ring_release(struct drm_device *drm, void *res)
++{
++	struct cmdlist *cl = res;
++	int i;
++
++	for (i = 0; i < CMDLIST_RING; i++) {
++		if (cl[i].va)
++			dma_free_coherent(drm->dev, cl[i].size, cl[i].va,
++					  cl[i].pa);
++	}
++}
++
++/* Allocate a channel's lists once, for the life of the DRM device. */
++int spacemit_cmdlist_ring_init(struct drm_device *drm, struct cmdlist cl[CMDLIST_RING],
++			       enum cmdlist_type type, struct drm_plane *plane,
++		      struct drm_crtc *crtc)
++{
++	int i;
++
++	for (i = 0; i < CMDLIST_RING; i++) {
++		cl[i].type = type;
++		cl[i].plane = plane;
++		cl[i].crtc = crtc;
++		cl[i].size = PER_CMDLIST_SIZE;
++		cl[i].va = dma_alloc_coherent(drm->dev, cl[i].size, &cl[i].pa,
++					      GFP_KERNEL);
++		if (!cl[i].va) {
++			spacemit_cmdlist_ring_release(drm, cl);
++			return -ENOMEM;
++		}
++	}
++
++	return drmm_add_action_or_reset(drm, spacemit_cmdlist_ring_release, cl);
++}
++
++/* Switch to the other list and empty it for this commit. */
++struct cmdlist *spacemit_cmdlist_ring_next(struct cmdlist cl[CMDLIST_RING], u8 *cur)
++{
++	struct cmdlist *next;
++
++	*cur ^= 1;
++	next = &cl[*cur];
++	next->nod_len = 0;
++	next->mode_mask = 0;
++	memset(next->va, 0, CMDLIST_HEADER_SIZE);
++
++	return next;
++}
++
++/* Allocated once at init: the commit tail has no way to fail. */
++struct cmdlist_regs *spacemit_cmdlist_regs_alloc(struct drm_device *drm,
++						 u16 nwords)
++{
++	struct cmdlist_regs *regs;
++
++	regs = drmm_kzalloc(drm, sizeof(*regs), GFP_KERNEL);
++	if (!regs)
++		return NULL;
++
++	regs->size = nwords;
++	regs->module = drmm_kcalloc(drm, nwords, sizeof(*regs->module),
++				    GFP_KERNEL);
++	regs->flags = drmm_kcalloc(drm, nwords, sizeof(*regs->flags),
++				   GFP_KERNEL);
++	if (!regs->module || !regs->flags)
++		return NULL;
++
++	return regs;
++}
++
++/* Append the words written to @cl_regs to @cl and empty the image. */
++void spacemit_cmdlist_regs_packing(struct cmdlist *cl, enum cmdlist_mode_type mod,
++				   struct cmdlist_regs *cl_regs)
++{
++	struct drm_device *drm;
++	u32 *reg_base;
++	int i;
++	u32 index;
++
++	drm = cl->type == CMDLIST_PLANE ? cl->plane->dev : cl->crtc->dev;
++
++	reg_base = cl_regs->module;
++
++	cl->mode_mask |= mod;
++
++	/* Allocated in spacemit_cmdlist_ring_init(); without it the writes vanish. */
++	if (drm_WARN_ON(drm, !cl->va))
++		goto out;
++
++	for (i = 0; i < cl_regs->size;) {
++		u32 value[CMDLIST_ROW_REGS] = {0x0};
++		u32 offset, strobe = 0;
++
++		if (cl_regs->flags[i]) {
++			offset = cl_regs->base + i * sizeof(u32);
++			for (u8 j = 0; j < CMDLIST_ROW_REGS; j++) {
++				index = i + j;
++				if (likely(index < cl_regs->size)) {
++					if (cl_regs->flags[index]) {
++						value[j] = reg_base[index];
++						strobe |= CMDLIST_REG_STROBE(j);
++					}
++				} else {
++					break;
++				}
++			}
++			if (!saturn_hee_cmdlist_fill_data_row(cl, strobe, offset,
++							      value)) {
++				drm_WARN_ONCE(drm, 1,
++					      "cmdlist buffer full (rows %u)\n",
++					      cl->nod_len);
++				goto out;
++			}
++			/*
++			 * the row covers the whole window; a shorter stride
++			 * would revisit covered words as duplicate rows
++			 */
++			i += CMDLIST_ROW_REGS;
++			cl->nod_len++;
++		} else {
++			i++;
++		}
++	}
++
++	drm_dbg(drm, "row_num = %d\n", cl->nod_len);
++out:
++	memset(cl_regs->flags, 0, cl_regs->size);
++}
++
++/*
++ * Terminate the plane's list and point its read channel at it; the engine
++ * replays it at the next CFG_RDY.
++ */
++void spacemit_cmdlist_submit_plane(struct drm_plane *plane,
++				   struct drm_plane_state *state)
++{
++	struct spacemit_plane *p = to_spacemit_plane(plane);
++	struct spacemit_crtc *a_crtc = to_spacemit_crtc(state->crtc);
++	struct spacemit_drm_private *priv = plane->dev->dev_private;
++	struct spacemit_hw_device *hwdev = priv->hwdev;
++	struct cmdlist *cl = spacemit_plane_to_cl(plane);
++	u32 addrl, addrh;
++
++	saturn_hee_cmdlist_fill_conf_row(cl, state->dst.y1);
++
++	addrl = (lower_32_bits(cl->pa) & CMDLIST_ADDRL_ALIGN_MASK) >>
++		CMDLIST_ADDRL_ALIGN_BITS;
++	addrh = upper_32_bits(cl->pa);
++
++	saturn_hee_enable_cmdlist(a_crtc, hwdev, p->rdma_id, false);
++	saturn_hee_cfg_cmdlist(hwdev, p->rdma_id, state->dst.y1, addrl, addrh);
++	saturn_hee_enable_cmdlist(a_crtc, hwdev, p->rdma_id, true);
++}
++
++/* Terminate the CRTC's compose list and point the composer channel at it. */
++void spacemit_cmdlist_submit_crtc(struct spacemit_crtc *a_crtc)
++{
++	struct drm_crtc *crtc = &a_crtc->crtc;
++	struct spacemit_drm_private *priv = crtc->dev->dev_private;
++	struct cmdlist *cl = spacemit_crtc_to_cl(crtc);
++
++	saturn_hee_cmdlist_fill_conf_row(cl, 0);
++	saturn_hee_crtc_cmdlist(priv->hwdev, cl->pa, drm_crtc_index(crtc));
++}
+diff --git a/drivers/gpu/drm/spacemit/spacemit_cmdlist.h b/drivers/gpu/drm/spacemit/spacemit_cmdlist.h
+new file mode 100644
+index 0000000000000..ebf2e26f48188
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_cmdlist.h
+@@ -0,0 +1,133 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#ifndef _SPACEMIT_CMDLIST_H_
++#define _SPACEMIT_CMDLIST_H_
++
++#include <linux/bits.h>
++#include <linux/io.h>
++#include <linux/types.h>
++
++#include <drm/drm_crtc.h>
++#include <drm/drm_plane.h>
++
++struct spacemit_crtc;
++struct spacemit_plane_state;
++
++#define PER_CMDLIST_SIZE             4096
++/* The engine's node header; rows follow it. Layout in dpu_saturn_hee.c. */
++#define CMDLIST_HEADER_SIZE          16
++#define CMDLIST_ROW_REGS	(3)
++
++/**
++ * enum cmdlist_type - what surface owns a cmdlist instance
++ * @CMDLIST_PLANE: Per-plane RDMA register batches.
++ * @CMDLIST_CRTC: Compose-side batches submitted on every flush.
++ */
++enum cmdlist_type {
++	CMDLIST_PLANE = 1,
++	CMDLIST_CRTC,
++};
++
++/**
++ * struct cmdlist - A DMA-backed batch of register writes replayed at CFG_RDY
++ * @nod_len: Number of register-write rows currently filled.
++ * @size: Capacity of the DMA buffer in bytes.
++ * @mode_mask: &enum cmdlist_mode_type bits of the blocks packed into the
++ *	       list; selects the wait events and CFG_RDY bits when it is closed.
++ * @va: Kernel virtual address of the DMA buffer.
++ * @pa: DMA address programmed into the cmdlist base register.
++ * @type: Originating surface; see &enum cmdlist_type.
++ * @plane: Owning plane for a %CMDLIST_PLANE list.
++ * @crtc: Owning CRTC for a %CMDLIST_CRTC list.
++ */
++struct cmdlist {
++	u16 nod_len;
++	u32 size;
++	u32 mode_mask;
++	void *va;
++	dma_addr_t pa;
++	u8 type;
++	struct drm_plane *plane;
++	struct drm_crtc *crtc;
++};
++
++/*
++ * Two lists per channel, used alternately: the engine may still re-read the
++ * list of the previous commit until the next CFG_RDY has been consumed, and
++ * every commit waits for that before it completes.
++ */
++#define CMDLIST_RING	2
++
++enum cmdlist_mode_type {
++	CMDLIST_MOD_RDMA = BIT(0),
++	CMDLIST_MOD_COMP = BIT(3),
++	CMDLIST_MOD_DMMU = BIT(6),
++};
++
++#define CMDLIST_REG_STROBE(index)	(0xf << ((index) * 4))
++
++#define CMDLIST_ADDRL_ALIGN_BITS               (4) /* From cmdlist_reg_0[] in CMDLIST_REG */
++#define CMDLIST_ADDRL_ALIGN_MASK \
++	((u32)(~(BIT(CMDLIST_ADDRL_ALIGN_BITS) - 1)))
++/*
++ * First touch seeds the word from a live MMIO read: only register blocks that
++ * read back what was written may be routed through cmdlist.
++ */
++#define cmdlist_write_reg(hwdev, module_name, module_base, field, data, cl_regs) \
++do { \
++	struct cmdlist_regs *cl_p = (cl_regs); \
++	u32 *__words = cl_p->module; \
++	const unsigned int __w = dpu_field_word(module_name, field); \
++	if (cl_p->flags[__w] == 0) { \
++		__words[__w] = readl((hwdev)->base + (module_base) + 4 * __w); \
++		cl_p->base = (module_base); \
++		cl_p->flags[__w] = 1; \
++	} \
++	__words[__w] &= ~dpu_field_mask(module_name, field); \
++	__words[__w] |= FIELD_PREP(dpu_field_mask(module_name, field), \
++				   (u32)(data)); \
++} while (0)
++
++/* Raw whole-word variant; no seeding needed. */
++#define cmdlist_write_word(module_base, word, data, cl_regs) \
++do { \
++	struct cmdlist_regs *cl_p = (cl_regs); \
++	u32 *__words = cl_p->module; \
++	cl_p->base = (module_base); \
++	cl_p->flags[(word)] = 1; \
++	__words[(word)] = (u32)(data); \
++} while (0)
++
++/**
++ * struct cmdlist_regs - Scratch image of one register block
++ * @base: Offset of the block the image currently describes.
++ * @size: Number of words in the block.
++ * @module: The words.
++ * @flags: Nonzero for each word written since the image was last packed.
++ */
++struct cmdlist_regs {
++	u32 base;
++	u16 size;
++	u32 *module;
++	u8 *flags;
++};
++
++struct cmdlist_regs *spacemit_cmdlist_regs_alloc(struct drm_device *drm,
++						 u16 nwords);
++void spacemit_cmdlist_regs_packing(struct cmdlist *cl, enum cmdlist_mode_type mod,
++				   struct cmdlist_regs *cl_regs);
++int spacemit_cmdlist_ring_init(struct drm_device *drm, struct cmdlist cl[CMDLIST_RING],
++			       enum cmdlist_type type, struct drm_plane *plane,
++		      struct drm_crtc *crtc);
++struct cmdlist *spacemit_cmdlist_ring_next(struct cmdlist cl[CMDLIST_RING], u8 *cur);
++void spacemit_cmdlist_submit_plane(struct drm_plane *plane,
++				   struct drm_plane_state *state);
++void spacemit_cmdlist_submit_crtc(struct spacemit_crtc *a_crtc);
++struct cmdlist *spacemit_plane_to_cl(struct drm_plane *plane);
++struct cmdlist *spacemit_crtc_to_cl(struct drm_crtc *crtc);
++
++#endif /* _SPACEMIT_CMDLIST_H_ */
+diff --git a/drivers/gpu/drm/spacemit/spacemit_crtc.h b/drivers/gpu/drm/spacemit/spacemit_crtc.h
+new file mode 100644
+index 0000000000000..d1f7ebe5d1a9d
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_crtc.h
+@@ -0,0 +1,133 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#ifndef _SPACEMIT_CRTC_H_
++#define _SPACEMIT_CRTC_H_
++
++#include <linux/container_of.h>
++#include <linux/timer.h>
++#include <linux/types.h>
++
++#include <drm/drm_crtc.h>
++#include <drm/drm_plane.h>
++
++#include "spacemit_cmdlist.h"
++#include "spacemit_drm.h"
++
++struct regmap;
++
++/* RDMA stride is a 16-bit byte count; img_width/height are 16-bit fields. */
++#define SPACEMIT_DPU_MAX_FB_WIDTH	(U16_MAX / 4)
++#define SPACEMIT_DPU_MAX_FB_HEIGHT	U16_MAX
++#define SPACEMIT_DPU_MAX_PITCH		U16_MAX
++/* K3 user manual ch.12: each DPU output is at most 3840x2160. */
++#define SPACEMIT_DPU_MAX_HDISPLAY	3840
++#define SPACEMIT_DPU_MAX_VDISPLAY	2160
++
++#define DPU_MCLK_DEFAULT	307200000
++#define DPU_AXICLK_DEFAULT	409000000
++
++enum spacemit_dpu_irq {
++	INT_UNDERRUN,
++	INT_CFG_RDY,
++	INT_VSYNC,
++	INT_EOF,
++	INT_REST,
++};
++
++/**
++ * struct spacemit_crtc - Per-instance state for a Saturn DPU CRTC
++ * @crtc: Embedded DRM CRTC; reachable via to_spacemit_crtc().
++ * @cfg_rdy_timer: Watchdog for a CFG_RDY that never arrives.
++ * @is_1st_f: True until the first frame of a new modeset is transferred.
++ * @event: The commit's event, held until the engine has taken its lists;
++ *	   under &drm_device.event_lock.
++ * @cl_cmp: Scratch image of the composer registers.
++ * @cl_pp: Scratch image of the post-pipe registers.
++ * @cl: The composer channel's command lists, written alternately.
++ * @cl_cur: Index of the list being built for the current commit.
++ * @ur_reported: True once an underrun has been logged since the last CFG_RDY.
++ * @ur_mask_armed: True while saturn_hee_clr_int_sts() may still mask the
++ *		   underrun IRQ.
++ */
++struct spacemit_crtc {
++	struct drm_crtc crtc;
++	struct timer_list cfg_rdy_timer;
++
++	bool is_1st_f;
++	struct drm_pending_vblank_event *event;
++
++	struct cmdlist_regs *cl_cmp;
++	struct cmdlist_regs *cl_pp;
++	struct cmdlist cl[CMDLIST_RING];
++	u8 cl_cur;
++
++	bool ur_reported;
++	bool ur_mask_armed;
++};
++
++static inline struct spacemit_crtc *to_spacemit_crtc(struct drm_crtc *crtc)
++{
++	return container_of(crtc, struct spacemit_crtc, crtc);
++}
++
++struct spacemit_hw_device;
++
++/**
++ * struct spacemit_plane - Subclassed drm_plane for the Saturn DPU
++ * @plane: Base DRM plane.
++ * @rdma_id: The RDMA read channel this plane scans out through, fixed at init.
++ * @cl: The channel's command lists, written alternately.
++ * @cl_cur: Index of the list being built for the current commit.
++ * @cl_rdma: Scratch image of the read channel's registers.
++ * @cl_tbu: Scratch image of the channel's TBU registers.
++ */
++struct spacemit_plane {
++	struct drm_plane plane;
++	u8 rdma_id;
++	struct cmdlist_regs *cl_rdma;
++	struct cmdlist_regs *cl_tbu;
++	struct cmdlist cl[CMDLIST_RING];
++	u8 cl_cur;
++};
++
++/**
++ * struct spacemit_plane_state - Subclassed drm_plane_state for the Saturn DPU
++ * @state: Embedded drm_plane_state; reachable via to_spacemit_plane_state().
++ * @format: DPU-internal pixel-format token translated from the fourcc.
++ * @fbcmem_size: Line-buffer units (FBCMEM_UNIT bytes) this plane needs.
++ */
++struct spacemit_plane_state {
++	struct drm_plane_state state;
++	u8 format;
++	u32 fbcmem_size;
++};
++
++struct spacemit_plane *to_spacemit_plane(struct drm_plane *plane);
++
++static inline struct
++spacemit_plane_state *
++to_spacemit_plane_state(const struct drm_plane_state *state)
++{
++	return container_of(state, struct spacemit_plane_state, state);
++}
++
++struct drm_plane *spacemit_plane_init(struct drm_device *drm);
++
++/*
++ * Per-revision Saturn DPU description. One static instance per DT compatible,
++ * copied at probe.
++ */
++struct spacemit_hw_device {
++	void __iomem *base;
++	struct regmap *regmap;
++	u8 rdma_nums;
++	u8 n_formats;
++	const struct dpu_format_id *formats;
++	u8 n_fbcmems;
++	const u32 *fbcmem_sizes;
++};
++#endif
+diff --git a/drivers/gpu/drm/spacemit/spacemit_dmmu.c b/drivers/gpu/drm/spacemit/spacemit_dmmu.c
+new file mode 100644
+index 0000000000000..e886547cff6a3
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_dmmu.c
+@@ -0,0 +1,119 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (C) 2023-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#include <linux/cleanup.h>
++#include <linux/dma-mapping.h>
++#include <linux/gfp.h>
++#include <linux/stddef.h>
++
++#include <drm/drm_framebuffer.h>
++#include <drm/drm_gem_shmem_helper.h>
++
++#include "dpu/saturn_regs/ops_hee.h"
++#include "spacemit_cmdlist.h"
++#include "spacemit_crtc.h"
++#include "spacemit_dmmu.h"
++#include "spacemit_dpu_reg.h"
++#include "spacemit_drm.h"
++
++static inline void spacemit_dmmu_fill_pgtable(struct drm_device *drm,
++					      struct dpu_mmu_tbl *tbl,
++					      struct sg_table *sgt)
++{
++	struct sg_dma_page_iter dma_iter;
++	u32 max_entries = tbl->size / 4;
++	u32 *ttbr = tbl->va;
++	u32 i = 0, n = 0, temp = 0;
++
++	for_each_sgtable_dma_page(sgt, &dma_iter, 0) {
++		/*
++		 * The table was sized from this object, so running past it is
++		 * a driver bug.
++		 */
++		if (drm_WARN_ON_ONCE(drm, n + HW_ALIGN_TTB_NUM >= max_entries))
++			break;
++		ttbr[n++] = SPACEMIT_DMMU_PFN_MASK &
++			    (sg_page_iter_dma_address(&dma_iter) >> PAGE_SHIFT);
++	}
++
++	if (drm_WARN_ON_ONCE(drm, !n))
++		return;
++
++	/*
++	 * The silicon over-fetches past the last entry; pad it to avoid a DDR
++	 * fault.
++	 */
++	temp = ttbr[n - 1];
++	for (i = 0; i < HW_ALIGN_TTB_NUM; i++)
++		ttbr[n++] = temp;
++}
++
++/*
++ * Build the translation table for @obj once. The table describes the buffer,
++ * not a plane state, so it lives with the object and is reused by every
++ * commit that scans the buffer out.
++ */
++int spacemit_dmmu_prepare(struct drm_gem_object *obj)
++{
++	struct spacemit_gem_object *sgem = to_spacemit_gem(obj);
++	struct drm_gem_shmem_object *shmem = &sgem->base;
++	struct device *dev = obj->dev->dev;
++	struct dpu_mmu_tbl tbl;
++	struct sg_table *sgt;
++
++	guard(mutex)(&sgem->tbl_lock);
++
++	if (sgem->mmu_tbl.va)
++		return 0;
++
++	/* An imported dma-buf has its sg table mapped for this device. */
++	if (drm_gem_is_imported(obj)) {
++		sgt = shmem->sgt;
++		if (!sgt)
++			return -EINVAL;
++	} else {
++		sgt = drm_gem_shmem_get_pages_sgt(shmem);
++		if (IS_ERR(sgt))
++			return PTR_ERR(sgt);
++	}
++
++	tbl.size = ((PAGE_ALIGN(obj->size) >> PAGE_SHIFT) + HW_ALIGN_TTB_NUM) * 4;
++	tbl.va = dma_alloc_coherent(dev, tbl.size, &tbl.pa, GFP_KERNEL);
++	if (!tbl.va)
++		return -ENOMEM;
++
++	spacemit_dmmu_fill_pgtable(obj->dev, &tbl, sgt);
++	sgem->mmu_tbl = tbl;
++
++	return 0;
++}
++
++void spacemit_dmmu_release(struct drm_gem_object *obj)
++{
++	struct spacemit_gem_object *sgem = to_spacemit_gem(obj);
++
++	if (sgem->mmu_tbl.va)
++		dma_free_coherent(obj->dev->dev, sgem->mmu_tbl.size,
++				  sgem->mmu_tbl.va, sgem->mmu_tbl.pa);
++	mutex_destroy(&sgem->tbl_lock);
++}
++
++/* Point the plane's TBU at the framebuffer's table; built in prepare_fb. */
++void spacemit_dmmu_map(struct drm_framebuffer *fb, u8 tbu_id,
++		       struct cmdlist_regs *cl_rdma, struct drm_plane *plane)
++{
++	struct spacemit_drm_private *priv = fb->dev->dev_private;
++	struct spacemit_hw_device *hwdev = priv->hwdev;
++	struct spacemit_gem_object *sgem = to_spacemit_gem(fb->obj[0]);
++	struct tbu_instance tbu = { };
++
++	/* Every advertised format is single-planar */
++	tbu.ttb_pa[0] = sgem->mmu_tbl.pa;
++	tbu.tbu_va[0] = TBU_BASE_VA(tbu_id);
++	tbu.ttb_size[0] = roundup(fb->obj[0]->size, PAGE_SIZE) >> PAGE_SHIFT;
++
++	saturn_hee_rdma_dmmu(hwdev, tbu_id, &tbu, fb, cl_rdma, plane);
++}
+diff --git a/drivers/gpu/drm/spacemit/spacemit_dmmu.h b/drivers/gpu/drm/spacemit/spacemit_dmmu.h
+new file mode 100644
+index 0000000000000..b5a3b48d19893
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_dmmu.h
+@@ -0,0 +1,80 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#ifndef _SPACEMIT_DMMU_H_
++#define _SPACEMIT_DMMU_H_
++
++#include <linux/bits.h>
++#include <linux/mutex.h>
++#include <linux/types.h>
++
++#include <drm/drm_file.h>
++#include <drm/drm_gem_shmem_helper.h>
++
++#include "spacemit_cmdlist.h"
++
++#define DPU_QOS_URGENT	4
++/* The TLB over-fetches past the table's end, further the larger src_x is. */
++#define SPACEMIT_DMMU_MAX_SRC_X	4096
++/* Entries of padding that cover the over-fetch at SPACEMIT_DMMU_MAX_SRC_X. */
++#define HW_ALIGN_TTB_NUM	60
++
++/* tbu_size is a 16-bit page count. */
++#define SPACEMIT_DMMU_MAX_PAGES	U16_MAX
++/* A table entry holds a 26-bit page frame number. */
++#define SPACEMIT_DMMU_PFN_MASK	GENMASK(25, 0)
++
++#define RD_OUTS_NUM             16
++#define RDMA_TIMELIMIT  0xFFFF
++
++#define BASE_VA         0x10000000ULL
++#define VA_STEP_PER_TBU 0x40000000ULL
++
++#define TBU_BASE_VA(tbu_id) ((u64)BASE_VA + (u64)VA_STEP_PER_TBU * (tbu_id))
++
++struct tbu_instance {
++	u64 ttb_pa[3];
++	u64 tbu_va[3];
++	u32 ttb_size[3];
++};
++
++/**
++ * struct dpu_mmu_tbl - DMMU translation table for one buffer object
++ * @size: Bytes of table, including the over-fetch padding.
++ * @va: CPU address of the table.
++ * @pa: DMA address programmed into the TBU.
++ */
++struct dpu_mmu_tbl {
++	u32 size;
++	void *va;
++	dma_addr_t pa;
++};
++
++/**
++ * struct spacemit_gem_object - shmem object plus its DMMU table
++ * @base: The shmem object.
++ * @mmu_tbl: Built on the first scanout of this buffer, freed with it.
++ * @tbl_lock: Serialises the lazy build between commits.
++ */
++struct spacemit_gem_object {
++	struct drm_gem_shmem_object base;
++	struct dpu_mmu_tbl mmu_tbl;
++	struct mutex tbl_lock;	/* serialises the build of @mmu_tbl */
++};
++
++static inline struct spacemit_gem_object *
++to_spacemit_gem(struct drm_gem_object *obj)
++{
++	return container_of(to_drm_gem_shmem_obj(obj), struct spacemit_gem_object,
++			    base);
++}
++
++int spacemit_dmmu_prepare(struct drm_gem_object *obj);
++void spacemit_dmmu_release(struct drm_gem_object *obj);
++void spacemit_dmmu_map(struct drm_framebuffer *fb, u8 tbu_id,
++		       struct cmdlist_regs *cl_rdma, struct drm_plane *plane);
++
++#endif /* _SPACEMIT_DMMU_H_ */
+diff --git a/drivers/gpu/drm/spacemit/spacemit_dpu_reg.h b/drivers/gpu/drm/spacemit/spacemit_dpu_reg.h
+new file mode 100644
+index 0000000000000..4147f5f548f1c
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_dpu_reg.h
+@@ -0,0 +1,99 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ * Saturn DPU register accessors.
++ */
++
++#ifndef _SPACEMIT_DPU_REG_H_
++#define _SPACEMIT_DPU_REG_H_
++
++#include <linux/bitfield.h>
++#include <linux/io.h>
++
++#include "dpu/saturn_regs/saturn_fields.h"
++
++#define dpu_field_word(module_name, field)	(module_name##__##field##_WORD)
++#define dpu_field_mask(module_name, field)	(module_name##__##field##_MASK)
++
++/* MMIO field read: returns the field value shifted down to bit 0. */
++#define dpu_read_reg(hwdev, module_name, module_base, field)		\
++	FIELD_GET(dpu_field_mask(module_name, field),			\
++		  readl((hwdev)->base + (module_base) +			\
++			4 * dpu_field_word(module_name, field)))
++
++/* MMIO raw 32-bit register read/write by word index within the block. */
++#define dpu_read_word(hwdev, module_base, word)				\
++	readl((hwdev)->base + (module_base) + 4 * (word))
++
++#define dpu_write_reg_word(hwdev, module_base, word, data)		\
++	writel((u32)(data), (hwdev)->base + (module_base) + 4 * (word))
++
++/*
++ * Not every DPU config word reads back what was written, so a byte- or
++ * halfword-aligned field is stored at its own width rather than read-modified.
++ */
++#define __dpu_mmio_field_write(__addr, __mask, data)			\
++do {									\
++	if ((__mask) == 0xffU)						\
++		writeb((u8)((data) & 0xffU), __addr);			\
++	else if ((__mask) == 0xff00U)					\
++		writeb((u8)((data) & 0xffU), (__addr) + 1);		\
++	else if ((__mask) == 0xff0000U)					\
++		writeb((u8)((data) & 0xffU), (__addr) + 2);		\
++	else if ((__mask) == 0xff000000U)				\
++		writeb((u8)((data) & 0xffU), (__addr) + 3);		\
++	else if ((__mask) == 0xffffU)					\
++		writew((u16)((data) & 0xffffU), __addr);		\
++	else if ((__mask) == 0xffff0000U)				\
++		writew((u16)((data) & 0xffffU), (__addr) + 2);		\
++	else if ((__mask) == 0xffffffffU)				\
++		writel((u32)(data), __addr);				\
++	else								\
++		writel((readl(__addr) & ~(__mask)) |			\
++		       FIELD_PREP(__mask, (u32)(data)), __addr);	\
++} while (0)
++
++#define dpu_write_reg(hwdev, module_name, module_base, field, data)	\
++do {									\
++	void __iomem *__waddr = (hwdev)->base + (module_base) +	\
++				4 * dpu_field_word(module_name, field);	\
++	__dpu_mmio_field_write(__waddr,					\
++			       dpu_field_mask(module_name, field), data); \
++} while (0)
++
++/* Field write into a register array element; the index is a runtime value. */
++#define dpu_write_reg_arr(hwdev, module_name, module_base, arr, i, field, data) \
++do {									\
++	void __iomem *__waddr = (hwdev)->base + (module_base) +	\
++		4 * module_name##__##arr##__##field##_WORD(i);		\
++	__dpu_mmio_field_write(__waddr,					\
++			       module_name##__##arr##__##field##_MASK,	\
++			       data);					\
++} while (0)
++
++/*
++ * Unified CPU/cmdlist field write; a NULL cl_regs selects the direct MMIO path.
++ */
++#define _dpu_write_reg(hwdev, module_name, module_base, field, data, cl_regs, ...) \
++do {									\
++	if ((cl_regs) != NULL)						\
++		cmdlist_write_reg(hwdev, module_name, module_base,	\
++				  field, data, cl_regs);		\
++	else								\
++		dpu_write_reg(hwdev, module_name, module_base, field,	\
++			      data);					\
++} while (0)
++
++#define dpu_write(...) _dpu_write_reg(__VA_ARGS__, NULL)
++
++/* Unified CPU/cmdlist raw-word write. */
++#define dpu_write_word(hwdev, module_base, word, data, cl_regs)	\
++do {									\
++	if ((cl_regs) != NULL)						\
++		cmdlist_write_word(module_base, word, data, cl_regs);	\
++	else								\
++		dpu_write_reg_word(hwdev, module_base, word, data);	\
++} while (0)
++
++#endif
+diff --git a/drivers/gpu/drm/spacemit/spacemit_drm.h b/drivers/gpu/drm/spacemit/spacemit_drm.h
+new file mode 100644
+index 0000000000000..af969194057b8
+--- /dev/null
++++ b/drivers/gpu/drm/spacemit/spacemit_drm.h
+@@ -0,0 +1,62 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
++ *
++ */
++
++#ifndef _SPACEMIT_DRM_H_
++#define _SPACEMIT_DRM_H_
++
++#include <linux/clk.h>
++#include <linux/dma-mapping.h>
++#include <linux/reset.h>
++
++#include <drm/drm_atomic.h>
++#include <drm/drm_drv.h>
 +#include <drm/drm_print.h>
 +#include <drm/drm_probe_helper.h>
 +#include <drm/drm_vblank.h>
 +
-+#include "dpu/dpu_saturn.h"
-+#include "dpu/saturn_regs/ops_hee.h"
-+#include "dpu/saturn_regs/saturn_fields.h"
-+#include "spacemit_cmdlist.h"
-+#include "spacemit_crtc.h"
 +#include "spacemit_dmmu.h"
-+#include "spacemit_drm.h"
 +
-+static void spacemit_crtc_atomic_enable(struct drm_crtc *crtc,
-+					struct drm_atomic_commit *state)
-+{
-+	struct drm_crtc_state *crtc_state =
-+			drm_atomic_get_new_crtc_state(state, crtc);
-+	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
-+	struct spacemit_crtc *a_crtc = to_spacemit_crtc(crtc);
-+	struct spacemit_drm_private *priv = crtc->dev->dev_private;
-+	int idx;
-+	int ret;
-+
-+	/*
-+	 * Not pm_runtime_resume_and_get(): atomic_disable runs and drops this
-+	 * reference even when the power-up failed.
-+	 */
-+	ret = pm_runtime_get_sync(priv->dev);
-+	if (ret < 0) {
-+		/* The resume callback has said what failed. */
-+		drm_dbg(crtc->dev, "DPU power-up failed: %d\n", ret);
-+		return;
-+	}
-+
-+	if (drm_dev_enter(crtc->dev, &idx)) {
-+		spacemit_dpu_init(a_crtc, mode);
-+		a_crtc->is_1st_f = true;
-+		drm_dev_exit(idx);
-+	}
-+
-+	drm_crtc_vblank_on(&a_crtc->crtc);
-+}
-+
-+static void spacemit_crtc_atomic_disable(struct drm_crtc *crtc,
-+					 struct drm_atomic_commit *state)
-+{
-+	struct drm_crtc_state *crtc_state =
-+			drm_atomic_get_new_crtc_state(state, crtc);
-+	struct spacemit_crtc *a_crtc = to_spacemit_crtc(crtc);
-+	struct drm_device *drm = a_crtc->crtc.dev;
-+	struct spacemit_drm_private *priv = drm->dev_private;
-+	int idx;
-+
-+	if (drm_dev_enter(drm, &idx)) {
-+		spacemit_dpu_uninit(a_crtc);
-+		drm_dev_exit(idx);
-+	}
-+
-+	drm_crtc_vblank_off(&a_crtc->crtc);
-+
-+	/* A commit may still be waiting for CFG_RDY: stop its watchdog. */
-+	timer_delete_sync(&a_crtc->cfg_rdy_timer);
-+
-+	pm_runtime_put_sync(priv->dev);
-+
-+	/* No further vblank will come; complete the disable event here. */
-+	spacemit_dpu_complete_event(a_crtc);
-+	spin_lock_irq(&drm->event_lock);
-+	if (crtc_state->event) {
-+		drm_crtc_send_vblank_event(crtc, crtc_state->event);
-+		crtc_state->event = NULL;
-+	}
-+	spin_unlock_irq(&drm->event_lock);
-+}
-+
-+/* Planes write composer rows into the CRTC list, so open it before them. */
-+static void spacemit_crtc_atomic_begin(struct drm_crtc *crtc,
-+				       struct drm_atomic_commit *state)
-+{
-+	struct spacemit_crtc *a_crtc = to_spacemit_crtc(crtc);
-+
-+	spacemit_cmdlist_ring_next(a_crtc->cl, &a_crtc->cl_cur);
-+}
-+
-+static void spacemit_crtc_atomic_flush(struct drm_crtc *crtc,
-+				       struct drm_atomic_commit *state)
-+{
-+	struct drm_crtc_state *crtc_state =
-+			drm_atomic_get_new_crtc_state(state, crtc);
-+	struct spacemit_crtc *a_crtc = to_spacemit_crtc(crtc);
-+	struct spacemit_drm_private *priv = crtc->dev->dev_private;
-+	int idx;
-+
-+	/*
-+	 * The event releases the next commit, which rewrites the other
-+	 * command list and points the engine at it. Hold the event until
-+	 * CFG_RDY says the engine has taken this commit's lists; the
-+	 * interrupt then arms it for the following vblank.
-+	 */
-+	spin_lock_irq(&crtc->dev->event_lock);
-+	if (crtc_state->event) {
-+		if (drm_crtc_vblank_get(crtc) == 0)
-+			a_crtc->event = crtc_state->event;
-+		else
-+			drm_crtc_send_vblank_event(crtc, crtc_state->event);
-+		crtc_state->event = NULL;
-+	}
-+	spin_unlock_irq(&crtc->dev->event_lock);
-+
-+	/* clocks_on is false here only after a failed power-up. */
-+	if (priv->clocks_on && drm_dev_enter(crtc->dev, &idx)) {
-+		spacemit_dpu_run(crtc, state);
-+		drm_dev_exit(idx);
-+	} else {
-+		spacemit_dpu_complete_event(a_crtc);
-+	}
-+}
-+
-+static int spacemit_crtc_enable_vblank(struct drm_crtc *crtc)
-+{
-+	saturn_hee_enable_irq(to_spacemit_crtc(crtc), INT_VSYNC, true);
-+
-+	return 0;
-+}
-+
-+static void spacemit_crtc_disable_vblank(struct drm_crtc *crtc)
-+{
-+	saturn_hee_enable_irq(to_spacemit_crtc(crtc), INT_VSYNC, false);
-+}
-+
-+static enum drm_mode_status
-+spacemit_crtc_mode_valid(struct drm_crtc *crtc,
-+			 const struct drm_display_mode *mode)
-+{
-+	if (mode->hdisplay > SPACEMIT_DPU_MAX_HDISPLAY)
-+		return MODE_BAD_HVALUE;
-+	if (mode->vdisplay > SPACEMIT_DPU_MAX_VDISPLAY)
-+		return MODE_BAD_VVALUE;
-+
-+	return MODE_OK;
-+}
-+
-+static const struct drm_crtc_helper_funcs spacemit_crtc_helper_funcs = {
-+	.mode_valid = spacemit_crtc_mode_valid,
-+	.atomic_begin = spacemit_crtc_atomic_begin,
-+	.atomic_flush = spacemit_crtc_atomic_flush,
-+	.atomic_enable = spacemit_crtc_atomic_enable,
-+	.atomic_disable = spacemit_crtc_atomic_disable,
++/* The DPU's clock inputs, as named by the binding. */
++struct dpu_clk_context {
++	struct clk *pxclk;
++	struct clk *mclk;
++	struct clk *escclk;
++	struct clk *aclk;
++	struct clk *dscclk;
 +};
 +
-+static const struct drm_crtc_funcs spacemit_crtc_funcs = {
-+	.set_config = drm_atomic_helper_set_config,
-+	.page_flip = drm_atomic_helper_page_flip,
-+	.atomic_create_state = drm_atomic_helper_crtc_create_state,
-+	.atomic_duplicate_state = drm_atomic_helper_crtc_duplicate_state,
-+	.atomic_destroy_state = drm_atomic_helper_crtc_destroy_state,
-+	.enable_vblank = spacemit_crtc_enable_vblank,
-+	.disable_vblank = spacemit_crtc_disable_vblank,
-+};
-+
-+static void spacemit_crtc_put_port(struct drm_device *drm, void *port)
-+{
-+	of_node_put(port);
-+}
-+
-+static struct spacemit_crtc *spacemit_crtc_create(struct drm_device *drm,
-+						  struct drm_plane *primary,
-+						  struct device_node *port)
-+{
-+	struct spacemit_crtc *a_crtc;
-+	int err;
-+
-+	a_crtc = drmm_crtc_alloc_with_planes(drm, struct spacemit_crtc, crtc,
-+					     primary, NULL,
-+					     &spacemit_crtc_funcs, NULL);
-+	if (IS_ERR(a_crtc)) {
-+		drm_err(drm, "failed to init crtc\n");
-+		return a_crtc;
-+	}
-+
-+	/*
-+	 * drm_of_find_possible_crtcs() walks crtc->port for the life of the
-+	 * drm_device.
-+	 */
-+	a_crtc->crtc.port = of_node_get(port);
-+	err = drmm_add_action_or_reset(drm, spacemit_crtc_put_port, port);
-+	if (err)
-+		return ERR_PTR(err);
-+
-+	drm_crtc_helper_add(&a_crtc->crtc, &spacemit_crtc_helper_funcs);
-+
-+	err = spacemit_cmdlist_ring_init(drm, a_crtc->cl, CMDLIST_CRTC, NULL,
-+					 &a_crtc->crtc);
-+	if (err)
-+		return ERR_PTR(err);
-+
-+	a_crtc->cl_cmp = spacemit_cmdlist_regs_alloc(drm, CMPS_X_REG__NWORDS);
-+	a_crtc->cl_pp = spacemit_cmdlist_regs_alloc(drm, POSTPIPE_REG__NWORDS);
-+	if (!a_crtc->cl_cmp || !a_crtc->cl_pp)
-+		return ERR_PTR(-ENOMEM);
-+
-+	return a_crtc;
-+}
-+
-+/* The one plane and the one CRTC of a DPU instance. */
-+static struct spacemit_crtc *spacemit_drm_pipeline_init(struct drm_device *drm)
-+{
-+	struct spacemit_crtc *a_crtc;
-+	struct device_node *port;
-+	struct drm_plane *plane;
-+
-+	plane = spacemit_plane_init(drm);
-+	if (IS_ERR(plane))
-+		return ERR_CAST(plane);
-+
-+	port = of_graph_get_port_by_id(drm->dev->of_node, 0);
-+	if (!port)
-+		return ERR_PTR(dev_err_probe(drm->dev, -EINVAL,
-+					     "no output port\n"));
-+
-+	a_crtc = spacemit_crtc_create(drm, plane, port);
-+	of_node_put(port);
-+	if (IS_ERR(a_crtc))
-+		return a_crtc;
-+
-+	timer_setup(&a_crtc->cfg_rdy_timer, spacemit_cfg_rdy_timer_handler, 0);
-+
-+	return a_crtc;
-+}
-+
-+static irqreturn_t spacemit_dpu_isr(int irq, void *data)
-+{
-+	struct spacemit_drm_private *priv = data;
-+	struct spacemit_crtc *a_crtc = priv->a_crtc;
-+
-+	if (!a_crtc)
-+		return IRQ_NONE;
-+
-+	/* Reading a clock-gated DPU's status registers stalls the bus. */
-+	if (unlikely(!READ_ONCE(priv->clocks_on)))
-+		return IRQ_NONE;
-+
-+	/*
-+	 * Not under drm_dev_enter(): an unplugged device raises interrupts
-+	 * until its CRTC is off, and they still have to be acked.
-+	 */
-+	return spacemit_dpu_online_isr(a_crtc) ? IRQ_HANDLED : IRQ_NONE;
-+}
-+
-+/*
-+ * Acquire at probe, not at bind: the aggregate can rebind without this device
-+ * detaching, and the exclusive resets would not be handed out a second time.
++/**
++ * struct spacemit_drm_private - Top-level driver state for the SpacemiT DRM
++ * card
++ * @ddev: DRM device; lives from the component master bind to its unbind.
++ * @dev: The DPU platform device; the DPU is the drm subsystem root.
++ * @a_crtc: Per-DPU CRTC state; lives as long as @ddev.
++ * @hwdev: Per-revision Saturn DPU description.
++ * @clk_ctx: The DPU's clocks, acquired once at probe.
++ * @clocks_on: True while clocks run; MMIO on a gated DPU stalls the bus.
++ * @pipe_resets: The DPU reset lines, in assert order; bulk-deassert
++ *		 releases them in reverse.
++ * @irq_online: Online-compose IRQ; requested disabled, enabled at bind.
 + */
-+static int spacemit_dpu_hw_resources_init(struct spacemit_drm_private *priv,
-+					  struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	int n_rstc;
-+	int ret;
-+
-+	ret = spacemit_dpu_parse_clocks(dev, &priv->clk_ctx);
-+	if (ret)
-+		return ret;
-+
-+	priv->pipe_resets[0].id = "lcd";
-+	priv->pipe_resets[1].id = "esc";
-+	priv->pipe_resets[2].id = "mclk";
-+	priv->pipe_resets[3].id = "aclk";
-+	priv->pipe_resets[4].id = "dsc";
-+	n_rstc = ARRAY_SIZE(priv->pipe_resets);
-+	ret = devm_reset_control_bulk_get_exclusive(dev, n_rstc,
-+						    priv->pipe_resets);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to get resets\n");
-+
-+	/*
-+	 * The boot loader may leave its boot-logo pipeline running. Stop it
-+	 * here with the resets alone (the clocks are not ours to gate yet)
-+	 * and hold them until the first enable brings the block up.
-+	 */
-+	ret = reset_control_bulk_assert(n_rstc, priv->pipe_resets);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to assert resets\n");
-+	usleep_range(10000, 20000);
-+
-+	priv->irq_online = platform_get_irq_byname(pdev, "online");
-+	if (priv->irq_online < 0)
-+		return priv->irq_online;
-+
-+	/* Keep the line disabled until bind: the handler needs bind state. */
-+	return devm_request_irq(dev, priv->irq_online, spacemit_dpu_isr,
-+				IRQF_NO_AUTOEN, "DPU_ONLINE", priv);
-+}
-+
-+static const struct regmap_config spacemit_dpu_regmap_config = {
-+	.name		= "dpu",
-+	.reg_bits	= 32,
-+	.val_bits	= 32,
-+	.reg_stride	= 4,
-+	.max_register	= 0x53ffc,	/* 0x54000-byte DPU register window */
-+};
-+
-+static int spacemit_drm_master_bind(struct device *dev)
-+{
-+	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
++struct spacemit_drm_private {
++	struct drm_device *ddev;
++	struct device *dev;
 +	struct spacemit_crtc *a_crtc;
-+	struct drm_device *drm;
-+	int ret;
++	struct spacemit_hw_device *hwdev;
 +
-+	ret = aperture_remove_all_conflicting_devices(spacemit_drm_drv.name);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "failed to remove existing framebuffers\n");
-+
-+	/*
-+	 * Bind-scoped, not devm: the aggregate can rebind without this
-+	 * device being re-probed, and each bind must release its own
-+	 * drm_device.
-+	 */
-+	drm = drm_dev_alloc(&spacemit_drm_drv, dev);
-+	if (IS_ERR(drm))
-+		return PTR_ERR(drm);
-+	priv->ddev = drm;
-+	drm->dev_private = priv;
-+
-+	ret = spacemit_drm_mode_config_init(drm);
-+	if (ret)
-+		goto err_dc;
-+
-+	a_crtc = spacemit_drm_pipeline_init(drm);
-+	if (IS_ERR(a_crtc)) {
-+		ret = PTR_ERR(a_crtc);
-+		goto err_dc;
-+	}
-+	priv->a_crtc = a_crtc;
-+
-+	/*
-+	 * component_bind_all() unbinds what it bound before returning an error.
-+	 */
-+	ret = component_bind_all(dev, drm);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to bind all components\n");
-+		goto err_dc;
-+	}
-+
-+	drm_mode_config_reset(drm);
-+
-+	ret = drm_vblank_init(drm, drm->mode_config.num_crtc);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to initialize vblank\n");
-+		goto err_unbind_all;
-+	}
-+
-+	drmm_kms_helper_poll_init(drm);
-+	drm_helper_hpd_irq_event(drm);
-+
-+	enable_irq(priv->irq_online);
-+
-+	ret = drm_dev_register(drm, 0);
-+	if (ret < 0)
-+		goto err_disable_irq;
-+	drm_client_setup(drm, NULL);
-+
-+	return 0;
-+
-+err_disable_irq:
-+	disable_irq(priv->irq_online);
-+
-+err_unbind_all:
-+	component_unbind_all(dev, drm);
-+err_dc:
-+	/*
-+	 * .shutdown tests priv->ddev; never leave it on a half-initialised
-+	 * device.
-+	 */
-+	priv->ddev = NULL;
-+	priv->a_crtc = NULL;
-+	drm_dev_put(drm);
-+	return ret;
-+}
-+
-+static void spacemit_drm_master_unbind(struct device *dev)
-+{
-+	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
-+	struct drm_device *drm = priv->ddev;
-+
-+	/*
-+	 * A process may keep the card open past this point. Unplug, so that
-+	 * its ioctls fail and the drm_dev_enter() sections keep off the
-+	 * registers. The commits that follow still turn the outputs off: the
-+	 * CRTC drops its runtime PM reference, and the suspend resets the DPU.
-+	 * The interrupt stays alive until then, for a commit that was already
-+	 * waiting on it.
-+	 */
-+	drm_dev_unplug(drm);
-+	/* An open file keeps the drm_device, and its poll worker, alive. */
-+	drm_kms_helper_poll_fini(drm);
-+	drm_atomic_helper_shutdown(drm);
-+
-+	disable_irq(priv->irq_online);
-+
-+	component_unbind_all(dev, drm);
-+
-+	/* .shutdown and a later re-bind must not touch the stale instance. */
-+	priv->ddev = NULL;
-+	priv->a_crtc = NULL;
-+
-+	drm_dev_put(drm);
-+}
-+
-+const struct component_master_ops spacemit_drm_master_ops = {
-+	.bind = spacemit_drm_master_bind,
-+	.unbind = spacemit_drm_master_unbind,
++	struct dpu_clk_context clk_ctx;
++	bool clocks_on;
++	struct reset_control_bulk_data pipe_resets[5];
++	int irq_online;
 +};
 +
-+static int spacemit_dpu_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	const struct spacemit_hw_device *hwdev_template;
-+	struct spacemit_drm_private *priv;
-+	int ret;
++extern const struct drm_driver spacemit_drm_drv;
++extern const struct component_master_ops spacemit_drm_master_ops;
 +
-+	/* A display MMU entry holds a 26-bit page frame number. */
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(38));
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to set DMA mask\n");
++int spacemit_drm_mode_config_init(struct drm_device *drm);
++int spacemit_drm_of_component_probe(struct device *dev);
 +
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+	priv->dev = dev;
-+	dev_set_drvdata(dev, priv);
-+
-+	/* The match data is shared const; the MMIO mapping is per-instance. */
-+	hwdev_template = device_get_match_data(dev);
-+	if (!hwdev_template)
-+		return -ENODEV;
-+	priv->hwdev = devm_kmemdup(dev, hwdev_template,
-+				   sizeof(*hwdev_template), GFP_KERNEL);
-+	if (!priv->hwdev)
-+		return -ENOMEM;
-+
-+	priv->hwdev->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(priv->hwdev->base))
-+		return PTR_ERR(priv->hwdev->base);
-+
-+	priv->hwdev->regmap = devm_regmap_init_mmio(dev, priv->hwdev->base,
-+						    &spacemit_dpu_regmap_config);
-+	if (IS_ERR(priv->hwdev->regmap))
-+		return dev_err_probe(dev, PTR_ERR(priv->hwdev->regmap),
-+				     "failed to init DPU regmap\n");
-+
-+	ret = spacemit_dpu_hw_resources_init(priv, pdev);
-+	if (ret)
-+		return ret;
-+
-+	/* Held in reset with the clocks off: the suspended state. */
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
-+
-+	return spacemit_drm_of_component_probe(dev);
-+}
-+
-+static void spacemit_dpu_remove(struct platform_device *pdev)
-+{
-+	component_master_del(&pdev->dev, &spacemit_drm_master_ops);
-+}
-+
-+static void spacemit_dpu_shutdown(struct platform_device *pdev)
-+{
-+	struct spacemit_drm_private *priv = dev_get_drvdata(&pdev->dev);
-+	struct drm_device *drm = priv->ddev;
-+
-+	/* Not bound: nothing was ever enabled. */
-+	if (!drm)
-+		return;
-+
-+	drm_atomic_helper_shutdown(drm);
-+}
-+
-+static int spacemit_dpu_runtime_suspend(struct device *dev)
-+{
-+	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
-+	int ret;
-+
-+	/*
-+	 * Close the ISR's MMIO gate, then let a handler that is already past
-+	 * it finish before the clocks stop.
-+	 */
-+	WRITE_ONCE(priv->clocks_on, false);
-+	synchronize_irq(priv->irq_online);
-+
-+	/*
-+	 * Assert before gating: a reset asserted into an already-gated block
-+	 * has no clock edges to propagate on and leaves the register file
-+	 * untouched.
-+	 */
-+	ret = reset_control_bulk_assert(ARRAY_SIZE(priv->pipe_resets),
-+					priv->pipe_resets);
-+	if (ret)
-+		dev_warn(dev, "failed to assert resets: %d\n", ret);
-+	usleep_range(10000, 20000);
-+
-+	spacemit_dpu_disable_clocks(priv);
-+
-+	return 0;
-+}
-+
-+static int spacemit_dpu_runtime_resume(struct device *dev)
-+{
-+	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = reset_control_bulk_deassert(ARRAY_SIZE(priv->pipe_resets),
-+					  priv->pipe_resets);
-+	if (ret) {
-+		dev_err(dev, "failed to deassert resets: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = spacemit_dpu_enable_clocks(priv);
-+	if (ret) {
-+		reset_control_bulk_assert(ARRAY_SIZE(priv->pipe_resets),
-+					  priv->pipe_resets);
-+		return ret;
-+	}
-+
-+	/* The DPU must settle after reset deassert or CFG_RDY races the flush. */
-+	usleep_range(10000, 20000);
-+	WRITE_ONCE(priv->clocks_on, true);
-+
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops spacemit_dpu_pm_ops = {
-+	RUNTIME_PM_OPS(spacemit_dpu_runtime_suspend, spacemit_dpu_runtime_resume,
-+		       NULL)
-+};
-+
-+static const struct of_device_id spacemit_dpu_match_table[] = {
-+	{
-+		.compatible = "spacemit,k3-saturn-dpu",
-+		.data = &spacemit_k3_saturn_dpu,
-+	},
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, spacemit_dpu_match_table);
-+
-+static struct platform_driver spacemit_dpu_driver = {
-+	.probe = spacemit_dpu_probe,
-+	.remove = spacemit_dpu_remove,
-+	.shutdown = spacemit_dpu_shutdown,
-+	.driver = {
-+		.name = "spacemit-dpu-drv",
-+		.of_match_table = spacemit_dpu_match_table,
-+		.pm = pm_ptr(&spacemit_dpu_pm_ops),
-+		.suppress_bind_attrs = true,
-+	},
-+};
-+module_platform_driver(spacemit_dpu_driver);
-+
-+MODULE_DESCRIPTION("SpacemiT DRM KMS master driver");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/gpu/drm/spacemit/spacemit_planes.c b/drivers/gpu/drm/spacemit/spacemit_planes.c
-new file mode 100644
-index 0000000000000..c49a2e1572771
---- /dev/null
-+++ b/drivers/gpu/drm/spacemit/spacemit_planes.c
-@@ -0,0 +1,332 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright (C) 2025-2026 SpacemiT Co., Ltd.
-+ *
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/slab.h>
-+
-+#include <drm/drm_atomic.h>
-+#include <drm/drm_atomic_helper.h>
-+#include <drm/drm_blend.h>
-+#include <drm/drm_drv.h>
-+#include <drm/drm_framebuffer.h>
-+#include <drm/drm_gem.h>
-+#include <drm/drm_gem_atomic_helper.h>
-+#include <drm/drm_plane.h>
-+#include <drm/drm_print.h>
-+
-+#include "dpu/dpu_saturn.h"
-+#include "dpu/saturn_fbcmem.h"
-+#include "dpu/saturn_regs/ops_hee.h"
-+#include "dpu/saturn_regs/saturn_fields.h"
-+#include "spacemit_cmdlist.h"
-+#include "spacemit_dmmu.h"
-+#include "spacemit_drm.h"
-+
-+/* The AFBC decoder exists but no modifier has been validated on hardware. */
-+static const u64 supported_format_modifiers[] = {
-+	DRM_FORMAT_MOD_LINEAR,
-+	DRM_FORMAT_MOD_INVALID
-+};
-+
-+struct spacemit_plane *to_spacemit_plane(struct drm_plane *plane)
-+{
-+	return container_of(plane, struct spacemit_plane, plane);
-+}
-+
-+static int spacemit_plane_atomic_check(struct drm_plane *plane,
-+				       struct drm_atomic_commit *atomic_state)
-+{
-+	struct drm_plane_state *state =
-+			drm_atomic_get_new_plane_state(atomic_state, plane);
-+	struct drm_framebuffer *fb = state->fb;
-+	struct spacemit_plane_state *cur_state = to_spacemit_plane_state(state);
-+	struct drm_crtc_state *crtc_state = NULL;
-+	int ret;
-+
-+	if (state->crtc)
-+		crtc_state = drm_atomic_get_new_crtc_state(atomic_state,
-+							   state->crtc);
-+
-+	ret = drm_atomic_helper_check_plane_state(state, crtc_state,
-+						  DRM_PLANE_NO_SCALING,
-+						  DRM_PLANE_NO_SCALING,
-+						  true, false);
-+	if (ret)
-+		return ret;
-+
-+	if (!state->visible)
-+		return 0;
-+
-+	/* The width limit bounds the default pitch; userspace may pass a larger one. */
-+	if (fb->pitches[0] > SPACEMIT_DPU_MAX_PITCH) {
-+		drm_dbg(plane->dev, "pitch %u exceeds the stride field\n",
-+			fb->pitches[0]);
-+		return -EINVAL;
-+	}
-+
-+	/* Scanout starts at the first byte of the buffer object. */
-+	if (fb->offsets[0]) {
-+		drm_dbg(plane->dev, "framebuffer offset %u is not supported\n",
-+			fb->offsets[0]);
-+		return -EINVAL;
-+	}
-+
-+	if (state->src.x1 >> 16 > SPACEMIT_DMMU_MAX_SRC_X) {
-+		drm_dbg(plane->dev, "src_x %d exceeds the DMMU table padding\n",
-+			state->src.x1 >> 16);
-+		return -EINVAL;
-+	}
-+
-+	if (fb->obj[0]->size >> PAGE_SHIFT > SPACEMIT_DMMU_MAX_PAGES) {
-+		drm_dbg(plane->dev, "buffer of %zu bytes exceeds one TBU\n",
-+			fb->obj[0]->size);
-+		return -EINVAL;
-+	}
-+
-+	if (saturn_cal_layer_fbcmem_size(plane, state)) {
-+		drm_dbg(plane->dev, "invalid fbcmem size\n");
-+		return -EINVAL;
-+	}
-+
-+	cur_state->format = spacemit_plane_hw_get_format_id(fb->format->format);
-+	if (cur_state->format == SPACEMIT_DPU_INVALID_FORMAT_ID) {
-+		drm_dbg(plane->dev, "unsupported format %p4cc\n",
-+			&fb->format->format);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+static void spacemit_plane_program(struct drm_plane *plane,
-+				   struct drm_plane_state *state,
-+				   const struct drm_display_mode *mode)
-+{
-+	struct spacemit_plane *p = to_spacemit_plane(plane);
-+	u32 rdma_id = p->rdma_id;
-+
-+	spacemit_cmdlist_ring_next(p->cl, &p->cl_cur);
-+
-+	saturn_hee_plane_update_hw_channel(plane, state, mode);
-+	spacemit_dmmu_map(state->fb, rdma_id * 2, p->cl_rdma, plane);
-+	spacemit_cmdlist_regs_packing(spacemit_plane_to_cl(plane), CMDLIST_MOD_RDMA,
-+				      p->cl_rdma);
-+
-+	spacemit_cmdlist_submit_plane(plane, state);
-+}
-+
-+/* Take the layer out of the composition and stop its read channel. */
-+static void spacemit_plane_off(struct drm_plane *plane, struct drm_crtc *crtc)
-+{
-+	struct spacemit_drm_private *priv = plane->dev->dev_private;
-+	struct spacemit_plane *p = to_spacemit_plane(plane);
-+
-+	saturn_hee_plane_disable_hw_channel(plane, crtc);
-+	saturn_hee_enable_cmdlist(to_spacemit_crtc(crtc), priv->hwdev,
-+				  p->rdma_id, false);
-+}
-+
-+static void spacemit_plane_atomic_update(struct drm_plane *plane,
-+					 struct drm_atomic_commit *state)
-+{
-+	struct drm_plane_state *new_state =
-+			drm_atomic_get_new_plane_state(state, plane);
-+	struct drm_crtc_state *crtc_state =
-+			drm_atomic_get_new_crtc_state(state, new_state->crtc);
-+	struct spacemit_drm_private *priv = plane->dev->dev_private;
-+	int idx;
-+
-+	if (priv->clocks_on && drm_dev_enter(plane->dev, &idx)) {
-+		/* A plane moved off the screen has no rectangle to program. */
-+		if (new_state->visible)
-+			spacemit_plane_program(plane, new_state,
-+					       &crtc_state->adjusted_mode);
-+		else
-+			spacemit_plane_off(plane, new_state->crtc);
-+		drm_dev_exit(idx);
-+	}
-+}
-+
-+static void spacemit_plane_atomic_disable(struct drm_plane *plane,
-+					  struct drm_atomic_commit *state)
-+{
-+	struct drm_plane_state *old_state =
-+			drm_atomic_get_old_plane_state(state, plane);
-+	struct spacemit_drm_private *priv = plane->dev->dev_private;
-+	int idx;
-+
-+	if (priv->clocks_on && drm_dev_enter(plane->dev, &idx)) {
-+		spacemit_plane_off(plane, old_state->crtc);
-+		drm_dev_exit(idx);
-+	}
-+}
-+
-+static struct drm_plane_state *
-+spacemit_plane_atomic_create_state(struct drm_plane *plane)
-+{
-+	struct spacemit_plane_state *s;
-+
-+	s = kzalloc_obj(*s);
-+	if (!s)
-+		return ERR_PTR(-ENOMEM);
-+
-+	__drm_atomic_helper_plane_state_init(&s->state, plane);
-+
-+	return &s->state;
-+}
-+
-+static struct drm_plane_state *
-+spacemit_plane_atomic_duplicate_state(struct drm_plane *plane)
-+{
-+	struct spacemit_plane_state *s;
-+	struct spacemit_plane_state *old_state =
-+			to_spacemit_plane_state(plane->state);
-+
-+	s = kzalloc_obj(*s);
-+	if (!s)
-+		return NULL;
-+
-+	__drm_atomic_helper_plane_duplicate_state(plane, &s->state);
-+
-+	s->format = old_state->format;
-+	s->fbcmem_size = old_state->fbcmem_size;
-+
-+	return &s->state;
-+}
-+
-+static void spacemit_plane_atomic_destroy_state(struct drm_plane *plane,
-+						struct drm_plane_state *state)
-+{
-+	__drm_atomic_helper_plane_destroy_state(state);
-+
-+	kfree(to_spacemit_plane_state(state));
-+}
-+
-+static int spacemit_plane_create_properties(struct spacemit_plane *p)
-+{
-+	unsigned int support_modes = BIT(DRM_MODE_BLEND_PIXEL_NONE) |
-+		BIT(DRM_MODE_BLEND_PREMULTI) |
-+		BIT(DRM_MODE_BLEND_COVERAGE);
-+	int ret;
-+
-+	ret = drm_plane_create_alpha_property(&p->plane);
-+	if (ret)
-+		return ret;
-+
-+	return drm_plane_create_blend_mode_property(&p->plane, support_modes);
-+}
-+
-+/* Collect the buffer's fences and build its DMMU table once. */
-+static int spacemit_plane_prepare_fb(struct drm_plane *plane,
-+				     struct drm_plane_state *state)
-+{
-+	int ret;
-+
-+	if (!state->fb)
-+		return 0;
-+
-+	ret = drm_gem_plane_helper_prepare_fb(plane, state);
-+	if (ret)
-+		return ret;
-+
-+	return spacemit_dmmu_prepare(state->fb->obj[0]);
-+}
-+
-+static const struct drm_plane_helper_funcs spacemit_plane_helper_funcs = {
-+	.prepare_fb = spacemit_plane_prepare_fb,
-+	.atomic_check = spacemit_plane_atomic_check,
-+	.atomic_update = spacemit_plane_atomic_update,
-+	.atomic_disable = spacemit_plane_atomic_disable,
-+};
-+
-+static void spacemit_plane_atomic_print_state(struct drm_printer *p,
-+					      const struct drm_plane_state *state)
-+{
-+	const struct spacemit_plane_state *s = to_spacemit_plane_state(state);
-+
-+	drm_printf(p, "\tformat-id=%u\n", s->format);
-+	drm_printf(p, "\tfbcmem-size=%u\n", s->fbcmem_size);
-+}
-+
-+static const struct drm_plane_funcs spacemit_plane_funcs = {
-+	.update_plane = drm_atomic_helper_update_plane,
-+	.disable_plane	= drm_atomic_helper_disable_plane,
-+	.atomic_create_state = spacemit_plane_atomic_create_state,
-+	.atomic_duplicate_state = spacemit_plane_atomic_duplicate_state,
-+	.atomic_destroy_state = spacemit_plane_atomic_destroy_state,
-+	.atomic_print_state = spacemit_plane_atomic_print_state,
-+};
-+
-+struct drm_plane *spacemit_plane_init(struct drm_device *drm)
-+{
-+	struct spacemit_plane *p;
-+	int err, j;
-+	u32 *formats;
-+	struct spacemit_drm_private *priv = drm->dev_private;
-+	struct spacemit_hw_device *hwdev = priv->hwdev;
-+	u8 n_formats = hwdev->n_formats;
-+	u8 n_fbcmems = hwdev->n_fbcmems;
-+	u8 n_rdmas = hwdev->rdma_nums;
-+	u32 plane_crtc_mask;
-+
-+	if (n_fbcmems * 2 != n_rdmas) {
-+		drm_err(drm, "mismatched rdma/fbcmem counts: %d vs %d\n",
-+			n_rdmas, n_fbcmems);
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	for (j = 0; j < n_fbcmems; j++) {
-+		if (hwdev->fbcmem_sizes[j] < FBCMEM_UNIT) {
-+			drm_err(drm, "invalid fbcmem_sizes[%d] = %u\n",
-+				j, hwdev->fbcmem_sizes[j]);
-+			return ERR_PTR(-EINVAL);
-+		}
-+	}
-+
-+	formats = kcalloc(n_formats, sizeof(*formats), GFP_KERNEL);
-+	if (!formats)
-+		return ERR_PTR(-ENOMEM);
-+
-+	/*
-+	 * The CRTC is created right after this, so its index is the current
-+	 * count.
-+	 */
-+	plane_crtc_mask = BIT(drm->mode_config.num_crtc);
-+
-+	for (j = 0; j < n_formats; j++)
-+		formats[j] = hwdev->formats[j].format;
-+
-+	p = drmm_universal_plane_alloc(drm, struct spacemit_plane, plane,
-+				       plane_crtc_mask, &spacemit_plane_funcs,
-+				       formats, n_formats,
-+				       supported_format_modifiers,
-+				       DRM_PLANE_TYPE_PRIMARY, NULL);
-+	kfree(formats);
-+	if (IS_ERR(p)) {
-+		drm_err(drm, "failed to init primary plane\n");
-+		return ERR_CAST(p);
-+	}
-+
-+	/* The single primary plane owns the first read channel. */
-+	p->rdma_id = 0;
-+
-+	drm_plane_helper_add(&p->plane, &spacemit_plane_helper_funcs);
-+
-+	err = spacemit_cmdlist_ring_init(drm, p->cl, CMDLIST_PLANE, &p->plane, NULL);
-+	if (err)
-+		return ERR_PTR(err);
-+
-+	err = spacemit_plane_create_properties(p);
-+	if (err)
-+		return ERR_PTR(err);
-+
-+	p->cl_rdma = spacemit_cmdlist_regs_alloc(drm, RDMA_PATH_X_REG__NWORDS);
-+	p->cl_tbu = spacemit_cmdlist_regs_alloc(drm, MMU_TBU_REG__NWORDS);
-+	if (!p->cl_rdma || !p->cl_tbu)
-+		return ERR_PTR(-ENOMEM);
-+
-+	return &p->plane;
-+}
++#endif /* _SPACEMIT_DRM_H_ */
 
 -- 
 2.43.0
