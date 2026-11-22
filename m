@@ -1,108 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795369141;
-	b=26HbyEJmQQelsXOQk4EzDa2bqmigSoEGKpRT2XBozrirztZfZLlBP6cGtBesYgef25rx
-	 VT1cf4xFcHX1Qd4oDOSvEfO6lO//0kAL7XA0+jKCPJY8tgpP/nzwLQb4hmhKyiQxc5QpQ
-	 3m01Bg4PLYWZu9uRidDIiVzKb3kOkHnXW2RtueBmjghswoLtufLevBtM7IcHD0ydyzg0P
-	 JOlyg+BVe7NhkOsV2VPDfo51ChXbuSdQCw1eJjg9OqEkheH778L07kKI8GMPF8RFBXncL
-	 ZMwQvGm0rZTf09cRtyYh67eioJz3lSEG2xlE7AiIm4Zob8KpKXKUksdbnLs66O83dqg==
+	t=1795373099;
+	b=OYvAnj0b54HQf4s4+5K9Zp2ApCA0XLlicyMS95lioVxPkeIHcWSPOGpOJw5CgNk/Weai
+	 dVsAQMe5fGlYCWLqGT/fakFf9CtmgGFYt9T9iq62SFp/FcLNw2uoJYRrSIBBTVeEjm6U4
+	 r5JuAn6K1mr0Pybb9jot0rIuWVwnvwMZj1HQkJkaZGokTTp6GaBW0fOJkVDtM/zMJ9H3h
+	 Aj+TZph0k7l7syyLoP61LnLBd705ZqSIDZCVYn25sBYzpfHPmDQ5rG26mNlSjWC5acXY3
+	 EHxd2yvQ0EUHmMCYqwzLkLENIxkDhL8lEy15GpuXSvDtNDrDTzVZQw+EVTLJDXN0Zew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795369141;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=LlFmwfQRuK6UV6XJmGVYSVgXfF3MLqCw1TxtpepQm6U=;
-	b=oFibE2zzJmcoTl7LU4z3fmV1VuBDDEqymfT/Kq/j7bHEfodzH5mtwHhZoqghx1+uPe48
-	 8d/iUw5iako/iTjjSqNaw0nmJOyParVpJLVOyZ+ewM18cNjcZwF8BHL+uKmXfaIKBWd43
-	 eRIx9sRAZJIevpqL0fIoV+iujTBR+WrQaTiqh3C9KuK6UDsQ3RuBeZR/AMjmDzyORZhNK
-	 tCnktwu17O4qTbAhIs3pnHuBGddyFyG41cmGRBoXROSuWt9ooFwQrJG2IVtwzGh9O5oFT
-	 ZEPCAo53k2YOm5co0X6BEnfXZpXUgK4mRfh7SyIZhWwSfVQTSLIURawtvN1xDOY2Eyg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795373099;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Wlw1svGMrjSyOsVhDZN+3pXfMCPyNzszcBB5icjp1ng=;
+	b=Ycha6qpgRVB9rYJOVyinPhtMFO3gyJtAMen1nWQCxz3TZlK+KYH2sd+3t0pf6j/Z9cdG
+	 MCxObkBrJgDJvh+CzBHgOY4ZuwkRfcLJExlSWwT87uGjNeYQYo5jtRKuYw/5j5ltCVFOP
+	 4Si/0uR865u8Trd7t+8YsP/wJyRJgDNC6P0xowAPli43RK1KnQte3g11JO03g8naA93Jz
+	 hsGwwRVJ4ue8rcHcMIpW7JlpTQsnaNWaGrmh6B0URJDVNveZfeWoatgBUe10l+tBFubhb
+	 CD0aaBcn5sh8+3uioHmLt8NPO43N73PnU16+bmLlP6xdXdr2XpzmWNm5imsRoEmbCDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vq4+XvRA;
-	arc=none smtp.remote-ip=74.125.82.169
-Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b="iR2tK3Y/";
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2567A606A332
-	for <spacemit@lists.linux.dev>; Sun, 22 Nov 2026 17:39:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2567A606A332
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05986606A336
+	for <spacemit@lists.linux.dev>; Sun, 22 Nov 2026 18:44:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05986606A336
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vq4+XvRA
-Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-38644aedba1so3493795eec.0
-        for <spacemit@lists.linux.dev>; Sun, 22 Nov 2026 09:39:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795369140; x=1795973940; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=LlFmwfQRuK6UV6XJmGVYSVgXfF3MLqCw1TxtpepQm6U=;
-        b=vq4+XvRAUpeBIZXEtK8ntfkW6hyI1IWn51mlfoQ0JXGn6To+4CnwxuPqjJMDvRGrep
-         /QKdnJYsEYbWGhd/qXr791Xomg3sf6XHZVcSlNJJy0uHenJYbHSvss1CSC3B5x0v0EjU
-         K3Xt+vNKuvF1ojTk4+LPuh0x0RYj6sPf3Da2Vi+O7nNIP7dXcQIl3WNySolG2fDI4mOv
-         4V2loSAYs8wQ5RutwyJOOv/kgQLpJ/NSZ7h43yF7J9B1xRk74bgGiQ3CJdUiNosNTCsp
-         ZBqVNmdG6kZmsKk+mm0gVCksqVTprnLFzDrGEffivd4knJk4EYUiy0NUi5o//RgkYyGY
-         2ahQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795369140; x=1795973940;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LlFmwfQRuK6UV6XJmGVYSVgXfF3MLqCw1TxtpepQm6U=;
-        b=j7Rmy20jPtUv7MqQ+fhyCmbEXyhgt1phEthY9OG4PzarqhmMacp4L+OQGyzlFAQe7e
-         /uOa7zVZcvDaiL82aYMDosS1O4oplxfMnvhkoVgAHq6bo4DN4AtWornntEPlz58q/xhi
-         LJLHj87kPguxBXdDVAOyvhjNknJbznd8816ty/WAc7w/YGwllL0ovCaYB8QyE8AtHtgm
-         Q5pUUyPxTOJgfvqNxVKJzHTSv8WcCFhRHqNmzU4uC95opAXVZI1HcuyqaP5UoxXgqxcB
-         oumL4Krf+O9ZUnUu7SqYCl1oehy7Kuvy/GdHipsIVooQRoY/V6V91KUJyRZ3GOS1vfkX
-         00FQ==
-X-Forwarded-Encrypted: i=1; AL+hErE63QdmkUt3Ntq7BO2EpUtIWWw+cB9plkRILOzqHWhRkjX0PofJ0Ej/LYudClYZ3zJhbsGGLw3Icg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+8/PW/KIAGZWho0g337ytF7WEKfDQJ/tLJUuXzHaCQcqpFMF9h
-	vkUdvoV/tdcCS4k1L9BE/FaiqTUNEeVB1i+pcF3QeK83Wt52X4CxO57B
-X-Gm-Gg: AZFdTZeeo5bYWeHGW6EKQsmKTKNIyj3ynhBdfOkwJi935/4dRq1wJLWZ7G0BbONdg0A
-	XIBvJ/s41qybUD+11mPfHT/czQGYJYtQwH0/jiSUuQSF1KEfAQTbR3io82qQ77/eDK5cRIJ40nF
-	qUTz9vsqV1kwj8lVtGvqqk4gc24x8hJ0BYQbN+pv69WTKNoTXb27NvIiYOSzn56IMlJPYuv2Wr4
-	0YR8RI+JEVUgqHfRPVnt0XkrdgDSpoUaW9bPEwFL3n7os33Ta0go05ah2817FPEMTELPfCORroC
-	Fh+fu4nb2TMOTf7kgrPbgeCaKcNEDdXoelOOpC1KcgYfm1MScq3cFGOQb8OBpL9PxaxB7U7cU/Z
-	7cXpvIDIJ8qFYuGsz19XkkULagiFeEtn+mD7AKK9ttSzOkTWmOiPeK8t7febV6FGR3rtB7QsM4a
-	o4/+bHl9DuYOJwZurAba7IDcAdRKr2V2MNcSoNPGFR8SFPTYqyKvsyhA+nGCJQKECKKgH4NdXQD
-	JMKkJcu9dLhoIr819Z0W4+IjWf9Y7pDHlxe12xnaRMA0tvXN2ql4e4plIZFnUk9uUBeZ0YKvRws
-	qDBoh+ErUGxGSqzt22M/54KlxN1iP3fEe9oeYMj2cnEdEAlinA==
-X-Received: by 2002:a05:693c:42d7:b0:369:f70e:bd40 with SMTP id 5a478bee46e88-3856f84fea7mr9545686eec.16.1795369140294;
-        Sun, 22 Nov 2026 09:39:00 -0800 (PST)
-Received: from duge-G3-3500.taila331c7.ts.net ([138.199.21.246])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38566cd4efesm29097985eec.12.2026.11.22.09.38.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 09:38:59 -0800 (PST)
-From: Jiayu Du <duge1256@gmail.com>
-To: srini@kernel.org
-Cc: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	dlan@kernel.org,
-	troy.mitchell@linux.spacemit.com,
-	me@ziyao.cc,
-	aurelien@aurel32.net,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	p.zabel@pengutronix.de,
+	dkim=pass (2048-bit key, unprotected) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=iR2tK3Y/
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id 93A7E20DD5C1;
+	Sun, 22 Nov 2026 19:44:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id 65EE120DD202;
+	Sun, 22 Nov 2026 19:44:49 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr 65EE120DD202
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1795373089;
+	bh=Wlw1svGMrjSyOsVhDZN+3pXfMCPyNzszcBB5icjp1ng=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=iR2tK3Y/S2/4lQgIxr70F7/QIwDFHg4OL8p7uqlRv9HZKlbZHOery4Gw5327vbRKz
+	 icd6lLGlmLeGgSRburc3EtiE0UFypWelwsQZ+BIoJW6BKIG402/U1wqqQcyA9Y6uoF
+	 3D8Qsd3jmYBe00ftVa05RQqFAyec8+On6y3/cRg6riQOOd9+MKa9iidRvpbdkEetsX
+	 72e1vjSyFrgH/17PSHbtnnpq4W7X4riDDTs9pMaAWeAlKK7VsqPaUs4WVxMrPxeQVl
+	 o+XDqNyursduK4ZN1AKmEIk5aKtlNYbCqbBUJdf/tbzZ/WI0n469kBKFePlhjN5NOy
+	 jkEtNSP+qUTBQ==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id p24HhIr6dker; Sun, 22 Nov 2026 19:44:49 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id D0A3620DD5C1;
+	Sun, 22 Nov 2026 19:44:47 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Iker Pedrosa <ikerpedrosam@gmail.com>
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Yixun Lan <dlan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Baihui Liang <liangbaihui@linux.spacemit.com>,
+	imagination@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	Jiayu Du <duge1256@gmail.com>
-Subject: [PATCH v3 3/3] riscv: dts: spacemit: Add K3 eFuse and temperature trim cells
-Date: Mon, 23 Nov 2026 01:38:10 +0800
-Message-ID: <20261122173810.2409146-4-duge1256@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261122173810.2409146-1-duge1256@gmail.com>
-References: <20261122173810.2409146-1-duge1256@gmail.com>
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: add PowerVR GPU device node
+Date: Sun, 22 Nov 2026 19:44:33 +0100
+Message-ID: <20261122184434.545341-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com>
+References: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -112,50 +99,33 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Add the K3 eFuse controller and NVMEM cells for the temperature
-calibration data in bank 0 and bank 7.
+Hi Iker,
 
-Signed-off-by: Jiayu Du <duge1256@gmail.com>
----
- arch/riscv/boot/dts/spacemit/k3.dtsi | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Tested on a Banana Pi BPI-F3, on v7.4-rc1 plus Yixun's CCU pm-aux
+patches and pmdomain v5 (and the riscv reboot fix), with the firmware
+from your link:
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-index e89d2cc5ca8c..af1a758788ff 100644
---- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-@@ -1439,6 +1439,29 @@ saplic: interrupt-controller@e0804000 {
- 
- 		/* sec_i2c3: 0xf0614000, not available from Linux */
- 
-+		efuse: efuse@f0702800 {
-+			compatible = "spacemit,k3-efuse";
-+			reg = <0x0 0xf0702800 0x0 0x400>;
-+			clocks = <&syscon_apmu CLK_APMU_AES_WTM>;
-+			resets = <&syscon_apmu RESET_APMU_AES_WTM>;
-+
-+			nvmem-layout {
-+				compatible = "fixed-layout";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+
-+				soc_rtemp_trim1: temperature-trim@1c {
-+					reg = <0x1c 0x1>;
-+					bits = <0 8>;
-+				};
-+
-+				soc_rtemp_trim: temperature-trim@ea {
-+					reg = <0xea 0x2>;
-+					bits = <4 8>;
-+				};
-+			};
-+		};
-+
- 		mimsic: interrupt-controller@f1000000 {
- 			compatible = "spacemit,k3-imsics", "riscv,imsics";
- 			reg = <0x0 0xf1000000 0x0 0x10000>;
--- 
-2.43.0
+- the gpu power domain turns on, firmware v1.1 (build 6976702) loads,
+  and card0/renderD128 appear. The GPU interrupt (75) fires;
+- a reboot afterwards is clean.
 
+Two notes:
+
+- On v7.4-rc1 the driver refuses the GPU ("Unknown GPU! Set
+  'exp_hw_support' to bypass this check"); with
+  powervr.exp_hw_support=3D1 it works as above. Is a driver patch
+  adding the K1 GPU pending somewhere?
+- The GPU never runtime-suspends: after 160 s idle,
+  runtime_suspended_time is still 0 and the power domain stays on
+  (autosuspend 50 ms). That looks like what Baihui's "drm/imagination:
+  re-check firmware idle state before runtime suspend" fixes.
+
+I could not test rendering: Debian 13's Mesa (25.0.7, riscv64) has no
+PowerVR Vulkan driver.
+
+Tested-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr> # BPI-F3
+
+Fr=C3=A9d=C3=A9ric
