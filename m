@@ -1,107 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795445971;
-	b=hKRsoo5W6PJeqb9t5lt8J2GJbtT59DVbWVjmnPFvkFIBaR2IvKsUwmH3C49725/yJoNi
-	 cvpRwld8tYncbc2vzE1io31roNaseHlEYZBeLskM97SKDwRhpo7/MYF3gR6KMyZZaTF9F
-	 vyh0C2bXuq+MCRzNGyYwYzG2MW5krlDN0CXvmTvIuRccH7S4FCaZvD61EcL5bbF0i7RlT
-	 T5U4P+dYlVMUH8BUMjuwhGQiF6JFjiLH4VawuZiFa/hZdOv9A7yQpi4pPEK266Wu/qpWG
-	 ZdFnJMRhDyaT84yfQb1CeH410gnrPi1p29xGNME9XMP7UnW4cwVtzBZkUycz0/oqXcQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795445971;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:
-	 Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Message-Id:
-	 Cc:Subject:From:To:X-Mailer:References:In-Reply-To:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=OZmoovvVA2nrKok0A8vpMJeVio+JChI+meHoWVKGIyo=;
-	b=nybkvtwaHRxx8A0+GOgeDG2xCUMyJSNHAvxUq7n4LMH3TblUWl6u+MkLiykP5pdnMVvF
-	 EuMl/qJ7vVq8VtNPIxUQ5aJcmr/DSlVndpcUmHlyRWpCyA224yGmQVnoPLPErtq2vWReS
-	 9u9Gvzm1jfdkKQJbZLQP5nH3dHGkgVoxZvyux6a4XMQkPlUH1tSvx7hdq/LRWFxkdxJcC
-	 2V30JEHGWOg+a7tkL3GRgddkTO4QUdmtomIEMUBODDR8p9LwPf+oAapzbumV4fhHUTnEm
-	 qpD1J9jZPZC5YhDlp/GO2y+Fv4Sl3w5xhOCJ9LY+UUzQ0n3pH9Qfi8CjQMI0dPBnUyQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JFYq535C;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=iUFiMFV2;
-	arc=none smtp.remote-ip=205.220.180.131
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.216.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1795459307;
+	b=X/fkNRSIousw+p4LlctGrRqx9sFQ/zHBINoPOOijBAaqFJPQhvnGCfvRG70qKTVfXSMT
+	 XEtni2f9hvu2JC+k3sA1U4GudBfUsdUFF+odg+3Uw/Asp4oCjn0lbza/I3ZyBw0KEofaU
+	 8Fz0dZFgrzDS+S8xO8F1xO/RJpTdRcHRulzJo2v1WrlCV1pdH6i8vMNBERlqhQFUY0goJ
+	 /S1aBg4V4c5Pyejcs5UMEVLsUFd1IKVEuaZ3FdJbSpAMk6qWKR1WyIUwhCX9aqP7OUfXU
+	 h64QlO6f3j9KsO2Y3BdYezIarScLFbtxEB/hJ4mXQHg8qYmOjnGaGGQJWstq78mw5kA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795459307;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=7KCCFV8c12xHGuVa12sa42pR/GvO+E15oZ8scml+fpM=;
+	b=qF4trTy1KAeRBRjTaeg1NhXdyZgYBGo6xEcFMF4O+Kb2N6A+RDjllWihAECSRu/swiQi
+	 fGJqurPz2IkcTJyDemZMQMGTxHWb3TNFIfQkhuIgJCJ4+NPrFxyXoqQdTrV1EWv/WIzTq
+	 XrsgEpwk0FI+Ln7Nbxo7ePYVkGCloICM892rLG3heMQy3uueQrxE/vYmdtDYwr+39tLWw
+	 CVo13SelXu9ZmYn4LrUmUnVTiSSp9Y9nxLaH2DA1iUZ39zFikjZ3mPlb4pLk4OnnWoge5
+	 ZAv2STPh6KtGT2Ir6OrY5cfNSP1PE2RvDwTqWJPpd68SvQ88XUWTwSGBP+fKz219vhA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nRHPy5XQ;
+	arc=fail smtp.remote-ip=209.85.216.50
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B25606A6A3
-	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 14:59:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 70B25606A6A3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D9B606A330
+	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 18:41:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E3D9B606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JFYq535C;
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=iUFiMFV2
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6ANDL14T3072384
-	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 14:59:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OZmoovvVA2nrKok0A8vpMJeVio+JChI+meHoWVKGIyo=; b=JFYq535CzhgqT6mA
-	o8W5fOZNTh+Df+/7wEFvDoFAEuEQfgrOA3LPa1JQAFs33Ncb5vdMFmyqKJvk2+86
-	h2rO6ojSm/2Fg5IiX9JU472VKCYdGPnVsrzHHKLOzOsEpMKhbsis4jMw+iRIwWQl
-	925Zq6z5hJitR+W3iGbk90GhXKA+G4RxDJ1/8Vlp8ubtM+fG9kQf8W3Pm8hDtOMO
-	Z3zLt8emIq2Xi3uvL7vPa/m+QYdiqtW2JXwr6oWhiwC+cuQqgDVZEnO+5j10X4CW
-	piKMCLzkl0E7N4Pmp41WnXeQOnscp4BNp2kGfY3oX9UWNB3UWtc7w9E5uFOktY7x
-	mqApkQ==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j4hn7sjcd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 14:59:29 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8a064f294cbso2538371b3a.2
-        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 06:59:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nRHPy5XQ
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3b09a83d12aso2620765a91.2
+        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 10:41:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795459306; cv=none;
+        d=google.com; s=arc-20260327;
+        b=bFeReoV41HyoPe3l5WG2svBNdRXIBeEKoahEh5py4DvuUbNHUnyMrzIs1M8JIETL9k
+         lBQNaaiGR8RpJPufnzrMzXEzK/gJ66jXBXCiD0JY1utwZDyQ9K6kT8oC1E1PCdgsfbFe
+         r22NCOCaFY46GiDVi44rS1sOmm6vuVF0UkFbAhpx/7s6w68aAaDdf6oL8V1+smN2/BN8
+         yj5+ph6WNbs3F+z4DlkEZw12rOsgqH/FF5MFZtNOsuHEuUW7C0lMwxlReEf1p8i66COp
+         taqjSviBewaJ03IbHFlqcQbjL0HKRisID1sGd0r7oNuDeNrTg8ilfgaS889qnlbpIE8K
+         nnHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7KCCFV8c12xHGuVa12sa42pR/GvO+E15oZ8scml+fpM=;
+        fh=DRaM4jKyD+0JnGImhShb8ZdrwCxFrECMwtJ+d+Liom0=;
+        b=eRIi0oTNVsXaZQKSfdExPZiBnAna1Qv1hsKpyz3hXao5WZ/FAKrmec655hRY11sJQY
+         rR3CpfJdVH6z1LFaF7hjBdabdHEnWPsv9GcSzOKZ5Jwa2OMgyUbm7PxPGm5evRvUtJAk
+         +M1clkEYNedczf2aBSO2RkupxaydglTdLCNKaYnush9sXa93KOWrmoGE5qt7jnRfNxLH
+         4MWBVJg8Wn4xpAqrP16jaAW6lA9NF5z2b4A+z3c5jbJtV+k5Sd7+9rIot0ydXgHQzTq6
+         yvwlfisnNH5yVHHH4DF6XVhszLe8VrjGpdWTwQA6lhYEIZZ7/liuVfTLzkS7LrW8/OwA
+         a2yg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1795445968; x=1796050768; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=OZmoovvVA2nrKok0A8vpMJeVio+JChI+meHoWVKGIyo=;
-        b=iUFiMFV22LlGMUudwCduTB41UpIlDD8xl1xLGzoUylWNsTKOhLdCfVIFDI5xP2arnw
-         +LQzu8oG0QMWotCcqyTUEVjN8g6P4Jrb8rxbichcf8mtIyrqQ7Twkv/HIXofq6cej0on
-         fJEr6eh+O7sNiWQNGyo9P1vqCvcExN9pvQEEq7uaxJIl1xIWlcoUqJl19ZEzTMxA92wW
-         yJhNetrgGOy4MuIscqEv4VnQgrD59xXvcKKN6g49vuzEEFEq81Uq01f87Uhzfx6wOlob
-         HTqdpoAWVm7N3TQJnh31z8qaaPeTR0DfZZF5ep4ygHRTpUsMQyZOPtKkgm6Vl4zLN5Ha
-         KE2g==
+        d=gmail.com; s=20260707; t=1795459306; x=1796064106; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=7KCCFV8c12xHGuVa12sa42pR/GvO+E15oZ8scml+fpM=;
+        b=nRHPy5XQdGAyki1Fa+YfUainaKTrsLpj7cQ4e71lJhERhjSw/ZR/pZSzOzaxYI3Yt7
+         Q8B7JMg+tITuWhCkn898/S+MGO0h0Vohww9ivBkrm5nKrDh5c2mZSOSrL+V38s/rtyS2
+         7jOd5rqM2pdhXL8hwkdjmHqsz96AyHD0XfBTb9O5C+uYZlx+VMVPrjxLijIRpaSDWYQ2
+         WE4HkUXQjepp/BWMRRBptoGacOSjwHJnKdR5XT7l4Zw+spqCEqtPK2rbRNFg+2LVuvvh
+         gjmCb37Bj+wSLXx3Enm6BnNk/+5hBwXRAxdL6ZVfc0lBD7Kjz9w/7HPylMBXw4tkSTDy
+         uNNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795445968; x=1796050768;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1795459306; x=1796064106;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=OZmoovvVA2nrKok0A8vpMJeVio+JChI+meHoWVKGIyo=;
-        b=BtTuRZkfzreqSqRZG7JLpnlg9GUwEXlF5799MFlwtg5FuFswvXuJ7VXIEzK6LwtXFv
-         SdZADbALYkZwIURn1VYgiRQV3Yh19ohO2tphJFlD1A3NmcCASGsitQrxwSV3twu+E052
-         KP4bu8iiqb6L2td8HOwZc2+Yc7H2rPhz/DNkV+Y/YF1XRYRzLnIWfmGoFEGg7osXn0fY
-         kv+DKpWn2ROE0tJzKZ8Yj7ASEEqJ9R2ExiRV7k/PGdgiF+x/5zKAPAMQUeKDeT8nmWk7
-         yZx9X64kwBTTiEseljQ9bW9SW2WIi/OZ360lm9TvVsIHeox27YPsKu+kOU+N+2F8z0uC
-         ueEg==
-X-Forwarded-Encrypted: i=1; AL+hErHqGYk9wqo2lvnX+YJ5t78sRgFYYW5aenxJAg2O442X5i5yCNj8N6qSvxGpPqT4ibKXzgdysBO4hg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+dp345GZ3fYEZcMiXxEWelNSU0E4N+MR3M+9d59b5fr3TESY2o
-	2/By38cF0eJgWiqZabm+715a1y73PNJEH2x9bLr4Ww9GVladG6/X1irD1Mcxc+gKU97tM2ToBSb
-	4i8qyIY/mQKQgxuuYQlzba4YvTWc0T3PL8By7YXrq+Gxf+wrOwbLtUHb9SD/xeg==
-X-Gm-Gg: AZFdTZfjY3e7ovxHb0q9WZ7PzAkTi0nN2UWzxK3R1ExYRE3zmERaBbFnAxks2E/bUIB
-	3mKiApRBF/u7qd9RssAkx+VXcebcgt+z0TrOIdHultV2fUdbehod6YKYfXPAIrqcM7RQJ+jtP9m
-	Ph7j3W4AzK+ZFAtMzcQ8l1BfB5hx7EDvDWzW8vb7IjMW1OD0j6WaosyiiGqu9+ATPfMxZP3NyIe
-	Z5BNJdgpy/nfrEWMC7ewMyzX2IPY4Y+e5d7YLortyig1e6lJi8F30d56WU3gOHNRMgxYUfSEZEr
-	Qm028/1MSJguSQeYrieIa2AZFKOvSINcpsvIoOAj23O21SWx7evhI+CfEbWdHm6m9tSww/Qpp+e
-	amrOKDOiSmzZ57Vfg3tFFeNdv5VzbOFOCMoPYCn0WP7jtStmtPCF3rw==
-X-Received: by 2002:a05:6a21:3b90:b0:3eb:3b69:77b1 with SMTP id adf61e73a8af0-4014db62872mr12165016637.46.1795445967777;
-        Mon, 23 Nov 2026 06:59:27 -0800 (PST)
-X-Received: by 2002:a05:6a21:3b90:b0:3eb:3b69:77b1 with SMTP id adf61e73a8af0-4014db62872mr12164949637.46.1795445967004;
-        Mon, 23 Nov 2026 06:59:27 -0800 (PST)
-Received: from localhost ([188.253.117.185])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde6cea7c38sm5545137a12.2.2026.11.23.06.59.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2026 06:59:26 -0800 (PST)
+        bh=7KCCFV8c12xHGuVa12sa42pR/GvO+E15oZ8scml+fpM=;
+        b=2nTw3LGsB+hHnnQzh41JzjqemE4gw3d2D07JsgKSdeOEJChsDYWgZm/ttLZbVm0vFN
+         7H9+M7xp5S8/kEnjk+U2aoDIuEeyA61ecN78zdhOxWdCioqaCi9VdaxL8413J2i7a3p0
+         ZD7VS4Aqqr/UN1ySbuiY8fRcfgs08oK8BCVsVj8P3fWO2EGYpPNdKikaYPZMh0W9IzMT
+         Diciuzq+KeYu3Hip6MiWXgreqQYNShks8onQDSGJtuwPOd+Pjg5+muvJDMPUiBR3nzlv
+         XZo37WFQCH0vhx6pqz8+5lb6P1yHmvy2F4rzHHiamBF+eZcTMvo9bXdRdMgyIyT0P1ak
+         +NWg==
+X-Forwarded-Encrypted: i=1; AL+hErEYe247dvNyPi2UagdFpu1F5PdSi1WpbiU5xsEK8CkpLmmCL95r6il/D0y4cHYWerWLYzAenjhAYA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9jLoUo1Tc/s/7BHMaSIfZjxcnPD1kk8XZ3f4/yz5ck+kXsQ45F
+	VWIkW+3+fjw+tRKknb1fA4ndm0dkEC2Oa49bj0iIDT5hJyIpIKjHdTAE/5INraEcrk4vV28zLMI
+	/EDC3hrTC+6aysC1BOROmrDxTVMXqxd8=
+X-Gm-Gg: AZFdTZe0vGAmXb3bt/Sng8i7ilAo9z2nPbIp4/FR5mYdfmgAM/Zsrge2EFVJCHyt2BN
+	ycXxIVScuri17mVXIVquP09+L2o6UKPWCNopf3vEi76T/2n9AqPVzAxXEnyHSS8LHE6TBVkogF9
+	yFCmKg42beWGzf60guRShFegPqBntwQbiT/DMi89Kr5kEnYZSwUuIdB6yvq79iyBxPL65+WeFT+
+	V3w6zfEuP3RUjYihxZL0ruGzfFlUVr/tax+j4thm7IIUqCL4FIt2sSGWGcelo178SmuZCN2LZzz
+	9UyJT1945UTCCF7q4JeXxQ7fc5mC2lGdJtL7omDotObKbLQ8Trx4++MvLQM9OCXrhwz19O2JrJl
+	fLuitKQTeK+cKazIzHQjuyYGshpP5FpoLRpZ0oQ==
+X-Received: by 2002:a17:90b:17cd:b0:3ac:6fcf:91d2 with SMTP id
+ 98e67ed59e1d1-3b41c8fe3d1mr11633543a91.19.1795459306227; Mon, 23 Nov 2026
+ 10:41:46 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -110,292 +103,56 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com> <20261122184434.545341-1-frederic.mahe@cirad.fr>
+In-Reply-To: <20261122184434.545341-1-frederic.mahe@cirad.fr>
+From: Iker Pedrosa <ikerpedrosam@gmail.com>
+Date: Mon, 23 Nov 2026 19:41:00 +0100
+X-Gm-Features: Aa3M54rYymnQncJINmj7PXylw19m9Q_Z0b_H3MvffZyCzTJDH31b-Bzjr4MRK-U
+Message-ID: <CABdCQ=PnfXRd2=b6_yEN94RCRvPnWx-WFfHZDC+jhHv_UFZ1ZQ@mail.gmail.com>
+Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: add PowerVR GPU device node
+To: =?UTF-8?B?RnLDqWTDqXJpYyBNYWjDqQ==?= <frederic.mahe@cirad.fr>
+Cc: Alessio Belle <alessio.belle@imgtec.com>, 
+	Luigi Santivetti <luigi.santivetti@imgtec.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Yixun Lan <dlan@kernel.org>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Baihui Liang <liangbaihui@linux.spacemit.com>, imagination@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 23 Nov 2026 22:59:10 +0800
-Message-Id: <DN2OGZ2JLHQ1.3PK0UZ3K1VYKF@oss.qualcomm.com>
-Cc: "Cody Kang" <codykang@vsit.ai>, <dri-devel@lists.freedesktop.org>,
-        <linux-riscv@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v3 00/17] drm/spacemit: add SpacemiT K3 display support
-From: "Ze Huang" <ze.huang@oss.qualcomm.com>
-To: <codykang.hk@gmail.com>, "David Airlie" <airlied@gmail.com>,
-        "Simona
- Vetter" <simona@ffwll.ch>,
-        "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>,
-        "Maxime Ripard" <mripard@kernel.org>,
-        "Thomas Zimmermann" <tzimmermann@suse.de>,
-        "Rob Herring" <robh@kernel.org>,
-        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-        "Conor Dooley"
- <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>,
-        "Troy Mitchell"
- <troy.mitchell@linux.spacemit.com>,
-        "Vinod Koul" <vkoul@kernel.org>,
-        "Neil
- Armstrong" <neil.armstrong@linaro.org>,
-        "Manivannan Sadhasivam"
- <mani@kernel.org>,
-        "Haylen Chu" <heylenay@4d2.org>,
-        "Michael Turquette"
- <mturquette@baylibre.com>,
-        "Stephen Boyd" <sboyd@kernel.org>,
-        "Brian
- Masney" <bmasney+clk@redhat.com>,
-        "Philipp Zabel" <p.zabel@pengutronix.de>,
-        "Paul Walmsley" <pjw@kernel.org>,
-        "Palmer Dabbelt" <palmer@dabbelt.com>,
-        "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
-        "Yao Zi" <me@ziyao.cc>,
-        =?utf-8?q?Uwe_Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>,
-        "Guodong Xu" <docular.xu@gmail.com>, "Icenowy Zheng" <uwu@icenowy.me>,
-        "Jerome Brunet"
- <jbrunet+clk@baylibre.com>,
-        "Sarah Emery" <sarah.emery@canonical.com>,
-        "Ze
- Huang" <ze.huang@oss.qualcomm.com>,
-        "Dmitry Baryshkov" <lumag@kernel.org>
-X-Mailer: aerc 0.22.0.r49.g9313f0f0
-References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
-In-Reply-To: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
-X-Authority-Analysis: v=2.4 cv=Ls0HWXdc c=1 sm=1 tr=0 ts=6b0454d1 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=RQ3dwY0XcLBFaqRX7rIGyg==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=NEAV23lmAAAA:8 a=lv0vYI88AAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
- a=danhDmx_AAAA:8 a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=E54iUL8AAfIq5j3bQbgA:9
- a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22 a=9qqun4PRrEabIEPCFt1_:22
- a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTIzMDA1OSBTYWx0ZWRfX1IXK8UZA33YN
- fYMV0jXK36nDJnCReOMO/WXFNq070y8jRnsGsSx/WB7+v2Z+BgbIBEcUA6C5d5Ma6Hcpy0Af7/Q
- gtNlhq7TNN+O74jpeOluE5WGSW43c8ZyHmzGwJmQ+GTq3c3yaidT1dmVjPo/VHad1u56gpvYppj
- qX1NI1Xx/szElO9/V+oV98SNCJsjryEyOBnpaORUp6gjAs1m2BTlcjnMTXtsgDaZBJ1UqS79pdy
- CmgLM6yU6b9omZ2M8DlbKvZN3ucRcPzmGY0FHKCQb8a7pZd6mqXm1Tf9W7wnFWI5wCnzWO5IFNp
- cJIm7VNhGjzjPfUFoifF59xtZ2vbnrIDcbo7xiBhF42+1UniORRq7zCAarIVYvICrJFwopthPH0
- dZyn2zxNR2fshFGZ+wSy3TKeDUohQyOvxQNatSHOV5hOpndNfap0ARBxFsQHEHtZ4+tbIAl61LR
- Kh0B/8C6oR8X/zSDFWA==
-X-Proofpoint-GUID: 5zHsa2ZDOAYlfeQq8p0q1VllvLRuEY4L
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTIzMDA1OSBTYWx0ZWRfX7r/+bLXZ9CZG
- S34LW4l8KQDMpXO9FEnOMuOUAf0c4NNI31Nk5slMO4u13iaZ8mm6MXp5hixkVTUQaLp4JyaNEeo
- W33UGUQ7wKy0yUvF4hsydnEWYm+MZfs=
-X-Proofpoint-ORIG-GUID: 5zHsa2ZDOAYlfeQq8p0q1VllvLRuEY4L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-23_03,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 impostorscore=0 malwarescore=0 suspectscore=0
- priorityscore=1501 spamscore=0 phishscore=0 lowpriorityscore=0 adultscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611230059
 
-On Sat Nov 21, 2026 at 3:40 PM CST, Cody Kang via B4 Relay wrote:
-> This series adds display support for the SpacemiT K3 [2], a RISC-V SoC:
-> a new DRM driver, a new PHY driver and three new bindings.
->
-> The display path is three blocks deep:
->
->   Saturn DPU -> Innosilicon DP/eDP controller -> Innosilicon DP PHY
->
-> New readers will find an introduction to this hardware in the v2 cover
-> letter [3].
->
-> In v3, two major changes, thanks to Thomas Zimmermann for the review
-> that led to these:
->
-> - The DPU driver lost its internal layers: the callback tables, the
->   tracepoints and the command-list grouping are gone.
-> - Page-flip events go through the vblank machinery, and the DPU is
->   powered through runtime PM.
->
-> The rest of the v3 changes please see below, with details in each patch's
-> changelog.
->
-> v2 ships in the Ubuntu 26.10 RISC-V kernel [4]. Thanks to Sarah Emery
-> for two fixes found there.
->
-> Thanks to Ze Huang for testing v2 on the K3 Pico-ITX. The Tested-by is
-> not carried, because the DRM driver changed too much in v3.
->
-> Ze, Sarah: if you have time to run v3, a retest would be very welcome.
+Hi Fr=C3=A9d=C3=A9ric,
 
-Thanks for v3. I tested the series based on v7.4-rc1 on the K3 Pico-ITX
-with an external DisplayPort monitor.
+Thanks for testing this on the BPI-F3!
 
-Modesetting and page flipping with modetest work at 1920x1080@144Hz,
-and kmscube renders correctly using Mesa softpipe.
+> Two notes:
+>
+> - On v7.4-rc1 the driver refuses the GPU ("Unknown GPU! Set
+>   'exp_hw_support' to bypass this check"); with
+>   powervr.exp_hw_support=3D1 it works as above. Is a driver patch
+>   adding the K1 GPU pending somewhere?
 
-Tested-by: Ze Huang <ze.huang@oss.qualcomm.com>
+You're right. I forgot to mention in the cover letter that I was loading
+the module with:
+sudo modprobe powervr exp_hw_support=3D1
 
->
-> Sashiko AI review contributed total review comments: 51 items, which I
-> accepted: 19 items.
->
-> v3 repeated the full v1 test matrix on both boards, in built-in and
-> modular configurations, with the module load/unload rounds of v2, plus
-> page-flip and DPMS rounds and unloading the modules while a client is
-> running.
->
-> About the series:
->
-> The DPU driver arrives as five staged patches (7 to 11) to keep each one
-> a reasonable size. It becomes buildable with patch 11. Bisect safe.
->
-> This series supports a single primary plane per CRTC and linear RGB
-> scanout (no plane scaling, rotation, YUV or writeback). It does not
-> support DSI, DSC or DP audio, and link rates are capped at HBR2.
->
-> Based on v7.4-rc1.
->
-> Testing this series needs a SpacemiT u-boot carrying display support:
-> the branch at [1], or a later official release.
->
-> Tested on two K3 boards:
->
->   - Pico-ITX: an eDP panel and an external DisplayPort monitor.
->   - CoM260-IFX: DisplayPort only, no eDP.
->
-> Note: The eDP panel DTS enablement is not part of this series; a separate
->       series will follow showing how eDP can be verified.
->
-> [1] https://github.com/spacemit-com/uboot-for-k3-display-verify/tree/k3-b=
-r-v1.0.y
-> [2] https://www.spacemit.com/community/document/info?lang=3Den&nodepath=
-=3Dhardware/key_stone/k3
-> [3] https://lore.kernel.org/r/20260809-k3-display-v2-0-327d7910bf71@gmail=
-.com
-> [4] https://launchpad.net/ubuntu/+source/linux-riscv/7.2.0-5.5.2
->
-> Changes in v3:
-> - drop the tracepoints, the hardware callback tables and the
->   constant-fill path; the Saturn register code is called directly
->   (Thomas Zimmermann)
-> - one command list per channel, allocated once and submitted by its
->   owner; the grouping, sorting and chaining of lists is gone (Thomas
->   Zimmermann)
-> - deliver the commit's event through the vblank machinery, armed from
->   the CFG_RDY interrupt (Thomas Zimmermann)
-> - power the DPU through runtime PM, and stop the boot loader's pipeline
->   at probe instead of at the first modeset (Thomas Zimmermann)
-> - add prepare_fb: the display MMU table is built once per GEM object
->   and the buffer's fences are waited for (Thomas Zimmermann)
-> - program the plane from the clipped rectangles, and size its line
->   buffer in atomic_check (Thomas Zimmermann)
-> - wrap only the hardware access in drm_dev_enter() (Thomas Zimmermann);
->   release the drm_device when the aggregate unbinds
-> - map scanout buffers write-combining; fail AUX transfers fast when HPD
->   is low (Sarah Emery)
-> - reject modes above 3840x2160, and bound framebuffers by what the RDMA
->   registers can address (Icenowy Zheng)
-> - let the panel supply the modes on eDP (Guodong Xu)
-> - leave the DPU's pixel clock at the rate it has; on DP and eDP the PHY
->   PLL is the pixel clock (Guodong Xu)
-> - do not advertise a gamma table (Guodong Xu)
-> - DT: order the display nodes by unit address; the Pico-ITX message
->   names the Type-C receptacle's DP alternate mode (Icenowy Zheng)
-> - clk: the commit message names the binding that documents the two
->   clock inputs (Jerome Brunet)
-> - MAINTAINERS: add Guodong Xu as maintainer; list Cody Kang with the
->   vsit.ai address
-> - rebased onto v7.4-rc1: atomic_create_state replaces .reset
-> - commit messages of patches 5, 7, 8, 9, 11, 12, 14 and 16 reworded
-> - picked up Rob Herring's Reviewed-by on patch 4
-> - Link to v2: https://patch.msgid.link/20260809-k3-display-v2-0-327d7910b=
-f71@gmail.com
->
-> Changes in v2:
-> - unbind: keep the online IRQ alive until the teardown commits have
->   drained; module unload no longer rides two watchdog timeouts
-> - bridge teardown on devres: reset via
->   devm_reset_control_get_exclusive_deasserted(), pxclk disable as a
->   devm action ordered against the PHY child (Philipp Zabel, Yao Zi)
-> - all five DPU reset lines behind one reset_control_bulk_* pair
->   (Philipp Zabel, Guodong Xu)
-> - bindings: port@1 is now required; the CoM260 board describes its DP
->   receptacle with a dp-connector node; redundant minItems dropped
->   (Rob Herring)
-> - possible_crtcs derived from the input endpoint only
-> - EDID reads through the AUX I2C adapter; write-1-to-clear interrupt
->   acks by plain write; assorted dead code dropped
-> - picked up Rob Herring's Reviewed-by on patches 1-3
-> - Link to v1: https://lore.kernel.org/r/20260725-k3-display-v1-0-6de34d80=
-e86c@gmail.com
->
-> Signed-off-by: Cody Kang <codykang@vsit.ai>
-> ---
-> Cody Kang (17):
->       dt-bindings: display: spacemit: add K3 Saturn DPU controller
->       dt-bindings: phy: add SpacemiT K3 Innosilicon DP PHY
->       dt-bindings: display: spacemit: add K3 Innosilicon DP/eDP controlle=
-r
->       dt-bindings: soc: spacemit: allow eDP/DP PHY PLL pixel clocks on K3=
- APMU
->       phy: spacemit: add Innosilicon DP TX PHY driver
->       clk: spacemit: k3: parent eDP/DP pixel clock to the PHY PLL
->       drm/spacemit: add Saturn DPU register model
->       drm/spacemit: add Saturn DPU core types, cmdlist and display MMU
->       drm/spacemit: add Saturn DPU hardware backend
->       drm/spacemit: add Saturn DPU KMS pipeline
->       drm/spacemit: add Saturn DPU DRM device driver
->       drm/spacemit: add Innosilicon DP/eDP controller bridge driver
->       MAINTAINERS: add SpacemiT K3 display driver entry
->       riscv: dts: spacemit: k3: add display nodes
->       riscv: dts: spacemit: k3-pico-itx: enable the DisplayPort output
->       riscv: dts: spacemit: k3-com260-ifx: enable the DisplayPort output
->       riscv: defconfig: spacemit: k3: enable display driver
->
->  .../display/spacemit/spacemit,k3-inno-dp.yaml      |  141 ++
->  .../display/spacemit/spacemit,k3-saturn-dpu.yaml   |  132 ++
->  .../bindings/phy/spacemit,k3-inno-dp-phy.yaml      |   48 +
->  .../bindings/soc/spacemit/spacemit,k1-syscon.yaml  |   21 +-
->  MAINTAINERS                                        |   11 +
->  arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts     |   27 +
->  arch/riscv/boot/dts/spacemit/k3-display.dtsi       |  166 ++
->  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts       |   11 +
->  arch/riscv/boot/dts/spacemit/k3-pinctrl.dtsi       |   22 +
->  arch/riscv/configs/defconfig                       |    2 +
->  drivers/clk/spacemit/ccu-k3.c                      |    4 +-
->  drivers/gpu/drm/Kconfig                            |    1 +
->  drivers/gpu/drm/Makefile                           |    1 +
->  drivers/gpu/drm/spacemit/Kconfig                   |   37 +
->  drivers/gpu/drm/spacemit/Makefile                  |   15 +
->  drivers/gpu/drm/spacemit/dpu/dpu_saturn.c          |  353 ++++
->  drivers/gpu/drm/spacemit/dpu/dpu_saturn.h          |   36 +
->  drivers/gpu/drm/spacemit/dpu/dpu_saturn_hee.c      |  670 ++++++
->  drivers/gpu/drm/spacemit/dpu/saturn_fbcmem.c       |   66 +
->  drivers/gpu/drm/spacemit/dpu/saturn_fbcmem.h       |   16 +
->  drivers/gpu/drm/spacemit/dpu/saturn_regs/dpu_int.h |   25 +
->  drivers/gpu/drm/spacemit/dpu/saturn_regs/ops_hee.h |   47 +
->  .../gpu/drm/spacemit/dpu/saturn_regs/reg_map_hee.h |   65 +
->  .../drm/spacemit/dpu/saturn_regs/saturn_fields.h   |  312 +++
->  drivers/gpu/drm/spacemit/spacemit_cmdlist.c        |  198 ++
->  drivers/gpu/drm/spacemit/spacemit_cmdlist.h        |  133 ++
->  drivers/gpu/drm/spacemit/spacemit_crtc.c           |  589 ++++++
->  drivers/gpu/drm/spacemit/spacemit_crtc.h           |  133 ++
->  drivers/gpu/drm/spacemit/spacemit_dmmu.c           |  119 ++
->  drivers/gpu/drm/spacemit/spacemit_dmmu.h           |   80 +
->  drivers/gpu/drm/spacemit/spacemit_dpu_ids.h        |   26 +
->  drivers/gpu/drm/spacemit/spacemit_dpu_reg.h        |   99 +
->  drivers/gpu/drm/spacemit/spacemit_drm.c            |  204 ++
->  drivers/gpu/drm/spacemit/spacemit_drm.h            |   62 +
->  drivers/gpu/drm/spacemit/spacemit_inno_dp.c        | 2186 ++++++++++++++=
-++++++
->  drivers/gpu/drm/spacemit/spacemit_inno_dp.h        |  328 +++
->  drivers/gpu/drm/spacemit/spacemit_planes.c         |  332 +++
->  drivers/phy/spacemit/Kconfig                       |   13 +
->  drivers/phy/spacemit/Makefile                      |    1 +
->  drivers/phy/spacemit/phy-k3-inno-dp.c              |  951 +++++++++
->  40 files changed, 7680 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-> change-id: 20260713-k3-display-e8ffed67e936
->
-> Best regards,
-> -- =20
-> Cody Kang <codykang.hk@gmail.com>
+I plan to send a separate patch to add K1 GPU support directly in
+Imagination's driver.
 
+> - The GPU never runtime-suspends: after 160 s idle,
+>   runtime_suspended_time is still 0 and the power domain stays on
+>   (autosuspend 50 ms). That looks like what Baihui's "drm/imagination:
+>   re-check firmware idle state before runtime suspend" fixes.
 
+I hadn't tested runtime suspend for the driver before, but after you
+mentioned it I gave it a try and can confirm it doesn't work properly.
+Hopefully Baihui's patch [1] will fix this issue.
+
+[1] https://lore.kernel.org/linux-riscv/20261111-img-pm-autosuspend-v2-1-42=
+7689f6f2f9@linux.spacemit.com/
