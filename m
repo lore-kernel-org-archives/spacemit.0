@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.34.216
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795425954;
-	b=4huntqKUImJoEDt3VPB6olziTDcubdgXdhvEtj2NSaNK1PLQ2H9quB+3El96X2gHoJNR
-	 H45nTMG/HMVUiEBssYB7ccEtZg8hgQ+SREHlHg3Bii7z/oJhYWHpg9GptccoDo4lUW+Lr
-	 LwPL3bbA8KP3LgtpAVKmRB333mZoQ4ZlP61dpGEmwKwxbJ8LrNuauyu/jflCkUqtdOlhY
-	 qKpfWyPtrb8EcPcGcG15ajtnewSLwV3JAFZnhfu5YNZzO+0QIL+bBb+p+jrybgtzpZgs5
-	 gC4UWIGh1FqgXxq+/YP1Ve3NuMF2yBUVkBADROrfI5S3yj2VzY5jcCAcdeHU2EFreZg==
+	t=1795428608;
+	b=UTqqs2gLtaRQQBRXnCBymwuywzZ7yJ6tW4PFTPeOksDUlMrID3b74cunuo2KkRD6EYmO
+	 q/AU/NzpaFKV7IKrAmoa3Ef8Mak1g/YOp9f2gb71xYOJf1wbdI+f3XheQlZXsW69XDKt4
+	 xIpcBCFW6WEKHqc5um/ZopiOWON6CEQjEAiHKax4lF0qrxjXyLsyLpz23E3I9g15gWiMs
+	 k9zlvG/+zXtqfLNikTIYM885CEGQbJdK/s3q/pBn1cZUvhkdrQEwzVdC0h9l20a3tF4Wc
+	 WQVkKQwjuvZv1mwhn0hb1dLFieTEVxgVA4oK4w1aLo0P0PbmO89IN8pwW63cHnUoohw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795425954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795428608;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 Content-Transfer-Encoding:In-Reply-To:References:X-QQ-SENDSIZE:
-	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=JBgmFwI3d+bD4ZeA1f4oLGcqRjnONiXOuExZb/PYGVU=;
-	b=3WVjivetDCD5UNaZgN0iH8piEV/8brgNPU14ADg34LeLTUUjMU1pKOXaN7jEsTGj1On/
-	 g21UEDtEJMy3adsc4Sq2BzrrQozKoRsTd6KzSZhHlbDYg66E37w2oWIeRJ2IMXGTRyJTe
-	 ft40MfC6klbtzFAq2K0Bw0ivo3ZojTIEHbtuF2/PASs6pURU2A9lqOf5CwiYp7wADGtFE
-	 /K5rcknSeqDVzgFswpcl6OQYNls0hKADrrO0rhV2FB/FO+Z3hwlOal6P8Rwz6v5CxvaCK
-	 ReDlmvCCsM0wars7Ri7JSvbXndhNUYI2M+dlmal3W6OnJtJFKFbHhFq4vPSq00uWDXA==
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:Subject:
+	 From:To:X-Mailer:References:In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:
+	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=na+Qx5lxtdWvhLfCjtLB7gxG8BYD2XnZIK8peOF3Fyg=;
+	b=4oMNsWcyTC8xhQmhWSDssjPFsEE487/6FEnblzL9kKGgCHqMeT42mvUjFtmZDmkdiFRL
+	 sb9eU0xe5Ncd/C44vPTKUqMat9CsiZfIUvPSMHN8FU7XhbLto49htqCximE/4VMRJshSq
+	 AgCAG//yA9zFOeIH6OEW9PNx9KjGUqYGLGwpGTDo5momPARDZLEirAZSI0MxC2Cy1NKav
+	 8heeQRKKGgNindi+RXAWOmUDNS8GAC1SUe9lzreehEgiG32SYQcokNMk1CnVYUxcYNi8+
+	 YCjqs9kwYMEnCYnBHVlJ7PNSkUJ6RBv/+WFLBVK+92TRuyAqGW86bx407WMmlA7yLYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bpRmjo+T;
-	arc=none smtp.remote-ip=54.207.19.206
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=dxBPOEcT;
+	arc=none smtp.remote-ip=54.206.34.216
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A50C606A31F
-	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 09:25:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A50C606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4340E606A31A
+	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 10:10:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4340E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bpRmjo+T
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=dxBPOEcT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1795425902;
-	bh=JBgmFwI3d+bD4ZeA1f4oLGcqRjnONiXOuExZb/PYGVU=;
+	s=mxsw2412; t=1795428544;
+	bh=na+Qx5lxtdWvhLfCjtLB7gxG8BYD2XnZIK8peOF3Fyg=;
 	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=bpRmjo+TJx+EXAXz2i836hOhcde9JmnBTLwhD0g1BaaFKQNTrON1PGAQwc3yRdzrm
-	 41bmzeSSsrcjx6NQa68swL7yBgkHVHMg+hWf1STDN+vB8C7Mk98uEOC4QJIHRKDLWy
-	 S1Pi6ko6FisVuT8IZteniiOgdPEWLZ1ty8DsBpLc=
-X-QQ-mid: esmtpsz10t1795425896tea819c39
-X-QQ-Originating-IP: uO/dN4xpVqcgehUM7VHVJuhKXoP0Sa6dV1wDnAUdss0=
-Received: from = ( [183.48.244.245])
+	b=dxBPOEcT822N9MS9+7+GDLXAz0TzccONkfaGXR7+gWQjIAPSzqiuxM1TR3UhG2jkR
+	 cwOE0aOcxn4dulG93a3CP/ghSNnpjVqzFm20iJBaB5NMLGNLqrXrs82bt3YOBp5lgn
+	 41LtHZxS5d5a1cLAuWBGP3DCzGaFVAURceEYZCbY=
+X-QQ-mid: esmtpsz21t1795428537t55d3ec12
+X-QQ-Originating-IP: YRM8rmCD4m2EOmelJpoSAkd6C+Zo71Ofh6RWgSJHJN0=
+Received: from localhost ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 23 Nov 2026 17:24:54 +0800 (CST)
+	id ; Mon, 23 Nov 2026 18:08:54 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6983506776198614728
-EX-QQ-RecipientCnt: 18
+X-BIZMAIL-ID: 6646035375502222729
+EX-QQ-RecipientCnt: 19
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -59,79 +59,91 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 23 Nov 2026 09:24:52 +0000
-Message-Id: <DN2HD0L9B12P.2EK0R922TOV3U@linux.spacemit.com>
-Cc: <srini@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
- <conor+dt@kernel.org>, <dlan@kernel.org>,
- <troy.mitchell@linux.spacemit.com>, <me@ziyao.cc>, <aurelien@aurel32.net>,
- <pjw@kernel.org>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
- <alex@ghiti.fr>, <p.zabel@pengutronix.de>, <devicetree@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Jiayu Du" <duge1256@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20261122173810.2409146-3-duge1256@gmail.com>
-References: <20261122173810.2409146-1-duge1256@gmail.com>
- <20261122173810.2409146-3-duge1256@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: MEc+ZvFxT3Id0mAMkmwJzZjB6ZNyp0/aYoFf2CjA8h2Ltgc8qHtV+DEz
-	5bcTeMx4e4O3r7ZxURvIvVt4LoL3UdHpShdjxlg5uiK8zRcretqGgTQGYP0LzK7AW168M/n
-	faT8uAseSChacGFN5G6/+5TMtHzzlPGABmg8y/OqJLS6yDasxfFu4LJjN1FEKucamEtgZct
-	bWlLUQTi5jr93gYFhvQzdq4c1C7b5fgEezVkC4GVI3enZFmhdOBwAR8lSxZ0Gd4yOsGW5cU
-	LhWOR2iwdhFbs3qqSON6uhaYS1liM2bsV2w9v/iId8tbCT2rcQyD21S8EU6qezXXh/AgOno
-	Pba8S9KCPMkI1kBxnLCyXOtBhs2wz7xvjEbtTfPmyKvWrUlZfNsABRc+M+uZqvVRUmbaelO
-	6ydr5lYoriIy7AUP2+eX+M7Mg8wx94d5oWrapWtf1vaxyHx3KjuIXFDu+JTX/lSkVS6xxjn
-	/OGF8MMCN/kXoS0SCjbBL4pyLfTy9sgjTXszerguHYQfNVUZyH5pU+oAASzwdJMgtcJN/DH
-	STY/0Jk9ppMC8ukeKlikhYME3wb+TIk4Dsj1dPQjqP/C8VapPtUskc1BLJYFmtqxq4KMbaD
-	UlPoJ7qvJUjfAcdrmJswcLKL7+7OVaL470oba763476UOt2YjGV9IvpYItUPcpbh56aeOXh
-	2JYioBhVQwz0luyo09qZa+auJOsA2LAYWZ8VQy9bHHr8Cxa1SS3jyopBg4EljVj2nqG8S17
-	IF2sF8fTdhhHFiUlE0aTJdMtc3P9t7Axyf8NyuIKswUYiO1Q6NyQs+UrtDbhu2xZuiB2Y8d
-	/hRo0UvgOWfQ3nM5+NVPuRIStmMcINRch9ouwYg1QVW+D7463iiehIVbV06ft/dyLXkf88m
-	m1DauE0J94WwfQvKX1sfALa0iRhAbyTs7lh3gglA3QRls695C7GT2qoZnnbHuYsV/bmZhrW
-	QNKmXQcHSmKrD70GWi09bOhf7n+p9VIzWXStZj/HfXan8kUbM3lW5pgvScy1dShrgN3VY7B
-	pMzl5Ov5y+sP3xes3hRAht0Xlz1viQ4nOlnOabCkgjd1lE8Q0SgbNPrhYMpcldEly2s0out
-	rBNPyXu9huv
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-QQ-RECHKSPAM: 0
-
---d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
+Date: Mon, 23 Nov 2026 18:08:54 +0800
+Message-Id: <DN2IAQ05SK22.2BFO0AZF4IAH6@linux.spacemit.com>
+Cc: "alessio.belle" <alessio.belle@imgtec.com>, "luigi.santivetti"
+ <luigi.santivetti@imgtec.com>, "maarten.lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "mripard" <mripard@kernel.org>,
+ "tzimmermann" <tzimmermann@suse.de>, "airlied" <airlied@gmail.com>,
+ "simona" <simona@ffwll.ch>, "dlan" <dlan@kernel.org>, "troy.mitchell"
+ <troy.mitchell@linux.spacemit.com>, "pjw" <pjw@kernel.org>, "palmer"
+ <palmer@dabbelt.com>, "aou" <aou@eecs.berkeley.edu>, "alex"
+ <alex@ghiti.fr>, "imagination" <imagination@lists.freedesktop.org>,
+ "dri-devel" <dri-devel@lists.freedesktop.org>, "linux-kernel"
+ <linux-kernel@vger.kernel.org>, "linux-riscv"
+ <linux-riscv@lists.infradead.org>, "spacemit" <spacemit@lists.linux.dev>
+Subject: Re: [PATCH v2] drm/imagination: re-check firmware idle state before
+ runtime suspend
+From: "Baihui Liang" <liangbaihui@linux.spacemit.com>
+To: "Gyeyoung Baek" <gye976@gmail.com>
+X-Mailer: aerc 0.17.0
+References: <20261111-img-pm-autosuspend-v2-1-427689f6f2f9@linux.spacemit.com> <CAKbEzntsUc4D3Nvxfphy5yApWG+sGsx7VF1cYd3SLSoZKhiteA@mail.gmail.com>
+In-Reply-To: <CAKbEzntsUc4D3Nvxfphy5yApWG+sGsx7VF1cYd3SLSoZKhiteA@mail.gmail.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz6b-0
+X-QQ-XMAILINFO: OKrvsjP4PrxvitNSYHKY3k1dVsxkzvcI7C2b1nwa+lhfvt0cyA90Rixi
+	+Z25tPoHkzZGBI92vYs8iTv9bh5x74iSpIhyPAIM4EWr1wnY6lqHC4Kaq/eafPv9gsbOi7g
+	DjYqsNPZCHzvDaieFPCvo2WsE/zTp2xVrVnn93Y2l7Dc5TS4WM0jWKZD2UqAlBhT48WtWd8
+	bXUloIHfss5sRQ+yFRzr6o5ECDglT41kc6yCZdbASRKZmhNiir91LirJBsqLBs7BF28R0/S
+	Ao2eJOv6ye4u8wiL+tNmCHxedAvWTZ3jAr2X0gMqnXlneUWXKMdD1znZExB4e8CM+lSI9JZ
+	pXEzZ7nDC6EJGRoaM1wBhmhqLf4W6ocPyl54LsS65sToMXlPVe09453UVba4MpGAcOtNHAM
+	au6EHGDCIUBSXpdcDFtZoU4L+r/ir/MhCI5WlTxMskdNHrJkxqQHoUZsAEqLL9UlzZse0bS
+	2wpp0K4i+STC8XmWlEojN4QY5qdtG9OdFSA/LCHrc9dc/V/7Xdh3qE792YYIn9vRF2Pz7Cy
+	KxqoABXb4p2AceVCNVgtSimAQ4Mri743Cx96KulVe0J5gscKYi7YF90WsBACHPGd9sCe8Cm
+	xNPm//PVImtyQ0gNRIl6LYN+SHk0bU8rtFd7Bx10qpvbHfbwKR6Sw2HIRkkAoyas9O3WHnb
+	nRypopyu/MRq9QU+XJvjHGiEfvw7b92DrEpA/u1ETuUdjFfCsULvgCALaE6L6ZASMWHAHUL
+	r663OuLG1vW9fUKAz4lwANJw1hN3x04BCCRH8+LKaQUHdigj495AHRz0xksFEcxmfTDw5Ur
+	DYYZnse6hsbBUjyel+2/ZS/hx+2JfI3ruwXSoPDJPABySxTEbdHPfZVMXr4Urs3WzMAnJXV
+	7hfDE9F/WocYwclayTvu2CgaVQ/Cs0Q5bQyA9Lyf/oV/9RnL0ZDsAUjIL+jDz1kzVXvgkoD
+	evlgocu8998inPdwybGYW6cKq8P0Yn/hN841T7BfjzQCbV3hcP5XVGIXcYBIGL7TcQsbjnj
+	Cx3zG29rUwf+udkb8lZgds1X2kvWot/ZQss9sYHXwRSPZVsEpV
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-QQ-RECHKSPAM: 0
 
-On Mon, 23 Nov 2026 01:38:09 +0800, Jiayu Du wrote:
-> Reload the shadows during probe and cache the data for subsequent reads.
-> Use a 512-byte NVMEM space with bank-based offsets and keepouts for the
-> other banks.
-
-v2 said why only banks 0 and 7 are exposed, here and in a comment
-above k3_efuse_keepouts. v3 drops both. Banks 1 and 2 hold the root
-key and the SSK, so please keep that explanation.
-
-[...]
+On Sun Nov 22, 2026 at 1:57 AM CST, Gyeyoung Baek wrote:
+> Hi Baihui,
 >
-> +static const struct nvmem_keepout k3_efuse_keepouts[] =3D {
+> On Wed, Nov 11, 2026 at 6:29=E2=80=AFPM Baihui Liang
+> <liangbaihui@linux.spacemit.com> wrote:
+> >
+> > pvr_power_device_idle() rejects runtime suspend while the firmware
+> > hasn't reached ROGUE_FWIF_POW_IDLE. The PM core doesn't reschedule
+> > idle notification after rejection, so no further pm_runtime_put()
+> > arrives on an idle GPU and the device stays powered indefinitely.
+> >
+> > Move the idle check into pvr_power_device_suspend() and return -EBUSY
+> > after pm_runtime_mark_last_busy() so the PM core reschedules the
+> > autosuspend timer and retries until the firmware is idle.
+>
+> My understanding of Sashiko's point (correct me if I'm wrong):
+>
+> - pvr_remove(): must power off unconditionally
+> - runtime suspend: power off only once idle (-EBUSY otherwise)
+>
+> Since remove goes through the suspend callback, it can now skip the
+> power-off on -EBUSY.
 
-The comment belongs here.
+Exactly right.
 
---=20
-Troy Mitchell
+> Moving the idle check into runtime suspend looks right to me, so how
+> about keeping just the power-off logic in a common helper, called by
+> runtime suspend after the idle check and by remove directly? Roughly:
+>
+>   pvr_power_device_off()        /* fw_disable + power_off */
+>
+>   pvr_remove()
+>       pm_runtime_disable();
+>       if (!pm_runtime_status_suspended()) {
+>           pvr_power_device_off();
+>           pm_runtime_set_suspended();
+>       }
+>       pm_runtime_enable();      /* balance devm_pm_runtime_enable() */
 
---d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a
-Content-Type: application/pgp-signature; name="signature.asc"
+Agreed =E2=80=94 that's the shape I ended up with: a common power-off helpe=
+r called from runtime suspend after the idle check, and from pvr_remove() w=
+ith runtime PM disabled around it.
 
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawQGZCEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8cbgEAyeUFitMIdIlR
-gQa3GssF970F0URLGWsxfc3ds7zjEf0BAOJNKKuprXjtRVCBte1FETP5UaTR1Gb3
-jxY5BVbWXI0P
-=GIiJ
------END PGP SIGNATURE-----
-
---d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a--
+Thanks,
+Baihui
