@@ -1,114 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795433167;
-	b=YCea53hP0bs0+l3fm8SEUAfbUGbl59CbwMMd69ZxlZ5Eaq5Kav2mS0IpfX4UjPIODHr1
-	 x4pqSJ/974pE4PgOYLbH5RfF+FZNw6bS8Fzk30T7eGECeUBojYVQSUDb0bXMrYt+KXcJH
-	 xe1cLix8ABDXwwANanyuw/G9b9IBh/Pcu2uK6eM9MdGwUs5a0PQkC+5SVkxHQvOHP+0yL
-	 wFUxaLWWJDz57aepIxbn2WWSiiJsV3lUESDyq7T896AJdZGpS2Ayi88dXnL/aPosK+qew
-	 4SMcfOGYBnjJkGOuT+PIc444KLhz66eNz4/R5DfbhAxeUX8LcWXmBkjOxWnPJU90/kQ==
+	t=1795434316;
+	b=08wBPBvRrnYL+TFN5ENDpL/+FMZBoNJmsaeKZ8k0DA9akUeu4QfyQzgEsk44NzssqQjK
+	 ZKWlOsvYPdu436gHE4wFbcEstiEY7AJq29UiMjCYVlyy1FnY5KKNEixnBx9hYqj5M5Kei
+	 NrcKfjHpiBkpyNoAFrGKceTlYFkI4Sl6IjoXyMsk1iDIBHhT14x1KFL1lN8EOrUmNhUf6
+	 4506nvhSoEqAe/3S2c5IEvT+fMvTZcER6RYIpgE8IkcnAceKAdFNUVtB/wbhsembmDnLc
+	 TDWuIaQzb8dOvwMOGxkB4o3/0nog2xL8YxSJhagNBSxmEiXaSpnS9dv4b72NJYwpyFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795433167;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version;
-	bh=Io7ujKNNt7SQhbgiNtNsmPHGRtWoUuLSgdS1AFaBjnc=;
-	b=heXDHmphX6fNqehIF0lVxiPQEkFOyT1Mt8XDWzxmDkLjKSRQOFQUBCdkZiwKMQBzxu76
-	 Tl4srZZFgER829z0EQfjMT6We5ztIbJHujBPuykoegII7sNC0IxvjDlDlq91mPNeLj4Ui
-	 eZiy7WdWiMuNvEROwVQCjzmU2vDqBsbp5pkvPgrSHQGcoPQdkpZD4n6V5wyhnGN82qVeM
-	 J/nvPUxJUWLfeftbm50cBwKdwvoGafAQNEGurLcsrPUXyuW7Ftn3okYZwId3L4Y53rnyv
-	 QFF8jF17MfMvWat3/XTgU9RZnX2OGehhrPBPPY5WqlzX9RuOXauh1rnh+YjHGvliFYw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795434316;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=O/TZUP+/cDgqPVePhYbaH1kfjdT/O9h7xEGK3jFSArc=;
+	b=cJcEzR5vJ/bpiqdkFjPAiLEDGDlTLJ3puwDPHa3rf97+0sA5p+Zw7/eyNtfRtcUKYFq3
+	 rLwSWHtDxuXUbNLf2vQ2ewUjTeY+3lyvcnm2RMdfvmtgqOh7cDfy33c2YGLfBSOX2Xyko
+	 9um/kvoBtJwMgRYaQrOJz+qR2xJI9eLtzI5Lpz2RikXN/ZUcLKKJTaT2AVdjKKzTK5X6J
+	 LvfM0UR+3HEqoOmWOT/8N3JEDljNhV8gzwurmngouWufuQxvkyFILp0zgKAEO4sItR9r6
+	 GofSJSKtQX3hoysNuN02T9bLW123fMYbgrBXIn8sig9SlB0hnY6SsEvbfxp7yuhyoXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q29eLR11;
-	arc=none smtp.remote-ip=74.125.227.136
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="M/ov9Ghm";
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB439606A321
-	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 11:26:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB439606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E26D606A31A;
+	Mon, 23 Nov 2026 11:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Q29eLR11
-Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-3ae93a86008so1736493a91.0
-        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 03:26:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795433166; x=1796037966; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Io7ujKNNt7SQhbgiNtNsmPHGRtWoUuLSgdS1AFaBjnc=;
-        b=Q29eLR11C1QNytvIk1fX3mdWAVbdgKC1KUzLQ6VcvsnQWZa1NxZS7ceoD+mj1fSrcb
-         hJv9JfOswmAJmganKwNUU2SftMm9sMO13UYXVXytZaYItIedVgiVr+UBUu5CDZ9Jfij9
-         cmamd1G23CWtjTVMSxwqToTZTeveegJwALXhOcKhvGw1jftZhZrjOoh6fP+NvI27qrk9
-         J9dyvYd9ZvVwd3yjeH132VC5JA7BEhwXAzu/QxZqGALUjWVRViSvDF9GfyJ7/RidMftO
-         NPSmTXXWnDiqMESaMbKW4G1xtJ6RFkNHlOmyLWHQEUksddaePNCGetRt4lYfkISEf+kW
-         Bb6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795433166; x=1796037966;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Io7ujKNNt7SQhbgiNtNsmPHGRtWoUuLSgdS1AFaBjnc=;
-        b=Pz+HqQDgYHHpO5a94VhfxqOAIQlZcLariz7c4n4Hkw0Aw1pA45qFKeYqfYQt8X/0xu
-         k2Rptt7AH16xARFstV07oJPNxmhx0ngRh0dV7Rx2tYlPnpVvNzjxH9uPx5fhpfmCG//9
-         6zLVD13iXxLbV/bgLDvFcf0S/V3AUY8R3zIVN85n055MfRWoT8RLOQ9NcSIYQoxLywAf
-         J08gz08GXtHKhdqPRHFw9u4LZ8BEMRXC7bbLdSsON3H5P4xCSkhNXzLaM/9NvmThwLbj
-         /TSWwOryhpB+vCCasrNBSGqvzdx0rhPtcSMJ5HaObgilFk8jiC2c8h2z0dFEXx2E6IZD
-         z1qQ==
-X-Forwarded-Encrypted: i=1; AL+hErGC+nLdfIF04/C7HVuNNCSxKc9EIDemUp+HGBimbeTtWX8SJJWB7fge8NztdhRXQOyql0RNKA8Wkw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9XG4BiELsK4Ar3sFQHA0DrAbBvVQWRUfuqgO7dJ7xcbKPNdIZz
-	4WgEHUlXQz5vKDDwM6cJ+aSWE/bi6VJ/Gi57HdMy2YOimR2r/0N78EKR
-X-Gm-Gg: AZFdTZel6P2Isxsv9h16y1KgjywS959WHqolybrtU8p+0nozmILlTG9bYmV0a8SIG36
-	+gwSjCyKGHZfnP5NBzLlpt+6+oR+QLD3uJ9LMWZqXXdx0rj3QEcOB+Q6DWrWQ8wlvwR58bQvzgp
-	PhMCnscB92T/Awc8AbcX0/lnhnjZGh+LoXpm+9Z3s5mbFhqv/44yXROibHyhjVXs8G2HdCJLf9e
-	prA6t9gG7oj0A0TOE2UL9ikomsqMGeF7vyL0EQwdFQhgy96zmz9b8tuxFljT/NuEh/IQTNGb0Qk
-	q6E8adEn+IjCM3ZrecbGo65gTS82RbVCZ/HsdOBs8hZ7/OtxdBLJrgK/fWtRdvv8RPG6kuRbSaa
-	Jmtb8rnxj9chUABIw4LkmGUWCLlpNKtc6V/6EgwMpi42MGXOE410HA9ASWFBm0ufsILPLYsv6jN
-	2bjJ4dH4Cl0I2W+g6pOtCX9vFJVwEMbqXz7nEU2PNuqHbZoOQPpBRonljA6zDz5CwADQBPjXPmD
-	0JMi0qrAW6ux3WWlKf5pXEYPFL47VYhYLlhhrdCrgSVZqChzwNGzLXdpdjDWi3fJWxEUAXVd6vS
-	d+BUxDT/kxnY3MhFODBXVD4RwKUbhya6qA0=
-X-Received: by 2002:a17:90b:4c07:b0:3b4:f92:ade7 with SMTP id 98e67ed59e1d1-3b41cb20eb8mr10517519a91.52.1795433165943;
-        Mon, 23 Nov 2026 03:26:05 -0800 (PST)
-Received: from localhost ([2403:2c80:6::10a9])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b41ad8e93asm17449770a91.11.2026.11.23.03.26.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 03:26:05 -0800 (PST)
-Date: Mon, 23 Nov 2026 19:26:02 +0800
-Message-ID: <f5c6f44bfb6040289653cdc079b1cb2a.codykang.hk@gmail.com>
-From: Cody Kang <codykang.hk@gmail.com>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Yixun Lan <dlan@kernel.org>, Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Haylen Chu <heylenay@4d2.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
- Brian Masney <bmasney+clk@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Yao Zi <me@ziyao.cc>,
- Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- Guodong Xu <docular.xu@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
- Jerome Brunet <jbrunet+clk@baylibre.com>,
- Sarah Emery <sarah.emery@canonical.com>, Ze Huang <ze.huang@oss.qualcomm.com>,
- Dmitry Baryshkov <lumag@kernel.org>, dri-devel@lists.freedesktop.org,
- linux-riscv@lists.infradead.org, devicetree@vger.kernel.org,
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 10/17] drm/spacemit: add Saturn DPU KMS pipeline
-In-Reply-To: <awPxPHpr4NYxqdmf@houat>
-References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
- <20261121-k3-display-v3-10-ec419e8e96b8@gmail.com> <awPxPHpr4NYxqdmf@houat>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=M/ov9Ghm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F361F000CF;
+	Mon, 23 Nov 2026 11:45:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795434315;
+	bh=O/TZUP+/cDgqPVePhYbaH1kfjdT/O9h7xEGK3jFSArc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=M/ov9Ghmefxn9L6wBnE5kr1N83AuM7y28ejF/4o2y1S+n+51U8mODk1l8ZntYty7s
+	 yMVF2INlVFW1eEwlL9+pPsSr9yYJDkaPrfXXdakbJW34QZBcUiKJMdbmOL4cYK3EAH
+	 wx+ncGycTn3JjvthFloibrAPyry3xrdbnVkxObqS59BXUQiUQzbXsK0hElMsWBq5Mj
+	 LxBkZLnTgU9s+fl9RH1taPEHwRHmTbWR6EUxg2oq+Cpr2g2i+HkTT7luDZk/2bb4Op
+	 AuRNkfXBmEA93Obu9Jh0na9n0l+cxfW2B0IBB9vNz9/N6mQazTWfigxiTqEXg6Lnnk
+	 UA9gqyk2iEoSA==
+Date: Mon, 23 Nov 2026 11:45:12 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: sashiko-reviews@lists.linux.dev, Ulf Hansson <ulfh@kernel.org>
+Cc: linux-pm@vger.kernel.org, spacemit@lists.linux.dev,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v5 2/2] pmdomain: spacemit: Add power domain driver
+Message-ID: <20261123114512-GKC156439@kernel.org>
+References: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
+ <20261118-04-k3-pm-support-v5-2-42394acdf3e3@kernel.org>
+ <sashiko-outbox-222182@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -118,17 +59,139 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-222182@kernel.org>
 
-Hi Maxime,
+Hi All,
 
-On Mon, 23 Nov 2026 08:55:40 +0100, Maxime Ripard wrote:
-> On Sat, Nov 21, 2026 at 03:40:49PM +0800, Cody Kang via B4 Relay wrote:
-> > +static int spacemit_drm_master_bind(struct device *dev)
-[...]
-> > +	drm_mode_config_reset(drm);
->
-> You need to use drm_mode_config_create_initial_state().
+On 23:32 Wed 18 Nov     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issues to consider:
+> - [High] pmdomain: spacemit: devres frees active domains when
+>   pm_genpd_remove() fails
+> - [Medium] pmdomain: spacemit: unpowered always-on domain in
+>   spacemit_pm_add_one_domain()
+> --
+> 
+> commit 3dbb7292ceae5fc8cd5471f6a58e884045deb2ec
+> Author: Yixun Lan <dlan@kernel.org>
+> 
+> pmdomain: spacemit: Add power domain driver
+> 
+> This commit adds a generic PM domain driver on the auxiliary bus for
+> SpacemiT K1 and K3 SoCs, supporting software and hardware power-on/off
+> sequences.
+> 
+> > diff --git a/drivers/pmdomain/spacemit/spacemit-pm-domains.c b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > new file mode 100644
+> > index 0000000000000..9d77d3f4c182b
+> > --- /dev/null
+> > +++ b/drivers/pmdomain/spacemit/spacemit-pm-domains.c
+> > @@ -0,0 +1,422 @@
+> 
+> [ ... ]
+> 
+> > +static int spacemit_pm_add_one_domain(struct spacemit_pmu *pmu, int id,
+> > +				      const struct spacemit_pm_domain_param *param)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int ret;
+> > +
+> > +	pd = devm_kzalloc(pmu->dev, sizeof(*pd), GFP_KERNEL);
+> > +	if (!pd)
+> > +		return -ENOMEM;
+> > +
+> > +	pd->param           = param;
+> > +	pd->pmu             = pmu;
+> > +	pd->genpd.name      = param->name;
+> > +	pd->genpd.flags     = param->flags;
+> > +	pd->genpd.power_off = spacemit_pd_power_off;
+> > +	pd->genpd.power_on  = spacemit_pd_power_on;
+> > +
+> > +	ret = pm_genpd_init(&pd->genpd, NULL, spacemit_pm_is_off_state(pmu, pd));
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	pmu->domains[id] = &pd->genpd;
+> > +
+> > +	return 0;
+> > +}
+> 
+> [Severity: Medium]
+> Can pm_genpd_init() fail with -EINVAL for a GENPD_FLAG_ALWAYS_ON domain
+> such as K3_PMDOMAIN_AUDIO if it is powered off at boot?
+> 
 
-Thanks for the review. Will fix in v4.
+I've checked in U-Boot which before booting Linux,
+=> md.l 0xd42828f0 1
+d42828f0: 00000008
+which shows bit[3]=1, audio power domain already in 'on' state..
 
-Cody
+So, K3 SoC should have no problem on this.
+
+> pm_genpd_init() requires always-on domains to already be powered on
+> (is_off == false) and rejects them with -EINVAL otherwise, aborting
+> spacemit_pm_domain_probe().  Also, because genpd never powers an
+> always-on domain off or on after initialization, the power control
+> parameters defined on K3_PMDOMAIN_AUDIO are unused unless
+> spacemit_pm_add_one_domain() powers the domain on before calling
+> pm_genpd_init() (note that spacemit_pd_power_on() logs with &domain->dev,
+> which is not initialized until pm_genpd_init(), so pmu->dev would need to
+> be used for logging).
+> 
+> > +
+> > +static void spacemit_pm_domain_cleanup(struct spacemit_pmu *pmu)
+> > +{
+> > +	struct spacemit_pm_domain *pd;
+> > +	int i, ret;
+> > +
+> > +	for (i = 0; i < pmu->genpd_data.num_domains; i++) {
+> > +		if (!pmu->domains[i])
+> > +			continue;
+> > +
+> > +		pd = to_spacemit_pd(pmu->domains[i]);
+> > +		ret = pm_genpd_remove(pmu->domains[i]);
+> > +		if (ret)
+> > +			dev_err(pmu->dev, "failed to remove domain %s: %d - state may be inconsistent\n",
+> > +				pd->param->name, ret);
+> > +	}
+> > +}
+> 
+> [ ... ]
+> 
+> > +static void spacemit_pm_domain_remove(struct auxiliary_device *adev)
+> > +{
+> > +	struct spacemit_pmu *pmu = auxiliary_get_drvdata(adev);
+> > +	struct device *dev = &adev->dev;
+> > +
+> > +	of_genpd_del_provider(dev->of_node);
+> > +	spacemit_pm_domain_cleanup(pmu);
+> > +}
+> 
+> [Severity: High]
+> As reported by Troy Mitchell on v3 [1], can unbinding the driver or
+> unloading the module while a consumer device is attached cause a
+> use-after-free on pd->genpd?
+> 
+I don't want to combine into this series, see cover letter or the link below
+https://lore.kernel.org/r/20261112-01-pm-device-link-v1-1-8932e0862378@kernel.org
+
+I'm trying to address in a separate patch
+
+> Because adev->dev shares the parent CCU device's of_node, fw_devlink
+> links consumers to the parent CCU platform device rather than adev->dev,
+> so unbinding spacemit_pm_domain_driver does not detach consumer devices
+> first.  When genpd->device_count > 0, pm_genpd_remove() fails with -EBUSY
+> and leaves pd->genpd linked in the global gpd_list and referenced by
+> consumers' dev->pm_domain pointers right before devres frees the
+> devm_kzalloc()-allocated struct spacemit_pm_domain.
+> 
+> [1] https://lore.kernel.org/r/DMQHSDTR177I.1HWHAF4FWTFQ5@linux.spacemit.com
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org?part=2
+
+-- 
+Yixun Lan (dlan)
