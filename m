@@ -1,68 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.207.19.206
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795420543;
-	b=qyvEA7py9GJbXWvsBbMc5hEx3qyvemm/5gRgJ+MYf1ylroQ01KU1+U1MarKJ35KPNVKN
-	 4ZGLrpkwGsh6S9Lu+NLO1o1FIa9+5sCYyVO2SFWqDX+n4I0uZVQebnRZspfz7G9VkxbWd
-	 wOAig3H47n4HXlP8demfyf4OfTtbTLqdojQJCN7j0RohHtt7MmPOYJgAo3oA5sUrRrZ0d
-	 v8Aq0Kbo04QWeBuvLAR2U5/R1wfXuZiO+zRDZyxAjO1j/Hbb9rrM3dIOsNbiBLKwRKwCt
-	 7hphuONDgxa988cAmxhfpJnO18B0nVJ1kdHRZ10TEL3PtHHx/pZzyC2TMTOg0PxeKpw==
+	t=1795425954;
+	b=4huntqKUImJoEDt3VPB6olziTDcubdgXdhvEtj2NSaNK1PLQ2H9quB+3El96X2gHoJNR
+	 H45nTMG/HMVUiEBssYB7ccEtZg8hgQ+SREHlHg3Bii7z/oJhYWHpg9GptccoDo4lUW+Lr
+	 LwPL3bbA8KP3LgtpAVKmRB333mZoQ4ZlP61dpGEmwKwxbJ8LrNuauyu/jflCkUqtdOlhY
+	 qKpfWyPtrb8EcPcGcG15ajtnewSLwV3JAFZnhfu5YNZzO+0QIL+bBb+p+jrybgtzpZgs5
+	 gC4UWIGh1FqgXxq+/YP1Ve3NuMF2yBUVkBADROrfI5S3yj2VzY5jcCAcdeHU2EFreZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795420543;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=nYLwjkPeDoYKPQ9fpj7sj29JLi9BGT+W9npk3A58FDA=;
-	b=o9B/i3izBlyr0Qa1r2BgY64A3uej8F5vmFFnB6yn4gVytjDRuA+5UzQOc5wTez7WU2pk
-	 4NRtEdkmQFk3tEzabw5qhnfKCYVWuCbvUqEpizCnwPmCiv4jt4V+UyitPWos/gsoPjH6F
-	 vVGBVrcWfYDOXtUksTVVjOLIIX1pdPHV0QvDGJ8hRR0d0ZzBRSdfaeOVxDL2EeuUecia9
-	 fGg2xYV5lJZGwiMJaad6l/jPXmCESXhdkjtFwqx0xCV6yRkliOEJJ/AdnmzbIyXnbpA9c
-	 VxqNTxL6oxW9i53Oypy6NE8g6G48701w8RPkIC6ISJ8iHJj26hRlqiGzbJu12NZ3xHg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795425954;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
+	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 Content-Transfer-Encoding:In-Reply-To:References:X-QQ-SENDSIZE:
+	 Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=JBgmFwI3d+bD4ZeA1f4oLGcqRjnONiXOuExZb/PYGVU=;
+	b=3WVjivetDCD5UNaZgN0iH8piEV/8brgNPU14ADg34LeLTUUjMU1pKOXaN7jEsTGj1On/
+	 g21UEDtEJMy3adsc4Sq2BzrrQozKoRsTd6KzSZhHlbDYg66E37w2oWIeRJ2IMXGTRyJTe
+	 ft40MfC6klbtzFAq2K0Bw0ivo3ZojTIEHbtuF2/PASs6pURU2A9lqOf5CwiYp7wADGtFE
+	 /K5rcknSeqDVzgFswpcl6OQYNls0hKADrrO0rhV2FB/FO+Z3hwlOal6P8Rwz6v5CxvaCK
+	 ReDlmvCCsM0wars7Ri7JSvbXndhNUYI2M+dlmal3W6OnJtJFKFbHhFq4vPSq00uWDXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YXAvsKFi;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=linux.spacemit.com;
+	spf=none smtp.mailfrom=linux.spacemit.com;
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bpRmjo+T;
+	arc=none smtp.remote-ip=54.207.19.206
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D20606A336;
-	Mon, 23 Nov 2026 07:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A50C606A31F
+	for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 09:25:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6A50C606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YXAvsKFi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA821F000C6;
-	Mon, 23 Nov 2026 07:55:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795420543;
-	bh=nYLwjkPeDoYKPQ9fpj7sj29JLi9BGT+W9npk3A58FDA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YXAvsKFiWSvpBAh0r/bLzhP/mDijS6wWiRAI/eNzzlW42pXDN4k8BL54YfASB4YyZ
-	 KDaG4gPrLUiNxP8Y53xiVgpDqyQYPNbffcEa5ycmQNLiBTR+5HEYIMJYvdAThv6YH9
-	 HpUjHRD3AKwKVwH6wIB1q+2q2wI63zezLOdt1UVU2EDTOuJDj6XbRN9XB1c4M1qRwJ
-	 nNsYrkMkn/h6oyq0H7wZPcnDLbwg1Mo1uDNj1WKorr/U67FRXRdTJ2zYV89UO4yI1c
-	 A8yJwwgZo6rSUPiINE2/hvWe4cJZZZanigQdCdzOb55tcn4lLBhSTUMLTCFRqbJA6u
-	 SjNDfuq17V90Q==
-Date: Mon, 23 Nov 2026 08:55:40 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: codykang.hk@gmail.com
-Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Haylen Chu <heylenay@4d2.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Yao Zi <me@ziyao.cc>, 
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, Guodong Xu <docular.xu@gmail.com>, 
-	Icenowy Zheng <uwu@icenowy.me>, Jerome Brunet <jbrunet+clk@baylibre.com>, 
-	Sarah Emery <sarah.emery@canonical.com>, Ze Huang <ze.huang@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Cody Kang <codykang@vsit.ai>, dri-devel@lists.freedesktop.org, 
-	linux-riscv@lists.infradead.org, devicetree@vger.kernel.org, spacemit@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v3 10/17] drm/spacemit: add Saturn DPU KMS pipeline
-Message-ID: <awPxPHpr4NYxqdmf@houat>
-References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
- <20261121-k3-display-v3-10-ec419e8e96b8@gmail.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=bpRmjo+T
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
+	s=mxsw2412; t=1795425902;
+	bh=JBgmFwI3d+bD4ZeA1f4oLGcqRjnONiXOuExZb/PYGVU=;
+	h=Mime-Version:Date:Message-Id:Subject:From:To;
+	b=bpRmjo+TJx+EXAXz2i836hOhcde9JmnBTLwhD0g1BaaFKQNTrON1PGAQwc3yRdzrm
+	 41bmzeSSsrcjx6NQa68swL7yBgkHVHMg+hWf1STDN+vB8C7Mk98uEOC4QJIHRKDLWy
+	 S1Pi6ko6FisVuT8IZteniiOgdPEWLZ1ty8DsBpLc=
+X-QQ-mid: esmtpsz10t1795425896tea819c39
+X-QQ-Originating-IP: uO/dN4xpVqcgehUM7VHVJuhKXoP0Sa6dV1wDnAUdss0=
+Received: from = ( [183.48.244.245])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 23 Nov 2026 17:24:54 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6983506776198614728
+EX-QQ-RecipientCnt: 18
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -71,81 +58,80 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="psp6wiqhchja3kyl"
-Content-Disposition: inline
-In-Reply-To: <20261121-k3-display-v3-10-ec419e8e96b8@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Mon, 23 Nov 2026 09:24:52 +0000
+Message-Id: <DN2HD0L9B12P.2EK0R922TOV3U@linux.spacemit.com>
+Cc: <srini@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+ <conor+dt@kernel.org>, <dlan@kernel.org>,
+ <troy.mitchell@linux.spacemit.com>, <me@ziyao.cc>, <aurelien@aurel32.net>,
+ <pjw@kernel.org>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
+ <alex@ghiti.fr>, <p.zabel@pengutronix.de>, <devicetree@vger.kernel.org>,
+ <linux-riscv@lists.infradead.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 2/3] nvmem: Add read-only SpacemiT K3 eFuse support
+From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+To: "Jiayu Du" <duge1256@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20261122173810.2409146-3-duge1256@gmail.com>
+References: <20261122173810.2409146-1-duge1256@gmail.com>
+ <20261122173810.2409146-3-duge1256@gmail.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: MEc+ZvFxT3Id0mAMkmwJzZjB6ZNyp0/aYoFf2CjA8h2Ltgc8qHtV+DEz
+	5bcTeMx4e4O3r7ZxURvIvVt4LoL3UdHpShdjxlg5uiK8zRcretqGgTQGYP0LzK7AW168M/n
+	faT8uAseSChacGFN5G6/+5TMtHzzlPGABmg8y/OqJLS6yDasxfFu4LJjN1FEKucamEtgZct
+	bWlLUQTi5jr93gYFhvQzdq4c1C7b5fgEezVkC4GVI3enZFmhdOBwAR8lSxZ0Gd4yOsGW5cU
+	LhWOR2iwdhFbs3qqSON6uhaYS1liM2bsV2w9v/iId8tbCT2rcQyD21S8EU6qezXXh/AgOno
+	Pba8S9KCPMkI1kBxnLCyXOtBhs2wz7xvjEbtTfPmyKvWrUlZfNsABRc+M+uZqvVRUmbaelO
+	6ydr5lYoriIy7AUP2+eX+M7Mg8wx94d5oWrapWtf1vaxyHx3KjuIXFDu+JTX/lSkVS6xxjn
+	/OGF8MMCN/kXoS0SCjbBL4pyLfTy9sgjTXszerguHYQfNVUZyH5pU+oAASzwdJMgtcJN/DH
+	STY/0Jk9ppMC8ukeKlikhYME3wb+TIk4Dsj1dPQjqP/C8VapPtUskc1BLJYFmtqxq4KMbaD
+	UlPoJ7qvJUjfAcdrmJswcLKL7+7OVaL470oba763476UOt2YjGV9IvpYItUPcpbh56aeOXh
+	2JYioBhVQwz0luyo09qZa+auJOsA2LAYWZ8VQy9bHHr8Cxa1SS3jyopBg4EljVj2nqG8S17
+	IF2sF8fTdhhHFiUlE0aTJdMtc3P9t7Axyf8NyuIKswUYiO1Q6NyQs+UrtDbhu2xZuiB2Y8d
+	/hRo0UvgOWfQ3nM5+NVPuRIStmMcINRch9ouwYg1QVW+D7463iiehIVbV06ft/dyLXkf88m
+	m1DauE0J94WwfQvKX1sfALa0iRhAbyTs7lh3gglA3QRls695C7GT2qoZnnbHuYsV/bmZhrW
+	QNKmXQcHSmKrD70GWi09bOhf7n+p9VIzWXStZj/HfXan8kUbM3lW5pgvScy1dShrgN3VY7B
+	pMzl5Ov5y+sP3xes3hRAht0Xlz1viQ4nOlnOabCkgjd1lE8Q0SgbNPrhYMpcldEly2s0out
+	rBNPyXu9huv
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 
+--d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
---psp6wiqhchja3kyl
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: Re: [PATCH v3 10/17] drm/spacemit: add Saturn DPU KMS pipeline
-MIME-Version: 1.0
+On Mon, 23 Nov 2026 01:38:09 +0800, Jiayu Du wrote:
+> Reload the shadows during probe and cache the data for subsequent reads.
+> Use a 512-byte NVMEM space with bank-based offsets and keepouts for the
+> other banks.
 
-Hi,
+v2 said why only banks 0 and 7 are exposed, here and in a comment
+above k3_efuse_keepouts. v3 drops both. Banks 1 and 2 hold the root
+key and the SSK, so please keep that explanation.
 
-On Sat, Nov 21, 2026 at 03:40:49PM +0800, Cody Kang via B4 Relay wrote:
-> +static int spacemit_drm_master_bind(struct device *dev)
-> +{
-> +	struct spacemit_drm_private *priv = dev_get_drvdata(dev);
-> +	struct spacemit_crtc *a_crtc;
-> +	struct drm_device *drm;
-> +	int ret;
-> +
-> +	ret = aperture_remove_all_conflicting_devices(spacemit_drm_drv.name);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				     "failed to remove existing framebuffers\n");
-> +
-> +	/*
-> +	 * Bind-scoped, not devm: the aggregate can rebind without this
-> +	 * device being re-probed, and each bind must release its own
-> +	 * drm_device.
-> +	 */
-> +	drm = drm_dev_alloc(&spacemit_drm_drv, dev);
-> +	if (IS_ERR(drm))
-> +		return PTR_ERR(drm);
-> +	priv->ddev = drm;
-> +	drm->dev_private = priv;
-> +
-> +	ret = spacemit_drm_mode_config_init(drm);
-> +	if (ret)
-> +		goto err_dc;
-> +
-> +	a_crtc = spacemit_drm_pipeline_init(drm);
-> +	if (IS_ERR(a_crtc)) {
-> +		ret = PTR_ERR(a_crtc);
-> +		goto err_dc;
-> +	}
-> +	priv->a_crtc = a_crtc;
-> +
-> +	/*
-> +	 * component_bind_all() unbinds what it bound before returning an error.
-> +	 */
-> +	ret = component_bind_all(dev, drm);
-> +	if (ret) {
-> +		dev_err_probe(dev, ret, "failed to bind all components\n");
-> +		goto err_dc;
-> +	}
-> +
-> +	drm_mode_config_reset(drm);
+[...]
+>
+> +static const struct nvmem_keepout k3_efuse_keepouts[] =3D {
 
-You need to use drm_mode_config_create_initial_state().
+The comment belongs here.
 
-Maxime
+--=20
+Troy Mitchell
 
---psp6wiqhchja3kyl
+--d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCawPxewAKCRAnX84Zoj2+
-dnHQAX9iDOtufQbymoduwPA/eIzFT4DPhesCne28+rDvff2JXlYtbNrRxUrTcGWq
-XGPo3ywBgIkbYttgELJJr4UywnFDhIGMTRi83oG6Mg+R1tb0t9izOxptosxvIQK+
-fEnXpcLERQ==
-=seld
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawQGZCEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC8cbgEAyeUFitMIdIlR
+gQa3GssF970F0URLGWsxfc3ds7zjEf0BAOJNKKuprXjtRVCBte1FETP5UaTR1Gb3
+jxY5BVbWXI0P
+=GIiJ
 -----END PGP SIGNATURE-----
 
---psp6wiqhchja3kyl--
+--d2ee13a6a85992f018305a6f724e47d00c2db0323c1bf1b05267470c5e8a--
