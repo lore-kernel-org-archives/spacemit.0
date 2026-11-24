@@ -1,98 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795492027;
-	b=dzKH4QWpjE/ELJSMzwkIhcTYH/F7r9M369rS0em6C4uzaVqS0zcCaWexSQvYVoBNaoBL
-	 mBidRfZhgnV++ik+xx7g7c8EJ+PyFQnP0OUYcOxippWsgzq84qHgTHtfTpfw8czqdj9uB
-	 QmVQylACXYrxAOrQ9XPz3P1tzeaBXjNROeglrSsYRoVQQy+p7QW1Z/0YQymQgjaU0aw+P
-	 BcEEmCMULMoM6IpRhWAB7a1mvcIHyRJiVLFxZH8kWSE68JudaLmsuKjslNo+ciuJiwTB8
-	 MwvDwZGZZJUcuYMQ4pIbX0z6BGEqw/mshGqcaki6LZt+/202PnaKvVzvdsTjzFaM1FQ==
+	t=1795494049;
+	b=aH1juwC4sZLXkghj/RSMHRKMQib5MAEdSP/SQUV+75C1zQjU1Bof3NurXjJ7/+X0QM3+
+	 yT1HYKSg2/THAE73GjIxLXh4Q/BUw6Az8+MFvr/qJlymnKK78Ks6qILh2Zy+3n36UDflc
+	 PCwxRK69LKdrpH0OGKO6rP6rxB6U+SkxXrz3+Tho+RiSmN8HqGyxolKzC7XJlCYTmwJ1o
+	 6+DdBnlj0jmgQl6bQ+wGYNM97fiRj2Dbi3PMzsqV9Sz224EFvrtiAXa5fUt7yoGTuh9Cy
+	 46lknrNit7rCpkYAlEHw5L/J1k+qWPZB7eaoD/xYGhbGRZ1apW/uA0tGIBcMc8c8p/w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795492027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795494049;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type;
-	bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
-	b=yIjOjOSKNIny0eit2t9jAV8SPTkj3NHfk8beb6KzgEtLH882WwPSpV8K/cBuMZ5rtG02
-	 NcFY/XIwe+6JoBkIPyNOQBy2XXg6xuhMOLT5F0lUfFUl8dO2nNeu9qSTMZ0Xes3QcDe7q
-	 3oMa9VFO7+FpY/zqgAWwkwTZYIdbtQpllLqwbGgW8lGVYUAwOV7lW/eZV/O3nBUbbFDoa
-	 AloO22n/hviuzmiQOD8FFNk7qz305JMAjXhcRRYqM+yciLW5hhECDog8pQE0iTsA0iDLO
-	 kwQcfgtn6keOho/F1AK0iL0eMwS/HSSTIFV3iP1rFFjnTpI81jfP7FvnY3dYUgs+c+A==
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Content-Type;
+	bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
+	b=m1EEWfKFLh9TMDluaaseZuSC1QGMigq/HvaEAtrcriRBUBFUq161WLr7euVmqWJzPXDN
+	 AUrnEs2icpcYrWWmizFGFi2HhlDTT7vvdKkPg5kkjG+gAwCT7/fBgjXnJguvwA8uecZrF
+	 qdWsBGgCJN7sYija0fPUOFeNAkmAq2WP8D6dBVSL3OSKXSs02ID7XyOobJdVMSFY4CoRW
+	 Qxdoabetuq0Fr7T2uxl9tS8DsaRY3MPLAY4dEtLr6I4hO4J3xnoCN89TqpxxWOF4sDPhQ
+	 nFALdpKpCYQ0TWmbz0aFWzoEFEoick0lC1tkgu0fDDOk7AjPk2QolDb3p1bjEDmaveQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pFO1XuE8;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=efI9QTDS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0A9606A31E
-	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 03:47:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B0A9606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43677606A326
+	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 04:20:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 43677606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pFO1XuE8
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-9213922de73so73757136d6.1
-        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 19:47:07 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795492026; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=efI9QTDS
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b596afb4c5so4577459a12.1
+        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 20:20:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795494047; cv=none;
         d=google.com; s=arc-20260327;
-        b=CNU0wzRz/GZn6k5zC62evJsEFyVBfP7DcFd5LFqO3lPu18hj5b3ll4D0a4suIzHp5E
-         DU5H3jLrqki01zO+eVkWKukV1CwdevQoUcnUEu46AwhDh6mPhNNyhaAfvSfiv+Yl7UsY
-         5V0NY3siRbDlYnw5GhO9gMX5c5LPlknQQvTr/qheZbkV2mLqwTLhVNZy5AsJmP/FBHSr
-         FrWttboCLAjMVi+hjs1zL9BoEd2ddTZ2XaTgo/antTu4io5COhY6QjvMAhejsR37hxr0
-         ylvLBqg5m77m9fgkebSnbi5b0Qoz61nsHO+sLlyLh21MwUEXUugNI0Ykraxm5wgNAWXf
-         EwLQ==
+        b=e/xGQe6qXB8zL2fFJblcypM3xFha99XSlCFzN3YE+QYIKlfx8GgNlYuuhcGbNEe0XM
+         ylM19pcV3kHY1ggxbvkJQhnI80rINNxbZr5G9/Hw6yRwoaUlD9Jakuk5lPDWT0YuoSrX
+         vnb6UwsWbXWS/Xe8BmQ+VdOH04392fldZG6LcJk7n0TE+r6ESLMAi76AuKjGRndSLiNx
+         Fnhe64PrQ7h4J5QukvCrjj3cH/9tOpcErn4cFksV8Y/ZhjWZM/CddrEBK3QzfGms74Ls
+         7lr15hgAWd6E2NzxyIUF5Zqhmr5K4eFZR87Zmoy2NVTGPeJQ9UH6IFp6Cbjxw0xAXz9z
+         dHKQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
-        fh=uw1c1g9vFyf6w7fzdi3YRW/nS6KXsfkVIn2GK4VckUE=;
-        b=I6jNo/Ea7FHtbzpfN9SIqxCICcFsmPu16DvMe2rFnM5NrBuj6jURkTGJkEoceuFCOZ
-         rcQLhsqhClYfoAxYxY1il/XEQ4qap6F7fyJlJFA1vCKd/P/hsDo5wdGzbiJ9VQQv7pEF
-         2s8JGX95AzKaB4ir0yfGP7D4Xs6JEgL/muAkNCceYuFTq3TrAxp1JAkyYBVVBgGElFDo
-         +AWsPmXHyPDp82eZ5FxPNU0VlXOEsNTNjZCpOQ//7cLpuwe0g+a+uqyvlP/+5LEwM+rw
-         XP9OIWXWiwBQSza1wUFS8STXAUflQIdt+hv8kK/X/qBlMibQTzy+wykKzlgqhXoN/MdS
-         pdYA==;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
+        fh=FFlXUucz65ENVMv4u6GflsMfwHpsKAqSlUEfQPn9BLg=;
+        b=XHxO4FeA775RrFT2kFMAikxCGHO/zIgZHouvxShqBMrrj9mgG7ihF1qo5T5wiXy008
+         Nx5YNI9vi0Jle8MNcRAVfP8lMNxsODiVTFnE0WDALnlyHs0kN2Xk1+BU5yx8QYKayfP7
+         Qzzr0zgtrx7CgtjudoC5gISHUcPfpUG09nHRevKKgEo9XJ8/Ic2SGMFEnb1rwJjCJ6Ll
+         ka8fuMwiAiUIoKIkKGDY/LjLruYn1lGZj2xmB8qCsPjQGWOukGgURv7k1ROI24A72Z3H
+         HyHnFqpoM1vsUQRxj10VI/hhPZB6lKymfYZJ6yF4RJU9BfoMnKAYTIWbx0rpaI34mf0C
+         szCA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795492026; x=1796096826; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
-        b=pFO1XuE8xGmCjwhrumbhj2mjy+4G+/FTc3f3RTJ75kw4p458/Vojm1trigLpgi2RxX
-         z745FXhpkFnp8ywV4bpT1n7YY7Vs3FID+OXXL4UDLyHL11eYE2TVNjo+Qsx7ohiOPZeW
-         I2I+zp9y1BZa7Csil8lQWmWM+qpVr/QUHrPguriuUXkbFXn8Bp4vhrcbcxZygjPMIewm
-         0qovJMpriZbHDveUM21vIOPpC3xQve5xQFEgoq8Bpl4XbhWSVdvmPNWuv3PAKJuylvTS
-         O33B70/gao0SzHUsHPGCZxTFmq3pfT2Okxu0OxEuuX7nrrtf5yAndYcXPWp7j67mf5qJ
-         HxFw==
+        d=gmail.com; s=20260707; t=1795494047; x=1796098847; darn=lists.linux.dev;
+        h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
+        b=efI9QTDSBxrJQhjValG8kCnHwoVwR/czSy6HwxU5vt/4ElH9XDtg1CzsI8bNaO+TD2
+         wctpwFWOOOeBuXJXBdEucg3VOh9Tf5cFZ6JdLVE6mo1gM/fcMhJqVwWDVSLXkCn/KUAB
+         4k+9s7K0CAOpym++n2YhPVj4OGsik2tToz1DRhw9183W3TiOub9e9etiRcHUE6emlu3h
+         p/Hqep29lARz1ngX3IZt1ylYu0MG57bSdK/XC9r8DCDHCXxgZYBwYqBAVhgTAyfIItgh
+         xBFb5dWJdSm8EnJ9XalJii4LA89qPKBORN0cTH7U9mTACALYOu6OY2f7nhNYkfcVsyXS
+         Izbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795492026; x=1796096826;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
-        b=utzAGIdKObd0kpoULLUgchSwG11YY0QbwaxgDO9syE/Fg/wzkYWdETgKPwIMoI8oan
-         Z6tLHKejvAMyChhn2LN7u+h2Xj97xuLXOYAsKtTURbh+XLWihDGv3XZ4olMsbt4f4coY
-         +1oop3BJctyxWkM4+EiQcXu0WctT/vkfRbtB6oB6IFs4mAW0L/d8D1wQQ37i2y6A/WpD
-         xa8MUHKE7S+y4Cp8WFlidHhKCqcR2rLJCFPPWqPw7AqFO9VnFwuidq+c1/fC6nyiKryu
-         p1O/HtqyP2LqSsMBIOtYC4vOpFPBf77VygKLrpWzXNcUKvx8qSSxVBF8kfeZNg1U3XkK
-         k3SQ==
-X-Forwarded-Encrypted: i=1; AL+hErFLLWjWHMzjIYdl4dItG1eFL1ELUT5Lq6/+LDjGWWlI+j+UcwsvOuamLf/Xlyuw4Z79PQms/6ek3Q==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/8KqmVrdSGJ+BZR0XWJ94+HM9exMjtgozlGxl/cmWw05ZS2OwW
-	9hWP1EvfPv4sLZllInlcQtfgfMG+e/ObrKgsQ7vH9TOj0BmaTe+4DDmK7WE7PMMAs/ib1Ty+155
-	UIoKLSs+U8ObfXwn87HJ+NE5xK5g+qdU=
-X-Gm-Gg: AZFdTZeM+I8E91jnS/9PiG+ypjyRZ20YezSBCIoUhi4oaNu5ZD0JSEn9YlPLh1w/aXx
-	53iD8uhahlH+GozZdlWoHOO8xU5+Ud6YfSO6yrLr8/fw+qkYe7RkKvI5FBcJAbu/uSoO9mnElN3
-	z0HHWgtXa/vPJcNrWBy+h/wpFCi7Z0KNDLOYWJV05p574GJpPy7l81j6p7cCyiZbLeSbDcHII3t
-	/txUwxlv7eZiEkZa8XCkpeAM8EER7KfWBvCn+6qv0X6g/2tx18e46yuHr/m0KyS0TOPRppq36TZ
-	8QH4CrlMGs7L+xr7cps61VMdZ6e8sooWUijiu1nmb1ptCXCjTHHeSKFxXzeLhHLCexSBujPjoAd
-	H3zhYWIBSZO921BDBiiKtnihi1TDPv42jQvCLklhF53HeEMYksLaDZUFoez5x/NEvhmWy3JB0S/
-	2f0yabm8ic6KPddkE=
-X-Received: by 2002:a05:6214:4e81:b0:91e:dde3:f213 with SMTP id
- 6a1803df08f44-92134b0e48dmr208910266d6.40.1795492026210; Mon, 23 Nov 2026
- 19:47:06 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795494047; x=1796098847;
+        h=content-type:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
+        b=rfXOjl38cHTuHZiW9HGiyVA+rUNug2Uh/esIS8ZyN2eHoQ4bxBp+QE1uZ02NJkCf9V
+         CF2pfSwh0ikLUoAakXCrsgtjG3N1vSaxq6q2QZ3OrpWMgOH7GVhO0QhbuenkPwPdrLyq
+         Cq4NvbGO9+YT4m2IdkhvPJc2z/T5PJrRDmWnmbzSeiSmZjIV5qXXNHJw5zvBlbFwcFyj
+         pEincfNu2h6XzUoTq9GxQL+QGSnoCkiwiImiqHvo17b0eky9fa7jQadx8V8I2yiGsCWd
+         yy557cLpKPIStznvTXhgyHYwNxTj92vx8CqIO0Ity4X6Wx4LqJZsrlF1LN/1USCM1kBU
+         4KMg==
+X-Forwarded-Encrypted: i=1; AL+hErGV/U53QVh4Aj3VNBR3wCxGNAz7jDD2jfh/9p6HHyFXXtXKJi61YPMia0j01gXmlYtxXS2M9GLzKg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/PNENgrkdtN0Ki+G7A+A6D9vosbrzDqQYKOiG6AC4t4yYJp5q9
+	nLJbuDcw1NF8BY5yfVASqrJ11sF9Z4A6Xg6527B8tSi5ml9hAk9dh3XAzFQ5gS++HdjUl28fWiS
+	3FdRt46JcLO15ZsO6LwEhLcoKZNLmFXg=
+X-Gm-Gg: AZFdTZfQe/YemqLr83RluQBayTzjLykoL5cgH0e9Bo2n2nzslcsF5nf4atB+USikOYA
+	19+WMaxZCzoN2O378FfASXyAt6a/kc67WiqMxkYygVoSFPia4eQIseN9NqfjPwQnX1pFsk+/RFa
+	4+An0L8ZJFdxbppGZWzdaW4aJVP91h0v17Q2dvKIFC1mPmLZE8+DbeKBLHtcJGWgmo2xNDqyi4j
+	BBLV5BsNmmiAol+bDS8DKDFESttg/pHXMQI595fJnejqz+7SNhNFTi/8nc7rW/nuSaYP6ecJwTq
+	D9UKh7UcelNVR7sePaXhXufsBHa8foBPrZxrlby29kYt4yep6N530THUnwaRqce+J+gubTQ6N6E
+	YS8vgJmVyqrbaQl9nGbIYw3Yp6Exa6luWKck=
+X-Received: by 2002:a05:6402:234a:b0:6ba:7762:3dc6 with SMTP id
+ 4fb4d7f45d1cf-6ba7762424cmr5526320a12.31.1795494047241; Mon, 23 Nov 2026
+ 20:20:47 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -102,53 +103,81 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-From: Zhi Long <longzhi@gmail.com>
-Date: Tue, 24 Nov 2026 11:46:55 +0800
-X-Gm-Features: Aa3M54ovvCtFZ2UeXOS2b1TVyPsCM_DsKH4Wi3KQVJPC-xM1QpPppfUx76jRiWs
-Message-ID: <CAGEQorPo=UkuF-o5+c7exvXzaj4uudM_f7ek_6GnSumMyYngdA@mail.gmail.com>
-Subject: drm/spacemit: K1 DPU and the K3 display series
-To: codykang.hk@gmail.com
-Cc: dri-devel@lists.freedesktop.org, spacemit@lists.linux.dev
+References: <20261118104935.1716-1-linux.amoon@gmail.com> <20261118104935.1716-3-linux.amoon@gmail.com>
+ <awS84s2FVdzy3j4Y@aurel32.net>
+In-Reply-To: <awS84s2FVdzy3j4Y@aurel32.net>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Tue, 24 Nov 2026 09:50:34 +0530
+X-Gm-Features: Aa3M54o2V3tALqDtTk5FmFGSg-XejOz73sQbTVaEuMBBmEBfiB2hu2jposXV5Ww
+Message-ID: <CANAwSgQXRojN2x4NypLajJ8tUf2cyNfdfFLnaOFPd1hXuOMkJA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] power: reset: Remove SpacemiT P1 reboot driver
+To: Anand Moon <linux.amoon@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
+	Andi Shyti <andi.shyti@kernel.org>, Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	=?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>, 
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, open list <linux-kernel@vger.kernel.org>, 
+	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>, 
+	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>, 
+	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Cody,
+Hi Aurelien,
 
-Thank you for the K3 display series ("drm/spacemit: add SpacemiT K3
-display support", v3).
+Thanks for your review comments.
 
-I have a question about the K1. I work on a device with the K1 (a product
-built on the MUSE Pi Pro board) that has a small MIPI DSI panel, and I
-would like it to work with a mainline kernel.
+On Tue, 24 Nov 2026 at 03:53, Aurelien Jarno <aurelien@aurel32.net> wrote:
+>
+> Hi Anand,
+>
+> On 2026-11-18 16:19, Anand Moon wrote:
+> > The SpacemiT P1 reboot driver uses I2C-backed regmap operations to
+> > request system shutdown and restart through the PMIC.
+> >
+> > The system-off handlers run in atomic context, where regmap operations
+> > may sleep. This can trigger invalid wait context and
+> > scheduling-while-atomic warnings during shutdown or restart.
+> >
+> > On SpacemiT K1 platforms, system poweroff and restart are handled by
+> > OpenSBI through the SBI System Reset (SRST) extension. The Linux PMIC
+> > reboot driver duplicates this firmware functionality and is no longer
+> > needed.
+> >
+> > Remove the driver along with its Kconfig and Makefile entries.
+> > The P1 MFD driver and its other functionality remain unaffected.
+> >
+> > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> > Cc: Aurelien Jarno <aurelien@aurel32.net>
+> > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+> > ---
+> > New patch
+> > ---
+> >  drivers/power/reset/Kconfig              |  9 ---
+> >  drivers/power/reset/Makefile             |  1 -
+> >  drivers/power/reset/spacemit-p1-reboot.c | 87 ------------------------
+> >  3 files changed, 97 deletions(-)
+> >  delete mode 100644 drivers/power/reset/spacemit-p1-reboot.c
+>
+> The patch is correct, but you might also want to remove the
+> spacemit-p1-reboot entry from drivers/mfd/simple-mfd-i2c.c.
+>
+> Anyway, while I support removing this driver on the long term, it might
+> be a bit early to remove it. Indeed, while the driver is available in
+> OpenSBI 1.9, using this version requires either patch the vendor U-Boot
+> or using the upstream U-Boot which still has some limitations (thanks
+> for your efforts improving it).
+>
+> At the end with your patch 2, keeping this driver a bit longer doesn't
+> hurt, as it is only used as a fallback if the SBI SRST extension is not
+> available.
+>
+Ok I have no issue keeping this as a fallback driver.
+> Regards
+> Aurelien
+>
+> --
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
 
-I compared the K1 DPU in the vendor kernel with the K3 DPU in your series.
-They look like two generations of the same Saturn design:
-
-- The pixel format numbers of the RDMA layers are the same.
-- The bits of the pipeline control words are the same (output enable in
-  bit 18, the video mode word 0x821).
-- The RDMA register block has the same shape, moved by one word.
-- The interrupt names are the same.
-
-But the layout is different: the register window is half the size, and the
-control, timing, composer and interrupt blocks are at other offsets. The K1
-has its timing registers in the output control block, where the K3 has a
-separate timing block.
-
-Do you or SpacemiT plan to add the K1 to this driver?
-
-If not, I would like to do it once your series is merged. For now I have a
-small local driver for the K1 only, to bring up the panel: one CRTC, one
-plane, direct register writes without the command list and the DPU MMU,
-plus a driver for the K1 DSI host. It builds but it is not tested on
-hardware yet, so I do not send it now. I only want to avoid duplicate work
-and to learn which way you prefer:
-
-1. Would a K1 variant fit into your driver, for example with a second
-   register map and a second back end next to dpu_saturn_hee.c? In v3 you
-   removed the ops table, so I am not sure which structure you want.
-2. Is there register documentation for the K1 DPU that can be shared? I
-   took several values from the vendor boot loader without knowing what
-   they mean.
-
-Thank you,
-Long Zhi
+Thanks
+-Anand
