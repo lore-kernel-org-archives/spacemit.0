@@ -1,55 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.138
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795482049;
-	b=cW3cI3REm3Rfc4BGCm1q6ZtoNBx98+kTouEliywQZOTnNVFTSiw6gNJVk6h2RcEmeVVU
-	 AkeEKhQYuN91EFOqIo6HCcjKM1yAPiqpZjuBw/SfqT4KbeBrhl5PG+o4xgBjz5Hr3fFZY
-	 lTADnQyjfAT1HG9vBBg2vTzzF+i9Ym9+rT1s2YAQNUO1thzwPl6QTcXcsbNX6uqMg6CSx
-	 W8Q0XTCTtZzr/L8lXcdm7/StzPWCXPtCBNhPVKcBu+3ZKG1GED0yzgLf08Yg5oMWygUT/
-	 Ik8mPhY6qhoWlQIn8osmUekT9wjQw0zV2fwp1gJzGrFwDjLLQyqkQeauWP0NBu68lWw==
+	t=1795486342;
+	b=TXfi8jFNcfdzoc3lO05wy1XBASZok7jIHauvgGiPp2FXRY3hDN4Sqo3/HJSvY1KDUeIO
+	 lBy0PmEDSP/PpEK9+gj4OeHlS3srDVM9qC6GjFBgkdebvaZBpCb8gvtofhRE+rhELc6VO
+	 R3HZoT86JPd9tsv8NNEAy74twe5Vsiju8l004KewMu/d56Nfh/7xTyiy63GX2ABX0ovfJ
+	 VGnOGLLBUdpip2rXUaGLw2EMRDnyfIQnc+Yc/p3pQeOufzEkYLfFeu6lFzI2gQ1oM4nva
+	 PUYt0XyI1odshxR392pyYIE5a4RwEsdd5PHyh3ewmHO8VJdqGZ3mTyZVKVHXFpGI/wA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795482049;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=Ggw7YcUYncqyVJG+//d0uJLUqpnx7zsMywIoX1umATo=;
-	b=LnRumEDI9FApPqehr3yvnwIbktkXjRJEuX60fws4Txo8uCO3/seN4ZUSs6g49yJAccAT
-	 N7yBVR+6ZyyFpEkOyDNdgaOLfeNCzl9viTxOiDnhnbqJ1W1S6Z5bxBQfT6uBWHOXJdTPI
-	 RvgDEwBq1/Dk4ZRNZJoxFUS/vJH3evjowHzD8PQUpNWliPhjKbPK2RQJ2Vyl6idFMlPT0
-	 2LkOd0cvSyi/zlgzE5+G2z0nXx7iKJ8qYR8pVM2yBzpHYaCmf3U7ElHNZo1VAiogGwdTp
-	 jy0tgbhNzdSuhIXj7hRUfPWhDHJbdHCjNA9GJvwRM1jwIQEG9WsTZOuOdyfVi5q+ohQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795486342;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=DYJhcyx23MYrdnoVW3nJljPvokUxcXGxcoFSW0aOJ4Y=;
+	b=5dNYghIjMQADYxfzzD5TuMCYGi8N6cueLiyFNH7SRg925OGIwUiV8NZZVRHTCovcUYHv
+	 O2K2aDbc635imS1dkc8z7poma65vOukinnEGeXSeiE2i/wKF7qoF/ofXsS15ckTSI4/vD
+	 KfH0LmR7iDqHhI/FedYy9Pr8LwoUDwLrhs1oLw7jNXu850+jYnN1tSWO0a1cobKCHHS/T
+	 yAVDOKMQNIQDV9hfG6qsFD/DLkT9VIMORrsILiu2suDkgkvkvMeiycdB4nICBp++WgC/q
+	 6vsbztqKyT8N+/xM93AobZX8Vi5cOkCQUJuewpVHvXLE7yfId8QImEWJG/aEeotRzYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=QlM6IKAC;
-	arc=none smtp.remote-ip=54.254.200.128
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ClSwIla6;
+	arc=none smtp.remote-ip=74.125.227.138
+Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2116B606A31E
-	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 01:00:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2116B606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30259606A31E
+	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 02:12:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 30259606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=QlM6IKAC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1795482027;
-	bh=Ggw7YcUYncqyVJG+//d0uJLUqpnx7zsMywIoX1umATo=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=QlM6IKAC38SvCbK00Pi9cTE69gcAUBd3lHR8uGTmD1Vaw+VGVYl67gpmUJJgPkkJz
-	 9bKl+H4chJIAmv9DpE9a2lud3OUn7u1oM/yFw+f7TIstdNGNFWLnlSDuedEh2AZHHf
-	 Udb0bdmtUIhsSgJYVvFhFZfYHDu2JXLoUbJwUlMk=
-X-QQ-mid: esmtpsz16t1795482022ted70460e
-X-QQ-Originating-IP: aaGmqngVMZGJB+SVmvOQbimTL7t13n7UZqIKKuEE44Y=
-Received: from = ( [183.48.244.245])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 24 Nov 2026 09:00:19 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 2033590560538473759
-EX-QQ-RecipientCnt: 17
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ClSwIla6
+Received: by mail-pj2-f10.google.com with SMTP id 98e67ed59e1d1-3b3d125637aso777423a91.0
+        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 18:12:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795486341; x=1796091141; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DYJhcyx23MYrdnoVW3nJljPvokUxcXGxcoFSW0aOJ4Y=;
+        b=ClSwIla65bX6YI8Z67IeI2qH+bvKC9dY5oJrtjvbu3S81QHCDJTmx258TMwl4c56Nx
+         L4Q9phTGTbTASMUdt0fVgslrcj+9rRMSG3DkJ+8GszN2JjN2rxQrFMo4/BY+XoHkIYdd
+         VCzlTnWBm33SZUiNEQhHV80/qOFYbLEXvSp0ENFGO42IFY4A8JqTX2E/ObK2jSK7bggR
+         FfripI6hrNbj5VuAfCnMuD47rDBr/gmxJVMTF9OqyXLaWZK9FCfkQPHXfao7cj6bmD0F
+         AXnGVGSc8Y3W554cNxgQFfz1a7VX57WJvjLLLVO88BJ9xU3k6K3VrMKmz/C0/1pBomAl
+         COHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795486341; x=1796091141;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DYJhcyx23MYrdnoVW3nJljPvokUxcXGxcoFSW0aOJ4Y=;
+        b=jDRoZnaFswC+vpEMmnEhC+yxlcLQbT5x0OvItUWoMOzvFQtp9/GculysdhEcOIAKmE
+         24frEvdScbZ9O5XyAAUdWREdtG2cKHiYnNdO9KjE5Ug2CMIBPBh3F92wkl2maEV7iWh0
+         DxjFerf2lo7CP9Dw925z8X/22A8CgPODaX8xM75ZGfewi80yGPee+G618fYflX5opeVH
+         l252/+uQ0RLqAIClXdARPBEWUGTzhAtUk3205+xadwMK4atTpgbQeuIwDw3EyXKaWmAE
+         z3sDvgWot9z2U1DDEYJdeI8fn4VDix1RcomZ5EZYVS0b+qgsvQREeiQHyUvGBEWil9Kw
+         2Ufw==
+X-Forwarded-Encrypted: i=1; AL+hErGMD/Wm8L1iCg3MFuz828llKXkcl0qryf4s+xgmP90qJuQQ0U+HE12j1tN2m5/s4rCEf92GDMdRUw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8nfl6Z84PjiZzEPsqBKTXUyV36t65FsK1Uazej1qXmVW0/iSzR
+	29piDQlOuyC440uGb6wfaTf1slbJA2CuHDuYPUdRTOCYmpPiCJX7+eyt
+X-Gm-Gg: AZFdTZczIWwLleRZsX/glV4wXisLcRpOhIczZjTTD8Nmv99yrGnYLVu8B03V5Cgjse2
+	ELlXq9kVnsFmaq5k94C36noLiJ4ajtgpusXGnSEPs3mJFd3bWuvNvZFMoxS39YNv+mE6xWYtewi
+	gmK1jhA4pZvrw0A3nJP0yp+AiGTpQB8oVQoUY5dQly/zMRgv+HeQmCfkW0J5+dxjtnKDEPO7xex
+	oPv5N2r3DjYVE/OsUJfj8h+Sjc1DQVo0b+B7M0Lzwit4wiEs46sfJzglfYyVl0N3Zf2Zeg7epcS
+	SKVWa3/R/MRx5oT1RFl0ix+QjCmYe9oWhnaYsY0Bww+3xL3WRn0RvtOX/7p1InHMRdpKKC/bBnj
+	f9kbi3bouynv27EtPzFUaBOwfJFKfwvhhi0ZOuyJPUrMrJS+uzZSTUJxfxZvEfeinoXHhePed8E
+	vASRkS1FuDtBZCi8Poo1bX51lb3Nm4S3ZtR5At7A9iQ+tYGsMR+mAeGWOGrV84yQx9MyGFqPSiH
+	XANBe3ccVLxneKBiSfuOq4+HmtSTnDPfaYDhlP7TA5xW+m/IrZADE6SSLQjaNlRTT83w/pt6lMr
+	uoOM9flNaymyru2SObGumx+rIKZb5XPUGe9K8sY+GB30DDKcKrjP7XzMRg==
+X-Received: by 2002:a17:90b:4ec5:b0:3ac:b2e6:3181 with SMTP id 98e67ed59e1d1-3b41c9476d3mr12780728a91.37.1795486341377;
+        Mon, 23 Nov 2026 18:12:21 -0800 (PST)
+Received: from localhost ([2403:2c80:6::10a9])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b48b41928esm9869004a91.9.2026.11.23.18.12.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 18:12:19 -0800 (PST)
+Date: Tue, 24 Nov 2026 10:12:15 +0800
+Message-ID: <3b4d214b53b64cd7941260875bbc88d7.codykang.hk@gmail.com>
+From: Cody Kang <codykang.hk@gmail.com>
+To: Ze Huang <ze.huang@oss.qualcomm.com>
+Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Haylen Chu <heylenay@4d2.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Brian Masney <bmasney+clk@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Yao Zi <me@ziyao.cc>,
+ Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Guodong Xu <docular.xu@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
+ Jerome Brunet <jbrunet+clk@baylibre.com>,
+ Sarah Emery <sarah.emery@canonical.com>, Dmitry Baryshkov <lumag@kernel.org>,
+ dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
+ devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 00/17] drm/spacemit: add SpacemiT K3 display support
+In-Reply-To: <DN2OGZ2JLHQ1.3PK0UZ3K1VYKF@oss.qualcomm.com>
+References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
+ <DN2OGZ2JLHQ1.3PK0UZ3K1VYKF@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,97 +118,19 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=717a22241ebf390108ca063a911934bd69b0b5ad107928f9f178dc29d784;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 24 Nov 2026 01:00:18 +0000
-Message-Id: <DN3198CCQBG1.RZR764NVW5ZK@linux.spacemit.com>
-Cc: <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>
-Subject: Re: [PATCH] riscv: dts: spacemit: k1: fix the EEPROM page size
-From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Zixian Zeng" <sycamoremoon376@gmail.com>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Troy
- Mitchell" <troy.mitchell@linux.spacemit.com>, "Paul Walmsley"
- <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou"
- <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Aurelien
- Jarno" <aurelien@aurel32.net>, "Vivian Wang" <wangruikang@iscas.ac.cn>,
- "Junhui Liu" <junhui.liu@pigmoral.tech>, "Michael Opdenacker"
- <michael.opdenacker@rootcommit.com>
-X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261123-fix-bpf3-eeprom-v1-1-df8cce6ef2b5@gmail.com>
-In-Reply-To: <20261123-fix-bpf3-eeprom-v1-1-df8cce6ef2b5@gmail.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OGmpL5CFYt/YATdBNWYWGhBWqnqjud8jL7fKHkPClwCAn5dG/yjBkOKm
-	VxABQ9X79QymsaamZV/E5YxIyDm8KoGFoTGKeFcVS9aqz3rMBe0EgilRrgZVKCMfnHnRGxN
-	MIwysIvUN7NoGG95e9Qv4drW2pxXgD0HgO4sUnw5d9aWUWbqZDbIgsvV4t58C70e/r3Gm6q
-	EJ4vc2deEMBEnfhtXgxxxsMTbWXMh5Wnpyns56CunymkkdreUHpQvpaOTij82HG656MJkLF
-	xNDHBS0PNgIEoGkMdRx96XGqQ/Co9jhLQAxnvn4JEAoU6aGF3CjgjO3G1vkhTB1J+4JCRRx
-	WhEFNWJOqpEqFXY5GxmWke/dsTyciptPB7iI0F7Gaz0pia8pddK1Cm6zRy6699aOpYYbOYZ
-	QvqflRlJrtFNixOBQ3quI6LbZCnUzDVwGNCNAHTbrVKFGqGaM2wYMQaRU+R2lYbPlcGMy35
-	EVLEwYYhBvCvGHuNsdmDjqzefZbiDFZ8Ii/yZp/beo6nrvQIhn4GAWedYM0qPgwGfB4QOC3
-	DM7oxSdZRd7sEFCu4wRbWqmKjVh3Kt3gvWL4FGxxH3fKbDlj2QQAtTgpZlRD0a5tFQtTrqN
-	g/YNJFs3EWmg/mWo7btM1bvTimd53UMpzHcYOBJW+5elLSJUf/K+wgjUh/WMcU2leehtH2b
-	gwDjDBvho9UNG9F6aeU4pV26xd+NFlp32FB2t7Ht5Nh3rslk0zy3HxsFssVlLS3s7e5keoF
-	GBP3bNFnHIUdb6QMtDWiCdy2bCW+bfBw9Ow1oRpBPfsLeLU6Nu+Wp9uRHXGCWisG36qAgmO
-	dvGJ09VZO7HJcHqpFLqYEf1zSIy3pJMLLBSuIgUvXCglOm05dZ8bp4euKL3/pOoNC+6kLkj
-	R6kcfDFOylj2TDjyYBR3fzMmRQ1vzsfi9wfncyH6qYi9LzXOzQaxE3GLp3RYA5DQv0KKMUY
-	Q1rFk4gXwV1BW72/QLCtGdnQRmkQGjhHF7SsgUTU30eQztIgSgSDeT/xo9Q26DFRGxlpNGT
-	qOWDLT7b8ugpX3Qyas7OV/pQ4pfi3MvtXcPz0IK33nfZFv8wcO8QZal7arZkVJMz4QxcnWz
-	kx7CrH++MuRIM0xfTUM3aDJPKT6QtRm2IdICwpUGsQtx6B8aGsRzm/uZ/q57z9Q8jtd2abw
-	XQA++sCEZ7pogNg=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
 
---717a22241ebf390108ca063a911934bd69b0b5ad107928f9f178dc29d784
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+Hi Ze,
 
-On Mon Nov 23, 2026 at 4:41 AM GMT, Zixian Zeng wrote:
-> The bananapi-f3 carries an AT24C02 compatible EEPROM GT24C02B [1]:
-> 256 bytes with an 8-byte write page, which can be found in schematic[2].
-> The device tree declares pagesize =3D <16>, which does not match the
-> eeprom chip datasheet which declares pagesize 8 bytes.
-> EEPROM pagesize of k1-bananapi-cm6-io[3] and k1-orangepi-rv2[4] changed
-> together, based on the chip model shown in the schematic diagram.
+On Mon, 23 Nov 2026 22:59:10 +0800, Ze Huang wrote:
+> Thanks for v3. I tested the series based on v7.4-rc1 on the K3 Pico-ITX
+> with an external DisplayPort monitor.
 >
-> The TLV EEPROM on this board holds the base MAC address and the MAC count=
-,
-> so a corrupted write leaves both Ethernet ports without a MAC address,
-> which is how this was found.
+> Modesetting and page flipping with modetest work at 1920x1080@144Hz,
+> and kmscube renders correctly using Mesa softpipe.
 >
-> Link: https://www.giantec-semi.com/uploads/20230414/GT24C02B.pdf [1]
-> Link: https://drive.google.com/file/d/19iLJ5xnCB_oK8VeQjkPGjzAn39WYyylv/v=
-iew?usp=3Dsharing [2]
-> Link: https://pan.baidu.com/s/13UTY_qM4gGuVxsZ9U7_Xpw?pwd=3D8888 [3]
-> Link: https://drive.google.com/drive/folders/1pcI_U0C3VJKTCg8A1zj08CwNboh=
-nONSR?usp=3Dsharing [4]
-> Fixes: bfce75e2345f ("riscv: dts: spacemit: add 24c02 eeprom on BPI-F3")
-> Fixes: 46a8c01700ac ("riscv: dts: spacemit: k1: Add Banana Pi BPI-CM6 IO =
-board")
-> Fixes: ac436e6879f5 ("riscv: dts: spacemit: enable onboard eeprom for Ora=
-ngePi")
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+> Tested-by: Ze Huang <ze.huang@oss.qualcomm.com>
 
+Thanks for testing v3.
 
---=20
-Troy Mitchell
-
-
---717a22241ebf390108ca063a911934bd69b0b5ad107928f9f178dc29d784
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawThoiEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+o+wD+OlEf5HFUNy7f
-l7HTzclNxt5QfKGOcZ77dQoUSqNlL8EA/Riqjg+f1nUhCjJ/zfcW9Ig33/Ral0U7
-tEVGQLgIa8QB
-=DIuQ
------END PGP SIGNATURE-----
-
---717a22241ebf390108ca063a911934bd69b0b5ad107928f9f178dc29d784--
+Cody
