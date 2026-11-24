@@ -1,99 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795494049;
-	b=aH1juwC4sZLXkghj/RSMHRKMQib5MAEdSP/SQUV+75C1zQjU1Bof3NurXjJ7/+X0QM3+
-	 yT1HYKSg2/THAE73GjIxLXh4Q/BUw6Az8+MFvr/qJlymnKK78Ks6qILh2Zy+3n36UDflc
-	 PCwxRK69LKdrpH0OGKO6rP6rxB6U+SkxXrz3+Tho+RiSmN8HqGyxolKzC7XJlCYTmwJ1o
-	 6+DdBnlj0jmgQl6bQ+wGYNM97fiRj2Dbi3PMzsqV9Sz224EFvrtiAXa5fUt7yoGTuh9Cy
-	 46lknrNit7rCpkYAlEHw5L/J1k+qWPZB7eaoD/xYGhbGRZ1apW/uA0tGIBcMc8c8p/w==
+	t=1795507880;
+	b=c0oG21DRa0aLq9nO5aPm+sAVjMSVjhV1JU9hFAXpObNm7miqeajas/GDDpxGc94YZRPL
+	 maPS73MCe0ECucMiICE/hZs2jmy/Cv1i3Ve/XpUz4nYPFwSBnvDaKjkNVSXDC/KFCslDY
+	 sgcxqqFzQ3k+ylVxeQsP/QDu9iKIWZGhpBDluPsV2eaRZr3OHA7HF3oLMuu0R2KsqtgEb
+	 bycJUEaHFa3Yv8MWnjJgRCyrUt2j5bQmGP53Zkmx7fQb3px7f7abe5WBCvchlCaO7/a7Q
+	 1Eu2CGe6nALZKSxVxvdU4hZVCZRlwEkkz7u7s6UedH39an/QZxP1dCWoemFLFJsaxlA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795494049;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Content-Type;
-	bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
-	b=m1EEWfKFLh9TMDluaaseZuSC1QGMigq/HvaEAtrcriRBUBFUq161WLr7euVmqWJzPXDN
-	 AUrnEs2icpcYrWWmizFGFi2HhlDTT7vvdKkPg5kkjG+gAwCT7/fBgjXnJguvwA8uecZrF
-	 qdWsBGgCJN7sYija0fPUOFeNAkmAq2WP8D6dBVSL3OSKXSs02ID7XyOobJdVMSFY4CoRW
-	 Qxdoabetuq0Fr7T2uxl9tS8DsaRY3MPLAY4dEtLr6I4hO4J3xnoCN89TqpxxWOF4sDPhQ
-	 nFALdpKpCYQ0TWmbz0aFWzoEFEoick0lC1tkgu0fDDOk7AjPk2QolDb3p1bjEDmaveQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795507880;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=1FcLExclzs9rqCiFM96+FT+nKVG2cSdDGV9xQNrXbO8=;
+	b=WPmbZoPKXoKsPW2nILWaXsD4+2U+S3UBQ6kaUG9sX0qlCFYQNwycnnOQxCVEBQW8+JEm
+	 iFPXGrz6fxCEVwwkVh64QIYFsHu39/jPWiZCchSA1PcWpUPJhRYipnqqDsm2cxcmrFCAW
+	 fVoX76SziasAYn5vmeUL3flIPiyEoAl7zQcTRmG32Pe4YTuzKXUImgQ5WCUUqblPIPZ54
+	 IViNcth6jg0XWBEnyl/AILOux9FEddUhsgjJgVYhG7g89ZcG0/ItJTLBra6cRh0OwEinc
+	 BC03ciKP6siI8ypxnAGbRqQz66kOKQUbaoKhSMpcZsvFx9FnwFPTxj8INKYnalbi5+g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=efI9QTDS;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.49
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dBhXAs8j;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F9E606A327;
+	Tue, 24 Nov 2026 08:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dBhXAs8j
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1795507880;
+	b=RkpVaolu5MIQT1Qg9od+FDiUmH//174Bq6hNQhzHX9rXLTmnfnx7WnhmP0hDZkyWe+gu
+	 eW5nZ//s2lJoOh7/xaPhhGTKpX7xG7IFJPLLtupSZ+3hhN7y4fhPdbY8Jz6nfxvmbwpY3
+	 W8R0I9TCOTFUY+2qhE1kW3ijOYqkiSFhh7yNmGhRw4VJJUmiNMPRvR2m3FsEf8VSGY7Va
+	 YPEcWAtJikXoKi+mP4Bl9ODWJl770S+0e1KYh2VH6M6Jfdw8j00gZxet+ol8g8T/Mn6Pl
+	 JBZ7axYsVg3+SMwmYc8sLlruYc8NMKSCnQzg41eTSiPBkVgwyx8wNGA0fNPf9NmKihQ==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1795507880;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=1FcLExclzs9rqCiFM96+FT+nKVG2cSdDGV9xQNrXbO8=;
+	b=3DaQwi2ArgmVOlR3kWe8iHGk/Ysdu80zTE0HBvvgNwxhd+pGxcEtKXQGBLcxOfKMAQLd
+	 NmC/EqqUJSZG6KC3kfj48/cGbEaZxo/bQLiWiZHWBHT7HW8L+PJqGgCCPTBm+uyJXc1mA
+	 qeB9ufRiDlmljmPGJDDnikzU7Qe/Ap4wsS2DsfdQwvSy9eI9kKYC09r1j11lQIF4+2w1G
+	 8CaVNXyJNs+xq2XHNSjqasJtayAxAWBDB37dR8800pLDkqUe+UQi2CrxbykXxD/XsWCLF
+	 kKUj1d6hZUkrAjS5njgAS9wugb5VfZxIDGBRjEilbVfKJXMjUek/dHac8nFA/dnb0aw==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43677606A326
-	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 04:20:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 43677606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=efI9QTDS
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6b596afb4c5so4577459a12.1
-        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 20:20:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795494047; cv=none;
-        d=google.com; s=arc-20260327;
-        b=e/xGQe6qXB8zL2fFJblcypM3xFha99XSlCFzN3YE+QYIKlfx8GgNlYuuhcGbNEe0XM
-         ylM19pcV3kHY1ggxbvkJQhnI80rINNxbZr5G9/Hw6yRwoaUlD9Jakuk5lPDWT0YuoSrX
-         vnb6UwsWbXWS/Xe8BmQ+VdOH04392fldZG6LcJk7n0TE+r6ESLMAi76AuKjGRndSLiNx
-         Fnhe64PrQ7h4J5QukvCrjj3cH/9tOpcErn4cFksV8Y/ZhjWZM/CddrEBK3QzfGms74Ls
-         7lr15hgAWd6E2NzxyIUF5Zqhmr5K4eFZR87Zmoy2NVTGPeJQ9UH6IFp6Cbjxw0xAXz9z
-         dHKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
-        fh=FFlXUucz65ENVMv4u6GflsMfwHpsKAqSlUEfQPn9BLg=;
-        b=XHxO4FeA775RrFT2kFMAikxCGHO/zIgZHouvxShqBMrrj9mgG7ihF1qo5T5wiXy008
-         Nx5YNI9vi0Jle8MNcRAVfP8lMNxsODiVTFnE0WDALnlyHs0kN2Xk1+BU5yx8QYKayfP7
-         Qzzr0zgtrx7CgtjudoC5gISHUcPfpUG09nHRevKKgEo9XJ8/Ic2SGMFEnb1rwJjCJ6Ll
-         ka8fuMwiAiUIoKIkKGDY/LjLruYn1lGZj2xmB8qCsPjQGWOukGgURv7k1ROI24A72Z3H
-         HyHnFqpoM1vsUQRxj10VI/hhPZB6lKymfYZJ6yF4RJU9BfoMnKAYTIWbx0rpaI34mf0C
-         szCA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795494047; x=1796098847; darn=lists.linux.dev;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
-        b=efI9QTDSBxrJQhjValG8kCnHwoVwR/czSy6HwxU5vt/4ElH9XDtg1CzsI8bNaO+TD2
-         wctpwFWOOOeBuXJXBdEucg3VOh9Tf5cFZ6JdLVE6mo1gM/fcMhJqVwWDVSLXkCn/KUAB
-         4k+9s7K0CAOpym++n2YhPVj4OGsik2tToz1DRhw9183W3TiOub9e9etiRcHUE6emlu3h
-         p/Hqep29lARz1ngX3IZt1ylYu0MG57bSdK/XC9r8DCDHCXxgZYBwYqBAVhgTAyfIItgh
-         xBFb5dWJdSm8EnJ9XalJii4LA89qPKBORN0cTH7U9mTACALYOu6OY2f7nhNYkfcVsyXS
-         Izbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795494047; x=1796098847;
-        h=content-type:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Iwz99gTCxCIUCcRsgbRPplQdxHuMdIk+bgQDXj94h8k=;
-        b=rfXOjl38cHTuHZiW9HGiyVA+rUNug2Uh/esIS8ZyN2eHoQ4bxBp+QE1uZ02NJkCf9V
-         CF2pfSwh0ikLUoAakXCrsgtjG3N1vSaxq6q2QZ3OrpWMgOH7GVhO0QhbuenkPwPdrLyq
-         Cq4NvbGO9+YT4m2IdkhvPJc2z/T5PJrRDmWnmbzSeiSmZjIV5qXXNHJw5zvBlbFwcFyj
-         pEincfNu2h6XzUoTq9GxQL+QGSnoCkiwiImiqHvo17b0eky9fa7jQadx8V8I2yiGsCWd
-         yy557cLpKPIStznvTXhgyHYwNxTj92vx8CqIO0Ity4X6Wx4LqJZsrlF1LN/1USCM1kBU
-         4KMg==
-X-Forwarded-Encrypted: i=1; AL+hErGV/U53QVh4Aj3VNBR3wCxGNAz7jDD2jfh/9p6HHyFXXtXKJi61YPMia0j01gXmlYtxXS2M9GLzKg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/PNENgrkdtN0Ki+G7A+A6D9vosbrzDqQYKOiG6AC4t4yYJp5q9
-	nLJbuDcw1NF8BY5yfVASqrJ11sF9Z4A6Xg6527B8tSi5ml9hAk9dh3XAzFQ5gS++HdjUl28fWiS
-	3FdRt46JcLO15ZsO6LwEhLcoKZNLmFXg=
-X-Gm-Gg: AZFdTZfQe/YemqLr83RluQBayTzjLykoL5cgH0e9Bo2n2nzslcsF5nf4atB+USikOYA
-	19+WMaxZCzoN2O378FfASXyAt6a/kc67WiqMxkYygVoSFPia4eQIseN9NqfjPwQnX1pFsk+/RFa
-	4+An0L8ZJFdxbppGZWzdaW4aJVP91h0v17Q2dvKIFC1mPmLZE8+DbeKBLHtcJGWgmo2xNDqyi4j
-	BBLV5BsNmmiAol+bDS8DKDFESttg/pHXMQI595fJnejqz+7SNhNFTi/8nc7rW/nuSaYP6ecJwTq
-	D9UKh7UcelNVR7sePaXhXufsBHa8foBPrZxrlby29kYt4yep6N530THUnwaRqce+J+gubTQ6N6E
-	YS8vgJmVyqrbaQl9nGbIYw3Yp6Exa6luWKck=
-X-Received: by 2002:a05:6402:234a:b0:6ba:7762:3dc6 with SMTP id
- 4fb4d7f45d1cf-6ba7762424cmr5526320a12.31.1795494047241; Mon, 23 Nov 2026
- 20:20:47 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id 55C231F000C6;
+	Tue, 24 Nov 2026 08:11:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795507880;
+	bh=1FcLExclzs9rqCiFM96+FT+nKVG2cSdDGV9xQNrXbO8=;
+	h=From:Date:Subject:To:Cc:Reply-To;
+	b=dBhXAs8jsTslgcFQK/uWWmQVYA+fwUTM5J4q7/rzwH8Y4RSqljEUrubk6Z6uSfITH
+	 dEzvbCtWGxfVsxzQeWIIwaWzzNWr+1C1+yEFzX064um54tzOhyCZr616br5eq4Jjqq
+	 QTG+S1fb2teFNMm5mI6XCrK6psCITpRV735KTZCtSU80dn/p8DKN6BzmsqAllOqrkN
+	 vuY2i32l81ytmTARQ1zdpebrUuMap/9kfmwUBJiE2wZDWFvTKyMoxT7vlK+/AktQLu
+	 lsLoXIfSgvxaEotnZEHBNU1id87TN/jpXT4eLsBTnkihmweBZlDBKgNitYVAoBxmKM
+	 5jjAI/XCbKMZw==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id 824004C929;
+	Tue, 24 Nov 2026 08:11:13 +0000 (UTC)
+From: Thomas Roos via B4 Relay <devnull+thomas.exein.io@kernel.org>
+Date: Tue, 24 Nov 2026 09:11:12 +0100
+Subject: [PATCH] scsi: ufs: spacemit: k3: change to FASTAUTO before the
+ FAST power mode
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -103,81 +83,214 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261118104935.1716-1-linux.amoon@gmail.com> <20261118104935.1716-3-linux.amoon@gmail.com>
- <awS84s2FVdzy3j4Y@aurel32.net>
-In-Reply-To: <awS84s2FVdzy3j4Y@aurel32.net>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Tue, 24 Nov 2026 09:50:34 +0530
-X-Gm-Features: Aa3M54o2V3tALqDtTk5FmFGSg-XejOz73sQbTVaEuMBBmEBfiB2hu2jposXV5Ww
-Message-ID: <CANAwSgQXRojN2x4NypLajJ8tUf2cyNfdfFLnaOFPd1hXuOMkJA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] power: reset: Remove SpacemiT P1 reboot driver
-To: Anand Moon <linux.amoon@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
-	Andi Shyti <andi.shyti@kernel.org>, Sebastian Reichel <sre@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	=?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>, 
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, open list <linux-kernel@vger.kernel.org>, 
-	"open list:I2C SUBSYSTEM HOST DRIVERS" <linux-i2c@vger.kernel.org>, 
-	"open list:SYSTEM RESET/SHUTDOWN DRIVERS" <linux-pm@vger.kernel.org>, 
-	"open list:RISC-V SPACEMIT SoC Support" <spacemit@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261124-fastauto-v1-1-32ec8da5af04@exein.io>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2O227DIBBEf8XiuVtxsTG2qir/UeUBwzqliY3DQ
+ lQpyr+XxH0c6cycuTPCFJDY2NxZwlugENcaxFvD3LddTwjB18wkl1oIqWC2lG3JERTXXnIv+m7
+ grOJbwjn8vqa+jnumMv2gy8/+P5HwWqoj7xhbkMi+HGPzsSuEBm7grKDMBFS2LaYMNwMcUE2y0
+ 0MvvW8PZ0wrXt5jOn0+pydLCC4uS8hjo7U02PvW6VpwxgszC9V2qGz9K4WRg7XYY8uOj8cfoN2
+ MXwEBAAA=
+X-Change-ID: 20261123-fastauto-306d20d17590
+To: Yixun Lan <dlan@kernel.org>
+Cc: linux-kernel@vger.kernel.org, "Martin K. Petersen" <mkp@kernel.org>, 
+ Avri Altman <avri.altman@sandisk.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, linux-riscv@lists.infradead.org, 
+ spacemit@lists.linux.dev, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Bart Van Assche <bvanassche@acm.org>, 
+ linux-scsi@vger.kernel.org, Thomas Roos <thomas@exein.io>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795507873; l=7608;
+ i=thomas@exein.io; s=20261123; h=from:subject:message-id;
+ bh=RymV5zMbzsG2XTIPvNgJCqbPkkuUhbtDXJ6LBGWwEoY=;
+ b=R9TDgIgztndqSoyDV01RA//UNz8TnzB9NUqSP2DihhF57O6C9DSwIzZRo3gCsSbQZGbEPmfjR
+ f4LjHNzWK+gAnP9AKwLAoFe/RRNiSUogSJeq0xIYBaAD5pcwmTa1fQo
+X-Developer-Key: i=thomas@exein.io; a=ed25519;
+ pk=/1K7FRX9hsKzsRpNzb4iTkD9xST9v3ePGJm6wu2ntMw=
+X-Endpoint-Received: by B4 Relay for thomas@exein.io/20261123 with
+ auth_id=1621
+X-Original-From: Thomas Roos <thomas@exein.io>
+Reply-To: thomas@exein.io
+Content-Transfer-Encoding: 7bit
 
-Hi Aurelien,
+From: Thomas Roos <thomas@exein.io>
 
-Thanks for your review comments.
+The SpacemiT vendor kernel and U-Boot never change the link straight to
+FAST: they change to FASTAUTO at the target gear/rate first, wait
+100 ms, and only then to FAST. A direct FAST change kills the link at
+the M-PHY PLL rate change: on the K3 CoM260 IFX (YMTC YMUS8B5TH1A1C1)
+every mode except HS-G1 rate A fails with DL errors 0x80000002 /
+0x80000001 / 0x80002000 and PA_ERR 0x80000010, and the disk is lost.
 
-On Tue, 24 Nov 2026 at 03:53, Aurelien Jarno <aurelien@aurel32.net> wrote:
->
-> Hi Anand,
->
-> On 2026-11-18 16:19, Anand Moon wrote:
-> > The SpacemiT P1 reboot driver uses I2C-backed regmap operations to
-> > request system shutdown and restart through the PMIC.
-> >
-> > The system-off handlers run in atomic context, where regmap operations
-> > may sleep. This can trigger invalid wait context and
-> > scheduling-while-atomic warnings during shutdown or restart.
-> >
-> > On SpacemiT K1 platforms, system poweroff and restart are handled by
-> > OpenSBI through the SBI System Reset (SRST) extension. The Linux PMIC
-> > reboot driver duplicates this firmware functionality and is no longer
-> > needed.
-> >
-> > Remove the driver along with its Kconfig and Makefile entries.
-> > The P1 MFD driver and its other functionality remain unaffected.
-> >
-> > Cc: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> > Cc: Aurelien Jarno <aurelien@aurel32.net>
-> > Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-> > ---
-> > New patch
-> > ---
-> >  drivers/power/reset/Kconfig              |  9 ---
-> >  drivers/power/reset/Makefile             |  1 -
-> >  drivers/power/reset/spacemit-p1-reboot.c | 87 ------------------------
-> >  3 files changed, 97 deletions(-)
-> >  delete mode 100644 drivers/power/reset/spacemit-p1-reboot.c
->
-> The patch is correct, but you might also want to remove the
-> spacemit-p1-reboot entry from drivers/mfd/simple-mfd-i2c.c.
->
-> Anyway, while I support removing this driver on the long term, it might
-> be a bit early to remove it. Indeed, while the driver is available in
-> OpenSBI 1.9, using this version requires either patch the vendor U-Boot
-> or using the upstream U-Boot which still has some limitations (thanks
-> for your efforts improving it).
->
-> At the end with your patch 2, keeping this driver a bit longer doesn't
-> hurt, as it is only used as a fallback if the SBI SRST extension is not
-> available.
->
-Ok I have no issue keeping this as a fallback driver.
-> Regards
-> Aurelien
->
-> --
-> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-> aurelien@aurel32.net                     http://aurel32.net
+Do the FASTAUTO step in the PRE_CHANGE hook; the core then sends the
+FAST request. With this the link runs at HS-G3 rate B on two lanes.
 
-Thanks
--Anand
+Skip the step only when the link already runs in FAST with the
+requested parameters, judged by PA_PWRMODE and not by hba->pwr_info
+alone. After a LINERESET, ufshcd_err_handler() restores the power mode
+with ufshcd_config_pwr_mode(hba, &hba->pwr_info, UFSHCD_PMC_POLICY_FORCE):
+the requested parameters equal hba->pwr_info, but the link has fallen
+back to a slow mode, and the forced FAST request would kill it again.
+
+The step also writes ANA_HSGEAR_CTRL_ATTR = 0x25 and waits for the PLL
+lock, as ufs_spacemit_apply_dev_quirks() does at probe. Every POST_CHANGE
+clears the attribute, so without this a LINERESET recovery would run the
+FASTAUTO and FAST changes with a different analog setting than probe.
+
+Assisted-by: claude-opus-5-5
+Signed-off-by: Thomas Roos <thomas@exein.io>
+---
+This applies on top of v8 of "scsi: ufs: spacemit: k3: Add UFS Host
+Controller driver":
+https://lore.kernel.org/r/20261116-08-k3-ufs-support-v8-2-e3b256972dd4@kernel.org
+
+Yixun, feel free to fold it into the next version of the series.
+
+Tested on a K3 CoM260 IFX (YMTC YMUS8B5TH1A1C1) on 7.3.4 with the
+equivalent v7-based driver: without the change only HS-G1 rate A works;
+with it the link runs at HS-G3 rate B x2 and the rootfs on UFS is
+stable. Builds without warnings at W=1 on top of v8.
+
+The restore path was exercised with this patch: a test-only debugfs
+hook drops the link to PWM-G1 SLOWAUTO behind the core (raw reads fall
+from ~900 MB/s to 1 MB/s), then a PA generic error is injected through
+the ufshcd debugfs saved_uic_err. In 6 of 6 runs the restore went
+through FASTAUTO back to G3B FAST, with reads at 850-980 MB/s again and
+a matching write/read-back. That setup keeps the PHY on rate B, so it
+does not reproduce a LINERESET that also resets the PLL rate.
+
+The FASTAUTO step open-codes the attribute writes of the core's
+ufshcd_dme_change_power_mode(). A core helper that takes an explicit
+PA_PWRMODE value and leaves hba->pwr_info alone would avoid that; I kept
+it in the driver for now.
+---
+ drivers/ufs/host/ufs-spacemit.c | 96 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
+
+diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
+index eb2ad50..04380a0 100644
+--- a/drivers/ufs/host/ufs-spacemit.c
++++ b/drivers/ufs/host/ufs-spacemit.c
+@@ -343,6 +343,87 @@ static int ufs_spacemit_negotiate_pwr_mode(struct ufs_hba *hba,
+ 	return ret;
+ }
+ 
++/*
++ * As in the vendor kernel and U-Boot: change to FASTAUTO at the target
++ * gear/rate first and only then (from the core) to FAST. A direct FAST
++ * change kills the link after the M-PHY PLL rate change, so only HS-G1A
++ * would work.
++ */
++static int ufs_spacemit_fastauto_step(struct ufs_hba *hba,
++				      struct ufs_pa_layer_attr *p)
++{
++	int ret;
++
++	/*
++	 * Restore the value and PLL lock wait of ufs_spacemit_apply_dev_quirks()
++	 * at probe: every POST_CHANGE resets it, which matters for a LINERESET
++	 * recovery.
++	 */
++	ufshcd_dme_set(hba, UIC_ARG_MIB(ANA_HSGEAR_CTRL_ATTR), 0x25);
++	ret = ufs_spacemit_wait_mphy_pll_lock(hba);
++	if (ret)
++		return ret;
++
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXGEAR), p->gear_rx);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVERXDATALANES), p->lane_rx);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_RXTERMINATION), 1);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXGEAR), p->gear_tx);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_ACTIVETXDATALANES), p->lane_tx);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXTERMINATION), 1);
++	ufshcd_dme_set(hba, UIC_ARG_MIB(PA_HSSERIES), p->hs_rate);
++	/* as in ufshcd_dme_change_power_mode() */
++	if (!(hba->quirks & UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING)) {
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA0),
++			       DL_FC0ProtectionTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA1),
++			       DL_TC0ReplayTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA2),
++			       DL_AFC0ReqTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA3),
++			       DL_FC1ProtectionTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA4),
++			       DL_TC1ReplayTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PWRMODEUSERDATA5),
++			       DL_AFC1ReqTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalFC0ProtectionTimeOutVal),
++			       DL_FC0ProtectionTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalTC0ReplayTimeOutVal),
++			       DL_TC0ReplayTimeOutVal_Default);
++		ufshcd_dme_set(hba, UIC_ARG_MIB(DME_LocalAFC0ReqTimeOutVal),
++			       DL_AFC0ReqTimeOutVal_Default);
++	}
++
++	ret = ufshcd_uic_change_pwr_mode(hba, FASTAUTO_MODE << 4 | FASTAUTO_MODE);
++	if (ret)
++		return ret;
++	msleep(100);
++
++	return ufs_spacemit_wait_mphy_pll_lock(hba);
++}
++
++/*
++ * True if the link already runs in FAST with the gear, lanes and rate of
++ * @p, so no FASTAUTO step is needed. Read PA_PWRMODE rather than trust
++ * hba->pwr_info alone: after a LINERESET the error handler restores the
++ * mode with UFSHCD_PMC_POLICY_FORCE and parameters equal to hba->pwr_info
++ * while the link has fallen back to a slow mode, and the forced FAST
++ * request from there kills the link.
++ */
++static bool ufs_spacemit_link_in_fast(struct ufs_hba *hba,
++				      struct ufs_pa_layer_attr *p)
++{
++	u32 mode;
++
++	if (memcmp(p, &hba->pwr_info, sizeof(*p)))
++		return false;
++
++	if (ufshcd_dme_get(hba, UIC_ARG_MIB(PA_PWRMODE), &mode))
++		return false;
++
++	return ((mode >> PWRMODE_RX_OFFSET) & PWRMODE_MASK) == FAST_MODE &&
++	       (mode & PWRMODE_MASK) == FAST_MODE;
++}
++
+ static int ufs_spacemit_pwr_change_notify(struct ufs_hba *hba,
+ 					  enum ufs_notify_change_status status,
+ 					  struct ufs_pa_layer_attr *dev_req_params)
+@@ -356,6 +437,21 @@ static int ufs_spacemit_pwr_change_notify(struct ufs_hba *hba,
+ 
+ 	switch (status) {
+ 	case PRE_CHANGE:
++		/* the core sends the FAST request after this hook */
++		if (dev_req_params->pwr_rx == FAST_MODE &&
++		    dev_req_params->pwr_tx == FAST_MODE &&
++		    !ufs_spacemit_link_in_fast(hba, dev_req_params)) {
++			/*
++			 * The core ignores the result. If the FASTAUTO PMC
++			 * failed outside a PM operation, the link is marked
++			 * broken and the FAST request is not sent; if only the
++			 * PLL lock wait timed out, the link already runs at
++			 * the target rate.
++			 */
++			ret = ufs_spacemit_fastauto_step(hba, dev_req_params);
++			if (ret)
++				dev_warn(hba->dev, "FASTAUTO step failed: %d\n", ret);
++		}
+ 		break;
+ 	case POST_CHANGE:
+ 		ret = ufs_spacemit_wait_mphy_pll_lock(hba);
+
+---
+base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+change-id: 20261123-fastauto-306d20d17590
+prerequisite-message-id: <20261116-08-k3-ufs-support-v8-0-e3b256972dd4@kernel.org>
+prerequisite-patch-id: 70385741c42f21fbc79b3ef967e48cb8214e5cd0
+prerequisite-patch-id: 5198841accdd660ed1597e92dcdef85a6accc8cd
+
+Best regards,
+--  
+Thomas Roos <thomas@exein.io>
+
+
