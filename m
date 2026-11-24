@@ -1,76 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.154.119.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795557405;
-	b=sH/0L86Fk/PwldAMQe+vXb1x6fEtlLJD3HXGpKS0w5sQPhDYAn8ppPCQDWl/8sH0JPf9
-	 ftMC4x48bHVNmWfDrO7YVdidH9KOf+NDlEYDf/obYgYqDcobpP7Fb7Ef3ssSUUwMwxvSp
-	 CJCfkgHlmqOqdniJtBaha+07Snhh5qEh2k3sVnHfzKT2f/Woidw1SJkH+uhT1X8KuXI3w
-	 AhxG8rGxg/OXISI6MWDKxlTs+klMtaSmNB95nB75tFe48bodXNZ22uNJer6nlCHeKAS4i
-	 RZRTJJMeTVIM9j9f37GoQoV0DJ/h0Uyuwivns7V0Eeg2UkuSCtHnm5G9RmCfpIwOBDA==
+	t=1795562352;
+	b=F1O8HuguR+3OhWOBOc6UQOJSWiYI+r3EZ593k1IBlRa0p/R3MkWLROkWBgfb/5aT1HFV
+	 Dbnysl58UDlSS6IUV2452Ux3fMuiHiDhuimaIZuquUi8pqGo2Pwo0K5iI3HXsCSlBdggf
+	 /Q5ym/F0k8CuqXm33awO8jJ85F4K/1LijF2Fx0OMvNF+51vegJ5/BhsT55eCwq7XZDcC6
+	 09jTtcoqnncLm503VPdNPC9bsfWcbv3dThXuVVQ06pvcx0/GHCv5A4k8N8sAFuj4NEedD
+	 ud/YKrrFnONV952IhIsnxaUt1fRz74eHjO0QKicgmgjNO0jNrCab7Tlj3QeuhaolmZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795557405;
-	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
-	 Message-ID:Mail-Followup-To:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:User-Agent;
-	bh=9X06TH/eKKW7Q/OT28lgH1tdTkDqNa2x4QON52BKzhU=;
-	b=io6Amcq8o3TC27wSCitn8uLVkG13MdsgnyxS9S0miek+zQbaZdDqq0W5opyfuMQ9M+vP
-	 ixo6wglkfcL8UnL8CQtupg4w05oZY1cbENiEekLQRAIs5EwX8mybfDmUyDpQIrqVRS6DW
-	 0U80XpwtO3RKpfKNk73DxIBJpUEy+GPtWzEwsNEaH7YNqQTZJurDU5w9zrrk2qZlz0wea
-	 OZTJiV+o41+/JhqPqO8bVZTc39d0E9OnzDYljEQhxPTYRZhvR2bLO2Np58/Of0/4Lh1ST
-	 vzc7lMBiSyUO/WFxUeISpp4PqCY9Y6g9EwelKAIuOkbApMJFLgV9jrRFZDjkN1dkr3g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795562352;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=SRWWMd+yzuA6S+ZzDttweE7vNGF2Hx8rwgs6Wuiy3ZY=;
+	b=btjyAFj4l2rRTiB+SCTg8RwQSIQvN2FfiCARGod/u1c5IIyXBkN3Kd1ZBOtve2n2n79y
+	 EanaVMFX6ZfPa/tYB1rnqilEN1459qImjowigW4pKpuF+LMweKjr2wDLxbxtBeTwchqOb
+	 m5zii+LAweayy2YmfTnvDnRGIV8JLuwhlK2HMgvZ2n8tYgjGRuuLKlEob4Xikd998hoAO
+	 E7flcyntKSrfR9ejtZx54QBik0FeXoiEHSGeHwjNDl0SFbLlVdAzZa9odEjqun9FJLifP
+	 t6Eh+7z3Oeol3rGrOTK9zovul00sytUdtTIzraRMssC4q7n7SItXLTYf/bzFnYiZKBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aurel32.net;
-	spf=pass smtp.mailfrom=aurel32.net;
-	dkim=pass header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=QgUCELLF;
-	arc=none smtp.remote-ip=195.154.119.183
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.119.183])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ooPODiqh;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA52C606A31E;
-	Tue, 24 Nov 2026 21:56:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EA52C606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5667A606A31E;
+	Tue, 24 Nov 2026 23:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=QgUCELLF
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=9X06TH/eKKW7Q/OT28lgH1tdTkDqNa2x4QON52BKzhU=; b=QgUCELLF9S0Pdj6zZVDyGQPsbG
-	9HslDjK3iUkWJhSQFryuJSjvGbl/jNexc5qsiqF74HwfVuKvX0FAXdAxe2ICmGN2zCcs1E7GFrco/
-	UwSBPU4a9IvNcp1T49T8BE7AetVOeTyoFcT9iAGfmoPmGLMr52/nj+W4JusSI4+PLw1NDzyD4N4WW
-	B35UzJzzj50V6rhjONOmWtW1KiNWhCjlKVUA50KGuw1WsJ8r7jvFl8D4iDoM3fp9+uUiA7wXNuag4
-	yxs/uyGcRBODd+oL42kkPdnEVFXt+SwjAuxFPgH0g+yK97byxyYa3J3U9yAefifwT9Z/09td+tYvN
-	3p89apag==;
-Received: from authenticated user
-	by hall.aurel32.net with esmtpsa  (TLS1.3)  tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1xVyVD-00000008zX1-2qFO;
-	Tue, 24 Nov 2026 22:56:39 +0100
-Date: Tue, 24 Nov 2026 22:56:39 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Jiayu Du <duge1256@gmail.com>
-Cc: srini@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, dlan@kernel.org,
-	troy.mitchell@linux.spacemit.com, me@ziyao.cc, pjw@kernel.org,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	p.zabel@pengutronix.de, devicetree@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ooPODiqh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB321F000C4;
+	Tue, 24 Nov 2026 23:19:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795562352;
+	bh=SRWWMd+yzuA6S+ZzDttweE7vNGF2Hx8rwgs6Wuiy3ZY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ooPODiqhP96bXIhoVPrnYtH5/9wmyGxrQBG4wgzt0BL2f25b/6lKOtsnmT4tvBT7T
+	 nAqDnBBxjWb7MBDfHHZ6/JefncBErm2Pcb7T4H7TuWKJaEQmFzUvAVP7A3lwWnNxn/
+	 54jk4xVvT8IXm6koQbJSzYwy96d0n700WNpGDXPRyS4Vvm5pmMd286xk46DZssGcAW
+	 iksh7sRP7JAB7MR0Vd8v4dLxST9TGZB82+vWDPo2zkbMbCH6luHwOXv6XuFMJnrYvN
+	 hPxNTzqQyymFeufwt3VJjMVYbf3YTZwBWL8y80nXjR4kbs+oKhuDeGaodVT0d3AEUI
+	 cHyEE4kI7IY7Q==
+Date: Tue, 24 Nov 2026 23:19:09 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: Hung-Chun Tseng <alan.tseng.cs@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	E Shattow <e@freeshell.de>, devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] riscv: dts: spacemit: Add K3 eFuse and
- temperature trim cells
-Message-ID: <awYIF2ynf95-g5-W@aurel32.net>
-Mail-Followup-To: Jiayu Du <duge1256@gmail.com>, srini@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	dlan@kernel.org, troy.mitchell@linux.spacemit.com, me@ziyao.cc,
-	pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	alex@ghiti.fr, p.zabel@pengutronix.de, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-References: <20261122173810.2409146-1-duge1256@gmail.com>
- <20261122173810.2409146-4-duge1256@gmail.com>
+Subject: Re: [PATCH v3 0/2] riscv: dts: spacemit: mark K1 boot nodes
+ bootph-pre-ram
+Message-ID: <20261124231909-GKB245721@kernel.org>
+References: <20261024092558.143621-1-alan.tseng.cs@gmail.com>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -80,70 +62,69 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261122173810.2409146-4-duge1256@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
+In-Reply-To: <20261024092558.143621-1-alan.tseng.cs@gmail.com>
 
-Hi Jiayu,
+Hi Hung-Chun, 
 
-On 2026-11-23 01:38, Jiayu Du wrote:
-> Add the K3 eFuse controller and NVMEM cells for the temperature
-> calibration data in bank 0 and bank 7.
+On 17:25 Sat 24 Oct     , Hung-Chun Tseng wrote:
+> On the SpacemiT K1 the BootROM loads the next boot stage into SRAM, and
+> that stage sets up DRAM. This series marks the nodes it needs for that
+> bootph-pre-ram: the SoC clocks, UART, boot media and the two I2C buses
+> in k1.dtsi, and the board EEPROM (which holds the DRAM configuration),
+> the PMIC rails and the SPI NOR in the board files.
 > 
-> Signed-off-by: Jiayu Du <duge1256@gmail.com>
-> ---
->  arch/riscv/boot/dts/spacemit/k3.dtsi | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+> The vendor confirmed that the BootROM itself does not access the
+> EEPROM [1]. It is tagged because bootph-pre-ram covers the phase that
+> sets up SDRAM, and DRAM cannot be trained without it.
 > 
-> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> index e89d2cc5ca8c..af1a758788ff 100644
-> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
-> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
-> @@ -1439,6 +1439,29 @@ saplic: interrupt-controller@e0804000 {
->  
->  		/* sec_i2c3: 0xf0614000, not available from Linux */
->  
-> +		efuse: efuse@f0702800 {
-> +			compatible = "spacemit,k3-efuse";
-> +			reg = <0x0 0xf0702800 0x0 0x400>;
-> +			clocks = <&syscon_apmu CLK_APMU_AES_WTM>;
-> +			resets = <&syscon_apmu RESET_APMU_AES_WTM>;
-> +
-> +			nvmem-layout {
-> +				compatible = "fixed-layout";
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +
-> +				soc_rtemp_trim1: temperature-trim@1c {
-> +					reg = <0x1c 0x1>;
-> +					bits = <0 8>;
-> +				};
-> +
-> +				soc_rtemp_trim: temperature-trim@ea {
-> +					reg = <0xea 0x2>;
-> +					bits = <4 8>;
-> +				};
-> +			};
-> +		};
-> +
->  		mimsic: interrupt-controller@f1000000 {
->  			compatible = "spacemit,k3-imsics", "riscv,imsics";
->  			reg = <0x0 0xf1000000 0x0 0x10000>;
+> Testing: all K1 DTBs build, and dtbs_check is clean for them with and
+> without this series.
+> 
+> I used Claude to help read the U-Boot SPL and the device trees. I
+> checked the changes and ran dtbs_check myself.
+> 
+> Changes in v3:
+> - Reword both commit messages to describe the hardware instead of what
+>   an SPL does, and drop the U-Boot paragraph from patch 1 (E)
+> - Tag i2c2 in k1.dtsi too, as every K1 board has the EEPROM there
+> - Tag eeprom@50 on the OrangePi RV2 and R2S, missed in v2 (Sashiko)
+> - Drop the Assisted-by tags, see commit 1e035297ffda
+> - Keep E's Reviewed-by on both patches, as the changes are the ones
+>   discussed on v2
+> - Link to v2: https://lore.kernel.org/all/20261017180141.3477743-1-alan.tseng.cs@gmail.com/
+> 
+> Changes in v2:
+> - Tag i2c8 in k1.dtsi instead of in every board file (Yixun)
+> - Rebase onto the spacemit dt-for-next branch
+> - Link to v1: https://lore.kernel.org/all/20261012235624.77993-1-alan.tseng.cs@gmail.com/
+> 
+> [1] https://lore.kernel.org/all/20261021083425-GKA125937@kernel.org/
+> 
+> Hung-Chun Tseng (2):
+>   riscv: dts: spacemit: k1: mark boot-critical SoC nodes bootph-pre-ram
+>   riscv: dts: spacemit: mark K1 board boot devices bootph-pre-ram
+> 
+I'd not put this series on hold, we generally could address other
+remains of issue/improvement later. so with
 
-This looks all good to me. The offset and bits matches what is in the 
-vendor driver (after mapping each bank to the correct address).
+Reviewed-by: Yixun Lan <dlan@kernel.org>
 
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-
-Small nitpick, no need to fix it, but the vendor device tree also define 
-offsets for soc_die_id, soc_ver_id, soc_pack_id, soc_chip_id and 
-soc_svt_dro data. It might be useful to export (some of) them.
-
-Regards
-Aurelien
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-cm6.dtsi |  5 +++++
+>  arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts   |  5 +++++
+>  arch/riscv/boot/dts/spacemit/k1-milkv-jupiter.dts |  6 ++++++
+>  arch/riscv/boot/dts/spacemit/k1-musepi-pro.dts    |  6 ++++++
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-r2s.dts  |  5 +++++
+>  arch/riscv/boot/dts/spacemit/k1-orangepi-rv2.dts  |  6 ++++++
+>  arch/riscv/boot/dts/spacemit/k1.dtsi              | 14 ++++++++++++++
+>  7 files changed, 47 insertions(+)
+> 
+> 
+> base-commit: d05c6236496071916e19012cda7149465f15e66e
+> -- 
+> 2.43.0
+> 
 
 -- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+Yixun Lan (dlan)
