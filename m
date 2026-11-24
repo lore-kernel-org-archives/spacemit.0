@@ -1,88 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.169
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795491115;
-	b=uU5fr8BCO8Ac0T+eLbG+TDRBZon4xdmKi8TrNjUHhTVh3fIScFDP91UlPFNG/kXAlan4
-	 U7uq6nsMTRhhVSSKoA2yhtdu8qGJtlu3UcLxjHBaDTjXesGB8P1SNv1eYvRQh76jBCmx+
-	 IDIlUCDTX4e19o8ZYyYa7x796PH/N+fS1KWlN7u+OW4xgXbaQWNdIL7jWnzE1NtfuvNeJ
-	 Z5IL6HOsP1r+rvU41st6djYmxmGSQp6LLcp9TKT/DGOxzx4BE58Ct72Oohs6sksyi1Hih
-	 Jn3tnyh33/YNKkEDs/aA+MFVWGhFaKBa4S2HfRvsCmF7rE8AUBCYhu0i/oWxG32LDDg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795491115;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795492027;
+	b=dzKH4QWpjE/ELJSMzwkIhcTYH/F7r9M369rS0em6C4uzaVqS0zcCaWexSQvYVoBNaoBL
+	 mBidRfZhgnV++ik+xx7g7c8EJ+PyFQnP0OUYcOxippWsgzq84qHgTHtfTpfw8czqdj9uB
+	 QmVQylACXYrxAOrQ9XPz3P1tzeaBXjNROeglrSsYRoVQQy+p7QW1Z/0YQymQgjaU0aw+P
+	 BcEEmCMULMoM6IpRhWAB7a1mvcIHyRJiVLFxZH8kWSE68JudaLmsuKjslNo+ciuJiwTB8
+	 MwvDwZGZZJUcuYMQ4pIbX0z6BGEqw/mshGqcaki6LZt+/202PnaKvVzvdsTjzFaM1FQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795492027;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=qKlNSAE1LII8ekZyJm2r7dBRiHTZedE60seDigfXqMg=;
-	b=EE2xyogoQ4HH9vqB/XzAdir/zoG8v0Z4Xfo98Y22XUtzN6lXGOOjw284E53dS1/GwH+r
-	 6a/kbryGMXpAAbOEnZmmajN9m9VBBPt3nGmgbLjgiGPD6Fi9dZO7jfid1UqHmzqBd7yfQ
-	 bUZZW8wGF4BmJlLvYFm0/XRNdh+NfVgnrKLGHtdgksNgIRc2t2VD9bne3ZGVDM8FP9viV
-	 bWTDNsfcg8RH85fY/Rd9OlhPIIBFTcyErTjMDMFWg4SSb8uxvbP6W1IrYXJPmTh1dYo/g
-	 uzDRXgxwxsiJwtydkiK0yESA5RJusCn0ovqQDGzc2YhfDPL6472SH/g+kPNS6fMl+Cg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type;
+	bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
+	b=yIjOjOSKNIny0eit2t9jAV8SPTkj3NHfk8beb6KzgEtLH882WwPSpV8K/cBuMZ5rtG02
+	 NcFY/XIwe+6JoBkIPyNOQBy2XXg6xuhMOLT5F0lUfFUl8dO2nNeu9qSTMZ0Xes3QcDe7q
+	 3oMa9VFO7+FpY/zqgAWwkwTZYIdbtQpllLqwbGgW8lGVYUAwOV7lW/eZV/O3nBUbbFDoa
+	 AloO22n/hviuzmiQOD8FFNk7qz305JMAjXhcRRYqM+yciLW5hhECDog8pQE0iTsA0iDLO
+	 kwQcfgtn6keOho/F1AK0iL0eMwS/HSSTIFV3iP1rFFjnTpI81jfP7FvnY3dYUgs+c+A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hqr02kTG;
-	arc=none smtp.remote-ip=209.85.215.169
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pFO1XuE8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.49
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5358606A321
-	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 03:31:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5358606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0A9606A31E
+	for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 03:47:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4B0A9606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Hqr02kTG
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-cdb684859cbso2275807a12.1
-        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 19:31:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pFO1XuE8
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-9213922de73so73757136d6.1
+        for <spacemit@lists.linux.dev>; Mon, 23 Nov 2026 19:47:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795492026; cv=none;
+        d=google.com; s=arc-20260327;
+        b=CNU0wzRz/GZn6k5zC62evJsEFyVBfP7DcFd5LFqO3lPu18hj5b3ll4D0a4suIzHp5E
+         DU5H3jLrqki01zO+eVkWKukV1CwdevQoUcnUEu46AwhDh6mPhNNyhaAfvSfiv+Yl7UsY
+         5V0NY3siRbDlYnw5GhO9gMX5c5LPlknQQvTr/qheZbkV2mLqwTLhVNZy5AsJmP/FBHSr
+         FrWttboCLAjMVi+hjs1zL9BoEd2ddTZ2XaTgo/antTu4io5COhY6QjvMAhejsR37hxr0
+         ylvLBqg5m77m9fgkebSnbi5b0Qoz61nsHO+sLlyLh21MwUEXUugNI0Ykraxm5wgNAWXf
+         EwLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
+        fh=uw1c1g9vFyf6w7fzdi3YRW/nS6KXsfkVIn2GK4VckUE=;
+        b=I6jNo/Ea7FHtbzpfN9SIqxCICcFsmPu16DvMe2rFnM5NrBuj6jURkTGJkEoceuFCOZ
+         rcQLhsqhClYfoAxYxY1il/XEQ4qap6F7fyJlJFA1vCKd/P/hsDo5wdGzbiJ9VQQv7pEF
+         2s8JGX95AzKaB4ir0yfGP7D4Xs6JEgL/muAkNCceYuFTq3TrAxp1JAkyYBVVBgGElFDo
+         +AWsPmXHyPDp82eZ5FxPNU0VlXOEsNTNjZCpOQ//7cLpuwe0g+a+uqyvlP/+5LEwM+rw
+         XP9OIWXWiwBQSza1wUFS8STXAUflQIdt+hv8kK/X/qBlMibQTzy+wykKzlgqhXoN/MdS
+         pdYA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795491109; x=1796095909; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=qKlNSAE1LII8ekZyJm2r7dBRiHTZedE60seDigfXqMg=;
-        b=Hqr02kTGIoYnGnSblON047xXJDmoPdmbv6AnZ9A5VFBk0YjOqXAUEzr3ARYMKJ+lEk
-         Uzcz+y0VIfEwxwEcBRzN0b5gsebVeyLnn3Od1LrQ7gbEP3I2NM8KlwCXN3g/doSC/saA
-         Br5ekRzxwZvYF1nkE+zAo4ypmWAEHIFnqfPJ9QJ5Z+6rjprOc7GxkVvyaAHXg6a5Lz2i
-         92xr555jBw1LIQv2eaklZd1AtxiCik0nsozWba7EgKUfwgOD7uBeLcSWT0nBK/+0gTm6
-         IHByFZ3qSrNbfNVtb+H5UTeV5Xfzg50wSDtkEaO9eZmEdf02ZDPgGeCvvcKVSPFBrrnN
-         gLFg==
+        d=gmail.com; s=20260707; t=1795492026; x=1796096826; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
+        b=pFO1XuE8xGmCjwhrumbhj2mjy+4G+/FTc3f3RTJ75kw4p458/Vojm1trigLpgi2RxX
+         z745FXhpkFnp8ywV4bpT1n7YY7Vs3FID+OXXL4UDLyHL11eYE2TVNjo+Qsx7ohiOPZeW
+         I2I+zp9y1BZa7Csil8lQWmWM+qpVr/QUHrPguriuUXkbFXn8Bp4vhrcbcxZygjPMIewm
+         0qovJMpriZbHDveUM21vIOPpC3xQve5xQFEgoq8Bpl4XbhWSVdvmPNWuv3PAKJuylvTS
+         O33B70/gao0SzHUsHPGCZxTFmq3pfT2Okxu0OxEuuX7nrrtf5yAndYcXPWp7j67mf5qJ
+         HxFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795491109; x=1796095909;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=qKlNSAE1LII8ekZyJm2r7dBRiHTZedE60seDigfXqMg=;
-        b=1EVJjC1A05LiOTJYhREJx/Ge7zsZ0Iix/bUjNTgrHzp+hH8WJziloLkdUN9eDm4XXQ
-         00gwRtLUZMszI1EY3hhSnsnsAjRNFbWrlHKqDCl/FRTbeWl/X0yj2ZgK/3mhHEZf5ob6
-         3QKUTv/rb7jLGtsgaQ5BTgGjtLghk2DnBAvZZmfmR65SMXpHIcBe7g3nP+Chk9shTfnn
-         deO12HGL0+lxvzRY5MWLORLt+LhG+68a7NzVEZtM8FX/mpVCMl5owUs01BStu6MLdViS
-         92hg2bIi7D/6JWvZvZxo/NB28rrzzvyD+cjOG51Lj8kYjNN2HbvDho34TaP3ZBKhYPJV
-         6L3Q==
-X-Forwarded-Encrypted: i=1; AL+hErEclKDEP3EIultieBgD3ywtRJKPUVctpPBRrQzWZteOU5Dfc4tWTze6NYCdl2ztWXuGDpmGu+pJ+A==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9kzmB2Pyqr/Fs95SkdSamdhvrf7MCR+co31AVUMsdkF5OlvRc4
-	63pnnARbherxq6faOr5hR+i75fctbfrTnYcI06N6Of3kXAoToVK8/Qz0
-X-Gm-Gg: AZFdTZe5g0uo6E26bgHGAojHIy3cxKycSaqRGQIJlTm1ZxggSE7VtlI4lv/loMestmv
-	iPQmpYfj7XHBNDIyf8TdJDPT8cjltuEIhc8juxo/v4mgKGQRdy8zyyCGa5PP7aDpzGmYAAba2q0
-	a+bOdxpQoDm6o+wpJWbCZJW1c5JlWddYkCPJffmuXN5yKDd/Lby5CzXd/VrXFG/5JsPBOJbKzlK
-	tAArX4J9+KEJAn3iAaFIqccbaZWiR0YKQHQ5KRnvkDsTX2QcPyXKfMjuMPkc3SOqbs8Ia3BqXjN
-	oZlRp5mFWqm3x4TZpWO93OvheJEK160KpuYIfWKmYhcYoV+C7q3OxUc8Fsf3iCF2o5WUR+pOA3U
-	a4q/xg9z6TUY19EyYqzrRkdLX6Y3G+3jQpZHm7tF6ak5jw8KrIZV+Ja7qBm/mnCcnffATRjbXvg
-	g78L8VaG5UHAGCqS1Kke/mysBGo8k+ICor8P/OiQ2eRXJLmQZZ0ctvq2cg99fWwZrpdpYyBYqA+
-	MQBCWNtVtLIGEJkDIIX8J29xHeU/cRRvp1N/xhNJAR3uZKhS1ArAqqCoeueYHKxaUqF2kAMSFZ/
-	aGmjg9RggmvItqsudUVKJyU4SSnmlR4=
-X-Received: by 2002:a17:90b:2fd0:b0:3ac:a521:95c with SMTP id 98e67ed59e1d1-3b41cb235aemr14048909a91.58.1795491109076;
-        Mon, 23 Nov 2026 19:31:49 -0800 (PST)
-Received: from [0.0.0.0] ([20.89.104.82])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b405d639fdsm23890691a91.10.2026.11.23.19.31.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Nov 2026 19:31:48 -0800 (PST)
-Message-ID: <12933da0-9bc8-4f92-96d4-36c5673d3f5e@gmail.com>
-Date: Tue, 24 Nov 2026 11:31:44 +0800
+        d=1e100.net; s=20260707; t=1795492026; x=1796096826;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ZlBXp4j95Fesrlj5MUpmODB8sCNBYo55Oy0NCx35Ro0=;
+        b=utzAGIdKObd0kpoULLUgchSwG11YY0QbwaxgDO9syE/Fg/wzkYWdETgKPwIMoI8oan
+         Z6tLHKejvAMyChhn2LN7u+h2Xj97xuLXOYAsKtTURbh+XLWihDGv3XZ4olMsbt4f4coY
+         +1oop3BJctyxWkM4+EiQcXu0WctT/vkfRbtB6oB6IFs4mAW0L/d8D1wQQ37i2y6A/WpD
+         xa8MUHKE7S+y4Cp8WFlidHhKCqcR2rLJCFPPWqPw7AqFO9VnFwuidq+c1/fC6nyiKryu
+         p1O/HtqyP2LqSsMBIOtYC4vOpFPBf77VygKLrpWzXNcUKvx8qSSxVBF8kfeZNg1U3XkK
+         k3SQ==
+X-Forwarded-Encrypted: i=1; AL+hErFLLWjWHMzjIYdl4dItG1eFL1ELUT5Lq6/+LDjGWWlI+j+UcwsvOuamLf/Xlyuw4Z79PQms/6ek3Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/8KqmVrdSGJ+BZR0XWJ94+HM9exMjtgozlGxl/cmWw05ZS2OwW
+	9hWP1EvfPv4sLZllInlcQtfgfMG+e/ObrKgsQ7vH9TOj0BmaTe+4DDmK7WE7PMMAs/ib1Ty+155
+	UIoKLSs+U8ObfXwn87HJ+NE5xK5g+qdU=
+X-Gm-Gg: AZFdTZeM+I8E91jnS/9PiG+ypjyRZ20YezSBCIoUhi4oaNu5ZD0JSEn9YlPLh1w/aXx
+	53iD8uhahlH+GozZdlWoHOO8xU5+Ud6YfSO6yrLr8/fw+qkYe7RkKvI5FBcJAbu/uSoO9mnElN3
+	z0HHWgtXa/vPJcNrWBy+h/wpFCi7Z0KNDLOYWJV05p574GJpPy7l81j6p7cCyiZbLeSbDcHII3t
+	/txUwxlv7eZiEkZa8XCkpeAM8EER7KfWBvCn+6qv0X6g/2tx18e46yuHr/m0KyS0TOPRppq36TZ
+	8QH4CrlMGs7L+xr7cps61VMdZ6e8sooWUijiu1nmb1ptCXCjTHHeSKFxXzeLhHLCexSBujPjoAd
+	H3zhYWIBSZO921BDBiiKtnihi1TDPv42jQvCLklhF53HeEMYksLaDZUFoez5x/NEvhmWy3JB0S/
+	2f0yabm8ic6KPddkE=
+X-Received: by 2002:a05:6214:4e81:b0:91e:dde3:f213 with SMTP id
+ 6a1803df08f44-92134b0e48dmr208910266d6.40.1795492026210; Mon, 23 Nov 2026
+ 19:47:06 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -92,53 +102,53 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] riscv: dts: spacemit: k1: fix the EEPROM page size
-To: Aurelien Jarno <aurelien@aurel32.net>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Troy Mitchell <troy.mitchell@linux.spacemit.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Vivian Wang <wangruikang@iscas.ac.cn>, Junhui Liu
- <junhui.liu@pigmoral.tech>,
- Michael Opdenacker <michael.opdenacker@rootcommit.com>,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev
-References: <20261123-fix-bpf3-eeprom-v1-1-df8cce6ef2b5@gmail.com>
- <awS2-clBenE1r1a1@aurel32.net>
-Content-Language: en-US
-From: Zixian Zeng <sycamoremoon376@gmail.com>
-In-Reply-To: <awS2-clBenE1r1a1@aurel32.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Zhi Long <longzhi@gmail.com>
+Date: Tue, 24 Nov 2026 11:46:55 +0800
+X-Gm-Features: Aa3M54ovvCtFZ2UeXOS2b1TVyPsCM_DsKH4Wi3KQVJPC-xM1QpPppfUx76jRiWs
+Message-ID: <CAGEQorPo=UkuF-o5+c7exvXzaj4uudM_f7ek_6GnSumMyYngdA@mail.gmail.com>
+Subject: drm/spacemit: K1 DPU and the K3 display series
+To: codykang.hk@gmail.com
+Cc: dri-devel@lists.freedesktop.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Aurelien,
+Hi Cody,
 
-On 2026/11/24 5:58, Aurelien Jarno wrote:
-> Hi,
-> 
-> On 2026-11-23 12:41, Zixian Zeng wrote:
->> The bananapi-f3 carries an AT24C02 compatible EEPROM GT24C02B [1]:
->> 256 bytes with an 8-byte write page, which can be found in schematic[2].
->> The device tree declares pagesize = <16>, which does not match the
->> eeprom chip datasheet which declares pagesize 8 bytes.
-> 
-> Oops, I am not sure how I got that wrong. Sorry about that.
-> 
->> EEPROM pagesize of k1-bananapi-cm6-io[3] and k1-orangepi-rv2[4] changed
->> together, based on the chip model shown in the schematic diagram.
-> 
-> The k1-milkv-jupiter board is also affected with the same issue, despite
-> using a slightly different EEPROM (24C04).
-> 
+Thank you for the K3 display series ("drm/spacemit: add SpacemiT K3
+display support", v3).
 
-The GT24C04A EEPROM used on k1-milkv-jupiter board doesn't seem to have
-the same issue, which you can find "Page Size: 16 bytes" in datasheet:
-https://www.giantec-semi.com/uploads/20220929/GT24C04A.pdf
+I have a question about the K1. I work on a device with the K1 (a product
+built on the MUSE Pi Pro board) that has a small MIPI DSI panel, and I
+would like it to work with a mainline kernel.
 
-But I don't have the board, simple test would be appreciated. Perhaps I
-should include test steps in the commit message for the next revision.
+I compared the K1 DPU in the vendor kernel with the K3 DPU in your series.
+They look like two generations of the same Saturn design:
 
-Best regards,
-Zixian
+- The pixel format numbers of the RDMA layers are the same.
+- The bits of the pipeline control words are the same (output enable in
+  bit 18, the video mode word 0x821).
+- The RDMA register block has the same shape, moved by one word.
+- The interrupt names are the same.
+
+But the layout is different: the register window is half the size, and the
+control, timing, composer and interrupt blocks are at other offsets. The K1
+has its timing registers in the output control block, where the K3 has a
+separate timing block.
+
+Do you or SpacemiT plan to add the K1 to this driver?
+
+If not, I would like to do it once your series is merged. For now I have a
+small local driver for the K1 only, to bring up the panel: one CRTC, one
+plane, direct register writes without the command list and the DPU MMU,
+plus a driver for the K1 DSI host. It builds but it is not tested on
+hardware yet, so I do not send it now. I only want to avoid duplicate work
+and to learn which way you prefer:
+
+1. Would a K1 variant fit into your driver, for example with a second
+   register map and a second back end next to dpu_saturn_hee.c? In v3 you
+   removed the ops table, so I am not sure which structure you want.
+2. Is there register documentation for the K1 DPU that can be shared? I
+   took several values from the vendor boot loader without knowing what
+   they mean.
+
+Thank you,
+Long Zhi
