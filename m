@@ -1,49 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795592795;
-	b=ihBiY7enDMRz+M3HJHyw+DZE7XC2k5Ngl8MrX43gdyqDa/xvlAlebXzHlrADrfF/t+BG
-	 P/7ICbP3ho0fmpJPcIxa8zKDI8U6pgWXQ8YYWqW3RuVcsdjX3seWby4rBSMF4OBmKNJOV
-	 b/Iv7ukuFPVHjAw0JUHa21FLTFFEIUlh0uAij3xiliFpoYCJZZbiWkPhfcGLcflWqVSJJ
-	 DXq18EuDTSDQXRFdnYJGS5b59J/I72fv/hfYYz0OqgPVKQNiZT/sU4Pnn91FCtgyNSgOq
-	 7wJOFmUNgGcoAjP5AcSJaVrvimd2nQyI44fQSI8rNkDjhxse/yiqY23QGc49SBL8AEg==
+	t=1795592800;
+	b=dmUcGp/A6TUPaQ2lMu3eTw18fC6ZyTtWP0fgdTuGC32VGVSM81bV5d2DuE7oeeLRB7yU
+	 sUsuIbI8TD8jKmEkF/LGUpiw+QR1w0pmqreuMNAY05DeOX6WP/wzb5hVbYhhF46KWdHTX
+	 3Xwr79PaQZUKm0t32IPHUO6P6nkYLvkV31+6ncPf8YupJtKZ8n/wGZMdXPStE8v/MjCEm
+	 AsjuZZ5YZLtCPPbnpSjX/3XZmGl/Q01VwLxLJdQjlR1XCoI8SbuE/0TTU0TdtSTcVsXl/
+	 6AdeeLJPVJ/QGELPWpfLujqR5ICjtADDCCjG8JM0n7s1KmlAfzOVJ5LdELFXRnSZ3IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795592795;
-	h=Received:DKIM-Signature:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=wyzL7xSHwG07AHAVXIarfFNMx2ryQoGUjtaQKy+SekM=;
-	b=zmouKDfjdBASTmooyvftqk/ocpFg/DSwV/AbR0Arpl+s9eC0TAJBFwglrGXUl91S1AZc
-	 sfcUD4defhbmrtZeReOiusaVsE7FDi9PkiANUGp4weRvi836nQx3QkstEsYFssjp/alKA
-	 lQdsbm0mW5UPOVxEBIRC9ND0wJztBVISz5zBfwvt80JB/Lsg5h0YNquiiXgwjwUEyLRdt
-	 59EWsl6akmESSJjaqUzYQY/5Z5idPJj8cpApwXZBPqNFR5dHqEj+fA22DzUOg0r71qbD8
-	 mPDaOB4dGQU2YsyfvO7t4H65Vi8oL5cPHcz1W3vEjOZiRi7eLXuKv8CdkN36fGsZqCw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795592800;
+	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
+	 X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=2DcaFXD0125nWcxTRBCp0tsdK90suKgYtEdqH6E3k1I=;
+	b=FuU+pDDVGFadNAO2cQX2jpWPLNaIwutlCO6+U5eAsH+R4Zu6QPt1hjVSQTQ9vxveEP29
+	 FG8oNzlS3gTFxW+UxhzWbOld9RMTuUIoOPDoFj9xDpZM9JHk8hw134ii//3IZvIsaTTqD
+	 iNNtyBSeufMilqEn+h4Xt5lh881SmeBhXv6lKZEsAuigjm6Eb/9yctFxtyPuyz5VvieMo
+	 i0RZJfZc1dhM4OSHVPpVVvglLrKX8XJWfx8/eSVX4dOhTpnhFptcOuRzTICeYHu96SryD
+	 u7v2HVcMtaxGMKdX3+mQcmnKpsna/HkS0MbWBCXyh8hNGEqd/+P9juARxZql9ApuqqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Uib7j0Nd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dxQ0I+1w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92828606A69F;
-	Wed, 25 Nov 2026 07:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53FE606A68E;
+	Wed, 25 Nov 2026 07:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Uib7j0Nd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F261F000CA;
-	Wed, 25 Nov 2026 07:46:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dxQ0I+1w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CFC1F00A00;
+	Wed, 25 Nov 2026 07:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795592795;
-	bh=wyzL7xSHwG07AHAVXIarfFNMx2ryQoGUjtaQKy+SekM=;
-	h=From:Subject:Date:To:Cc;
-	b=Uib7j0NdX1D+qDVQjzoYbda9gGP9cz0zWCeDkmvuoT6VOI47SofU7L02PbTC/F7xT
-	 0O4jz+wXGbw0pMMam7qmq+Q8v+lPFANKN68intuSGbZlXid1sAOHlKdniVUEIFSfdd
-	 D45jGJFEw9NhFbaoPn614zm7LPHSBkHdCAlcUpEIuoe8CNMUJHygEpGYPVO1QcWR3d
-	 z4g+7J0GxFvBmB6r/qO/6j1vUUgzIkEo0vp8PCZlX0Oeoib6ScAXxB7A7Zto0H1Qfj
-	 Jz9HdLkwdHlu6JnRBvpleuNIRJ4qtT3rULHBaUrXAJAH5ezRyEUyEFYjmeFibKOuEj
-	 Nyrm5NhqRpA+A==
+	s=k20260515; t=1795592800;
+	bh=2DcaFXD0125nWcxTRBCp0tsdK90suKgYtEdqH6E3k1I=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=dxQ0I+1wyBYpeuu5wItqXDl0YeN85hd2y+M4I1d1i8LCxA65e4IbcALyqwp4oc2EK
+	 /JYN2yvex9j+1VYcnf6dBUuGkDqoIPkoD76b1k912CG3JNaQnVq/IWLEoh6wCjEcUB
+	 sT5eM2kOLTmWm4aB60ED/UIk686OCM7TaV8R3W2/K4i7nSg68G2VziXC3qtlF1mYs+
+	 09qmwdNRqW+bRKr6MyWpWKAKaMb/cWN3qLUw9YofKNhwOXIzk/o+Z1EelI40fJRzI5
+	 tGwgN70YFjZyX9CeAtXfHUyDXB+21WQYhQDyfRIP1AKQNMOK+pIdk6sl7CNQSnOt36
+	 vW5zHmrlSy2Eg==
 From: Yixun Lan <dlan@kernel.org>
-Subject: [PATCH 0/4] riscv: dts: spacemit: Some minor improvements to K3
-Date: Wed, 25 Nov 2026 07:46:13 +0000
-Message-Id: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
+Date: Wed, 25 Nov 2026 07:46:14 +0000
+Subject: [PATCH 1/4] riscv: dts: spacemit: k3: Rename PMIC node
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -55,10 +54,9 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMQQqDMBBFryKzdiBJi2KvIi5sMtFRGiWTloJ49
- 07bzYfH570DhDKTwK06INOLhbekYOsK/DymiZCDMjjjGmvdFU2H6wVDwQenLeuKxxhIXxNd0xK
- ouWeK/P5V++HP8rwv5Ms3Bef5AUQ9KN53AAAA
-X-Change-ID: 20261124-09-k3-dt-minor-misc-fde2610f267e
+Message-Id: <20261125-09-k3-dt-minor-misc-v1-1-dd887a8eb326@kernel.org>
+References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
+In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
@@ -68,46 +66,46 @@ Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=849; i=dlan@kernel.org;
- h=from:subject:message-id; bh=16U7h0aKOarFfxiA3lDLd7920xWf8TsRkzBLdHH6oTo=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJH5QbFc2ugtaJyOGAfzadyJFj0f9xjO3wvM
- 2TuMJekOluJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSRxsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=685; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=MM7auyW6m3xTfeJCLq8URarLNjoz56AH4mXZ1+VDyzM=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJLSJbFQuRW46QpH4a7S6tvP6mvxRWYlljGk
+ A1vqms0bfWJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSSxsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+3zKQ//UVzoytlvzLKEn8GUoC5vVljYFBlGqUThDcXrKWXQzBJkaAmxatmNw
- m89mLvm22ttJbLCptAghfXV0dmJGj9FsEQnlI2/NTAL9Ug2uVe1TOBABEMlICTUA3QpjiuXXTcx
- LsQalHp9iuRf/p/OFZlAqW3FiWQCGrBW3+UZX6ShRldbz1hrTtgl9d8GR2eu79qmvfr93p5ndHE
- oy3ebRDs7F8naF6x4B1pcSQdkZv9WHwemsJVAdfc3tVbX/bfyCZK75Z209iwG/I+kFJmx021UdW
- HvFHv7Rgz+VfJWpJOJyakPEvQTI/gyXzkU93w3Q4UcQ4JhjTXWSXXcO3K/w+HHWaPRQ39wQgVg5
- niQP2R2G4nUcxAH7aSkxs5Te+71Jpfn8iJUD0GyEEFO7EDoJ3rlrF2/isV6EM8UHgUgTPCBO3ks
- aYtQO+E9Ij6zuLe+V9TYtQQvVMaNy/7Acw+n59tC2yyidJ4C/ETB9wEAarZ65JJG8frRUUZOESs
- LHNX+54ft6i4YUT/Ecqg9FfOiLV1kTlWfORKDKPpMrqpZP5MmcIV7JuelWH6DohVh5L6MA81w5b
- VxPeRR9FDINLmP3ZCLJ4COT6xNIhXXgex3D9Fzl0dqjPNIlyQfben36MBEx51pbQR0XKBM0uS22
- dFsNHyKos81+r0PiOW0L73fZPckcW8=
+ QACgkQMarqR1lNu+0UCw//akI7eNfI2+KZ0AJf5C01IhO0AXACxpIX4dvH54IwsIeaSQIyFbKs8
+ eQ83LbCCgdP8XWmdR8fm4xEg+ujlzIx/ZFweEadtpyt/sG07wBD9oX1htEXJp4apQqTI2mE+Y1h
+ mGCuqa7/hZOXHOoRXET3J3qXuIFxkAfX08u7M99Q6tFGkuhVVqj0ZvDiOpGer0IgTf1XkidfPFK
+ Zcuc6gkTk2NXwdqzaK14fFNEBlVdI4LcNWLAIviv+XZFJy6cP3ZhQu5bR/xqEFTxzrebqYDsZC3
+ LLAKzEq+mfznnF/TOqAx09yj0scEsasjj03LQNqO8SUPquJrn72gGEkkDG+LW23tow+2AzfT3g8
+ HpkgBKM8C3BWqs5T+xaArQpbSuB6XyU1B2cIN6CYsv9lw7Bge3vsnQmXPnOfO1RX4urIlLGoJG0
+ GcngL4UuXHAuL1OK1yY0cgF+xDOUrUOOMDQvDyX6vmHSmZKhtchO61grLvZFEHhE+eSRU7/KE3W
+ /Hr0g5R869UwU4syAkkZ5jYzyotZICC9FuMBjcNLVZW5lq/XVEoCN0XGt/QGgzMF7KAdecQFIst
+ oTaocXlyGj/u7t7wO2s/CqzJ3r4AT3qnnsMoiX636DRoIzmdj9dSqe2bGm0VWviXYLdYc7sGRK5
+ oY/k1ov//91UdCja7lvgTqXoRmeLOQ=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Some misc changes combined in this series, the first three
-patches are quite minor and obvious, the CD pin patch fix
-an issue in U-Boot side which request explicit bias settings.
+Replace to a more descriptive name which follow Device Tree docs.
 
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
-Yixun Lan (4):
-      riscv: dts: spacemit: k3: Rename PMIC node
-      riscv: dts: spacemit: k3: Use Pin Macro
-      riscv: dts: spacemit: k3: Add alias for MicroSD Card
-      riscv: dts: spacemit: k3: Set CD pin bias
+ arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 1 +
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi    | 4 ++--
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts   | 8 ++++----
- 3 files changed, 7 insertions(+), 6 deletions(-)
----
-base-commit: da3f64e708a342ab2804754fa26fb4a132dc1809
-change-id: 20261124-09-k3-dt-minor-misc-fde2610f267e
+diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+index 8d1cd468cf8c..a4afe24130ae 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+@@ -100,7 +100,7 @@ &i2c8 {
+ 	pinctrl-0 = <&i2c8_cfg>;
+ 	status = "okay";
+ 
+-	p1@41 {
++	pmic@41 {
+ 		compatible = "spacemit,p1";
+ 		reg = <0x41>;
+ 		interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
 
-Best regards,
---  
-Yixun Lan <dlan@kernel.org>
+-- 
+2.56.0
 
