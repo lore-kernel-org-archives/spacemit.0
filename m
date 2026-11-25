@@ -1,48 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795592814;
-	b=l3ne/+eqKYuPpAYykS2Xi6STErol0RgLkkawiXUEkXmyaKeYbUYuZvCEb4DF1ggVFyMB
-	 KdGEPybiaw+mkML6vlYcjFjuEeq0hLH8E+8m3xBlHXLLAnuHldFc7LAwrw7wa/ulVUdMG
-	 XxCOIlM4UYyAjg1lYXKa4SzKjjiWHmhBAFsI/tBWxUhRbXpPxNNeoOkA5+mpe4vpuJV/u
-	 l8BrgflpMAQyB2gxp1R3gIbDq08c2l0gypz9jyq3ewvyz40nO7+rialAZbM+Sa9uiA/De
-	 q3rAANpqemPR1PFq2ZB3CZycBWEOnDDO+GS6PRxZUDFznbm1rfGrnp/2UQ814vgd6Yg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795592814;
-	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=40a2SxR2F++aAWEGeCskAj0ReXgihjjN31vR1BVlWBs=;
-	b=l8DtRiUxmfhzGqVV1oOKOzoglQfdxB5J0/t4m3CiuruatyHoLEvVUrZT1DBMKCDfdpZd
-	 YDour87ZvYwFbi0E+esbmViwOLBp4f+doh3VkNARXoxS28e8E/8Hyw+9Qex9KOpo/FtW2
-	 iuXXRCwMCLJ2KzLvlyDtGWpV4Lfi5+NjvdqwXQEazp31fkkdq+j5HWG4++kpNLB+YWpuC
-	 rW7qIF7Wz3bsWwEP9n7Rx9naSWUNeiGbqpn7ZbDr4a6KQGa/rEbP2W2mCh8ds0amf9nN3
-	 BUN1gERrhW6F45iYCwN1jnM7UVVrtQeoBoqxVFmOsmlya8tjzA3M7gQzk2U3O14kjnw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GF+1Udnt;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795593180;
+	b=Hve9lh7A3c/2+NAnHOrgMSIxDW2aias6wyJHv/SoxtJlHTWhMyiuhXsF2orXtkWkMCaI
+	 pwJw5iN4oXuRnUiM7wzymKY1UEpoH/RzwtLBmfbGsFW0JbErSA0/vA63F1qOZTIEdCblz
+	 xOyyA73iguYJmpef7o9WyOdo8zsOOOr2SNKAdEb+2XtRB4ftywOq6AGrx2e1zikMb3fmw
+	 X+qGeVcQOc9SRDD8eokIGfILRh4+j8rwEhkYmaxpdoZQtLy0hhF3qfdK5rIEHk6GPYQSV
+	 2R/hV9PV+BXhU7QqeVvcVsCALh+sVRk4bDtHvSkC1JYYf7FL3d93v+7c5QwWkoHEJoA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795593180;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type;
+	bh=KSGHti+DBG58dWZXRAMCvoWIexuD6kTB1LwSNHMxBG8=;
+	b=2VhP9e5R8r3FKH9OcTmef863JCSwQIJyBEcQcAggjNHkbvr2jX4YwzkPhKE9Uw9CWtFr
+	 yt+1x0T9+HieJ3/LceXAEbISb8oPtsAPPQ0gLNS+fKWqGKPueYnW55g1pAd694qbol8S1
+	 mhZO/pmHqNkV7uzWZ3htV83G5BiBv6y/y2BPmeiHFDvYQziKmNQ7XlICZLjyBSaLStt9V
+	 R7PjC0nDBHwK5ar9qHHilGsyGLjw3oWRcaeafuCwmkYcz1+616spWoHaT8lc1INrJSsOH
+	 dCUlQgPwcdpAZ1cK6HATIQ745EGj4N04fg7A6sNDSRPFRU+e/Ed3uzA17gsSO8z2img==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mXKeBnfR;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.50
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D97606A680;
-	Wed, 25 Nov 2026 07:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F0A606A323
+	for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 07:52:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 38F0A606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GF+1Udnt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910BD1F000C4;
-	Wed, 25 Nov 2026 07:46:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795592814;
-	bh=40a2SxR2F++aAWEGeCskAj0ReXgihjjN31vR1BVlWBs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=GF+1UdntSeWb27lATOJUYK0ZM85tb2IzGIUc7ccDmhKFbXh9Yl7friVx/RE9TRE3e
-	 7gRbCNxKOcOlUJIFo7z1C27olhEsNZi5vO7+yE1LX/XiHuDTob27h5n3rbyUBHS78E
-	 V+5gfLmdXdcxQnMu15mENMmo8iGpai1RXROtG9mTKd734JolX2Vg06tUS/wt3pKe3m
-	 AaQJbdcEAxdWUIszuLFrBavE4mhJu9bKKoV2XuYjUCiZDxnht60Iy4Z7XVODmzf0T8
-	 /NUfAg6lEbnCDGIEODMZtWHb+ysu1MhqDDxXSXw1S1GWO86KijpUTDnQBJ/lI+ZSyK
-	 FJQsxoMfI9ZMg==
-From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 25 Nov 2026 07:46:17 +0000
-Subject: [PATCH 4/4] riscv: dts: spacemit: k3: Set CD pin bias
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mXKeBnfR
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6b88b74e54eso6705117a12.0
+        for <spacemit@lists.linux.dev>; Tue, 24 Nov 2026 23:52:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795593178; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OGVVHg1GBa+7hxMeSAbG/S9MbEWjQxSvLzLaGaSTEHDpcEQrPbYFC7Ck2WTsedlscE
+         NoG7DgdKyNGJAr1lTle+sqeciA0kNY8R7ZMmxSjiOWWqFByg4RBuxnX1qaWDYDmF4u0b
+         oTTlTIWIb7TSlOdY0sPbwk16/LhiGpifiLXWgBDu9gLqoylD5RtCgGzYxCoMFzJcGFK8
+         ZgYa0UWhg0ObrBL37gY7wSy65NcWEduZxTkeqMtn1nd+qhrGwibummrpNSPgAD7wn/B5
+         S9/KjyADs6jwc/pYqMSpSu4ZBnwxrksOhfNWJaa/2dO220r561JWTACM0qefDJCvPASv
+         /x5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=KSGHti+DBG58dWZXRAMCvoWIexuD6kTB1LwSNHMxBG8=;
+        fh=ZRk8XPS3jZcblbxdRHbZtPHZ+ATIO8UJj1DZsHL93zM=;
+        b=pTihj8a3gwbKPAYhiLYaIrW4NPOA3gWR6eeegt2J7XgAcNuMuWokSHnAq57mJxojXu
+         k4KpwxpM/KEIhbohgrijWLiYyeXNavol74AKASc5Saz3rPHUF+U2vSyS10NgNBGyzPN9
+         VVc/D34QUIojnInl/rWSrYKHaTSSXmmNvd6NOlwQn6RGuhCbSrD1ZYaut+NAW1MK2XYX
+         kXHVs0jEReGJTXm8NFEjfsF22MgGs60sQSrmZcFJoagpgze57uYeosmyg3F3dgFBaXjM
+         tIpnz3Xjkodef8DlTmpNlDyfVvfMBElhhS0rb+v+GgBLIWspBoCxbAYVNX4yIpcvfdbp
+         iWIw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795593178; x=1796197978; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=KSGHti+DBG58dWZXRAMCvoWIexuD6kTB1LwSNHMxBG8=;
+        b=mXKeBnfRjM6HLWfhZCKaY15obNVoKz2TxaXWOORuBGAo3/+SD+exVs6/Ff+2adoikv
+         7nHR5cHn+vV/OriN6xV6sMOhaYr7mANe/JwDtiAgdbatnDLLzH/esqSm9hxVTZJitiwG
+         banqdtIHP3/Dhne0wQQqaOSdP2cS4xlnX0xnXSWdR2mmasJP271QXh6VyIQtsLiCu8ek
+         J7+lC7OBSN/dvcV7Lx1SRjp4m12GkUP6NgLimk5bB8FTJZwW6wl5U8oM/0cuu6qH794E
+         aJ8wR8/4DnHS4Lmo7MCgDONTB9DSy2VGqGUuGKu+WsqrpC4YQNq8skVUG3MtYbST9x0G
+         jUVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795593178; x=1796197978;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=KSGHti+DBG58dWZXRAMCvoWIexuD6kTB1LwSNHMxBG8=;
+        b=mdVKt1giD5h7kW0LfPnppO0nR1lfb9yGD2BKzBpFLeWqUNGXl01wg9I/CQ6cRkfX0/
+         FlkLoFvsKrbcya9Ty87srwJNA7/hgEvl2L3Mn/yKQPH/acKaA/+t8CUd/604HRSV/Jqz
+         g9H7FoXnISowycAnbIdLfeOyLJFktnMXAC7HJOBpZkTr3DHRO4ySSW898NrbsQ8BGMOx
+         fPfQrPmsK9L82fUW9tcG53voyCCOKhcSH4r4anAurlfqfgIssa2yU0jAUh+qNwmUtK0U
+         7V4q9yAQ172uxG3hf/i8mlLZMAfBJuBUfqKp1Or2ZoAnIGAeJLSyvYyuT+iRZy47PIT2
+         oeHg==
+X-Forwarded-Encrypted: i=1; AL+hErFLJlZ/8uxV7sGm2OQD9jJAwBZkABzZOcrtemdXv66QuJ6ZAJsxmtExqKFgmSfHSIrTkel9wYLFjg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/yfLns00zYE1NktYPKm8b5H9oNDXkFKlEHltYgdh82eooteLzE
+	2D8YXXwPz25baAdgDGflOY102ipYPCOFCNKKGstFHoxphb3bvsb2ZtfZeRQdZikG2xVm828U1kr
+	CaenxN8tLLliy5c8nCAfxAeiYO6C+/LNj38OR
+X-Gm-Gg: AZFdTZeYrnfqGbCeQPA49xf1tpwNjfBCcbA9MdIGZ40yuHOgbEfWopKBoYcXOWZDo/F
+	FwhSzzSR+O7LuqLhORb+24TO80m4mCoAE25vIG588w+u6OdBQF+iLdXIzwbYNIQAgxSerNm+hxz
+	bluFOUKTZ2DSjmHqKH3fZd5rpGAhzEmg3rPJ4Qs2kjKD2aQ2tfpTgbAc7Yfa4DR0BQsUU53A++i
+	zlwOIYoqjnUXGySsBxydlrfE1VpDQ4aMAmfS8jJ+untG7yCOINtl6mlJgL8z2IYlB29Oua/eRDC
+	GLlJUt74OuHdHLKFtujvz+5vMQQVvgyueLPjbtdO/HAB+ULVNQpRfrzNKPAKnyYJc7KTeGVRz+2
+	xrbgZe0PPiiKCUXL7Xv/BYBGI3ZT3CaFxvMM=
+X-Received: by 2002:aa7:c0c5:0:b0:6b6:4dcd:9677 with SMTP id
+ 4fb4d7f45d1cf-6ba37d62867mr9467600a12.14.1795593178308; Tue, 24 Nov 2026
+ 23:52:58 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -52,68 +103,130 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261125-09-k3-dt-minor-misc-v1-4-dd887a8eb326@kernel.org>
-References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
-In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Yixun Lan <dlan@kernel.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1072; i=dlan@kernel.org;
- h=from:subject:message-id; bh=YNc1vItrgHYyzAJZXdA+z/8Pr3LgzudsQKQoxQGoJGI=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJUlQ5XNwoXk5k7IVVIa5jI7eZycR9IEOiyi
- 8XgfVh/C1GJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSVBsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
- maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+19pg/+LKShy0zh5QYLystrUsbPBbb+zQGtCzzE246Tailkiy8GVhITAb0Mp
- d56vguSjRLlwg4OzyI19a7D7SWv+SKVW3Mcf1Hp90ZlA3s6uLkjSTBIoLDLNZpKZx6yYYTP+DoP
- 46MnFNF12ljI7pApVHuF3n4+PnCqMJqpfyh51RyRrlaEOAsODrPLOYzwpZyJwsE/hPav1/0h64C
- ka0a0+MbOdw1w7Nbzp7o55tVbJQB0gbLuyRlva6QpichzKS1gk4lqpaFAQSxjRANk4m1Ew8TFvJ
- f2+6AI3M/+19g8mbrgKBBkPyMObfo8rFtXRlgQtHZFr6gdOJV9lxOmhHhxk9ktcaDeKForS+ywM
- 6xEvwM6/1ypa4VgDkbbAArp59Ht9YWJb42PrYc1rIY68XknkOrCYj3RVt6ER4TCGYsig8WfOPi1
- xfOWQ3yz25U9WV5n+0dACHOzuUtRUQJZXBJnoIRj//6vKcIwuqeAzrE3kPxmGnbW68YCnSBWJG8
- 6Mqgwqyy4QHC1mfATASLZzPQznZmZD+Hu0ylCQsXMP8tTt5nRnU375gG2ZJoGcc84uJ/10TaOkT
- Pt/ct2a3F774CrXNJSFbEa86qEcrZZhjO0+qy1g7+8sSUsIv4h0ECha+U3Le6zLRD3pf16wgaNo
- 22o68gYAMZktPmSvIpGdLqs7z1HTG0=
-X-Developer-Key: i=dlan@kernel.org; a=openpgp;
- fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
+References: <20261123-fix-bpf3-eeprom-v1-1-df8cce6ef2b5@gmail.com>
+ <awS2-clBenE1r1a1@aurel32.net> <12933da0-9bc8-4f92-96d4-36c5673d3f5e@gmail.com>
+ <awXUSuYOUQMPCl-5@aurel32.net>
+In-Reply-To: <awXUSuYOUQMPCl-5@aurel32.net>
+From: Anand Moon <linux.amoon@gmail.com>
+Date: Wed, 25 Nov 2026 13:22:44 +0530
+X-Gm-Features: Aa3M54q54Z3pQu7569lgjovS1EclOCcqRbeez4LQayhOiQc7wEhf9EIuKCN7Gzs
+Message-ID: <CANAwSgRf0XpWnyDaoiGySFv3NPKCBYn6BODf1M+P4w58BF-duw@mail.gmail.com>
+Subject: Re: [PATCH] riscv: dts: spacemit: k1: fix the EEPROM page size
+To: Aurelien Jarno <aurelien@aurel32.net>
+Cc: Zixian Zeng <sycamoremoon376@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang <wangruikang@iscas.ac.cn>, 
+	Junhui Liu <junhui.liu@pigmoral.tech>, 
+	Michael Opdenacker <michael.opdenacker@rootcommit.com>, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Explicitly configure the bias settings of the CD (Card Detect) pin
-for MicroSD card in CoM260-IFX board.
+Hi Aurelien,
 
-During the GPIO pin request phase, the pinctrl driver disables bias
-settings in function spacemit_request_gpio(), this happens to work
-in kernel side, but doesn't for U-Boot. Adding a flag to fix this.
+On Wed, 25 Nov 2026 at 00:14, Aurelien Jarno <aurelien@aurel32.net> wrote:
+>
+> Hi Zixian,
+>
+> On 2026-11-24 11:31, Zixian Zeng wrote:
+> > Hi Aurelien,
+> >
+> > On 2026/11/24 5:58, Aurelien Jarno wrote:
+> > > Hi,
+> > >
+> > > On 2026-11-23 12:41, Zixian Zeng wrote:
+> > > > The bananapi-f3 carries an AT24C02 compatible EEPROM GT24C02B [1]:
+> > > > 256 bytes with an 8-byte write page, which can be found in schematic[2].
+> > > > The device tree declares pagesize = <16>, which does not match the
+> > > > eeprom chip datasheet which declares pagesize 8 bytes.
+> > >
+> > > Oops, I am not sure how I got that wrong. Sorry about that.
+>
+> The question of the page size has been raised in the initial review [1],
+> and it seems that the GT24C02 has a 16-byte page size, while the
+> GT24C02B [2] has a 8-byte page size. The BPI-F3 schematics confirms that
+> the B version is used. Sorry about the mistake.
+>
+> > > > EEPROM pagesize of k1-bananapi-cm6-io[3] and k1-orangepi-rv2[4] changed
+> > > > together, based on the chip model shown in the schematic diagram.
+> > >
+> > > The k1-milkv-jupiter board is also affected with the same issue, despite
+> > > using a slightly different EEPROM (24C04).
+> > >
+> >
+> > The GT24C04A EEPROM used on k1-milkv-jupiter board doesn't seem to have
+> > the same issue, which you can find "Page Size: 16 bytes" in datasheet:
+> > https://www.giantec-semi.com/uploads/20220929/GT24C04A.pdf
+>
+> Indeed you are correct, and I confirm that this is the exact version
+> used on the schematics. Therefore there is no need to extend your patch,
+> it can be merged that way.
+>
+> > But I don't have the board, simple test would be appreciated. Perhaps I
+> > should include test steps in the commit message for the next revision.
+>
+> Unfortunately the board has the EEPROM write protection pin connected to
+> VCC, which means the write protection is enabled. Therefore testing is
+> not so easy.
+>
+> Regards
+> Aurelien
+>
+> [1] https://lore.kernel.org/linux-riscv/aNLzRJcKCYOngc7z@aurel32.net/
+> [2] https://www.giantec-semi.com/juchen1123/uploads/pdf/GT24C02_DS_Au.pdf
+>
+Apologies, this is a different issue.
 
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+I am currently working on enabling multi-DTB support in U-Boot SPL
+for SpacemiT K1 boards.
 
----
-K3 Use same SD card slot as K1's MusePi-PRO, which needs PULL_UP.
----
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+While investigating the board detection issue, I noticed that the EEPROM
+on my Banana Pi BPI-F3 does not contain a Product Name TLV entry.
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-index 65c6f49f8591..598a53461afc 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-@@ -240,7 +240,7 @@ &sdhci0 {
- 	pinctrl-0 = <&mmc1_cfg>;
- 	pinctrl-1 = <&mmc1_uhs_cfg>;
- 	bus-width = <4>;
--	cd-gpios = <&gpio K3_GPIO(4) GPIO_ACTIVE_HIGH>;
-+	cd-gpios = <&gpio K3_GPIO(4) (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
- 	no-mmc;
- 	no-sdio;
- 	disable-wp;
+alarm@k1:~$ sudo hexdump -C /sys/bus/i2c/devices/2-0050/eeprom
+00000000  54 6c 76 49 6e 66 6f 00  01 00 20 24 06 fe fe fe  |TlvInfo... $....|
+00000010  d5 52 bd 2a 02 00 02 23  0c 39 38 61 39 63 33 61  |.R.*...#.98a9c3a|
+00000020  32 62 64 34 37 fe 04 3b  e3 ff bd ff ff ff ff ff  |2bd47..;........|
+00000030  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|
+*
+00000100
 
--- 
-2.56.0
+Although the EEPROM is readable, the missing Product Name TLV entry
+explains why read_product_name() returns `-ENOENT` (-2), assuming the
+EEPROM read and validation succeed.
 
+Consequently, automatic board detection fails, and U-Boot falls back to
+CONFIG_DEFAULT_DEVICE_TREE, which may select an incorrect device
+tree for the target board.
+
+Since the SD card-detect GPIO polarity differs between the Banana Pi BPI-F3
+and MusePi Pro, selecting the incorrect device tree can result in SD
+card detection
+and boot failures.
+
+The following SPL boot log shows the board detection failure, although
+DDR initialization completes successfully:
+
+```
+U-Boot SPL 2026.10-01060-gf3080abcfe92-dirty (Oct 24 2026 - 17:30:03 +0530)
+Fail to detect board:-2
+vdd_core, value:900000
+vdd_1v8, value:1800000
+vdd_1v8_mmc, value:1800000
+DDR firmware: [0xc0820900]:0xf0227179, size:0x8d98
+DDR is ready
+```
+Could you please confirm whether the Product Name TLV entry is
+expected to be programmed into the EEPROM during manufacturing?
+
+Also, is there a recommended approach for handling boards with missing
+product information in the EEPROM to ensure reliable automatic device
+tree selection?
+
+> --
+> Aurelien Jarno                          GPG: 4096R/1DDD8C9B
+> aurelien@aurel32.net                     http://aurel32.net
+>
+Thanks
+-Anand
