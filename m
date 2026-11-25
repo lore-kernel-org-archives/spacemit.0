@@ -1,100 +1,123 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.168.131
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795616529;
-	b=TEe1UYtcIsbb8J2+5sg60V8FNOgWgbrtJSKSY/4g+BVQwbFyH/DSLukugWIE9f0PmcNg
-	 J4ENFSsKiZ1dz0aTMD4jp2pgyLE0B4KR3nDljMkVa4SgueENjF5JFnHb+NVuz/DbhinyN
-	 HFPr1Y2wsHFaQZyGHqwaoq1xbe2Q0g2fyunoHhDPbxmRGfyBBjmkodRMQr9vIzJIvt8d0
-	 gUbNkXDM6gQUhdMB35invImvxWW2HVbHr/Nrrqn9/Qt108wDLHhYTTkp3HfK/NjR/O8oF
-	 1qgqvBvhFho77/+oemkgBSRBI/PSWApEHMrdafoxky7kVIk6Q+XdPekW3X8t4mNFYzg==
+	t=1795620286;
+	b=E1eJRoZ04TKeo4pZWpWY9ZnUosDdw7ylgC/pKvCP8EqpLOTFnPZuHLEHZE0oeMzEEcPc
+	 iPUT6H/GIjzJW/UA2DDBiJgAdyrOyKQIxCOrP5El/jjAfsB0Gt3OwaYSduMcN8kw53E/J
+	 Fc6V/Aip/1Pi4UMM5CpYT39XDHzJxxlQFAkTp9Ooa3l9ieZSYGANNE3Mykp4KPMNGJWmr
+	 F1RlT5IREKzL7+s8q6LD3N+94EnFy1BwVlCg40rhK+BvTGDwx3NhmdG+iOrAuQCFgVt7B
+	 DrpzAGjm12AUL23F0VEtRhP8FLHudry57w4G18NjFfCjUXMSuJP540vy3qlVWN96FPw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795616529;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=qcxgI/Ns4WvtOt6H6UP0HsEplcfIU7aicu4QDdc3bw8=;
-	b=i1VpJlfUkYVIEDuD7RVwn5dTF6fX9VVXPfBSFSzDc8jT7ARqPSO0i3m00L0mf4aBEE5T
-	 +MXeTp7UZJnENH/J1p0H6nbnKn4Sks7AlUaJK1QDHjFl9jhnoke2A79dciUA8Zah5m4Mf
-	 FEVGwHjY416EDsqlq8aDwEAe6SM0SZ1blL20+bDBt8M1LPYFzNamMs6CnJRb7YVBx6GdE
-	 VUbmlJ0CHQJrPI5qqRbMovIqvYnmoMMeIpjM/4vFSr6cgfQcAXgL0Kg06bpOZIM36z5oE
-	 7rhz5c8yZeD4rr/0us9y001weO5MmmdapkhH00/cWs1kBKEd8+fq6ovLSwkrQzrMT/Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795620286;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
+	 Cc:Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
+	 X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=QIYZYd3o/tNv9e79fiRmovS4XRBJcwrqybTUeeJB7F4=;
+	b=AmXfZWGcbtWog1LwlmJzCSpt0rTYME0vm/TC/oSBhxcTTIb/n3mAWZYcbqQOS1gBNhLG
+	 nWjNtk+1WqETDAIEmxC/8dIWNNkj/8TNSgbufqtJJXChreraAZgPOGMAbnD37YhJvY7qm
+	 OhjyBbrY4POt7zjLFzOaGYKTSJZ5fyVRePPlsYUkRmVhGc4nlYnY0TnmJhA2vhNuQpGSA
+	 t5JHEkhygCsgQblX0LvSB7dv3ZcQExUSWramZxcd57kTVU/JYKvOq8RKEJ/i0iNAUC2n1
+	 Vuqf1jJFo6sf6f/DufhPl5kjKe4c1pa53BUQyZg2hzJ0TDG3OQOJ+f7PCoemCXbA2fQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="RKu/JO8+";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=MveGXrNU;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LNelTxC8;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3A606A31E
-	for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 14:22:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E6A3A606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020E4606A33B
+	for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 15:24:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 020E4606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=RKu/JO8+
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b596afb4c5so6806923a12.1
-        for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 06:22:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795616527; cv=none;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=MveGXrNU;
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LNelTxC8
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6APEMQgm441502
+	for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 15:24:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QIYZYd3o/tNv9e79fiRmovS4XRBJcwrqybTUeeJB7F4=; b=MveGXrNU9rvAmn6V
+	xyXMLjH+LeWkmnYw5sO0/5LIzFGhJKO6bnj+DlEI27vePJbVd0hXi74Bktgvxg/7
+	qTXu93gmDfo1mniLpECQMDNfQAraAs2gSciu6wtyvKkg5MYR5NR1xIuon3fFcysa
+	vweMynCEphOviJ2FslE5q5pFdHKX8Vs7EQnRWvJuSHd11zkB/LMkPjB7+cJb0Jub
+	X0GKLuGzzobTNolJ/29eZLg5253HUI1rBQHw6o8FEoIQO4X6XyRIjozhWIYI+OOA
+	IDrSIbUznKwH2Byn5AsoGh7SuEsRWGvb4b832YXkS3/gvvFl3idyej/aVE7siMXh
+	XdEvLA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4j5mqbke85-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 15:24:45 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2f08196b148so35034665ad.1
+        for <spacemit@lists.linux.dev>; Wed, 25 Nov 2026 07:24:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795620285; cv=none;
         d=google.com; s=arc-20260327;
-        b=IS7EeG6B+iF/piv05Tvr8uqB+tfYmW8MJs+nvoOhPmZog2US0MfMS0mKu8SluOrNGv
-         nGtiRSksCpw9rZ+f0PaLOheqSSAynUqY3pxsPmzRLtY1Obp83IXisf+JkqM6KJeSuKOH
-         Vac0AZJ3s6dBmXQB/mZThFMRcUtGOTDun0NH2cz/IhGg5zygv1H4RXRMHSHPdW2TNvfV
-         xErMyHQJmvqbVv7NDMu0yORKOMRCKnVpy1MRj9tzkzgw3B/j/cvfQz0QGKD6OPO/MKm+
-         6rpBA26b3DUDa2HqKtD8icMkBbgnL6if3IFJtRfCJfSq5GQkD60WCibAeXA5+CbgtBU+
-         rQuw==
+        b=B0jBRYWrntQZK3wBd+GvRKtZjwKzpZasPK09TneBjnAf/4eD2Qjk0VmCpMTtFcAUDG
+         4aDfDUgFc1WNJGel4Tj1Wtu8pRF4FeWCtlN6AIjNxdW4n88kE/GUgI57EvzZM/wfKiLQ
+         +CCO1cr7cbCp3jjkK6qVBGGmX1rMjwRXouVtmItDdKUAx/9SGSdPX95KxjXrMWp6xjtK
+         UXQCetm5pb7tHZEucwm8LjmMnQVfk2DBxZgmOlrW4Md01yxaai+XmIidm+7mk4RdEv5J
+         Ya95gdLWEG5sVlTolLdMJTcH1DfjNoL+QGxOqwL2AT75I09u1rx4IvK4+PLFPxSF0iS2
+         LYpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=qcxgI/Ns4WvtOt6H6UP0HsEplcfIU7aicu4QDdc3bw8=;
-        fh=PHBRL/07N2b+Y8VHMcPetcW39trBqdYKFNfQAkLl+8k=;
-        b=h/ULoZTk6xloBMxMvIuZEmUfjB1NlTSnvT2FH3a5P349xfVnw4X76B85zJjVczmn3h
-         32wn4b3lBlRTKY9pFWyJEKPvg1/riOBe9w+f0pYVdEgzlb/StKF9wcDre2aUlHG45TL3
-         BtRH0GQF0WV9ivObpugUX/Nea+lhWWewgKDvTgFIXttSDPBoT8oIWnSQOagveIgH1fPv
-         9cfcrc+tnck1UVD4umn90Yd8HJc7ukAJ5rxyTwHfHcLmlUAGnZnJL5cCyjWJf9WcNxxv
-         gmMnHXi5glwSje+WAVChOm6PLVV8zjhTuPpa8LZQ/DMomUd+Z0BMVAf0Bc4pyZEudUZl
-         +XuA==;
+        bh=QIYZYd3o/tNv9e79fiRmovS4XRBJcwrqybTUeeJB7F4=;
+        fh=0lMs+yF9hWc0wqSTcQ26t2Vi37GToJvxRlZoCSFORl4=;
+        b=JJSsXL7rBHoyo+ynvhILXIY9E1Nu2WO8czaF+JbGUBzjbMXSuSjxPChVSRklEW3gzR
+         h8mn+oXmmlz6yfJWvAS3YGYNKYoOqFWaASaxmYVxNTubQdOtWaLGlq1TH0ZhpQddowvZ
+         BOCtLzW9YtN2en9bz0RByM6A7+rtOABuRt90VGwXd1BRCTXpwDBKXKtxUdd4QiGFaAIy
+         ITGr9cBAzZxBC0E1KN/G6Lg3WwwRuXj4FlLrjk7p/UMq23q0f44oTxRXIIHnr/Ir+ep1
+         4QyvGSmGog8UyyRXCIoUbaFgnjNjGtt+X+d0ydr/3/EOjv6txtz4CfHUEDZ0t5ypACdw
+         3bVw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795616527; x=1796221327; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1795620285; x=1796225085; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=qcxgI/Ns4WvtOt6H6UP0HsEplcfIU7aicu4QDdc3bw8=;
-        b=RKu/JO8+NHmz0PKH26C+kY7GZzbDnNEvZuiCgO6umXT6rZvEAHjPxXqmU9zZ7NoHZG
-         oXyKXInRoZAOyvFMb2E3lrM4GyY3rMPXPGw0mIqPkkApqKmwzfOIJrEf1BLtOVwsnBMs
-         x124qSNkuGgX8jT1iPdQ2L30HZ6POMX6POzCta57Sotzl6r1BXzPfr9SIYAMcItHN0Kh
-         CpFyV/aVlOaST8qQjWeqSeVtFWkjO0/74y/gkMOYG6P8JIsJmcy5utL5OlswkSZErbTG
-         /Pyvk3Uu6DkB3hQiDWNdbUIVZSGuC9SNAa/GaO6x/RjF12k1CXnERrukToGN3s+5arHy
-         JkTQ==
+        bh=QIYZYd3o/tNv9e79fiRmovS4XRBJcwrqybTUeeJB7F4=;
+        b=LNelTxC80kuJGgWd94JRjwbFfqFCUpZrPLU/Phz89lQGMPrUeFStBvdp4yHKIxQAuv
+         G3iQhyU51czPxVYUJkQzTqTHmWomcukSPVQGNSjH5Io0J9YWrGHllR8nriuUjbZfZl7v
+         sVtKtU09iwbOSqYeCh2HLVM6Gqjj4eNbJOrr1RKQ7tbqbTzZP65qDFeqDKF/d6MKqcx0
+         XG+52ZxofV6kCoVPmRmh6cDX0+eM/QJL7l120nDRhxGLeNBtSzEwF6uX4HiQ/eEqUGeP
+         Z1P5FKZD1qtYen2zohFN/7hh1T9O/hXzjca+0sMCy+Lydi9BtgrVUNW9A8CFo6mTw1Oy
+         nrjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795616527; x=1796221327;
+        d=1e100.net; s=20260707; t=1795620285; x=1796225085;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=qcxgI/Ns4WvtOt6H6UP0HsEplcfIU7aicu4QDdc3bw8=;
-        b=P3GrAAWmzzD4P1yT5qlnn9xEKxFu7MStRl+dISAH0kon+NJoaKHdfhGL5LeZN7pATt
-         p1CG1MZU4PKptUjakIKTO3IHPyIdKNJLvd0OLNbsZsuf511ALu4N1B02PddhdGhKIyQz
-         qLTOwj/aIxrlc0jaCn6pOAPaziPuJNurjIJZvs/XNnOem7UTdqxrRppQ4agshrMWujl0
-         rM+U39mCrc727fLBHLV/Dqp0tzx01OtBoYEGA/RVVuvqFpRrM+lXrL0TtgfippxpdK98
-         Q3crdScGXtyouHx2n2ZbS6hzuKh3d0KC/GmsCLmOQuj/EuBT53wu4iufTDI+avJ4qL32
-         APyw==
-X-Forwarded-Encrypted: i=1; AL+hErEPC/a0reS05YW2wU194kjMGnDxckudU+JT1ycODH18lCbrDzzygdfVlbaGBt1/RCsEavGD1eGeeg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/IfcF5qfrZ+edEnQIMor3c5uJKsL1geq+VT+EFdkBi+RfcXRXF
-	nXJMDS5X3n2jP66rhgmTs2ZjjFqfM+mqfiB+ZK1frbyeMMeUmLYZY6Ksd8WAuFUezGc610TQcwp
-	itu3hEFv4YtcpgjWbGyW83tQk6310UBM=
-X-Gm-Gg: AZFdTZf/MUsj3sTf8LU+ynjYUFlq64iH7jDw3vFwXei2R5cd0bll9CdSpcj6TrxK5dZ
-	MBkcvpT3VaOhHspgqK6K45EJnr1yaaacki4kCxoPqHUkoIfPUQYkBCVKEq0fONTdMfUvc6awsoo
-	EA50/6dOEMRNfEVNDitpCoE/ZZBbXjWwG0ZSCD6TsvQYgxjVz6auufDEoc3t8on5iP7oPIQ8Vvb
-	XWgWuWzU6Adq/YwKxpbRu8bv+KKIrFv7DEe9H6oJ757YmX/0/30t87lux1jPyKrlO+qFvZvLTZF
-	xcLpITstcL06xeK/jY9w3TtLq4shsTgFb+LUY7ZUH+16/20j2+yJ+Klea1YAnx59ZPnt2pjQNnK
-	Y7uF3JHA5oWMboe4HxfbDlkJGBm8fbicvSafm
-X-Received: by 2002:a05:6402:1941:b0:6ba:7b46:78a7 with SMTP id
- 4fb4d7f45d1cf-6ba7b468320mr9290374a12.35.1795616526919; Wed, 25 Nov 2026
- 06:22:06 -0800 (PST)
+        bh=QIYZYd3o/tNv9e79fiRmovS4XRBJcwrqybTUeeJB7F4=;
+        b=AQZNbUte0YK6G6iaEp3Vu/L31AIqvh1/MZIQJLYhNCrgPtqdAfGuPAd85jJYnpXRRv
+         Pq2wQPYEM5bMl4kbaYbBfd6hGkB9CPoHjuvDap7XeIv6kGP2Tfyg2FQzKWQx1iLGNu1M
+         bPQWDW+1y95d5Rw7yzYliK9zyALP3wlbLp2TFV99QoYIdLrRl164gp0lpyeUt6LWINEb
+         z9/65yd8/JQawxQjHsvUAv2qe7fdDxJ6TRNjbpHCbB3DoEcSOUUdFuDJLNVVX0FNzj24
+         IR0k0PHYpAx1xxA6K0r443ac0LKmogVGZif3dwtZno30K0p70UnIWiwObon/PYErYbiT
+         Dtvg==
+X-Forwarded-Encrypted: i=1; AL+hErE1+XjSnrVcj/Wcx4TtriTTfp79lKWmikBrzTj4q1jNCaxfaW/rEI+twrhGft6nrPULfD18G37wgg==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+j9zGViEvbQoC1AUwXia958bSFXvTR0gkRci/mqCdePfL3zMUu
+	QUtsDspXzFGFhR/o2Jekl+E/ch4qAyrjiTWx6YlMe7fIPBh/YDdoc6FGpiIE1qYSYGKt6eXgNF0
+	mKnHFDLbPpkTEBjpaYeYEtb6TNC/nw/ImA28BghNkAz1v+qJEeM1hsqlU1H2g3V1dcMJ1Ylfqdw
+	HoutSdv7T2j0aDYYm6v5asiELleQEkUYSG9Eft
+X-Gm-Gg: AZFdTZeOdemj8d5oqN+Vlx8Dh5T/nFy5N8uQdXDSYT3V+l2e/KjKi07kxXRuX8bSTAM
+	0KFIuBiHq2r7i9awcFpacNtkHwkhZos1Rh1+nCqX1hbW9sdvSrHHXp1hdc7pXfF1LPk9+W34dsN
+	3B4bzg62eoapCH2mLzPG/Ew4hWBYIUWeNJda19U7plE+6K7pDe6Gjj4GUe4w==
+X-Received: by 2002:a17:903:4b07:b0:2ef:de9a:e59 with SMTP id d9443c01a7336-2f03f1a1767mr166368825ad.23.1795620284594;
+        Wed, 25 Nov 2026 07:24:44 -0800 (PST)
+X-Received: by 2002:a17:903:4b07:b0:2ef:de9a:e59 with SMTP id
+ d9443c01a7336-2f03f1a1767mr166368535ad.23.1795620283988; Wed, 25 Nov 2026
+ 07:24:43 -0800 (PST)
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -104,242 +127,155 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261123-fix-bpf3-eeprom-v1-1-df8cce6ef2b5@gmail.com>
- <awS2-clBenE1r1a1@aurel32.net> <12933da0-9bc8-4f92-96d4-36c5673d3f5e@gmail.com>
- <awXUSuYOUQMPCl-5@aurel32.net> <CANAwSgRf0XpWnyDaoiGySFv3NPKCBYn6BODf1M+P4w58BF-duw@mail.gmail.com>
- <CAKyUbwUyYptzZrMFKD-RjmufU7Wni8-w5vQvPyxUgx9BU++vsw@mail.gmail.com>
-In-Reply-To: <CAKyUbwUyYptzZrMFKD-RjmufU7Wni8-w5vQvPyxUgx9BU++vsw@mail.gmail.com>
-From: Anand Moon <linux.amoon@gmail.com>
-Date: Wed, 25 Nov 2026 19:51:54 +0530
-X-Gm-Features: Aa3M54o9-c3RGYDe5yPxK4MpGdTfrRnEWaETWf2MdzNo7lC6NrDNImRWSOSHHdE
-Message-ID: <CANAwSgSNuEC72PM=1ai3xj31+=veLkDhAfuNJ3pmCggBtx9v-Q@mail.gmail.com>
-Subject: Re: [PATCH] riscv: dts: spacemit: k1: fix the EEPROM page size
-To: Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Aurelien Jarno <aurelien@aurel32.net>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Vivian Wang <wangruikang@iscas.ac.cn>, 
-	Junhui Liu <junhui.liu@pigmoral.tech>, 
-	Michael Opdenacker <michael.opdenacker@rootcommit.com>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
+References: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
+In-Reply-To: <20261118-04-k3-pm-support-v5-0-42394acdf3e3@kernel.org>
+From: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Date: Wed, 25 Nov 2026 16:24:32 +0100
+X-Gm-Features: Aa3M54olEAoYIpHYojNK94sf0JF_SRHhMMcIhjtuJGmTJ5tnlyfF1zWJRLUcNAA
+Message-ID: <CAPx+jO-TqhmF=vwSveSQk0ayUKf9M9fSDBYygTx3uTdQ5QHSHw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] PM: spacemit: Add power domain support
+To: Yixun Lan <dlan@kernel.org>
+Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+        Alexandre Ghiti <alex@ghiti.fr>, Icenowy Zheng <uwu@icenowy.me>,
+        Iker Pedrosa <ikerpedrosam@gmail.com>, devicetree@vger.kernel.org,
+        linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Conor Dooley <conor.dooley@microchip.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI1MDA2MSBTYWx0ZWRfX/jJ6BPG+wzD+
+ 3aSpAsVzn2fF3xIES/3f3RkxUnrIqpxftPZXHLIYPr2wZaoQu7ksk1lIZrjV5wHmyhB1/AXKUkb
+ iqfHVEkM542+9GeXnbnsa3YEjB12eq8=
+X-Authority-Analysis: v=2.4 cv=Bb9NQbt2 c=1 sm=1 tr=0 ts=6b06fdbd cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8 a=bC-a23v3AAAA:8
+ a=CDiEhUVfAZlwq9Ebo7kA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI1MDA2MSBTYWx0ZWRfXxH9oPzGiAG6r
+ 5TgPItguv6cgzAedr5xh6+zWcVIiAF2h7Q5cU7+jA7vIsmClqL8EMKEuEffkZC94GQoV8JIrScC
+ x20gqtVbmrQWfOMyV43hlu32dAEV+z0RqQndaV5dynhw4ifP/2kDDEmnuwXW6a9y8ZkJSYAH3Gp
+ ozREe3LdNHOfzQZ7ky2HD4u1Ikm8NVDptMxEN2ibr3M7OHT2xvJxM/ycvFiC5WC//sqRgGovlpU
+ pYOAqO+eV7Elim0S5/dyFNay/gp8FeXe3pT4JygskN6d4CGOQ+ult6HaD/1wF40ci9rrPLDIMjr
+ 99zNoXfPx3ZWwZ1TNSd8CrJW9n9lSdYEAskd+jQnT/GTJoInGBvVdFKqXgjLn4NKCVZsMybWzwf
+ FWna/jR0pjmhcb++9Gf7sJrgSe+OqGmucex+Z+74vDXmyIlh3CCnXP3wAH9Psn+EGxMGG1pdc0A
+ Lh+JSDLgg4J9zPFfhtw==
+X-Proofpoint-ORIG-GUID: dtn3O4SGErqnNb1aeY7lgQrrvAM_SWyU
+X-Proofpoint-GUID: dtn3O4SGErqnNb1aeY7lgQrrvAM_SWyU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-11-25_04,2026-11-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2611040001 definitions=main-2611250061
 
-Hi Zixian,
-
-On Wed, 25 Nov 2026 at 15:08, Zixian Zeng <sycamoremoon376@gmail.com> wrote=
-:
+On Thu, Nov 19, 2026 at 12:13=E2=80=AFAM Yixun Lan <dlan@kernel.org> wrote:
 >
-> Hi Anand,
+> In this series, we try to add a Power Domain driver support for SpacemiT
+> K1/K3 SoCs, the driver implement the power-switch functionaly which suppo=
+rt
+> power on/off, and it's based on Linux Generic PM Domain framework and
+> similiar to vendor K1's implementation, but unlike the K3's vendor
+> version which is more complicated.
 >
-> On Wed, Nov 25, 2026 at 3:52=E2=80=AFPM Anand Moon <linux.amoon@gmail.com=
-> wrote:
-> >
-> > Hi Aurelien,
-> >
-> > On Wed, 25 Nov 2026 at 00:14, Aurelien Jarno <aurelien@aurel32.net> wro=
-te:
-> > >
-> > > Hi Zixian,
-> > >
-> > > On 2026-11-24 11:31, Zixian Zeng wrote:
-> > > > Hi Aurelien,
-> > > >
-> > > > On 2026/11/24 5:58, Aurelien Jarno wrote:
-> > > > > Hi,
-> > > > >
-> > > > > On 2026-11-23 12:41, Zixian Zeng wrote:
-> > > > > > The bananapi-f3 carries an AT24C02 compatible EEPROM GT24C02B [=
-1]:
-> > > > > > 256 bytes with an 8-byte write page, which can be found in sche=
-matic[2].
-> > > > > > The device tree declares pagesize =3D <16>, which does not matc=
-h the
-> > > > > > eeprom chip datasheet which declares pagesize 8 bytes.
-> > > > >
-> > > > > Oops, I am not sure how I got that wrong. Sorry about that.
-> > >
-> > > The question of the page size has been raised in the initial review [=
-1],
-> > > and it seems that the GT24C02 has a 16-byte page size, while the
-> > > GT24C02B [2] has a 8-byte page size. The BPI-F3 schematics confirms t=
-hat
-> > > the B version is used. Sorry about the mistake.
-> > >
-> > > > > > EEPROM pagesize of k1-bananapi-cm6-io[3] and k1-orangepi-rv2[4]=
- changed
-> > > > > > together, based on the chip model shown in the schematic diagra=
-m.
-> > > > >
-> > > > > The k1-milkv-jupiter board is also affected with the same issue, =
-despite
-> > > > > using a slightly different EEPROM (24C04).
-> > > > >
-> > > >
-> > > > The GT24C04A EEPROM used on k1-milkv-jupiter board doesn't seem to =
-have
-> > > > the same issue, which you can find "Page Size: 16 bytes" in datashe=
-et:
-> > > > https://www.giantec-semi.com/uploads/20220929/GT24C04A.pdf
-> > >
-> > > Indeed you are correct, and I confirm that this is the exact version
-> > > used on the schematics. Therefore there is no need to extend your pat=
-ch,
-> > > it can be merged that way.
-> > >
-> > > > But I don't have the board, simple test would be appreciated. Perha=
-ps I
-> > > > should include test steps in the commit message for the next revisi=
-on.
-> > >
-> > > Unfortunately the board has the EEPROM write protection pin connected=
- to
-> > > VCC, which means the write protection is enabled. Therefore testing i=
-s
-> > > not so easy.
-> > >
-> > > Regards
-> > > Aurelien
-> > >
-> > > [1] https://lore.kernel.org/linux-riscv/aNLzRJcKCYOngc7z@aurel32.net/
-> > > [2] https://www.giantec-semi.com/juchen1123/uploads/pdf/GT24C02_DS_Au=
-.pdf
-> > >
-> > Apologies, this is a different issue.
-> >
-> > I am currently working on enabling multi-DTB support in U-Boot SPL
-> > for SpacemiT K1 boards.
-> >
-> > While investigating the board detection issue, I noticed that the EEPRO=
-M
-> > on my Banana Pi BPI-F3 does not contain a Product Name TLV entry.
-> >
-> > alarm@k1:~$ sudo hexdump -C /sys/bus/i2c/devices/2-0050/eeprom
-> > 00000000  54 6c 76 49 6e 66 6f 00  01 00 20 24 06 fe fe fe  |TlvInfo...=
- $....|
-> > 00000010  d5 52 bd 2a 02 00 02 23  0c 39 38 61 39 63 33 61  |.R.*...#.9=
-8a9c3a|
-> > 00000020  32 62 64 34 37 fe 04 3b  e3 ff bd ff ff ff ff ff  |2bd47..;..=
-......|
-> > 00000030  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |..........=
-......|
-> > *
-> > 00000100
-> >
-> > Although the EEPROM is readable, the missing Product Name TLV entry
-> > explains why read_product_name() returns `-ENOENT` (-2), assuming the
-> > EEPROM read and validation succeed.
-> >
-> > Consequently, automatic board detection fails, and U-Boot falls back to
-> > CONFIG_DEFAULT_DEVICE_TREE, which may select an incorrect device
-> > tree for the target board.
+>   The DT documentation for Power Domain already exist in below file,
+> and APMU already has #power-domain-cells property.
+> Documentation/devicetree/bindings/soc/spacemit/spacemit,k1-syscon.yaml
 >
-> Yes, exactly. I encountered the same problem. Board detect failed and the=
-n used
-> default device tree (MusePi Pro).
+>   The previous DTS patch is obsolete, so I dropped it. For devices requir=
+ed
+> PM feature, it need to add a "power-domains" property, and should send in
+> a separate patch.
 >
-> > Since the SD card-detect GPIO polarity differs between the Banana Pi BP=
-I-F3
-> > and MusePi Pro, selecting the incorrect device tree can result in SD
-> > card detection
-> > and boot failures.
-> >
-> > The following SPL boot log shows the board detection failure, although
-> > DDR initialization completes successfully:
-> >
-> > ```
-> > U-Boot SPL 2026.10-01060-gf3080abcfe92-dirty (Oct 24 2026 - 17:30:03 +0=
-530)
-> > Fail to detect board:-2
-> > vdd_core, value:900000
-> > vdd_1v8, value:1800000
-> > vdd_1v8_mmc, value:1800000
-> > DDR firmware: [0xc0820900]:0xf0227179, size:0x8d98
-> > DDR is ready
-> > ```
-> > Could you please confirm whether the Product Name TLV entry is
-> > expected to be programmed into the EEPROM during manufacturing?
+>   In order to test this series, a prerequisite CCU patches are needed,
+> which can be found here [1].
 >
-> Yes, No product name TLV entry in my Bananapi-f3 EEPROM. That's the reaso=
-n
-> I wanted to write EEPROM and found this EEPROM pagesize issue.
+> Hi Ulf,
+>  Would you be ok to take this version? only minor change updated.
+> I think the sudden removal of pmdomain supplier is kind of an
+> independent common issue (exist in other platfroms too), I do not
+> want to addresse it in this series, see a possible solution in separate
+> patch here [2], or Icenowy's preference in comment[3], or whatever
+> way to take. Just let me know what you think..
+
+I made a comment on that as well, but I am fine with this as is.
+Please make a fix for the unbind/remove problem on top.
+
+The v5 series applied for next, thanks!
+
+Kind
+Uffe
+
+
 >
-> > Also, is there a recommended approach for handling boards with missing
-> > product information in the EEPROM to ensure reliable automatic device
-> > tree selection?
+> Link: https://lore.kernel.org/spacemit/20261008-04-k3-clk-pm-aux-v1-0-837=
+2d7307694@kernel.org/ [1]
+> Link: https://lore.kernel.org/spacemit/20261112-01-pm-device-link-v1-1-89=
+32e0862378@kernel.org/ [2]
+> Link: https://lore.kernel.org/spacemit/b7d7ac2eee0e64aa7c267def5c2a8a022c=
+7da425.camel@icenowy.me [3]
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+> Changes in v5:
+> - drop pm_index
+> - fix dev_err() to return error code
+> - Link to v4: https://patch.msgid.link/20261112-04-k3-pm-support-v4-0-de3=
+931aa5153@kernel.org
 >
-> I'm not sure. Currently, after I corrected pagesize, I wrote EEPROM manua=
-lly:
-> ```
-> U-Boot SPL 2027.01-rc2-00039-g4cff50f40343
-> Get board name:k1-x_deb1
-> vdd_core, value:900000
-> vdd_1v8, value:1800000
-> DDR firmware: [0xc081df80]:0xf0227179, size:0x8d98
-> DDR is ready
-> No SPI controller (-19)
-> Trying to boot from MMC2
-> ....
-> =3D> tlv_eeprom
-> TLV: 0
-> TlvInfo Header:
->    Id String:    TlvInfo
->    Version:      1
->    Total Length: 29
-> TLV Name             Code Len Value
-> -------------------- ---- --- -----
-> Base MAC Address     0x24   6 FE:FE:FE:90:1E:F0
-> Product Name         0x21   9 k1-x_deb1
-> MAC Addresses        0x2A   2 2
-> CRC-32               0xFE   4 0xA88C93F0
-> ```
-> Maybe we can discuss this in u-boot mailling list? This is indeed a
-> separate issue.
-Correct, I will raise this issue over there.
-
-Reviewed-by: Anand Moon <linux.amoon@gmail.com>
-Tested-by: Anand Moon <linux.amoon@gmail.com>
-
-Can you follow up with the patch to read the MAC address from the EEPROM.
-
-$ git diff .
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 1db896536256..3928a47b7702 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -137,6 +137,8 @@ &eth0 {
-        pinctrl-0 =3D <&gmac0_cfg>, <&gmac0_clk_ref_cfg>;
-        rx-internal-delay-ps =3D <0>;
-        tx-internal-delay-ps =3D <0>;
-+       nvmem-cells =3D <&mac_address 0>;
-+       nvmem-cell-names =3D "mac-address";
-        status =3D "okay";
-
-        mdio-bus {
-@@ -160,6 +162,8 @@ &eth1 {
-        pinctrl-0 =3D <&gmac1_cfg>, <&gmac1_clk_ref_cfg>;
-        rx-internal-delay-ps =3D <0>;
-        tx-internal-delay-ps =3D <250>;
-+       nvmem-cells =3D <&mac_address 1>;
-+       nvmem-cell-names =3D "mac-address";
-        status =3D "okay";
-
-        mdio-bus {
-@@ -202,7 +206,7 @@ eeprom@50 {
-                nvmem-layout {
-                        compatible =3D "onie,tlv-layout";
-
--                       mac-address {
-+                       mac_address: mac-address {
-                                #nvmem-cell-cells =3D <1>;
-                        };
-
-
+> Changes in v4:
+> - adjust Kconfig help message
+> - drop unused include header
+> - propagate regmap_read_x() error code
+> - simplify spacemit_pm_is_off_state()
+> - Link to v3: https://patch.msgid.link/20261108-04-k3-pm-support-v3-0-b9d=
+c0857039b@kernel.org
+>
+> Changes in v3:
+> - collect tags
+> - rename spacemit_pm_is_off_state()
+> - implement a remove() function
+> - use proper type in struct spacemit_pm_domain_param
+> - refactor struct spacemit_pmu
+> - Link to v2: https://patch.msgid.link/20261008-04-k3-pm-support-v2-0-6f7=
+78a53dd2d@kernel.org
+>
+> Changes in v2:
+> - convert to auxilary driver
+> - no need dt-binding doc, drop it
+> - drop dts patch
+> - support to build as module
+> - set always on for K3 audio pm
+> - no global variable for struct spacemit_pmu
+> - no force to do power-off in spacemit_pd_power_on()
+> - check return value of pm_genpd_init()
+> - adjust license header format
+> - Link to v1: https://patch.msgid.link/20260918-04-k3-pm-support-v1-0-0ac=
+d2b36b96f@kernel.org
+>
+> ---
+> Yixun Lan (2):
+>       dt-bindings: power: spacemit: Add power domain controller IDs
+>       pmdomain: spacemit: Add power domain driver
+>
+>  drivers/pmdomain/Kconfig                        |   1 +
+>  drivers/pmdomain/Makefile                       |   1 +
+>  drivers/pmdomain/spacemit/Kconfig               |  21 ++
+>  drivers/pmdomain/spacemit/Makefile              |   1 +
+>  drivers/pmdomain/spacemit/spacemit-pm-domains.c | 422 ++++++++++++++++++=
+++++++
+>  include/dt-bindings/power/spacemit,k1-power.h   |  14 +
+>  include/dt-bindings/power/spacemit,k3-power.h   |  12 +
+>  7 files changed, 472 insertions(+)
+> ---
+> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
+> change-id: 20260909-04-k3-pm-support-0bef40e87fd7
 >
 > Best regards,
-> Zixian
-
-Thanks
--Anand
+> --
+> Yixun Lan <dlan@kernel.org>
+>
