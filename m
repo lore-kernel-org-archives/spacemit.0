@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795592804;
-	b=GC7UIJecPoHK1ChFn5BkEIcOLVVeHoYqHgi4/WjvsbtDuTXNPl1DHkTRmxgAw8YEwnyn
-	 NuyP4jcuue2+JKTYpA3z8+kmdCXyEiTEnqpB/7fdGHXGTuPlWn8bR8Ap8iPDjhikd2+M0
-	 jA7152K8b2hD+VK7npdYQVxMukQb768jAJU37+FJIWxNO2KWPy7TAF4UPHode7lILPY2S
-	 NM2dpigEwfvQBpD72n2mYUKj3JhqugDXka2Z42Cz24n+CVxMFzSvEgHWOmhLTiehrInMB
-	 NAu5AZJOfJpUSsljOkTCkMsmKWSPpFl2KFmkNr5PRtqywuBUmq1hmLk9/iSOJ68kXJQ==
+	t=1795592808;
+	b=MaE8sy+e8uFaiWfuxBDhC7m5Ig0aixePxSH7HBmzclzx9mAIHQjwLEGZZCVQ7Lo+gvhL
+	 CWdzWSOnq7el6anESYtfNAhFTYgfaSC1K5+vsxkRh+Ppw23an/dDnT5fnq5wN0F39QaYE
+	 FMBsA+12LGQvkr2ZlXaOBTlzcNAIzFlB30FvuO2xzEtPC+KczqKWivCW1N2fJ8jt1kSM9
+	 jlHCWQ49/0Hhp1iYMwqo1se1Xad6luNBrsfO7uxOwCpLnrxgOLwnUxdbMoQrUI0ym38AQ
+	 oV2+2VztDIQe+YQlucK+VWPuMpn9B0sbq73hOopqdnRFQAvIQNZWdvG9fHf0UTPt3rA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795592804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795592808;
 	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=gU/UcpSoePzAQUGjCNdjk4uCfDEDrO1+IvpBCE4O59k=;
-	b=RvgBIAC0hmzL4j5Gwea06yrpBM7OjaL4a92NZBIbjpw6xKH9DBLv+my7hErJ2t5RbEt+
-	 7BzKtTjQ1BLSdMxD1FgUQByJXjPujeb86PYa7B1/JtRHwHRgIoSz7tjwudXNrLDm8tw/g
-	 xl/SKbVFJ7n9yhB9xMUUpLAAPs7R7u4LWOoJB9JSIYZpJ6wvRK6IbdQJAu+ANu4AvO6jS
-	 hfp9JkNGBLxL6KiJO2olh00+Q0oePWG+Gu/sLl2PwxjdYkyhtv8fkaC6Z/u8saemUw1q7
-	 MPc32wDUYQP/tW9UR250PArJNlQplLsneyY7z9ukOmT0gifA7CNz3/V7U7uUgs+RY1A==
+	bh=M/Yg0u7/6WPlFEfzCatSVjj5BVXg6/i3iWEm4yi+0oM=;
+	b=nvnbG2qs17aFuK1B74sxcHR9YbDROOBgCNJGq6/WFGSKXscx/mqQNRHATWpR4TsE6Tkr
+	 uXuGbVxFVrkL1lGIH41iyivr+ZMCHkvbyG9by8YBCOpDTOjJqOZm8EhKVAsZa+hKMflh1
+	 kZFKtItbvd/ZalTI90uaLYLfO+FOPRFfYkyltBh1lbrL7Py+AnX8GJaE9WRVffcb6H+lh
+	 e4QiiihbGYtdB2LfwUjhJ1WNxp+Jq1P4PqLukrW4wzSUhcRjivzEI0JVBhC2CK3NeFU6Y
+	 0T3oHQLxayoozIJEfQqF6JyRum9BqOAZwJH39rQ2O61vy7g2OrPDsvPG+X7bRGwcIrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="YfV/mzuc";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Oa4E+lK4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDEB60A382C;
-	Wed, 25 Nov 2026 07:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC741606A333;
+	Wed, 25 Nov 2026 07:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YfV/mzuc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B49F1F000D4;
-	Wed, 25 Nov 2026 07:46:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Oa4E+lK4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116A41F000E6;
+	Wed, 25 Nov 2026 07:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795592804;
-	bh=gU/UcpSoePzAQUGjCNdjk4uCfDEDrO1+IvpBCE4O59k=;
+	s=k20260515; t=1795592808;
+	bh=M/Yg0u7/6WPlFEfzCatSVjj5BVXg6/i3iWEm4yi+0oM=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=YfV/mzuc2IioktAlU4ZSkT2pk+XOB2ke0a/tufs34x0/IxQV2ypubnIs+vxEGqPM0
-	 XPOjdf3/8UU10YmpC49q5Ik8XnHXydeXQkjM2VBdI843e7vA/KDCI0AtdBg6GseH7C
-	 xGzH6r+itNASJ3/Oo0QVl5MFYCS3OPsOsJhwFCaJwvsXghqyBJo213+p9gkjCWEhrq
-	 e78l4wbV77kDMgeI5OdHX8t/5obtIIiEArRrYGO+5WWHLMdTKjsZK1XrFwWabUrLDX
-	 /JomraxVtZsJPF3nOCrdnpsGDJcIgmW/ShbMke2IykLiq7a3Z3g7Kp4nj/NjlrT0uX
-	 VgEO+vugJ/gYA==
+	b=Oa4E+lK4IVjeiDO97UoT9fbsFb7uDbTc17IM6oSoBwecZ6RxsqHq4BE87llULhfeV
+	 mR321tGaNlcd0LiZXt2pV6rPgDBkggx1W/yidGlD0McbNSK87gZKjpQlnunVp45Ff3
+	 V0Mdu/BqyasqSttZEq4oloXGVRExtMuyZV1oPoSD0IA+IDabB8ZSDQN+bLNy3ZgPrB
+	 yXn6VS9fRp2xQaSEVoqbhtI1rA2wUoQn/TbxzKf0AxTIwDZ9txMx6W1okmQuG8XERI
+	 B5AETfVAOgzwOUQQ89fIk+G0L/NQo+JirvOW60q+J4ife9kMn1vYPSCbRhuYhn8QrA
+	 0ik3PuEk8c60g==
 From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 25 Nov 2026 07:46:15 +0000
-Subject: [PATCH 2/4] riscv: dts: spacemit: k3: Use Pin Macro
+Date: Wed, 25 Nov 2026 07:46:16 +0000
+Subject: [PATCH 3/4] riscv: dts: spacemit: k3: Add alias for MicroSD Card
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -54,7 +54,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261125-09-k3-dt-minor-misc-v1-2-dd887a8eb326@kernel.org>
+Message-Id: <20261125-09-k3-dt-minor-misc-v1-3-dd887a8eb326@kernel.org>
 References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
 In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -66,77 +66,44 @@ Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1958; i=dlan@kernel.org;
- h=from:subject:message-id; bh=NLfSqq53cy2/3tiAdAfEyPG/cXEbgeJoLVQyYeX+FXU=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJO1HPGHrHOa4+sCWp0aoIjf4FJeBPh0ePeS
- VAMxmAHAMOJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSThsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=593; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=DOKR0EO79yhDzRsaEFOVBxWUE/Kc126K90RsB/fWYZg=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJRv/+qf9xm6aU3cM30hLpZ06hvKl8hD+N6x
+ ErRQCiitWqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSURsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+3AJA//epbR8jRNKONG8DGeBdI6pFSea1fPSpdVgU8qQ0rQ3T3/bTpoQSN1M
- 04P6PHq9m89BlO4q8G5s4tIvptF51gkYeefOR53Wn7+YQgbRlCs6OWA3TBoGTTM3OE7+ik0x70e
- BEELxY0CUSaGpB9PAglGAumASDKFVsK44CM8C8nk0lCCHkqWQrCfb964PXN8zYdGWtTujuFMZnO
- Rng9sze/d8GggKzk1IY2H98lrrM05IWBm7Inmk/dJ2sZabrmAYMZujY+OfNUUIfi06UOMWAQF8y
- eUhAjBX0NhDEdTwFcou0IRQ2BmwarAxNEsFAUwSNJh4YTa0Ml89PysA+VJaHBBGP5HbXXlZBjm+
- 6UAU1oPG6fiu9/uofUiJgWBYlBjkR7zZ7Jub6p78wtNecTsHox8ojab/QF+MyGWdtWBPlYNtenJ
- nwD/aEe4d0tOQ2e6Od17KOxPQLHTrGbqE9h/fwuLVECMLJCCUxSubTPpXDk0CrZ6XGr1eb6YqFz
- W6qCXPe5s0IoSYWIhT4wZF35aHaPGAqLYki+Fw8zz7zhW/7b0kJh13Ks/l3KJVW3RCyt4VAld/E
- oYWzojxZACFjzsQ0Scl76uZ30uD7W9xFx/a2KbCdpPhCdvkLHDyjLcrstRvY5E8deiTRSirZYrT
- SJr3fmFan0FXsHUaVeOQ1V7xYrFlYs=
+ QACgkQMarqR1lNu+0mFw/+PbGaCMMJASnujCQaZaIxUjBC/SQl4MAgb4F2ICMrBUV8USvD+GdIQ
+ E7yiiJ/vqPIa+d2zDTjiDLSMsYu/bSItbRrURUAT6ObUagOrp/V2fCmIHtGckWQp4sAM6KHNFxg
+ 5c+45/mSSeOuPw3ljp6V/+u9Smmg3Hfp+U/SrjlP0sQZ3hdegEHyye+hekt5V/AYxCE3JbDOOrG
+ vukT+HCD/E7RSPRGzPRXRhBpYMKbdYz5pKbKEY3zJm7JqGPJ3+qRgi0wMRRn5a8TMFMY6fOHGK1
+ MN3yVpEfD6GCLw2YTpJxGtjrRfEykMz/kFOL1ZhtNlX1C1IL65Pt+Yy4yo3tz5sFY09KA9p1uZv
+ q/nZKkbfawMxTu4Fgrkygxm3WOHzpxvSdlHYiL30ys1QDFPU92xR6kzr+00nQl39krJq5O8v2kR
+ kbKC8jABcH6KuYwnUjOU9H4uCrVuxT6gky7ac2c33ltQqrCOteuOV0VwLHGvwvkRBGlsABwlPq6
+ HiDuvT2TbVCM67ZfYVjVajpA4H9ItWjGsacJv0IEYB5Ofs2qKf7Mjgz2VGav58e7NjKukJQ77de
+ 2pmnby2XQbTCJ85cG/C/tIWB4T1LvZ3k/OjqPess6hrz4B2BI+1/zE/hc5MYNybgKsKvtgiWene
+ 41wM4EahdamuzuqOxsyjk48KL6MH14=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Use Macro for the GPIO Pin definition, which match enumeration from
-pinctrl driver and make people easy to grep for debugging purpose.
+Add an alias to the MicroSD Card for CoM260-IFX board.
 
 Signed-off-by: Yixun Lan <dlan@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k3-com260.dtsi  | 2 +-
- arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-index d8e94d538bf1..65c6f49f8591 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
-@@ -228,7 +228,7 @@ mdio {
- 		phy1: ethernet-phy@1 {
- 			compatible = "ethernet-phy-id001c.c916";
- 			reg = <1>;
--			reset-gpios = <&gpio 1 5 GPIO_ACTIVE_LOW>;
-+			reset-gpios = <&gpio K3_GPIO(37) GPIO_ACTIVE_LOW>;
- 			reset-assert-us = <10000>;
- 			reset-deassert-us = <50000>;
- 		};
-diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-index a4afe24130ae..a74e76ee75e4 100644
---- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
-@@ -48,14 +48,14 @@ rfkill-pcie-wlan {
- 		compatible = "rfkill-gpio";
- 		label = "rfkill-pcie-wlan";
- 		radio-type = "wlan";
--		shutdown-gpios = <&gpio 1 3 GPIO_ACTIVE_HIGH>;
-+		shutdown-gpios = <&gpio K3_GPIO(35) GPIO_ACTIVE_HIGH>;
+diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+index 38809d01df82..c5c5e6d44918 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
++++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
+@@ -14,6 +14,7 @@ / {
+ 	aliases {
+ 		serial0 = &uart0;
+ 		ethernet0 = &eth1;
++		mmc0 = &sdhci0;
  	};
  
- 	rfkill-usb-bt {
- 		compatible = "rfkill-gpio";
- 		label = "rfkill-usb-bt";
- 		radio-type = "bluetooth";
--		shutdown-gpios = <&gpio 0 30 GPIO_ACTIVE_HIGH>;
-+		shutdown-gpios = <&gpio K3_GPIO(30) GPIO_ACTIVE_HIGH>;
- 	};
- };
- 
-@@ -250,7 +250,7 @@ mdio {
- 		phy0: ethernet-phy@1 {
- 			compatible = "ethernet-phy-id001c.c916";
- 			reg = <1>;
--			reset-gpios = <&gpio 0 15 GPIO_ACTIVE_LOW>;
-+			reset-gpios = <&gpio K3_GPIO(15) GPIO_ACTIVE_LOW>;
- 			reset-assert-us = <10000>;
- 			reset-deassert-us = <50000>;
- 			realtek,aldps-enable;
+ 	chosen {
 
 -- 
 2.56.0
