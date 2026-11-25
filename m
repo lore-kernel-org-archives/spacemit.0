@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795592808;
-	b=MaE8sy+e8uFaiWfuxBDhC7m5Ig0aixePxSH7HBmzclzx9mAIHQjwLEGZZCVQ7Lo+gvhL
-	 CWdzWSOnq7el6anESYtfNAhFTYgfaSC1K5+vsxkRh+Ppw23an/dDnT5fnq5wN0F39QaYE
-	 FMBsA+12LGQvkr2ZlXaOBTlzcNAIzFlB30FvuO2xzEtPC+KczqKWivCW1N2fJ8jt1kSM9
-	 jlHCWQ49/0Hhp1iYMwqo1se1Xad6luNBrsfO7uxOwCpLnrxgOLwnUxdbMoQrUI0ym38AQ
-	 oV2+2VztDIQe+YQlucK+VWPuMpn9B0sbq73hOopqdnRFQAvIQNZWdvG9fHf0UTPt3rA==
+	t=1795592814;
+	b=l3ne/+eqKYuPpAYykS2Xi6STErol0RgLkkawiXUEkXmyaKeYbUYuZvCEb4DF1ggVFyMB
+	 KdGEPybiaw+mkML6vlYcjFjuEeq0hLH8E+8m3xBlHXLLAnuHldFc7LAwrw7wa/ulVUdMG
+	 XxCOIlM4UYyAjg1lYXKa4SzKjjiWHmhBAFsI/tBWxUhRbXpPxNNeoOkA5+mpe4vpuJV/u
+	 l8BrgflpMAQyB2gxp1R3gIbDq08c2l0gypz9jyq3ewvyz40nO7+rialAZbM+Sa9uiA/De
+	 q3rAANpqemPR1PFq2ZB3CZycBWEOnDDO+GS6PRxZUDFznbm1rfGrnp/2UQ814vgd6Yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795592808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795592814;
 	h=Received:DKIM-Signature:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=M/Yg0u7/6WPlFEfzCatSVjj5BVXg6/i3iWEm4yi+0oM=;
-	b=nvnbG2qs17aFuK1B74sxcHR9YbDROOBgCNJGq6/WFGSKXscx/mqQNRHATWpR4TsE6Tkr
-	 uXuGbVxFVrkL1lGIH41iyivr+ZMCHkvbyG9by8YBCOpDTOjJqOZm8EhKVAsZa+hKMflh1
-	 kZFKtItbvd/ZalTI90uaLYLfO+FOPRFfYkyltBh1lbrL7Py+AnX8GJaE9WRVffcb6H+lh
-	 e4QiiihbGYtdB2LfwUjhJ1WNxp+Jq1P4PqLukrW4wzSUhcRjivzEI0JVBhC2CK3NeFU6Y
-	 0T3oHQLxayoozIJEfQqF6JyRum9BqOAZwJH39rQ2O61vy7g2OrPDsvPG+X7bRGwcIrQ==
+	bh=40a2SxR2F++aAWEGeCskAj0ReXgihjjN31vR1BVlWBs=;
+	b=l8DtRiUxmfhzGqVV1oOKOzoglQfdxB5J0/t4m3CiuruatyHoLEvVUrZT1DBMKCDfdpZd
+	 YDour87ZvYwFbi0E+esbmViwOLBp4f+doh3VkNARXoxS28e8E/8Hyw+9Qex9KOpo/FtW2
+	 iuXXRCwMCLJ2KzLvlyDtGWpV4Lfi5+NjvdqwXQEazp31fkkdq+j5HWG4++kpNLB+YWpuC
+	 rW7qIF7Wz3bsWwEP9n7Rx9naSWUNeiGbqpn7ZbDr4a6KQGa/rEbP2W2mCh8ds0amf9nN3
+	 BUN1gERrhW6F45iYCwN1jnM7UVVrtQeoBoqxVFmOsmlya8tjzA3M7gQzk2U3O14kjnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Oa4E+lK4;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GF+1Udnt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC741606A333;
-	Wed, 25 Nov 2026 07:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D97606A680;
+	Wed, 25 Nov 2026 07:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Oa4E+lK4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116A41F000E6;
-	Wed, 25 Nov 2026 07:46:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GF+1Udnt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910BD1F000C4;
+	Wed, 25 Nov 2026 07:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795592808;
-	bh=M/Yg0u7/6WPlFEfzCatSVjj5BVXg6/i3iWEm4yi+0oM=;
+	s=k20260515; t=1795592814;
+	bh=40a2SxR2F++aAWEGeCskAj0ReXgihjjN31vR1BVlWBs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=Oa4E+lK4IVjeiDO97UoT9fbsFb7uDbTc17IM6oSoBwecZ6RxsqHq4BE87llULhfeV
-	 mR321tGaNlcd0LiZXt2pV6rPgDBkggx1W/yidGlD0McbNSK87gZKjpQlnunVp45Ff3
-	 V0Mdu/BqyasqSttZEq4oloXGVRExtMuyZV1oPoSD0IA+IDabB8ZSDQN+bLNy3ZgPrB
-	 yXn6VS9fRp2xQaSEVoqbhtI1rA2wUoQn/TbxzKf0AxTIwDZ9txMx6W1okmQuG8XERI
-	 B5AETfVAOgzwOUQQ89fIk+G0L/NQo+JirvOW60q+J4ife9kMn1vYPSCbRhuYhn8QrA
-	 0ik3PuEk8c60g==
+	b=GF+1UdntSeWb27lATOJUYK0ZM85tb2IzGIUc7ccDmhKFbXh9Yl7friVx/RE9TRE3e
+	 7gRbCNxKOcOlUJIFo7z1C27olhEsNZi5vO7+yE1LX/XiHuDTob27h5n3rbyUBHS78E
+	 V+5gfLmdXdcxQnMu15mENMmo8iGpai1RXROtG9mTKd734JolX2Vg06tUS/wt3pKe3m
+	 AaQJbdcEAxdWUIszuLFrBavE4mhJu9bKKoV2XuYjUCiZDxnht60Iy4Z7XVODmzf0T8
+	 /NUfAg6lEbnCDGIEODMZtWHb+ysu1MhqDDxXSXw1S1GWO86KijpUTDnQBJ/lI+ZSyK
+	 FJQsxoMfI9ZMg==
 From: Yixun Lan <dlan@kernel.org>
-Date: Wed, 25 Nov 2026 07:46:16 +0000
-Subject: [PATCH 3/4] riscv: dts: spacemit: k3: Add alias for MicroSD Card
+Date: Wed, 25 Nov 2026 07:46:17 +0000
+Subject: [PATCH 4/4] riscv: dts: spacemit: k3: Set CD pin bias
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -54,7 +54,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261125-09-k3-dt-minor-misc-v1-3-dd887a8eb326@kernel.org>
+Message-Id: <20261125-09-k3-dt-minor-misc-v1-4-dd887a8eb326@kernel.org>
 References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
 In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -66,44 +66,53 @@ Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
  spacemit@lists.linux.dev, linux-kernel@vger.kernel.org, 
  Yixun Lan <dlan@kernel.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=593; i=dlan@kernel.org;
- h=from:subject:message-id; bh=DOKR0EO79yhDzRsaEFOVBxWUE/Kc126K90RsB/fWYZg=;
- b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJRv/+qf9xm6aU3cM30hLpZ06hvKl8hD+N6x
- ErRQCiitWqJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSURsUgAAAAAAEAA5t
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1072; i=dlan@kernel.org;
+ h=from:subject:message-id; bh=YNc1vItrgHYyzAJZXdA+z/8Pr3LgzudsQKQoxQGoJGI=;
+ b=owEB6QIW/ZANAwAKATGq6kdZTbvtAcsmYgBrBpJUlQ5XNwoXk5k7IVVIa5jI7eZycR9IEOiyi
+ 8XgfVh/C1GJAq8EAAEKAJkWIQS1urjJwxtxFWcCI9wxqupHWU277QUCawaSVBsUgAAAAAAEAA5t
  YW51MiwyLjUrMS4xMiwyLDJfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5
  maWZ0aGhvcnNlbWFuLm5ldEI1QkFCOEM5QzMxQjcxMTU2NzAyMjNEQzMxQUFFQTQ3NTk0REJCRU
- QACgkQMarqR1lNu+0mFw/+PbGaCMMJASnujCQaZaIxUjBC/SQl4MAgb4F2ICMrBUV8USvD+GdIQ
- E7yiiJ/vqPIa+d2zDTjiDLSMsYu/bSItbRrURUAT6ObUagOrp/V2fCmIHtGckWQp4sAM6KHNFxg
- 5c+45/mSSeOuPw3ljp6V/+u9Smmg3Hfp+U/SrjlP0sQZ3hdegEHyye+hekt5V/AYxCE3JbDOOrG
- vukT+HCD/E7RSPRGzPRXRhBpYMKbdYz5pKbKEY3zJm7JqGPJ3+qRgi0wMRRn5a8TMFMY6fOHGK1
- MN3yVpEfD6GCLw2YTpJxGtjrRfEykMz/kFOL1ZhtNlX1C1IL65Pt+Yy4yo3tz5sFY09KA9p1uZv
- q/nZKkbfawMxTu4Fgrkygxm3WOHzpxvSdlHYiL30ys1QDFPU92xR6kzr+00nQl39krJq5O8v2kR
- kbKC8jABcH6KuYwnUjOU9H4uCrVuxT6gky7ac2c33ltQqrCOteuOV0VwLHGvwvkRBGlsABwlPq6
- HiDuvT2TbVCM67ZfYVjVajpA4H9ItWjGsacJv0IEYB5Ofs2qKf7Mjgz2VGav58e7NjKukJQ77de
- 2pmnby2XQbTCJ85cG/C/tIWB4T1LvZ3k/OjqPess6hrz4B2BI+1/zE/hc5MYNybgKsKvtgiWene
- 41wM4EahdamuzuqOxsyjk48KL6MH14=
+ QACgkQMarqR1lNu+19pg/+LKShy0zh5QYLystrUsbPBbb+zQGtCzzE246Tailkiy8GVhITAb0Mp
+ d56vguSjRLlwg4OzyI19a7D7SWv+SKVW3Mcf1Hp90ZlA3s6uLkjSTBIoLDLNZpKZx6yYYTP+DoP
+ 46MnFNF12ljI7pApVHuF3n4+PnCqMJqpfyh51RyRrlaEOAsODrPLOYzwpZyJwsE/hPav1/0h64C
+ ka0a0+MbOdw1w7Nbzp7o55tVbJQB0gbLuyRlva6QpichzKS1gk4lqpaFAQSxjRANk4m1Ew8TFvJ
+ f2+6AI3M/+19g8mbrgKBBkPyMObfo8rFtXRlgQtHZFr6gdOJV9lxOmhHhxk9ktcaDeKForS+ywM
+ 6xEvwM6/1ypa4VgDkbbAArp59Ht9YWJb42PrYc1rIY68XknkOrCYj3RVt6ER4TCGYsig8WfOPi1
+ xfOWQ3yz25U9WV5n+0dACHOzuUtRUQJZXBJnoIRj//6vKcIwuqeAzrE3kPxmGnbW68YCnSBWJG8
+ 6Mqgwqyy4QHC1mfATASLZzPQznZmZD+Hu0ylCQsXMP8tTt5nRnU375gG2ZJoGcc84uJ/10TaOkT
+ Pt/ct2a3F774CrXNJSFbEa86qEcrZZhjO0+qy1g7+8sSUsIv4h0ECha+U3Le6zLRD3pf16wgaNo
+ 22o68gYAMZktPmSvIpGdLqs7z1HTG0=
 X-Developer-Key: i=dlan@kernel.org; a=openpgp;
  fpr=50B03A1A5CBCD33576EF8CD7920C0DBCAABEFD55
 
-Add an alias to the MicroSD Card for CoM260-IFX board.
+Explicitly configure the bias settings of the CD (Card Detect) pin
+for MicroSD card in CoM260-IFX board.
+
+During the GPIO pin request phase, the pinctrl driver disables bias
+settings in function spacemit_request_gpio(), this happens to work
+in kernel side, but doesn't for U-Boot. Adding a flag to fix this.
 
 Signed-off-by: Yixun Lan <dlan@kernel.org>
----
- arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-index 38809d01df82..c5c5e6d44918 100644
---- a/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-+++ b/arch/riscv/boot/dts/spacemit/k3-com260-ifx.dts
-@@ -14,6 +14,7 @@ / {
- 	aliases {
- 		serial0 = &uart0;
- 		ethernet0 = &eth1;
-+		mmc0 = &sdhci0;
- 	};
- 
- 	chosen {
+---
+K3 Use same SD card slot as K1's MusePi-PRO, which needs PULL_UP.
+---
+ arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+index 65c6f49f8591..598a53461afc 100644
+--- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
++++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+@@ -240,7 +240,7 @@ &sdhci0 {
+ 	pinctrl-0 = <&mmc1_cfg>;
+ 	pinctrl-1 = <&mmc1_uhs_cfg>;
+ 	bus-width = <4>;
+-	cd-gpios = <&gpio K3_GPIO(4) GPIO_ACTIVE_HIGH>;
++	cd-gpios = <&gpio K3_GPIO(4) (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+ 	no-mmc;
+ 	no-sdio;
+ 	disable-wp;
 
 -- 
 2.56.0
