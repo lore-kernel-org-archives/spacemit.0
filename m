@@ -1,55 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=194.199.235.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795710275;
-	b=aPDkHEGKTS3lYj2RM407lTiWcXgdDKUCmzh9AVKck0/qLIFCQp7jfrX9n8JMhOe05GeC
-	 6qesiPDTA389f3G6zm/Sxha3XQFQKfEEFWRyUXc1pPTTnnbeU9CNbDeRgFy3RYRFleN9h
-	 AtYTOUdWbBIXAimj0VQcuspjLqcIlqVamSTVMe8WnDt/hoo0yyIGR3RkziC2/diAmF0Hd
-	 3ZYDVfkmj/ktRZsSmiRWkfeysmDUylGIaIxJDKygfbbiT7CKANJNO69Gy8q9dnJDVvcDJ
-	 8LjYTwT3CRQibD0lQCqeMjhYSYcZaskVnmGZ9WnIICV+LzWUqC3CK6wRvfDGxoTFEFA==
+	t=1795712389;
+	b=a+wwAqSX8rjpwk7k9wVCV2VcaEM67gkmiwbz9521giws3UQW9HyF2TkoQ+Uc3JT5z07w
+	 Oj5DNAFnnlsiqgGhkHlctY4gfV7SI3pluVM1FQx1DfN68fi67NL30bb3aH9QfeUVAMamc
+	 Nj+tf4G/GZFnEqm9qoL7DO6sMKuU+FzQzi0IXFVhs8IcIhomfLXNYHZ/I92drfqRR74hS
+	 CzP9gft1S5LXl10d085S0q67e8iJ+f6vNsuNmVUPNhkLt67nkOzE50IeDDbTlxKeURMEj
+	 jUrjxe/4U5o/W61W70j5x0lPALlLN5lZ5d8pkZNO4tqlHKPF/b9oXDXF5J/K5yFTZeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795710275;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:Mime-Version:
-	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:To:From:
-	 Subject:X-Mailer:References:In-Reply-To:X-Last-TLS-Session-Version;
-	bh=Mp9D7pFPwCc0xm6C56ewwnHz36Xm2c9SF3YyvxKT0jc=;
-	b=fgHUvfIo59arte+VPhYFyDuG4MLzutsMgqzUt5R2KPuM+aSeoRJeXRtatJ/mQqL669SX
-	 7i9E6pC5SrV+SOaAEWLG/YDHahSoLwZFyxOBmJ2s7QB0KzTF3JniYCJyKnov9yEU4Sh0x
-	 TmyGhoDZLLHYJANk07U2R5lRhDh3YDoEZgH11ELqjZf9Ww1IzRpYtyPCpS0NMMZU4EWhm
-	 a95xlTjq5zbDdBMArjEQD17+N2c0L+5PZAgzc17/VBcI9Duvfb7ZXsh5vT1+AybzMItPP
-	 4xzTI/ZwQFTC7sSAUzfXVBtVPwFbSrSbaVn+x43iqokK2nmUywbqwXJ01V3PXuLkCEw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795712389;
+	h=DMARC-Filter:Received:Received:DKIM-Filter:DKIM-Signature:
+	 X-Virus-Scanned:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=AHx1ZHDrqBb1Si3Vg9G24oWeMqKbUp9iTNo0v3fevqo=;
+	b=o8xopavognY40gV2KLXy82BcB0K7MWJxDafw1XY8unR+ol0Dxc0owYlbO+/4D2Nm4BA5
+	 I+qmPQX5QtXfjaFXCU1bXnMxv6TKypR2HapFhpLIS56DSK3s0uN5y5qKmiKi6SIMEgT6v
+	 gSD6HmsyknI/jkekSdaCWBaA2Zhpn/jCqHmhy5PRESC4OMuyICcJPPkJuUER5zSGRzKUo
+	 28Aww8lPYeL2pDTuoaha7AoyGMyQaniXVuuwTLMnXVe1z88kecaXQnz1wOeu71f8SErMv
+	 1lWMrwHoE/94sjYQaNy3377obGgub0aryl71/8LJEqWc7OqR0KCVm0I202scdN1PtWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=bAivDR2C;
-	arc=none smtp.remote-ip=185.171.202.116
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	dmarc=pass header.from=cirad.fr;
+	spf=pass smtp.mailfrom=cirad.fr;
+	dkim=pass header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=JhouUIo+;
+	arc=none smtp.remote-ip=194.199.235.221
+Received: from retz.cirad.fr (retz.cirad.fr [194.199.235.221])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FDC606A32D
-	for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 16:24:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5FDC606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267D0606A31C
+	for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 16:59:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 267D0606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cirad.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cirad.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=bAivDR2C
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 7C795C2B9D2;
-	Thu, 26 Nov 2026 16:24:39 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id EA25860558;
-	Thu, 26 Nov 2026 16:24:30 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B33F111E6914A;
-	Thu, 26 Nov 2026 17:24:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1795710264; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=Mp9D7pFPwCc0xm6C56ewwnHz36Xm2c9SF3YyvxKT0jc=;
-	b=bAivDR2C35PhwnrRDbM0ubJtlM8WREdKoDtv8oyGFcLEbdkTrz41SLrg//H1eEUqhCzFlJ
-	lzuFHTRbfcWExSuvEE9gNsYQb4b1644KMpczPnQVW3dK6wmMubxf3e/h+WOm9/GI3wYPt5
-	6Vhj6/ihGRqvUv/ieBsQE8bp3ELAtBxFtdWj/htVxu5K9LON5kvq/IYvgWVKAJc48nGOQn
-	j8ITNyt1NNe//9eE6bFqxqQnWcotDBl1xgwZjV41q0K7GWuwAckrnF+Qa6/5TCbSExclVV
-	hA8sGg2w597segnATDIotV4Awrtdx4o40lkojytTIBzXrZrrqowzfZUAkBvpFw==
+	dkim=pass (2048-bit key) header.d=cirad.fr header.i=@cirad.fr header.a=rsa-sha256 header.s=573E3878-7916-11F1-BF4B-F68474317960 header.b=JhouUIo+
+Received: from retz.cirad.fr (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTPS id 1A375210CB39;
+	Thu, 26 Nov 2026 17:59:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by retz.cirad.fr (Postfix) with ESMTP id E2B91210CB8B;
+	Thu, 26 Nov 2026 17:59:39 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 retz.cirad.fr E2B91210CB8B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirad.fr;
+	s=573E3878-7916-11F1-BF4B-F68474317960; t=1795712380;
+	bh=AHx1ZHDrqBb1Si3Vg9G24oWeMqKbUp9iTNo0v3fevqo=;
+	h=From:To:Date:Message-ID:MIME-Version;
+	b=JhouUIo+srPjnJRPo3bBdddGVOSulP0WXkfsaXtn3NC7xUv/Pfq98honcLwGI1G+k
+	 Uw699z0xEriJO1hFUqlceUnxaCxqxj/fg/1vRAq/PknZ2bhg+BrravmlOGRyqzRJiu
+	 aaHK15FcJ8OWpFRjdlh869gCH+UBKH09Ac45nfKAhQtNEegq4Bq5s3D1oCfy/+khRC
+	 PnPYUGfKYrIAemPme9H7I48OCRUtkdFu2gdq4ERf9dSDduRLVO9JlBid8IYnBoc0YC
+	 /gdlf/6gW9IMolp8s2hWC09uOcAS84lajEQmzPRNLGNhtYzMqJhpWuU5MSeOoJBAWD
+	 OlgjQyNZSYbdg==
+X-Virus-Scanned: amavis at retz.cirad.fr
+Received: from retz.cirad.fr ([127.0.0.1])
+ by localhost (retz.cirad.fr [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id mmMzcOV2bv_K; Thu, 26 Nov 2026 17:59:39 +0100 (CET)
+Received: from localhost.localdomain (78-196-243-100.subs.proxad.net [78.196.243.100])
+	by retz.cirad.fr (Postfix) with ESMTPSA id 200E7210CB39;
+	Thu, 26 Nov 2026 17:59:39 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>
+To: Yixun Lan <dlan@kernel.org>
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Mah=C3=A9?= <frederic.mahe@cirad.fr>,
+	Ulf Hansson <ulfh@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Long Wan <long.wan@linux.spacemit.com>,
+	linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v2 0/2] mmc: spacemit: Introduce tx delay DT property
+Date: Thu, 26 Nov 2026 17:59:19 +0100
+Message-ID: <20261126165920.905227-1-frederic.mahe@cirad.fr>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261125-07-k3-sdhci-dts-v2-0-a069659ba025@kernel.org>
+References: <20261125-07-k3-sdhci-dts-v2-0-a069659ba025@kernel.org>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -58,58 +87,18 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 26 Nov 2026 17:24:03 +0100
-Message-Id: <DN5A5LAYR6AW.X45Z2L7J1T4H@bootlin.com>
-Cc: "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
- "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
- <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Troy
- Mitchell" <troy.mitchell@linux.spacemit.com>, "Vinod Koul"
- <vkoul@kernel.org>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Haylen Chu" <heylenay@4d2.org>,
- "Michael Turquette" <mturquette@baylibre.com>, "Stephen Boyd"
- <sboyd@kernel.org>, "Brian Masney" <bmasney+clk@redhat.com>, "Philipp
- Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
- Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
- "Alexandre Ghiti" <alex@ghiti.fr>, "Yao Zi" <me@ziyao.cc>,
- =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, "Icenowy
- Zheng" <uwu@icenowy.me>, "Jerome Brunet" <jbrunet+clk@baylibre.com>, "Sarah
- Emery" <sarah.emery@canonical.com>, "Ze Huang" <ze.huang@oss.qualcomm.com>,
- "Dmitry Baryshkov" <lumag@kernel.org>, "Cody Kang" <codykang@vsit.ai>,
- <dri-devel@lists.freedesktop.org>, <linux-riscv@lists.infradead.org>,
- <devicetree@vger.kernel.org>, <spacemit@lists.linux.dev>,
- <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
- <linux-clk@vger.kernel.org>, "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-To: "Guodong Xu" <docular.xu@gmail.com>, "Cody Kang" <codykang.hk@gmail.com>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-Subject: Re: [PATCH v3 12/17] drm/spacemit: add Innosilicon DP/eDP
- controller bridge driver
-X-Mailer: aerc 0.22.0
-References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
- <20261121-k3-display-v3-12-ec419e8e96b8@gmail.com>
- <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
-In-Reply-To: <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: quoted-printable
 
-On Thu Nov 26, 2026 at 2:16 AM CET, Guodong Xu wrote:
-...
-> Luca (added to Cc), is module unload something your bridge hotplug
-> series [1] is meant to cover?
+Hi Yixun,
 
-No, I'm afraid it does nothing related to modules.
+Tested v2 on a Banana Pi BPI-F3 (v7.4-rc4) without the new property
+(the board DT does not set it): no regression. The eMMC runs in HS400
+enhanced strobe (256 MiB direct read at 210 MB/s), and an SD card in
+high-speed mode reads at 15.6 MB/s. W=3D1 build is clean.
+Testing done with the help of Claude (AI assistant).
 
-It's complicated enough without! :-)
+Tested-by: Fr=C3=A9d=C3=A9ric Mah=C3=A9 <frederic.mahe@cirad.fr> # BPI-F3
 
-> [1] https://lore.kernel.org/r/20261118-drm-bridge-hotplug-v3-0-44bb3b4a82=
-8f@bootlin.com
-
-Luca
-
---
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Fr=C3=A9d=C3=A9ric
