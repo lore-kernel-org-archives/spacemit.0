@@ -1,65 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795697635;
-	b=LdsUj4JPcV4qTPOb/T72+c0vKvqUdpxNOQsHB5pRyHxWEX3fBO5dpS17wdgVYSdyt4TA
-	 080yMez0RTH+gykwIfiyXlRdZgZYni9SoFDRI+vO3hyL9n/1DVdWG1cfaHjh/XPRTjsGT
-	 2uE1b/5BChQ6EQcC8hD3spJ5bTXkBB8UqowLXRCZOQhbRp7Xl+0Ufq+Km0FlxNAI4MJLy
-	 MJChhAm3QstSy0grQt9KEdDKtaXVSHzw0Uvf05l5oQ3tbNF+/QQ4KWTnIq1GTTNT10Uvj
-	 ma0SEaJi5yB5c/qsvWlnAwuQFWNiKdX6Fgf4b/ByqoriAt8v0JFbkIcYWUZfeFEUpHg==
+	t=1795710275;
+	b=aPDkHEGKTS3lYj2RM407lTiWcXgdDKUCmzh9AVKck0/qLIFCQp7jfrX9n8JMhOe05GeC
+	 6qesiPDTA389f3G6zm/Sxha3XQFQKfEEFWRyUXc1pPTTnnbeU9CNbDeRgFy3RYRFleN9h
+	 AtYTOUdWbBIXAimj0VQcuspjLqcIlqVamSTVMe8WnDt/hoo0yyIGR3RkziC2/diAmF0Hd
+	 3ZYDVfkmj/ktRZsSmiRWkfeysmDUylGIaIxJDKygfbbiT7CKANJNO69Gy8q9dnJDVvcDJ
+	 8LjYTwT3CRQibD0lQCqeMjhYSYcZaskVnmGZ9WnIICV+LzWUqC3CK6wRvfDGxoTFEFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795697635;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=O+d5676T5CMcSy/94TsW5KMv0BgyZ1tcN/EjPiQ8WdI=;
-	b=3ebu92v4dK3sv+VoIGS+re6ldks8FXCsLQBJdzP9udHe1RDA/A7kIP7w1R77lqEwUCYC
-	 xL+BU3uXIy9A38lxlYLSiRK+tQQJ0oxKgRdpxp3RzpEaR6I/Nz8BBPrPqhp/KdTZdznVr
-	 OqxQ9aFWzJny/yJIXM1FwHcjM/o7r6XeUxEv3E8fi4PJQYHd4RfQ1TeeTfG49tByj5vx8
-	 DCeWLYbOxkyrFUQBcKVH07CoSCgZiTmHAXmDbodnRtphQbXKZtVHIPCZPvZEzFCgvs0M6
-	 PH4ha8x4GwZf6OHghb3iTOWm44qqdw5bSd5M+Z3l9dtvbwsQdJ1va8X4+QKeWIDNYPQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795710275;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:Mime-Version:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Cc:To:From:
+	 Subject:X-Mailer:References:In-Reply-To:X-Last-TLS-Session-Version;
+	bh=Mp9D7pFPwCc0xm6C56ewwnHz36Xm2c9SF3YyvxKT0jc=;
+	b=fgHUvfIo59arte+VPhYFyDuG4MLzutsMgqzUt5R2KPuM+aSeoRJeXRtatJ/mQqL669SX
+	 7i9E6pC5SrV+SOaAEWLG/YDHahSoLwZFyxOBmJ2s7QB0KzTF3JniYCJyKnov9yEU4Sh0x
+	 TmyGhoDZLLHYJANk07U2R5lRhDh3YDoEZgH11ELqjZf9Ww1IzRpYtyPCpS0NMMZU4EWhm
+	 a95xlTjq5zbDdBMArjEQD17+N2c0L+5PZAgzc17/VBcI9Duvfb7ZXsh5vT1+AybzMItPP
+	 4xzTI/ZwQFTC7sSAUzfXVBtVPwFbSrSbaVn+x43iqokK2nmUywbqwXJ01V3PXuLkCEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fTEegIdj;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=bAivDR2C;
+	arc=none smtp.remote-ip=185.171.202.116
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280D1606A31C;
-	Thu, 26 Nov 2026 12:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FDC606A32D
+	for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 16:24:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5FDC606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fTEegIdj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDBD1F000C4;
-	Thu, 26 Nov 2026 12:53:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795697634;
-	bh=O+d5676T5CMcSy/94TsW5KMv0BgyZ1tcN/EjPiQ8WdI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fTEegIdje0HvM2qaftMcVv2uLKABRroZ03kJ9XkK3T/hbWBTyB8VuriZGtZlekyPs
-	 jNX3hzvZrkFe4yK8iTXBxn4tJHhAX9amXLpa4x8QSjvIO4M+VnhIYOOGQy2MsKGfqv
-	 y9qTWIXFWA9qDoDRnXmnCQt1WPJY1av60tKgCpbVjJfqux/laPrY3qrcMuMpROQVf9
-	 mjL4VlrO5viC9+dbpDD/CsjmTAkB9wZOPVcYWIEnyWdjywwrL0/8Y1t4KbXnFbcphm
-	 FaHjP3c37mfU+rTGFPy/fs7Gs+FduZa+fdtfsf5ZSjGyxTfvDUV8FVgPyqaXaQfkQt
-	 lENMWEMyEiLDA==
-Date: Thu, 26 Nov 2026 12:53:51 +0000
-From: Yixun Lan <dlan@kernel.org>
-To: Iker Pedrosa <ikerpedrosam@gmail.com>
-Cc: Alessio Belle <alessio.belle@imgtec.com>,
-	Luigi Santivetti <luigi.santivetti@imgtec.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: add PowerVR GPU device node
-Message-ID: <20261126125351-GKA2398@kernel.org>
-References: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=bAivDR2C
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 7C795C2B9D2;
+	Thu, 26 Nov 2026 16:24:39 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id EA25860558;
+	Thu, 26 Nov 2026 16:24:30 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B33F111E6914A;
+	Thu, 26 Nov 2026 17:24:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1795710264; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=Mp9D7pFPwCc0xm6C56ewwnHz36Xm2c9SF3YyvxKT0jc=;
+	b=bAivDR2C35PhwnrRDbM0ubJtlM8WREdKoDtv8oyGFcLEbdkTrz41SLrg//H1eEUqhCzFlJ
+	lzuFHTRbfcWExSuvEE9gNsYQb4b1644KMpczPnQVW3dK6wmMubxf3e/h+WOm9/GI3wYPt5
+	6Vhj6/ihGRqvUv/ieBsQE8bp3ELAtBxFtdWj/htVxu5K9LON5kvq/IYvgWVKAJc48nGOQn
+	j8ITNyt1NNe//9eE6bFqxqQnWcotDBl1xgwZjV41q0K7GWuwAckrnF+Qa6/5TCbSExclVV
+	hA8sGg2w597segnATDIotV4Awrtdx4o40lkojytTIBzXrZrrqowzfZUAkBvpFw==
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -68,21 +58,58 @@ List-Subscribe: <mailto:spacemit+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 26 Nov 2026 17:24:03 +0100
+Message-Id: <DN5A5LAYR6AW.X45Z2L7J1T4H@bootlin.com>
+Cc: "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
+ "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
+ <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Troy
+ Mitchell" <troy.mitchell@linux.spacemit.com>, "Vinod Koul"
+ <vkoul@kernel.org>, "Neil Armstrong" <neil.armstrong@linaro.org>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Haylen Chu" <heylenay@4d2.org>,
+ "Michael Turquette" <mturquette@baylibre.com>, "Stephen Boyd"
+ <sboyd@kernel.org>, "Brian Masney" <bmasney+clk@redhat.com>, "Philipp
+ Zabel" <p.zabel@pengutronix.de>, "Paul Walmsley" <pjw@kernel.org>, "Palmer
+ Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>,
+ "Alexandre Ghiti" <alex@ghiti.fr>, "Yao Zi" <me@ziyao.cc>,
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, "Icenowy
+ Zheng" <uwu@icenowy.me>, "Jerome Brunet" <jbrunet+clk@baylibre.com>, "Sarah
+ Emery" <sarah.emery@canonical.com>, "Ze Huang" <ze.huang@oss.qualcomm.com>,
+ "Dmitry Baryshkov" <lumag@kernel.org>, "Cody Kang" <codykang@vsit.ai>,
+ <dri-devel@lists.freedesktop.org>, <linux-riscv@lists.infradead.org>,
+ <devicetree@vger.kernel.org>, <spacemit@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+ <linux-clk@vger.kernel.org>, "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+To: "Guodong Xu" <docular.xu@gmail.com>, "Cody Kang" <codykang.hk@gmail.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+Subject: Re: [PATCH v3 12/17] drm/spacemit: add Innosilicon DP/eDP
+ controller bridge driver
+X-Mailer: aerc 0.22.0
+References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
+ <20261121-k3-display-v3-12-ec419e8e96b8@gmail.com>
+ <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
+In-Reply-To: <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-Hi Iker,
+On Thu Nov 26, 2026 at 2:16 AM CET, Guodong Xu wrote:
+...
+> Luca (added to Cc), is module unload something your bridge hotplug
+> series [1] is meant to cover?
 
-On 19:59 Wed 18 Nov     , Iker Pedrosa wrote:
-> Add PowerVR Rogue GPU device node for SpacemiT K1 SoC.
-> 
-> The GPU is integrated within the SoC and enabled by default.
-> 
-> Signed-off-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+No, I'm afraid it does nothing related to modules.
 
-Reviewed-by: Yixun Lan <dlan@kernel.org>
+It's complicated enough without! :-)
 
--- 
-Yixun Lan (dlan)
+> [1] https://lore.kernel.org/r/20261118-drm-bridge-hotplug-v3-0-44bb3b4a82=
+8f@bootlin.com
+
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
