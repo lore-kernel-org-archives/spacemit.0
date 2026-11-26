@@ -1,100 +1,117 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.171
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795726287;
-	b=gqtsZdhcERaoMbCoGwzPmPc1yXKYFwAlbojsloiZbikd5rhXiKDBl82p0uRJKtS+o+0x
-	 EyjfZqA9WJqZcrclIiR4Tc6heM1eO0suSaiPU3G3UF2kPLzRb7ipdbQZAvfh2yvzwgpKe
-	 dlT7CasQuNIRc4Jmvyal9vdyCOl9spTM2sC11Izh0oZ4ekyQFSIdOLRsUyMWJi743Jj31
-	 VYaoviNfnkUHhUi97xDvSfXtSbgaaGwewh2Xasg4FU9aB0uroueaLPMgPGorLi1BJQtIt
-	 z29c7elKlHTMU0/wxCYSaLkMcitUhH2VAMdbkNcggzJAWPE3t3UNPGFPrU6WXHDhOJQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795726287;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.8
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795729482;
+	b=HD89FuAvPLFvOdMTCjCYM7VBmWr3oabP3gY4f/UvfD2X5JVh7G35x2J3k15HXkm1HbgO
+	 ZstLFVhSzSvmMFy/HdAT4RtTsRguKjzY46k2OW027G0xAqrs8eCYaLvoOW4gS+JlsRVFa
+	 hkeKrlEY9dmZgS/n9Upo98mERGOqq4EEdzs/dR9/05BCg1RM9vPrV+269RV3pZGgH+O9m
+	 /s2jiIiTNEKGew9XVvaeaOteBrUlzbZjkMaARqkYl0s0/I79pGOYbZz7XfctVtrn/h0n7
+	 StmF0oNMLnvCspr6wWWKD8GoNst4Y5iMHzVudxjqILa7Fvjuezt6JS+278VRaMU8w2A==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795729482;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=KjPQo4q/k3/IK7cR8RIRgyLDoYYjcusaTmDtFIYgl8E=;
-	b=V3we4/mN1fDHlLNQN4x0DCEplbROAfDhs+Hacppdo1tvFmK+faUOMOZ36OVrG3PvViZH
-	 715RKVSZHolXZyhwreikciKs9NFJUMcPJegGJBC5VsiDc6WqEfyVsHKw98/amPyQaJOmy
-	 7MXrlBq9rtaNAQ/g836AR4xxPymj/sonYIIp7uCXBDnvokplBipVuvwjACExdXJyrB+kK
-	 Mt+uXFo/VlahQpDiNEa1Wa/AGbv2yj5UjSNnpKDfrBLYdCmrQxsrE2yl5yGhC8Ty3CjeE
-	 U9ZLhWUsCxWmM13CM7e6PzBLh6aib3TVbtpcRYdf+k0pmt/7woiMaQkQy2lS9DSqd9A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=UYJTRpYCZNTbQQiix5R88SQ1NUZI9ZYUAhpcRTfR3qA=;
+	b=mBHgaNhiibRNjLSyonXJjmykyzLqYTltZncL5C37bq+68aX16F0W4JARMju4pMssiG23
+	 hs7MIpS3fZxyrWECgJ4fWMp42XtAyHpEsCUvvvsUd1x07IhdcYwa0b60bf+ujxpSqsbr7
+	 wgLzAv68SmywT9O2kPbmfZKQ7mP3xZNGoSPYq020atcQgCFmTpEa1B2TOTv6OFZV78EUl
+	 mRRlWl9Vseg5MF6ZoZa6zQhSHVKitCuvgzYg7W9IWnADBDrTGQnPzBPkgxCaW0aeWiFLM
+	 hACX1tVfKzZYzmPlUKhUwmPIfPEU2n8xEgNqRmJxmTS0aPWmPuORmEImlZDeWE2Imjw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zivFwnKS;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.171
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wCJOTmVr;
+	arc=none smtp.remote-ip=74.125.229.8
+Received: from mail-dy2-f8.google.com (mail-dy2-f8.google.com [74.125.229.8])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5318606A68C
-	for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 20:51:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5318606A68C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AFF606A6BD
+	for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 21:44:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58AFF606A6BD
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zivFwnKS
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2f04244c3d0so58690555ad.3
-        for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 12:51:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795726286; cv=none;
-        d=google.com; s=arc-20260327;
-        b=r1LmqxavVPF1FLn75Lk2Og+174KBh3pSwhwcWnwor3RGs67NXBUCZdLaUPKMyp79Z7
-         jPfWfUHGygZXOuDNKEHu30sKSj8qdlLx09D5YWIkCgSqNuiNTFF2gydBjx6k9hHQNWX9
-         JKnCE4VEMq1k4mB9Lqyjspndkln16yCYP/2EauxJ8Ug4y77lWcX0twaOE9l1PpR5jGKa
-         5HYWL312EQNR++NL+Dos9fU2VtpoYY5nm4Qvluk1x1AZyG6HalYLjhXL3wiTTWPrnuiY
-         9+fa1ZtmbqYHrf8Ysw5LpZ5Uhhrx7AcVKl5QtW+xW58foSOEa8vTshJaQlWnRvJ0qs48
-         BEgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KjPQo4q/k3/IK7cR8RIRgyLDoYYjcusaTmDtFIYgl8E=;
-        fh=wpTRAewAh0oQVEu6tFXXKiydDuqD5fERSh76lbJRtcA=;
-        b=nmlu+ChxWqDtvKgX48qU3zq0Tt9GGLQbj7/vf3WD4X2Hr4jcxQ6ENP348oJXrRhxI3
-         gxbw5nZYN1gTfr4oSl+65PRJ2S18T6ce85Otk/4oHm5+wxZNLCO8PxPpE7wla5VvTR1E
-         AWqcWIXbKmMNl2QbRlz3f7sDWL0ZbBSsSSRwdKRf9TMPMFS4vcqUprdSsVxMl1daCeoi
-         tvQvzXgnRHglY4Ox9nLkMqEHPCYt39XcMDelb+mS2bUeS7dLVphD37UnXFnKicPHDILX
-         k1IyxytolNgRv8w1YnUcxODFFX3JfCuPVzEnLQew6OY/Y4FQiS/hd8mZahpmwS4gEjaK
-         P2uQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wCJOTmVr
+Received: by mail-dy2-f8.google.com with SMTP id 5a478bee46e88-382afece6d8so1527376eec.1
+        for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 13:44:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795726286; x=1796331086; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1795729481; x=1796334281; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=KjPQo4q/k3/IK7cR8RIRgyLDoYYjcusaTmDtFIYgl8E=;
-        b=zivFwnKSFKTw19elgYnvmnd4GZxP3x7FYQkBTpQlXj7fz6fHFYa2oijxpIdzUnajAA
-         l7BXEOXWgA5HADz1YyzgFnrS0YVUV9cRlguVimJNPxXpzfu4eoIe/+gTQzZag1Vs5pFa
-         N9Fp4q9OVvYfBPp89wngzWjNc9lrx8+pw2WYStGs/GeABjhlVIApCPnwpIL/GkkFbabI
-         pPXJjBC9jkGuKBBueJu4NuQA0IULaW4Wtu0FY+XnGg98o5ag0Gz+83fq6aVGfxouU1Eo
-         BKZxen+S4e8XMltJZ5/Y5Qw8I/cQ4aeSpQiGq7UkZqLNVeRvOQJQ2HTGzXmdJOhCVdIR
-         dLfg==
+        bh=UYJTRpYCZNTbQQiix5R88SQ1NUZI9ZYUAhpcRTfR3qA=;
+        b=wCJOTmVrf9s5CAI6ER7XneIJgi0XNoXRb7Ejv+3jV14QyhArYuIINb0JaTAsQq/4Xt
+         ZamFKa1taSks2+Hgcu7cf0VdXxVKoZDtqWcB9WZzfg4Z4++7RHOcPOeEGQSRyrA4aWUq
+         aB6qu4m4RoKLC+w21VXy6sbRhatmIgSp8C9ooT9KaamsJBdVoTh9pLd5iEFKdpfIn+oq
+         rHcSS2finFTyRtMRvARXo9yFy1w9K8CUwW+wC8xCUomdQbE0S6zcutsOmEpMdfz5X61C
+         /Bfc0R7ksbcLwES+G6N+vmotBgZnCd1fSEz2gNHF7yxEKjUoYpxJhSRavOzoI1mBVDOT
+         oFqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795726286; x=1796331086;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1795729481; x=1796334281;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:message-id:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=KjPQo4q/k3/IK7cR8RIRgyLDoYYjcusaTmDtFIYgl8E=;
-        b=jMG6s2j6oNW8zf9dC5tmHJnHFW2fOJs3796LUnJxUF1aOXe7y/k0+quMcVx7e5as/G
-         pGcLBIWUhJ4QnCWsaoBqfAsS37Z7T/xwiQXc+sbNoPFQHSohpjFq48E/tB9dTOv8DwvQ
-         s0gMElsGKFDmaUo4D392yTrAlVVdB6wIDKEKSz3+oxuNiv0ZBxh01kZE+QZVBZll5hbb
-         80VnGxGyY7Mexb/GLd6bWkAj0k2B/ZWKaSUZsvC1xnXpzIK1NYZ8Uk9SdqtJTtMPhRss
-         H6jeUD5c7WaBn0Zqx9uLNnccekeUG89h89Ka3bKfZJKRNgcFpaHzDkAqqy9ekb89wgQi
-         iDbQ==
-X-Forwarded-Encrypted: i=1; AL+hErHyB+p/HFF6A1i924ynCmgfSH6DYkjetepubw9PzughS8/O0MeawCOjN/5FbE8mx5RlRprdygp1Gg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8MHUuIY18/GCXDZd1aVfjzm1Y2SfTrA9l+GtvYMXZoB3iTHBDS
-	mtNeuxrbXJtlRPY7hsBSV70XVHhi/Zl9Fa+1yJCK5h13Wxm/j7Z6au5oZV3Dy//WPGGfOKm30WX
-	fwgqln3MIrO70uV1Nubd49Exjs+22JAc=
-X-Gm-Gg: AZFdTZcwMM/KR4KGAfpH72F9rhr8+T+m2litrPAmik7sL5SuF3edVMQqHhLlvUQfWs/
-	f0KXFYXITltuxiimlMRWj1RclNMkPwGZayTBz8XY/d4mKt7Xxo5+dm75GhYJi78VhfNo4GiqwPg
-	caAD0Y0vaqrkPSnsCX05TdSFVoDeM3YTDzFk8pIqX+wTF8efWLkty+MbJ/J/nwP269pVz28/zCH
-	fBxe6J6sSZhaAKZZ81Wxs4QnscagiKos5pCcQXhYBnQZox0DFt97/QczR+NZfq6bty7l/w3p2/I
-	rw3Acc/IPt9gOStu6exDr/aE+1EE2ZV6PBmCIhLSM0/ffa2vcMrwRzvBs26gBguXBTxe9sE7Cf3
-	QmbSS9bjH8kKpTMWYlsWlXNKEHtV2BDjBLn1y
-X-Received: by 2002:a17:903:4b0c:b0:2ed:352d:c619 with SMTP id
- d9443c01a7336-2f03f16ca83mr215219965ad.46.1795726286102; Thu, 26 Nov 2026
- 12:51:26 -0800 (PST)
+        bh=UYJTRpYCZNTbQQiix5R88SQ1NUZI9ZYUAhpcRTfR3qA=;
+        b=pQkBFDVRl3CnbWpU7bgbexjASLR3mTiMdP+h8Ndxd0uBjKOQYonwqATRW5v8xclY2L
+         JD9Oasw0ZwSWFg0Ilsner6seNDZhLQAW21Y4OVKO1vr1OZxjRerFm1XApTIe6XRZ5amU
+         p0cwjd9iau4l8BuEeRFK2+Ihb+48MlHic9Vnf6Dm6R26CT2UUDHCEht9R4XNtNtDZEDF
+         Bn+3oYoCfQEeBqgww/RKU1JzK2+fHBuVCyfIb8gKdRQgurMVfVEu7yFZPa1y/Ls0enXM
+         ZMPw4tKrVGyv4gHbYu5ZmlrNyh07hFMBByJc6qA3BVyACOlqedfhn22hgoQTp4bndtUc
+         F2Bg==
+X-Forwarded-Encrypted: i=1; AL+hErFcmhqsuaZs43QmjHz3TQmQdOBP6vzEHakr5HI8kptVehwB6L56Lz8fh2LjxJ6e5eJvQ1V6AHzPig==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8MhU+DgfyfFLZwiBaG+OHvOMrjNyeEUAlVS/x4elZkVjz6woy3
+	FcCANZ/56aa22hdO71UQdQ7Uc9uUvDDb4jme3+ndH7jb+rMm/ET9WB0Q
+X-Gm-Gg: AZFdTZe6No4zk1ydokN5Tj9vo4mCb6Y40nro+/FOW5mSquqd21TGzWS+usAGaiP+39U
+	k7hRZQzjovbympoLxbJob45rkYUD/DAfcKu8p8r8QsMryLa+pJTbByWZ+hVb3pQbW8Nzs0BzOd8
+	8eN33AEG/L4vGGnb2wmRg69dLD4hvfZUAPT6FERF6Tp/aWFTfur+m+f03/lONM8tprSZ9kpneoO
+	9xzZFsPeSg17Zw7nK9JTIV+tZW1pIRzB8c1dm+qndB+0/PLJQp5aIUJDWp90JTU4JsckIWZW94T
+	EjMONo/9FgqwIyhJ9ch4nq1yMXdcYSuBBeq/OaVkG2+dxVU/3B9/GBzkL1QKuc37V5y4FnDo//O
+	tHOFL1dt0RxMqFXzOayin2T25ejLoZVva2k1nXMFts9frnjmUaxDqQXnd5LZHh1KxTqyD7d8W9+
+	8LeJCmSsfPhKkOZFPR/EKE9hAWsd0ptna5NcuKTfQOnSPjwKkMN3Ly0mTEaXPPZ4F1lfImpHPCD
+	5DbM7cZuUpK0ilRp0bZSrBXDSiEBGdFRA3a1RUX/2BremfKylr0QyJ54L1nV0U5XKTi7715I5Se
+	nUZTQbpuohflGvl8deXfKNQviIqGwAv9JnzOt4M1wNC7WkOv6x1ORJT+waaZ5rM=
+X-Received: by 2002:a05:7301:c089:b0:372:14fb:2573 with SMTP id 5a478bee46e88-3856fd5bf76mr21960944eec.20.1795729481384;
+        Thu, 26 Nov 2026 13:44:41 -0800 (PST)
+Received: from localhost ([2604:a840:3:1e0::1080])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385665f21aesm79578155eec.4.2026.11.26.13.44.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 13:44:40 -0800 (PST)
+Date: Fri, 27 Nov 2026 05:44:37 +0800
+Message-ID: <73f6ebde526f60ff64064ef602e0cae9.codykang.hk@gmail.com>
+From: Cody Kang <codykang.hk@gmail.com>
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+ Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Haylen Chu <heylenay@4d2.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+ Brian Masney <bmasney+clk@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Yao Zi <me@ziyao.cc>,
+ Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+ Icenowy Zheng <uwu@icenowy.me>, Jerome Brunet <jbrunet+clk@baylibre.com>,
+ Sarah Emery <sarah.emery@canonical.com>, Ze Huang <ze.huang@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Cody Kang <codykang@vsit.ai>,
+ dri-devel@lists.freedesktop.org, linux-riscv@lists.infradead.org,
+ devicetree@vger.kernel.org, spacemit@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-clk@vger.kernel.org, Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: Re: [PATCH v3 12/17] drm/spacemit: add Innosilicon DP/eDP controller
+ bridge driver
+In-Reply-To: <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
+References: <20261121-k3-display-v3-0-ec419e8e96b8@gmail.com>
+ <20261121-k3-display-v3-12-ec419e8e96b8@gmail.com>
+ <9ec2f818084f2e723e8b82218a302258.docular.xu@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -104,95 +121,27 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261125-spacemit-soc-timer-v3-0-e6390f3ae4a6@linux.spacemit.com>
-In-Reply-To: <20261125-spacemit-soc-timer-v3-0-e6390f3ae4a6@linux.spacemit.com>
-From: Iker Pedrosa <ikerpedrosam@gmail.com>
-Date: Thu, 26 Nov 2026 21:50:00 +0100
-X-Gm-Features: Aa3M54oEPweJV68Vjz8cVs_U2wRf_Iqv5S5UWB4zm__2yBgEw8WUCZAIeYKD9Xg
-Message-ID: <CABdCQ=OHaicMvAC=S+To2pQgFXupoUEY72TF+NUNF7ywM1kj0Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Add SpacemiT K1/K3 SoC timer support
-To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Cc: Daniel Lezcano <daniel.lezcano@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Yixun Lan <dlan@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Series looks good. All previous concerns addressed.
+On Wed, 25 Nov 2026 20:16:25 -0500, Guodong Xu wrote:
+[...]
+> I noticed a corner case when testing module unload on v3.
+> spacemit_inno_dp can be removed while a process still has cardN open
+> (say Xorg or kmscube is running and somebody does rmmod
+> spacemit_inno_dp), and the DRM device then still holds references on
+> the bridge. When that process closes cardN later, the kernel oopses. On
+> a CoM260-IFX:
+>
+> 	sleep 20 < /dev/dri/card0 &
+> 	rmmod spacemit_inno_dp
 
-Reviewed-by: Iker Pedrosa <ikerpedrosam@gmail.com>
+Thanks for reporting this. I can reproduce it.
 
-El mi=C3=A9, 25 nov 2026 a las 2:39, Troy Mitchell
-(<troy.mitchell@linux.spacemit.com>) escribi=C3=B3:
->
-> The SpacemiT K1 and K3 SoCs have APB timers that run independently of
-> the CPU cores. Each timer block has three 32-bit up counters, and each
-> counter has three match comparators and its own interrupt. A counter
-> can be clocked from the functional clock or from the 32.768 kHz clock,
-> and can run in free-running or periodic mode.
->
-> This series uses counter 0 as a oneshot clockevent. It is registered
-> for tick broadcast, so it can wake up CPUs whose local RISC-V timer
-> stops in idle.
->
-> K3 uses the same register interface as K1 and falls back to the K1
-> compatible. Both SoCs run the timer from a 1 MHz functional clock.
->
-> ---
-> Changes in v3:
-> - Drop the unnecessary RESET_CONTROLLER dependency (Philipp)
-> - Link to v2: https://patch.msgid.link/20261117-spacemit-soc-timer-v2-0-9=
-264d0ea7755@linux.spacemit.com
->
-> Changes in v2:
-> - Use named constants with comments for the counter sync latency and
->   the minimum clock rate (Iker)
-> - Link to v1: https://patch.msgid.link/20261103-spacemit-soc-timer-v1-0-3=
-6722421db6e@linux.spacemit.com
->
-> To: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-> To: Daniel Lezcano <daniel.lezcano@kernel.org>
-> To: Thomas Gleixner <tglx@kernel.org>
-> To: Rob Herring <robh@kernel.org>
-> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> To: Conor Dooley <conor+dt@kernel.org>
-> To: Yixun Lan <dlan@kernel.org>
-> To: Philipp Zabel <p.zabel@pengutronix.de>
-> To: Paul Walmsley <pjw@kernel.org>
-> To: Palmer Dabbelt <palmer@dabbelt.com>
-> To: Albert Ou <aou@eecs.berkeley.edu>
-> To: Alexandre Ghiti <alex@ghiti.fr>
-> Cc: linux-kernel@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-riscv@lists.infradead.org
-> Cc: spacemit@lists.linux.dev
->
-> ---
-> Troy Mitchell (5):
->       dt-bindings: timer: Add SpacemiT K1 timer
->       clocksource/drivers/spacemit: Add K1 timer support
->       riscv: dts: spacemit: Add the K1 APB timer
->       riscv: dts: spacemit: Add the K3 APB timer
->       MAINTAINERS: Add entry for SpacemiT timer
->
->  .../bindings/timer/spacemit,k1-timer.yaml          |  71 +++++
->  MAINTAINERS                                        |   6 +
->  arch/riscv/boot/dts/spacemit/k1.dtsi               |  12 +
->  arch/riscv/boot/dts/spacemit/k3.dtsi               |  12 +
->  drivers/clocksource/Kconfig                        |  11 +
->  drivers/clocksource/Makefile                       |   1 +
->  drivers/clocksource/timer-spacemit.c               | 317 +++++++++++++++=
-++++++
->  7 files changed, 430 insertions(+)
-> ---
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-> change-id: 20261019-spacemit-soc-timer-cadf3088d286
->
-> Best regards,
-> --
-> Troy Mitchell <troy.mitchell@linux.spacemit.com>
->
->
+[...]
+> Other DRM drivers with the same structure, rockchipdrm for example,
+> put the bridge driver and the DRM driver into one module. I think doing
+> the same here (add spacemit_inno_dp.o to spacemit-drm) is the better
+> solution.
+
+Agreed. Will fix in v4.
+
+Cody
