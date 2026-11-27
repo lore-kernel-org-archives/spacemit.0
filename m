@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=18.194.254.142
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.92.39.34
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795759516;
-	b=4wVZ85/uL8ApHFH4ZjjHnhhO8qlKoaDW7upgWc48u0zGyLmDgR9UgcNQopgj3TfZFIWx
-	 XFnwPRBKrPtWZEV24u4Nb4zMmn3fKG+wey13e4eMYat+DoKHkZqXaYlaxyyGfQYyTd7QZ
-	 2M3S9k0p9Q8MXnO2crQg1tYB/QXdXd6ZudNs5ENJ3Z/eSkpMco4c1zTLa7DRgYnRdW3Fc
-	 aSu72ObvW31Et0LnM02DXEKq9e8ZsqpSIzSkiNYd0NEh12XljQvkBBJ9wmbTvyYYz6B9p
-	 khXzRB4oJmeUA1e1Hk/TVS8wdw0VNxfY+u2tHtXdSiRUuoUaiZ0ubxUe41A9+8vMDKw==
+	t=1795759880;
+	b=OFjsBUzUxYXxEjJ9e0Rfohlmpw/T9B/7Fb3+AM7Hv9v6oorO3uDhjIzy2St13FnKRMAU
+	 7mUu+KLzW57fwkgoEik8FOoKw30VNGMAowhaL6lG4UGtr0pL5XvRG18coTnU8fxKkvJ+K
+	 zoZpGDlHCeBuX53vaVPX+eiZu+ttlOWfFyar6u7lY9SrrvntZADdl+yWO78yHcJkshMO5
+	 5QvAO5NVP4OFpG+4dofUUL3RkbuIAfjeOvPZnPHVVVNYK6NWAd47uNashcDYzrh/UZvJ0
+	 crt82WTEusXZ7IjVmoDD74VHxR03bV2puWbNP53JghODx6NTy6HcGcTWRdZcAFFOpgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795759516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795759880;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 Content-Transfer-Encoding:X-Mailer:References:In-Reply-To:
-	 X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=7MogPv/8rDNnLROh2lJqUbjxxMwzFQktEETGe7LKoj8=;
-	b=xO/gRr/28RGhIqWrtKrHuaZ50R/jSHyvrDILxaiIpZzYyjwK4rH8LkOpz7wVgefdCFXp
-	 RzBBxqoIDaepsQ//xeBc0m2b76Z2vHmlb8BM2pN6swIi05+ETO36jgrwvQyYNPyfoMXcv
-	 GxIzjhryxVm1o83x5m363JLvzgrh1LhyAJ4VZcB+2YEf1V3I395Fup3mUjj+jPetqomkd
-	 yD07buj7/ucJvY3GIt3Vi0IaMNwH3JhlqkQ2B65Lw3C/y1avX3Wzd98r7B+TaucqrOorz
-	 gQo5OtDXdY0o89Px47y14Vpd8xv5tAz3nmC7HL8P7Meb8zUS/NBA2dPnGDxtDkjT4NQ==
+	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
+	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
+	 X-QQ-RECHKSPAM;
+	bh=E2NeSLXfonrxSY+W49lO191CRD3CyOzI7hF6dMSOWd8=;
+	b=YQ8g0qXW7J8QIaxab0qVWoZWW2uujg6U/L/oCuXGlhv3lN2nFqTMZHyyL81WYN+ecPlI
+	 hTPNxVVF5YyEagXyzI+7cHCNKdDzJ58KpMe9jFk9EinjypMFM9yKqDbE2xEaL4NfU7+AZ
+	 MUY8K6cruK9eV9A7ck3ZzYThVR2D+LrEYshKpsawB7KcWdwtdRpYG3jstIQ3whyZkI1tw
+	 06xFUmprCyfYRp/FtJrRrVzleN9UHefG3zf1LMiKaFb4gkN2feoC0tLeR99n1vvCFvcCX
+	 XWPy6BfhMN2PYIoQz7+K2PLpftKXH5aeKcORnUazy3HihwkAnfxT2OetzaV2CDPIxpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=KcAjQ0Si;
-	arc=none smtp.remote-ip=18.194.254.142
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=IlGuBUNf;
+	arc=none smtp.remote-ip=54.92.39.34
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0C7606A31C
-	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 06:05:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D0C7606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5EF606A31C
+	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 06:11:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3D5EF606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=KcAjQ0Si
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=IlGuBUNf
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1795759445;
-	bh=7MogPv/8rDNnLROh2lJqUbjxxMwzFQktEETGe7LKoj8=;
+	s=mxsw2412; t=1795759815;
+	bh=E2NeSLXfonrxSY+W49lO191CRD3CyOzI7hF6dMSOWd8=;
 	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=KcAjQ0Si0uqyawIDoZlyH5MMR3Cj4jedNyeUQLbcacXQb87gJymIiEnk7EHw+WFmN
-	 g7eej1bwZqfqtsV0Lakx9m1mMgisIwCbnYBMwSwut9+pAYU+jjbWK0EL8brtsnpI8e
-	 qYI0OzIKwHsxZt/SA5ptBY/kCrW1SyBQiekD/qdc=
-X-QQ-mid: esmtpsz16t1795759443te5c7fabc
-X-QQ-Originating-IP: w9ScYnFOG3tL2kivETE6oRptnE7ii6xkMYvcHsfyRpU=
+	b=IlGuBUNfuc0X+Pt3hn9np8itQgtiT5Y6SrDdfdiN0lIRUOz21aPe8g8Qgadna6M75
+	 bdn2tXw/j7r0us/0BtOSVxF1Yjyjb3TUWZxP8XiPP5Q5qt8PZW/QpXEI/b84/aI1Ze
+	 6Lxe3kwqdBXOal+B4RzUZg3Lpsm30yimKVcfbLH0=
+X-QQ-mid: zesmtpsz4t1795759813ta86aa600
+X-QQ-Originating-IP: n4795X9CtarIxKcBmI9iCqupaEOTuiKZlULc3AJEdYw=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 27 Nov 2026 14:04:01 +0800 (CST)
+	id ; Fri, 27 Nov 2026 14:10:11 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5566147713049927069
+X-BIZMAIL-ID: 10182266507146119862
 EX-QQ-RecipientCnt: 13
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
@@ -60,55 +60,76 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=511ec13c2b7141be0104885f7a52a1b4dfa31b6f2847b9143b414700b4f6;
+ boundary=26ed1f322d44d2ecd4a6afc050eef67eafba067d32d916536e0aeaac7c68;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 27 Nov 2026 06:04:00 +0000
-Message-Id: <DN5RLE33ZA2I.31YRV21UEQO2T@linux.spacemit.com>
+Date: Fri, 27 Nov 2026 06:10:10 +0000
+Message-Id: <DN5RQ489MNYL.1WRXDMIRHZK6I@linux.spacemit.com>
 Cc: <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
  <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 3/4] riscv: dts: spacemit: k3: Add alias for MicroSD
- Card
+Subject: Re: [PATCH 4/4] riscv: dts: spacemit: k3: Set CD pin bias
 From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
 To: "Yixun Lan" <dlan@kernel.org>, "Rob Herring" <robh@kernel.org>,
  "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
  <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt"
  <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
  Ghiti" <alex@ghiti.fr>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-Content-Transfer-Encoding: quoted-printable
 X-Mailer: aerc 0.21.0-reader-ipc4
 References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
- <20261125-09-k3-dt-minor-misc-v1-3-dd887a8eb326@kernel.org>
-In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-3-dd887a8eb326@kernel.org>
+ <20261125-09-k3-dt-minor-misc-v1-4-dd887a8eb326@kernel.org>
+In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-4-dd887a8eb326@kernel.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Ne6A6eRT3vSHjLBydMUawiFpAPx1wjo4FjP0zt1A++O0f22aAFsb+WCq
-	pNiYYrWHNbABgGylE4FxhVKSJvQJcbTRlGc78OAtVxxPljcwqvMzxT+G4ROOjTqoPmRxjZ1
-	iGQ1cUS6LN9oH/UHm0thEQxB2u/SncJQTv89gjnublLr8cIx/QvI1mpkHfnWQIjZl5GNc+W
-	z4rOfjeoqvUGtBcF8suV+eocrlx8dEoiVwGRRVx9li9ohf0VhuomeqCGuIzRmA0EGXBzGVY
-	qMB11Yt2DbhXTAsC+B9ZkxajOnc+cuuQQiWMS492UYYITq7arWcS2lJPnumhwFSxO8IezVs
-	828gR3H0dctcwWxmwPtDW3EeTt2wnyNn6uQhSoPt+5OfRVIaI1tvXKKN7VPKsAxty6AGfT4
-	3xC5wa6YotCeT2vPCJBIzghrr56ksJEcEyW0oAxck8S/1tYuOL26Nlib1BKlnKOXOEocIvw
-	7IWAqfJRtAOkucNYFiGKh1Q9SWvmsgzDZIrVLoWk38kSRYzRCwm76pit4arah/kOlT5DkNs
-	xSY6Zc4kMnvnk1xp/2b+6+0gXLXDHt5ylC6vLfkEEdDvUZ31s3yeUURKh7XAwcdONwmzU71
-	4+S6ijR6iBqi4aQGoef0QNMEEACNnmEdsEgcuqXQDnQCZ5oIKXg9r3euXOMESKTwjfpfAsa
-	C+WN2LmD7mx4nIurP8l6OgylfbymA6UXNUX4g7Ffm5Kr85eP0TukqfPDDOHcKwKznXFNUXk
-	Rsd3sokgJnLZRGbGuNs/e5IF6h+nd+8il2FLNWKqqfGHjmtsU74mZ0CfOEoNDzoskjrRUUd
-	Z+TQezRI7wzOQ32aACh8zk+XMJhumWfhRTjcveAuu/Q8Grb76mw+udQZX9ZS0v4GSu7K+x9
-	Ha351s8qy8zdzLqiNLOlttm1SPuKGU4c7LH4ZdPaQ1r9167tmPM11HUvzTjU7KG9F1P3Kv8
-	HF9KDKwwMw6f6WdMLvzKiSGTn3rG+uz0F/63fKMLbBsqyFu9QP/RGjdgXaRNEdtGYRJ0l1a
-	vghvBZFQW+E5WKPAYVA6i7xkExT3D9umLTcnqr3oVV50S85TeOBK8sxRHhhT5HDaJb4QQwy
-	il5ukVL76XiRJSAykEme0VR7wf32SzZ+3Dk2fFl08jHTn+yzObmrRI=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NPhALGoAJPM8bVLOJNUsgGmOkOFiqtOOUiYoxC1L7S/MM+r05SX1ibCk
+	OqEELwN5YBBcDCEO7ca6rd7uE6Vd0D/gC5037rOeHXSprOKLHZ8T59gqLkNh86U46aZftoX
+	wnhAgezQTtL3/z5PdXu3H9zMsKXOPb79IxZYb4foYQqCc5Ifl2k7thsqrjgn8ydYt4DlwCl
+	2K5PaLsBigw6EGrCapVzC6vuu7p2yMmvoRiBoI9FffzjQ2C7yEaOYAJry8hic1hRVqC1PKd
+	YgigMFcVvG96f4XANSW1oSYAeopAEGhcCQesHait+RPFeLAMwaYZp3H+HJnU5dls1H6G8vg
+	ZOpb1SKlg7dLZzS1n4wp+aGmh3P/C3t1njiWwuYgo7fFbybtc8Xuj24+v1yFy6HDdBPtGwn
+	rDRkYOsi//WoozCmpn9eJmpLK0lZJn/DCNaayxXfBNLEb8NVFF33tC8xCpeoomP507I1dLj
+	nkgFITt4684hsdYsUO67+yFdlas9eYD0iHCyy6zYfopYAlbTK3pCRbUEVZkjD8PTDVZlpvJ
+	phy14aEOlRgdIJznuRSPUWC2cmGfEDpsa6t0S7lQElfP+TKeO9D3ysVGPeliBTFtqscMwJi
+	2F0s1cOl1j1OgaaqGpG2c07jyan+LtWxl3zFijxSuHWpWVE1kmuj6g84/nKIqGlAgSSCNug
+	zsKaNzBhXw1AusWEgqm4P5zv/klTY2KC6yazXDQVfynhTLHKDnNKl7AM3OOUhYi0B7kOLIh
+	ezuwXXJRQlMRdeLikkyJjWQ3GWen26qQkEE9C5qI/Lny/Ws+FT98h/fBTKFUzP5WRhHjOKy
+	2aLAUUN8zk+sj+xmKf5VIJZGfqJjIhAfeKfPDbhGUHdcuTs91P1jrDATXjyf+i+DRQOfW5J
+	Ge01M8ILw4PSvy6e0c6as8Lrs22ugr0ilA2qMDykCNTiCime+VCwmueLz+bjZtPvM2L+aX/
+	yEhxFjOo89yS95Zzl9z05EZ5uY5nlnOZSaA3+PXwZ0kdltB8gWPRwTTFi/126NdU536M3DM
+	+OjmxnbD2wZSVjm64XyBnsRno6HIHzL9j/CbL89tDUAmVdheiL7XdwdReXxY7I40nEU2gbL
+	cg2um7Vyisvmr0//pvf7+YwPemzkiK07Igjot1NGi4SwqcxZRykkpY=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
---511ec13c2b7141be0104885f7a52a1b4dfa31b6f2847b9143b414700b4f6
+--26ed1f322d44d2ecd4a6afc050eef67eafba067d32d916536e0aeaac7c68
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
 On Wed Nov 25, 2026 at 7:46 AM GMT, Yixun Lan wrote:
-> Add an alias to the MicroSD Card for CoM260-IFX board.
+> Explicitly configure the bias settings of the CD (Card Detect) pin
+> for MicroSD card in CoM260-IFX board.
+>
+> During the GPIO pin request phase, the pinctrl driver disables bias
+> settings in function spacemit_request_gpio(), this happens to work
+> in kernel side, but doesn't for U-Boot. Adding a flag to fix this.
 >
 > Signed-off-by: Yixun Lan <dlan@kernel.org>
+>
+> ---
+> K3 Use same SD card slot as K1's MusePi-PRO, which needs PULL_UP.
+> ---
+>  arch/riscv/boot/dts/spacemit/k3-com260.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi b/arch/riscv/boo=
+t/dts/spacemit/k3-com260.dtsi
+> index 65c6f49f8591..598a53461afc 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3-com260.dtsi
+> @@ -240,7 +240,7 @@ &sdhci0 {
+>  	pinctrl-0 =3D <&mmc1_cfg>;
+>  	pinctrl-1 =3D <&mmc1_uhs_cfg>;
+>  	bus-width =3D <4>;
+> -	cd-gpios =3D <&gpio K3_GPIO(4) GPIO_ACTIVE_HIGH>;
+> +	cd-gpios =3D <&gpio K3_GPIO(4) (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
 
@@ -116,16 +137,16 @@ Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Troy Mitchell
 
 
---511ec13c2b7141be0104885f7a52a1b4dfa31b6f2847b9143b414700b4f6
+--26ed1f322d44d2ecd4a6afc050eef67eafba067d32d916536e0aeaac7c68
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawkdUCEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/ntwEAta30V/NVIohc
-hMoxmKN0JKEAvLmQLLUpsNQ2ycAEFqwA/jDC2OlAs1T+oRQtn9mzwDtIxwKOZTqN
-V0t3Xn2x+akI
-=E6T9
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawkewiEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC/aXQEA1ljwDzb2fdP6
+XzncsQ9ip4r67ZDtHNdpKwFVYpXsXskBAJwpqVE+V9wjlbhp5FQodbaCyQVw4YuI
+iJup+srjnbgK
+=BeSR
 -----END PGP SIGNATURE-----
 
---511ec13c2b7141be0104885f7a52a1b4dfa31b6f2847b9143b414700b4f6--
+--26ed1f322d44d2ecd4a6afc050eef67eafba067d32d916536e0aeaac7c68--
