@@ -1,55 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.204.34.129
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795759275;
-	b=PB76ywqTFkuxkdUq5EhwpfypGFZLREjyWbJErQAo+yo8aBQsHewJi/lhqoulHj6Iu+Fx
-	 SyL2hkcvWn7y2b+dloU7O0ZZ+iE4bAWxrbKXzXcgG0S23utqaH5P/SnEbkm0i2ONoiDpk
-	 Kdvf/qQt1ZYJNFXSoGF9/s32mxWOQ6KCh9sYm/eLP9ZTcprUPGfHsWHwv9qPq5qby5nS9
-	 qgDKhIi04QWzNtYkx35a/bfD2ujkLFgOhmqQTwU3O4aNLvzEXVfz1+r1+w/iIDfRZWBeJ
-	 f7ipV5+Ad0eqndDC303/vQYiydwu6o6v/WUlx82Z9t/WZwbAC3QPzIR76oimRBka7BQ==
+	t=1795759483;
+	b=cUdxbENpZ85qcG0V+xlDoX8bb6ReBp3ZDWQ7JR4u8g8mhLiTXn2ENE0fWoUlVno7TJj5
+	 lnc5y4p9Il35wvCLf/3W19iub9MGg1W94qRU3sGdGMDzaotmIGe25So7FG3d8Yy1QJn1M
+	 ZpCr6QByILBG+6Lk5w8Daz9LJZqhRjrqmqApKVK7tfK7SHfCBDSa2IrbniKZdOrBRecut
+	 ig9xQkVD9Tz/EnLZL+cbGDHfqvrw9F7+ccPeBZRI3CePA7IiCevA14Iw7v931BoE8YEX2
+	 iSjuWm5OD7bNjUW6lpwAtbIEsgB0IqZoDH+LpMJROkDKg7QO2F3yyGoc3wKyd0P83Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795759275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795759483;
 	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
 	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:Mime-Version:
-	 Content-Type:Date:Message-Id:Cc:Subject:From:To:X-Mailer:References:
-	 In-Reply-To:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:
-	 X-QQ-RECHKSPAM;
-	bh=W5orpNQRwzUsBFtBd4lKgk0noKXsQvGISmKxvFmwlXQ=;
-	b=Wc/lPh+mLie8iKfjS6rGDaovTUkzcXJGv4BCynNx4vAOs/PjVx+AaxBxQU1sqowjcpHZ
-	 W6auo+Q+wZEq0eAFNtRXn0NpXauY+ubO2JzbSTJB49veOkSQXBYsSRHa3TWc3PiOpoTpH
-	 zgL3fU3JPRxLAeTEdHxIYDom5kiI23F8b2sV510MLde+4G1nwOxUVTHhWrSTTrAYhS9+b
-	 6K65Tl7UPQYzJe8TJAVgLnjjnPUkWs4WSFgBeHr4PliplWx62+NXhIVedJ/JVNZpKZHQt
-	 5WavCvCIkBs6ZyAD7/xAjPTipzQEwA0WwJ7U1RPr0EVZzjbBS3h2tymt/iKaP7ewzwA==
+	 Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 Content-Transfer-Encoding:X-Mailer:References:In-Reply-To:
+	 X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
+	bh=+CoxtxAlXXTcTP7hM4mxLxfWNCL2jUGH6jwViGvzmUI=;
+	b=RrSSJtsAobAY2QP3j9ZTBDQI6m236bvS1v9K7ZnLLW3V6XMGQjL9QUkZW6k4YhY1xloD
+	 nl6WqCnXkTq3TVcsi2fsHh3OOqgG25wpg7jg6J2/5XyzF97g2AxBWo0QMm7GWzL/BWmWE
+	 Hx2g7dbMGbAHxVSSNsudQf99MObRlgv3B6wmOcSYOLOZtBykz4IGuHpy7qWd9CdTuJe68
+	 dBxHSPhIKDG2qoOUNaVjAx1vyv063UBxKfIrA8qTM8hmcchwjBeOWaOHkl/9q1wgFFhVe
+	 koz25zWQ26e4hh+pR96ZJAIAzlvhRTkdMBGBIiTN52z/2uTfG7vqUk5WiAJ/GJGyqjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=linux.spacemit.com;
 	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=udXPH5Co;
-	arc=none smtp.remote-ip=54.204.34.129
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=tXS0Nw4X;
+	arc=none smtp.remote-ip=54.206.16.166
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAEB606A323
-	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 06:01:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0AAEB606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BAF606A31C
+	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 06:04:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 39BAF606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=udXPH5Co
+	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=tXS0Nw4X
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1795759205;
-	bh=W5orpNQRwzUsBFtBd4lKgk0noKXsQvGISmKxvFmwlXQ=;
-	h=Mime-Version:Date:Message-Id:Subject:From:To;
-	b=udXPH5CoHvXAfxhAFIvhAGd1cAWKjuWGDFGZ8Bj/GnFrorSn1XB+O9oECrCJTtKrk
-	 dO0MQo0gyq5RxnnilQYu7cID6Ujhmb9NaTciIBBpJjkJEeGNOEKpz7kl4bYAebtrkn
-	 lYHjMzRgx/xWuUZ6HIok6eQzdVQr/4mnszW6X11o=
-X-QQ-mid: zesmtpgz6t1795759198t02bcd124
-X-QQ-Originating-IP: CyiqXhML3xAjxSMuZRfc6KNxWUfRG9AMsUIeo1bcios=
+	s=mxsw2412; t=1795759432;
+	bh=+CoxtxAlXXTcTP7hM4mxLxfWNCL2jUGH6jwViGvzmUI=;
+	h=Mime-Version:Date:Message-Id:To:Subject:From;
+	b=tXS0Nw4Xh93ckj4dHg2s9gfumIK+tCYENS/w+vSfjDY95VlhYalh0UCoxWKswujT8
+	 jryN6i+a/4gxkZt05y/jXjRrGlOIyu4ZMFNt1lPX//XqzojRgGizTFIvEPG+YAzeli
+	 Le34vxYXx4A38aaws+rFjg5nnro61kNCzECPJnnQ=
+X-QQ-mid: esmtpsz20t1795759430t6776662d
+X-QQ-Originating-IP: mpmvFh0R3UtSvg9VqO4lkFODjR/FTtIIYNG//MpBlWc=
 Received: from = ( [120.237.158.181])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 27 Nov 2026 13:59:55 +0800 (CST)
+	id ; Fri, 27 Nov 2026 14:03:48 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5876352062716450279
-EX-QQ-RecipientCnt: 25
+X-BIZMAIL-ID: 3646035124795458743
+EX-QQ-RecipientCnt: 13
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -60,75 +60,72 @@ List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=d1ae752c97959d5b8d8cd87d8f8f5410d469b0ecca2088ec5a8e5567b25f;
+ boundary=dea23099e5428f6b7ac3e4e3b106bb44ea01804eae0a8ac0d378e215a0ec;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Fri, 27 Nov 2026 05:59:54 +0000
-Message-Id: <DN5RI93NOUY6.2TXJX73EU84KJ@linux.spacemit.com>
-Cc: "Alessio Belle" <alessio.belle@imgtec.com>, "Luigi Santivetti"
- <luigi.santivetti@imgtec.com>, "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
- "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
- <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Yixun Lan" <dlan@kernel.org>, "Paul
- Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>, "Albert
- Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, "Troy
- Mitchell" <troy.mitchell@linux.spacemit.com>, "Baihui Liang"
- <liangbaihui@linux.spacemit.com>, <imagination@lists.freedesktop.org>,
- <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
- <spacemit@lists.linux.dev>
-Subject: Re: [PATCH v2] riscv: dts: spacemit: k1: add PowerVR GPU device
- node
+Date: Fri, 27 Nov 2026 06:03:47 +0000
+Message-Id: <DN5RL82O9EER.3GGSSOY5NFUOP@linux.spacemit.com>
+To: "Yixun Lan" <dlan@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt"
+ <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre
+ Ghiti" <alex@ghiti.fr>, "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
+Cc: <devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
+ <spacemit@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/4] riscv: dts: spacemit: k3: Rename PMIC node
 From: "Troy Mitchell" <troy.mitchell@linux.spacemit.com>
-To: "Iker Pedrosa" <ikerpedrosam@gmail.com>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Mah=C3=A9?= <frederic.mahe@cirad.fr>
+Content-Transfer-Encoding: quoted-printable
 X-Mailer: aerc 0.21.0-reader-ipc4
-References: <20261118-orangepi-gpu-v2-1-f68676f844eb@gmail.com>
- <20261122184434.545341-1-frederic.mahe@cirad.fr>
- <CABdCQ=PnfXRd2=b6_yEN94RCRvPnWx-WFfHZDC+jhHv_UFZ1ZQ@mail.gmail.com>
-In-Reply-To: <CABdCQ=PnfXRd2=b6_yEN94RCRvPnWx-WFfHZDC+jhHv_UFZ1ZQ@mail.gmail.com>
+References: <20261125-09-k3-dt-minor-misc-v1-0-dd887a8eb326@kernel.org>
+ <20261125-09-k3-dt-minor-misc-v1-1-dd887a8eb326@kernel.org>
+In-Reply-To: <20261125-09-k3-dt-minor-misc-v1-1-dd887a8eb326@kernel.org>
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Mdw6+lqugK2CvZJHCS1LrDPF+Hj9qgBYBDw/eWVDA3sRaPVNAzBOCiym
-	Yiey3YYUnX/+MQfYoOO9hZHqKcD0OCc+5PF5yGdx+hFQdS8dsZzECJRZSgm6+IzWDVWipUt
-	GYtP7GAVRKYkRfmrKmI7BmohM/+lrWI31C0OiENSUIgv0xlJIaUT9Ad3zJdGTAjdA84zVnX
-	AR8A+fUn2GYXkmsASkqYRiLPv0zKHY70X7KY2KsCWE004YuQcPvZtnvG8OIcFwEbP4PHVJe
-	BjUS5vyFHfO2DGdevuj1Lr43ndVT1bmFSAwMUfXJHD4kquG6XeDDmrGaPg5TXZpm7muWEM9
-	i2xinTQfNF/JZfW8AlYK6jUlbDEy9+gmg8ug9Of02RuqffqPFjS0ftjwmtJk6p2B4l6GQ1V
-	NMNZDZx3j2ubfzstl7gI29g7OIz3RkNMgZ1EHSu8Mo/Kfu9QKe+RMutHgLu4YFKAFoep5Ro
-	3K6TQgglINUVhiZvg8QpQY7Y8/Vc1I7nr5fAzQrHHaM+I3eLzzVUudoXTtZiJTQ1FRhrydi
-	2z6bxRpo7WprihcQta8hwu3R9GBLb0mBHNXYI4IhD0CjhoAJZinOu8OfGof/YAkkxgtSn9x
-	s/cZWZwIYvlEpoVSRVyeGm+U72Dk7Kb7TXGHEyzJxLAA2gz+czKJIe2SCxn16jmOEumqte8
-	TkosUE2o4WnXGN1vTglvdUZgatGc6KvqsX4D+NrNbbjTEJ5ZZDnvrytIVB1g0qY9rO0ukeC
-	hDDyRqwMKNA4sN1EukMGsJuL2smOUvQZM+rARFquFx3n7+vKXlnnDmQASijg9Arwk0X/9+F
-	IS1jGg55tDuGZP7HtoMyRM4OKqWDeEiTgPloPo/L82VFt7n/XVvN8e/hw/3EliQJVUt/YQq
-	Hr8ANf7CwpiAbgEH14V7eCt6V0W+w+9NnW15sO8lpj/dUHgadJUrbgcfy1RykCwA8D9qe3w
-	WK6vvJrEjztaClHofTqDPk0/03PdXyDVAMMjPNn61R+uAZlcUDwlnuZqe/mwkT1E6c2fALt
-	7/pzvGwt2ksHOfCJL5lQknHdTeJOsTJfV13ofq8BcRB2tXTlJxXKEGFz+mZcecM/Ne1SR7l
-	w==
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: NsUaodqEUTWoj1zWXQnIiGb2wHGiDeEtl6G4+Fo8NP0WjBT6PPK8TEmR
+	jNO6LhA96Yl/6RrDEVkdFhthaSeNis1ed0JZXF1B6seUfZ/BvGx+2e/mwXpojt8qKsMp53I
+	uxf1U1b7ybXHi+Gq8Sw8RQVUGmNhGL5a53zB7Rd3lqF7/nIAWlQZfgeeYgjjG8vM5oxt7Xo
+	fch1MrhnUzUOem0BU79Pjn5reFvv5ic7VeygIWgzkh4glFk8xf+pujk1zW9/yzl1sBWp2Bp
+	QLz0FdmkCt+jhQOMmfcL2zZhbva7XxhVW1RbSsJIHkzhwWIoMuXvfdmyq+U7km2DAIeB8Mj
+	djqFcgMrH/b2XLNAY7F4iOOjNELtkPCsevE6DrulpSEwXw7MaGuNvHIQ52UQl8CEqccKXkD
+	VIRfZFf/i2Wtl/eIs3Nyor6oRiLpMRtIkHMOB8QN+cvJJen30abhx5ViOy2EJbMb2HvlD70
+	BAjnVtzgInWv4kxh6Lv1jOJJldJuPLRdt1/wcq8ma0H2Vf52uIyvZ0iLb3XBtJqTgeDzQD2
+	Mm3FvQM6xNSoE9JI0QN91lppLEto9U2CAJSSItCC0NyWF35Vflj25UCeQJbEM72+WGNTtTf
+	xvjshH5seKOBbAC152UKArx/HjEWEUwClOB0w8Dn9j7u3uMPIIAlFGeSE7/r7sUlnY5OJKG
+	6PvZJoi8QtdjV33Yv4SPjoJTqH0RN3Y2ew3vDU6mOHUeOX9UCABaSQ7DfQXUBinRWKHYRfU
+	jqpf9EScl7gLyvzoEcaL/N+mY6mm4Ef6d65lZuSjMs/LgEtnGlomifurswahQXagIAcEI8p
+	/408Z6Ry4YwnY4xSQzsuQlkb1oq9zeKt+mV+59VqtgFj+Ln1kiSKCTzANJsgsSG9yTLMHOm
+	RAvy4BZm1aY4uIyL4Nfmv4vP9IKCZejuEfMxVSEfQANTe5E/51refOFxhra9WBhwd5Hp/nY
+	qmy2ro2O6+dIbnMvhWPmMr1m5u6rFwIFEVLAPM/mJM9n5uPh02GAih0Ffj/qkba1JizHHON
+	ReM/GMvwUD+foLVZ3UZt1YWCSAEzxKXFaKlyg+kC6PkdJ1zNuXsye1yUjtakPRxzkUD42ol
+	hNkxG33wFGF
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
 X-QQ-RECHKSPAM: 0
 
---d1ae752c97959d5b8d8cd87d8f8f5410d469b0ecca2088ec5a8e5567b25f
+--dea23099e5428f6b7ac3e4e3b106bb44ea01804eae0a8ac0d378e215a0ec
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
 
-On Mon Nov 23, 2026 at 6:41 PM GMT, Iker Pedrosa wrote:
-> Hi Fr=C3=A9d=C3=A9ric,
+On Wed Nov 25, 2026 at 7:46 AM GMT, Yixun Lan wrote:
+> Replace to a more descriptive name which follow Device Tree docs.
 >
-> Thanks for testing this on the BPI-F3!
+> Signed-off-by: Yixun Lan <dlan@kernel.org>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3-pico-itx.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->> Two notes:
->>
->> - On v7.4-rc1 the driver refuses the GPU ("Unknown GPU! Set
->>   'exp_hw_support' to bypass this check"); with
->>   powervr.exp_hw_support=3D1 it works as above. Is a driver patch
->>   adding the K1 GPU pending somewhere?
->
-> You're right. I forgot to mention in the cover letter that I was loading
-> the module with:
-> sudo modprobe powervr exp_hw_support=3D1
+> diff --git a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts b/arch/riscv/bo=
+ot/dts/spacemit/k3-pico-itx.dts
+> index 8d1cd468cf8c..a4afe24130ae 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> +++ b/arch/riscv/boot/dts/spacemit/k3-pico-itx.dts
+> @@ -100,7 +100,7 @@ &i2c8 {
+>  	pinctrl-0 =3D <&i2c8_cfg>;
+>  	status =3D "okay";
+> =20
+> -	p1@41 {
+> +	pmic@41 {
+>  		compatible =3D "spacemit,p1";
+>  		reg =3D <0x41>;
+>  		interrupts =3D <64 IRQ_TYPE_LEVEL_HIGH>;
 Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 
 
@@ -136,16 +133,16 @@ Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
 Troy Mitchell
 
 
---d1ae752c97959d5b8d8cd87d8f8f5410d469b0ecca2088ec5a8e5567b25f
+--dea23099e5428f6b7ac3e4e3b106bb44ea01804eae0a8ac0d378e215a0ec
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawkcWiEcdHJveS5taXRj
-aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC9jPwEAkEDYQ/DUZqdM
-7fO73JXCHzzyxH2RSvNzzjPHVh6TJCAA/jY1bbDX9rE04bGONDjWVzwEHNrfpRKP
-pCll1aV1PnkD
-=NZI6
+iJcEABYKAD8WIQSL4Ay2cExaPXAQcU2YCe+A+TM0LwUCawkdQyEcdHJveS5taXRj
+aGVsbEBsaW51eC5zcGFjZW1pdC5jb20ACgkQmAnvgPkzNC+72AEA6xeu93yEEa++
+vdfWOF3LBT8G/QTUIuZMu/R3YlMKumEBAIRz1wtpkYvXtXK4vzdoyfE7b3gN3mcS
+f2FUy2P9NF0A
+=YDVA
 -----END PGP SIGNATURE-----
 
---d1ae752c97959d5b8d8cd87d8f8f5410d469b0ecca2088ec5a8e5567b25f--
+--dea23099e5428f6b7ac3e4e3b106bb44ea01804eae0a8ac0d378e215a0ec--
