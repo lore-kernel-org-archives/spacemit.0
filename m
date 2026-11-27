@@ -1,60 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795750919;
-	b=NKuPRYWTUraR53SuTDohppncyx4OBYrd3rT/YhY8W9f8Y5FeeHQ0VJCXi5zteGsemcnn
-	 gFIeA9yisdmivLD40zq9hKrLlm8dY/RKpLhRxNMzkGU2gbXyJGwLccB5lQ1Nfc6vGBZUx
-	 83Hp2YJ2jX0vEZttuU1vBsijHXB506l7QsuVfBNVEZ0vI/d+OQgx/AlAq/okwp4I+ctqs
-	 ufpqk+ueoNFRbrf125S9PZ9qYQ5aVn1pZDZkvKARPF/VtB8/N98Ur8ffS1NZn743AtaiK
-	 x+ju1Mh6EKiDhie0mP3N1g7A/HGZRFhOLPjglFSAEzk2dlDuWJT61g6xMmHegQjcdWA==
+	t=1795757294;
+	b=azkLnBOmJDeqezjHNfTVkEzS8X77r++UAaZ/2zBB0Gv/WeJc9K/fx0OAWGMRWu3vswSJ
+	 rqvS+wRJgb1xxPsHBqT8phLpwuZYtq1VA9+mlcJgg1+tnesow8QZ2fvSL8WFA3RqQ/lwa
+	 uORLbFkzQTEKpaoWgN/2joMP1AVNRA59MOU0StASAyAtsFxPa9IOMZUyo3O3oMeanRx+8
+	 4oCRIo99IR72LMPAZVFDNziiWIqizIpdeGXwe5sPJ2gtscT+SwwYB54q5CN4v7wQSiAxc
+	 O7+esJnRr8jaQqerpsCT1d3s0eE55RBzdkuRpdWRtYGAtb7hQLViRObYC9LRToDQ9Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795750919;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:Date:
-	 Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-QQ-SENDSIZE:Feedback-ID:
-	 X-QQ-XMAILINFO:X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=gRzSE886gqVPNfRIk/T791axfG2WElyar5tUseuf8tw=;
-	b=gkTEVE5ANhC2WfJS6NYdaRT6DomuWoGGo4EhdNrcqtBOuYL329Pa/iwLmP4XpvpTOWay
-	 IEhtyCcuAjUlEWeme9iRMM/vZQYu+XYxojKIlEDsAQFDVy77XnxO9AMubYIe6gsPoChaI
-	 yyL24ltn3FpsQa6qakrhtWXwAkirZIlgjBMo5pbfJ2k9gUzv3IJoto0uxuyxn8rSYaLp0
-	 ct9D0X1HvgW3+aee5hZh11pYMCn2Roi8NpknzLvGM/1gFkBDS9j6FWlevp2RA5FIgVKCk
-	 sZQTBUhqk7Ce4W7cHdbZtxGukmT4+1i2v3UUtKHS+yak8J0G9gEHMmVmXX817/t+Smw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795757294;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=9jH/OKgM1gQSDKQc5kAy7iczSgneLDrLRkuuGZg3T08=;
+	b=TgfoI8sCzK4p9Zx87230dH5V3i5HCCw7QV+c3KBvpb873BV9EwKVxzAcTbfKr51UNnX0
+	 6klAZKsLssO1nNCzN/lSZetx8hgdWAr/1RINXd75f72Mw6Hv4Yf9ZBuR6gDTCb6FXvlhB
+	 Cocimer+Hx7Xm5CUy24ElZui/MaDTaCkI75t4DenjrB2dwF5BVdIltL9C5VAnNYsZhTDA
+	 RB75uDZMhCVSbTDleN0QYAP0EN/MRsw5wjadCwBZqZfMJ0gaA3lfZJQaMsTatl6TkUWZK
+	 jLp3elSnekAIb49/ZgOLM529YqdW7X0Gr2oGmBlNYcGCYBXjzDkMWI1kRWuciMCytHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux.spacemit.com;
-	spf=none smtp.mailfrom=linux.spacemit.com;
-	dkim=pass header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=v+D9Cdhe;
-	arc=none smtp.remote-ip=54.204.34.130
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=oss.tenstorrent.com;
+	spf=pass smtp.mailfrom=tenstorrent.com;
+	dkim=pass header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=YBamr02D;
+	arc=none smtp.remote-ip=74.125.224.44
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC13606A31E
-	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 03:41:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6CC13606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.spacemit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.spacemit.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB124606A321
+	for <spacemit@lists.linux.dev>; Fri, 27 Nov 2026 05:28:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB124606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.tenstorrent.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tenstorrent.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.spacemit.com header.i=@linux.spacemit.com header.a=rsa-sha256 header.s=mxsw2412 header.b=v+D9Cdhe
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
-	s=mxsw2412; t=1795750853;
-	bh=gRzSE886gqVPNfRIk/T791axfG2WElyar5tUseuf8tw=;
-	h=From:Date:Subject:MIME-Version:Message-Id:To;
-	b=v+D9Cdhev9N/TEl0Fa1sTrbV4iltMCwzC7nurR9Nj5OZFByQXrgyCxs16rAgz5Ter
-	 8sbHErjaKekrTNbnTOEL0f6ph9rvc2Z0jqwlfbtVvfku2Rda8L5VyLdK/VRxlccYX+
-	 kwzcBd0sXOmzDIWtkLS9k2iejOj9/0CbN9rQDskI=
-X-QQ-mid: esmtpsz18t1795750846t005b7e38
-X-QQ-Originating-IP: uROc6SY8cPRHqCbo0tZNh72h/13nBFKmcLhhsL3jfgQ=
-Received: from LT-LIANGBAIHUI.dc.com ( [120.237.158.181])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 27 Nov 2026 11:40:43 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 17842540283637095505
-EX-QQ-RecipientCnt: 20
-From: Baihui Liang <liangbaihui@linux.spacemit.com>
-Date: Fri, 27 Nov 2026 11:39:51 +0800
-Subject: [PATCH v3] drm/imagination: re-check firmware idle state before
- runtime suspend
+	dkim=pass (2048-bit key) header.d=tenstorrent.com header.i=@tenstorrent.com header.a=rsa-sha256 header.s=google header.b=YBamr02D
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-677d35fd1d2so7762719d50.1
+        for <spacemit@lists.linux.dev>; Thu, 26 Nov 2026 21:28:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tenstorrent.com; s=google; t=1795757293; x=1796362093; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9jH/OKgM1gQSDKQc5kAy7iczSgneLDrLRkuuGZg3T08=;
+        b=YBamr02DHIxG7iS4d2mzhKadc8S7Vik/Cmtjs3dvXgGVgtEP6l9K/GRKGpDipLGsY5
+         8kvMizVTAKlWTle1QsZWrabrI8zrCZh9FfkcePxnfX2SuVRS+yLUEZqqfVZ4vSiy6Ibz
+         guszyR0WxTbHc7V9vUVj63UXz+Jzpo0AXJMcjZ0QKw2OsuCcFMgiaeN2DKjJkNXwf5q+
+         W9pMaGGzQAICF4DA+D06P1BTM8ZNHCugmCmyJCAUNnpua4JSRz3Qe22sxAYUSnDKqrrb
+         rhpMH/TNGf3thuM5f6nKpvnJsm6RmKNmnPclcJSktRgO8+HGMTdCLB7s2/ElhaLjlbHS
+         FZgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795757293; x=1796362093;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9jH/OKgM1gQSDKQc5kAy7iczSgneLDrLRkuuGZg3T08=;
+        b=xUAYo05DtvKaGFlJK2zJgIneNH32tRhPSvgk/dI6uzTU+IMpvt5PwQqF/eCOjbYKcs
+         yVMVvvzokJGfFl2v/JsruVDoCPxaapngCfcdNYYtBxgVcVUPjIxrA+MJZm/++92mX77U
+         QjiskCO+Cvj8UT+mP42e0jBRYEa8uo2S4hYciPqw6SglTxJSClkFoNW/aNQdQSXXFCXO
+         D/vztqKqzw84P4rO2TLA6XxYCmW6BbHpXkb+pdNj8Ui20MGRowiHne+KKG5o5uFn2weG
+         SHOSH923ERUAMEy/XYKrg73/d+HWWkKXpXOLkQ67UgY3kotmzPUMVun5nbQ5lE+jXh5F
+         SZmw==
+X-Forwarded-Encrypted: i=1; AL+hErEfUEDFx10bgdhS/UKK3zSYDoI2tZeGONL7Q2Rf3JQxpHKzPdpnzGgkW6YNwSQM7d1NK8TFmgo/yA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+hRMHLqzv+qBUxTGWETPDTXW8+4CbYR4Nv18Wjlh88NEXTZBRi
+	6vzrBe1haRmoHyz/n3kASOCJUn2WLcSnA1Xz5Iv6tRspC1hz3atDCc9qZ4PnekA/Nw8=
+X-Gm-Gg: AZFdTZcvarAFy8e/uLZ2SDvEIAZFR9Zk+T4ETiU179PeCIdnV7aMa4LqL2orImXHT+F
+	UTYxLzNMXHGfdAeRvTJRvjeEyOOo8Buew4BtYPKnR/N4uqJyB7wZ24f+0Twt38TtFKq6iSFEkcY
+	AeBiZQaovAoHJ83ylswyYQSKelSqUL+bsi4JWODsSykiygKT1IvUTKXYwrir1LvXx5GPJdaELtO
+	yvmGO8Gz9Rlenv960xGiz7C07BoptE4K9fJNwmnPns4qCYOo342q5OjTNFWO+aWismBPxt/B31i
+	gAinsblBmIJOzo4guA2Jdxmkjtd6ZGe0kpXenvOpAwNwwctNQxjYnTN+cF5+3eP5zYXV5qVY0bn
+	wEWsWG5v1OGvv+wOhFJarA9Q9Nof59J6vzWw6A+bKDhMLcAGsZ66hBOOiSqAUxyiMsdiZq/4k6g
+	7v8cCAekPVUcHgyEQJ1KLjylQCOrM06h6pd0Gd7o8LrAROB7Ti3GXJ8otIYiSpqYOscpzodUDnP
+	EHWTw8S2HK4jbMalx8ewuCWRpsjNf+NI2drNCk3gor5FMeLDPt3AsRj/xMC2yZLhVRkES5urTG9
+	Ooln7uEObKwMr6NaHRwlmnp/5f8Xtylz0CRS8PzOGdqtRQuNIT3gOPXvB1gGtaovbMLkAsZt1a6
+	ipz8a4Dmi6we+8ic668sI
+X-Received: by 2002:a05:690e:4594:20b0:67c:6ce7:c513 with SMTP id 956f58d0204a3-67df44da548mr5273707d50.82.1795757292881;
+        Thu, 26 Nov 2026 21:28:12 -0800 (PST)
+Received: from toolbox ([2600:1700:220:59e0:e3a5:f585:4070:c566])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67df33d64a0sm11238363d50.22.2026.11.26.21.28.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2026 21:28:12 -0800 (PST)
+Date: Thu, 26 Nov 2026 23:27:47 -0600
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Daniel Lezcano <daniel.lezcano@kernel.org>, 
+	Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, 
+	Inochi Amaoto <inochiama@outlook.com>, Radu Rendec <radu@rendec.net>, Paul Walmsley <pjw@kernel.org>, 
+	Samuel Holland <samuel.holland@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Anup Patel <anup@brainfault.org>, Guodong Xu <docular.xu@gmail.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	Conor Dooley <conor.dooley@microchip.com>, Bo Gan <ganboing@gmail.com>
+Subject: Re: [PATCH v3 6/6] riscv: dts: spacemit: k3: Replace incorrect CLINT
+ node with ACLINT nodes
+Message-ID: <yf2dawzefycxhhs7zkua3v3hoirals3wtr6rheh4li33eq7r4i@yb7cem4r6x3z>
+References: <20260918-k3-aclint-v3-0-cf4fd4050e14@pigmoral.tech>
+ <20260918-k3-aclint-v3-6-cf4fd4050e14@pigmoral.tech>
 X-Mailing-List: spacemit@lists.linux.dev
 List-Id: <spacemit.lists.linux.dev>
 List-Post: <mailto:spacemit@lists.linux.dev>
@@ -64,251 +106,91 @@ List-Unsubscribe: <mailto:spacemit+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:spacemit+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261127-img-pm-autosuspend-v3-1-3a65ee22d9b2@linux.spacemit.com>
-X-B4-Tracking: v=1; b=H4sIAIb7CGsC/32NzQ6CMBAGX4X0bAldsAVPvofxgLCFNfITWhoM4
- d1t8eCFuLdJvp1ZmcGJ0LBLtLIJHRkaeg/pKWJVW/YNcqo9M0hAigQKTl3Dx46Xsx3MbEbsa66
- UgjpPMyG1Yv5xnFDTsktv9y+b+fHEygZTWLRk7DC996oTYfc34AQXHGR+FnmWlGmG1xf18xKbs
- aywIxtXQ8dCycHP5e/QBd6VgZJ5oaUGXRy6tm37AL6h0JQbAQAA
-X-Change-ID: 20261029-img-pm-autosuspend-7772d83416f7
-To: Alessio Belle <alessio.belle@imgtec.com>, 
- Luigi Santivetti <luigi.santivetti@imgtec.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Yixun Lan <dlan@kernel.org>, 
- Troy Mitchell <troy.mitchell@linux.spacemit.com>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: imagination@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
- spacemit@lists.linux.dev, gye976@gmail.com, 
- Baihui Liang <liangbaihui@linux.spacemit.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795750844; l=6789;
- i=liangbaihui@linux.spacemit.com; s=20261015; h=from:subject:message-id;
- bh=0LRS5sRlNCnbjexn/7XJmmzCalEGkE1fUT4nAMwDoWc=;
- b=W5t+cb2PvoYGdNHyfjzqgejQrvkXw7bl8Hq6huF3jLaByrFdZXJF5BfQFBHEcambW4v6ASwsq
- sz8WntOYXSLDdTJDv6gS6IPsKtpMbi4NpxW3JzgLQwnLloOvU6xoAw8
-X-Developer-Key: i=liangbaihui@linux.spacemit.com; a=ed25519;
- pk=L9Pa1YBHFuJrRPNu/FfSW/likBvv9j2dUrR3r+YyJ5M=
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz6b-0
-X-QQ-XMAILINFO: Mb1BOhWcNIRMEbOuuFz9XFhKTU/zHj10gWylwAze9Ivm7Ug8LQ3td0k1
-	YYuFAUpuv0ZFoVlnk6RLqy76mWe/GrWYqq2JqVPjeVw37ptwPaKRBi9fLykgoSTdoCGzWx+
-	FtW1Lh4oT8GtgNAGQQsfJML4giIzcOJ4CTeF+Df3QeiNpVXXLYorspSbFkhZMMSeWm5hOSp
-	e+CaVv1OSuGwM2iLKHZ4mWAJB10u0KgnfhLguyg7Dzt9EtYois0jFro8IpRl38dJb0sm6+q
-	PY5CEOFxlmmhpkkXldkYWz0Vx6NPctPrDVGD9Y1uvIPHuWyWGxpzJsocLnO7O3BknGIPN84
-	OxRWv6pyJsaHWaN4o/6LDfhNs/exUgaPsHwfCv6etog/ZrKJa9MAeRsxK90REKWIU6MHtSP
-	OVMYHwejcr70KjxGhQ0s4exa9NAhLe8gJMCI+SAPIGyiEUu5f3ZLPjCaJ/OcTMiPPT4Aps4
-	IQ6HrdigCEUTzOPosk/GcHR2qPrDLSRm7nI94EyQF2fpirhM5M/Kn1f5hiuo9gPZ+BcA4p8
-	gtW4jN+kLSGVc9pIW1u2bHSL09fjLVI5p9bfzQliWzFRE4gPKIb9OIf3t96nrGCdo+WUCCq
-	HuN+J3L/hJDsvqi8aDanBgaX0/Y3FhR3aYgrAL8V/tj6+Hz3oEyFxqWgeuXOxuc/MAM7WdR
-	zkm3Ndx5eCHWTPWrKosCSFWnShj4MazDAMtprrKvsI1Up7HzmH8jH9ZnEX3O7dPS33byCbs
-	RGlv+CdhiSr2y4LQcLhzB5I0EjOsYdP61zakZ28l/nZ3ByaD1IhktrdIhEqU6SGuM0Aj6IY
-	v3hOh4EIvqj+BmqIS1RMeGDGKMwS9emiB/X+6BkAk+Zx4xzsy3T2urH62ofSGt15nytCAOE
-	fpLMJs3ddiP8YV5jqrVXWd/V5YP18rsROBj8pJAj+Hq0PTU4wIoZnb3gOZjDddRe7AceLtq
-	mIOBWWImvws8ciep0VRmKH8RMu1wFJrMlA1H6R0jfQnRWAQpP/DESYXvXwum0MOvHCvr7Y2
-	nxY9Ji8neBNici473DTl8D8deA/+T0X6Ubb7c7EaFZyxDT8lJQ2DWl5PkANYZ7NQvQfbuuQ
-	/av6skaNSd+gujnpNvrDRh2wkDZ95a0/QM3rEdpWCnhxYiecYvG0XrzL7HIEgj2ZElycRHu
-	h8bS
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
-X-QQ-RECHKSPAM: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260918-k3-aclint-v3-6-cf4fd4050e14@pigmoral.tech>
 
-pvr_power_device_idle() rejects runtime suspend while the firmware
-hasn't reached ROGUE_FWIF_POW_IDLE. The PM core doesn't reschedule
-idle notification after rejection, so no further pm_runtime_put()
-arrives on an idle GPU and the device stays powered indefinitely.
+Hi Junhui,
 
-Move the idle check into pvr_power_device_suspend() and return -EBUSY
-after pm_runtime_mark_last_busy() so the PM core reschedules the
-autosuspend timer and retries until the firmware is idle.
+On Fri, Sep 18, 2026 at 12:29:38AM +0800, Junhui Liu wrote:
+> The K3 implements separate ACLINT MSWI, MTIMER and SSWI devices. The
+> existing CLINT node at 0xe081c000 incorrectly describes the SSWI
+> register space in the non-secure window as a legacy CLINT.
+> 
+> The ACLINT register space is mapped at two base addresses: a secure
+> window at 0xf1810000 and a non-secure window at 0xe0810000. The
+> secure window exposes all three components, while the non-secure
+> window only exposes SSWI; the MSWI and MTIMER offsets are reserved
+> there. Moreover, depending on the eFuse configuration, the non-secure
+> window may be entirely inaccessible, whereas the secure window is
+> always available.
+> 
+> Replace the CLINT node with the three ACLINT devices, all using
+> secure-window addresses: MSWI and MTIMER for machine-level firmware
+> such as OpenSBI, and SSWI for supervisor software interrupts.
+> 
+> Fixes: 56f37e391a62 ("riscv: dts: spacemit: add initial support for K3 SoC")
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
+>  arch/riscv/boot/dts/spacemit/k3.dtsi | 43 +++++++++++++++++++++++++-----------
+>  1 file changed, 30 insertions(+), 13 deletions(-)
+> 
+> diff --git a/arch/riscv/boot/dts/spacemit/k3.dtsi b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> index c3f2dce0969c..74831974435e 100644
+> --- a/arch/riscv/boot/dts/spacemit/k3.dtsi
+> +++ b/arch/riscv/boot/dts/spacemit/k3.dtsi
+> @@ -1261,19 +1261,6 @@ saplic: interrupt-controller@e0804000 {
+>  			riscv,num-sources = <512>;
+>  		};
+>  
+> -		clint: timer@e081c000 {
+> -			compatible = "spacemit,k3-clint", "sifive,clint0";
+> -			reg = <0x0 0xe081c000 0x0 0x4000>;
+> -			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>,
+> -					      <&cpu1_intc 3>, <&cpu1_intc 7>,
+> -					      <&cpu2_intc 3>, <&cpu2_intc 7>,
+> -					      <&cpu3_intc 3>, <&cpu3_intc 7>,
+> -					      <&cpu4_intc 3>, <&cpu4_intc 7>,
+> -					      <&cpu5_intc 3>, <&cpu5_intc 7>,
+> -					      <&cpu6_intc 3>, <&cpu6_intc 7>,
+> -					      <&cpu7_intc 3>, <&cpu7_intc 7>;
+> -		};
+> -
+>  		/* sec_i2c3: 0xf0614000, not available from Linux */
+>  
+>  		mimsic: interrupt-controller@f1000000 {
+> @@ -1305,5 +1292,35 @@ maplic: interrupt-controller@f1800000 {
+>  			riscv,num-sources = <512>;
+>  			status = "reserved";
+>  		};
+> +
+> +		aclint_mswi: interrupt-controller@f1810000 {
+> +			compatible = "spacemit,k3-aclint-mswi";
+> +			reg = <0x0 0xf1810000 0x0 0x4000>;
+> +			interrupts-extended = <&cpu0_intc 3>, <&cpu1_intc 3>,
+> +					      <&cpu2_intc 3>, <&cpu3_intc 3>,
+> +					      <&cpu4_intc 3>, <&cpu5_intc 3>,
+> +					      <&cpu6_intc 3>, <&cpu7_intc 3>;
+> +		};
+> +
+> +		aclint_mtimer: timer@f1814000 {
+> +			compatible = "spacemit,k3-aclint-mtimer";
 
-Factor the power-off sequence into a helper and call it from the
-removal path with runtime PM disabled, bypassing the idle check.
-Power off before destroying the job and free-list ID arrays, since
-the IRQ handler can still process firmware commands during shutdown
-and look up free-list IDs.
+I think you'll need to also include the "riscv,aclint-mtimer" compatible
+here so that this DT can be used with upstream OpenSBI. OpenSBI doesn't
+include the spacemit specific compatible. OpenSBI boot prints this
+currently.
 
-Signed-off-by: Baihui Liang <liangbaihui@linux.spacemit.com>
----
-Changes in v3:
-- Factor the shared power-off sequence out of the runtime suspend callback.
-- On driver removal, disable runtime PM and bypass the firmware idle check.
-  Power off the GPU before destroying the job and free-list ID arrays.
-- Link to v2: https://patch.msgid.link/20261111-img-pm-autosuspend-v2-1-427689f6f2f9@linux.spacemit.com
+Platform Timer Device       : --- @ 0Hz
 
-Changes in v2:
-- Move the pvr_power_is_idle() check into pvr_power_device_suspend()
-  and return -EBUSY after pm_runtime_mark_last_busy().
-- Drop pvr_power_device_idle() and pass NULL in RUNTIME_PM_OPS().
-- Link to v1: https://patch.msgid.link/20261029-img-pm-autosuspend-v1-1-26851840a34e@linux.spacemit.com
----
- drivers/gpu/drm/imagination/pvr_drv.c   |  9 ++++-
- drivers/gpu/drm/imagination/pvr_power.c | 72 +++++++++++++++++++++++++--------
- drivers/gpu/drm/imagination/pvr_power.h |  2 +-
- 3 files changed, 63 insertions(+), 20 deletions(-)
+> +			reg = <0x0 0xf1814000 0x0 0x8000>;
+> +			reg-names = "mtimecmp";
+> +			interrupts-extended = <&cpu0_intc 7>, <&cpu1_intc 7>,
+> +					      <&cpu2_intc 7>, <&cpu3_intc 7>,
+> +					      <&cpu4_intc 7>, <&cpu5_intc 7>,
+> +					      <&cpu6_intc 7>, <&cpu7_intc 7>;
+> +		};
 
-diff --git a/drivers/gpu/drm/imagination/pvr_drv.c b/drivers/gpu/drm/imagination/pvr_drv.c
-index 5c965ef0274..bf70cd5c6df 100644
---- a/drivers/gpu/drm/imagination/pvr_drv.c
-+++ b/drivers/gpu/drm/imagination/pvr_drv.c
-@@ -1469,19 +1469,24 @@ static void pvr_remove(struct platform_device *plat_dev)
- 	struct drm_device *drm_dev = platform_get_drvdata(plat_dev);
- 	struct pvr_device *pvr_dev = to_pvr_device(drm_dev);
- 
-+	pm_runtime_disable(drm_dev->dev);
-+
- 	WARN_ON(!xa_empty(&pvr_dev->job_ids));
- 	WARN_ON(!xa_empty(&pvr_dev->free_list_ids));
- 
-+	pvr_power_device_shutdown(pvr_dev);
-+
- 	xa_destroy(&pvr_dev->job_ids);
- 	xa_destroy(&pvr_dev->free_list_ids);
- 
--	pm_runtime_suspend(drm_dev->dev);
- 	pvr_device_fini(pvr_dev);
- 	drm_dev_unplug(drm_dev);
- 	pvr_watchdog_fini(pvr_dev);
- 	pvr_queue_device_fini(pvr_dev);
- 	pvr_context_device_fini(pvr_dev);
- 	pvr_power_domains_fini(pvr_dev);
-+
-+	pm_runtime_enable(drm_dev->dev);
- }
- 
- static const struct pvr_device_data pvr_device_data_manual = {
-@@ -1516,7 +1521,7 @@ static const struct of_device_id dt_match[] = {
- MODULE_DEVICE_TABLE(of, dt_match);
- 
- static const struct dev_pm_ops pvr_pm_ops = {
--	RUNTIME_PM_OPS(pvr_power_device_suspend, pvr_power_device_resume, pvr_power_device_idle)
-+	RUNTIME_PM_OPS(pvr_power_device_suspend, pvr_power_device_resume, NULL)
- };
- 
- static struct platform_driver pvr_driver = {
-diff --git a/drivers/gpu/drm/imagination/pvr_power.c b/drivers/gpu/drm/imagination/pvr_power.c
-index eb4b6ecdf4f..a0537a888d8 100644
---- a/drivers/gpu/drm/imagination/pvr_power.c
-+++ b/drivers/gpu/drm/imagination/pvr_power.c
-@@ -366,6 +366,50 @@ const struct pvr_power_sequence_ops pvr_power_sequence_ops_pwrseq = {
- 	.power_off = pvr_power_off_sequence_pwrseq,
- };
- 
-+static int
-+pvr_power_device_off(struct pvr_device *pvr_dev)
-+{
-+	int err;
-+
-+	/* Caller must hold a drm_dev_enter() reference. */
-+	if (READ_ONCE(pvr_dev->fw_dev.initialised)) {
-+		err = pvr_power_fw_disable(pvr_dev, false, true);
-+		if (err)
-+			return err;
-+	}
-+
-+	return pvr_dev->device_data->pwr_ops->power_off(pvr_dev);
-+}
-+
-+/* Power the device off on driver removal, skipping the idle check done by
-+ * pvr_power_device_suspend() as the device won't be resumed. Runtime PM must be
-+ * disabled by the caller.
-+ */
-+void
-+pvr_power_device_shutdown(struct pvr_device *pvr_dev)
-+{
-+	struct drm_device *drm_dev = from_pvr_device(pvr_dev);
-+	struct device *dev = drm_dev->dev;
-+	int idx;
-+	int err;
-+
-+	if (pm_runtime_status_suspended(dev))
-+		return;
-+
-+	if (!drm_dev_enter(drm_dev, &idx)) {
-+		drm_err(drm_dev, "Device is unplugged, cannot power it off\n");
-+		return;
-+	}
-+
-+	err = pvr_power_device_off(pvr_dev);
-+	drm_dev_exit(idx);
-+	if (!err)
-+		err = pm_runtime_set_suspended(dev);
-+
-+	if (err)
-+		drm_err(drm_dev, "Failed to power the device off (%d)\n", err);
-+}
-+
- int
- pvr_power_device_suspend(struct device *dev)
- {
-@@ -378,15 +422,19 @@ pvr_power_device_suspend(struct device *dev)
- 	if (!drm_dev_enter(drm_dev, &idx))
- 		return -EIO;
- 
--	if (READ_ONCE(pvr_dev->fw_dev.initialised)) {
--		err = pvr_power_fw_disable(pvr_dev, false, true);
--		if (err)
--			goto err_drm_dev_exit;
--	}
-+	if (READ_ONCE(pvr_dev->fw_dev.initialised) && !pvr_power_is_idle(pvr_dev)) {
-+		/*
-+		 * The firmware has not drained the GPU yet. Refresh last_busy so
-+		 * the PM core reschedules the autosuspend and retries this callback
-+		 * until the firmware becomes idle.
-+		 */
-+		pm_runtime_mark_last_busy(dev);
-+		drm_dev_exit(idx);
- 
--	err = pvr_dev->device_data->pwr_ops->power_off(pvr_dev);
-+		return -EBUSY;
-+	}
- 
--err_drm_dev_exit:
-+	err = pvr_power_device_off(pvr_dev);
- 	drm_dev_exit(idx);
- 
- 	return err;
-@@ -427,16 +475,6 @@ pvr_power_device_resume(struct device *dev)
- 	return err;
- }
- 
--int
--pvr_power_device_idle(struct device *dev)
--{
--	struct platform_device *plat_dev = to_platform_device(dev);
--	struct drm_device *drm_dev = platform_get_drvdata(plat_dev);
--	struct pvr_device *pvr_dev = to_pvr_device(drm_dev);
--
--	return pvr_power_is_idle(pvr_dev) ? 0 : -EBUSY;
--}
--
- static int
- pvr_power_clear_error(struct pvr_device *pvr_dev)
- {
-diff --git a/drivers/gpu/drm/imagination/pvr_power.h b/drivers/gpu/drm/imagination/pvr_power.h
-index c34252bda07..dde765f18ce 100644
---- a/drivers/gpu/drm/imagination/pvr_power.h
-+++ b/drivers/gpu/drm/imagination/pvr_power.h
-@@ -16,9 +16,9 @@ void pvr_device_lost(struct pvr_device *pvr_dev);
- 
- bool pvr_power_is_idle(struct pvr_device *pvr_dev);
- 
-+void pvr_power_device_shutdown(struct pvr_device *pvr_dev);
- int pvr_power_device_suspend(struct device *dev);
- int pvr_power_device_resume(struct device *dev);
--int pvr_power_device_idle(struct device *dev);
- 
- int pvr_power_reset(struct pvr_device *pvr_dev, bool hard_reset);
- 
 
----
-base-commit: 067c5c24cef23d913b67eaaf71ae67e7169a6620
-change-id: 20261029-img-pm-autosuspend-7772d83416f7
-
-Best regards,
---  
-Baihui Liang <liangbaihui@linux.spacemit.com>
-
+Regards
+Anirudh Srinivasan
